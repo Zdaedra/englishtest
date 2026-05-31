@@ -1,0 +1,7 @@
+# Raw IP:port deploy — bare `:80` site address = HTTP only, no auto-TLS.
+# Auth is handled INSIDE the app (cookie gate), not here, so iOS Safari/PWA
+# remember the login instead of re-prompting every launch.
+:80 {
+	encode zstd gzip
+	reverse_proxy english_app:8000
+}

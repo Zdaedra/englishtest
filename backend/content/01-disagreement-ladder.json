@@ -1,0 +1,20 @@
+{
+  "slug": "batch",
+  "title": "",
+  "theme": "Лестница несогласия — от любопытства к прямоте",
+  "subtitle": "",
+  "section": "live-tone",
+  "zones": ["Curious", "Cautious", "Direct"],
+  "phrases": [
+    { "anchor": "Understand", "zone": "Curious",  "en": "Help me understand the thinking there." },
+    { "anchor": "Run",        "zone": "Curious",  "en": "Run me through how you got to that number." },
+    { "anchor": "Angle",      "zone": "Curious",  "en": "Can I offer a different angle?" },
+    { "anchor": "Far",        "zone": "Cautious", "en": "I'm not sure I'd go that far." },
+    { "anchor": "Hesitation", "zone": "Cautious", "en": "My one hesitation here is…" },
+    { "anchor": "Pause",      "zone": "Cautious", "en": "What gives me pause is…" },
+    { "anchor": "Land",       "zone": "Direct",   "en": "I hear you, but here's where I'd land differently…" },
+    { "anchor": "Push",       "zone": "Direct",   "en": "Let me push back on that a little." },
+    { "anchor": "Straight",   "zone": "Direct",   "en": "Let me be straight with you — I don't think that works." }
+  ],
+  "mnemo": "Ты хочешь understand эту гору — и медленно run вверх по тропе, на ходу ищешь другой angle, другой ракурс склона. Видишь, как far ещё до вершины, и внутри вспыхивает hesitation. Делаешь pause, выбираешь, куда land ногу, и push себя выше. И с самого пика говоришь тем, кто внизу, straight — прямо, без обиняков."
+}

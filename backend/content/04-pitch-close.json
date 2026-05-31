@@ -1,0 +1,20 @@
+{
+  "slug": "pitch-3",
+  "title": "Замок",
+  "theme": "Питч: просьба, что замыкает сделку",
+  "subtitle": "Мост через пропасть",
+  "section": "pitch",
+  "zones": ["Bridge", "Ask", "Seal"],
+  "phrases": [
+    { "anchor": "Bridge",    "zone": "Bridge", "en": "So here's the bridge from where we are to where this goes." },
+    { "anchor": "Door",      "zone": "Bridge", "en": "I'm opening one door — you decide if you walk through it." },
+    { "anchor": "Fit",       "zone": "Bridge", "en": "The reason I'm bringing this to you specifically — it's a fit." },
+    { "anchor": "Ask",       "zone": "Ask",    "en": "So here's the ask, plainly." },
+    { "anchor": "Yes",       "zone": "Ask",    "en": "All I need from you today is a yes to the next step." },
+    { "anchor": "Room",      "zone": "Ask",    "en": "I want to be the obvious person you back in this room." },
+    { "anchor": "Skin",      "zone": "Seal",   "en": "I've got skin in this — I'm not asking you to go where I won't." },
+    { "anchor": "Handshake", "zone": "Seal",   "en": "Let's not overthink it — handshake and we're moving." },
+    { "anchor": "Seal",      "zone": "Seal",   "en": "Give me the green light and I'll seal it by Friday." }
+  ],
+  "mnemo": "Ты строишь bridge через пропасть, доска за доской, прямо к нему. На том конце — одна door, ты толкаешь её, и она входит в проём точь-в-точь, идеальный fit. На пороге ты произносишь ask — прямо, без обёртки. Он кивает: yes — и вы вдвоём входите в room, где решается всё. Закатываешь рукав — на коже шрам, skin, ты в игре наравне. Протягиваешь руку — крепкий handshake. И капля сургуча падает вниз: seal. Дверь заперта, сделка — твоя."
+}

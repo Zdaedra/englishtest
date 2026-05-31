@@ -1,0 +1,20 @@
+{
+  "slug": "batch-3",
+  "title": "Эмпатия → присутствие",
+  "theme": "Раскрыть собеседника: от ярлыков-отражений через искренность к смелому присутствию — назвать невысказанное",
+  "subtitle": "Выступление на сцене",
+  "section": "live-tone",
+  "zones": ["Mechanical", "Warm", "Presence"],
+  "phrases": [
+    { "anchor": "Sounds",     "zone": "Mechanical", "en": "It sounds like the timeline's the real worry." },
+    { "anchor": "Seems",      "zone": "Mechanical", "en": "Seems like something here isn't sitting right." },
+    { "anchor": "Sense",      "zone": "Mechanical", "en": "My sense is you're not fully sold — am I off?" },
+    { "anchor": "Head",       "zone": "Warm",       "en": "Here's where my head's at — tell me where I'm wrong." },
+    { "anchor": "Underneath", "zone": "Warm",       "en": "Help me see what's really going on underneath." },
+    { "anchor": "Agenda",     "zone": "Warm",       "en": "You probably think I've got my own agenda here." },
+    { "anchor": "Kill",       "zone": "Presence",   "en": "Honestly, I'd kill the whole thing myself — talk me out of it." },
+    { "anchor": "Elephant",   "zone": "Presence",   "en": "Feels like there's an elephant in the room nobody's naming — what is it?" },
+    { "anchor": "Obvious",    "zone": "Presence",   "en": "I'm probably missing something obvious — what is it?" }
+  ],
+  "mnemo": "Ты на сцене. Зал гудит — ты ловишь его sounds, его звучание. Тебе seems, что в воздухе напряжение. Доверяешь sense, чутью артиста. Киваешь: вот где моя head, где я сейчас. Заглядываешь underneath, под маски первого ряда. Признаёшь вслух свой agenda, свой расчёт — и зал выдыхает. Потом резко: «я бы это kill, убил номер» — провоцируешь. Тычешь в elephant, в то, о чём все молчат. И называешь самое obvious, очевидное, что никто не сказал вслух."
+}

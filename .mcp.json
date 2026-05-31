@@ -1,0 +1,12 @@
+{
+  "_comment": "Per-project MCP servers. Uncomment and configure what's needed for this project. Tokens come from master .env.",
+  "mcpServers": {
+    "_github_example": {
+      "command": "npx",
+      "args": ["-y", "@github/github-mcp-server"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}

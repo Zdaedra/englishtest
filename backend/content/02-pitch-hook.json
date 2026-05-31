@@ -1,0 +1,20 @@
+{
+  "slug": "pitch-1",
+  "title": "Крючок",
+  "theme": "Питч: первые 15 секунд — зацепить внимание",
+  "subtitle": "Крючок на леске",
+  "section": "pitch",
+  "zones": ["Spark", "Pull", "Lock"],
+  "phrases": [
+    { "anchor": "Picture", "zone": "Spark", "en": "Picture this — it's Monday morning and the whole thing already broke." },
+    { "anchor": "Quick",   "zone": "Spark", "en": "Give me thirty seconds — quick one." },
+    { "anchor": "Hook",    "zone": "Spark", "en": "Here's the hook — we make X feel like Y." },
+    { "anchor": "Catch",   "zone": "Pull",  "en": "Most people miss this, and that's the whole catch." },
+    { "anchor": "Lean",    "zone": "Pull",  "en": "Lean in — this is the part nobody talks about." },
+    { "anchor": "Bet",     "zone": "Pull",  "en": "I'd bet money you've felt this exact thing." },
+    { "anchor": "Knife",   "zone": "Lock",  "en": "Here's where the knife comes down — what actually matters." },
+    { "anchor": "One",     "zone": "Lock",  "en": "If you take one thing away, take this." },
+    { "anchor": "Grab",    "zone": "Lock",  "en": "This is the line that should grab you." }
+  ],
+  "mnemo": "Тёмная сцена. Ты чиркаешь спичкой — picture, и в воздухе вспыхивает картинка. Зал замирает на один quick вдох. Ты выбрасываешь вперёд hook — крючок блестит на леске. Толпа дёргается — вот он, catch. Леска тянет всех, и люди невольно lean вперёд. Ты делаешь bet — ставишь всё на эту секунду. В тишине достаёшь knife, режешь воздух — остаётся one яркая нить. Сжимаешь её в кулаке: grab. Зал — твой."
+}

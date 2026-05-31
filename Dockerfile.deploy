@@ -1,0 +1,12 @@
+# Lightweight host build: uses a PRE-BUILT frontend/dist (no node stage),
+# no ffmpeg — keeps RAM/disk low on the shared Hetzner host.
+FROM python:3.12-slim
+WORKDIR /srv/backend
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/ /srv/backend/
+COPY frontend/dist /srv/frontend/dist
+ENV PYTHONPATH=/srv/backend
+ENV ENGLISH_DATA_DIR=/srv/backend/data
+EXPOSE 8000
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

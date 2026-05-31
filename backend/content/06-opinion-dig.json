@@ -1,0 +1,20 @@
+{
+  "slug": "batch-2",
+  "title": "Узнать мнение",
+  "theme": "Вытянуть чужое мнение — от мягкого к прямому",
+  "subtitle": "Раскопки",
+  "section": "live-tone",
+  "zones": ["Curious", "Probing", "Pressing"],
+  "phrases": [
+    { "anchor": "Read",     "zone": "Curious",  "en": "What's your read on this?" },
+    { "anchor": "Thinking", "zone": "Curious",  "en": "How are you thinking about this?" },
+    { "anchor": "Take",     "zone": "Curious",  "en": "I'd love to get your take." },
+    { "anchor": "Seeing",   "zone": "Probing",  "en": "What are you seeing that I'm not?" },
+    { "anchor": "Shoes",    "zone": "Probing",  "en": "What would you do in my shoes?" },
+    { "anchor": "Gut",      "zone": "Probing",  "en": "What's your gut telling you?" },
+    { "anchor": "Missing",  "zone": "Pressing", "en": "Be honest — what am I missing here?" },
+    { "anchor": "True",     "zone": "Pressing", "en": "What would have to be true for you to get behind this?" },
+    { "anchor": "Stand",    "zone": "Pressing", "en": "Where do you actually stand on this?" }
+  ],
+  "mnemo": "Ты стоишь на поле и read землю — где копать. Начинаешь thinking, прикидываешь. Берёшь, take, лопату. Вглядываешься — seeing, что скрыто под дёрном. Копаешь так глубоко, что shoes скрываются в яме. Доходишь до gut земли, до самого нутра. Чувствуешь — чего-то missing. Пробиваешься к true дну, к скале. И там, наконец, stand на твёрдом."
+}

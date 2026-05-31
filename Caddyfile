@@ -1,0 +1,12 @@
+# Single-user basic-auth + auto-HTTPS. Generate the hash with:
+#   docker run --rm caddy:2 caddy hash-password --plaintext 'your-password'
+# and set ENGLISH_BASIC_AUTH_HASH in the env.
+{$DOMAIN} {
+	encode zstd gzip
+
+	basic_auth {
+		{$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+	}
+
+	reverse_proxy english_app:8000
+}

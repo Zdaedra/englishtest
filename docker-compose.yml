@@ -1,0 +1,45 @@
+# Deploy on Hetzner is a SEPARATE, approval-gated step (shared prod host).
+# Local: `docker compose up --build` -> http://localhost:8000
+#
+# Secrets come from the master .env (symlinked / passed through). The TTS &
+# generation endpoints are cost-bearing — keep this behind Caddy basic_auth and
+# do not expose :8000 directly to the internet.
+services:
+  english_app:
+    build: .
+    container_name: english_app
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL:-https://api.anthropic.com}
+      # On Hetzner the LLM provider is Meridian (free via Max subscription).
+      - ENGLISH_LLM_PROVIDER=${ENGLISH_LLM_PROVIDER:-auto}
+    volumes:
+      - english_data:/srv/backend/data
+    ports:
+      - "8000:8000"   # local dev convenience; on Hetzner drop this and use Caddy only
+    restart: unless-stopped
+
+  # Optional: only if NOT reusing the existing Hetzner reverse-proxy.
+  caddy:
+    image: caddy:2
+    container_name: english_caddy
+    depends_on: [english_app]
+    ports:
+      - "443:443"
+      - "80:80"
+    environment:
+      - DOMAIN=${ENGLISH_DOMAIN:-english.example.com}
+      - BASIC_AUTH_USER=${ENGLISH_BASIC_AUTH_USER:-alexey}
+      - BASIC_AUTH_HASH=${ENGLISH_BASIC_AUTH_HASH:-}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+    profiles: ["with-caddy"]
+
+volumes:
+  english_data:
+  caddy_data:
+  caddy_config:
