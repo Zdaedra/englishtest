@@ -32,6 +32,34 @@ export const IconProfile = ({ size }: P) => (
   </g></svg>
 );
 
+export const IconMenu = ({ size = 24 }: P) => (
+  <svg {...s(size)}><g fill="currentColor">
+    <circle cx="5" cy="12" r="1.85" /><circle cx="12" cy="12" r="1.85" /><circle cx="19" cy="12" r="1.85" />
+  </g></svg>
+);
+
+export const IconShield = ({ size = 24 }: P) => (
+  <svg {...s(size)}><g {...stroke}>
+    <path d="M12 3.2 19 6v5.2c0 4.4-2.9 7.4-7 8.8-4.1-1.4-7-4.4-7-8.8V6z" />
+    <path d="M9 11.8l2.1 2.1L15 10" />
+  </g></svg>
+);
+
+export const IconHeadphones = ({ size = 24 }: P) => (
+  <svg {...s(size)}><g {...stroke}>
+    <path d="M5 13.5V12a7 7 0 0 1 14 0v1.5" />
+    <rect x="3.4" y="13" width="4" height="6.2" rx="2" />
+    <rect x="16.6" y="13" width="4" height="6.2" rx="2" />
+  </g></svg>
+);
+
+export const IconSearch = ({ size = 24 }: P) => (
+  <svg {...s(size)}><g {...stroke}>
+    <circle cx="11" cy="11" r="6.5" />
+    <path d="M20 20l-3.8-3.8" />
+  </g></svg>
+);
+
 export const IconPlay = ({ size = 24 }: P) => (
   <svg {...s(size)}><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
 );

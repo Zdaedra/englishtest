@@ -1,0 +1,20 @@
+{
+  "slug": "requests-1",
+  "title": "Плохие новости",
+  "theme": "Плохие новости и managing up — предупредить, взять ответственность, развернуть к выходу",
+  "subtitle": "",
+  "section": "requests",
+  "zones": ["Warn", "Own", "Forward"],
+  "phrases": [
+    { "anchor": "Heads",      "zone": "Warn",    "en": "Heads up — we've got a problem." },
+    { "anchor": "Ahead",      "zone": "Warn",    "en": "I want to get ahead of this." },
+    { "anchor": "Snag",       "zone": "Warn",    "en": "We hit a snag on the timeline." },
+    { "anchor": "Sugarcoat",  "zone": "Own",     "en": "I'm not going to sugarcoat this." },
+    { "anchor": "Ball",       "zone": "Own",     "en": "We took our eye off the ball here." },
+    { "anchor": "Buck",       "zone": "Own",     "en": "The buck stops with me on this." },
+    { "anchor": "Woods",      "zone": "Forward", "en": "We're not out of the woods yet." },
+    { "anchor": "Escalate",   "zone": "Forward", "en": "We may need to escalate this." },
+    { "anchor": "Claw",       "zone": "Forward", "en": "Here's how we claw this back." }
+  ],
+  "mnemo": "Ты вбегаешь с криком heads up — берегись, и несёшься ahead, вперёд, опережая беду. На тропе snag — коряга, ты цепляешься. Не время sugarcoat, подслащивать: говоришь как есть. Из рук выскальзывает ball, мяч проблемы, ты упустил его из виду. Но buck — фишка ответственности — останавливается у тебя: дальше некуда. Кругом тёмный woods, лес, вы ещё не выбрались. Сигнал нужно escalate — поднять выше, на флагшток. И ты claw, когтями, выцарапываешь ситуацию назад."
+}

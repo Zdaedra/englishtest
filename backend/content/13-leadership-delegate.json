@@ -1,0 +1,20 @@
+{
+  "slug": "leadership-2",
+  "title": "Делегировать",
+  "theme": "Делегирование — передать штурвал, дать полномочия, спросить за результат",
+  "subtitle": "",
+  "section": "leadership",
+  "zones": ["Entrust", "Empower", "Account"],
+  "phrases": [
+    { "anchor": "Reins",       "zone": "Entrust", "en": "I'm handing you the reins." },
+    { "anchor": "Charge",      "zone": "Entrust", "en": "You're in charge of this now." },
+    { "anchor": "Lead",        "zone": "Entrust", "en": "I need you to lead on this." },
+    { "anchor": "Call",        "zone": "Empower", "en": "It's your call from here." },
+    { "anchor": "Back",        "zone": "Empower", "en": "I've got your back on this." },
+    { "anchor": "Green",       "zone": "Empower", "en": "You've got the green light." },
+    { "anchor": "Own",         "zone": "Account", "en": "I need you to own the outcome." },
+    { "anchor": "Accountable", "zone": "Account", "en": "I'll hold you accountable for it." },
+    { "anchor": "Deliver",     "zone": "Account", "en": "I'm counting on you to deliver." }
+  ],
+  "mnemo": "Ты вкладываешь в чужие ладони reins — поводья, всю упряжку. Говоришь: ты теперь in charge, за главного, на капитанском мостике. Просишь lead — вести, идти первым. Решение — твой call, твой свисток. Но я прикрываю back — спину, стою сзади. Зажигаю green — зелёный свет, путь открыт. Теперь ты own — владеешь результатом целиком. И держишь себя accountable — отвечаешь за результат, с тебя спросят. А я верю, что ты сумеешь deliver — донести и положить на стол."
+}

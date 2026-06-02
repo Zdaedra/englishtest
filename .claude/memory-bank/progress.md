@@ -4,6 +4,343 @@
 
 ---
 
+## 2026-06-01 — Карточка батча (BatchHome) редизайн + Design Book (HTML+DESIGN.md) + деплой
+
+- **Запрос 1 (Лёша, со скрином-ориентиром):** переделать экран обзора батча (`/batch/:id`) в новый зелёный
+  Apple-стиль (в тон «Тестам»). **`BatchHome.tsx` переписан** (логика уроков/прогресса не тронута):
+  `.bh-screen` градиент-фон; `.bh-back` пилл; `.bh-cover` hero-обложка (radius 24, object-fit cover);
+  зелёный тег **«Урок N»** где N = позиция батча в пути обучения (тот же flatten, что Learning:
+  `orderedSections`+`prioritySectionSlugs(getProfile())`, батчи oldest-first; `listBatches` добавлен в fetch);
+  `.bh-title`/`.bh-sub`; `.bh-anchors` карточка-цепочка якорей (`flex-wrap`, зелёные `→`, `Fragment`);
+  «ЭТАПЫ УРОКА» + `.bh-lesson` карточки (active=зелёная подсветка+green-ink заголовок, done=зелёный кружок
+  с ✓, locked=opacity .6, зелёный chevron); CTA `.l3-cta` «Начать {активный этап}» + хинт `.l3-hint`.
+  Деплой-бандл `index-BUY7qw45.js`/`index-Fv4qdEh-.css`. (Отступление от макета: done-этапы с ✓, не номером.)
+- **Запрос 2 (Лёша «сделай книгу визуальных документов»):** собран **Design Book** —
+  `frontend/public/design-system.html` (самодостаточный HTML, зеркалит реальные токены `index.css`):
+  11 разделов — принципы, палитра-свотчи, типо-шкала, форма/тени, кнопки/теги, карточки, прогресс,
+  стеклянная навигация (на цветном фоне), 3D-иллюстрация (реальный `/art/lesson3-hero.png`), таблица
+  движения, do/don't. По рекомендации выбран формат **DESIGN.md + хостинг HTML** (не живой роут, не PDF).
+  **`DESIGN.md`** (корень репо) — текстовая выжимка для ИИ-инструментов (точные токены + рецепты компонентов
+  + границы). Хостинг: HTML в `public/` → Vite копирует в `dist/` → доступен на
+  **`https://executive-english.net/design-system.html`** (за cookie-гейтом).
+- **Деплой (Лёша «давай так да»):** build → rsync → пересборка `english_app`. Прод: гейт `/api`→401,
+  `/login`→200; `dist/design-system.html` (30 КБ) и `DESIGN.md` на хосте; `/design-system.html`→303 (гейт), Up. ✅
+
+---
+
+## 2026-06-01 — Урок 3 hero: настоящий 3D-объект через gpt-image-1 (по апруву) + деплой
+
+- **Запрос (Лёша «да, делай»):** заменить SVG-иллюстрацию в hero «Тесты» на настоящий матовый-пластик 3D-объект
+  через `gpt-image-1` (платно — явный апрув получен).
+- **Генерация:** одноразовый Python-скрипт (`/tmp`, удалён после) → OpenAI Images API `gpt-image-1`,
+  `size 1024, quality high, background transparent`. Промпт: matte-plastic зелёный речевой пузырь со словами +
+  карандаш, Apple-style 3D icon, soft shadow, transparent, no text. Ключ из мастер-`.env` (не печатался).
+- **Оптимизация:** Pillow autocrop прозрачных полей → resize до 480px (ретина для ~150px) → optimize PNG.
+  1.46 МБ → **160 КБ**. Сохранён в `frontend/public/art/lesson3-hero.png` (→ Vite копирует в `dist/`, бэкенд
+  отдаёт на `/art/lesson3-hero.png`).
+- **`Lesson3.tsx`:** `Art3D` теперь `<img src="/art/lesson3-hero.png" width=480 height=407>` вместо SVG.
+  `index.css`: `.l3-art img` + лёгкая зелёная `drop-shadow(0 10px 18px rgba(28,140,99,.16))`. SVG-версия удалена.
+- **Проверено (Playwright):** img complete, naturalWidth 480; на скрине hero — премиальный 3D-объект один-в-один
+  со стилем макета, в фирменном зелёном.
+- **Деплой (Лёша «да»):** build (бандл **`index-D6aXbLaM.js` / `index-JwYmchnE.css`**) → rsync → пересборка
+  `english_app`. Прод: ассет `dist/art/lesson3-hero.png` (160 КБ) на хосте, гейт `/api`→401, `/login`→200, Up. ✅
+
+---
+
+## 2026-06-01 — Экран «Тесты» (Урок 3): премиальный редизайн Apple-Music/Fitness+ (зелёный) + деплой
+
+- **Запрос (Лёша, детальное ТЗ + макет):** редизайн экрана Урок 3 «Тесты» в стиле Apple Music/Fitness+ (без
+  музыкальных метафор — тема речи/памяти), **на фирменном зелёном** вместо фиолетового из макета. Много
+  воздуха, крупная типографика, мягкие карточки/тени, glassmorphism только в навигации. Логику 3 этапов сохранить.
+- **`pages/Lesson3.tsx` (только презентация, флоу записи/оценки не тронут):**
+  - Контейнер `.screen l3-screen` (градиентный фон). Хедер `.l3-header` — 2 круглые кнопки 44×44 (`IconBack` +
+    новый `IconMenu`, обе → `/batch/:id`). Hero `.l3-hero`: `.l3-tag` (УРОК 3 зелёным) + `.l3-title` (Тесты 40px) +
+    `.l3-sub` + **`<Art3D/>`** — SVG soft-3D зелёный речевой пузырь со словами + карандаш (`feDropShadow`).
+  - `ExamTrack` переписан: `.l3-track` — круги 40px, активный зелёный с белой цифрой + `.l3-step-play` бейдж,
+    done = зелёный чек, пунктир `.l3-track-line` между; подписи Пересказ/Мнемо-основа/Якорь.
+  - Карточка-предупреждения (`!rec.supported`): красный текст → `.l3-warn` (белая, щит `IconShield` в зелёном
+    кружке, Safari/Chrome зелёным `<b>`, `IconChevron` справа).
+  - `StageIntro` переписан: `.l3-task` (radius 28, иконка-волна `IconWave` + лейбл зелёным капсом, body 18px,
+    **`<WaveDeco/>`** — декоративная зелёная аудио-волна низкой прозрачности внизу) + `.l3-cta` (зелёный градиент
+    64px, glow-анимация) + `.l3-hint` (`IconHeadphones` + текст).
+  - `icons.tsx`: добавлены `IconMenu`, `IconShield`, `IconHeadphones`.
+- **`index.css`:** большой блок `.l3-*` (фон-градиент `#FCFCFC→#F4F7F4`, хедер-кружки, hero, track с play-бейджем,
+  warn-card, task-card + wave bleed, CTA `linear-gradient(135deg,#27AB7B,#1C8C63)` + `@keyframes l3-glow`,
+  hint, press 97%). Зелёный = `var(--map-green)` #1C8C63. Другие экраны/глобальные классы не тронуты.
+- **Проверено (Playwright, stub getBatch):** экран рендерится, hero+title+3D, track активный зелёный, warn-card
+  (форсировал `MediaRecorder=undefined`), task-card с волной, зелёная CTA, нав-капсула. На скринах — точное
+  соответствие ТЗ в зелёном.
+- **Деплой (Лёша «да»):** build (бандл **`index-SEJ4cZ7R.js` / `index-CRBSjDze.css`**) → rsync → пересборка
+  `english_app`. Прод: гейт `/api`→401, `/login`→200, `index.html`→ новый бандл, Up. Backend не менялся. ✅
+- **Открыто:** 3D-иллюстрация пока SVG (soft-3D), НЕ фотореалистичный рендер. Лёше предложен апгрейд через
+  платный `gpt-image-1` по явному апруву — отложено до его решения.
+
+---
+
+## 2026-06-01 — Нав-полировка: тоньше (Apple-Music) + прозрачнее стекло + медленнее pill + лупа>бар + деплой
+
+- **4 правки Лёши (frontend-only, `App.tsx`+`index.css`):**
+  1. **Медленнее переход pill между табами:** `.nav-pill` transition `.42s → .6s`; gel-keyframes `.44 → .6s`.
+  2. **Больше «стекла»:** капсула и `.nav-search` прозрачнее — bg `rgba(255,255,255,.82) → .58`, blur `22 → 26`,
+     saturate `180 → 190` → сквозь бар просвечивает frosted-контент. `.nav-pill::before` тоже прозрачнее
+     (gradient `.96→.66` → `.8→.4`) + `brightness(1.06)`, усилены блик (`::after` .85→.95, inset-блик до 1.0)
+     и хром-кайма (.22/.20 → .28/.26). На iOS это потолок (настоящее backdrop-преломление недоступно).
+  3. **Лупа крупнее бара при нажатии:** search onClick — кнопка swell peak `1.12 → 1.2` (56×1.2≈67 > 56 капсула),
+     иконка `lensPop` peak `1.32 → 1.55`.
+  4. **Размер как в Apple Music (был крупный):** капсула height `70 → 56`, radius `35 → 28`; `.nav-search` `70 → 56`;
+     pill `::before` inset `6 → 5`, radius `29 → 23`; `::after` уменьшен; tab font `11 → 10`, icon `23 → 21`.
+     Мини-плеер bottom `safe+94 → safe+80`; `.screen` низ `safe+116 → safe+100`.
+- **Проверено (Playwright):** капсула 56px / 75% vw / search 56×56; pill transition `0.6s`; капсула bg
+  `rgba(255,255,255,.58)` blur26; pill blur14 saturate2.1 brightness1.06. На скрине сквозь бар видны размытые
+  карточки (frosted glass), активная иконка зелёная на глянцевом pill.
+- **Деплой (Лёша «Да»):** build (бандл **`index-CnmOqCE7.js` / `index-B2EzOhD8.css`**) → rsync → пересборка
+  `english_app`. Прод: гейт `/api`→401, `/login`→200, `index.html`→ новый бандл, Up. Backend не менялся. ✅
+- **Зафиксировано Лёше:** настоящий Liquid Glass (преломление фона) в вебе-PWA на iOS невозможен — только
+  нативное приложение (Swift/UIKit, системный материал). Текущее — максимум CSS-имитации.
+
+---
+
+## 2026-06-01 — Поиск двумя блоками (батчи+фразы) + видимая линза-«поп» + drag-жест по бару + деплой
+
+- **Три запроса Лёши подряд:**
+  1. Press-эффект не виден на реальном тапе («ни линзы, ни нажатия, одинаковый размер»). Спросил —
+     это ограничение Safari (тогда оставить до app) или реализуемо?
+  2. «Тянем жест выделения за пальцем» по нижнему бару — да, делаем.
+  3. Поиск должен искать по батчам И по отдельным фразам — двумя блоками.
+- **Фикс press/линзы (App.tsx + index.css):** старый press зависел от УДЕРЖАНИЯ (pointerdown→up), при
+  быстром тапе пружина .3с не успевала → невидимо. Переделал: (а) активная иконка теперь постоянно
+  крупнее — `.nav-tab.active svg { transform: scale(1.18) }` (было 1.05, незаметно) — «линза сидит на
+  выбранном»; (б) **one-shot «поп» через Web Animations API на `click`** (`lensPop`: иконка 1→1.5→1.18,
+  back-out, 440мс) — виден при ЛЮБОМ касании; search-кнопка тоже (иконка 1→1.32→1 + сам круг 1→1.12→1).
+  Удалены `.pressing`-классы/pointer-press. **Вывод (важно):** линза/поп реализуемы в Safari (была моя
+  ошибка с «удержанием»); НЕ реализуемо в Safari только преломление фона (нативный Metal).
+- **Drag-жест «тянуть выделение за пальцем» (App.tsx + index.css):** на `.nav-capsule` — pointer-DnD.
+  `posFromX(clientX)` → дробная позиция 0..2 (`clamp(f*3−0.5,0,2)`, т.к. центры колонок на 1/6,3/6,5/6).
+  Во время drag: `--active`=дробная (pill едет за пальцем 1:1, `transition .09s` через `.dragging`),
+  зелёная линза (`shownActive=round(dragPos)`) перескакивает на ближайший таб; на `pointerup` → nav к
+  ближайшему (батчится с `setDragging(false)` → без мигания). `setPointerCapture` в try/catch,
+  `touch-action:none` на капсуле (не крадётся скроллом). Тап не конфликтует: onClick проверяет
+  `dragged.current` (drag уже навигировал → suppress), а каждый pointerdown сбрасывает флаг.
+- **Поиск по фразам (backend + api.ts + Library.tsx + index.css):**
+  - **`batches.py`:** `GET /api/batches/phrases` — плоский индекс всех фраз непустых батчей
+    (`{phrase_id,batch_id,batch_title,anchor,phrase_en,gloss_ru,order_index}`). Объявлен ДО `/{batch_id}`
+    (литерал выигрывает матч). Read-only.
+  - **`api.ts`:** тип `PhraseSearchItem` + `listPhrases()`.
+  - **`Library.tsx`:** фразы грузятся **лениво** (1 запрос при первом открытии поиска, `phrases:null→[]`).
+    `matchedBatches` (title/preview/theme/anchors) + `matchedPhrases` (phrase_en/anchor/gloss_ru/batch_title,
+    slice 50). Два блока: «Батчи · N» (грид) + «Фразы · N» (`.srch-phrase`: phrase_en крупно, `.sp-anchor`
+    бронзой + батч). Тап фразы → её батч. Пусто в обоих → «Ничего не найдено».
+- **Проверено (Playwright):** «cut»→Фразы·2; «несог»→Батчи·1+Фразы·2 (порядок верный, anchor `rgb(154,123,79)`);
+  active icon `scale(1.18)`, click→анимация running; drag: `--active` 0→1→2 плавно, линза следует, release→nav.
+- **Деплой (Лёша «Да»):** build (бандл **`index-DGyK2Kig.js` / `index-DR6N1sal.css`**) → rsync (frontend+backend)
+  → пересборка `english_app`. Прод: роут `/api/batches/phrases` зарегистрирован (отвечает 401, не 404),
+  `index.html`→ новый бандл, гейт цел, Up. ✅
+
+---
+
+## 2026-06-01 — Нав: зелёный акцент + Liquid-Glass press-эффект (исследование Apple iOS 26) + деплой
+
+- **Запрос (Лёша, со скрином Apple Music Radio):** (1) активная иконка должна быть нашим фирменным
+  **зелёным** (как «0/3»-бейдж/путь), а не серо-графит; (2) хочется настоящий **Apple Liquid Glass** —
+  стекло, преломляющее фон по краям; (3) press-эффект: «кнопка увеличивается, ходит за рукой, увеличивает
+  иконку как жидкое стекло». Просил поискать в интернете / консилиум — «модный эффект».
+- **Веб-исследование (WebSearch+WebFetch, источники в ответе Лёше):** Liquid Glass = язык дизайна iOS 26
+  (WWDC июнь 2025). Настоящее преломление фона в вебе = `backdrop-filter: url(#svg)` + SVG
+  `feDisplacementMap` — **Chromium-only**; в **Safari/iOS НЕ работает** (баг WebKit #245510, подтв. caniuse).
+  Вывод: на iOS-PWA истинное преломление фона средствами CSS невозможно (у Apple — нативный Metal).
+  Консилиум не запускал — вопрос фактический, однозначно решён.
+- **Реализовано (iOS-достижимое, всё в App.tsx + index.css):**
+  - **Зелёный акцент:** `.nav-tab.active { color: var(--map-green) }` (#1C8C63), вместо `#2B2118`.
+  - **Усиленное стекло pill:** `::after` — зеркальный блик-купол сверху; `::before` box-shadow дополнен
+    **хроматической каймой** (`inset 1.5px 0 rgba(120,190,255,.22)` слева + `inset -1.5px 0 rgba(255,150,205,.20)`
+    справа) — имитация преломляющего ободка.
+  - **Press-эффект «жидкой линзы»:** `FloatingNav` получил `pressed`-state через **pointer-события**
+    (`onPointerDown/Up/Cancel/Leave` — надёжнее `:active` на iOS). `.nav-tab.pressing` → таб ×1.06,
+    иконка ×1.24; `.nav-search.pressing` → кнопка ×1.1, иконка ×1.2; пружинные transitions.
+  - **Желейное перетекание:** при смене активного таба — keyframes `nav-gel-a/-b` (alternate для рестарта)
+    на `.nav-pill::before`: `scaleX 1.16 / scaleY .9 → 1` поверх пружинного `translateX`. `moveTick` в
+    `useEffect([activeIndex])` детектит смену (skip mount).
+  - Мелочи: `-webkit-tap-highlight-color: transparent`, `touch-action: manipulation`, `will-change:transform`,
+    `.nav-tab.active svg{scale(1.05)}`, у `.nav-search` добавлен inset-блик + grow-on-press (был shrink `:active .94`).
+- **Проверено (Playwright 390×844 + computed + скрины):** active color `rgb(28,140,99)`=#1C8C63;
+  press: tab `matrix(1.06)`/icon `1.24`, search `1.1`/icon `1.2`; `::after` есть, хром-кайма в box-shadow.
+  На скрине — зелёная активная иконка на стеклянном pill + раздутая кнопка поиска.
+- **Деплой (Лёша «Да»):** build (бандл **`index-Djb4qgB1.js` / `index-Cj73imAe.css`**) → rsync →
+  пересборка только `english_app`. Прод: `index.html`→ новый бандл, гейт `/api`→401, `/login`→200, Up.
+  Backend не менялся. ✅ ⚠️ Истинное backdrop-преломление (SVG feDisplacementMap) можно добавить как
+  enhancement ТОЛЬКО для Chromium (десктоп/Android) — отложено, iOS не поддерживает.
+
+---
+
+## 2026-06-01 — Активный таб нав-капсулы → «liquid glass» pill + деплой
+
+- **Запрос (Лёша):** форма нав уже правильная, но активная вкладка выглядит как плоская светло-серая
+  заливка, а не как Apple liquid glass. Нужно: активный pill = **отдельный стеклянный объект внутри
+  капсулы** (градиент-глянец, верхний внутренний блик, лёгкая прозрачность, тень вниз, чуть заметный
+  border), активные иконка+текст — тёплый премиум-тёмный (не серый), скольжение сохранить.
+- **`index.css` (только nav):**
+  - `.nav-pill` разделён на 2 слоя: **внешний** — только позиционирование (`width:1/3`,
+    `translateX(var(--active)*100%)`, `top/bottom:0`), **внутренний** `.nav-pill::before` — само стекло,
+    `inset:6px` → видимый размер **58px**, `border-radius:29px`. Так inset больше не ломает выравнивание
+    скольжения (раньше был хак с прозрачными бордерами + `background-clip`).
+  - Стекло: `linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.66))`,
+    `backdrop-filter: blur(24px) saturate(180%)`, `border:1px solid rgba(255,255,255,.85)`,
+    `box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.04), 0 8px 22px rgba(0,0,0,.12)`.
+  - С `.nav-capsule` снят **`overflow:hidden`** (иначе drop-shadow pill обрезался). Стекло не вылезает за
+    капсулу: радиусы вложены ровно (**35 = 29 + 6**), corners концентричны.
+  - Цвета: активный таб `#2B2118` (тёплый графит-браун, `font-weight:680`), неактивные `#8E8E93`,
+    иконка поиска `#111`. (Раньше active=`var(--text)`, inactive=`var(--faint)` — слишком серо.)
+- **Проверено (Playwright 390×844 + computed-стили + скриншот):** `::before` имеет gradient/backdrop/border/
+  3-частную тень, inset 6px → 58px, radius 29; капсула `overflow:visible`; active color `rgb(43,33,24)`,
+  inactive `rgb(142,142,147)`, search `rgb(17,17,17)`. На скрине pill читается как приподнятый белый
+  стеклянный объект, не плоская заливка. Скольжение translateX не трогалось → сохранено.
+- **Деплой (Лёша «аппрув»):** build (бандл **`index-CTpalwlr.js` / `index-J6PFrACi.css`**) → rsync →
+  пересборка только `english_app`. Прод: `index.html`→ новый бандл, гейт `/api`→401, `/login`→200, Up.
+  Backend не менялся. ✅
+
+---
+
+## 2026-06-01 — Нижняя навигация → плавающая «Apple Music» + поиск по библиотеке + деплой
+
+- **Запрос (Лёша, ТЗ детально):** заменить ТОЛЬКО нижний таб-бар (он «тяжёлый, как стандартный
+  Flutter/Android») на Apple-Music-паттерн: **плавающая стеклянная капсула** (Library/Practice/Profile)
+  + **отдельная круглая плавающая кнопка поиска** справа. Glassmorphism, мягкие тени, без рамок/сегментов,
+  активное состояние — подчёркнуто-сдержанное (тёмная иконка+текст + лёгкая серая таблетка-подложка,
+  пружинно скользит между табами), без ярких цветов/градиентов/свечения. Остальное приложение не трогать.
+  Уточнения в ходе: подписи **по-русски** (консистентность с UI), кнопка поиска **раскрывает рабочую
+  строку поиска** по библиотеке (Лёша: «делай полноценный поиск»).
+- **`App.tsx`:** `BottomNav` → **`FloatingNav`**. Контейнер `.nav-dock` (fixed, click-through,
+  `pointer-events:none`, дети — auto). Капсула `.nav-capsule` (3 × `.nav-tab`) + отдельная `.nav-search`.
+  Активный индекс → `--active` (0/1/2) рулит translateX единственной таблетки `.nav-pill`. Маппинг:
+  «Библиотека»→`/` (вкл. `/batch`,`/play`,`/settings`,`/import`), «Практика»→`/learn` (`IconWave`),
+  «Профиль»→`/profile` (`IconProfile`). **Таб «Playback» убран** — плеер доступен через мини-плеер
+  (как в Apple Music). Кнопка поиска → `nav("/", { state:{ focusSearch: <token> } })`.
+- **Поиск в `Library.tsx`:** состояние `searchOpen`/`q`; эффект на `loc.key` читает `state.focusSearch`
+  → открывает строку + `requestAnimationFrame`-фокус. `matches` фильтрует по title/preview/subtitle/theme/
+  anchors (case-insensitive). При активном поиске прячется Current focus + полный грид, показывается
+  «Найдено · N» / «Ничего не найдено»; «Отмена» закрывает. `.lib-search`/`.search-field`/`.search-input`
+  (font-size 16px — нет iOS-зума)/`.search-clear`/`.search-cancel`.
+- **`icons.tsx`:** добавлен `IconSearch` (magnifyingglass). `IconSections` остался (unused export, безвреден).
+- **`index.css`:** блок `.bottom-nav`/`.nav-item` заменён на `.nav-dock`/`.nav-capsule`/`.nav-pill`/
+  `.nav-tab`/`.nav-search` + `.lib-search` и пр. Таблетка: `width:calc(100%/3)`, прозрачные L/R-бордеры
+  8px + `background-clip:padding-box` (визуальный inset без слома `translateX(var(--active)*100%)`).
+  Мини-плеер опущен над капсулой (`bottom: safe + 94px`), `.screen` низ → `calc(safe + 116px)`.
+- **Проверено вживую (Playwright 390×844, mock-данные через stub fetch):** капсула 280px=**72%** vw
+  (ТЗ 72-78), высота **70** (68-72), радиус **35** (34-36); кнопка **70×70** (68-72); зазор 12, поля 14/14,
+  одна вертикаль; стекло `rgba(255,255,255,.82)` + `blur(22px)`, тень `0 12 36 rgba(.10)`, **border 0**.
+  Таблетка скользит: Library→`translateX(0)`, Profile→`translateX(186.7)` = ровно 2 колонки; подпись
+  активного меняется. Поиск: «несог»→1 рез. «Несогласие» (focus скрыт), «zzzzz»→«Ничего не найдено»,
+  «Отмена»→4 альбома обратно.
+- **Деплой (Лёша «Деплой»):** build (бандл **`index-CD23gvtx.js` / `index-ClOvV7-I.css`**) → rsync →
+  пересборка только `english_app`. Прод: `index.html`→ новый бандл, гейт `/api`→401, `/login`→200,
+  контейнер Up. Backend не менялся (только фронт). ✅ ⚠️ iPhone: авто-фокус строки поиска может не поднять
+  клавиатуру сразу (фокус вне исходного жеста) — строка раскрывается, по тапу печатает; + возможен 1 reload
+  PWA для сброса оболочки.
+
+---
+
+## 2026-06-01 — Урок 3 «Тесты»: финал переделан в 3-этапный экзамен + деплой
+
+- **Запрос (Лёша):** вместо одного random-stop+пересказ — **три строго последовательных этапа**:
+  1) **Полный пересказ истории** (как раньше экзамен) — назвать все якоря по порядку;
+  2) **По мнемо-основе** — история играет и замирает НА КАЖДОМ якоре → «стоп» → назвать фразу этого якоря;
+  3) **Фраза → якорь** — звучит англ. фраза, ученик называет её якорь (ключевое слово).
+  Проход каждого = **средний балл ≥8/10 (=80%)**, и **каждое слово произнесено ≥2 раз** в рамках этапа.
+  Возле каждого — **процент** + «Пересдать» (<80%) либо «Дальше». Все три ≥80% → батч закрыт, следующий
+  на пути открыт. Порядок строгий 1→2→3 (следующий этап открывается только после сдачи предыдущего).
+- **Backend:**
+  - `scoring.py` → **`score_anchor(anchor, user_said)`**: скоринг по строковому сходству (`SequenceMatcher`
+    лучшего токена/всей реплики, ≥0.85 → 10), **без LLM** и **без правила `_MIN_TOKENS=2`** (одно слово —
+    это и есть весь ответ; phrase-гейт занулил бы его).
+  - `routers/training.py` → новый **`POST /api/training/score-anchor`**: STT(en) → `score_anchor` →
+    пишет `PhraseAttempt` (для дневного лимита/истории), но **НЕ вызывает `_apply_rollup`** (узнавание
+    якоря слабее воспроизведения фразы — не должно завышать per-phrase EWMA, на котором живут дрилл/ротация).
+- **Frontend:**
+  - `api.ts` → тип `AnchorScore` + метод `scoreAnchor(phraseId, blob, filename, latencyMs?)`.
+  - `lib/progress.ts` → флаги `l3_s1` (этап 1 сдан), `l3_s2` (этап 2 сдан) рядом с `l3_passed`.
+  - `pages/Lesson3.tsx` — **полный реврайт**. Машина состояний `stage 1|2|3` × `running/verdict/allDone`.
+    `scoresRef` (рефом, чтобы переживать audio-колбэки) — источник правды для среднего этапа;
+    `finishStage` = `avg≥8 ? pass : fail`, `pct = round(avg*10)`. Этап 1: 2 пересказа (`scoreSequence`).
+    Этап 2: `anchorSegments(plan)` — стопы на ВСЕХ якорях, **2 полных прохода** (replay через
+    `replaySignal`-эффект, т.к. колбэк `onStoryEnded` объявлен до `mnemo`), «Пропустить» = 0,
+    `stageRef`-гард в `onTick/onStoryEnded`. Перезапуск этапа 2 — `seek(0)+resume` (не `play("full")`,
+    т.к. при уже загруженном layout `play` лишь тогглит). Этап 3: порядок `[...sorted, ...sorted]`
+    (каждая фраза 2×), авто-проигрыш англ.фразы по `lastPlayedRef`-гарду, `scoreAnchor`. Степпер
+    `ExamTrack` сверху; прогресс возобновляется на первом несданном этапе (`getProgress`). Старый
+    `sampleSorted`/`Stage="ready|running|exam"` удалён.
+  - `index.css` → `.exam-track/.exam-step(.on/.done)/.exam-dot/.exam-name`, `.verdict-pct(.ok/.no)`.
+- **Деплой (одобрено «Деплой сейчас»):** `npm run build` (бандл **`index-DvA5O4lb.js`** / `index-DziEdFDM.css`)
+  → rsync → пересборка ТОЛЬКО `english_app` (Recreated/Started, чужие контейнеры не тронуты). Проверено на
+  проде: маршрут `/api/training/score-anchor` зарегистрирован в контейнере (рядом со `score-phrase`/`-sequence`),
+  `index.html`→ новый бандл, гейт `/login`→200, `/api/batches`→401, `/api/training/score-anchor`→401 (не 404),
+  старт без ошибок. ✅ ⚠️ iPhone PWA — возможен 1 reload для сброса старой оболочки.
+
+---
+
+## 2026-06-01 — Фикс «Проверь фразы» (Урок 2): убрал авто-диктовку фразы в тесте
+
+- **Симптом (Лёша):** в секции «4 · Проверь фразы» жмёшь «Начать проверку» — и приложение СРАЗУ
+  диктует целую английскую фразу вслух, а не даёт якорь. Тест выдаёт собственный ответ → проверки
+  по сути нет. Надо: показать только якорь и ждать, пока ученик назовёт фразу.
+- **Корень:** в `pages/Lesson2.tsx` был `useEffect`, который при входе на каждую карточку дрилла
+  авто-проигрывал `player.playPhrase(current.phrase_id)` как «подсказку на слух» (задумано
+  2026-05-31 как shadow-практика «услышал→повтори»). Для финальной проверки это неверно.
+- **Фикс:** удалён авто-play `useEffect` + связанный `lastHintRef` (и неиспользуемый импорт `useRef`).
+  Теперь видна ТОЛЬКО подсказка-якорь (`<p className="train-prompt">{current.anchor}</p>`), ученик
+  называет фразу по памяти → `scorePhrase`. Фраза звучит лишь по явному тапу: кнопка «Прослушать
+  ещё раз» переименована в **«Подсказать фразу»**. Текст старт-экрана обновлён («Покажу якорь —
+  назови фразу вслух по памяти… Не вспомнил — нажми „Подсказать фразу"»). Урок 3 не трогал — там
+  механика другая и корректная (история замирает НА якоре, фразу не диктует).
+- **Деплой (одобрено «Деплой сейчас»):** `npm run build` (бандл `index-CO2kef8u.js`) → rsync →
+  пересборка ТОЛЬКО `english_app` (Recreated/Started, чужие не тронуты). Проверено: контейнер Up,
+  `index.html`→`index-CO2kef8u.js`, гейт `/login`→200, `/api/batches`→401. ✅ ⚠️ iPhone PWA —
+  возможен 1 reload для сброса старой оболочки.
+
+---
+
+## 2026-06-01 — Редизайн пути обучения «Обучение» (карта-дорога как референс) + деплой
+
+- **Контекст:** прошлой сессией прогнан `/consilium` (Opus+GPT+Claude) — сравнили мой прогресс-путь
+  (`IMG_3128.PNG`: узлы сбоку от прямого пунктирного центрального хребта) с присланным референсом
+  (`IMG_3129.PNG` «Communication Games»: узлы нанизаны на плавную связную линию-дорогу). Синтез: сделать
+  **спокойную премиальную цельную карту-дорогу**, явно **БЕЗ геймификации** (никаких Duolingo
+  очков/стриков/жизней — Лёшина жёсткая граница). Лёша: «поехали, делай сейчас».
+- **`MapTrack` (в `pages/Learning.tsx`) переписан** с uniform-`frac` reveal на **measure-based
+  ортогональную SVG-дорогу с точечной посегментной заливкой**:
+  - `useLayoutEffect` + `getBoundingClientRect` каждого узла относительно корня `.map-nodes`; пере-замер
+    по `ResizeObserver` + `document.fonts.ready` + `img.onload`, планируется через rAF.
+  - Путь = округлые ОРТОГОНАЛЬНЫЕ колена (metro-style L-колена, Q-скругления, R=16), а не кривые Безье.
+  - Сигнатура `MapTrack({ done, sig })` (было `{ frac, sig }`); state `{ full, done }` (было один `d`).
+    `done` = число первых ЦЕЛЫХ пройденных сегментов (`reached` из `stateOf !== "locked"`), зелёная
+    заливка = `segs.slice(0, done).join(" ")` — точно доходит до центра активного узла (а не
+    усреднённая доля `pathLength`).
+  - **Фикс бага недолёта:** при uniform `frac=0.5` зелёный конец оказывался ВЫШЕ верха активного узла
+    (первый сегмент длиннее из-за «пузыря» активного узла). Посегментная заливка решила — проверено
+    математически (`getPointAtLength`): зелёный кончается ровно на center-x активного узла, 2px под
+    верхом.
+  - Анимация рисования теперь чисто CSS: `@keyframes map-draw` (stroke-dashoffset 1→0, `pathLength={1}`,
+    `stroke-dasharray:1`) вместо JS `transition` на dashoffset.
+- **`index.css`:** `.map-track-done` → `animation: map-draw .6s var(--spring) both`; locked-узлы сделаны
+  чётче-грейскейл (opacity .82, `grayscale(1) saturate(.4) brightness(1.01)`, overlay .16, badge .5 —
+  было мутнее). Верхний прогресс-бар убран → подпись «Пройдено N из M». FAB «Продолжить» (чёрный
+  `.map-bubble`) scroll-aware. **Геймификации нет** (Daily-Goal/Streak-бар референса намеренно НЕ
+  реплицирован).
+- **Верификация локально:** vite dev на свежем origin (без залипшего SW), реальные данные прод-бэкенда
+  через proxy, localStorage (`ee-profile`/`ee-progress-*`) посеян через Chrome MCP `javascript_tool`,
+  навигация на хеш-роут `/#/learn` (роутер `createHashRouter` → `/learn` рендерил Library, не карту).
+  Геометрия зелёной заливки подтверждена `path.getPointAtLength` + `getBBox`.
+- **Деплой (одобрено Лёшей «Деплой сейчас»):** `npm run build` → rsync `frontend/dist` на Hetzner →
+  пересборка ТОЛЬКО `english_app` (`docker compose -p english -f docker-compose.deploy.yml up -d --build
+  english_app`, чужие контейнеры не тронуты, exit 0, Recreated/Started). Проверено: `english_app` Up,
+  в контейнере `/srv/frontend/dist/index.html` ссылается на мой свежий бандл `index-D324m8LI.js` +
+  `index-ZXUakjat.css`, `/login`→200 (cookie-гейт цел). Локальные vite-серверы убиты, temp удалены,
+  Chrome-таб закрыт. ✅
+- **⚠️ Для Лёши:** на iPhone PWA держит СТАРУЮ закэшенную оболочку — autoUpdate подхватит свежак за
+  1-2 загрузки, но может потребоваться один полный reload (или «Clear Website Data») чтобы увидеть новую
+  карту. URL: https://executive-english.net (вкладка «Обучение»).
+
+---
+
 ## 2026-05-31 — Урок 2: вернул плеер шаффл-луп + переделал проверку фраз
 
 - **Запрос Лёши (по скриншотам с телефона):** (а) «у тебя пропал классный плеер… верни сюда —

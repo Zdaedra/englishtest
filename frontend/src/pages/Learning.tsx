@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { api, BatchListItem, BatchMastery } from "../api";
@@ -9,6 +9,125 @@ import { BatchCover } from "../ui/Art";
 import { IconArrowUp, IconCheck, IconRefresh, IconWave } from "../ui/icons";
 
 type NodeState = "completed" | "active" | "locked";
+
+// The road. A measured SVG overlay that threads the section's nodes with rounded
+// orthogonal connectors (metro-style elbows), reproducing the reference's
+// serpentine where the line is a spine the nodes are strung onto — not a central
+// rail they float beside. It is measure-based, not fixed-pitch, so it survives
+// variable row heights (the active node carries a bubble; Russian labels wrap),
+// and it re-measures on resize, web-font load and cover-image load so the road
+// never drifts after async layout shifts. `frac` paints the travelled portion
+// green; everything ahead stays a calm light gray.
+function MapTrack({ done, sig }: { done: number; sig: string }) {
+  const ref = useRef<SVGSVGElement | null>(null);
+  const [paths, setPaths] = useState<{ full: string; done: string }>({
+    full: "",
+    done: "",
+  });
+  const [box, setBox] = useState({ w: 0, h: 0 });
+
+  useLayoutEffect(() => {
+    const svg = ref.current;
+    const root = svg?.parentElement as HTMLElement | null | undefined;
+    if (!root) return;
+
+    let raf = 0;
+    const measure = () => {
+      const rootRect = root.getBoundingClientRect();
+      const pts = Array.from(
+        root.querySelectorAll<HTMLElement>(".mnode")
+      ).map((el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          x: r.left - rootRect.left + r.width / 2,
+          top: r.top - rootRect.top,
+          bottom: r.bottom - rootRect.top,
+        };
+      });
+      setBox((prev) => {
+        const next = { w: rootRect.width, h: root.scrollHeight };
+        return prev.w === next.w && prev.h === next.h ? prev : next;
+      });
+      if (pts.length < 2) {
+        setPaths((p) => (p.full === "" && p.done === "" ? p : { full: "", done: "" }));
+        return;
+      }
+      // One rounded-orthogonal elbow per adjacent pair: exit the upper node's
+      // bottom centre, corner to a short horizontal run that clears its label,
+      // then a long drop into the lower node's top centre. Each segment is its own
+      // subpath string so the "travelled" green can cover an EXACT whole number of
+      // completed segments — it lands precisely on the active node rather than at a
+      // uniform length-fraction that drifts when row heights differ (the active
+      // node carries a taller bubble).
+      const R = 16;
+      const f = (v: number) => v.toFixed(1);
+      const segs = pts.slice(0, -1).map((p, i) => {
+        const n = pts[i + 1];
+        const dir = n.x >= p.x ? 1 : -1;
+        const y1 = p.bottom - 2;
+        const runY = y1 + R;
+        const y2 = n.top + 2;
+        return (
+          `M ${f(p.x)} ${f(y1)} ` +
+          `Q ${f(p.x)} ${f(runY)} ${f(p.x + dir * R)} ${f(runY)} ` +
+          `L ${f(n.x - dir * R)} ${f(runY)} ` +
+          `Q ${f(n.x)} ${f(runY)} ${f(n.x)} ${f(runY + R)} ` +
+          `L ${f(n.x)} ${f(y2)}`
+        );
+      });
+      const full = segs.join(" ");
+      const doneStr = segs.slice(0, Math.max(0, done)).join(" ");
+      setPaths((prev) =>
+        prev.full === full && prev.done === doneStr ? prev : { full, done: doneStr }
+      );
+    };
+    const schedule = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(measure);
+    };
+
+    measure();
+    const ro = new ResizeObserver(schedule);
+    ro.observe(root);
+    const imgs = Array.from(root.querySelectorAll("img"));
+    imgs.forEach((img) => {
+      if (!(img as HTMLImageElement).complete)
+        img.addEventListener("load", schedule);
+    });
+    const fonts = (document as Document & { fonts?: { ready?: Promise<unknown> } })
+      .fonts;
+    let alive = true;
+    fonts?.ready?.then(() => alive && schedule());
+
+    return () => {
+      alive = false;
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      imgs.forEach((img) => img.removeEventListener("load", schedule));
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sig]);
+
+  return (
+    <svg
+      ref={ref}
+      className="map-track"
+      width={box.w}
+      height={box.h}
+      viewBox={`0 0 ${box.w} ${box.h}`}
+      aria-hidden="true"
+    >
+      {paths.full && <path className="map-track-bg" d={paths.full} />}
+      {paths.done && (
+        <path
+          className="map-track-done"
+          d={paths.done}
+          pathLength={1}
+        />
+      )}
+    </svg>
+  );
+}
 
 // Adaptive review ("Закрепление"): a CLOSED batch resurfaces when recall drifts
 // below the pass bar or the material goes cold. It never re-locks — the node stays
@@ -117,6 +236,16 @@ export default function Learning() {
     activeRef.current?.scrollIntoView({ block: "center" });
   }, [activeId, total]);
 
+  // The jump FAB is a utility, not décor — it only appears once the learner has
+  // scrolled away from the top, then quietly offers a ride back to the active node.
+  const [showFab, setShowFab] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShowFab(window.scrollY > 260);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const jumpToActive = () =>
     activeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
 
@@ -129,16 +258,10 @@ export default function Learning() {
       <div className="screen-head">
         <h1 className="app-title">Обучение</h1>
         <p className="app-sub">Твоя карта навыков — узел за узлом.</p>
+        {total > 0 && (
+          <p className="path-meta">Пройдено {doneCount} из {total}</p>
+        )}
       </div>
-
-      {total > 0 && (
-        <div className="path-progress">
-          <div className="pp-bar">
-            <span style={{ width: `${total ? (doneCount / total) * 100 : 0}%` }} />
-          </div>
-          <div className="pp-meta">Закрыто {doneCount} из {total}</div>
-        </div>
-      )}
 
       {dueList.length > 0 && (
         <div className="review-block">
@@ -173,6 +296,15 @@ export default function Learning() {
       <div className="map">
         {chapters.map((c) => {
           const cDone = c.items.filter((b) => closed(b.id)).length;
+          // How far the road is travelled in this section: up to the last node
+          // that's been reached (completed or active). `reached` is that node's
+          // index, which also equals the count of connector segments leading into
+          // it — so the green fills exactly that many whole segments and lands on
+          // the active node.
+          let reached = -1;
+          c.items.forEach((b, i) => {
+            if (stateOf(b.id) !== "locked") reached = i;
+          });
           return (
             <div className="map-chapter" key={c.section.slug}>
               <div className="topic-header">
@@ -184,6 +316,10 @@ export default function Learning() {
               </div>
 
               <div className="map-nodes">
+                <MapTrack
+                  done={reached}
+                  sig={`${c.items.length}|${reached}|${activeId ?? -1}`}
+                />
                 {c.items.map((b) => {
                   gi += 1;
                   const st = stateOf(b.id);
@@ -234,9 +370,10 @@ export default function Learning() {
           residual transform from its entry animation, which would otherwise trap a
           position:fixed child inside the screen instead of the viewport. */}
       {activeId !== null &&
+        showFab &&
         createPortal(
           <button className="map-fab" onClick={jumpToActive} aria-label="К текущему узлу">
-            <IconArrowUp size={26} />
+            <IconArrowUp size={22} />
           </button>,
           document.body
         )}

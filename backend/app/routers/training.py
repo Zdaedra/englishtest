@@ -85,6 +85,32 @@ async def score_phrase(audio: UploadFile = File(...), phrase_id: int = Form(...)
             "avg_score": p.avg_score, "attempts": p.attempts}
 
 
+@router.post("/score-anchor")
+async def score_anchor(audio: UploadFile = File(...), phrase_id: int = Form(...),
+                       latency_ms: int | None = Form(None),
+                       session: Session = Depends(get_session)):
+    """Test C (Lesson 3 stage 3): the app speaks the English phrase, the learner
+    names its single anchor keyword. We persist the attempt (for the daily cap and
+    history) but deliberately do NOT roll it into the per-phrase EWMA — naming the
+    keyword is a weaker signal than reproducing the whole phrase, so it must not
+    inflate the phrase mastery the drills/rotation depend on."""
+    p = session.get(models.Phrase, phrase_id)
+    if not p:
+        raise HTTPException(404, "Phrase not found")
+    _check_rate(session)
+    raw = await _read_audio(audio)
+    transcript = stt.transcribe(raw, filename=audio.filename or "clip.webm", language="en")
+    result = scoring.score_anchor(p.anchor, transcript)
+    score = int(result["score"])
+
+    session.add(models.PhraseAttempt(phrase_id=phrase_id, score=score,
+                                     transcript=transcript, via=result["via"],
+                                     latency_ms=latency_ms))
+    session.commit()
+    return {"phrase_id": phrase_id, "anchor": p.anchor, "transcript": transcript,
+            "score": score, "correct_anchor": p.anchor, "via": result["via"]}
+
+
 @router.post("/score-sequence")
 async def score_sequence(audio: UploadFile = File(...), batch_id: int = Form(...),
                          latency_ms: int | None = Form(None),

@@ -32,6 +32,10 @@ export type SequenceScore = {
   batch_id: number; transcript: string; score: number;
   missed_anchors: string[]; order_ok: boolean; passed: boolean; via: string;
 };
+export type AnchorScore = {
+  phrase_id: number; anchor: string; transcript: string; score: number;
+  correct_anchor: string; via: string;
+};
 export type RotationItem = {
   phrase_id: number; anchor: string; order_index: number;
   avg_score: number | null; attempts: number; last_score: number | null;
@@ -39,6 +43,10 @@ export type RotationItem = {
 export type BatchMastery = {
   batch_id: number; avg_score: number | null; attempts: number;
   last_seen_at: string | null;
+};
+export type PhraseSearchItem = {
+  phrase_id: number; batch_id: number; batch_title: string;
+  anchor: string; phrase_en: string; gloss_ru: string; order_index: number;
 };
 
 async function j<T>(r: Response): Promise<T> {
@@ -96,6 +104,14 @@ export const api = {
     if (latencyMs != null) fd.append("latency_ms", String(latencyMs));
     return fetch("/api/training/score-sequence", { method: "POST", body: fd }).then(j<SequenceScore>);
   },
+  scoreAnchor: (phraseId: number, audio: Blob, filename: string, latencyMs?: number) => {
+    const fd = new FormData();
+    fd.append("audio", audio, filename);
+    fd.append("phrase_id", String(phraseId));
+    if (latencyMs != null) fd.append("latency_ms", String(latencyMs));
+    return fetch("/api/training/score-anchor", { method: "POST", body: fd }).then(j<AnchorScore>);
+  },
+  listPhrases: () => fetch("/api/batches/phrases").then(j<PhraseSearchItem[]>),
   getRotation: (batchId: number) =>
     fetch(`/api/training/rotation/${batchId}`).then(j<RotationItem[]>),
   getMastery: () => fetch("/api/training/mastery").then(j<BatchMastery[]>),

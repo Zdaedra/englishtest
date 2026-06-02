@@ -7,7 +7,9 @@ export type BatchProgress = {
   l1_listened?: boolean; // played the full story at least once
   l1_retold?: boolean; // did at least one sequence retell
   l1_best_seq?: number; // best sequence score so far (informational)
-  l3_passed?: boolean; // passed the final exam (Test A ≥ 7)
+  l3_s1?: boolean; // exam stage 1 passed (full retell, avg ≥ 8)
+  l3_s2?: boolean; // exam stage 2 passed (story-stop phrase, avg ≥ 8)
+  l3_passed?: boolean; // passed the whole 3-stage final exam (all stages ≥ 80%)
 };
 
 const key = (batchId: number) => `ee-progress-${batchId}`;

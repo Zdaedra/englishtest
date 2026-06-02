@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Executive English · Design Book</title>
+<style>
+  :root{
+    /* Surfaces */
+    --bg:#F8F8F6; --card:#FFFFFF; --border:#ECECEC; --hairline:#F0F0EE;
+    --soft-top:#FCFCFC; --soft-bottom:#F4F7F4;
+    /* Ink */
+    --text:#111111; --text-2:#3A3A3A; --muted:#6B6B6B; --faint:#9A9A9A; --inactive:#8E8E93;
+    /* Brand green */
+    --green:#1C8C63; --green-ink:#15714F; --green-light:#34B07E; --green-cta:#27AB7B;
+    --green-soft:rgba(28,140,99,.14);
+    /* Warm legacy accents */
+    --bronze:#9A7B4F; --graphite:#26211B;
+    --danger:#C0564B; --ok:#5C8A4A;
+    /* Shape */
+    --r-sm:12px; --r:18px; --r-lg:26px;
+    --shadow:0 1px 2px rgba(17,17,17,.04), 0 10px 28px rgba(17,17,17,.055);
+    --shadow-card:0 8px 26px rgba(17,17,17,.06), 0 1px 3px rgba(17,17,17,.04);
+    --shadow-lg:0 16px 44px rgba(17,17,17,.14);
+    --spring:cubic-bezier(.22,1,.36,1);
+    --shell:1040px;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(180deg,var(--soft-top),var(--soft-bottom));
+    color:var(--text);-webkit-font-smoothing:antialiased;
+    padding:0 0 80px;
+  }
+  .wrap{max-width:var(--shell);margin:0 auto;padding:0 28px;}
+
+  /* Cover */
+  .cover{padding:84px 0 56px;}
+  .cover .kicker{font-size:13px;font-weight:750;letter-spacing:.16em;text-transform:uppercase;color:var(--green);}
+  .cover h1{font-size:clamp(44px,7vw,76px);font-weight:840;letter-spacing:-.03em;line-height:1;margin:14px 0 18px;}
+  .cover p{font-size:20px;color:var(--muted);max-width:34em;line-height:1.5;margin:0;}
+  .cover .meta{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{display:inline-block;font-size:12.5px;font-weight:650;color:var(--green-ink);background:var(--green-soft);padding:7px 14px;border-radius:999px;}
+
+  /* Section scaffolding */
+  section{padding:34px 0;border-top:1px solid var(--hairline);}
+  .sec-no{font-size:12px;font-weight:750;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
+  .sec-title{font-size:30px;font-weight:820;letter-spacing:-.02em;margin:6px 0 8px;}
+  .sec-lead{font-size:16.5px;color:var(--muted);line-height:1.55;max-width:46em;margin:0 0 26px;}
+  .grid{display:grid;gap:16px;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  @media(max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+
+  .panel{background:var(--card);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-card);}
+  .label{font-size:11px;font-weight:750;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0 0 12px;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--muted);}
+
+  /* Colour swatches */
+  .swatch{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-card);background:var(--card);}
+  .swatch .chipc{height:96px;}
+  .swatch .body{padding:13px 15px;}
+  .swatch .nm{font-size:14px;font-weight:700;}
+  .swatch .hx{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);margin-top:3px;}
+
+  /* Type specimens */
+  .type-row{display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid var(--hairline);flex-wrap:wrap;}
+  .type-row:last-child{border-bottom:0;}
+  .type-row .t-meta{flex:none;width:200px;color:var(--muted);font-size:12.5px;}
+  .t-display{font-size:40px;font-weight:820;letter-spacing:-.02em;line-height:1.05;}
+  .t-title{font-size:34px;font-weight:820;letter-spacing:-.02em;}
+  .t-h{font-size:22px;font-weight:760;letter-spacing:-.01em;}
+  .t-body{font-size:18px;line-height:1.5;}
+  .t-ui{font-size:15px;}
+  .t-cap{font-size:12px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:var(--green);}
+
+  /* Elevation */
+  .elev{height:90px;border-radius:var(--r);background:var(--card);display:grid;place-items:center;font-size:12.5px;color:var(--muted);}
+  .e1{box-shadow:var(--shadow);}
+  .e2{box-shadow:var(--shadow-card);}
+  .e3{box-shadow:var(--shadow-lg);}
+
+  /* Buttons */
+  .cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:60px;padding:0 30px;border:0;border-radius:24px;
+    background:linear-gradient(135deg,var(--green-cta),var(--green));color:#fff;font-size:18px;font-weight:640;
+    box-shadow:0 14px 30px -10px rgba(28,140,99,.55), inset 0 1px 0 rgba(255,255,255,.25);cursor:pointer;}
+  .pill-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--text);font-size:15px;font-weight:650;
+    padding:9px 16px;border-radius:999px;border:0;box-shadow:0 4px 14px rgba(17,17,17,.08);}
+  .icon-btn{width:44px;height:44px;border-radius:50%;background:#fff;border:0;display:grid;place-items:center;
+    box-shadow:0 4px 14px rgba(17,17,17,.08);color:var(--text);}
+  .tag-pill{display:inline-block;font-size:12px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--green-ink);background:var(--green-soft);padding:5px 12px;border-radius:999px;}
+
+  /* Lesson card */
+  .lcard{display:flex;align-items:center;gap:14px;background:#fff;border:1.5px solid transparent;border-radius:20px;padding:15px 16px;box-shadow:var(--shadow-card);}
+  .lcard.active{border-color:rgba(28,140,99,.28);background:linear-gradient(180deg,#F1FAF5,#fff);}
+  .lnum{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:18px;font-weight:740;background:var(--green-soft);color:var(--green-ink);}
+  .lnum.done{background:var(--green);color:#fff;}
+  .lbody{flex:1;}
+  .ltitle{font-size:17px;font-weight:720;letter-spacing:-.01em;}
+  .lcard.active .ltitle{color:var(--green-ink);}
+  .lsub{font-size:13.5px;color:var(--muted);margin-top:3px;}
+  .chev{color:var(--green);font-size:20px;}
+
+  /* Anchor chain */
+  .anchors{display:flex;flex-wrap:wrap;align-items:center;gap:7px 9px;background:#fff;border-radius:20px;padding:16px 18px;box-shadow:var(--shadow-card);}
+  .arr{color:var(--green);font-weight:700;}
+  .anc{font-size:16px;font-weight:700;}
+
+  /* Warning card */
+  .warn{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:13px 16px;box-shadow:var(--shadow-card);}
+  .warn .ic{flex:none;width:38px;height:38px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;}
+  .warn p{flex:1;margin:0;font-size:14px;line-height:1.4;color:var(--text-2);}
+  .warn b{color:var(--green);}
+  .warn .cv{color:var(--faint);}
+
+  /* Floating glass nav */
+  .navwrap{position:relative;border-radius:24px;padding:30px 18px;overflow:hidden;background:
+    linear-gradient(120deg,#8FBF9E,#cdbfa6 40%,#b9d3c4 70%,#a8b8c9);min-height:140px;display:flex;align-items:flex-end;gap:12px;}
+  .capsule{position:relative;flex:1;height:56px;display:flex;background:rgba(255,255,255,.58);
+    -webkit-backdrop-filter:saturate(190%) blur(26px);backdrop-filter:saturate(190%) blur(26px);
+    border-radius:28px;box-shadow:0 12px 36px rgba(17,17,17,.10),0 2px 8px rgba(17,17,17,.04);}
+  .pill{position:absolute;top:5px;bottom:5px;left:5px;width:calc((100% - 10px)/3);border-radius:23px;
+    background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,.4));
+    -webkit-backdrop-filter:blur(14px) saturate(210%) brightness(1.06);backdrop-filter:blur(14px) saturate(210%) brightness(1.06);
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:inset 0 1.5px 0 #fff, inset 0 -1.5px 1px rgba(0,0,0,.05), inset 2px 0 1px rgba(120,190,255,.28), inset -2px 0 1px rgba(255,150,205,.26), 0 8px 22px rgba(0,0,0,.14);}
+  .tab{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;font-weight:600;color:var(--inactive);}
+  .tab.on{color:var(--green);font-weight:680;}
+  .tab .ti{font-size:19px;}
+  .tab.on .ti{transform:scale(1.18);}
+  .search{flex:none;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#111;font-size:20px;
+    background:rgba(255,255,255,.58);-webkit-backdrop-filter:saturate(190%) blur(26px);backdrop-filter:saturate(190%) blur(26px);
+    box-shadow:inset 0 1.5px 0 #fff,0 12px 36px rgba(17,17,17,.10),0 2px 8px rgba(17,17,17,.04);}
+
+  /* progress steps */
+  .steps{display:flex;align-items:flex-start;}
+  .step{flex:none;width:84px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .scircle{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:16px;font-weight:720;background:#fff;color:var(--faint);border:1.5px solid #E2E6E2;box-shadow:0 2px 8px rgba(17,17,17,.05);}
+  .step.on .scircle{background:var(--green);color:#fff;border-color:transparent;box-shadow:0 9px 22px -6px var(--green);}
+  .step.done .scircle{background:var(--green-soft);color:var(--green-ink);border:0;}
+  .splay{position:absolute;right:-4px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:8px;border:2px solid #F7F9F7;}
+  .slabel{font-size:12px;font-weight:600;color:var(--faint);}
+  .step.on .slabel{color:var(--text);}
+  .sline{flex:1;height:0;margin-top:20px;border-top:2px dashed #D5DAD5;}
+
+  /* motion table */
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--hairline);vertical-align:top;}
+  th{font-size:11px;font-weight:750;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  td code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--green-ink);background:var(--green-soft);padding:2px 6px;border-radius:6px;}
+
+  /* do / dont */
+  .dd{border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow-card);background:#fff;}
+  .dd h4{margin:0 0 10px;font-size:14px;font-weight:750;letter-spacing:.04em;text-transform:uppercase;}
+  .dd.do h4{color:var(--green-ink);}
+  .dd.dont h4{color:var(--danger);}
+  .dd ul{margin:0;padding-left:18px;color:var(--text-2);font-size:14.5px;line-height:1.65;}
+
+  .foot{padding:40px 0 0;color:var(--faint);font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover">
+    <div class="kicker">Executive English · Design Book v1</div>
+    <h1>Тихая<br/>премиальность.</h1>
+    <p>Визуальный язык приложения: спокойный, воздушный, в духе Apple Music и Apple Fitness+ — но про речь, память и язык, а не про музыку. Один фирменный зелёный. Никакой геймификации. Контент — всегда герой; интерфейс лишь поддерживает движение.</p>
+    <div class="meta">
+      <span class="chip">SF Pro Display / Text</span>
+      <span class="chip">Фирменный зелёный #1C8C63</span>
+      <span class="chip">Glassmorphism только в навигации</span>
+      <span class="chip">Много воздуха · мягкие тени</span>
+    </div>
+  </header>
+
+  <!-- 01 PRINCIPLES -->
+  <section>
+    <div class="sec-no">01 — Принципы</div>
+    <h2 class="sec-title">Как это должно ощущаться</h2>
+    <p class="sec-lead">Не «экран приложения», а тщательно подготовленный премиальный продукт. Пользователь запускает тренировку речи так же спокойно, как тренировку в Apple Fitness+ или подборку в Apple Music.</p>
+    <div class="grid g3">
+      <div class="panel"><p class="label">Воздух</p><div class="t-body">Крупная типографика, щедрые отступы, ничего не теснится. Пустота — это материал, а не пробел.</div></div>
+      <div class="panel"><p class="label">Один акцент</p><div class="t-body">Только фирменный зелёный. Без синего, фиолетового, красного. Акцент — редкий и осмысленный.</div></div>
+      <div class="panel"><p class="label">Стекло — только в навигации</p><div class="t-body">Glassmorphism живёт во floating-баре. Остальной UI — плотные мягкие карточки на светлом фоне.</div></div>
+      <div class="panel"><p class="label">Контент — герой</p><div class="t-body">Навигация и хром никогда не конкурируют с обложками, картами и иллюстрациями.</div></div>
+      <div class="panel"><p class="label">Без геймификации</p><div class="t-body">Никаких очков, стриков, жизней. Прогресс — спокойные галочки и проценты, не «награды».</div></div>
+      <div class="panel"><p class="label">Спокойное движение</p><div class="t-body">Мягкие пружины, лёгкое «жидкое стекло», без отскоков и резких скачков.</div></div>
+    </div>
+  </section>
+
+  <!-- 02 COLOUR -->
+  <section>
+    <div class="sec-no">02 — Цвет</div>
+    <h2 class="sec-title">Палитра</h2>
+    <p class="sec-lead">Фирменный изумруд — единственный акцент. Тёплая графика и бронза остались как редкие текстовые акценты прошлого стиля; новые экраны строятся на зелёном.</p>
+
+    <p class="label" style="margin-top:6px">Бренд · зелёный</p>
+    <div class="grid g4" style="margin-bottom:18px">
+      <div class="swatch"><div class="chipc" style="background:#1C8C63"></div><div class="body"><div class="nm">Green</div><div class="hx">#1C8C63 · акцент, иконки, ссылки</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#15714F"></div><div class="body"><div class="nm">Green Ink</div><div class="hx">#15714F · текст на зелёном-soft</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#34B07E"></div><div class="body"><div class="nm">Green Light</div><div class="hx">#34B07E · верх CTA-градиента</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:rgba(28,140,99,.14)"></div><div class="body"><div class="nm">Green Soft</div><div class="hx">rgba(28,140,99,.14) · подложки</div></div></div>
+    </div>
+
+    <p class="label">Чернила · текст</p>
+    <div class="grid g4" style="margin-bottom:18px">
+      <div class="swatch"><div class="chipc" style="background:#111111"></div><div class="body"><div class="nm">Text</div><div class="hx">#111111</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#6B6B6B"></div><div class="body"><div class="nm">Muted</div><div class="hx">#6B6B6B</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#9A9A9A"></div><div class="body"><div class="nm">Faint</div><div class="hx">#9A9A9A</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#8E8E93"></div><div class="body"><div class="nm">Inactive</div><div class="hx">#8E8E93 · неактивный таб</div></div></div>
+    </div>
+
+    <p class="label">Поверхности и статусы</p>
+    <div class="grid g4">
+      <div class="swatch"><div class="chipc" style="background:linear-gradient(180deg,#FCFCFC,#F4F7F4)"></div><div class="body"><div class="nm">Soft BG</div><div class="hx">#FCFCFC → #F4F7F4</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#FFFFFF;border-bottom:1px solid #ECECEC"></div><div class="body"><div class="nm">Card</div><div class="hx">#FFFFFF</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#9A7B4F"></div><div class="body"><div class="nm">Bronze</div><div class="hx">#9A7B4F · редкий текст-акцент</div></div></div>
+      <div class="swatch"><div class="chipc" style="background:#C0564B"></div><div class="body"><div class="nm">Danger</div><div class="hx">#C0564B · только ошибки</div></div></div>
+    </div>
+  </section>
+
+  <!-- 03 TYPE -->
+  <section>
+    <div class="sec-no">03 — Типографика</div>
+    <h2 class="sec-title">Шкала</h2>
+    <p class="sec-lead">SF Pro Display для заголовков, SF Pro Text для интерфейса. Крупно, плотный трекинг на больших кеглях, дыхание между блоками.</p>
+    <div class="panel">
+      <div class="type-row"><div class="t-meta">Display · 40 / 820 / -.02em</div><div class="t-display">Тесты</div></div>
+      <div class="type-row"><div class="t-meta">Title · 34 / 820</div><div class="t-title">Несогласие</div></div>
+      <div class="type-row"><div class="t-meta">Heading · 22 / 760</div><div class="t-h">Мнемоническая основа</div></div>
+      <div class="type-row"><div class="t-meta">Body · 18 / 1.5</div><div class="t-body">Перескажи всю историю своими словами, называя якоря по порядку.</div></div>
+      <div class="type-row"><div class="t-meta">UI · 15 / 600</div><div class="t-ui">Запомни каркас якорей</div></div>
+      <div class="type-row"><div class="t-meta">Caption · 12 / 750 / caps</div><div class="t-cap">Этап 1 · полный пересказ</div></div>
+    </div>
+  </section>
+
+  <!-- 04 SHAPE / ELEVATION -->
+  <section>
+    <div class="sec-no">04 — Форма и тень</div>
+    <h2 class="sec-title">Скругления и слои</h2>
+    <p class="sec-lead">Мягкие радиусы и низкоконтрастные диффузные тени — премиальная «бумага», а не материал-дизайн. Чем важнее блок, тем больше радиус и тем выше парение.</p>
+    <div class="grid g2" style="margin-bottom:16px">
+      <div class="panel">
+        <p class="label">Радиусы</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end">
+          <div style="text-align:center"><div style="width:64px;height:64px;background:var(--green-soft);border-radius:12px"></div><div class="mono" style="margin-top:7px">12 · chips</div></div>
+          <div style="text-align:center"><div style="width:64px;height:64px;background:var(--green-soft);border-radius:18px"></div><div class="mono" style="margin-top:7px">18–20 · карточки</div></div>
+          <div style="text-align:center"><div style="width:64px;height:64px;background:var(--green-soft);border-radius:24px"></div><div class="mono" style="margin-top:7px">24 · обложка/CTA</div></div>
+          <div style="text-align:center"><div style="width:64px;height:64px;background:var(--green-soft);border-radius:28px"></div><div class="mono" style="margin-top:7px">28 · hero-карточка</div></div>
+          <div style="text-align:center"><div style="width:64px;height:64px;background:var(--green-soft);border-radius:999px"></div><div class="mono" style="margin-top:7px">999 · пилл/круг</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="label">Парение</p>
+        <div class="grid g3">
+          <div class="elev e1">subtle</div>
+          <div class="elev e2">card</div>
+          <div class="elev e3">hero</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 BUTTONS -->
+  <section>
+    <div class="sec-no">05 — Кнопки и теги</div>
+    <h2 class="sec-title">Действия</h2>
+    <p class="sec-lead">Один главный акцент на экран — зелёная градиентная CTA с мягким «дышащим» свечением. Вторичное — белые пиллы и круглые иконки с лёгкой тенью.</p>
+    <div class="panel" style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">
+      <button class="cta">▶ Начать этап 1</button>
+      <button class="pill-btn">‹ Назад</button>
+      <span class="tag-pill">Урок 3</span>
+      <button class="icon-btn">‹</button>
+      <button class="icon-btn">•••</button>
+    </div>
+    <p class="mono" style="margin-top:12px">CTA: 64px · radius 24 · gradient #27AB7B→#1C8C63 · shadow 0 14 30 -10 rgba(28,140,99,.55) · keyframes glow (дышит 3.4s)</p>
+  </section>
+
+  <!-- 06 CARDS -->
+  <section>
+    <div class="sec-no">06 — Карточки</div>
+    <h2 class="sec-title">Контент-блоки</h2>
+    <p class="sec-lead">Белые мягкие карточки на светлом фоне. Активный элемент — зелёная подсветка; пройденный — зелёный кружок с галочкой; предупреждение — карточка вместо красного текста.</p>
+    <div class="grid g2">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="lcard done"><span class="lnum done">✓</span><span class="lbody"><div class="ltitle">Мнемоническая основа</div><div class="lsub">Запомни каркас якорей</div></span><span class="chev">›</span></div>
+        <div class="lcard active"><span class="lnum">3</span><span class="lbody"><div class="ltitle">Тесты</div><div class="lsub">Проверь на скорость</div></span><span class="chev">›</span></div>
+        <div class="warn"><span class="ic">🛡</span><p>Этот браузер не умеет записывать звук. Откройте приложение в <b>Safari</b> или <b>Chrome</b>.</p><span class="cv">›</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="anchors">
+          <span class="anc">Understand</span><span class="arr">→</span><span class="anc">Run</span><span class="arr">→</span><span class="anc">Angle</span><span class="arr">→</span><span class="anc">Far</span><span class="arr">→</span><span class="anc">Hesitation</span><span class="arr">→</span><span class="anc">Pause</span><span class="arr">→</span><span class="anc">Land</span>
+        </div>
+        <div class="panel" style="border-radius:28px">
+          <div class="t-cap" style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:26px;border-radius:9px;background:var(--green-soft);color:var(--green);display:inline-grid;place-items:center">∿</span> Этап 1 · полный пересказ</div>
+          <div class="t-body" style="margin-top:12px">Перескажи всю мнемоническую историю своими словами, называя якоря по порядку. Нужно сделать это дважды; средний балл <b style="color:var(--green)">≥ 80%</b>.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 PROGRESS -->
+  <section>
+    <div class="sec-no">07 — Прогресс</div>
+    <h2 class="sec-title">Этапы</h2>
+    <p class="sec-lead">Горизонтальный степпер: активный — залитый зелёный круг с play-бейджем, пройденный — зелёный-soft с галочкой, будущий — контурный серый. Между ними — тонкий пунктир.</p>
+    <div class="panel">
+      <div class="steps">
+        <div class="step done"><span class="scircle">✓</span><span class="slabel">Пересказ</span></div>
+        <span class="sline"></span>
+        <div class="step on"><span class="scircle">2<span class="splay">▶</span></span><span class="slabel" style="color:var(--text)">Мнемо-основа</span></div>
+        <span class="sline"></span>
+        <div class="step"><span class="scircle">3</span><span class="slabel">Якорь</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 NAVIGATION -->
+  <section>
+    <div class="sec-no">08 — Навигация</div>
+    <h2 class="sec-title">Floating glass dock</h2>
+    <p class="sec-lead">Два отдельных плавающих стеклянных элемента: капсула из трёх табов + отдельная круглая кнопка поиска. Активный таб — «жидкая» линза с зелёной иконкой, пружинно скользит и тянется за пальцем.</p>
+    <div class="navwrap">
+      <nav class="capsule">
+        <span class="pill"></span>
+        <span class="tab on"><span class="ti">▦</span>Библиотека</span>
+        <span class="tab"><span class="ti">∿</span>Практика</span>
+        <span class="tab"><span class="ti">☻</span>Профиль</span>
+      </nav>
+      <span class="search">⌕</span>
+    </div>
+    <p class="mono" style="margin-top:12px">Капсула 56px · стекло rgba(255,255,255,.58) + blur(26) · pill — translucent gloss + хром-кайма · drag-to-select · ⚠ настоящее преломление фона = только натив (iOS Safari не умеет SVG-displacement в backdrop-filter).</p>
+  </section>
+
+  <!-- 09 ILLUSTRATION -->
+  <section>
+    <div class="sec-no">09 — Иллюстрация</div>
+    <h2 class="sec-title">3D-объекты и иконки</h2>
+    <p class="sec-lead">Hero-иллюстрации — матовый-пластик 3D в Apple-стиле (через gpt-image-1), полупрозрачный зелёный, мягкая тень, прозрачный фон. Тема — речь и память: речевой пузырь, карандаш, микрофон. Интерфейсные иконки — тонкий штрих 1.7px, 24px-сетка, inherit currentColor.</p>
+    <div class="grid g2">
+      <div class="panel" style="display:flex;gap:18px;align-items:center">
+        <img src="/art/lesson3-hero.png" alt="" style="width:120px;height:auto;filter:drop-shadow(0 10px 18px rgba(28,140,99,.16))" onerror="this.style.display='none'"/>
+        <div><div class="ltitle">Soft-3D matte plastic</div><div class="lsub" style="margin-top:6px">Зелёный, прозрачный фон, запечённая тень. Генерится gpt-image-1, ужимается до ~160 КБ / 480px.</div></div>
+      </div>
+      <div class="panel">
+        <p class="label">Иконки</p>
+        <div style="display:flex;gap:18px;font-size:26px;color:var(--green)">▦ ∿ ☻ ⌕ ▶ ✓ ›</div>
+        <div class="lsub" style="margin-top:12px">Stroke 1.7 · round caps · currentColor. Активный — зелёный, неактивный — #8E8E93.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 MOTION -->
+  <section>
+    <div class="sec-no">10 — Движение</div>
+    <h2 class="sec-title">Микроанимации</h2>
+    <p class="sec-lead">Всё спокойное и «премиальное»: одна пружина, мягкое свечение, лёгкое «жидкое» желе. Без отскоков и фейерверков.</p>
+    <table>
+      <tr><th>Токен</th><th>Кривая / длительность</th><th>Где</th></tr>
+      <tr><td>Spring</td><td><code>cubic-bezier(.22,1,.36,1)</code></td><td>базовая пружина всех переходов</td></tr>
+      <tr><td>Press</td><td>scale .97 · 150ms</td><td>нажатие CTA / карточек</td></tr>
+      <tr><td>Lens-pop</td><td>1 → 1.5 → rest · 440ms back-out (WAAPI)</td><td>тап по табу/поиску — иконка-линза</td></tr>
+      <tr><td>Pill travel</td><td>transform .6s spring</td><td>активная линза между табами</td></tr>
+      <tr><td>Gel</td><td>scaleX 1.16 / scaleY .9 → 1</td><td>«желе» при переходе между табами</td></tr>
+      <tr><td>Glow</td><td>дышит 3.4s ease-in-out</td><td>зелёная CTA</td></tr>
+      <tr><td>Enter</td><td>fade + slide-up 8–10px</td><td>появление экрана</td></tr>
+    </table>
+  </section>
+
+  <!-- 11 DO / DONT -->
+  <section>
+    <div class="sec-no">11 — Правила</div>
+    <h2 class="sec-title">Делай / не делай</h2>
+    <div class="grid g2">
+      <div class="dd do">
+        <h4>✓ Делай</h4>
+        <ul>
+          <li>Много воздуха и крупный заголовок наверху экрана.</li>
+          <li>Один зелёный акцент: активное состояние, CTA, ключевые иконки.</li>
+          <li>Белые мягкие карточки, диффузные тени, радиусы 18–28.</li>
+          <li>Glass — только в нижней навигации.</li>
+          <li>Прогресс — спокойные галочки/проценты.</li>
+          <li>3D-иллюстрации матовые, зелёные, с прозрачным фоном.</li>
+        </ul>
+      </div>
+      <div class="dd dont">
+        <h4>✕ Не делай</h4>
+        <ul>
+          <li>Красный/синий/фиолетовый как акцент.</li>
+          <li>Тяжёлые чёрные кнопки и жёсткие тени.</li>
+          <li>Геймификацию: очки, стрики, жизни, бейджи-награды.</li>
+          <li>Стекло на контент-карточках (только навигация).</li>
+          <li>Резкие отскоки, мигание, кричащие переходы.</li>
+          <li>Тесные сетки и веб-формовость (ощущение «html-формы»).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot">Executive English · Design Book v1 · собрано из реальных токенов приложения (frontend/src/index.css). Обновляется вместе с продуктом.</p>
+
+</div>
+</body>
+</html>

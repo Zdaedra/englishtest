@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api, BatchDetail as Batch, PhraseScore, RotationItem } from "../api";
 import { useMnemoAudio } from "../audio/useMnemoAudio";
@@ -27,7 +27,6 @@ export default function Lesson2() {
   const [result, setResult] = useState<PhraseScore | null>(null);
   const [busy, setBusy] = useState(false);
   const [drillStarted, setDrillStarted] = useState(false);
-  const lastHintRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -65,21 +64,9 @@ export default function Lesson2() {
 
   const current = rotation[pos] || null;
 
-  // Once the drill is started, each new prompt plays its phrase aloud as a hint —
-  // the test is "hear it, then say it back". Guard on phrase_id so a re-render
-  // doesn't replay the same clip.
-  useEffect(() => {
-    if (!drillStarted || !current || result) return;
-    if (lastHintRef.current === current.phrase_id) return;
-    lastHintRef.current = current.phrase_id;
-    player.playPhrase(current.phrase_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [drillStarted, current, result]);
-
   const startDrill = useCallback(() => {
     setNotice("");
     setResult(null);
-    lastHintRef.current = null;
     setDrillStarted(true);
   }, []);
 
@@ -231,8 +218,8 @@ export default function Lesson2() {
       ) : !drillStarted ? (
         <>
           <p className="train-hint" style={{ marginTop: 4 }}>
-            Покажу якорь и проиграю его фразу вслух. Послушай, нажми кнопку
-            и повтори фразу — ИИ оценит и подскажет.
+            Покажу якорь — назови фразу вслух по памяти, ИИ оценит и подскажет.
+            Не вспомнил — нажми «Подсказать фразу».
           </p>
           <button className="btn btn-primary btn-block" style={{ marginTop: 12 }} onClick={startDrill}>
             Начать проверку
@@ -250,7 +237,7 @@ export default function Lesson2() {
           <p className="train-prompt">{current.anchor}</p>
           <div className="mnemo-play" style={{ marginTop: 14 }}>
             <button className="mp-pill" onClick={() => player.playPhrase(current.phrase_id)}>
-              <IconPlay size={16} /> Прослушать ещё раз
+              <IconPlay size={16} /> Подсказать фразу
             </button>
           </div>
           <RecFab recording={rec.recording} busy={busy} onClick={onMic} />

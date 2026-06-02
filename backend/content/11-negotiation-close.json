@@ -1,0 +1,20 @@
+{
+  "slug": "negotiation-2",
+  "title": "Закрыть сделку",
+  "theme": "Закрыть сделку — проверить готовность, надавить на решение, скрепить",
+  "subtitle": "",
+  "section": "negotiation",
+  "zones": ["Test", "Press", "Close"],
+  "phrases": [
+    { "anchor": "Page",     "zone": "Test",  "en": "Are we on the same page?" },
+    { "anchor": "Holdup",   "zone": "Test",  "en": "So what's the holdup here?" },
+    { "anchor": "Sticking", "zone": "Test",  "en": "Let's name the sticking point." },
+    { "anchor": "Fence",    "zone": "Press", "en": "Don't sit on the fence here." },
+    { "anchor": "Pull",     "zone": "Press", "en": "Let's pull the trigger on this." },
+    { "anchor": "Board",    "zone": "Press", "en": "I'd love to have you on board." },
+    { "anchor": "Dotted",   "zone": "Close", "en": "Ready to sign on the dotted line?" },
+    { "anchor": "Shake",    "zone": "Close", "en": "Let's shake on it." },
+    { "anchor": "Done",     "zone": "Close", "en": "Then it's a done deal." }
+  ],
+  "mnemo": "Вы листаете один page — одну страницу сделки, сверяя, что видите её одинаково. Спрашиваешь, в чём holdup — заминка, где застряло. Находишь sticking — место, где всё залипло, как смола. Партнёр сидит на fence — на заборе, не решаясь спрыгнуть. Ты тянешь pull — за рычаг, спускаешь курок. Зовёшь его на board — на борт, в свою лодку. Кладёшь перед ним dotted — пунктир для подписи. Жмёшь руку, shake, скрепляя уговор. И выдыхаешь: done — готово."
+}

@@ -65,6 +65,29 @@ def list_batches(session: Session = Depends(get_session)):
     return out
 
 
+@router.get("/phrases")
+def list_phrases(session: Session = Depends(get_session)):
+    """Flat index of every phrase across non-deleted batches — powers the library
+    search's per-phrase results block. Read-only, no audio. Declared before
+    /{batch_id} so the literal path wins the route match."""
+    batches = session.exec(
+        select(models.Batch).where(models.Batch.deleted_at == None)  # noqa: E711
+    ).all()
+    title_by_id = {b.id: b.title for b in batches}
+    ids = list(title_by_id.keys())
+    if not ids:
+        return []
+    phrases = session.exec(
+        select(models.Phrase).where(models.Phrase.batch_id.in_(ids))
+        .order_by(models.Phrase.batch_id, models.Phrase.order_index)
+    ).all()
+    return [{"phrase_id": p.id, "batch_id": p.batch_id,
+             "batch_title": title_by_id.get(p.batch_id, ""),
+             "anchor": p.anchor, "phrase_en": p.phrase_en,
+             "gloss_ru": p.gloss_ru, "order_index": p.order_index}
+            for p in phrases]
+
+
 @router.get("/{batch_id}")
 def get_batch(batch_id: int, session: Session = Depends(get_session)):
     b = session.get(models.Batch, batch_id)

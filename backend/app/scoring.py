@@ -171,6 +171,26 @@ def score_phrase(anchor: str, correct_phrase: str, user_said: str) -> dict:
     return out
 
 
+def score_anchor(anchor: str, user_said: str) -> dict:
+    """Test C (anchor recall): the learner hears a phrase and must name its single
+    anchor keyword. The target is ONE word, so we score by string similarity (no
+    LLM) — an exact/near match is full credit, partial overlap is partial. The
+    phrase gate's 2-token minimum deliberately does NOT apply here: one word is
+    the whole answer."""
+    na = _normalize(anchor)
+    nu = _normalize(user_said)
+    if not na or not nu:
+        return {"score": 0, "correct_anchor": anchor, "via": "gate"}
+    # Credit the best-matching spoken token (so "uh, read" still matches 'read'),
+    # and also the whole utterance in case the anchor itself is multi-word.
+    said = _tokens(nu)
+    best_tok = max((SequenceMatcher(None, na, t).ratio() for t in said), default=0.0)
+    whole = SequenceMatcher(None, na, nu).ratio()
+    ratio = max(best_tok, whole)
+    score = 10 if ratio >= 0.85 else _clamp(round(ratio * 10))
+    return {"score": score, "correct_anchor": anchor, "via": "gate"}
+
+
 def score_sequence(anchors_in_order: list[str], story_ru: str, user_said: str) -> dict:
     """Test A. Returns {score, missed_anchors, order_ok, via}."""
     if len(_tokens(_normalize(user_said))) < _MIN_TOKENS:

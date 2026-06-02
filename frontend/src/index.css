@@ -81,7 +81,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .screen {
-  padding: max(20px, env(safe-area-inset-top)) 18px 132px;
+  padding: max(20px, env(safe-area-inset-top)) 18px calc(env(safe-area-inset-bottom) + 100px);
   animation: fade-up .42s var(--spring) both;
 }
 
@@ -961,7 +961,7 @@ table.phrases input { padding: 8px; font-size: 13px; }
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(64px + env(safe-area-inset-bottom));
+  bottom: calc(env(safe-area-inset-bottom) + 80px);
   width: min(var(--shell-w), 100vw);
   width: calc(min(var(--shell-w), 100vw) - 16px);
   display: flex;
@@ -1013,36 +1013,234 @@ table.phrases input { padding: 8px; font-size: 13px; }
   place-items: center;
 }
 
-/* ----- Bottom navigation -------------------------------------------------- */
-.bottom-nav {
+/* ----- Floating navigation (Apple-Music style) --------------------------- */
+/* Two detached glass elements: a capsule of three tabs + a separate search
+   button. The dock is click-through; only the two elements catch taps. */
+.nav-dock {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 0;
+  bottom: calc(env(safe-area-inset-bottom) + 12px);
   width: min(var(--shell-w), 100vw);
+  box-sizing: border-box;
+  padding: 0 14px;
   display: flex;
-  background: rgba(248, 248, 246, .9);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-top: 1px solid var(--border);
-  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  align-items: center;
+  gap: 12px;
   z-index: 50;
+  pointer-events: none;
 }
-.nav-item {
+.nav-dock > * { pointer-events: auto; }
+
+.nav-capsule {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 56px; /* Apple-Music-slim bar */
+  display: flex;
+  align-items: stretch;
+  /* More translucent + heavier blur → the scrolling content reads through the
+     bar as frosted glass (the strongest "glass" cue iOS Safari can render). */
+  background: rgba(255, 255, 255, .58);
+  -webkit-backdrop-filter: saturate(190%) blur(26px);
+  backdrop-filter: saturate(190%) blur(26px);
+  border-radius: 28px;
+  box-shadow: 0 12px 36px rgba(17, 17, 17, .10), 0 2px 8px rgba(17, 17, 17, .04);
+  touch-action: none; /* own horizontal drags so the lens can follow the finger */
+}
+/* While dragging, the pill tracks the finger near-1:1 instead of the slow spring. */
+.nav-capsule.dragging .nav-pill { transition: transform .09s linear; }
+
+/* The single sliding selector. Outer layer = positioning only: width is one
+   third, so translateX by 100% of its own width lands it exactly over the next
+   tab. The visible glass lives in ::before, inset 6px, so the inset never
+   breaks that alignment. */
+.nav-pill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% / 3);
+  transform: translateX(calc(var(--active, 0) * 100%));
+  /* Slower, calmer travel between tabs (was .42s). */
+  transition: transform .6s var(--spring), opacity .25s ease;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+/* Liquid-glass pill: a separate translucent lens floating inside the capsule.
+   Inner radius 23 = capsule radius 28 − 5px inset → the corners nest perfectly.
+   Translucent body (lets the frosted content show through) + a strong specular
+   gloss + cool/warm rim fake the refractive glass; iOS Safari can't do a true
+   backdrop displacement, so the gloss/translucency carry the effect. */
+.nav-pill::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 23px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .8) 0%, rgba(255, 255, 255, .4) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(210%) brightness(1.06);
+  backdrop-filter: blur(14px) saturate(210%) brightness(1.06);
+  border: 1px solid rgba(255, 255, 255, .9);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 1px rgba(0, 0, 0, .05),
+    inset 2px 0 1px rgba(120, 190, 255, .28),
+    inset -2px 0 1px rgba(255, 150, 205, .26),
+    0 8px 22px rgba(0, 0, 0, .14);
+  transform-origin: center;
+}
+/* Specular sweep: a bright curved gloss on the top half → reads as a domed,
+   light-bending glass surface rather than a flat fill. */
+.nav-pill::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  right: 8px;
+  height: 21px;
+  border-radius: 22px 22px 60px 60px / 16px 16px 40px 40px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .95) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+.nav-capsule[data-noactive="true"] .nav-pill { opacity: 0; }
+
+/* Gel stretch on travel: the glass squashes horizontally then settles, the
+   signature "liquid" deform. Two identical keyframes alternate to force replay. */
+@keyframes nav-gel-a {
+  0%   { transform: scaleX(1) scaleY(1); }
+  40%  { transform: scaleX(1.16) scaleY(.9); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+@keyframes nav-gel-b {
+  0%   { transform: scaleX(1) scaleY(1); }
+  40%  { transform: scaleX(1.16) scaleY(.9); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+.nav-pill.gel-a::before { animation: nav-gel-a .6s var(--spring); }
+.nav-pill.gel-b::before { animation: nav-gel-b .6s var(--spring); }
+
+.nav-tab {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  color: var(--faint);
-  font-size: 10.5px;
+  background: transparent;
+  border: 0;
+  color: #8E8E93;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .01em;
-  padding: 4px 0;
-  transition: color .2s;
+  letter-spacing: .005em;
+  transition: color .25s var(--spring), transform .3s var(--spring);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
-.nav-item.active { color: var(--text); }
-.nav-item svg { width: 24px; height: 24px; }
+/* Active = the app's signature emerald (same accent as the path/badges), heavier
+   weight to read as selected through the glass. */
+.nav-tab.active { color: var(--map-green); font-weight: 680; }
+.nav-tab svg { width: 21px; height: 21px; transition: transform .3s var(--spring); }
+/* The lens sits on the selected tab → its icon rests clearly magnified. The tap
+   itself fires a one-shot pop (Web Animations API, see App.tsx::lensPop). */
+.nav-tab.active svg { transform: scale(1.18); }
+
+.nav-search {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 0;
+  display: grid;
+  place-items: center;
+  color: #111111;
+  background: rgba(255, 255, 255, .58);
+  -webkit-backdrop-filter: saturate(190%) blur(26px);
+  backdrop-filter: saturate(190%) blur(26px);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 1),
+    0 12px 36px rgba(17, 17, 17, .10),
+    0 2px 8px rgba(17, 17, 17, .04);
+  transition: transform .26s var(--spring);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* Tap fires a one-shot swell + magnifier lens-pop (App.tsx onClick / lensPop). */
+.nav-search svg { width: 24px; height: 24px; }
+
+/* ----- Library search ----------------------------------------------------- */
+.lib-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  animation: fade-up .3s var(--spring) both;
+}
+.search-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--faint);
+}
+.search-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 16px; /* ≥16px keeps iOS from zooming on focus */
+  color: var(--text);
+}
+.search-input::placeholder { color: var(--faint); }
+.search-clear {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--accent-tint);
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+.search-cancel {
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: var(--mark);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0 2px;
+}
+/* Per-phrase search results (second block) */
+.srch-list { display: flex; flex-direction: column; gap: 8px; }
+.srch-phrase {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+  transition: transform .15s var(--spring);
+}
+.srch-phrase:active { transform: scale(.985); }
+.sp-en { font-size: 15px; font-weight: 650; color: var(--text); line-height: 1.35; }
+.sp-meta { font-size: 12.5px; color: var(--faint); }
+.sp-anchor { color: var(--mark); font-weight: 600; }
 
 /* ----- Feedback training (spoken recall + scoring) ------------------------ */
 .btn-block { display: block; width: 100%; text-align: center; }
@@ -1182,6 +1380,437 @@ table.phrases input { padding: 8px; font-size: 13px; }
 }
 .train-cta { width: 100%; margin-top: 8px; }
 
+/* ----- Lesson 3: 3-stage exam ------------------------------------------- */
+.exam-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 18px 0 4px;
+}
+.exam-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.exam-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 760;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  color: var(--faint);
+  transition: all .2s var(--spring);
+}
+.exam-name {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .02em;
+  color: var(--faint);
+}
+.exam-step.on .exam-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 20px -8px var(--accent);
+}
+.exam-step.on .exam-name { color: var(--text); }
+.exam-step.done .exam-dot {
+  background: var(--accent-tint);
+  border-color: transparent;
+  color: var(--ok);
+}
+.exam-step.done .exam-name { color: var(--muted); }
+
+.verdict-pct {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1px;
+  font-size: 52px;
+  font-weight: 840;
+  line-height: 1;
+  margin: 4px 0 16px;
+}
+.verdict-pct.ok { color: var(--ok); }
+.verdict-pct.no { color: var(--danger); }
+
+/* ===== Lesson 3 «Тесты» — Apple-Music / Fitness+ premium redesign ========= */
+/* Soft green-tinted gradient backdrop (no texture); covers the viewport. */
+.l3-screen {
+  background: linear-gradient(180deg, #FCFCFC 0%, #F4F7F4 100%);
+  min-height: 100dvh;
+}
+
+/* Header: two floating circular controls */
+.l3-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2px 0 8px;
+}
+.l3-iconbtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: #fff;
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 14px rgba(17, 17, 17, .08), 0 1px 3px rgba(17, 17, 17, .05);
+  transition: transform .15s var(--spring);
+}
+.l3-iconbtn:active { transform: scale(.95); }
+
+/* Hero: big title + soft-3D illustration */
+.l3-hero {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 188px;
+  margin-bottom: 6px;
+}
+.l3-hero-text { flex: 1; min-width: 0; }
+.l3-tag {
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--map-green);
+}
+.l3-title {
+  font-size: 40px;
+  font-weight: 820;
+  letter-spacing: -.02em;
+  line-height: 1.02;
+  margin: 6px 0 10px;
+  color: var(--text);
+}
+.l3-sub {
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--muted);
+  margin: 0;
+  max-width: 17em;
+}
+.l3-art { flex: none; width: 152px; }
+.l3-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 18px rgba(28, 140, 99, .16));
+}
+
+/* Stage progress track */
+.l3-track {
+  display: flex;
+  align-items: flex-start;
+  margin: 16px 0 6px;
+}
+.l3-step {
+  flex: none;
+  width: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+.l3-step-circle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 720;
+  background: #fff;
+  color: var(--faint);
+  border: 1.5px solid #E2E6E2;
+  box-shadow: 0 2px 8px rgba(17, 17, 17, .05);
+}
+.l3-step.on .l3-step-circle {
+  background: var(--map-green);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 9px 22px -6px var(--map-green);
+}
+.l3-step.done .l3-step-circle {
+  background: var(--map-green-soft);
+  color: var(--map-green-ink);
+  border-color: transparent;
+  box-shadow: none;
+}
+.l3-step-play {
+  position: absolute;
+  right: -4px;
+  bottom: -3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--map-green);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  border: 2px solid #F7F9F7;
+  padding-left: 1px;
+}
+.l3-step-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--faint);
+}
+.l3-step.on .l3-step-label { color: var(--text); }
+.l3-step.done .l3-step-label { color: var(--muted); }
+.l3-track-line {
+  flex: 1;
+  height: 0;
+  margin-top: 20px;
+  border-top: 2px dashed #D5DAD5;
+}
+
+/* Warning card (replaces the old red error text) */
+.l3-warn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 13px 16px;
+  margin-top: 12px;
+  box-shadow: 0 6px 20px rgba(17, 17, 17, .06), 0 1px 3px rgba(17, 17, 17, .04);
+}
+.l3-warn-ic {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--map-green-soft);
+  color: var(--map-green);
+  display: grid;
+  place-items: center;
+}
+.l3-warn-txt {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+.l3-warn-txt b { color: var(--map-green); font-weight: 700; }
+.l3-warn > svg { color: var(--faint); flex: none; }
+
+/* Task card */
+.l3-task {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 28px;
+  padding: 24px;
+  margin-top: 18px;
+  box-shadow: 0 10px 34px rgba(17, 17, 17, .07), 0 2px 8px rgba(17, 17, 17, .04);
+}
+.l3-task-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+.l3-task-ic {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: var(--map-green-soft);
+  color: var(--map-green);
+  display: grid;
+  place-items: center;
+}
+.l3-task-label {
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--map-green);
+}
+.l3-task-body {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--text);
+  margin: 0;
+}
+.l3-task-wave {
+  display: block;
+  width: calc(100% + 48px);
+  height: 40px;
+  margin: 18px -24px -24px;
+}
+
+/* Primary CTA — green gradient with a soft breathing glow */
+.l3-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 64px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #27AB7B 0%, #1C8C63 100%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 640;
+  box-shadow: 0 14px 30px -10px rgba(28, 140, 99, .58), inset 0 1px 0 rgba(255, 255, 255, .25);
+  animation: l3-glow 3.4s ease-in-out infinite;
+  transition: transform .15s var(--spring);
+}
+.l3-cta:active { transform: scale(.97); }
+@keyframes l3-glow {
+  0%, 100% { box-shadow: 0 14px 30px -10px rgba(28, 140, 99, .55), inset 0 1px 0 rgba(255, 255, 255, .25); }
+  50%      { box-shadow: 0 17px 40px -8px rgba(28, 140, 99, .72), inset 0 1px 0 rgba(255, 255, 255, .25); }
+}
+
+/* Hint under the CTA */
+.l3-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--faint);
+  margin: 16px auto 0;
+  text-align: center;
+  max-width: 290px;
+  line-height: 1.4;
+}
+.l3-hint svg { flex: none; }
+
+/* ===== Batch overview (BatchHome) — premium green, matches Lesson 3 ======= */
+.bh-screen {
+  background: linear-gradient(180deg, #FCFCFC 0%, #F4F7F4 100%);
+  min-height: 100dvh;
+}
+.bh-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fff;
+  border: 0;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 650;
+  padding: 9px 16px 9px 11px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(17, 17, 17, .08), 0 1px 3px rgba(17, 17, 17, .05);
+  margin-bottom: 18px;
+  transition: transform .15s var(--spring);
+}
+.bh-back:active { transform: scale(.96); }
+.bh-back svg { color: var(--map-green); }
+
+.bh-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 16px 44px rgba(17, 17, 17, .14), 0 2px 8px rgba(17, 17, 17, .05);
+}
+.bh-cover > * { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.bh-head { margin-top: 18px; }
+.bh-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--map-green-ink);
+  background: var(--map-green-soft);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.bh-title {
+  font-size: 34px;
+  font-weight: 820;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  margin: 12px 0 8px;
+  color: var(--text);
+}
+.bh-sub { font-size: 17px; color: var(--muted); line-height: 1.4; margin: 0; }
+
+.bh-anchors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 9px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px 18px;
+  margin-top: 18px;
+  box-shadow: 0 8px 26px rgba(17, 17, 17, .06), 0 1px 3px rgba(17, 17, 17, .04);
+}
+.bh-arrow { color: var(--map-green); font-weight: 700; }
+.bh-anchor { font-size: 16px; font-weight: 700; color: var(--text); }
+
+.bh-steps-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 28px 0 12px;
+}
+.bh-lessons { display: flex; flex-direction: column; gap: 12px; }
+.bh-lesson {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid transparent;
+  border-radius: 20px;
+  padding: 15px 16px;
+  box-shadow: 0 8px 26px rgba(17, 17, 17, .06), 0 1px 3px rgba(17, 17, 17, .04);
+  transition: transform .15s var(--spring);
+}
+.bh-lesson:active { transform: scale(.985); }
+.bh-lesson.active {
+  border-color: rgba(28, 140, 99, .28);
+  background: linear-gradient(180deg, #F1FAF5 0%, #fff 100%);
+}
+.bh-lesson.locked { opacity: .6; }
+.bh-lesson-num {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  font-weight: 740;
+  background: var(--map-green-soft);
+  color: var(--map-green-ink);
+}
+.bh-lesson.done .bh-lesson-num { background: var(--map-green); color: #fff; }
+.bh-lesson-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.bh-lesson-title { font-size: 17px; font-weight: 720; letter-spacing: -.01em; color: var(--text); }
+.bh-lesson.active .bh-lesson-title { color: var(--map-green-ink); }
+.bh-lesson-sub { font-size: 13.5px; color: var(--muted); }
+.bh-lesson > svg { flex: none; color: var(--map-green); }
+.bh-lesson.locked > svg { color: var(--faint); }
+
 /* ----- 3-lesson restructure ---------------------------------------------- */
 .lesson-tag {
   display: inline-block;
@@ -1285,27 +1914,25 @@ table.phrases input { padding: 8px; font-size: 13px; }
 /* ---- Learning Map (Обучение) -------------------------------------------- */
 /* The map gets its own cool-gray ground — a conscious step away from the warm
    library surfaces toward a calmer, more spatial "journey" canvas. */
-.map-screen { background: #F4F6F5; }
+/* Extra breathing room above the status bar so the title never tucks under it. */
+.map-screen {
+  background: #F4F6F5;
+  padding-top: calc(env(safe-area-inset-top) + 26px);
+}
+.map-screen .app-title {
+  font-size: 34px;
+  font-weight: 780;
+  letter-spacing: -.035em;
+}
+.map-screen .app-sub { margin-bottom: 8px; }
 
-.path-progress { margin: 2px 0 20px; }
-.pp-bar {
-  height: 7px;
-  border-radius: 999px;
-  background: #E1E7E4;
-  overflow: hidden;
-}
-.pp-bar span {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--map-green), #2BAE7C);
-  transition: width .5s var(--spring);
-}
-.pp-meta {
-  margin-top: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .02em;
+/* The only progress readout up top — a quiet caption. The real indicator is the
+   road itself: travelled segments turn green, so no SaaS-style bar is needed. */
+.path-meta {
+  margin: 0 0 22px;
+  font-size: 13px;
+  font-weight: 620;
+  letter-spacing: .01em;
   color: var(--muted);
 }
 
@@ -1457,53 +2084,68 @@ table.phrases input { padding: 8px; font-size: 13px; }
   box-shadow: 0 4px 14px rgba(28, 140, 99, .4);
 }
 
-/* Serpentine of nodes threaded by a soft dashed spine. */
-.map-nodes { position: relative; padding: 24px 0 6px; }
-.map-nodes::before {
-  content: "";
+/* Serpentine of nodes strung onto a real road (the measured SVG below). */
+.map-nodes { position: relative; padding: 40px 0 10px; }
+
+/* The road overlay: drawn behind the nodes (z 0) while rows sit above (z 2), so
+   each tile reads as resting on top of the road and the line tucks under it. */
+.map-track {
   position: absolute;
-  top: 6px;
-  bottom: 34px;
-  left: 50%;
-  width: 4px;
-  transform: translateX(-50%);
-  background: repeating-linear-gradient(#D9DFDB 0 9px, transparent 9px 19px);
-  border-radius: 999px;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
   z-index: 0;
+}
+.map-track-bg,
+.map-track-done {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5px;
+}
+.map-track-bg { stroke: #D6DCD8; }
+.map-track-done {
+  stroke: var(--map-green);
+  stroke-dasharray: 1;
+  animation: map-draw .6s var(--spring) both;
+}
+@keyframes map-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
 }
 .map-row {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 46px;
 }
 .map-node-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 180px;
+  width: 156px;
   transition: transform .3s var(--spring);
 }
-.map-row.left .map-node-wrap { transform: translateX(-58px); }
-.map-row.right .map-node-wrap { transform: translateX(58px); }
+.map-row.left .map-node-wrap { transform: translateX(-86px); }
+.map-row.right .map-node-wrap { transform: translateX(86px); }
 
 .mnode {
   position: relative;
-  width: 116px;
-  height: 116px;
+  width: 128px;
+  height: 128px;
   padding: 0;
   border: none;
-  border-radius: 26px;
+  border-radius: 30px;
   background: var(--card);
-  box-shadow: 0 2px 6px rgba(17, 17, 17, .06), 0 16px 32px rgba(17, 17, 17, .10);
+  box-shadow: 0 1px 4px rgba(17, 17, 17, .05), 0 14px 30px rgba(17, 17, 17, .09);
   transition: transform .18s var(--spring), box-shadow .25s var(--spring);
 }
 .mnode:active { transform: scale(.95); }
 .mnode-art {
   position: absolute;
   inset: 0;
-  border-radius: 26px;
+  border-radius: 30px;
   overflow: hidden;
   display: block;
 }
@@ -1512,27 +2154,28 @@ table.phrases input { padding: 8px; font-size: 13px; }
 /* Floating media badge — audio-first, so a waveform glyph. */
 .mnode-badge {
   position: absolute;
-  top: -9px;
-  right: -9px;
-  width: 36px;
-  height: 36px;
+  top: -11px;
+  right: -11px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: #fff;
   color: #1B1B1B;
   display: grid;
   place-items: center;
-  box-shadow: 0 4px 12px rgba(17, 17, 17, .18);
+  box-shadow: 0 4px 12px rgba(17, 17, 17, .16);
   z-index: 2;
 }
 
-/* Completed — gently dimmed, with a green check seal. */
-.mnode.completed .mnode-art { filter: saturate(.82) brightness(.97); }
+/* Completed — full-colour and inviting, just a touch calmer, with a green check
+   seal. No heavy white veil — a passed node should still read as valuable. */
+.mnode.completed .mnode-art { filter: saturate(.88) brightness(.99); }
 .mnode.completed::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 26px;
-  background: rgba(255, 255, 255, .34);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .12);
   pointer-events: none;
 }
 .mnode-check {
@@ -1557,30 +2200,42 @@ table.phrases input { padding: 8px; font-size: 13px; }
 .mnode.due .mnode-art { filter: none; }
 .mnode-check.due-seal { color: var(--mark); }
 
-/* Active — the resume point: green ring, soft glow, a touch larger. No pulsing. */
+/* Active — the resume point: a clean green ring + one soft halo, a touch larger.
+   Calmer than a glow; premium, not gamey. No pulsing. */
 .mnode.active {
-  transform: scale(1.03);
-  box-shadow: 0 0 0 3px var(--map-green), 0 0 0 10px var(--map-green-soft),
-    0 18px 36px rgba(28, 140, 99, .22);
+  transform: scale(1.04);
+  box-shadow: 0 0 0 3.5px var(--map-green), 0 0 0 11px var(--map-green-soft),
+    0 16px 32px rgba(28, 140, 99, .16);
 }
-.mnode.active:active { transform: scale(1); }
+.mnode.active:active { transform: scale(1.01); }
 
-/* Locked — softened and slightly blurred (not grayscale), still tappable. */
-.mnode.locked { box-shadow: 0 1px 3px rgba(17, 17, 17, .06); }
-.mnode.locked .mnode-art { opacity: .4; filter: blur(1.2px); }
+/* Locked — sharp grayscale, near-full opacity. Not blurred, not broken: a future
+   node should be crisp and tempting, just clearly not-yet-unlocked. */
+.mnode.locked { box-shadow: 0 1px 3px rgba(17, 17, 17, .05), 0 10px 22px rgba(17, 17, 17, .06); }
+.mnode.locked .mnode-art { opacity: .82; filter: grayscale(1) saturate(.4) brightness(1.01); }
+.mnode.locked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  background: rgba(246, 248, 247, .16);
+  pointer-events: none;
+}
 .mnode.locked .mnode-badge { opacity: .5; }
 
+/* "Продолжить" — a black bubble that rhymes with the dark topic card. Premium,
+   and a deliberate step away from a green gamified CTA. */
 .map-bubble {
   position: relative;
-  margin-bottom: 13px;
-  background: var(--map-green);
+  margin-bottom: 14px;
+  background: #111;
   color: #fff;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 720;
   letter-spacing: .01em;
-  padding: 7px 14px;
-  border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(28, 140, 99, .34);
+  padding: 8px 16px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(17, 17, 17, .22);
   animation: fade-up .4s var(--spring) both;
 }
 .map-bubble::after {
@@ -1591,17 +2246,17 @@ table.phrases input { padding: 8px; font-size: 13px; }
   transform: translateX(-50%) rotate(45deg);
   width: 10px;
   height: 10px;
-  background: var(--map-green);
+  background: #111;
   border-radius: 2px;
 }
 
 .mnode-label {
-  margin-top: 14px;
-  max-width: 16ch;
+  margin-top: 20px;
+  max-width: 14ch;
   text-align: center;
   font-size: 16px;
-  line-height: 1.22;
-  font-weight: 650;
+  line-height: 1.2;
+  font-weight: 660;
   letter-spacing: -.01em;
   color: var(--text);
 }
@@ -1615,26 +2270,30 @@ table.phrases input { padding: 8px; font-size: 13px; }
   text-align: center;
 }
 
-/* Floating jump FAB — anchored to the bottom-right of the shell column. */
+/* Floating jump FAB — a neutral utility, anchored to the shell's bottom-right.
+   Appears only after scroll (see Learning.tsx); fades in rather than popping. */
 .map-fab {
   position: fixed;
   z-index: 45;
   bottom: calc(150px + env(safe-area-inset-bottom));
   left: 50%;
   /* anchor 16px inside the centred shell column's right edge: half-shell − fab − margin */
-  transform: translateX(calc(var(--shell-w) / 2 - 56px - 16px));
-  width: 56px;
-  height: 56px;
-  border-radius: 20px;
-  border: none;
-  background: var(--map-green);
-  color: #fff;
+  transform: translateX(calc(var(--shell-w) / 2 - 48px - 16px));
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  border: 1px solid rgba(17, 17, 17, .06);
+  background: rgba(255, 255, 255, .82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: #1B1B1B;
   display: grid;
   place-items: center;
-  box-shadow: 0 10px 28px rgba(28, 140, 99, .4);
+  box-shadow: 0 8px 24px rgba(17, 17, 17, .16);
+  animation: fade-up .26s var(--spring) both;
   transition: transform .18s var(--spring);
 }
-.map-fab:active { transform: translateX(calc(var(--shell-w) / 2 - 56px - 16px)) scale(.92); }
+.map-fab:active { transform: translateX(calc(var(--shell-w) / 2 - 48px - 16px)) scale(.92); }
 @media (max-width: 480px) {
   .map-fab { left: auto; right: 16px; transform: none; }
   .map-fab:active { transform: scale(.92); }
