@@ -1,0 +1,20 @@
+{
+  "slug": "flirt-4",
+  "title": "Сделать так, чтобы почувствовала себя единственной",
+  "theme": "Твоё внимание сужается до неё одной — выделена из всех, не как все; из изобилия, не лесть",
+  "subtitle": "",
+  "section": "flirt",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Noticed",  "zone": "Warm",     "en": "I noticed you before I knew why." },
+    { "anchor": "Track",    "zone": "Warm",     "en": "You're making me lose track of the whole party — and it's a little inconvenient." },
+    { "anchor": "Quiet",    "zone": "Warm",     "en": "You have a quiet way of pulling focus." },
+    { "anchor": "Rest",     "zone": "Backbone", "en": "You're not like the rest of this room — and I think you already know it." },
+    { "anchor": "Crossed",  "zone": "Backbone", "en": "Out of everyone here, you're the one I crossed the room for." },
+    { "anchor": "Choice",   "zone": "Backbone", "en": "If I had to choose one conversation tonight, it'd be this one." },
+    { "anchor": "Polite",   "zone": "Weight",   "en": "There's you — and then there's everyone I'm just being polite to." },
+    { "anchor": "Full",     "zone": "Weight",   "en": "You've got my full attention — that's rarer than it sounds." },
+    { "anchor": "Else",     "zone": "Weight",   "en": "I'm aware there's a whole room here — I'm just not very interested in anyone else right now." }
+  ],
+  "mnemo": "Ты noticed её ещё до того, как понял почему; рядом теряешь track всей вечеринки, и в ней есть quiet сила тянуть фокус. Выделяешь прямо: она не как rest зала и знает это; из всех именно к ней ты crossed комнату; будь твоя choice — только этот разговор. Спокойно, из изобилия: есть она — и есть все, с кем ты polite; ей достаётся full внимание, а весь else зал тебе сейчас неинтересен."
+}

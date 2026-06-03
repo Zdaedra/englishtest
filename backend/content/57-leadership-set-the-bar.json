@@ -1,0 +1,20 @@
+{
+  "slug": "lead-11",
+  "title": "Задать планку / позвать к лучшему",
+  "theme": "Поднять стандарт и позвать людей к их лучшей версии — требовательность из уважения, зов вверх, а не давление вниз",
+  "subtitle": "",
+  "section": "lead-presence",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Seen",       "zone": "Warm",     "en": "I'm asking more of you because I've seen what you can actually do." },
+    { "anchor": "Ceiling",    "zone": "Warm",     "en": "I can see the ceiling you're capable of — and we're nowhere near it yet." },
+    { "anchor": "More",       "zone": "Warm",     "en": "I see more in you than the work is currently showing." },
+    { "anchor": "Bar",        "zone": "Backbone", "en": "Here's the bar: not 'fine,' but the thing people remember." },
+    { "anchor": "Excellent",  "zone": "Backbone", "en": "Let's define what 'excellent' actually means here — concretely, not just 'better.'" },
+    { "anchor": "Costing",    "zone": "Backbone", "en": "'Good enough' is costing us the thing we actually care about." },
+    { "anchor": "Up",         "zone": "Weight",   "en": "I'm calling you up — not bending you down. There's a difference, and you'll feel it." },
+    { "anchor": "Waste",      "zone": "Weight",   "en": "I'd rather expect a lot and mean it than flatter you and waste you." },
+    { "anchor": "Invitation", "zone": "Weight",   "en": "This isn't pressure — it's an invitation to be who you already are at your best." }
+  ],
+  "mnemo": "Ты говоришь из веры: «прошу больше, потому что seen, на что ты способен»; «вижу ceiling, который тебе по силам — и мы к нему даже близко не подошли»; «вижу в тебе more, чем пока показывает работа». Ясно ставишь планку: «вот bar — не „нормально\", а то, что запоминают»; «давай определим, что значит excellent здесь — конкретно, не просто „лучше\"»; «„good enough\" уже costing нам то, что нам правда дорого». И требовательность из уважения: «я зову тебя up, не гну down — это разное, и ты это почувствуешь»; «лучше ждать многого и всерьёз, чем льстить и waste тебя»; «это не давление — это invitation быть тем, кто ты уже есть на пике»."
+}

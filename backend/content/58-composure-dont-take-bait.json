@@ -1,0 +1,20 @@
+{
+  "slug": "composure-1",
+  "title": "Не дать себя спровоцировать",
+  "theme": "Тебя подкалывают, чтобы вырвать реакцию — не клюнуть на наживку, спокойно назвать приём; самообладание читается как сила",
+  "subtitle": "",
+  "section": "composure",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Bait",     "zone": "Warm",     "en": "I see the bait — and I admire the presentation." },
+    { "anchor": "Rise",     "zone": "Warm",     "en": "Nice try getting a rise out of me." },
+    { "anchor": "Table",    "zone": "Warm",     "en": "I'm going to leave that one on the table." },
+    { "anchor": "Designed", "zone": "Backbone", "en": "That was designed to get a reaction — I noticed, and I'll pass." },
+    { "anchor": "Role",     "zone": "Backbone", "en": "I'm not going to take the role you're offering me." },
+    { "anchor": "Fishing",  "zone": "Backbone", "en": "I won't perform the reaction you're fishing for." },
+    { "anchor": "Button",   "zone": "Weight",   "en": "My calm isn't a button you get to press." },
+    { "anchor": "Strings",  "zone": "Weight",   "en": "Pull all the strings you want — they're not attached to anything." },
+    { "anchor": "Lever",    "zone": "Weight",   "en": "My reaction is my choice — never your lever." }
+  ],
+  "mnemo": "Тебя подкалывают, а ты спокойно: «вижу bait — и отдаю должное подаче»; «хорошая попытка вырвать из меня rise»; «оставлю это на table». Прямо называешь манёвр: «это было designed ради реакции — я заметил и пропущу»; «я не возьму role, которую ты мне суёшь»; «не стану отыгрывать реакцию, на которую ты fishing». И непробиваемое достоинство: «мой покой — не button, который тебе жать»; «дёргай за strings сколько хочешь — они ни к чему не привязаны»; «моя реакция — мой выбор, а не твой lever»."
+}

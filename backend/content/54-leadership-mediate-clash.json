@@ -1,0 +1,20 @@
+{
+  "slug": "lead-8",
+  "title": "Разрулить чужой конфликт",
+  "theme": "Двое сцепились при тебе — вступить нейтральным авторитетом: снизить градус, дать структуру и вернуть их на одну сторону, не судя",
+  "subtitle": "",
+  "section": "lead-presence",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Closer",      "zone": "Warm",     "en": "I hear both of you — and we're closer to the same concern than it sounds." },
+    { "anchor": "Enemy",       "zone": "Warm",     "en": "Neither of you is the enemy here." },
+    { "anchor": "Outcome",     "zone": "Warm",     "en": "You both want the same outcome — that's the part to stand on." },
+    { "anchor": "Crossfire",   "zone": "Backbone", "en": "Let's stop the crossfire — one voice at a time, uninterrupted." },
+    { "anchor": "Fact",        "zone": "Backbone", "en": "Give me the fact — then what you need from it." },
+    { "anchor": "Temperature", "zone": "Backbone", "en": "Let's separate the issue from the temperature in the room." },
+    { "anchor": "Crown",       "zone": "Weight",   "en": "I'm not here to crown a winner — I'm here to get you hearing each other." },
+    { "anchor": "Frame",       "zone": "Weight",   "en": "I'll just hold the frame until you actually hear each other." },
+    { "anchor": "Side",        "zone": "Weight",   "en": "I'm not picking a side — I'm getting you back onto the same one." }
+  ],
+  "mnemo": "Ты входишь нейтрально: «слышу обоих — вы closer к одной тревоге, чем кажется»; «никто здесь не enemy»; «вам нужен один outcome — вот на чём стоим». Глушишь эскалацию структурой: «стоп crossfire — по одному голосу, без перебиваний»; «дай мне fact — потом что тебе от него нужно»; «отделим вопрос от temperature в комнате». И спокойный нейтралитет: «я не crown победителя — я возвращаю вам слышимость»; «просто держу frame, пока вы правда не услышите друг друга»; «я не на чьей side — я возвращаю вас на одну»."
+}

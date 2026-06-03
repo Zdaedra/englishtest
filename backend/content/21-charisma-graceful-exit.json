@@ -1,0 +1,20 @@
+{
+  "slug": "charisma-8",
+  "title": "Красивый выход из разговора",
+  "theme": "Уйти так, что человек польщён и остаётся «хочу ещё» — не «бросили»",
+  "subtitle": "",
+  "section": "charisma",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Needed",   "zone": "Warm",     "en": "This was exactly the conversation I needed tonight." },
+    { "anchor": "Selfish",  "zone": "Warm",     "en": "I'd keep you all night if I weren't trying to be less selfish about it." },
+    { "anchor": "High",     "zone": "Warm",     "en": "I'm going to leave this on a high note." },
+    { "anchor": "Rounds",   "zone": "Backbone", "en": "I've got to make my rounds — but find me before you leave." },
+    { "anchor": "Calendar", "zone": "Backbone", "en": "Let's get something on the calendar before we both pretend we will and don't." },
+    { "anchor": "Pick",     "zone": "Backbone", "en": "Let me step away one second — but I want to pick this back up." },
+    { "anchor": "Trouble",  "zone": "Weight",   "en": "You and I are going to be trouble together — I can already tell." },
+    { "anchor": "Mystery",  "zone": "Weight",   "en": "Let's leave a little mystery for the next one." },
+    { "anchor": "Next",     "zone": "Weight",   "en": "Next time, I want the question you were too polite to ask me." }
+  ],
+  "mnemo": "Ты говоришь, что это был именно тот разговор, что был needed, и остался бы дольше, не будь это так selfish — но уходишь на high-ноте. Тебе пора на rounds по залу, но вы сразу ставите встречу в calendar, чтобы pick разговор позже. На прощание роняешь крючок: с тобой они будут trouble; оставляешь mystery — и приберегаешь на next раз вопрос, который они постеснялись задать."
+}

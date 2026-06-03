@@ -1,0 +1,20 @@
+{
+  "slug": "intimacy-9",
+  "title": "Разговор об ожиданиях и будущем",
+  "theme": "Большой разговор «куда мы идём» — ясно назвать свои потребности и направление без ультиматума и без нужды, пригласить к сонастройке",
+  "subtitle": "",
+  "section": "intimacy",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Value",     "zone": "Warm",     "en": "I love what we have — and I'd like to talk about where it's going." },
+    { "anchor": "Dream",     "zone": "Warm",     "en": "Can we dream out loud together for a bit? No pressure — just us." },
+    { "anchor": "Imagine",   "zone": "Warm",     "en": "I'd love space to imagine what we're building — not just what we're managing." },
+    { "anchor": "Plainly",   "zone": "Backbone", "en": "Here's what I want, plainly: a real partnership — and I want to build it with you." },
+    { "anchor": "Ultimatum", "zone": "Backbone", "en": "This isn't an ultimatum — it's me telling you my direction honestly." },
+    { "anchor": "Clarity",   "zone": "Backbone", "en": "I'm not asking for a promise tonight — I'm asking for clarity." },
+    { "anchor": "Together",  "zone": "Weight",   "en": "I know where I'm going — the real question is whether we go there together." },
+    { "anchor": "Desire",    "zone": "Weight",   "en": "I want you in my future from desire — not from fear." },
+    { "anchor": "Disappear", "zone": "Weight",   "en": "I'm willing to build something real — but I won't disappear from myself to keep it." }
+  ],
+  "mnemo": "Ты кладёшь на стол value того, что есть: «люблю, что у нас есть, — и хочу поговорить, куда оно идёт»; «давай dream вслух вместе, без давления — просто мы»; «хочу места, чтобы imagine, что мы строим, а не только что разруливаем». Прямо: «вот чего хочу, plainly — настоящего партнёрства, и строить его с тобой»; «это не ultimatum — это я честно называю своё направление»; «не прошу обещания сегодня — прошу clarity». И из зрелости: я знаю, куда иду, вопрос лишь — together ли; хочу тебя в своём будущем из desire, не из страха; готов строить настоящее — но не disappear из себя, чтобы это удержать."
+}

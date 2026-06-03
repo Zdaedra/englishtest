@@ -1,0 +1,20 @@
+{
+  "slug": "composure-9",
+  "title": "Остаться собой под лестью/манипуляцией",
+  "theme": "Тебя обрабатывают лестью, виной, срочностью — принять тёплое не покупаясь, назвать рычаг и держать решение; нельзя купить настроением",
+  "subtitle": "",
+  "section": "composure",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Flattery", "zone": "Warm",     "en": "Flattery gets you a sincere thank-you — not much past that." },
+    { "anchor": "Lovely",   "zone": "Warm",     "en": "Lovely words — I'm keeping them and my position both." },
+    { "anchor": "Warmth",   "zone": "Warm",     "en": "I appreciate the warmth — and I'd like to keep the question clean." },
+    { "anchor": "Trading",  "zone": "Backbone", "en": "I'll take the compliment — but I'm not trading it for a yes." },
+    { "anchor": "Guilt",    "zone": "Backbone", "en": "That's the guilt angle — I see it, and it doesn't change the question." },
+    { "anchor": "Urgency",  "zone": "Backbone", "en": "The urgency may be real — but it doesn't change what I need to weigh." },
+    { "anchor": "Bought",   "zone": "Weight",   "en": "Good feeling isn't how my judgment gets bought." },
+    { "anchor": "Anchor",   "zone": "Weight",   "en": "I can enjoy the charm and still keep my anchor." },
+    { "anchor": "Sweet",    "zone": "Weight",   "en": "My choice stays mine — even when the room gets sweet." }
+  ],
+  "mnemo": "Тебя обрабатывают, а ты тепло держишься: «flattery приносит искреннее спасибо — и не больше»; «lovely слова — оставлю их и свою позицию заодно»; «ценю warmth — и хочу сохранить вопрос чистым». Называешь рычаги: «комплимент приму — но не trading его на „да\"»; «это guilt-приём — вижу его, и он не меняет вопроса»; «urgency может быть реальной — но не меняет того, что мне взвесить». И внутренний якорь: «приятным чувством моё суждение не bought»; «могу наслаждаться charm и держать свой anchor»; «мой choice остаётся моим — даже когда в комнате стало sweet»."
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "gravitas-9",
+  "title": "Командовать через спокойствие и экономию слов",
+  "theme": "Комната шумит — командовать обратным: меньше слов, тише, медленнее; не перекрикивать, а понизить, и комната подстроится; спокойствие — это команда",
+  "subtitle": "",
+  "section": "gravitas",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Down",     "zone": "Warm",     "en": "Let's bring the room down — nobody loses power by listening." },
+    { "anchor": "Quieter",  "zone": "Warm",     "en": "Stay with me — we'll get further together if we get quieter." },
+    { "anchor": "One",      "zone": "Warm",     "en": "One voice at a time — I actually want to hear it." },
+    { "anchor": "Signal",   "zone": "Backbone", "en": "Stop adding noise — give me the signal." },
+    { "anchor": "Point",    "zone": "Backbone", "en": "One point at a time — the first one is safety." },
+    { "anchor": "Pause",    "zone": "Backbone", "en": "We pause. We hear the facts. Then we decide." },
+    { "anchor": "Outshout", "zone": "Weight",   "en": "I'm not going to outshout the room — I'm going to steady it." },
+    { "anchor": "Lower",    "zone": "Weight",   "en": "I'll speak lower — because the stakes are high." },
+    { "anchor": "Calm",     "zone": "Weight",   "en": "The loudest thing in this room is calm. Let it do the work." }
+  ],
+  "mnemo": "Комната шумит, а ты понижаешь: «давайте сбавим down — никто не теряет силу, слушая»; «будь со мной — мы дальше уйдём, если станем quieter»; «по one голосу — я правда хочу услышать». Коротко и ясно: «хватит шуметь — дай мне signal»; «по одному point — первый из них безопасность»; «мы pause, слышим факты, потом решаем». И вес: «я не стану outshout комнату — я её успокою»; «я говорю lower, потому что ставки высоки»; «самое громкое в этой комнате — calm; пусть он делает работу»."
+}

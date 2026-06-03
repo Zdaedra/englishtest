@@ -1,0 +1,20 @@
+{
+  "slug": "flirt-6",
+  "title": "Пригласить с зарядом",
+  "theme": "Позвать на свидание как обещание опыта, не транзакцию — ей хочется сказать «да»",
+  "subtitle": "",
+  "section": "flirt",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Ruin",      "zone": "Warm",     "en": "Let me take you out and ruin all your other Tuesdays." },
+    { "anchor": "Show",      "zone": "Warm",     "en": "There's a place I've been wanting to show someone — you're someone." },
+    { "anchor": "Breathe",   "zone": "Warm",     "en": "I want to take you somewhere this conversation can breathe." },
+    { "anchor": "Friday",    "zone": "Backbone", "en": "Friday. Dinner. I'm planning the whole thing — you just show up." },
+    { "anchor": "Light",     "zone": "Backbone", "en": "Thursday evening — somewhere with good light and no rush." },
+    { "anchor": "Coffee",    "zone": "Backbone", "en": "Give me one evening — and I promise it won't be a coffee." },
+    { "anchor": "Boring",    "zone": "Weight",   "en": "I don't do boring — say yes and find out exactly what I mean." },
+    { "anchor": "Wondering", "zone": "Weight",   "en": "Say yes now, then spend all week wondering what I've got planned." },
+    { "anchor": "Errand",    "zone": "Weight",   "en": "I'm not offering you an errand — I'm offering you a night you'll remember." }
+  ],
+  "mnemo": "Ты обещаешь ruin все её прочие вторники; есть место, которое хочешь show — и она «тот самый someone». Хочешь увести туда, где разговору можно breathe. Зовёшь конкретно: Friday, ужин, всё на тебе; вечер с хорошим light и без спешки; «дай один вечер — обещаю, это не coffee». И заряжаешь: ты не делаешь boring, скажи да — узнаешь; say yes — и всю неделю wondering, что задумал; ты не предлагаешь errand — ты предлагаешь ночь, которую запомнят."
+}

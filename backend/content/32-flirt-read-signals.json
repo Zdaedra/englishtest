@@ -1,0 +1,20 @@
+{
+  "slug": "flirt-8",
+  "title": "Читать и отвечать на сигналы",
+  "theme": "Считывать её сигналы и калиброваться — отзеркалить, проверить, идти за её темпом, без эго",
+  "subtitle": "",
+  "section": "flirt",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Smile",   "zone": "Warm",     "en": "I caught that smile — I'm going to take it gently." },
+    { "anchor": "Leaning", "zone": "Warm",     "en": "You were leaning in for a second there — I noticed." },
+    { "anchor": "Pace",    "zone": "Warm",     "en": "I like your pace — it makes me want to match it." },
+    { "anchor": "Reading", "zone": "Backbone", "en": "I'm reading interest — but I'd rather check than assume." },
+    { "anchor": "Light",   "zone": "Backbone", "en": "That felt like a green light — am I reading it right?" },
+    { "anchor": "Slow",    "zone": "Backbone", "en": "If I'm moving too fast, tell me — I can slow down." },
+    { "anchor": "Force",   "zone": "Weight",   "en": "I don't need to force the moment — I'd rather follow what's actually here." },
+    { "anchor": "Signal",  "zone": "Weight",   "en": "I'll follow the signal you give me — not the one I want." },
+    { "anchor": "Space",   "zone": "Weight",   "en": "No ego in it — if you want space, it's yours, no story attached." }
+  ],
+  "mnemo": "Ты ловишь её smile и берёшь его gently; замечаешь лёгкое leaning — «я заметил»; тебе нравится её pace, хочется попасть в такт. Прямо проверяешь: «я reading интерес — но лучше спрошу, чем додумаю»; «это похоже на green light — верно?»; «слишком быстро — скажи, я slow». И спокойно, без эго: не нужно force момент; следуешь её signal, не своему сценарию; «no ego — нужно space, оно твоё, без обид»."
+}

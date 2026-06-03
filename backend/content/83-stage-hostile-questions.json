@@ -1,0 +1,20 @@
+{
+  "slug": "stage-5",
+  "title": "Враждебные вопросы из зала",
+  "theme": "Из зала летит агрессивный «gotcha»-вопрос с ложной посылкой при всех — удержать комнату, не уйти в оборону и не вступить в драку; снять жар и найти боль под выпадом, держать рамку без ответной агрессии, остаться выше; зал запомнит не вопрос, а мою реакцию",
+  "subtitle": "",
+  "section": "stage",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "heat",       "zone": "Warm",     "en": "Let me take the heat out of the question and keep the concern." },
+    { "anchor": "underneath", "zone": "Warm",     "en": "That's a sharp one — and there's a real worry underneath it." },
+    { "anchor": "nerve",      "zone": "Warm",     "en": "Thank you for the question with some nerve in it. Let's take it seriously." },
+    { "anchor": "premise",    "zone": "Backbone", "en": "I'd challenge the premise — but the question under it is fair, so here it is." },
+    { "anchor": "bait",       "zone": "Backbone", "en": "I'm not taking the bait on the framing — but the substance, I'll answer." },
+    { "anchor": "separate",   "zone": "Backbone", "en": "Let me separate the accusation from the real question, and answer the second." },
+    { "anchor": "gift",       "zone": "Weight",   "en": "A tough question is a gift — it lets me clear this up for everyone." },
+    { "anchor": "audience",   "zone": "Weight",   "en": "I'm not here to fight the questioner. I'm here to serve the audience." },
+    { "anchor": "steady",     "zone": "Weight",   "en": "The question was sharp. The answer will be steady." }
+  ],
+  "mnemo": "Из зала летит выпад. Сначала ты снимаешь heat и оставляешь суть; видишь под колкостью настоящую боль underneath; благодаришь за вопрос с nerve. Потом держишь рамку без драки: оспариваешь premise, но отвечаешь на честное ядро; не клюёшь на bait в формулировке; separate обвинение от вопроса и отвечаешь по сути. И остаёшься выше: резкий вопрос — это gift; ты не дерёшься со спросившим, а служишь audience; вопрос был резкий — а ответ будет steady."
+}

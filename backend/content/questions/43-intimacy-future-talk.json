@@ -1,0 +1,208 @@
+{
+  "slug": "intimacy-future-talk",
+  "batch_file": "43-intimacy-future-talk.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "value",
+      "accept_anchors": [
+        "Value"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Большой разговор «куда мы идём» — ясно назвать…). Дай реплику в регистре «Warm».",
+      "intent": "dream",
+      "accept_anchors": [
+        "Dream"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "imagine",
+      "accept_anchors": [
+        "Imagine"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "plainly",
+      "accept_anchors": [
+        "Plainly"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Большой разговор «куда мы идём» — ясно назвать…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "ultimatum",
+      "accept_anchors": [
+        "Ultimatum"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "clarity",
+      "accept_anchors": [
+        "Clarity"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "together",
+      "accept_anchors": [
+        "Together"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Большой разговор «куда мы идём» — ясно назвать…). Дай реплику в регистре «Weight».",
+      "intent": "desire",
+      "accept_anchors": [
+        "Desire"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "disappear",
+      "accept_anchors": [
+        "Disappear"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "value",
+      "accept_anchors": [
+        "Value"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Большой разговор «куда мы идём» — ясно назвать…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "dream",
+      "accept_anchors": [
+        "Dream"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "imagine",
+      "accept_anchors": [
+        "Imagine"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "plainly",
+      "accept_anchors": [
+        "Plainly"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Большой разговор «куда мы идём» — ясно назвать…). Дай реплику в регистре «Backbone».",
+      "intent": "ultimatum",
+      "accept_anchors": [
+        "Ultimatum"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "clarity",
+      "accept_anchors": [
+        "Clarity"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "together",
+      "accept_anchors": [
+        "Together"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Большой разговор «куда мы идём» — ясно назвать…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "desire",
+      "accept_anchors": [
+        "Desire"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "disappear",
+      "accept_anchors": [
+        "Disappear"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "value",
+      "accept_anchors": [
+        "Value"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Большой разговор «куда мы идём» — ясно назвать…). Дай реплику в регистре «Warm».",
+      "intent": "dream",
+      "accept_anchors": [
+        "Dream"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

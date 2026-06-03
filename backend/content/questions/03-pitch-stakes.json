@@ -1,0 +1,208 @@
+{
+  "slug": "pitch-stakes",
+  "batch_file": "03-pitch-stakes.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Frame». Ответь одной уместной фразой.",
+      "intent": "frame",
+      "accept_anchors": [
+        "Frame"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Питч: боль, цена и «почему сейчас»). Дай реплику в регистре «Frame».",
+      "intent": "crack",
+      "accept_anchors": [
+        "Crack"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Frame». Скажи фразу, которая здесь уместна.",
+      "intent": "real",
+      "accept_anchors": [
+        "Real"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Cost». Произнеси подходящую фразу.",
+      "intent": "bleed",
+      "accept_anchors": [
+        "Bleed"
+      ],
+      "zone": "Cost",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Питч: боль, цена и «почему сейчас»). Вступи в тоне «Cost» одной фразой.",
+      "intent": "stake",
+      "accept_anchors": [
+        "Stake"
+      ],
+      "zone": "Cost",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Cost»).",
+      "intent": "tax",
+      "accept_anchors": [
+        "Tax"
+      ],
+      "zone": "Cost",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Now». Ответь одной уместной фразой.",
+      "intent": "window",
+      "accept_anchors": [
+        "Window"
+      ],
+      "zone": "Now",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Питч: боль, цена и «почему сейчас»). Дай реплику в регистре «Now».",
+      "intent": "tide",
+      "accept_anchors": [
+        "Tide"
+      ],
+      "zone": "Now",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Now». Скажи фразу, которая здесь уместна.",
+      "intent": "clock",
+      "accept_anchors": [
+        "Clock"
+      ],
+      "zone": "Now",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Frame». Произнеси подходящую фразу.",
+      "intent": "frame",
+      "accept_anchors": [
+        "Frame"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Питч: боль, цена и «почему сейчас»). Вступи в тоне «Frame» одной фразой.",
+      "intent": "crack",
+      "accept_anchors": [
+        "Crack"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Frame»).",
+      "intent": "real",
+      "accept_anchors": [
+        "Real"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Cost». Ответь одной уместной фразой.",
+      "intent": "bleed",
+      "accept_anchors": [
+        "Bleed"
+      ],
+      "zone": "Cost",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Питч: боль, цена и «почему сейчас»). Дай реплику в регистре «Cost».",
+      "intent": "stake",
+      "accept_anchors": [
+        "Stake"
+      ],
+      "zone": "Cost",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Cost». Скажи фразу, которая здесь уместна.",
+      "intent": "tax",
+      "accept_anchors": [
+        "Tax"
+      ],
+      "zone": "Cost",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Now». Произнеси подходящую фразу.",
+      "intent": "window",
+      "accept_anchors": [
+        "Window"
+      ],
+      "zone": "Now",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Питч: боль, цена и «почему сейчас»). Вступи в тоне «Now» одной фразой.",
+      "intent": "tide",
+      "accept_anchors": [
+        "Tide"
+      ],
+      "zone": "Now",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Now»).",
+      "intent": "clock",
+      "accept_anchors": [
+        "Clock"
+      ],
+      "zone": "Now",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Frame». Ответь одной уместной фразой.",
+      "intent": "frame",
+      "accept_anchors": [
+        "Frame"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Питч: боль, цена и «почему сейчас»). Дай реплику в регистре «Frame».",
+      "intent": "crack",
+      "accept_anchors": [
+        "Crack"
+      ],
+      "zone": "Frame",
+      "difficulty": 1
+    }
+  ]
+}

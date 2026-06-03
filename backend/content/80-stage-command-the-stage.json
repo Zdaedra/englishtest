@@ -1,0 +1,20 @@
+{
+  "slug": "stage-2",
+  "title": "Командовать сценой (тело/голос/пауза)",
+  "theme": "Владеть залом в процессе — вести внимание, использовать паузу и замедление как команду, командовать через тишину; пространство моё",
+  "subtitle": "",
+  "section": "stage",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Lean",    "zone": "Warm",     "en": "Lean in with me for this next part." },
+    { "anchor": "Stay",    "zone": "Warm",     "en": "Stay with me here — this is where it starts to matter." },
+    { "anchor": "Picture", "zone": "Warm",     "en": "Picture this with me for a second." },
+    { "anchor": "Soak",    "zone": "Backbone", "en": "Let that soak for a second before we move on." },
+    { "anchor": "Slow",    "zone": "Backbone", "en": "I'm going to slow this down — it deserves precision." },
+    { "anchor": "Write",   "zone": "Backbone", "en": "If you write down one line, write this one." },
+    { "anchor": "Hang",    "zone": "Weight",   "en": "I'll let that line hang. The silence is on my side." },
+    { "anchor": "Air",     "zone": "Weight",   "en": "I don't fill the air to feel in control — the space is already mine." },
+    { "anchor": "Wait",    "zone": "Weight",   "en": "I'm in no rush to fill it — watch the room wait for me." }
+  ],
+  "mnemo": "Ты уже на сцене и ведёшь внимание: «lean ближе для этой части»; «stay со мной — вот здесь начинается главное»; «picture это вместе со мной». Командуешь паузой и темпом: «дай этому soak секунду, прежде чем дальше»; «я slow это — оно заслуживает точности»; «если запишете одну строку — write эту». И владение тишиной: «дам фразе hang — тишина на моей стороне»; «я не заполняю air ради контроля — пространство уже моё»; «я не тороплюсь его заполнять — смотри, как зал wait меня»."
+}

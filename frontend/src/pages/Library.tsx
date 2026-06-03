@@ -1,14 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api, BatchListItem, PhraseSearchItem } from "../api";
-import { usePlayer } from "../player/PlayerContext";
 import { BatchCover } from "../ui/Art";
-import { IconPlay, IconSearch } from "../ui/icons";
+import { IconSearch } from "../ui/icons";
+import { orderedSections } from "../lib/sections";
+
+// Natural order inside a direction: charisma-1, charisma-2, … charisma-11.
+const numOf = (slug: string) => {
+  const m = slug.match(/(\d+)\s*$/);
+  return m ? parseInt(m[1], 10) : 0;
+};
 
 export default function Library() {
   const nav = useNavigate();
   const loc = useLocation();
-  const player = usePlayer();
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [err, setErr] = useState("");
 
@@ -16,15 +21,12 @@ export default function Library() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  // Per-phrase index for the second search block — fetched lazily on first open.
   const [phrases, setPhrases] = useState<PhraseSearchItem[] | null>(null);
 
   useEffect(() => {
     api.listBatches().then(setBatches).catch((e) => setErr(String(e)));
   }, []);
 
-  // The nav's search button navigates here with a fresh focusSearch token; open
-  // the field and focus it. Keyed on loc.key so a repeated tap re-triggers.
   useEffect(() => {
     const st = loc.state as { focusSearch?: number } | null;
     if (st?.focusSearch) {
@@ -34,7 +36,6 @@ export default function Library() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loc.key]);
 
-  // Pull the phrase index the first time search opens (cheap, single request).
   useEffect(() => {
     if (searchOpen && phrases === null) {
       api.listPhrases().then(setPhrases).catch(() => setPhrases([]));
@@ -46,22 +47,40 @@ export default function Library() {
     setQ("");
   };
 
-  // Most-recent batch is the featured focus; all batches form the library.
-  const ordered = useMemo(
+  // Group batches into the section rows (Apple-Music browse: each direction is a
+  // horizontal carousel, directions stacked top→bottom in the curated order).
+  const rows = useMemo(() => {
+    const bySlug: Record<string, BatchListItem[]> = {};
+    for (const b of batches) (bySlug[b.section || "__other"] ||= []).push(b);
+    for (const k in bySlug) bySlug[k].sort((a, c) => numOf(a.slug) - numOf(c.slug));
+
+    const out: { slug: string; title: string; items: BatchListItem[]; nav: boolean }[] = [];
+    const known = new Set<string>();
+    for (const sec of orderedSections()) {
+      known.add(sec.slug);
+      const items = bySlug[sec.slug];
+      if (items?.length) out.push({ slug: sec.slug, title: sec.ru, items, nav: true });
+    }
+    const other = batches
+      .filter((b) => !known.has(b.section))
+      .sort((a, c) => numOf(a.slug) - numOf(c.slug));
+    if (other.length) out.push({ slug: "__other", title: "Другое", items: other, nav: false });
+    return out;
+  }, [batches]);
+
+  const needle = q.trim().toLowerCase();
+  const allOrdered = useMemo(
     () => [...batches].sort((a, b) => b.created_at.localeCompare(a.created_at)),
     [batches]
   );
-  const focus = ordered[0];
-
-  const needle = q.trim().toLowerCase();
   const matchedBatches = useMemo(() => {
-    if (!needle) return ordered;
-    return ordered.filter((b) =>
+    if (!needle) return [];
+    return allOrdered.filter((b) =>
       [b.title, b.preview, b.subtitle, b.theme, ...(b.anchors || [])]
         .filter(Boolean)
         .some((t) => t.toLowerCase().includes(needle))
     );
-  }, [ordered, needle]);
+  }, [allOrdered, needle]);
   const matchedPhrases = useMemo(() => {
     if (!needle || !phrases) return [];
     return phrases
@@ -73,16 +92,6 @@ export default function Library() {
       .slice(0, 50);
   }, [phrases, needle]);
   const searching = searchOpen && needle.length > 0;
-
-  const startBatch = async (id: number) => {
-    try {
-      const b = await api.getBatch(id);
-      player.playBatch(b, { mode: "listening", order: "full_random" });
-      nav("/play");
-    } catch (e) {
-      setErr(String(e));
-    }
-  };
 
   return (
     <div className="screen">
@@ -185,53 +194,35 @@ export default function Library() {
         </>
       )}
 
-      {!searching && focus && (
-        <section>
-          <p className="section-label">Current focus</p>
-          <button className="feature" onClick={() => nav(`/batch/${focus.id}`)}>
-            <span className="feature-art">
-              <BatchCover seed={focus.slug} coverUrl={focus.cover_url} />
-            </span>
-            <div className="feature-body">
-              <div className="feature-title">{focus.title}</div>
-              {focus.preview && <div className="feature-sub">{focus.preview}</div>}
-              <div className="feature-meta">{focus.phrase_count} patterns</div>
-            </div>
-            <span
-              className="feature-play"
-              onClick={(e) => {
-                e.stopPropagation();
-                startBatch(focus.id);
-              }}
+      {!searching &&
+        rows.map((row) => (
+          <section className="lib-row" key={row.slug}>
+            <button
+              className="lib-row-head"
+              onClick={() => row.nav && nav(`/section/${row.slug}`)}
+              disabled={!row.nav}
             >
-              <IconPlay size={20} />
-            </span>
-          </button>
-        </section>
-      )}
-
-      {!searching && ordered.length > 0 && (
-        <section>
-          <p className="section-label">Library</p>
-          <div className="grid">
-            {ordered.map((b, i) => (
-              <button
-                key={b.id}
-                className="album"
-                style={{ animationDelay: `${i * 40}ms` }}
-                onClick={() => nav(`/batch/${b.id}`)}
-              >
-                <span className="album-art">
-                  <BatchCover seed={b.slug} coverUrl={b.cover_url} />
-                </span>
-                <div className="album-title">{b.title}</div>
-                {b.preview && <div className="album-sub">{b.preview}</div>}
-                <div className="album-meta">{b.phrase_count} patterns</div>
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
+              <span className="lib-row-title">{row.title}</span>
+              {row.nav && (
+                <svg className="lib-row-chev" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                  <path d="M1 1l7 7-7 7" stroke="currentColor" strokeWidth="2"
+                        strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </button>
+            <div className="row-scroll">
+              {row.items.map((b) => (
+                <button key={b.id} className="row-card" onClick={() => nav(`/batch/${b.id}`)}>
+                  <span className="row-card-art">
+                    <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                  </span>
+                  <div className="row-card-title">{b.title}</div>
+                  {b.preview && <div className="row-card-sub">{b.preview}</div>}
+                </button>
+              ))}
+            </div>
+          </section>
+        ))}
     </div>
   );
 }

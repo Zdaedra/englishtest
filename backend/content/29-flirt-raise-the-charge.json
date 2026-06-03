@@ -1,0 +1,20 @@
+{
+  "slug": "flirt-5",
+  "title": "Поднять накал, не форсируя",
+  "theme": "Калиброванно усилить заряд, приглашая, а не давя — выбор и выход всегда остаются за ней",
+  "subtitle": "",
+  "section": "flirt",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Going",     "zone": "Warm",     "en": "I like where this is going — if you do." },
+    { "anchor": "Quieter",   "zone": "Warm",     "en": "I'd like to keep this going somewhere quieter — if you're into that." },
+    { "anchor": "Tempted",   "zone": "Warm",     "en": "I'm tempted to give this conversation a little more room." },
+    { "anchor": "Call",      "zone": "Backbone", "en": "This is where I'd ask you to get out of here with me — entirely your call." },
+    { "anchor": "Charge",    "zone": "Backbone", "en": "I'm enjoying the charge here — I don't want to pretend it's casual." },
+    { "anchor": "Kiss",      "zone": "Backbone", "en": "I'd kiss you right now — but only if it's something you'd want too." },
+    { "anchor": "Chase",     "zone": "Weight",   "en": "I'm not going to chase this — but I'd love to see where it goes." },
+    { "anchor": "Ambiguous", "zone": "Weight",   "en": "The next move is yours — but my interest is not ambiguous." },
+    { "anchor": "Timing",    "zone": "Weight",   "en": "I know what I'd like here — the timing's entirely yours." }
+  ],
+  "mnemo": "Тебе нравится, куда всё going — если ей тоже; хочется увести туда, где quieter, и ты tempted дать разговору больше места. Прямо приподнимаешь ставку: уйти вместе — её call; не делаешь вид, что это casual — тут есть charge; «я бы kiss тебя сейчас — но только если ты тоже хочешь». И спокойно, из изобилия: не станешь chase, но интерес твой не ambiguous, а timing целиком за ней."
+}

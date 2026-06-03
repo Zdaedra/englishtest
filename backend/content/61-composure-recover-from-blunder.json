@@ -1,0 +1,20 @@
+{
+  "slug": "composure-4",
+  "title": "Сохранить лицо после ошибки",
+  "theme": "Ты на людях оговорился или что-то пошло не так — не провалиться в стыд, легко признать и восстановить осанку; одна оплошность не определяет тебя",
+  "subtitle": "",
+  "section": "composure",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Blooper",   "zone": "Warm",     "en": "Well — that one's going in the blooper reel." },
+    { "anchor": "Scenic",    "zone": "Warm",     "en": "Apparently my brain took the scenic route to that sentence." },
+    { "anchor": "Buffered",  "zone": "Warm",     "en": "Brain buffered for a second there — okay, we're back." },
+    { "anchor": "Scratch",   "zone": "Backbone", "en": "Scratch that — here's what I actually meant." },
+    { "anchor": "Cleanly",   "zone": "Backbone", "en": "Let me correct that cleanly — before I make the real point." },
+    { "anchor": "Clumsy",    "zone": "Backbone", "en": "The point stands — I just took the clumsy route to get there." },
+    { "anchor": "Own",       "zone": "Weight",   "en": "A small miss doesn't get to own the room." },
+    { "anchor": "Flustered", "zone": "Weight",   "en": "I don't get flustered over a slip. Onward." },
+    { "anchor": "Public",    "zone": "Weight",   "en": "I can be human in public and still be clear." }
+  ],
+  "mnemo": "Ты оговорился — и легко: «это идёт в blooper-нарезку»; «мозг сегодня поехал по scenic маршруту к фразе»; «buffered на секунду — окей, мы вернулись». Спокойно правишь: «scratch это — вот что я имел в виду»; «дай поправлю cleanly — и к настоящей мысли»; «суть стоит — я просто доехал до неё clumsy путём». И достоинство выше ошибки: «маленький промах не получает права own комнату»; «я не flustered из-за оговорки — дальше»; «я могу быть public человеком и при этом ясным»."
+}

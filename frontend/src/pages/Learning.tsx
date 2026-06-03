@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { api, BatchListItem, BatchMastery } from "../api";
 import { orderedSections, SECTION_BY_SLUG } from "../lib/sections";
 import { getProgress } from "../lib/progress";
-import { getProfile, isOnboarded, prioritySectionSlugs } from "../lib/profile";
+import { getProfile, getStrategy, isOnboarded, prioritySectionSlugs } from "../lib/profile";
+import { buildSprint, weightMix } from "../lib/strategy";
 import { BatchCover } from "../ui/Art";
-import { IconArrowUp, IconCheck, IconRefresh, IconWave } from "../ui/icons";
+import { IconArrowUp, IconCheck, IconPlay, IconRefresh, IconWave } from "../ui/icons";
 
 type NodeState = "completed" | "active" | "locked";
 
@@ -198,6 +199,16 @@ export default function Learning() {
   const total = flat.length;
   const doneCount = flat.filter((b) => closed(b.id)).length;
 
+  // The adaptive focus route: a small weighted sprint instead of all 89 at once.
+  // Rebuilds live whenever the learner re-tunes (getStrategy reads the profile).
+  const strategy = useMemo(() => getStrategy(), [batches]);
+  const mix = useMemo(() => weightMix(strategy), [strategy]);
+  const sprint = useMemo(
+    () => buildSprint(strategy, batches, (id) => !!getProgress(id).l3_passed),
+    [strategy, batches]
+  );
+  const sprintActiveId = sprint[0]?.id ?? null;
+
   // Adaptive review. A node is "due" only if it's closed AND its recall has a real
   // signal that has drifted: low rolling average, or gone stale. Never re-locks.
   const masteryById = useMemo(
@@ -261,7 +272,52 @@ export default function Learning() {
         {total > 0 && (
           <p className="path-meta">Пройдено {doneCount} из {total}</p>
         )}
+        <p className="learn-note">
+          Навык закрывается прохождением всего бетча и сдачей тестов — можно прямо здесь
+          или открыв любой бетч в «Библиотеке».
+        </p>
       </div>
+
+      {/* Training Focus — the live, re-tunable strategy control (consilium design). */}
+      <button className="focus-card" onClick={() => nav("/tune")}>
+        <div className="focus-head">
+          <span className="focus-kicker">Фокус обучения</span>
+          <span className="focus-adjust">Настроить →</span>
+        </div>
+        <div className="focus-mix">
+          {mix.map((m, i) => (
+            <span key={i} className="focus-chip">{m.label} · {m.pct}%</span>
+          ))}
+        </div>
+      </button>
+
+      {/* Current sprint — the small active set under the chosen focus, not all 89. */}
+      {sprint.length > 0 && (
+        <div className="sprint-block">
+          <div className="review-head">
+            <div className="review-head-main">
+              <span className="review-title">Текущий спринт</span>
+              <span className="review-sub">{sprint.length} батчей под твой фокус.</span>
+            </div>
+          </div>
+          <div className="review-rail">
+            {sprint.map((b) => (
+              <button className="review-card" key={b.id} onClick={() => nav(`/batch/${b.id}`)}>
+                <span className="review-thumb">
+                  <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                  {b.id === sprintActiveId && (
+                    <span className="review-badge play"><IconPlay size={14} /></span>
+                  )}
+                </span>
+                <span className="review-card-title">{b.title}</span>
+                <span className="review-card-hint">
+                  {b.id === sprintActiveId ? "Продолжить" : "В очереди"}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {dueList.length > 0 && (
         <div className="review-block">
@@ -291,6 +347,10 @@ export default function Learning() {
             ))}
           </div>
         </div>
+      )}
+
+      {chapters.length > 0 && (
+        <p className="section-label atlas-label">Атлас — все направления</p>
       )}
 
       <div className="map">

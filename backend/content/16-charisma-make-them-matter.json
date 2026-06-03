@@ -1,0 +1,20 @@
+{
+  "slug": "charisma-3",
+  "title": "Сделать собеседника главным",
+  "theme": "Твоё внимание как валюта — человек уходит, чувствуя себя крупнее и интереснее, чем пришёл",
+  "subtitle": "",
+  "section": "charisma",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Fired",    "zone": "Warm",     "en": "What's got you genuinely fired up lately?" },
+    { "anchor": "Light",    "zone": "Warm",     "en": "You lit up when you said that — what's underneath it?" },
+    { "anchor": "Obsessed", "zone": "Warm",     "en": "What are you a little obsessed with right now?" },
+    { "anchor": "Word",     "zone": "Backbone", "en": "You keep coming back to one word — say more about that." },
+    { "anchor": "Rush",     "zone": "Backbone", "en": "That's the part I don't want to rush past." },
+    { "anchor": "Pattern",  "zone": "Backbone", "en": "What I'm hearing is, you saw the pattern early." },
+    { "anchor": "Cost",     "zone": "Weight",   "en": "What did that cost you to learn?" },
+    { "anchor": "Bet",      "zone": "Weight",   "en": "When you're eighty, which of these will you be glad you bet on?" },
+    { "anchor": "Ahead",    "zone": "Weight",   "en": "What are you seeing that the rest of us are still catching up to?" }
+  ],
+  "mnemo": "Ты спрашиваешь, чем человек по-настоящему fired up, и видишь, как внутри загорается light. Ловишь его obsessed-увлечение, замечаешь одно повторяющееся word и не даёшь разговору rush мимо главного — за ним проступает pattern. Тихо спрашиваешь, какой это был cost, на что он готов bet к восьмидесяти, и чем он видит ahead то, что остальные только догоняют."
+}

@@ -1,0 +1,208 @@
+{
+  "slug": "charisma-banter",
+  "batch_file": "19-charisma-banter.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "walked",
+      "accept_anchors": [
+        "Walked"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Отбить укол легко, не ранясь — взять подачу и …). Дай реплику в регистре «Warm».",
+      "intent": "generous",
+      "accept_anchors": [
+        "Generous"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "proud",
+      "accept_anchors": [
+        "Proud"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "careful",
+      "accept_anchors": [
+        "Careful"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Отбить укол легко, не ранясь — взять подачу и …). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "clap",
+      "accept_anchors": [
+        "Clap"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "landing",
+      "accept_anchors": [
+        "Landing"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "hand",
+      "accept_anchors": [
+        "Hand"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Отбить укол легко, не ранясь — взять подачу и …). Дай реплику в регистре «Weight».",
+      "intent": "worst",
+      "accept_anchors": [
+        "Worst"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "like",
+      "accept_anchors": [
+        "Like"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "walked",
+      "accept_anchors": [
+        "Walked"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Отбить укол легко, не ранясь — взять подачу и …). Вступи в тоне «Warm» одной фразой.",
+      "intent": "generous",
+      "accept_anchors": [
+        "Generous"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "proud",
+      "accept_anchors": [
+        "Proud"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "careful",
+      "accept_anchors": [
+        "Careful"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Отбить укол легко, не ранясь — взять подачу и …). Дай реплику в регистре «Backbone».",
+      "intent": "clap",
+      "accept_anchors": [
+        "Clap"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "landing",
+      "accept_anchors": [
+        "Landing"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "hand",
+      "accept_anchors": [
+        "Hand"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Отбить укол легко, не ранясь — взять подачу и …). Вступи в тоне «Weight» одной фразой.",
+      "intent": "worst",
+      "accept_anchors": [
+        "Worst"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "like",
+      "accept_anchors": [
+        "Like"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "walked",
+      "accept_anchors": [
+        "Walked"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Отбить укол легко, не ранясь — взять подачу и …). Дай реплику в регистре «Warm».",
+      "intent": "generous",
+      "accept_anchors": [
+        "Generous"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

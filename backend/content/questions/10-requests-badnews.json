@@ -1,0 +1,208 @@
+{
+  "slug": "requests-badnews",
+  "batch_file": "10-requests-badnews.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warn». Ответь одной уместной фразой.",
+      "intent": "heads",
+      "accept_anchors": [
+        "Heads"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Плохие новости и managing up — предупредить, в…). Дай реплику в регистре «Warn».",
+      "intent": "ahead",
+      "accept_anchors": [
+        "Ahead"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warn». Скажи фразу, которая здесь уместна.",
+      "intent": "snag",
+      "accept_anchors": [
+        "Snag"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Own». Произнеси подходящую фразу.",
+      "intent": "sugarcoat",
+      "accept_anchors": [
+        "Sugarcoat"
+      ],
+      "zone": "Own",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Плохие новости и managing up — предупредить, в…). Вступи в тоне «Own» одной фразой.",
+      "intent": "ball",
+      "accept_anchors": [
+        "Ball"
+      ],
+      "zone": "Own",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Own»).",
+      "intent": "buck",
+      "accept_anchors": [
+        "Buck"
+      ],
+      "zone": "Own",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Forward». Ответь одной уместной фразой.",
+      "intent": "woods",
+      "accept_anchors": [
+        "Woods"
+      ],
+      "zone": "Forward",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Плохие новости и managing up — предупредить, в…). Дай реплику в регистре «Forward».",
+      "intent": "escalate",
+      "accept_anchors": [
+        "Escalate"
+      ],
+      "zone": "Forward",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Forward». Скажи фразу, которая здесь уместна.",
+      "intent": "claw",
+      "accept_anchors": [
+        "Claw"
+      ],
+      "zone": "Forward",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warn». Произнеси подходящую фразу.",
+      "intent": "heads",
+      "accept_anchors": [
+        "Heads"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Плохие новости и managing up — предупредить, в…). Вступи в тоне «Warn» одной фразой.",
+      "intent": "ahead",
+      "accept_anchors": [
+        "Ahead"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warn»).",
+      "intent": "snag",
+      "accept_anchors": [
+        "Snag"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Own». Ответь одной уместной фразой.",
+      "intent": "sugarcoat",
+      "accept_anchors": [
+        "Sugarcoat"
+      ],
+      "zone": "Own",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Плохие новости и managing up — предупредить, в…). Дай реплику в регистре «Own».",
+      "intent": "ball",
+      "accept_anchors": [
+        "Ball"
+      ],
+      "zone": "Own",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Own». Скажи фразу, которая здесь уместна.",
+      "intent": "buck",
+      "accept_anchors": [
+        "Buck"
+      ],
+      "zone": "Own",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Forward». Произнеси подходящую фразу.",
+      "intent": "woods",
+      "accept_anchors": [
+        "Woods"
+      ],
+      "zone": "Forward",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Плохие новости и managing up — предупредить, в…). Вступи в тоне «Forward» одной фразой.",
+      "intent": "escalate",
+      "accept_anchors": [
+        "Escalate"
+      ],
+      "zone": "Forward",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Forward»).",
+      "intent": "claw",
+      "accept_anchors": [
+        "Claw"
+      ],
+      "zone": "Forward",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warn». Ответь одной уместной фразой.",
+      "intent": "heads",
+      "accept_anchors": [
+        "Heads"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Плохие новости и managing up — предупредить, в…). Дай реплику в регистре «Warn».",
+      "intent": "ahead",
+      "accept_anchors": [
+        "Ahead"
+      ],
+      "zone": "Warn",
+      "difficulty": 1
+    }
+  ]
+}

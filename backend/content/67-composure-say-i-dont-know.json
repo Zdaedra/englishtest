@@ -1,0 +1,20 @@
+{
+  "slug": "composure-10",
+  "title": "Сказать «не знаю» без потери лица",
+  "theme": "Тебя спрашивают, а ты не знаешь — признать спокойно и с авторитетом, без блефа; честное «не знаю» весомее блефа",
+  "subtitle": "",
+  "section": "composure",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Top",         "zone": "Warm",     "en": "Great question — not one I'll answer off the top of my head." },
+    { "anchor": "Comfortable",  "zone": "Warm",     "en": "I'm not sure — and I'm comfortable saying that out loud." },
+    { "anchor": "Stumped",      "zone": "Warm",     "en": "You've genuinely stumped me there." },
+    { "anchor": "Solid",        "zone": "Backbone", "en": "I don't know yet — I'll find out and come back with something solid." },
+    { "anchor": "Verify",       "zone": "Backbone", "en": "I'm not going to guess on that — I'll verify it first." },
+    { "anchor": "Limited",      "zone": "Backbone", "en": "What I can say now is limited — what I'll bring back is clear." },
+    { "anchor": "Precise",      "zone": "Weight",   "en": "I'd rather be precise later than confident and wrong now." },
+    { "anchor": "Trouble",      "zone": "Weight",   "en": "Not knowing that doesn't trouble me — pretending to would." },
+    { "anchor": "Bluff",        "zone": "Weight",   "en": "I won't bluff my way through an answer just to fill the room." }
+  ],
+  "mnemo": "Тебя спрашивают, а ты спокойно: «отличный вопрос — не из тех, что отвечу с top головы»; «я не уверен — и мне comfortable сказать это вслух»; «ты меня честно stumped». Прямо: «пока не знаю — узнаю и вернусь с чем-то solid»; «не буду гадать — сначала verify»; «сейчас могу сказать limited — а принесу clear». И спокойная сила: «лучше быть precise позже, чем уверен и неправ сейчас»; «незнание меня не trouble — а притворство бы да»; «я не стану bluff ответом просто чтобы заполнить комнату»."
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "intimacy-3",
+  "title": "Починить после ссоры",
+  "theme": "Буря прошла — первым протянуть руку через разрыв, взять свою часть и выбрать «нас», не делая вид, что ничего не было",
+  "subtitle": "",
+  "section": "intimacy",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Reach",     "zone": "Warm",     "en": "I'm reaching out first, on purpose. Take my hand." },
+    { "anchor": "Distance",  "zone": "Warm",     "en": "I don't like this distance between us — can we close it?" },
+    { "anchor": "Miss",      "zone": "Warm",     "en": "I miss us — even in the middle of this." },
+    { "anchor": "Sorry",     "zone": "Backbone", "en": "I'm sorry. Full stop — that's the whole sentence." },
+    { "anchor": "Defensive", "zone": "Backbone", "en": "I got defensive — and I made it harder for you to reach me." },
+    { "anchor": "Instead",   "zone": "Backbone", "en": "Next time I'll slow down instead of going for the throat." },
+    { "anchor": "Right",     "zone": "Weight",   "en": "I'd rather be close to you than be right." },
+    { "anchor": "Bigger",    "zone": "Weight",   "en": "We're bigger than one bad night — and I'm choosing us." },
+    { "anchor": "Ammo",      "zone": "Weight",   "en": "Let's not save this as ammo for later. Let's just put it down." }
+  ],
+  "mnemo": "Ты первым делаешь reach — протягиваешь руку нарочно; «не люблю эту distance между нами, давай закроем»; «я miss нас, даже посреди всего этого». Берёшь свою часть: «sorry. Точка — это всё предложение»; честно — «я ушёл в defensive и тем закрылся от тебя»; «в следующий раз притормозю instead того, чтобы бить по горлу». И держишь зрелость: лучше быть рядом, чем right; мы bigger одной плохой ночи — я выбираю нас; и не копим это как ammo на потом — просто кладём на землю."
+}

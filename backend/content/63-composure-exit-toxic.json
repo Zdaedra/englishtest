@@ -1,0 +1,20 @@
+{
+  "slug": "composure-6",
+  "title": "Уйти из токсичного разговора с достоинством",
+  "theme": "Разговор стал токсичным или пошёл по кругу — завершить чисто, не хлопая дверью и не капитулируя; вернёмся, когда будет уважительно",
+  "subtitle": "",
+  "section": "composure",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Damage",     "zone": "Warm",     "en": "I don't want this to do more damage than it solves." },
+    { "anchor": "Pause",      "zone": "Warm",     "en": "I care about this enough to pause before we say things we can't take back." },
+    { "anchor": "Kindly",     "zone": "Warm",     "en": "I'm going to step away kindly — not angrily." },
+    { "anchor": "Productive", "zone": "Backbone", "en": "This has stopped being productive — so I'm ending it here for now." },
+    { "anchor": "Attacks",    "zone": "Backbone", "en": "I'm open to the issue — not the attacks around it." },
+    { "anchor": "Circles",    "zone": "Backbone", "en": "We're going in circles — and I'm not going to keep feeding it." },
+    { "anchor": "Afraid",     "zone": "Weight",   "en": "I'm not leaving because I'm afraid — I'm leaving because this deserves better." },
+    { "anchor": "Composure",  "zone": "Weight",   "en": "I won't spend my composure on a conversation that's lost its center." },
+    { "anchor": "Respectful", "zone": "Weight",   "en": "When we can speak respectfully again — I'll be right here." }
+  ],
+  "mnemo": "Разговор пошёл вразнос, и ты тепло: «не хочу, чтобы это сделало больше damage, чем решает»; «мне не всё равно — поэтому pause, пока не сказали то, что не вернуть»; «я отойду kindly, не злясь». Прямо: «это перестало быть productive — на сегодня заканчиваю»; «я открыт к теме, не к attacks вокруг неё»; «мы ходим по circles — и я не стану это кормить». И уход из силы: «я ухожу не потому что afraid — а потому что это заслуживает лучшего»; «я не потрачу свою composure на разговор, потерявший центр»; «когда сможем говорить respectful — я буду тут»."
+}

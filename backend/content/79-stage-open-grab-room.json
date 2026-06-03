@@ -1,0 +1,20 @@
+{
+  "slug": "stage-1",
+  "title": "Открыть выступление, схватить зал",
+  "theme": "Первые секунды на сцене — взять внимание с первой фразы, без разогрева и извинений; крючок, обещание и спокойное владение сценой",
+  "subtitle": "",
+  "section": "stage",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Singular",   "zone": "Warm",     "en": "Let me talk to you — singular — not to a room." },
+    { "anchor": "Back",        "zone": "Warm",     "en": "I can see the back row — hi, you count too." },
+    { "anchor": "Useful",      "zone": "Warm",     "en": "Let's make this useful, not polished." },
+    { "anchor": "Pretending",  "zone": "Backbone", "en": "Here's the question under all of this: what are we pretending not to know?" },
+    { "anchor": "Mistake",     "zone": "Backbone", "en": "I'll open with the mistake that changed everything for me." },
+    { "anchor": "Unsee",       "zone": "Backbone", "en": "If I do my job, you'll leave with one thing you can't unsee." },
+    { "anchor": "Settle",      "zone": "Weight",   "en": "Let the room settle — I'm not rushing the first sentence." },
+    { "anchor": "Command",     "zone": "Weight",   "en": "I'll speak slowly — because speed isn't the same as command." },
+    { "anchor": "Here",        "zone": "Weight",   "en": "The room is mine — not because I took it, but because I'm already here." }
+  ],
+  "mnemo": "Ты выходишь к залу и говоришь не массе, а человеку: «дам тебе — singular — а не „комнате\"»; «я вижу back ряд — привет, вы тоже считаетесь»; «давайте сделаем это useful, а не отполированным». Сильный первый удар: «вот вопрос под всем этим: что мы pretending не знаем?»; «открою с mistake, что изменила для меня всё»; «если сделаю работу — вы унесёте то, что нельзя unsee». И спокойное владение сценой: «дам залу settle — я не тороплю первую фразу»; «говорю медленно, потому что скорость — не то же, что command»; «зал мой — не потому что я его взял, а потому что я уже here»."
+}

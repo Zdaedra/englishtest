@@ -1,0 +1,208 @@
+{
+  "slug": "flirt-raise-the-charge",
+  "batch_file": "29-flirt-raise-the-charge.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "going",
+      "accept_anchors": [
+        "Going"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Калиброванно усилить заряд, приглашая, а не да…). Дай реплику в регистре «Warm».",
+      "intent": "quieter",
+      "accept_anchors": [
+        "Quieter"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "tempted",
+      "accept_anchors": [
+        "Tempted"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "call",
+      "accept_anchors": [
+        "Call"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Калиброванно усилить заряд, приглашая, а не да…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "charge",
+      "accept_anchors": [
+        "Charge"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "kiss",
+      "accept_anchors": [
+        "Kiss"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "chase",
+      "accept_anchors": [
+        "Chase"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Калиброванно усилить заряд, приглашая, а не да…). Дай реплику в регистре «Weight».",
+      "intent": "ambiguous",
+      "accept_anchors": [
+        "Ambiguous"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "timing",
+      "accept_anchors": [
+        "Timing"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "going",
+      "accept_anchors": [
+        "Going"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Калиброванно усилить заряд, приглашая, а не да…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "quieter",
+      "accept_anchors": [
+        "Quieter"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "tempted",
+      "accept_anchors": [
+        "Tempted"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "call",
+      "accept_anchors": [
+        "Call"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Калиброванно усилить заряд, приглашая, а не да…). Дай реплику в регистре «Backbone».",
+      "intent": "charge",
+      "accept_anchors": [
+        "Charge"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "kiss",
+      "accept_anchors": [
+        "Kiss"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "chase",
+      "accept_anchors": [
+        "Chase"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Калиброванно усилить заряд, приглашая, а не да…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "ambiguous",
+      "accept_anchors": [
+        "Ambiguous"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "timing",
+      "accept_anchors": [
+        "Timing"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "going",
+      "accept_anchors": [
+        "Going"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Калиброванно усилить заряд, приглашая, а не да…). Дай реплику в регистре «Warm».",
+      "intent": "quieter",
+      "accept_anchors": [
+        "Quieter"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

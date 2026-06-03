@@ -1,0 +1,20 @@
+{
+  "slug": "gravitas-7",
+  "title": "Дать уверенность, когда исход неизвестен",
+  "theme": "Исход правда неизвестен — дать не гарантию результата, а честную опору: процесс, ценности, присутствие; уверенность в нас, не в финале",
+  "subtitle": "",
+  "section": "gravitas",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Lie",      "zone": "Warm",     "en": "I won't lie to you to make this easier — I'll just be here." },
+    { "anchor": "Unknown",  "zone": "Warm",     "en": "Honest version: it's unknown. Also honest: you're not facing it alone." },
+    { "anchor": "Presence", "zone": "Warm",     "en": "What I can give you right now is honesty, steadiness, and presence." },
+    { "anchor": "Control",  "zone": "Backbone", "en": "Here's what we control: the next move, the standard, and how we treat people." },
+    { "anchor": "Step",     "zone": "Backbone", "en": "The whole road isn't visible — but the next step is." },
+    { "anchor": "Measure",  "zone": "Backbone", "en": "We measure ourselves by how we show up — not by what we can't control." },
+    { "anchor": "Promise",  "zone": "Weight",   "en": "I won't promise the result — I promise the way we meet it." },
+    { "anchor": "Become",   "zone": "Weight",   "en": "We can't choose how this ends — only who we become getting there." },
+    { "anchor": "Upright",  "zone": "Weight",   "en": "Whatever comes, we meet it upright. That part I guarantee." }
+  ],
+  "mnemo": "Люди ждут надежды, а ты честно: «я не стану lie, чтоб тебе было легче — я просто буду рядом»; «честно: исход unknown; и так же честно — вы не одни в этом»; «что могу дать сейчас — честность, устойчивость и presence». Даёшь опору: «вот что мы control: следующий шаг, планка и как мы обходимся с людьми»; «всю дорогу не видно — но next step виден»; «мы measure себя тем, как держимся, а не тем, что нам неподвластно». И уверенность в нас: «я не promise результат — я обещаю, как мы это встретим»; «мы не выбираем, чем всё кончится — только кем become по пути»; «что бы ни пришло, встретим upright — вот это я guarantee»."
+}

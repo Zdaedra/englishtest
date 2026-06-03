@@ -1,0 +1,208 @@
+{
+  "slug": "flirt-graceful-no",
+  "batch_file": "31-flirt-graceful-no.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "fair",
+      "accept_anchors": [
+        "Fair"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Когда интерес не взаимен — принять «нет» с дос…). Дай реплику в регистре «Warm».",
+      "intent": "flattered",
+      "accept_anchors": [
+        "Flattered"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "safe",
+      "accept_anchors": [
+        "Safe"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "clarity",
+      "accept_anchors": [
+        "Clarity"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Когда интерес не взаимен — принять «нет» с дос…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "honest",
+      "accept_anchors": [
+        "Honest"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "negotiate",
+      "accept_anchors": [
+        "Negotiate"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "dent",
+      "accept_anchors": [
+        "Dent"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Когда интерес не взаимен — принять «нет» с дос…). Дай реплику в регистре «Weight».",
+      "intent": "respect",
+      "accept_anchors": [
+        "Respect"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "grown-ups",
+      "accept_anchors": [
+        "Grown-ups"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "fair",
+      "accept_anchors": [
+        "Fair"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Когда интерес не взаимен — принять «нет» с дос…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "flattered",
+      "accept_anchors": [
+        "Flattered"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "safe",
+      "accept_anchors": [
+        "Safe"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "clarity",
+      "accept_anchors": [
+        "Clarity"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Когда интерес не взаимен — принять «нет» с дос…). Дай реплику в регистре «Backbone».",
+      "intent": "honest",
+      "accept_anchors": [
+        "Honest"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "negotiate",
+      "accept_anchors": [
+        "Negotiate"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "dent",
+      "accept_anchors": [
+        "Dent"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Когда интерес не взаимен — принять «нет» с дос…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "respect",
+      "accept_anchors": [
+        "Respect"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "grown-ups",
+      "accept_anchors": [
+        "Grown-ups"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "fair",
+      "accept_anchors": [
+        "Fair"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Когда интерес не взаимен — принять «нет» с дос…). Дай реплику в регистре «Warm».",
+      "intent": "flattered",
+      "accept_anchors": [
+        "Flattered"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

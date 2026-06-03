@@ -53,6 +53,13 @@ export const IconHeadphones = ({ size = 24 }: P) => (
   </g></svg>
 );
 
+export const IconMic = ({ size = 24 }: P) => (
+  <svg {...s(size)}><g {...stroke}>
+    <rect x="9" y="3" width="6" height="11" rx="3" />
+    <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6" />
+  </g></svg>
+);
+
 export const IconSearch = ({ size = 24 }: P) => (
   <svg {...s(size)}><g {...stroke}>
     <circle cx="11" cy="11" r="6.5" />

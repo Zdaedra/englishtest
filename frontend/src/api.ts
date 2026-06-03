@@ -48,6 +48,14 @@ export type PhraseSearchItem = {
   phrase_id: number; batch_id: number; batch_title: string;
   anchor: string; phrase_en: string; gloss_ru: string; order_index: number;
 };
+export type PracticeQuestion = {
+  id: string; batch_id: number; batch_title: string; prompt_ru: string;
+  zone: string; accept_phrase_ids: number[]; hint_anchor: string;
+};
+export type PracticeScore = {
+  score: number; phrase_id: number; anchor: string; phrase_en: string;
+  transcript: string; is_repeat: boolean;
+};
 
 async function j<T>(r: Response): Promise<T> {
   if (!r.ok) throw new Error((await r.text()) || r.statusText);
@@ -112,6 +120,27 @@ export const api = {
     return fetch("/api/training/score-anchor", { method: "POST", body: fd }).then(j<AnchorScore>);
   },
   listPhrases: () => fetch("/api/batches/phrases").then(j<PhraseSearchItem[]>),
+  getPracticeQuestions: (batchIds: number[]) =>
+    fetch(`/api/practice/questions?batch_ids=${batchIds.join(",")}`).then(
+      j<{ questions: PracticeQuestion[] }>
+    ),
+  practicePromptAudio: (text: string) => {
+    const fd = new FormData();
+    fd.append("text", text);
+    return fetch("/api/practice/prompt-audio", { method: "POST", body: fd }).then(
+      j<{ audio_url: string; duration: number }>
+    );
+  },
+  practiceScore: (
+    phraseIds: number[], usedPhraseIds: number[], audio: Blob, filename: string, latencyMs?: number
+  ) => {
+    const fd = new FormData();
+    fd.append("audio", audio, filename);
+    fd.append("phrase_ids", phraseIds.join(","));
+    fd.append("used_phrase_ids", usedPhraseIds.join(","));
+    if (latencyMs != null) fd.append("latency_ms", String(latencyMs));
+    return fetch("/api/practice/score", { method: "POST", body: fd }).then(j<PracticeScore>);
+  },
   getRotation: (batchId: number) =>
     fetch(`/api/training/rotation/${batchId}`).then(j<RotationItem[]>),
   getMastery: () => fetch("/api/training/mastery").then(j<BatchMastery[]>),

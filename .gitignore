@@ -14,5 +14,8 @@ frontend/dist/
 .env
 *.local
 
+# Claude session state (transient)
+.claude/scheduled_tasks.lock
+
 # OS
 .DS_Store

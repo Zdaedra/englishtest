@@ -1,0 +1,20 @@
+{
+  "slug": "charisma-10",
+  "title": "Представить людей",
+  "theme": "Свести двоих так, что оба благодарны, а ты — связующий центр, поднявший статус всех",
+  "subtitle": "",
+  "section": "charisma",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Favorite",  "zone": "Warm",     "en": "Two of my favorite people, and somehow you'd never met." },
+    { "anchor": "Click",     "zone": "Warm",     "en": "I had a feeling you two would click — let's find out." },
+    { "anchor": "Better",    "zone": "Warm",     "en": "You both make a room better — in very different ways." },
+    { "anchor": "Compare",   "zone": "Backbone", "en": "You two should compare notes — you're solving the same thing from opposite ends." },
+    { "anchor": "Ask",       "zone": "Backbone", "en": "Ask her about Lagos, ask him about the raise — then I'll get out of your way." },
+    { "anchor": "Only",      "zone": "Backbone", "en": "He's the only other person I know who sees this the way you do." },
+    { "anchor": "Casually",  "zone": "Weight",   "en": "I don't make introductions casually — this one has range." },
+    { "anchor": "Record",    "zone": "Weight",   "en": "When you two build something, I want it on record I started it." },
+    { "anchor": "Thank",     "zone": "Weight",   "en": "This is the introduction you'll both quietly thank me for in a year." }
+  ],
+  "mnemo": "Ты сводишь двух favorite людей, что почему-то никогда не встречались, и уверен: они click. Говоришь, что каждый делает комнату better по-своему, и что им стоит compare notes — они с разных концов об одном. Даёшь крючок: ask её про Лагос, его про повышение; добавляешь, что он only, кто видит это так же. Ставишь печать: ты не знакомишь casually — пусть будет on record, что свёл их ты; и через год оба тебя тихо thank."
+}

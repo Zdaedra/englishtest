@@ -1,0 +1,208 @@
+{
+  "slug": "charisma-hold-the-table",
+  "batch_file": "17-charisma-hold-the-table.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "corner",
+      "accept_anchors": [
+        "Corner"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Управлять динамикой застолья, не доминируя — в…). Дай реплику в регистре «Warm».",
+      "intent": "smiling",
+      "accept_anchors": [
+        "Smiling"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "hog",
+      "accept_anchors": [
+        "Hog"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "around",
+      "accept_anchors": [
+        "Around"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Управлять динамикой застолья, не доминируя — в…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "park",
+      "accept_anchors": [
+        "Park"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "loop",
+      "accept_anchors": [
+        "Loop"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "truth",
+      "accept_anchors": [
+        "Truth"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Управлять динамикой застолья, не доминируя — в…). Дай реплику в регистре «Weight».",
+      "intent": "safe",
+      "accept_anchors": [
+        "Safe"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "changed",
+      "accept_anchors": [
+        "Changed"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "corner",
+      "accept_anchors": [
+        "Corner"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Управлять динамикой застолья, не доминируя — в…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "smiling",
+      "accept_anchors": [
+        "Smiling"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "hog",
+      "accept_anchors": [
+        "Hog"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "around",
+      "accept_anchors": [
+        "Around"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Управлять динамикой застолья, не доминируя — в…). Дай реплику в регистре «Backbone».",
+      "intent": "park",
+      "accept_anchors": [
+        "Park"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "loop",
+      "accept_anchors": [
+        "Loop"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "truth",
+      "accept_anchors": [
+        "Truth"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Управлять динамикой застолья, не доминируя — в…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "safe",
+      "accept_anchors": [
+        "Safe"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "changed",
+      "accept_anchors": [
+        "Changed"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "corner",
+      "accept_anchors": [
+        "Corner"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Управлять динамикой застолья, не доминируя — в…). Дай реплику в регистре «Warm».",
+      "intent": "smiling",
+      "accept_anchors": [
+        "Smiling"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

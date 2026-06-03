@@ -1,0 +1,20 @@
+{
+  "slug": "intimacy-1",
+  "title": "Поднять трудную тему",
+  "theme": "Начать с партнёром тяжёлый разговор без атаки и без оправданий — держа рамку любви",
+  "subtitle": "",
+  "section": "intimacy",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Close",    "zone": "Warm",     "en": "I want to talk about something — because I want us close, not because I want us hurt." },
+    { "anchor": "Softly",   "zone": "Warm",     "en": "Can we go into this softly? It matters to me — and so do you." },
+    { "anchor": "Together", "zone": "Warm",     "en": "I don't want to carry this alone — and I don't want to put it on you. Let's look at it together." },
+    { "anchor": "Avoiding", "zone": "Backbone", "en": "I've been avoiding this — and I don't want that to become our pattern." },
+    { "anchor": "Name",     "zone": "Backbone", "en": "I need to name something between us without turning it into blame." },
+    { "anchor": "Part",     "zone": "Backbone", "en": "My part is that I've been quiet when I should've been honest." },
+    { "anchor": "Win",      "zone": "Weight",   "en": "This may be hard — but I'm not here to win. I'm here to understand what's true." },
+    { "anchor": "Against",  "zone": "Weight",   "en": "It's not me against you — it's us against the problem." },
+    { "anchor": "Survive",  "zone": "Weight",   "en": "Whatever gets said, we're still us when it's over. We survive this." }
+  ],
+  "mnemo": "Ты заходишь не с атакой: хочешь close, а не hurt; «можем softly? это важно — и ты мне важна»; не нести это одному и не сваливать — together. Признаёшь: ты avoiding, не хочешь, чтоб это стало паттерном; нужно name тему без обвинения; твоя part — что молчал, когда надо было честно. Держишь рамку любви: ты здесь не чтобы win, а понять правду; это не ты against неё, а вы против проблемы; что бы ни прозвучало — вы это survive."
+}

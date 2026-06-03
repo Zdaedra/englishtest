@@ -1,0 +1,20 @@
+{
+  "slug": "charisma-7",
+  "title": "Комплимент со статусом",
+  "theme": "Похвалить так, что человек крупнее, а ты остаёшься на его уровне или выше — не лесть",
+  "subtitle": "",
+  "section": "charisma",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Human",     "zone": "Warm",     "en": "You have a way of making sharp things feel human." },
+    { "anchor": "Trust",     "zone": "Warm",     "en": "I can see why people trust your judgment." },
+    { "anchor": "Days",      "zone": "Warm",     "en": "I'm still thinking about something you said days ago." },
+    { "anchor": "Missed",    "zone": "Backbone", "en": "You saw what the whole room missed." },
+    { "anchor": "Level",     "zone": "Backbone", "en": "You didn't just answer it — you changed the level of the conversation." },
+    { "anchor": "Risk",      "zone": "Backbone", "en": "You caught the risk before the room had language for it." },
+    { "anchor": "Lightly",   "zone": "Weight",   "en": "I don't say this lightly —" },
+    { "anchor": "Authority", "zone": "Weight",   "en": "That's a rare kind of authority — quiet, clean, and earned." },
+    { "anchor": "Remember",  "zone": "Weight",   "en": "Remember I called it — you're going to be the one they all reference." }
+  ],
+  "mnemo": "Ты говоришь человеку, что он умеет делать острое human — по-человечески, — и что видно, почему люди trust его суждению. Признаёшься, что помнишь его слова days спустя. Дальше показываешь скрытое: он увидел то, что все missed, поднял level разговора, поймал risk раньше, чем у комнаты нашлись слова. И ставишь печать: ты не бросаешь это lightly — это редкая, тихая authority; remember, я это сказал первым."
+}

@@ -1,0 +1,208 @@
+{
+  "slug": "leadership-own-a-miss",
+  "batch_file": "52-leadership-own-a-miss.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "wrong",
+      "accept_anchors": [
+        "Wrong"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Публично взять свою ошибку как лидер — чисто, …). Дай реплику в регистре «Warm».",
+      "intent": "cost",
+      "accept_anchors": [
+        "Cost"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "guessing",
+      "accept_anchors": [
+        "Guessing"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "timing",
+      "accept_anchors": [
+        "Timing"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Публично взять свою ошибку как лидер — чисто, …). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "missed",
+      "accept_anchors": [
+        "Missed"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "changes",
+      "accept_anchors": [
+        "Changes"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "authority",
+      "accept_anchors": [
+        "Authority"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Публично взять свою ошибку как лидер — чисто, …). Дай реплику в регистре «Weight».",
+      "intent": "hit",
+      "accept_anchors": [
+        "Hit"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "trust",
+      "accept_anchors": [
+        "Trust"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "wrong",
+      "accept_anchors": [
+        "Wrong"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Публично взять свою ошибку как лидер — чисто, …). Вступи в тоне «Warm» одной фразой.",
+      "intent": "cost",
+      "accept_anchors": [
+        "Cost"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "guessing",
+      "accept_anchors": [
+        "Guessing"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "timing",
+      "accept_anchors": [
+        "Timing"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Публично взять свою ошибку как лидер — чисто, …). Дай реплику в регистре «Backbone».",
+      "intent": "missed",
+      "accept_anchors": [
+        "Missed"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "changes",
+      "accept_anchors": [
+        "Changes"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "authority",
+      "accept_anchors": [
+        "Authority"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Публично взять свою ошибку как лидер — чисто, …). Вступи в тоне «Weight» одной фразой.",
+      "intent": "hit",
+      "accept_anchors": [
+        "Hit"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "trust",
+      "accept_anchors": [
+        "Trust"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "wrong",
+      "accept_anchors": [
+        "Wrong"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Публично взять свою ошибку как лидер — чисто, …). Дай реплику в регистре «Warm».",
+      "intent": "cost",
+      "accept_anchors": [
+        "Cost"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

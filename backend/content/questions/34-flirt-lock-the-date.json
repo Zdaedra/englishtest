@@ -1,0 +1,208 @@
+{
+  "slug": "flirt-lock-the-date",
+  "batch_file": "34-flirt-lock-the-date.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "almosts",
+      "accept_anchors": [
+        "Almosts"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Закрепить продолжение, пока искра жива — перев…). Дай реплику в регистре «Warm».",
+      "intent": "disappear",
+      "accept_anchors": [
+        "Disappear"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "next",
+      "accept_anchors": [
+        "Next"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "number",
+      "accept_anchors": [
+        "Number"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Закрепить продолжение, пока искра жива — перев…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "pick",
+      "accept_anchors": [
+        "Pick"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "overthink",
+      "accept_anchors": [
+        "Overthink"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "carry",
+      "accept_anchors": [
+        "Carry"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Закрепить продолжение, пока искра жива — перев…). Дай реплику в регистре «Weight».",
+      "intent": "consider",
+      "accept_anchors": [
+        "Consider"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "electricity",
+      "accept_anchors": [
+        "Electricity"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "almosts",
+      "accept_anchors": [
+        "Almosts"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Закрепить продолжение, пока искра жива — перев…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "disappear",
+      "accept_anchors": [
+        "Disappear"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "next",
+      "accept_anchors": [
+        "Next"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "number",
+      "accept_anchors": [
+        "Number"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Закрепить продолжение, пока искра жива — перев…). Дай реплику в регистре «Backbone».",
+      "intent": "pick",
+      "accept_anchors": [
+        "Pick"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "overthink",
+      "accept_anchors": [
+        "Overthink"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "carry",
+      "accept_anchors": [
+        "Carry"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Закрепить продолжение, пока искра жива — перев…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "consider",
+      "accept_anchors": [
+        "Consider"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "electricity",
+      "accept_anchors": [
+        "Electricity"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "almosts",
+      "accept_anchors": [
+        "Almosts"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Закрепить продолжение, пока искра жива — перев…). Дай реплику в регистре «Warm».",
+      "intent": "disappear",
+      "accept_anchors": [
+        "Disappear"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

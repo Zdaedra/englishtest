@@ -1,0 +1,208 @@
+{
+  "slug": "disagreement-ladder",
+  "batch_file": "01-disagreement-ladder.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Curious». Ответь одной уместной фразой.",
+      "intent": "understand",
+      "accept_anchors": [
+        "Understand"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Лестница несогласия — от любопытства к прямоте). Дай реплику в регистре «Curious».",
+      "intent": "run",
+      "accept_anchors": [
+        "Run"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Curious». Скажи фразу, которая здесь уместна.",
+      "intent": "angle",
+      "accept_anchors": [
+        "Angle"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Cautious». Произнеси подходящую фразу.",
+      "intent": "far",
+      "accept_anchors": [
+        "Far"
+      ],
+      "zone": "Cautious",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Лестница несогласия — от любопытства к прямоте). Вступи в тоне «Cautious» одной фразой.",
+      "intent": "hesitation",
+      "accept_anchors": [
+        "Hesitation"
+      ],
+      "zone": "Cautious",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Cautious»).",
+      "intent": "pause",
+      "accept_anchors": [
+        "Pause"
+      ],
+      "zone": "Cautious",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Direct». Ответь одной уместной фразой.",
+      "intent": "land",
+      "accept_anchors": [
+        "Land"
+      ],
+      "zone": "Direct",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Лестница несогласия — от любопытства к прямоте). Дай реплику в регистре «Direct».",
+      "intent": "push",
+      "accept_anchors": [
+        "Push"
+      ],
+      "zone": "Direct",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Direct». Скажи фразу, которая здесь уместна.",
+      "intent": "straight",
+      "accept_anchors": [
+        "Straight"
+      ],
+      "zone": "Direct",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Curious». Произнеси подходящую фразу.",
+      "intent": "understand",
+      "accept_anchors": [
+        "Understand"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Лестница несогласия — от любопытства к прямоте). Вступи в тоне «Curious» одной фразой.",
+      "intent": "run",
+      "accept_anchors": [
+        "Run"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Curious»).",
+      "intent": "angle",
+      "accept_anchors": [
+        "Angle"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Cautious». Ответь одной уместной фразой.",
+      "intent": "far",
+      "accept_anchors": [
+        "Far"
+      ],
+      "zone": "Cautious",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Лестница несогласия — от любопытства к прямоте). Дай реплику в регистре «Cautious».",
+      "intent": "hesitation",
+      "accept_anchors": [
+        "Hesitation"
+      ],
+      "zone": "Cautious",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Cautious». Скажи фразу, которая здесь уместна.",
+      "intent": "pause",
+      "accept_anchors": [
+        "Pause"
+      ],
+      "zone": "Cautious",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Direct». Произнеси подходящую фразу.",
+      "intent": "land",
+      "accept_anchors": [
+        "Land"
+      ],
+      "zone": "Direct",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Лестница несогласия — от любопытства к прямоте). Вступи в тоне «Direct» одной фразой.",
+      "intent": "push",
+      "accept_anchors": [
+        "Push"
+      ],
+      "zone": "Direct",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Direct»).",
+      "intent": "straight",
+      "accept_anchors": [
+        "Straight"
+      ],
+      "zone": "Direct",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Curious». Ответь одной уместной фразой.",
+      "intent": "understand",
+      "accept_anchors": [
+        "Understand"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Лестница несогласия — от любопытства к прямоте). Дай реплику в регистре «Curious».",
+      "intent": "run",
+      "accept_anchors": [
+        "Run"
+      ],
+      "zone": "Curious",
+      "difficulty": 1
+    }
+  ]
+}

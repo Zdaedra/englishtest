@@ -1,0 +1,208 @@
+{
+  "slug": "repair-apology",
+  "batch_file": "12-repair-apology.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Admit». Ответь одной уместной фразой.",
+      "intent": "owe",
+      "accept_anchors": [
+        "Owe"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Починка отношений — признать вину, извиниться,…). Дай реплику в регистре «Admit».",
+      "intent": "overstepped",
+      "accept_anchors": [
+        "Overstepped"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Admit». Скажи фразу, которая здесь уместна.",
+      "intent": "fault",
+      "accept_anchors": [
+        "Fault"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Mend». Произнеси подходящую фразу.",
+      "intent": "sorry",
+      "accept_anchors": [
+        "Sorry"
+      ],
+      "zone": "Mend",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Починка отношений — признать вину, извиниться,…). Вступи в тоне «Mend» одной фразой.",
+      "intent": "right",
+      "accept_anchors": [
+        "Right"
+      ],
+      "zone": "Mend",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Mend»).",
+      "intent": "better",
+      "accept_anchors": [
+        "Better"
+      ],
+      "zone": "Mend",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Rebuild». Ответь одной уместной фразой.",
+      "intent": "trust",
+      "accept_anchors": [
+        "Trust"
+      ],
+      "zone": "Rebuild",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Починка отношений — признать вину, извиниться,…). Дай реплику в регистре «Rebuild».",
+      "intent": "slate",
+      "accept_anchors": [
+        "Slate"
+      ],
+      "zone": "Rebuild",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Rebuild». Скажи фразу, которая здесь уместна.",
+      "intent": "track",
+      "accept_anchors": [
+        "Track"
+      ],
+      "zone": "Rebuild",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Admit». Произнеси подходящую фразу.",
+      "intent": "owe",
+      "accept_anchors": [
+        "Owe"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Починка отношений — признать вину, извиниться,…). Вступи в тоне «Admit» одной фразой.",
+      "intent": "overstepped",
+      "accept_anchors": [
+        "Overstepped"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Admit»).",
+      "intent": "fault",
+      "accept_anchors": [
+        "Fault"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Mend». Ответь одной уместной фразой.",
+      "intent": "sorry",
+      "accept_anchors": [
+        "Sorry"
+      ],
+      "zone": "Mend",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Починка отношений — признать вину, извиниться,…). Дай реплику в регистре «Mend».",
+      "intent": "right",
+      "accept_anchors": [
+        "Right"
+      ],
+      "zone": "Mend",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Mend». Скажи фразу, которая здесь уместна.",
+      "intent": "better",
+      "accept_anchors": [
+        "Better"
+      ],
+      "zone": "Mend",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Rebuild». Произнеси подходящую фразу.",
+      "intent": "trust",
+      "accept_anchors": [
+        "Trust"
+      ],
+      "zone": "Rebuild",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Починка отношений — признать вину, извиниться,…). Вступи в тоне «Rebuild» одной фразой.",
+      "intent": "slate",
+      "accept_anchors": [
+        "Slate"
+      ],
+      "zone": "Rebuild",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Rebuild»).",
+      "intent": "track",
+      "accept_anchors": [
+        "Track"
+      ],
+      "zone": "Rebuild",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Admit». Ответь одной уместной фразой.",
+      "intent": "owe",
+      "accept_anchors": [
+        "Owe"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Починка отношений — признать вину, извиниться,…). Дай реплику в регистре «Admit».",
+      "intent": "overstepped",
+      "accept_anchors": [
+        "Overstepped"
+      ],
+      "zone": "Admit",
+      "difficulty": 1
+    }
+  ]
+}

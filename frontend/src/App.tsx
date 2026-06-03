@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PlayerProvider, usePlayer } from "./player/PlayerContext";
 import { BatchCover } from "./ui/Art";
 import {
-  IconLibrary, IconWave, IconProfile, IconSearch, IconPlay, IconPause,
+  IconLibrary, IconWave, IconMic, IconProfile, IconSearch, IconPlay, IconPause,
 } from "./ui/icons";
 
 function MiniPlayer() {
@@ -46,9 +46,11 @@ function MiniPlayer() {
 // SVG feDisplacementMap is Chromium-only and broken in iOS Safari, WebKit #245510).
 const TABS = [
   { to: "/", label: "Библиотека", Icon: IconLibrary },
-  { to: "/learn", label: "Практика", Icon: IconWave },
+  { to: "/learn", label: "Обучение", Icon: IconWave },
+  { to: "/practice", label: "Практика", Icon: IconMic },
   { to: "/profile", label: "Профиль", Icon: IconProfile },
 ];
+const NTAB = TABS.length;
 
 // One-shot "lens pop": scale the button's icon up past its rest size and settle
 // back, on every tap. Driven by the Web Animations API on the click event, so it
@@ -72,9 +74,11 @@ function FloatingNav() {
   const nav = useNavigate();
   const { pathname } = useLocation();
 
-  const practiceActive = pathname.startsWith("/learn");
+  const learnActive = pathname.startsWith("/learn");
+  const practiceActive = pathname.startsWith("/practice");
   const profileActive = pathname.startsWith("/profile");
   const libActive =
+    !learnActive &&
     !practiceActive &&
     !profileActive &&
     (pathname === "/" ||
@@ -82,7 +86,7 @@ function FloatingNav() {
       pathname.startsWith("/settings") ||
       pathname.startsWith("/import") ||
       pathname.startsWith("/play"));
-  const activeIndex = libActive ? 0 : practiceActive ? 1 : profileActive ? 2 : -1;
+  const activeIndex = libActive ? 0 : learnActive ? 1 : practiceActive ? 2 : profileActive ? 3 : -1;
 
   // Replay a one-shot "gel" stretch on the pill whenever the active tab changes.
   // Alternate two identical keyframes so the animation restarts each move.
@@ -102,14 +106,14 @@ function FloatingNav() {
   const [dragging, setDragging] = useState(false);
   const [dragPos, setDragPos] = useState(0); // fractional 0..2 while dragging
 
-  // Map a clientX to a fractional tab position (0..2): column centres sit at
-  // 1/6, 3/6, 5/6 of the capsule, so pos = clamp(f*3 − 0.5, 0, 2).
+  // Map a clientX to a fractional tab position (0..NTAB-1): column centres sit at
+  // (2i+1)/(2·NTAB) of the capsule, so pos = clamp(f·NTAB − 0.5, 0, NTAB-1).
   const posFromX = (clientX: number) => {
     const el = capsuleRef.current;
     if (!el) return 0;
     const r = el.getBoundingClientRect();
     const f = (clientX - r.left) / r.width;
-    return Math.min(2, Math.max(0, f * 3 - 0.5));
+    return Math.min(NTAB - 1, Math.max(0, f * NTAB - 0.5));
   };
 
   const onDown = (e: React.PointerEvent) => {

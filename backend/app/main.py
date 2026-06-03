@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .config import get_settings
 from .db import init_db
-from .routers import batches, imports, sessions, settings, training
+from .routers import batches, imports, practice, sessions, settings, training
 
 app = FastAPI(title="English Executive")
 
@@ -118,6 +118,7 @@ app.include_router(batches.router)
 app.include_router(sessions.router)
 app.include_router(settings.router)
 app.include_router(training.router)
+app.include_router(practice.router)
 
 
 @app.on_event("startup")

@@ -1,0 +1,20 @@
+{
+  "slug": "composure-3",
+  "title": "Держаться, когда унижают публично",
+  "theme": "Тебя пытаются принизить при людях — не съёжиться и не взорваться, назвать происходящее и стоять ровно; унижение не прилипает",
+  "subtitle": "",
+  "section": "composure",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Scene",     "zone": "Warm",     "en": "I'm not going to turn this into a scene." },
+    { "anchor": "Volume",    "zone": "Warm",     "en": "No need to raise the volume — I hear you fine." },
+    { "anchor": "Concern",   "zone": "Warm",     "en": "I can hear the concern without accepting the tone." },
+    { "anchor": "Directly",  "zone": "Backbone", "en": "If there's feedback, give it to me directly — not theatrically." },
+    { "anchor": "Substance", "zone": "Backbone", "en": "Give me the substance — and I'll stand right here and take it." },
+    { "anchor": "Adults",    "zone": "Backbone", "en": "Let's bring this back to the work and speak like adults." },
+    { "anchor": "Shrink",    "zone": "Weight",   "en": "You can't shrink me by trying to — that's just not how I work." },
+    { "anchor": "Ounce",     "zone": "Weight",   "en": "I don't lose an ounce of standing because you raised your voice." },
+    { "anchor": "Tall",      "zone": "Weight",   "en": "This isn't landing the way you hoped — I'm still standing exactly as tall." }
+  ],
+  "mnemo": "Тебя пытаются принизить при всех, а ты ровно: «я не стану превращать это в scene»; «не надо повышать volume — я и так слышу»; «я слышу concern, не принимая тон». Прямо: «есть фидбэк — дай directly, не театрально»; «дай substance — я стою здесь и приму её»; «вернём это к делу и поговорим как adults». И непоколебимая высота: «ты не shrink меня попыткой — я так не работаю»; «я не теряю ни ounce достоинства от того, что ты повысил голос»; «это не сработало, как ты хотел — я стою ровно так же tall»."
+}

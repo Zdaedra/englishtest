@@ -1,0 +1,20 @@
+{
+  "slug": "stage-3",
+  "title": "Держаться на камеру / в записи",
+  "theme": "Говорить в объектив без живого зала — обращаться к одному человеку сквозь стекло, дать тепло, говорить чётко и в темпе под запись, остаться спокойным и неподдельным перед линзой; на экране считывается присутствие, а не игра",
+  "subtitle": "",
+  "section": "stage",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "lens",        "zone": "Warm",     "en": "I'm looking right at you — one person — not a lens." },
+    { "anchor": "glass",       "zone": "Warm",     "en": "There's glass between us, but I don't want this to feel distant." },
+    { "anchor": "kitchen",     "zone": "Warm",     "en": "Picture us in your kitchen, not on a screen." },
+    { "anchor": "crisp",       "zone": "Backbone", "en": "Three things. Crisp. Then I'm done." },
+    { "anchor": "fillers",     "zone": "Backbone", "en": "I'll land each sentence — no fillers, no drift." },
+    { "anchor": "thread",      "zone": "Backbone", "en": "Here's the thread I want you to follow." },
+    { "anchor": "performance", "zone": "Weight",   "en": "The camera doesn't need a performance. It needs presence." },
+    { "anchor": "stiffen",     "zone": "Weight",   "en": "A lens doesn't make me stiffen. I breathe, I slow, I stay me." },
+    { "anchor": "reads",       "zone": "Weight",   "en": "I'm not acting for you — and that's exactly what reads." }
+  ],
+  "mnemo": "Ты говоришь не в lens, а одному человеку: между вами glass, но это не должно холодить — будто вы сидите у него на kitchen, а не на экране. Дальше — чисто под запись: три пункта, всё crisp, без fillers и «эээ», и держишь один thread мысли. И главный вес: камере не нужен performance — нужно присутствие; линза не заставляет тебя stiffen — ты дышишь и остаёшься собой, и именно это reads."
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "intimacy-8",
+  "title": "Принять критику не защищаясь",
+  "theme": "Близкий говорит неприятное — впустить, найти зерно правды и остаться открытым, не защищаясь и не контратакуя",
+  "subtitle": "",
+  "section": "intimacy",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Listening", "zone": "Warm",     "en": "Okay. I'm listening — really listening, not waiting to argue." },
+    { "anchor": "Guts",      "zone": "Warm",     "en": "Thank you — that took guts to say to my face." },
+    { "anchor": "Defend",    "zone": "Warm",     "en": "I can feel myself wanting to defend — but I want to hear you first." },
+    { "anchor": "Truth",     "zone": "Backbone", "en": "There's truth in that — and I want the rest of it, not less." },
+    { "anchor": "Specific",  "zone": "Backbone", "en": "Can you give me a specific example? I'd rather get this exactly right." },
+    { "anchor": "Part",      "zone": "Backbone", "en": "I may not agree with every part — but I won't dismiss the part that's real." },
+    { "anchor": "Shatter",   "zone": "Weight",   "en": "This doesn't shatter me — I can hear it and stay with you." },
+    { "anchor": "Sift",      "zone": "Weight",   "en": "I'll sift it — take what lands, leave what doesn't. Calmly." },
+    { "anchor": "Grow",      "zone": "Weight",   "en": "I don't need to defend my way out of this — I'd rather just grow." }
+  ],
+  "mnemo": "Ты говоришь: «ок, я listening — по-настоящему, не жду момента возразить»; «спасибо — сказать это мне в лицо взяло guts»; «чувствую, как тянет defend — но сначала хочу услышать тебя». Берёшь зерно: «в этом есть truth — и я хочу остальное, не меньше»; «дай specific пример, хочу понять точно»; «могу не согласиться с каждой part, но настоящую не отброшу». И держишь достоинство: это не shatter меня — слышу и остаюсь рядом; я sift сказанное — беру что легло, остальное отпускаю, спокойно; мне не нужно defend-ом выбираться — я лучше grow."
+}

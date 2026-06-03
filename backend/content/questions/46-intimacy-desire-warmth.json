@@ -1,0 +1,208 @@
+{
+  "slug": "intimacy-desire-warmth",
+  "batch_file": "46-intimacy-desire-warmth.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "laugh",
+      "accept_anchors": [
+        "Laugh"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Выразить влечение и нежность свежо и конкретно…). Дай реплику в регистре «Warm».",
+      "intent": "catch",
+      "accept_anchors": [
+        "Catch"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "ordinary",
+      "accept_anchors": [
+        "Ordinary"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "want",
+      "accept_anchors": [
+        "Want"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Выразить влечение и нежность свежо и конкретно…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "closer",
+      "accept_anchors": [
+        "Closer"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "pull",
+      "accept_anchors": [
+        "Pull"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "whole",
+      "accept_anchors": [
+        "Whole"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Выразить влечение и нежность свежо и конкретно…). Дай реплику в регистре «Weight».",
+      "intent": "presence",
+      "accept_anchors": [
+        "Presence"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "stay",
+      "accept_anchors": [
+        "Stay"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "laugh",
+      "accept_anchors": [
+        "Laugh"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Выразить влечение и нежность свежо и конкретно…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "catch",
+      "accept_anchors": [
+        "Catch"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "ordinary",
+      "accept_anchors": [
+        "Ordinary"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "want",
+      "accept_anchors": [
+        "Want"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Выразить влечение и нежность свежо и конкретно…). Дай реплику в регистре «Backbone».",
+      "intent": "closer",
+      "accept_anchors": [
+        "Closer"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "pull",
+      "accept_anchors": [
+        "Pull"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "whole",
+      "accept_anchors": [
+        "Whole"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Выразить влечение и нежность свежо и конкретно…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "presence",
+      "accept_anchors": [
+        "Presence"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "stay",
+      "accept_anchors": [
+        "Stay"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "laugh",
+      "accept_anchors": [
+        "Laugh"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Выразить влечение и нежность свежо и конкретно…). Дай реплику в регистре «Warm».",
+      "intent": "catch",
+      "accept_anchors": [
+        "Catch"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

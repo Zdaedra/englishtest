@@ -1,0 +1,20 @@
+{
+  "slug": "charisma-4",
+  "title": "Держать стол",
+  "theme": "Управлять динамикой застолья, не доминируя — всем хорошо, и это явно твой стол",
+  "subtitle": "",
+  "section": "charisma",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Corner",  "zone": "Warm",     "en": "Let's bring the quiet corner in — I want that side of the table." },
+    { "anchor": "Smiling", "zone": "Warm",     "en": "You've been smiling like you know something we don't." },
+    { "anchor": "Hog",     "zone": "Warm",     "en": "Okay, I've been hogging this — someone take it from me." },
+    { "anchor": "Around",  "zone": "Backbone", "en": "Let's go around — I want everyone's one-liner on this." },
+    { "anchor": "Park",    "zone": "Backbone", "en": "Let's park that — it deserves its own conversation." },
+    { "anchor": "Loop",    "zone": "Backbone", "en": "Hang on — we never looped back to what Dave started." },
+    { "anchor": "Truth",   "zone": "Weight",   "en": "We've got enough charm at this table — let's add a little truth." },
+    { "anchor": "Safe",    "zone": "Weight",   "en": "Let's not waste a good table on safe answers." },
+    { "anchor": "Changed", "zone": "Weight",   "en": "Going around: one thing you've changed your mind about this year — I'll start." }
+  ],
+  "mnemo": "За большим столом ты подтягиваешь тихий corner и ловишь чьё-то smiling — мол, знает что-то. Спохватываешься, что hog-аешь свет, и пускаешь разговор around по кругу. Спорную тему park-уешь в сторону, но loop-ом возвращаешься к недосказанному. Потом кладёшь на стол truth, гонишь safe-ответы прочь — и просишь каждого назвать, в чём он changed мнение за год."
+}

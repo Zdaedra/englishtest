@@ -1,0 +1,208 @@
+{
+  "slug": "flirt-banter",
+  "batch_file": "26-flirt-banter.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "working",
+      "accept_anchors": [
+        "Working"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Флиртующий пинг-понг — поддразнивание с искрой…). Дай реплику в регистре «Warm».",
+      "intent": "innocent",
+      "accept_anchors": [
+        "Innocent"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "show",
+      "accept_anchors": [
+        "Show"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "smooth",
+      "accept_anchors": [
+        "Smooth"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Флиртующий пинг-понг — поддразнивание с искрой…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "allow",
+      "accept_anchors": [
+        "Allow"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "spar",
+      "accept_anchors": [
+        "Spar"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "exactly",
+      "accept_anchors": [
+        "Exactly"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Флиртующий пинг-понг — поддразнивание с искрой…). Дай реплику в регистре «Weight».",
+      "intent": "trying",
+      "accept_anchors": [
+        "Trying"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "spark",
+      "accept_anchors": [
+        "Spark"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "working",
+      "accept_anchors": [
+        "Working"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Флиртующий пинг-понг — поддразнивание с искрой…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "innocent",
+      "accept_anchors": [
+        "Innocent"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "show",
+      "accept_anchors": [
+        "Show"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "smooth",
+      "accept_anchors": [
+        "Smooth"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Флиртующий пинг-понг — поддразнивание с искрой…). Дай реплику в регистре «Backbone».",
+      "intent": "allow",
+      "accept_anchors": [
+        "Allow"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "spar",
+      "accept_anchors": [
+        "Spar"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "exactly",
+      "accept_anchors": [
+        "Exactly"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Флиртующий пинг-понг — поддразнивание с искрой…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "trying",
+      "accept_anchors": [
+        "Trying"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "spark",
+      "accept_anchors": [
+        "Spark"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "working",
+      "accept_anchors": [
+        "Working"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Флиртующий пинг-понг — поддразнивание с искрой…). Дай реплику в регистре «Warm».",
+      "intent": "innocent",
+      "accept_anchors": [
+        "Innocent"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

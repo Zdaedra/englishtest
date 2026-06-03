@@ -1,0 +1,20 @@
+{
+  "slug": "gravitas-6",
+  "title": "Держать рамку против ранга/угрозы/силы",
+  "theme": "Тяжеловес давит рангом, угрозой, статусом — не сложиться и не сорваться в агрессию; держать рамку спокойным весом, как равный",
+  "subtitle": "",
+  "section": "gravitas",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Diminish",    "zone": "Warm",     "en": "I'm not here to diminish anyone's position — I'm here to solve the problem." },
+    { "anchor": "Outcome",     "zone": "Warm",     "en": "We both want the same thing here: a clean outcome." },
+    { "anchor": "Remind",      "zone": "Warm",     "en": "No need to remind me who you are — let's stay on the issue." },
+    { "anchor": "Rank",        "zone": "Backbone", "en": "Rank won't settle this — facts and consequences will." },
+    { "anchor": "Threat",      "zone": "Backbone", "en": "A threat may change the temperature — it won't change my read." },
+    { "anchor": "Intimidated", "zone": "Backbone", "en": "I'm willing to be pressed — I'm not willing to be intimidated." },
+    { "anchor": "Title",       "zone": "Weight",   "en": "Your title doesn't make you right — and it doesn't make me small." },
+    { "anchor": "Fold",        "zone": "Weight",   "en": "I don't fold for power, and I don't fight it — I just hold." },
+    { "anchor": "Over",        "zone": "Weight",   "en": "Bigger than me doesn't mean over me — not in this room." }
+  ],
+  "mnemo": "Против тебя тяжеловес, а ты ровно: «я здесь не чтобы diminish чью-то позицию — я здесь решить проблему»; «мы хотим одного: чистого outcome»; «не нужно remind, кто ты — останемся по делу». Прямо отказываешь давлению: «rank это не решит — решат факты и последствия»; «threat сменит температуру, но не мой read»; «я готов, чтоб на меня давили — но не быть intimidated». И спокойная несгибаемость: «твой title не делает тебя правым — и меня не делает меньше»; «я не fold перед силой и не лезу в драку — просто держу»; «больше меня не значит over меня — не в этой комнате»."
+}

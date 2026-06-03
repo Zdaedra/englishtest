@@ -30,9 +30,9 @@ export default function Onboarding() {
       </button>
 
       <div className="quest-step">
-        <h1 className="quest-q">Где английский нужен сильнее всего?</h1>
+        <h1 className="quest-q">Что хочешь прокачать в первую очередь?</h1>
         <p className="app-sub">
-          Выбери 1–2 — с них и соберём траекторию. Уровень подстроится сам по ходу.
+          Выбери 1–2 направления — с них и начнём траекторию. Остальное подтянется следом.
         </p>
         <div className="quest-opts">
           {SCENARIOS.map((o) => {

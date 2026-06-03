@@ -1,0 +1,20 @@
+{
+  "slug": "gravitas-4",
+  "title": "Не дрогнуть под шквалом враждебных вопросов",
+  "theme": "Горячее кресло — не дрожать, контролировать темп, брать самый трудный в лоб, отвечать на суть, а не на тон",
+  "subtitle": "",
+  "section": "gravitas",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Angry",    "zone": "Warm",     "en": "You're right to be angry — I'd be asking the same things." },
+    { "anchor": "Hide",     "zone": "Warm",     "en": "I'm not going to hide from any of this — ask away." },
+    { "anchor": "Heat",     "zone": "Warm",     "en": "I understand the heat in the room — let's make it useful." },
+    { "anchor": "Hardest",  "zone": "Backbone", "en": "I'll take these one at a time — starting with the hardest." },
+    { "anchor": "Directly", "zone": "Backbone", "en": "I'll answer that directly: yes, that one sits with us." },
+    { "anchor": "Separate", "zone": "Backbone", "en": "Let's separate the allegation from the facts we can verify." },
+    { "anchor": "Tone",     "zone": "Weight",   "en": "I'm not answering the tone — I'm answering the substance." },
+    { "anchor": "Rushed",   "zone": "Weight",   "en": "I won't be rushed into a weaker answer because the room is loud." },
+    { "anchor": "Count",    "zone": "Weight",   "en": "Ask in any order — I'll answer in the order that makes this count." }
+  ],
+  "mnemo": "Горячее кресло, а ты ровно: «вы вправе быть angry — я бы спрашивал то же»; «я не стану hide ни от чего — спрашивайте»; «понимаю heat в комнате — давайте сделаем его полезным». Прямо: «возьму по одному — начну с hardest»; «отвечу directly: да, это на нас»; «давайте separate обвинение от фактов, что можно проверить». И непоколебимость под огнём: «я отвечаю не на tone — на суть»; «меня не rushed в слабый ответ тем, что комната громкая»; «спрашивайте в любом порядке — отвечу так, чтобы это count»."
+}

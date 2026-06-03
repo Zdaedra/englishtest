@@ -1,0 +1,60 @@
+{
+  "slug": "intimacy-10",
+  "title": "Ревность без обвинения",
+  "theme": "Назвать ревность как своё чувство — не обвиняя, не контролируя и не делая партнёра виноватым; трюст вместо страха",
+  "subtitle": "",
+  "section": "intimacy",
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
+  ],
+  "phrases": [
+    {
+      "anchor": "Jealous",
+      "zone": "Warm",
+      "en": "I felt a little jealous earlier — and I'd rather name it than hide it."
+    },
+    {
+      "anchor": "Tightened",
+      "zone": "Warm",
+      "en": "Something tightened in me tonight — and that one's mine to look at."
+    },
+    {
+      "anchor": "Admit",
+      "zone": "Warm",
+      "en": "Can I admit something a little unflattering — without it turning into a fight?"
+    },
+    {
+      "anchor": "Reassurance",
+      "zone": "Backbone",
+      "en": "I don't need to police you — I need reassurance, and I can just ask for it."
+    },
+    {
+      "anchor": "Loud",
+      "zone": "Backbone",
+      "en": "I'm not accusing you — I'm naming the part of me that got loud."
+    },
+    {
+      "anchor": "Mine",
+      "zone": "Backbone",
+      "en": "This is mine to work through — not yours to fix."
+    },
+    {
+      "anchor": "Crime",
+      "zone": "Weight",
+      "en": "This is my fear to hold — not your crime to answer for."
+    },
+    {
+      "anchor": "Trust",
+      "zone": "Weight",
+      "en": "I can feel jealous and still choose trust."
+    },
+    {
+      "anchor": "Freedom",
+      "zone": "Weight",
+      "en": "I won't make my fear the manager of your freedom."
+    }
+  ],
+  "mnemo": "Ты честно роняешь: «мне стало чуть jealous — и я лучше назову это, чем спрячу»; «что-то tightened во мне сегодня — и это мне на себя смотреть»; «можно admit кое-что нелестное — без того, чтоб это стало ссорой?». Прямо называешь нужду: «мне не нужно police тебя — мне нужна reassurance, и я могу просто попросить»; «я не accusing тебя — называю свою часть, что стала loud»; это mine — мне прорабатывать, не тебе чинить. И держишь достоинство: это мой страх hold, не твой crime отвечать; я могу ревновать и всё равно choose trust; я не сделаю свой страх менеджером твоей freedom."
+}

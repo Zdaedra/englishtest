@@ -1,0 +1,208 @@
+{
+  "slug": "leadership-take-the-room",
+  "batch_file": "47-leadership-take-the-room.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "gather",
+      "accept_anchors": [
+        "Gather"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (В группе вакуум — спокойно взять инициативу, с…). Дай реплику в регистре «Warm».",
+      "intent": "voices",
+      "accept_anchors": [
+        "Voices"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "tie",
+      "accept_anchors": [
+        "Tie"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "focus",
+      "accept_anchors": [
+        "Focus"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (В группе вакуум — спокойно взять инициативу, с…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "order",
+      "accept_anchors": [
+        "Order"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "decide",
+      "accept_anchors": [
+        "Decide"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "steer",
+      "accept_anchors": [
+        "Steer"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (В группе вакуум — спокойно взять инициативу, с…). Дай реплику в регистре «Weight».",
+      "intent": "stall",
+      "accept_anchors": [
+        "Stall"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "got",
+      "accept_anchors": [
+        "Got"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "gather",
+      "accept_anchors": [
+        "Gather"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (В группе вакуум — спокойно взять инициативу, с…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "voices",
+      "accept_anchors": [
+        "Voices"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "tie",
+      "accept_anchors": [
+        "Tie"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "focus",
+      "accept_anchors": [
+        "Focus"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (В группе вакуум — спокойно взять инициативу, с…). Дай реплику в регистре «Backbone».",
+      "intent": "order",
+      "accept_anchors": [
+        "Order"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "decide",
+      "accept_anchors": [
+        "Decide"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "steer",
+      "accept_anchors": [
+        "Steer"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (В группе вакуум — спокойно взять инициативу, с…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "stall",
+      "accept_anchors": [
+        "Stall"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "got",
+      "accept_anchors": [
+        "Got"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "gather",
+      "accept_anchors": [
+        "Gather"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (В группе вакуум — спокойно взять инициативу, с…). Дай реплику в регистре «Warm».",
+      "intent": "voices",
+      "accept_anchors": [
+        "Voices"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

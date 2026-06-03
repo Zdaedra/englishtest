@@ -3,13 +3,16 @@ import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Library from "./pages/Library";
+import SectionDetail from "./pages/SectionDetail";
 import Learning from "./pages/Learning";
+import TunePath from "./pages/TunePath";
 import Onboarding from "./pages/Onboarding";
 import BatchHome from "./pages/BatchHome";
 import Lesson1 from "./pages/Lesson1";
 import Lesson2 from "./pages/Lesson2";
 import Lesson3 from "./pages/Lesson3";
 import Playback from "./pages/Playback";
+import Practice from "./pages/Practice";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import ImportBatch from "./pages/ImportBatch";
@@ -21,12 +24,15 @@ const router = createHashRouter([
     element: <App />,
     children: [
       { index: true, element: <Library /> },
+      { path: "section/:slug", element: <SectionDetail /> },
       { path: "learn", element: <Learning /> },
+      { path: "tune", element: <TunePath /> },
       { path: "batch/:id", element: <BatchHome /> },
       { path: "batch/:id/lesson/1", element: <Lesson1 /> },
       { path: "batch/:id/lesson/2", element: <Lesson2 /> },
       { path: "batch/:id/lesson/3", element: <Lesson3 /> },
       { path: "play", element: <Playback /> },
+      { path: "practice", element: <Practice /> },
       { path: "profile", element: <Profile /> },
       { path: "settings", element: <Settings /> },
       { path: "import", element: <ImportBatch /> },

@@ -1,0 +1,208 @@
+{
+  "slug": "leadership-steady-the-room",
+  "batch_file": "49-leadership-steady-the-room.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "breathe",
+      "accept_anchors": [
+        "Breathe"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Комната паникует — стать якорем: снизить граду…). Дай реплику в регистре «Warm».",
+      "intent": "hard",
+      "accept_anchors": [
+        "Hard"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "ground",
+      "accept_anchors": [
+        "Ground"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "facts",
+      "accept_anchors": [
+        "Facts"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Комната паникует — стать якорем: снизить граду…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "separate",
+      "accept_anchors": [
+        "Separate"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "next",
+      "accept_anchors": [
+        "Next"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "calm",
+      "accept_anchors": [
+        "Calm"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Комната паникует — стать якорем: снизить граду…). Дай реплику в регистре «Weight».",
+      "intent": "weathered",
+      "accept_anchors": [
+        "Weathered"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "steady",
+      "accept_anchors": [
+        "Steady"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "breathe",
+      "accept_anchors": [
+        "Breathe"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Комната паникует — стать якорем: снизить граду…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "hard",
+      "accept_anchors": [
+        "Hard"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "ground",
+      "accept_anchors": [
+        "Ground"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "facts",
+      "accept_anchors": [
+        "Facts"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Комната паникует — стать якорем: снизить граду…). Дай реплику в регистре «Backbone».",
+      "intent": "separate",
+      "accept_anchors": [
+        "Separate"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "next",
+      "accept_anchors": [
+        "Next"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "calm",
+      "accept_anchors": [
+        "Calm"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Комната паникует — стать якорем: снизить граду…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "weathered",
+      "accept_anchors": [
+        "Weathered"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "steady",
+      "accept_anchors": [
+        "Steady"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "breathe",
+      "accept_anchors": [
+        "Breathe"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Комната паникует — стать якорем: снизить граду…). Дай реплику в регистре «Warm».",
+      "intent": "hard",
+      "accept_anchors": [
+        "Hard"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

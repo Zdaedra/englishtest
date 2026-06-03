@@ -1,0 +1,60 @@
+{
+  "slug": "gravitas-2",
+  "title": "Говорить с весом, когда внутри страшно",
+  "theme": "Высокие ставки, внутри трясёт — сознательно проецировать спокойный авторитет: замедлить, держать голос ровным; страх остаётся внутри",
+  "subtitle": "",
+  "section": "gravitas",
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
+  ],
+  "phrases": [
+    {
+      "anchor": "Breath",
+      "zone": "Warm",
+      "en": "Stay with me. One breath — then the next step."
+    },
+    {
+      "anchor": "Frightening",
+      "zone": "Warm",
+      "en": "This is frightening — and we can still think clearly."
+    },
+    {
+      "anchor": "Slow",
+      "zone": "Warm",
+      "en": "Let's slow the room down — we do the next right thing first."
+    },
+    {
+      "anchor": "True",
+      "zone": "Backbone",
+      "en": "Here is what's true right now."
+    },
+    {
+      "anchor": "Pace",
+      "zone": "Backbone",
+      "en": "We're not letting fear set the pace."
+    },
+    {
+      "anchor": "Clear",
+      "zone": "Backbone",
+      "en": "Clear voices, clean facts, no extra noise."
+    },
+    {
+      "anchor": "Deliberate",
+      "zone": "Weight",
+      "en": "I'm speaking deliberately — the moment needs it."
+    },
+    {
+      "anchor": "Voice",
+      "zone": "Weight",
+      "en": "The room can shake — my voice will not."
+    },
+    {
+      "anchor": "Inside",
+      "zone": "Weight",
+      "en": "Whatever's shaking inside stays inside — what you get from me is steady."
+    }
+  ],
+  "mnemo": "Внутри страшно, а ты держишь подачу: «будь со мной — один breath, потом следующий шаг»; «это frightening — и мы всё ещё можем думать ясно»; «давай slow комнату — сперва следующее правильное действие». Простыми твёрдыми утверждениями: «вот что true прямо сейчас»; «мы не даём страху задавать pace»; «clear голоса, чистые факты, без лишнего шума». И голос из центра: «я говорю deliberate — момент этого требует»; «комната может дрожать — мой voice не будет»; «что трясётся inside — остаётся внутри, а от меня вы получаете ровное»."
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "charisma-2",
+  "title": "Открыть разговор с незнакомцем",
+  "theme": "Заговорить с тем, кого не знаешь, так, что человеку сразу интересно",
+  "subtitle": "",
+  "section": "charisma",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Soul",     "zone": "Warm",     "en": "I don't know a soul here, so I'm starting with you." },
+    { "anchor": "Laugh",    "zone": "Warm",     "en": "That laugh sounded like it had a story behind it." },
+    { "anchor": "Crash",    "zone": "Warm",     "en": "You looked like the most fun in the room — mind if I crash?" },
+    { "anchor": "Skip",     "zone": "Backbone", "en": "Tell me what you actually do — and skip the elevator pitch." },
+    { "anchor": "Read",     "zone": "Backbone", "en": "You look like you've got the real read on this room." },
+    { "anchor": "Settle",   "zone": "Backbone", "en": "Settle a debate for me — you look like you'd have an opinion." },
+    { "anchor": "Watching", "zone": "Weight",   "en": "I've been watching the room — you're the only one not working it." },
+    { "anchor": "Usual",    "zone": "Weight",   "en": "Before the usual small talk — what's actually worth knowing here?" },
+    { "anchor": "Deal",     "zone": "Weight",   "en": "Here's my deal: ninety seconds, and you'll be glad you stopped." }
+  ],
+  "mnemo": "Ты входишь — ни одной знакомой soul, и идёшь на звонкий laugh у дальнего столика. Просишь разрешения crash в их круг, сразу skip-аешь дежурный скрипт и по лицам считываешь read комнаты. Подкидываешь им спор, чтобы settle, а сам, будто watching сверху, замечаешь: только ты тут не суетишься. Отбрасываешь usual болтовню — и закрываешь знакомство как deal: девяносто секунд, и человек рад, что остановился."
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "lead-2",
+  "title": "Повести за идеей",
+  "theme": "Зажечь людей направлением так, чтобы они захотели пойти — показать «зачем», дать веру и импульс, а не приказать",
+  "subtitle": "",
+  "section": "lead-presence",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Imagine",   "zone": "Warm",     "en": "Imagine what changes if we actually get this right." },
+    { "anchor": "Care",      "zone": "Warm",     "en": "This only works if it connects to what we actually care about." },
+    { "anchor": "Yours",     "zone": "Warm",     "en": "The part that excites me most is the piece that's so clearly yours." },
+    { "anchor": "Direction", "zone": "Backbone", "en": "The direction is clear: smaller, sharper, and useful enough to matter." },
+    { "anchor": "First",     "zone": "Backbone", "en": "The first move is simple — we prove it with one real example." },
+    { "anchor": "Hope",      "zone": "Backbone", "en": "I've thought this through — it's not a hope, it's a path." },
+    { "anchor": "Believe",   "zone": "Weight",   "en": "I believe in this enough to put my name on the first step." },
+    { "anchor": "Selling",   "zone": "Weight",   "en": "I'm not selling you anything — I'm telling you where I'm already headed." },
+    { "anchor": "Rather",    "zone": "Weight",   "en": "I'd do this alone if I had to — I'd just much rather do it with you." }
+  ],
+  "mnemo": "Ты зовёшь в видение: «imagine, что изменится, если мы правда это вытянем»; «это сработает, только если задевает то, о чём вы по-настоящему care»; «больше всего меня зажигает часть, что так явно yours». Даёшь опору: «direction ясное — меньше, острее, и достаточно полезное, чтобы значить»; «first шаг простой — докажем одним реальным примером»; «я всё продумал — это не hope, а путь». И спокойная убеждённость: «believe в это настолько, что ставлю имя на первый шаг»; «я ничего не selling — просто говорю, куда уже иду»; «сделал бы и один, но куда rather — с вами»."
+}

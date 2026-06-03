@@ -1,0 +1,208 @@
+{
+  "slug": "gravitas-hard-call",
+  "batch_file": "71-gravitas-hard-call.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "fog",
+      "accept_anchors": [
+        "Fog"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Данных мало, решать надо сейчас и необратимо —…). Дай реплику в регистре «Warm».",
+      "intent": "luxury",
+      "accept_anchors": [
+        "Luxury"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "uneasy",
+      "accept_anchors": [
+        "Uneasy"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "decision",
+      "accept_anchors": [
+        "Decision"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Данных мало, решать надо сейчас и необратимо —…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "downside",
+      "accept_anchors": [
+        "Downside"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "pivot",
+      "accept_anchors": [
+        "Pivot"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "call",
+      "accept_anchors": [
+        "Call"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Данных мало, решать надо сейчас и необратимо —…). Дай реплику в регистре «Weight».",
+      "intent": "waiting",
+      "accept_anchors": [
+        "Waiting"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "lock",
+      "accept_anchors": [
+        "Lock"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "fog",
+      "accept_anchors": [
+        "Fog"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Данных мало, решать надо сейчас и необратимо —…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "luxury",
+      "accept_anchors": [
+        "Luxury"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "uneasy",
+      "accept_anchors": [
+        "Uneasy"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "decision",
+      "accept_anchors": [
+        "Decision"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Данных мало, решать надо сейчас и необратимо —…). Дай реплику в регистре «Backbone».",
+      "intent": "downside",
+      "accept_anchors": [
+        "Downside"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "pivot",
+      "accept_anchors": [
+        "Pivot"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "call",
+      "accept_anchors": [
+        "Call"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Данных мало, решать надо сейчас и необратимо —…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "waiting",
+      "accept_anchors": [
+        "Waiting"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "lock",
+      "accept_anchors": [
+        "Lock"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "fog",
+      "accept_anchors": [
+        "Fog"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Данных мало, решать надо сейчас и необратимо —…). Дай реплику в регистре «Warm».",
+      "intent": "luxury",
+      "accept_anchors": [
+        "Luxury"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

@@ -81,7 +81,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .screen {
-  padding: max(20px, env(safe-area-inset-top)) 18px calc(env(safe-area-inset-bottom) + 100px);
+  padding: max(20px, env(safe-area-inset-top)) 18px calc(env(safe-area-inset-bottom) + 92px);
   animation: fade-up .42s var(--spring) both;
 }
 
@@ -307,6 +307,95 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   color: var(--faint);
   margin: 0 13px 13px;
+}
+
+/* ----- Apple-Music section carousels (Library browse) -------------------- */
+/* Each direction is a row: a bold tappable header + a horizontal scroller of
+   square cover cards that bleeds under the screen edges. */
+.lib-row { margin: 2px 0 26px; }
+.lib-row-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin: 0 0 13px;
+  padding: 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  color: var(--text);
+}
+.lib-row-head:disabled { opacity: 1; }
+.lib-row-title {
+  font-size: 22px;
+  font-weight: 760;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+}
+.lib-row-chev { flex: none; color: var(--faint); margin-left: 1px; }
+.row-scroll {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  /* bleed past the .screen 18px padding so cards slide under the edges */
+  margin: 0 -18px;
+  padding: 2px 18px 8px;
+  scrollbar-width: none;
+}
+.row-scroll::-webkit-scrollbar { display: none; }
+.row-card {
+  flex: 0 0 auto;
+  width: 150px;
+  scroll-snap-align: start;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  transition: transform .15s var(--spring);
+  animation: fade-up .5s var(--spring) both;
+}
+.row-card:active { transform: scale(.96); }
+.row-card-art {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.row-card-art > *,
+.row-card-art img,
+.row-card-art svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.row-card-title {
+  font-size: 14.5px;
+  font-weight: 720;
+  letter-spacing: -.01em;
+  color: var(--text);
+  margin: 9px 2px 2px;
+  line-height: 1.22;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.row-card-sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0 2px;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .empty {
@@ -961,19 +1050,22 @@ table.phrases input { padding: 8px; font-size: 13px; }
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(env(safe-area-inset-bottom) + 80px);
+  bottom: calc(env(safe-area-inset-bottom) + 70px);
   width: min(var(--shell-w), 100vw);
-  width: calc(min(var(--shell-w), 100vw) - 16px);
+  width: calc(min(var(--shell-w), 100vw) - 20px);
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(255, 255, 255, .82);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, .8);
+  -webkit-backdrop-filter: saturate(190%) blur(26px);
+  backdrop-filter: saturate(190%) blur(26px);
+  border: 0;
+  border-radius: 28px; /* oval pill, like Apple Music now-playing */
   padding: 8px 10px;
-  box-shadow: var(--shadow);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .9),
+    0 12px 36px rgba(17, 17, 17, .10),
+    0 2px 8px rgba(17, 17, 17, .04);
   z-index: 40;
   text-align: left;
   animation: mini-rise .35s var(--spring) both;
@@ -1020,13 +1112,13 @@ table.phrases input { padding: 8px; font-size: 13px; }
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(env(safe-area-inset-bottom) + 12px);
+  bottom: calc(env(safe-area-inset-bottom) + 6px);
   width: min(var(--shell-w), 100vw);
   box-sizing: border-box;
-  padding: 0 14px;
+  padding: 0 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   z-index: 50;
   pointer-events: none;
 }
@@ -1060,7 +1152,7 @@ table.phrases input { padding: 8px; font-size: 13px; }
   top: 0;
   bottom: 0;
   left: 0;
-  width: calc(100% / 3);
+  width: calc(100% / 4);
   transform: translateX(calc(var(--active, 0) * 100%));
   /* Slower, calmer travel between tabs (was .42s). */
   transition: transform .6s var(--spring), opacity .25s ease;
@@ -1132,9 +1224,9 @@ table.phrases input { padding: 8px; font-size: 13px; }
   background: transparent;
   border: 0;
   color: #8E8E93;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: .005em;
+  letter-spacing: -.01em;
   transition: color .25s var(--spring), transform .3s var(--spring);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
@@ -1142,15 +1234,15 @@ table.phrases input { padding: 8px; font-size: 13px; }
 /* Active = the app's signature emerald (same accent as the path/badges), heavier
    weight to read as selected through the glass. */
 .nav-tab.active { color: var(--map-green); font-weight: 680; }
-.nav-tab svg { width: 21px; height: 21px; transition: transform .3s var(--spring); }
+.nav-tab svg { width: 19px; height: 19px; transition: transform .3s var(--spring); }
 /* The lens sits on the selected tab → its icon rests clearly magnified. The tap
    itself fires a one-shot pop (Web Animations API, see App.tsx::lensPop). */
-.nav-tab.active svg { transform: scale(1.18); }
+.nav-tab.active svg { transform: scale(1.14); }
 
 .nav-search {
   flex: none;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: 0;
   display: grid;
@@ -1810,6 +1902,160 @@ table.phrases input { padding: 8px; font-size: 13px; }
 .bh-lesson-sub { font-size: 13.5px; color: var(--muted); }
 .bh-lesson > svg { flex: none; color: var(--map-green); }
 .bh-lesson.locked > svg { color: var(--faint); }
+
+/* ===== Practice (live recall drill) — green premium, matches Lesson 3 ====== */
+.pr-screen {
+  background: linear-gradient(180deg, #FCFCFC 0%, #F4F7F4 100%);
+  min-height: 100dvh;
+}
+.pr-empty, .pr-start { margin-top: 22px; }
+.pr-empty-t { font-size: 20px; font-weight: 760; margin: 0 0 6px; }
+.pr-empty-s, .pr-start-s {
+  font-size: 15.5px; color: var(--muted); line-height: 1.5; margin: 0; max-width: 30em;
+}
+.pr-start-s { margin-bottom: 22px; }
+
+.pr-prompt {
+  background: #fff;
+  border-radius: 24px;
+  padding: 20px 22px;
+  margin-top: 18px;
+  box-shadow: 0 10px 34px rgba(17, 17, 17, .07), 0 2px 8px rgba(17, 17, 17, .04);
+}
+.pr-prompt-tag {
+  font-size: 11px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--map-green);
+}
+.pr-prompt-text {
+  font-size: 21px; font-weight: 700; line-height: 1.35; letter-spacing: -.01em;
+  color: var(--text); margin: 10px 0 14px;
+}
+.pr-notice { margin: 14px 0 0; text-align: center; }
+
+.pr-log { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; }
+.pr-row {
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border-radius: 14px; padding: 11px 13px;
+  box-shadow: var(--shadow);
+  animation: fade-up .3s var(--spring) both;
+}
+.pr-score {
+  flex: none; width: 38px; height: 38px; border-radius: 11px;
+  display: grid; place-items: center; font-size: 17px; font-weight: 800; color: #fff;
+}
+.pr-score.ok { background: var(--map-green); }
+.pr-score.no { background: var(--danger); }
+.pr-row-body { flex: 1; min-width: 0; }
+.pr-heard {
+  font-size: 15px; color: var(--text); font-style: italic;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pr-row-meta { font-size: 12px; color: var(--faint); margin-top: 2px; }
+
+.pr-stats {
+  display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center;
+  margin-top: 18px; padding: 14px 12px;
+  background: var(--map-green-soft); border-radius: 16px;
+  font-size: 14px; color: var(--muted);
+}
+.pr-stats b { color: var(--text); font-weight: 750; }
+.pr-stat-ok { color: var(--map-green-ink); font-weight: 650; }
+.pr-stat-no { color: var(--danger); font-weight: 650; }
+
+/* Soft info caption (how a stage is closed) — used on Обучение */
+.learn-note {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--map-green-ink);
+  background: var(--map-green-soft);
+  border-radius: 12px;
+  padding: 10px 13px;
+  margin: 14px 0 0;
+  max-width: 34em;
+}
+.learn-redo {
+  display: inline-block;
+  margin: 12px 0 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--map-green-ink);
+  font-size: 13px;
+  font-weight: 650;
+}
+.learn-redo:active { opacity: .55; }
+
+/* ----- Adaptive focus route: Training Focus + sprint + Tune (consilium) --- */
+.focus-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  margin: 4px 0 22px;
+  transition: transform .15s var(--spring);
+}
+.focus-card:active { transform: scale(.985); }
+.focus-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.focus-kicker {
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.focus-adjust {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--map-green-ink);
+}
+.focus-mix { display: flex; flex-wrap: wrap; gap: 6px; }
+.focus-chip {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--map-green-ink);
+  background: var(--map-green-soft);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.sprint-block { margin: 0 0 22px; }
+.review-badge.play { background: var(--accent); }
+.atlas-label { margin-top: 4px; }
+
+/* Tune-your-path: option hint + sprint-size pills (reuses .quest-opt). */
+.qo-hint {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.tune-sizes { display: flex; gap: 10px; }
+.tune-size {
+  flex: 1;
+  padding: 14px 0;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  font-size: 18px;
+  font-weight: 720;
+  color: var(--text);
+  transition: transform .15s var(--spring);
+}
+.tune-size:active { transform: scale(.96); }
+.tune-size.sel {
+  background: var(--map-green-soft);
+  border-color: var(--map-green);
+  color: var(--map-green-ink);
+}
+.tune .quest-cta { margin-top: 26px; }
 
 /* ----- 3-lesson restructure ---------------------------------------------- */
 .lesson-tag {

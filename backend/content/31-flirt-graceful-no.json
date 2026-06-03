@@ -1,0 +1,20 @@
+{
+  "slug": "flirt-7",
+  "title": "Принять или дать отказ изящно",
+  "theme": "Когда интерес не взаимен — принять «нет» с достоинством или мягко отказать; статус цел у обоих",
+  "subtitle": "",
+  "section": "flirt",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Fair",       "zone": "Warm",     "en": "That's fair — and I'm glad I said it." },
+    { "anchor": "Flattered",  "zone": "Warm",     "en": "I'm genuinely flattered — it's just not where I am right now." },
+    { "anchor": "Safe",       "zone": "Warm",     "en": "Your no is safe with me — no awkwardness." },
+    { "anchor": "Clarity",    "zone": "Backbone", "en": "I can take a clear no — I'd rather have clarity than performance." },
+    { "anchor": "Honest",     "zone": "Backbone", "en": "I'd rather be honest — not in that way for me, but I really like you." },
+    { "anchor": "Negotiate",  "zone": "Backbone", "en": "I respect that — I won't try to negotiate your answer." },
+    { "anchor": "Dent",       "zone": "Weight",   "en": "A no doesn't dent me — and it shouldn't cost you a thing." },
+    { "anchor": "Respect",    "zone": "Weight",   "en": "Nothing changes — same respect, same ease." },
+    { "anchor": "Grown-ups",  "zone": "Weight",   "en": "Let's be the two people who handled this like grown-ups." }
+  ],
+  "mnemo": "Ответ «нет» — и ты находишь его fair, рад, что сказал; ты genuinely flattered (или сам мягко отказываешь), и её «нет» с тобой safe. Дальше прямо: тебе нужна clarity, а не спектакль; будешь honest — «не в ту сторону, но ты очень нравишься»; и ты не станешь negotiate её ответ. Изящный выход: «нет» тебя не dent и ей ничего не стоит; ничего не меняется — тот же respect; вы двое handled это как grown-ups."
+}

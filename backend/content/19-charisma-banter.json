@@ -1,0 +1,20 @@
+{
+  "slug": "charisma-6",
+  "title": "Остроумие и подколка",
+  "theme": "Отбить укол легко, не ранясь — взять подачу и забрать рамку, не обидевшись",
+  "subtitle": "",
+  "section": "charisma",
+  "zones": ["Warm", "Backbone", "Weight"],
+  "phrases": [
+    { "anchor": "Walked",    "zone": "Warm",     "en": "I walked right into that one — nicely done." },
+    { "anchor": "Generous",  "zone": "Warm",     "en": "That's generous — most people wait ten minutes before diagnosing me." },
+    { "anchor": "Proud",     "zone": "Warm",     "en": "My mother would be so proud you finally noticed." },
+    { "anchor": "Careful",   "zone": "Backbone", "en": "Careful — you're dangerously close to being funny." },
+    { "anchor": "Clap",      "zone": "Backbone", "en": "I'd clap, but you'd only encourage yourself." },
+    { "anchor": "Landing",   "zone": "Backbone", "en": "Bold opening — let's see if you can stick the landing." },
+    { "anchor": "Hand",      "zone": "Weight",   "en": "Give him a hand, folks — he's been saving that one all night." },
+    { "anchor": "Worst",     "zone": "Weight",   "en": "If that's the worst thing they say about me, I'm having a good night." },
+    { "anchor": "Like",      "zone": "Weight",   "en": "[a beat, to the room] …I like this guy." }
+  ],
+  "mnemo": "Тебя подкалывают — ты улыбаешься: walked прямо в шутку, сам виноват. Замечаешь, как это generous — обычно тебя дольше «диагностируют», — и роняешь, что мама была бы proud. Лёгкий встречный: careful, ты почти сострил; «я бы clap, да ты сам себя подзадоришь»; «bold заход — сумеешь landing?». А под финал разворачиваешься к залу: hand этому парню; и если это worst, что про тебя скажут, вечер удался — и, выдержав паузу: а мне он, кстати, like."
+}

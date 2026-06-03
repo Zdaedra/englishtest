@@ -1,0 +1,208 @@
+{
+  "slug": "gravitas-hostile-questions",
+  "batch_file": "72-gravitas-hostile-questions.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "angry",
+      "accept_anchors": [
+        "Angry"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Горячее кресло — не дрожать, контролировать те…). Дай реплику в регистре «Warm».",
+      "intent": "hide",
+      "accept_anchors": [
+        "Hide"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "heat",
+      "accept_anchors": [
+        "Heat"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "hardest",
+      "accept_anchors": [
+        "Hardest"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Горячее кресло — не дрожать, контролировать те…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "directly",
+      "accept_anchors": [
+        "Directly"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "separate",
+      "accept_anchors": [
+        "Separate"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "tone",
+      "accept_anchors": [
+        "Tone"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Горячее кресло — не дрожать, контролировать те…). Дай реплику в регистре «Weight».",
+      "intent": "rushed",
+      "accept_anchors": [
+        "Rushed"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "count",
+      "accept_anchors": [
+        "Count"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "angry",
+      "accept_anchors": [
+        "Angry"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Горячее кресло — не дрожать, контролировать те…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "hide",
+      "accept_anchors": [
+        "Hide"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "heat",
+      "accept_anchors": [
+        "Heat"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "hardest",
+      "accept_anchors": [
+        "Hardest"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Горячее кресло — не дрожать, контролировать те…). Дай реплику в регистре «Backbone».",
+      "intent": "directly",
+      "accept_anchors": [
+        "Directly"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "separate",
+      "accept_anchors": [
+        "Separate"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "tone",
+      "accept_anchors": [
+        "Tone"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Горячее кресло — не дрожать, контролировать те…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "rushed",
+      "accept_anchors": [
+        "Rushed"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "count",
+      "accept_anchors": [
+        "Count"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "angry",
+      "accept_anchors": [
+        "Angry"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Горячее кресло — не дрожать, контролировать те…). Дай реплику в регистре «Warm».",
+      "intent": "hide",
+      "accept_anchors": [
+        "Hide"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}
