@@ -2,19 +2,59 @@
   "slug": "stage-10",
   "title": "Сделать момент личным с большой аудиторией",
   "theme": "Перед тобой сотни или тысячи — схлопнуть масштаб так, чтобы каждый почувствовал, что говорят лично с ним; интимность и есть сила: шёпот в большом зале бьёт сильнее крика, и присутствие не в том, чтобы заполнить зал, а чтобы каждый почувствовал себя увиденным",
-  "subtitle": "",
+  "subtitle": "Личный планетарий",
   "section": "stage",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "thousand",  "zone": "Warm",     "en": "I know there are a thousand of you — but right now I'm talking to one. You." },
-    { "anchor": "between",   "zone": "Warm",     "en": "Let me drop my voice. This next part's just between us." },
-    { "anchor": "nothing",   "zone": "Warm",     "en": "If you remember nothing else tonight, remember this." },
-    { "anchor": "person",    "zone": "Backbone", "en": "Bring to mind one person this is really about. Hold them there." },
-    { "anchor": "avoiding",  "zone": "Backbone", "en": "Ask yourself the question you've been avoiding. [pause] You know the one." },
-    { "anchor": "tell",      "zone": "Backbone", "en": "Some of you are feeling it right now — I can tell. That's exactly the point." },
-    { "anchor": "whisper",   "zone": "Weight",   "en": "I could shout this — but a whisper in a room this size hits harder." },
-    { "anchor": "spectacle", "zone": "Weight",   "en": "One real moment beats any amount of spectacle." },
-    { "anchor": "seen",      "zone": "Weight",   "en": "My job is not to fill the room. It's to make each of you feel seen." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Перед тобой тысяча, но ты говоришь к одному: пусть вас thousand — я обращаюсь к тебе; роняешь голос — это between нами; если запомните nothing, запомните вот это. Создаёшь момент намеренно: вспомни одного person, о ком это на самом деле; задай себе вопрос, что ты avoiding; кто-то это чувствует прямо сейчас — я tell. И интимность как сила: можно крикнуть, но whisper в таком зале бьёт сильнее; один настоящий миг важнее любого spectacle; моя задача не заполнить зал, а чтобы каждый почувствовал себя seen."
+  "phrases": [
+    {
+      "anchor": "thousand",
+      "zone": "Warm",
+      "en": "I know there are a thousand of you — but right now I'm talking to one. You."
+    },
+    {
+      "anchor": "between",
+      "zone": "Warm",
+      "en": "Let me drop my voice. This next part's just between us."
+    },
+    {
+      "anchor": "nothing",
+      "zone": "Warm",
+      "en": "If you remember nothing else tonight, remember this."
+    },
+    {
+      "anchor": "person",
+      "zone": "Backbone",
+      "en": "Bring to mind one person this is really about. Hold them there."
+    },
+    {
+      "anchor": "avoiding",
+      "zone": "Backbone",
+      "en": "Ask yourself the question you've been avoiding. [pause] You know the one."
+    },
+    {
+      "anchor": "tell",
+      "zone": "Backbone",
+      "en": "Some of you are feeling it right now — I can tell. That's exactly the point."
+    },
+    {
+      "anchor": "whisper",
+      "zone": "Weight",
+      "en": "I could shout this — but a whisper in a room this size hits harder."
+    },
+    {
+      "anchor": "spectacle",
+      "zone": "Weight",
+      "en": "One real moment beats any amount of spectacle."
+    },
+    {
+      "anchor": "seen",
+      "zone": "Weight",
+      "en": "My job is not to fill the room. It's to make each of you feel seen."
+    }
+  ],
+  "mnemo": "На куполе вспыхивает thousand звёзд, ты протягиваешь серебряную нить between рядами и гасишь всё лишнее до маленького чёрного круга nothing. Из этого круга выходит один person, ты обходишь avoiding тени кресел и поднимаешь табличку tell прямо перед ним. Потом включаешь тихий луч whisper, снаружи грохочет spectacle, а в последней точке света человек впервые чувствует себя seen."
 }

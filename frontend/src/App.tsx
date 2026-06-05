@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PlayerProvider, usePlayer } from "./player/PlayerContext";
 import { BatchCover } from "./ui/Art";
 import {
-  IconLibrary, IconWave, IconMic, IconProfile, IconSearch, IconPlay, IconPause,
+  IconLibrary, IconWave, IconMic, IconSearch, IconPlay, IconPause,
 } from "./ui/icons";
 
 function MiniPlayer() {
@@ -48,7 +48,6 @@ const TABS = [
   { to: "/", label: "Библиотека", Icon: IconLibrary },
   { to: "/learn", label: "Обучение", Icon: IconWave },
   { to: "/practice", label: "Практика", Icon: IconMic },
-  { to: "/profile", label: "Профиль", Icon: IconProfile },
 ];
 const NTAB = TABS.length;
 
@@ -86,7 +85,8 @@ function FloatingNav() {
       pathname.startsWith("/settings") ||
       pathname.startsWith("/import") ||
       pathname.startsWith("/play"));
-  const activeIndex = libActive ? 0 : learnActive ? 1 : practiceActive ? 2 : profileActive ? 3 : -1;
+  // Profile lives in the top-right avatar, not the bar — on /profile no tab lights.
+  const activeIndex = libActive ? 0 : learnActive ? 1 : practiceActive ? 2 : -1;
 
   // Replay a one-shot "gel" stretch on the pill whenever the active tab changes.
   // Alternate two identical keyframes so the animation restarts each move.

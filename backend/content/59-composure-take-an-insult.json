@@ -2,19 +2,59 @@
   "slug": "composure-2",
   "title": "Принять оскорбление с достоинством",
   "theme": "Тебя уязвили на людях — не рассыпаться и не лезть в драку, спокойно провести черту; выпад говорит о нём, не о тебе",
-  "subtitle": "",
+  "subtitle": "Землемер",
   "section": "composure",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Personally", "zone": "Warm",     "en": "I'm not going to take that personally — even if it was meant that way." },
-    { "anchor": "Beside",     "zone": "Warm",     "en": "I'll let that land beside me — not on me." },
-    { "anchor": "Unsaid",     "zone": "Warm",     "en": "I'll give you the chance to leave that one unsaid." },
-    { "anchor": "Crossed",    "zone": "Backbone", "en": "That crossed a line — and I'm not going to pretend it didn't." },
-    { "anchor": "Contempt",   "zone": "Backbone", "en": "I'm fine with disagreement — I'm not fine with contempt." },
-    { "anchor": "Dig",        "zone": "Backbone", "en": "Say the real thing, not the dig — I'll happily take the real thing." },
-    { "anchor": "Worth",      "zone": "Weight",   "en": "Your words don't get to define my worth." },
-    { "anchor": "Describes",  "zone": "Weight",   "en": "What you just said describes you, not me." },
-    { "anchor": "Inch",       "zone": "Weight",   "en": "I know exactly who I am — that didn't move it an inch." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "В тебя летит выпад, а ты спокойно: «не приму это personally — даже если так и метили»; «пусть это ляжет beside меня, а не в меня»; «дам тебе шанс оставить это unsaid». Прямо проводишь черту: «это crossed черту — и я не сделаю вид, что нет»; «я ок с несогласием — не ок с contempt»; «скажи real вещь, а не dig — настоящую с радостью приму». И достоинство сверху: «твои слова не определяют мой worth»; «сказанное describes тебя, не меня»; «я точно знаю, кто я — это не сдвинуло меня ни на inch»."
+  "phrases": [
+    {
+      "anchor": "Personally",
+      "zone": "Warm",
+      "en": "I'm not going to take that personally — even if it was meant that way."
+    },
+    {
+      "anchor": "Beside",
+      "zone": "Warm",
+      "en": "I'll let that land beside me — not on me."
+    },
+    {
+      "anchor": "Unsaid",
+      "zone": "Warm",
+      "en": "I'll give you the chance to leave that one unsaid."
+    },
+    {
+      "anchor": "Crossed",
+      "zone": "Backbone",
+      "en": "That crossed a line — and I'm not going to pretend it didn't."
+    },
+    {
+      "anchor": "Contempt",
+      "zone": "Backbone",
+      "en": "I'm fine with disagreement — I'm not fine with contempt."
+    },
+    {
+      "anchor": "Dig",
+      "zone": "Backbone",
+      "en": "Say the real thing, not the dig — I'll happily take the real thing."
+    },
+    {
+      "anchor": "Worth",
+      "zone": "Weight",
+      "en": "Your words don't get to define my worth."
+    },
+    {
+      "anchor": "Describes",
+      "zone": "Weight",
+      "en": "What you just said describes you, not me."
+    },
+    {
+      "anchor": "Inch",
+      "zone": "Weight",
+      "en": "I know exactly who I am — that didn't move it an inch."
+    }
+  ],
+  "mnemo": "Ты personally вбил каждый межевой колышек, когда сосед-скандалист харкает — плевок шлёпается beside сапога, мимо. Ответ оставляешь unsaid и тянешь шнур дальше, но его сапог уже crossed линию: с contempt он выбивает крайний кол. Ты молча dig лунку глубже и вгоняешь кол по самую шляпку — земля worth ровно столько, насколько точна её граница. Циркуль на планшете спокойно describes дугу, межа ложится на карту, не сдвинувшись ни на inch."
 }

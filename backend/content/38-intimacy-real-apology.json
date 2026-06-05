@@ -2,19 +2,59 @@
   "slug": "intimacy-4",
   "title": "Извиниться по-настоящему",
   "theme": "Настоящее извинение, а не «прости, если»: назвать вред и эффект, без «но» и «если», починить поведением — на её сроках",
-  "subtitle": "",
+  "subtitle": "Лопнувшая спица",
   "section": "intimacy",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Hurt",      "zone": "Warm",     "en": "I'm sorry I hurt you. I can see it landed deeper than I meant it to." },
-    { "anchor": "Alone",     "zone": "Warm",     "en": "You didn't deserve to feel alone in that moment." },
-    { "anchor": "Matters",   "zone": "Warm",     "en": "How it landed on you matters more than what I meant." },
-    { "anchor": "Dismissed", "zone": "Backbone", "en": "I dismissed what mattered to you — and that made you feel small." },
-    { "anchor": "Spoke",     "zone": "Backbone", "en": "I spoke over you when I should have slowed down and listened." },
-    { "anchor": "Excuses",   "zone": "Backbone", "en": "No excuses — what I did was mine to own." },
-    { "anchor": "Cheap",     "zone": "Weight",   "en": "Words are cheap right now — let me show you with what I do next." },
-    { "anchor": "Repeat",    "zone": "Weight",   "en": "The real apology is making sure I don't repeat it." },
-    { "anchor": "Forgive",   "zone": "Weight",   "en": "Take all the time you need — my responsibility doesn't depend on you forgiving me." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты прямо говоришь: «прости, я сделал тебе hurt — вижу, попало глубже, чем хотел»; «ты не заслуживала чувствовать себя alone в тот момент»; и как это легло на тебя matters больше, чем что я имел в виду. Называешь конкретно: я dismissed важное для тебя, от этого ты почувствовала себя меньше; я spoke поверх тебя, когда надо было слушать; и никаких excuses — что сделал, то моё. Дальше зрелость: слова cheap — покажу делом; настоящее извинение в том, чтобы не repeat это; и не тороплю — бери время, моя ответственность не зависит от того, forgive ли ты."
+  "phrases": [
+    {
+      "anchor": "Hurt",
+      "zone": "Warm",
+      "en": "I'm sorry I hurt you. I can see it landed deeper than I meant it to."
+    },
+    {
+      "anchor": "Alone",
+      "zone": "Warm",
+      "en": "You didn't deserve to feel alone in that moment."
+    },
+    {
+      "anchor": "Matters",
+      "zone": "Warm",
+      "en": "How it landed on you matters more than what I meant."
+    },
+    {
+      "anchor": "Dismissed",
+      "zone": "Backbone",
+      "en": "I dismissed what mattered to you — and that made you feel small."
+    },
+    {
+      "anchor": "Spoke",
+      "zone": "Backbone",
+      "en": "I spoke over you when I should have slowed down and listened."
+    },
+    {
+      "anchor": "Excuses",
+      "zone": "Backbone",
+      "en": "No excuses — what I did was mine to own."
+    },
+    {
+      "anchor": "Cheap",
+      "zone": "Weight",
+      "en": "Words are cheap right now — let me show you with what I do next."
+    },
+    {
+      "anchor": "Repeat",
+      "zone": "Weight",
+      "en": "The real apology is making sure I don't repeat it."
+    },
+    {
+      "anchor": "Forgive",
+      "zone": "Weight",
+      "en": "Take all the time you need — my responsibility doesn't depend on you forgiving me."
+    }
+  ],
+  "mnemo": "Гравий уходит из-под колеса — падение, колено hurt, и ты совсем alone на пустой дороге. Поднимаешься, проверяя, что matters: рама цела; боль dismissed взмахом руки. В заднем колесе лопнула spoke — времени на excuses нет, темнеет: достаёшь из ремнабора cheap запасную спицу. Крутишь колесо на repeat, пока не пойдёт ровно, хлопаешь раму ладонью — «forgive меня, старушка» — и катишь к огням города."
 }

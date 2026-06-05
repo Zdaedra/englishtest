@@ -2,19 +2,59 @@
   "slug": "stage-9",
   "title": "Под софитами / вниманием прессы",
   "theme": "Интервью, камеры, журналисты — каждое слово пишется и может быть вырвано в цитату; остаться живым человеком, а не пресс-релизом, владеть своим посланием и дать чистую строку, которую хочешь увидеть в печати; софиты не меняют мой ответ — тон задаю я, не новостной цикл",
-  "subtitle": "",
+  "subtitle": "Ночная типография",
   "section": "stage",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "statement", "zone": "Warm",     "en": "Let's talk like people — I'm not going to read you a statement." },
-    { "anchor": "armor",     "zone": "Warm",     "en": "I don't want to put on armor and call it transparency." },
-    { "anchor": "homework",  "zone": "Warm",     "en": "You've clearly done your homework. I respect that — let's get into it." },
-    { "anchor": "print",     "zone": "Backbone", "en": "Here's the line I actually want you to print:" },
-    { "anchor": "speculate", "zone": "Backbone", "en": "I won't speculate on that. What I can tell you is this." },
-    { "anchor": "chopped",   "zone": "Backbone", "en": "Let me give you that in one line they can't chop up." },
-    { "anchor": "spotlight", "zone": "Weight",   "en": "The spotlight doesn't change my answer. It only raises the standard for it." },
-    { "anchor": "cycle",     "zone": "Weight",   "en": "I set the tone of this conversation, not the news cycle." },
-    { "anchor": "quote",     "zone": "Weight",   "en": "Quote me on all of it. I stand behind every word." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Под софитами ты остаёшься человеком: не читаешь statement, не надеваешь armor вместо открытости, и ценишь, что журналист сделал homework. Владеешь посланием: вот строка, которую хочу видеть в print; на это я speculate не стану — а вот что скажу; даю фразу так, чтобы её не chopped вне контекста. И владеешь вниманием: spotlight не меняет мой ответ, а лишь поднимает планку; тон задаю я, а не news cycle; quote меня хоть целиком — я за каждым словом стою."
+  "phrases": [
+    {
+      "anchor": "statement",
+      "zone": "Warm",
+      "en": "Let's talk like people — I'm not going to read you a statement."
+    },
+    {
+      "anchor": "armor",
+      "zone": "Warm",
+      "en": "I don't want to put on armor and call it transparency."
+    },
+    {
+      "anchor": "homework",
+      "zone": "Warm",
+      "en": "You've clearly done your homework. I respect that — let's get into it."
+    },
+    {
+      "anchor": "print",
+      "zone": "Backbone",
+      "en": "Here's the line I actually want you to print:"
+    },
+    {
+      "anchor": "speculate",
+      "zone": "Backbone",
+      "en": "I won't speculate on that. What I can tell you is this."
+    },
+    {
+      "anchor": "chopped",
+      "zone": "Backbone",
+      "en": "Let me give you that in one line they can't chop up."
+    },
+    {
+      "anchor": "spotlight",
+      "zone": "Weight",
+      "en": "The spotlight doesn't change my answer. It only raises the standard for it."
+    },
+    {
+      "anchor": "cycle",
+      "zone": "Weight",
+      "en": "I set the tone of this conversation, not the news cycle."
+    },
+    {
+      "anchor": "quote",
+      "zone": "Weight",
+      "en": "Quote me on all of it. I stand behind every word."
+    }
+  ],
+  "mnemo": "Ты кладёшь на наборный стол лист statement, снимаешь с него тяжёлую armor обложку и достаёшь из ящика папку homework с проверенными метками. Потом опускаешь рычаг print, но не даёшь машине speculate чернилами в пустоту, а вытаскиваешь из резака chopped обрезки лишних слов. Поднимаешь лист под spotlight, пропускаешь его через один ровный cycle барабана и в конце вынимаешь из пресса чистую quote, которую уже не перекрутить."
 }

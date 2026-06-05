@@ -54,6 +54,31 @@ export function isOnboarded(): boolean {
   return !!getProfile().onboardedAt;
 }
 
+// Lightweight day-streak: call once when the home screen opens. Same day → no
+// change; consecutive day → +1; a gap → reset to 1. Stored in localStorage.
+const STREAK_KEY = "ee-streak";
+export function recordVisit(): number {
+  const today = new Date();
+  const dayStr = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  let data: { last?: string; count?: number } = {};
+  try {
+    data = JSON.parse(localStorage.getItem(STREAK_KEY) || "{}");
+  } catch {
+    /* ignore */
+  }
+  if (data.last === dayStr) return data.count || 1;
+  const y = new Date(today);
+  y.setDate(y.getDate() - 1);
+  const yStr = `${y.getFullYear()}-${y.getMonth() + 1}-${y.getDate()}`;
+  const count = data.last === yStr ? (data.count || 0) + 1 : 1;
+  try {
+    localStorage.setItem(STREAK_KEY, JSON.stringify({ last: dayStr, count }));
+  } catch {
+    /* ignore */
+  }
+  return count;
+}
+
 // The active strategy: an explicitly tuned one wins; otherwise derive it from the
 // onboarding picks (SCENARIOS keys are focus keys); otherwise the default.
 export function getStrategy(): Strategy {

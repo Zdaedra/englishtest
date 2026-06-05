@@ -2,19 +2,59 @@
   "slug": "composure-11",
   "title": "Держать достоинство в проигрыше/отказе",
   "theme": "Тебя обошли или сказали «нет» — принять исход без горечи и обвала; красивый проигрыш парадоксально поднимает статус",
-  "subtitle": "",
+  "subtitle": "Фехтовальный поклон",
   "section": "composure",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Earned",    "zone": "Warm",     "en": "Congratulations — you earned that, and I mean it." },
-    { "anchor": "Asterisk",  "zone": "Warm",     "en": "She earned it, and I'm glad for her. No asterisk." },
-    { "anchor": "Genuinely", "zone": "Warm",     "en": "I'm disappointed — and I'm genuinely happy for you." },
-    { "anchor": "Accept",    "zone": "Backbone", "en": "I accept the decision — I'd value a clear read on where I fell short." },
-    { "anchor": "Sharpen",   "zone": "Backbone", "en": "Fair outcome — what should I sharpen for next time?" },
-    { "anchor": "Argue",     "zone": "Backbone", "en": "I'm not going to argue the outcome — I want to learn from it." },
-    { "anchor": "Reduce",    "zone": "Weight",   "en": "This result doesn't reduce me — it gives me information." },
-    { "anchor": "Cleanly",   "zone": "Weight",   "en": "I'll take the loss cleanly — and come back better." },
-    { "anchor": "Handle",    "zone": "Weight",   "en": "How I handle this will say more about me than the loss itself." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Тебя обошли, а ты держишь достоинство: «поздравляю — ты earned это, и я серьёзно»; «она заслужила, и я рад за неё — no asterisk, без оговорок»; «мне досадно — и я genuinely рад за тебя». Прямо принимаешь: «я accept решение — и хотел бы ясно понять, где недотянул»; «честный исход — что мне sharpen к следующему разу?»; «я не стану argue результат — хочу из него научиться». И достоинство выше счёта: «этот итог не reduce меня — он даёт информацию»; «приму проигрыш cleanly — и вернусь лучше»; «то, как я это handle, скажет обо мне больше, чем сам проигрыш»."
+  "phrases": [
+    {
+      "anchor": "Earned",
+      "zone": "Warm",
+      "en": "Congratulations — you earned that, and I mean it."
+    },
+    {
+      "anchor": "Asterisk",
+      "zone": "Warm",
+      "en": "She earned it, and I'm glad for her. No asterisk."
+    },
+    {
+      "anchor": "Genuinely",
+      "zone": "Warm",
+      "en": "I'm disappointed — and I'm genuinely happy for you."
+    },
+    {
+      "anchor": "Accept",
+      "zone": "Backbone",
+      "en": "I accept the decision — I'd value a clear read on where I fell short."
+    },
+    {
+      "anchor": "Sharpen",
+      "zone": "Backbone",
+      "en": "Fair outcome — what should I sharpen for next time?"
+    },
+    {
+      "anchor": "Argue",
+      "zone": "Backbone",
+      "en": "I'm not going to argue the outcome — I want to learn from it."
+    },
+    {
+      "anchor": "Reduce",
+      "zone": "Weight",
+      "en": "This result doesn't reduce me — it gives me information."
+    },
+    {
+      "anchor": "Cleanly",
+      "zone": "Weight",
+      "en": "I'll take the loss cleanly — and come back better."
+    },
+    {
+      "anchor": "Handle",
+      "zone": "Weight",
+      "en": "How I handle this will say more about me than the loss itself."
+    }
+  ],
+  "mnemo": "Последний укол соперника earned на табло, и рядом вспыхивает маленькая asterisk, которую ты не пытаешься стереть оправданиями. Ты genuinely снимаешь маску, делаешь шаг вперёд и accept протянутую руку перед всем залом. Потом у бортика начинаешь sharpen свой клинок, не идёшь argue с судьёй и reduce лишний шум до одного спокойного вдоха. Ты cleanly убираешь шпагу в чехол, берёшь handle сумки и уходишь с дорожки прямой спиной."
 }

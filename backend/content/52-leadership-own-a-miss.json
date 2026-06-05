@@ -2,19 +2,59 @@
   "slug": "lead-6",
   "title": "Признать промах, не теряя авторитета",
   "theme": "Публично взять свою ошибку как лидер — чисто, без самобичевания и оправданий; показать коррекцию и выйти с большим доверием",
-  "subtitle": "",
+  "subtitle": "Лучник",
   "section": "lead-presence",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Wrong",     "zone": "Warm",     "en": "I got this one wrong — and it landed on you. I want to say that out loud." },
-    { "anchor": "Cost",      "zone": "Warm",     "en": "That call cost the team time — and that's on me, no one else." },
-    { "anchor": "Guessing",  "zone": "Warm",     "en": "Let me name it plainly — so no one's left guessing." },
-    { "anchor": "Timing",    "zone": "Backbone", "en": "I misjudged the timing — and that's on me." },
-    { "anchor": "Missed",    "zone": "Backbone", "en": "I moved too fast and missed the part that should've slowed me down." },
-    { "anchor": "Changes",   "zone": "Backbone", "en": "Here's what changes now: clearer checks, earlier flags, no quiet assumptions." },
-    { "anchor": "Authority", "zone": "Weight",   "en": "I don't lose authority by owning the miss — I lose it by pretending there wasn't one." },
-    { "anchor": "Hit",       "zone": "Weight",   "en": "I'll take the hit — and we'll move with the lesson." },
-    { "anchor": "Trust",     "zone": "Weight",   "en": "Trust gets built in moments like this — by what we do next." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты говоришь вслух: «я тут был wrong — и это легло на вас, хочу это назвать»; «тот выбор cost команде время — и это на мне, ни на ком ещё»; «назову прямо, чтобы никто не остался guessing». Прямо берёшь конкретику: «я неверно понял timing — это на мне»; «я гнал и missed то, что должно было меня притормозить»; «вот что changes теперь: проверки яснее, флаги раньше, без тихих допущений». И достоинство: «authority теряют не признав промах, а делая вид, что его не было»; «я take the hit — и мы идём дальше с уроком»; «trust строится как раз в такие моменты — тем, что делаем дальше»."
+  "phrases": [
+    {
+      "anchor": "Wrong",
+      "zone": "Warm",
+      "en": "I got this one wrong — and it landed on you. I want to say that out loud."
+    },
+    {
+      "anchor": "Cost",
+      "zone": "Warm",
+      "en": "That call cost the team time — and that's on me, no one else."
+    },
+    {
+      "anchor": "Guessing",
+      "zone": "Warm",
+      "en": "Let me name it plainly — so no one's left guessing."
+    },
+    {
+      "anchor": "Timing",
+      "zone": "Backbone",
+      "en": "I misjudged the timing — and that's on me."
+    },
+    {
+      "anchor": "Missed",
+      "zone": "Backbone",
+      "en": "I moved too fast and missed the part that should've slowed me down."
+    },
+    {
+      "anchor": "Changes",
+      "zone": "Backbone",
+      "en": "Here's what changes now: clearer checks, earlier flags, no quiet assumptions."
+    },
+    {
+      "anchor": "Authority",
+      "zone": "Weight",
+      "en": "I don't lose authority by owning the miss — I lose it by pretending there wasn't one."
+    },
+    {
+      "anchor": "Hit",
+      "zone": "Weight",
+      "en": "I'll take the hit — and we'll move with the lesson."
+    },
+    {
+      "anchor": "Trust",
+      "zone": "Weight",
+      "en": "Trust gets built in moments like this — by what we do next."
+    }
+  ],
+  "mnemo": "Ты берёшь wrong поправку на ветер, и первая стрела уходит в край — это cost тебе десятку. Признаёшь: ты guessing, а не читаешь поле, — и начинаешь ловить timing порывов по флажкам; вторая всё же missed на волос. Вносишь changes в прицел — два щелчка, — и старый тренер кивает с authority: теперь верно. Выпуск — hit, десятка! — а последнюю стрелу ты пускаешь с закрытыми глазами, на чистом trust."
 }

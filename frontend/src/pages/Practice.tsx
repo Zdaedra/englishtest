@@ -4,11 +4,14 @@ import { api, PracticeQuestion } from "../api";
 import { useRecorder } from "../audio/useRecorder";
 import { RecFab } from "../ui/RecFab";
 import { IconHeadphones, IconPlay } from "../ui/icons";
+import { isEngaged } from "../lib/progress";
 
 type Attempt = { prompt: string; heard: string; score: number; anchor: string; batch: string };
 
-// Passed batches (l3_passed) straight from localStorage — no extra round-trip.
-function passedBatchIds(): number[] {
+// Engaged batches — activated, in-progress, or passed — straight from localStorage
+// (no round-trip). Practice draws from everything in the learner's active set, not
+// only fully-passed batches.
+function engagedBatchIds(): number[] {
   const out: number[] = [];
   try {
     for (let i = 0; i < localStorage.length; i++) {
@@ -17,7 +20,7 @@ function passedBatchIds(): number[] {
       const id = Number(k.slice("ee-progress-".length));
       if (Number.isNaN(id)) continue;
       const p = JSON.parse(localStorage.getItem(k) || "{}");
-      if (p.l3_passed) out.push(id);
+      if (isEngaged(p)) out.push(id);
     }
   } catch { /* ignore */ }
   return out;
@@ -37,7 +40,7 @@ export default function Practice() {
   const [err, setErr] = useState("");
   const promptAudio = useRef<HTMLAudioElement>(null);
 
-  const ids = useMemo(() => passedBatchIds(), []);
+  const ids = useMemo(() => engagedBatchIds(), []);
 
   useEffect(() => {
     if (ids.length === 0) { setQuestions([]); return; }
@@ -111,7 +114,7 @@ export default function Practice() {
         <span className="lesson-tag" style={{ color: "var(--map-green)" }}>Практика</span>
         <h1>Вживую</h1>
         <p className="app-sub" style={{ marginBottom: 0 }}>
-          Слушай ситуацию — отвечай голосом фразой из пройденных навыков.
+          Слушай ситуацию — отвечай голосом фразой из своих активных навыков.
         </p>
       </div>
 
@@ -126,9 +129,9 @@ export default function Practice() {
         <div className="pr-empty">
           <p className="pr-empty-t">Пока нечего практиковать</p>
           <p className="pr-empty-s">
-            Навык закрывается, когда пройден весь бетч и сданы тесты — это можно сделать
-            и из «Обучения», и из любого бетча в «Библиотеке». Закрой первый — и он появится
-            здесь для живой тренировки.
+            Открой любой бетч и нажми «Активировать бетч» — он сразу попадёт сюда для живой
+            тренировки (а не только после полного прохождения). Активные и пройденные бетчи —
+            это и есть твой материал для практики.
           </p>
           <button className="l3-cta" style={{ marginTop: 18 }} onClick={() => nav("/learn")}>
             <IconPlay size={18} /> В Обучение

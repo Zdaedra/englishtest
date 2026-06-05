@@ -2,19 +2,59 @@
   "slug": "stage-6",
   "title": "Восстановиться после провала на сцене",
   "theme": "Посреди выступления виден сбой — шутка упала, провал в памяти, отказали слайды, запнулся — и зал это видел; восстановиться изящно, не сорваться в штопор и не рассыпаться в извинениях; самообладание в ступоре и есть сигнал, а изящное восстановление запоминается сильнее безупречности",
-  "subtitle": "",
+  "subtitle": "Дрезина на арене",
   "section": "stage",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "balloon",     "zone": "Warm",     "en": "That one landed like a lead balloon — moving swiftly on." },
-    { "anchor": "blank",       "zone": "Warm",     "en": "Total blank just now. Happens to the best of me." },
-    { "anchor": "slides",      "zone": "Warm",     "en": "And the slides have decided to take a little break. Bold of them." },
-    { "anchor": "resume",      "zone": "Backbone", "en": "No big apology — let's just resume." },
-    { "anchor": "rails",       "zone": "Backbone", "en": "Let me get back on the rails — here's the real point." },
-    { "anchor": "where",       "zone": "Backbone", "en": "Here's where we were before the room took that little detour." },
-    { "anchor": "stumble",     "zone": "Weight",   "en": "One stumble does not get to own the room." },
-    { "anchor": "fall",        "zone": "Weight",   "en": "It's not the fall — it's how I get up. Watch." },
-    { "anchor": "forgettable", "zone": "Weight",   "en": "Flawless would've been forgettable. This, you'll remember." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Шутка упала, как свинцовый balloon, в голове на миг blank, а slides решили устроить перекур — ты называешь это с улыбкой. Сбрасываешь без потока извинений: просто resume, обратно на rails, и спокойно напоминаешь, where мы были до маленького крюка. И достоинство выше провала: один stumble не владеет залом; дело не в падении (fall), а в том, как встаёшь; идеальное было бы forgettable — а это запомнят."
+  "phrases": [
+    {
+      "anchor": "balloon",
+      "zone": "Warm",
+      "en": "That one landed like a lead balloon — moving swiftly on."
+    },
+    {
+      "anchor": "blank",
+      "zone": "Warm",
+      "en": "Total blank just now. Happens to the best of me."
+    },
+    {
+      "anchor": "slides",
+      "zone": "Warm",
+      "en": "And the slides have decided to take a little break. Bold of them."
+    },
+    {
+      "anchor": "resume",
+      "zone": "Backbone",
+      "en": "No big apology — let's just resume."
+    },
+    {
+      "anchor": "rails",
+      "zone": "Backbone",
+      "en": "Let me get back on the rails — here's the real point."
+    },
+    {
+      "anchor": "where",
+      "zone": "Backbone",
+      "en": "Here's where we were before the room took that little detour."
+    },
+    {
+      "anchor": "stumble",
+      "zone": "Weight",
+      "en": "One stumble does not get to own the room."
+    },
+    {
+      "anchor": "fall",
+      "zone": "Weight",
+      "en": "It's not the fall — it's how I get up. Watch."
+    },
+    {
+      "anchor": "forgettable",
+      "zone": "Weight",
+      "en": "Flawless would've been forgettable. This, you'll remember."
+    }
+  ],
+  "mnemo": "На арене лопается balloon, экран за спиной становится blank, и картонные slides съезжают набок. Ты нажимаешь на медный рычаг resume, ставишь дрезину обратно на rails и мелом отмечаешь where начинается следующий круг. Колесо цепляет песок, выходит смешной stumble, ты переводишь его в мягкий fall на колено и тут же вскакиваешь так красиво, что сам сбой становится не forgettable."
 }

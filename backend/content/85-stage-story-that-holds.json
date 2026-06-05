@@ -2,19 +2,59 @@
   "slug": "stage-7",
   "title": "История, которая держит зал",
   "theme": "Держать зал через повествование — крючок и сцена, в которую их бросаешь, нарастающие ставки и удержанная развязка, и в конце смысл, который они унесут; история не украшение — она несёт мысль и убеждает вместо тебя, оставляя один образ",
-  "subtitle": "",
+  "subtitle": "Театр теней",
   "section": "stage",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "smell",       "zone": "Warm",     "en": "Let me put you in the room: smell the coffee, hear the clock ticking." },
-    { "anchor": "stomach",     "zone": "Warm",     "en": "You know that feeling when your stomach drops? Hold onto it." },
-    { "anchor": "embarrassing","zone": "Warm",     "en": "This next part's embarrassing — which is exactly why I'm telling you." },
-    { "anchor": "stakes",      "zone": "Backbone", "en": "The stakes were simple: if we got this wrong, the whole thing changed." },
-    { "anchor": "coming",      "zone": "Backbone", "en": "Now hold that — because what happened next, I never saw coming." },
-    { "anchor": "wait",        "zone": "Backbone", "en": "And here's the turn. [pause] Wait for it." },
-    { "anchor": "revealed",    "zone": "Weight",   "en": "The point is not what happened. The point is what it revealed." },
-    { "anchor": "image",       "zone": "Weight",   "en": "Hold that image. That's the lesson before I name it." },
-    { "anchor": "sit",         "zone": "Weight",   "en": "[long pause] ...I'll let that sit. Some things land harder in silence." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты бросаешь зал прямо в сцену: smell кофе, слышишь часы; ловишь то чувство, когда stomach падает; делишься embarrassing деталью — потому и рассказываешь. Строишь дугу: вот stakes — ошибись, и всё рухнет; держи мысль, ведь дальше то, чего ты не видел coming; вот поворот — [пауза] — wait for it. И приземляешь смысл: дело не в том, что случилось, а в том, что это revealed; вот image, который они унесут; [пауза] — пусть это sit в тишине."
+  "phrases": [
+    {
+      "anchor": "smell",
+      "zone": "Warm",
+      "en": "Let me put you in the room: smell the coffee, hear the clock ticking."
+    },
+    {
+      "anchor": "stomach",
+      "zone": "Warm",
+      "en": "You know that feeling when your stomach drops? Hold onto it."
+    },
+    {
+      "anchor": "embarrassing",
+      "zone": "Warm",
+      "en": "This next part's embarrassing — which is exactly why I'm telling you."
+    },
+    {
+      "anchor": "stakes",
+      "zone": "Backbone",
+      "en": "The stakes were simple: if we got this wrong, the whole thing changed."
+    },
+    {
+      "anchor": "coming",
+      "zone": "Backbone",
+      "en": "Now hold that — because what happened next, I never saw coming."
+    },
+    {
+      "anchor": "wait",
+      "zone": "Backbone",
+      "en": "And here's the turn. [pause] Wait for it."
+    },
+    {
+      "anchor": "revealed",
+      "zone": "Weight",
+      "en": "The point is not what happened. The point is what it revealed."
+    },
+    {
+      "anchor": "image",
+      "zone": "Weight",
+      "en": "Hold that image. That's the lesson before I name it."
+    },
+    {
+      "anchor": "sit",
+      "zone": "Weight",
+      "en": "[long pause] ...I'll let that sit. Some things land harder in silence."
+    }
+  ],
+  "mnemo": "Сначала из костра поднимается smell смолы, у тебя сжимается stomach, и кукла падает в траву так embarrassing, что дети замирают. Ты вбиваешь в землю stakes для белой простыни, слышишь, как из темноты что-то coming, и поднимаешь ладонь wait, не раскрывая силуэт раньше времени. Потом за простынёй вспыхивает revealed тень огромного оленя, превращается в один яркий image, и все садятся sit вокруг огня, уже держа эту картинку внутри."
 }

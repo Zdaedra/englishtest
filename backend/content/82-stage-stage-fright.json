@@ -2,19 +2,59 @@
   "slug": "stage-4",
   "title": "Совладать со сценическим страхом вживую",
   "theme": "Живой зал, тело предаёт — руки дрожат, сердце колотит, в голове пусто; не побороть страх, а тёпло признать его, заземлить тело и начать раньше, чем «готов», обратив адреналин в присутствие; страх может быть рядом, но залом правлю я",
-  "subtitle": "",
+  "subtitle": "Ночной старт",
   "section": "stage",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "shaking",  "zone": "Warm",     "en": "Hands are shaking a little — that just means it matters to me." },
-    { "anchor": "nervous",  "zone": "Warm",     "en": "Yeah, I'm a little nervous. You'd worry if I weren't." },
-    { "anchor": "heart",    "zone": "Warm",     "en": "I'll be honest — my heart's going. Bear with me; I care about this." },
-    { "anchor": "floor",    "zone": "Backbone", "en": "Feet flat on the floor. One slow breath. Begin." },
-    { "anchor": "ready",    "zone": "Backbone", "en": "I don't wait to feel ready — I start, and ready catches up." },
-    { "anchor": "momentum", "zone": "Backbone", "en": "Just land the first line. Momentum takes it from there." },
-    { "anchor": "fuel",     "zone": "Weight",   "en": "This isn't fear — it's fuel. Same chemistry, my label on it." },
-    { "anchor": "run",      "zone": "Weight",   "en": "Fear doesn't run this room. I do." },
-    { "anchor": "present",  "zone": "Weight",   "en": "I don't have to be perfect up here. I have to be present." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты выходишь, и руки shaking — это не беда, а знак: тебе важно. Да, чуть nervous — и честно говоришь это залу, прижав ладонь к heart. Потом заземляешься: стопы на floor, один вдох — и не ждёшь, пока ready, просто роняешь первую фразу, а дальше momentum несёт. И рефрейм: это не страх, а fuel; страх не run этот зал — рулишь ты; тебе не нужно быть идеальным — нужно быть present."
+  "phrases": [
+    {
+      "anchor": "shaking",
+      "zone": "Warm",
+      "en": "Hands are shaking a little — that just means it matters to me."
+    },
+    {
+      "anchor": "nervous",
+      "zone": "Warm",
+      "en": "Yeah, I'm a little nervous. You'd worry if I weren't."
+    },
+    {
+      "anchor": "heart",
+      "zone": "Warm",
+      "en": "I'll be honest — my heart's going. Bear with me; I care about this."
+    },
+    {
+      "anchor": "floor",
+      "zone": "Backbone",
+      "en": "Feet flat on the floor. One slow breath. Begin."
+    },
+    {
+      "anchor": "ready",
+      "zone": "Backbone",
+      "en": "I don't wait to feel ready — I start, and ready catches up."
+    },
+    {
+      "anchor": "momentum",
+      "zone": "Backbone",
+      "en": "Just land the first line. Momentum takes it from there."
+    },
+    {
+      "anchor": "fuel",
+      "zone": "Weight",
+      "en": "This isn't fear — it's fuel. Same chemistry, my label on it."
+    },
+    {
+      "anchor": "run",
+      "zone": "Weight",
+      "en": "Fear doesn't run this room. I do."
+    },
+    {
+      "anchor": "present",
+      "zone": "Weight",
+      "en": "I don't have to be perfect up here. I have to be present."
+    }
+  ],
+  "mnemo": "В пальцах начинается shaking, над трибунами мигает nervous табло, а в груди барабаном бьёт heart. Ты опускаешь ладони на резиновый floor, слышишь команду ready и первым толчком ловишь momentum. Адреналин становится fuel, ноги начинают run по освещённой дуге, и на финише ты разрываешь ленту с надписью present."
 }

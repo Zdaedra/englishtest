@@ -2,19 +2,59 @@
   "slug": "intimacy-11",
   "title": "Заряженный разговор с семьёй",
   "theme": "Остаться взрослым с родителями, когда жмут старые кнопки — граница с любовью, уважение без подчинения, встреча на равных",
-  "subtitle": "",
+  "subtitle": "Теннисный матч",
   "section": "intimacy",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Love",       "zone": "Warm",     "en": "I know this comes from love — I really do." },
-    { "anchor": "Agree",      "zone": "Warm",     "en": "We don't have to agree to be close — I'm not going anywhere." },
-    { "anchor": "Concern",    "zone": "Warm",     "en": "I hear the concern underneath it — let's not fight over the form." },
-    { "anchor": "Court",      "zone": "Backbone", "en": "I'm not going to defend my life like a case in court." },
-    { "anchor": "Steering",   "zone": "Backbone", "en": "I can listen to you without handing you the steering wheel." },
-    { "anchor": "Vote",       "zone": "Backbone", "en": "That part of my life isn't open for a family vote." },
-    { "anchor": "Child",      "zone": "Weight",   "en": "I'm your child — but I'm not a child in this conversation." },
-    { "anchor": "Permission", "zone": "Weight",   "en": "I'm not asking for permission — I'm offering you honesty." },
-    { "anchor": "Adults",     "zone": "Weight",   "en": "I want us to meet as adults — not as old roles." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты сначала видишь за давлением love — «я знаю, это из любви, правда»; «нам не нужно agree, чтобы быть близкими — я никуда не ухожу»; «я слышу concern под резкими словами — давай не воевать из-за формы». Спокойно держишь границу: «я не буду defend свою жизнь, как дело в court»; «могу слушать тебя, не отдавая steering руль»; «эта часть моей жизни не открыта для family vote». И достоинство выросшего: я ваш child, но не ребёнок в этом разговоре; не прошу permission — предлагаю честность; хочу, чтобы мы встретились как adults, а не как старые роли."
+  "phrases": [
+    {
+      "anchor": "Love",
+      "zone": "Warm",
+      "en": "I know this comes from love — I really do."
+    },
+    {
+      "anchor": "Agree",
+      "zone": "Warm",
+      "en": "We don't have to agree to be close — I'm not going anywhere."
+    },
+    {
+      "anchor": "Concern",
+      "zone": "Warm",
+      "en": "I hear the concern underneath it — let's not fight over the form."
+    },
+    {
+      "anchor": "Court",
+      "zone": "Backbone",
+      "en": "I'm not going to defend my life like a case in court."
+    },
+    {
+      "anchor": "Steering",
+      "zone": "Backbone",
+      "en": "I can listen to you without handing you the steering wheel."
+    },
+    {
+      "anchor": "Vote",
+      "zone": "Backbone",
+      "en": "That part of my life isn't open for a family vote."
+    },
+    {
+      "anchor": "Child",
+      "zone": "Weight",
+      "en": "I'm your child — but I'm not a child in this conversation."
+    },
+    {
+      "anchor": "Permission",
+      "zone": "Weight",
+      "en": "I'm not asking for permission — I'm offering you honesty."
+    },
+    {
+      "anchor": "Adults",
+      "zone": "Weight",
+      "en": "I want us to meet as adults — not as old roles."
+    }
+  ],
+  "mnemo": "Тренер кричит: начинаем с love, с нуля, — и вы agree на три сета, хотя тучи вызывают concern. Выходите на центральный court; ты подаёшь, steering мяч точно в угол. Спорный аут — трибуны vote криками, child-болбой подносит новый мяч, и ты просишь у судьи permission на челлендж. «Ястребиный глаз»: мяч в поле! — и вы дожимаете тай-брейк, по-взрослому, как adults, пожимая руки через сетку."
 }

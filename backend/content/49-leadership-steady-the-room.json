@@ -2,19 +2,59 @@
   "slug": "lead-3",
   "title": "Стать спокойствием в кризисе",
   "theme": "Комната паникует — стать якорем: снизить градус, дать ясность и следующий шаг, излучать заразительную устойчивость",
-  "subtitle": "",
+  "subtitle": "Пилот в турбулентности",
   "section": "lead-presence",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Breathe",   "zone": "Warm",     "en": "Okay — everybody breathe for one second. Me included." },
-    { "anchor": "Hard",      "zone": "Warm",     "en": "This is a lot — and nobody has to pretend it isn't." },
-    { "anchor": "Ground",    "zone": "Warm",     "en": "Let's get our feet back on the ground — together." },
-    { "anchor": "Facts",     "zone": "Backbone", "en": "Here are the facts we actually have — and here's what we don't know yet." },
-    { "anchor": "Separate",  "zone": "Backbone", "en": "Let's separate what happened from what we're afraid it means." },
-    { "anchor": "Next",      "zone": "Backbone", "en": "The next move is simple: stabilize first, then make the call." },
-    { "anchor": "Calm",      "zone": "Weight",   "en": "I'm going to stay calm enough for all of us to think." },
-    { "anchor": "Weathered", "zone": "Weight",   "en": "We've weathered hard things before — we're not starting from zero." },
-    { "anchor": "Steady",    "zone": "Weight",   "en": "Stay with me. We move steady from here." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты снимаешь накал: «так, все breathe одну секунду — я тоже»; «это hard, и никто не обязан делать вид, что нет»; «давайте вернём ноги на ground вместе». Даёшь ясность: «вот facts, что у нас есть — и вот чего пока не знаем»; «давайте separate, что случилось, от того, чего мы боимся»; «next шаг простой: сперва стабилизируем, потом решаем». И устойчивость: «я останусь calm настолько, чтоб мы все могли думать»; «мы weathered трудное раньше — мы не с нуля»; «будьте со мной — дальше идём steady»."
+  "phrases": [
+    {
+      "anchor": "Breathe",
+      "zone": "Warm",
+      "en": "Okay — everybody breathe for one second. Me included."
+    },
+    {
+      "anchor": "Hard",
+      "zone": "Warm",
+      "en": "This is a lot — and nobody has to pretend it isn't."
+    },
+    {
+      "anchor": "Ground",
+      "zone": "Warm",
+      "en": "Let's get our feet back on the ground — together."
+    },
+    {
+      "anchor": "Facts",
+      "zone": "Backbone",
+      "en": "Here are the facts we actually have — and here's what we don't know yet."
+    },
+    {
+      "anchor": "Separate",
+      "zone": "Backbone",
+      "en": "Let's separate what happened from what we're afraid it means."
+    },
+    {
+      "anchor": "Next",
+      "zone": "Backbone",
+      "en": "The next move is simple: stabilize first, then make the call."
+    },
+    {
+      "anchor": "Calm",
+      "zone": "Weight",
+      "en": "I'm going to stay calm enough for all of us to think."
+    },
+    {
+      "anchor": "Weathered",
+      "zone": "Weight",
+      "en": "We've weathered hard things before — we're not starting from zero."
+    },
+    {
+      "anchor": "Steady",
+      "zone": "Weight",
+      "en": "Stay with me. We move steady from here."
+    }
+  ],
+  "mnemo": "Перед стеной фронта ты делаешь глубокий breathe — и болтанка бьёт hard, подбрасывая машину. На связи ground: ты ровно зачитываешь facts — высота, топливо, курс, — и диспетчер separate эшелоны, разводя борта. Палец идёт по чек-листу: next пункт, ещё пункт; твой голос в эфире — calm. Фронт weathered — позади; стрелки встают steady, и салон взрывается аплодисментами."
 }

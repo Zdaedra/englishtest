@@ -2,19 +2,59 @@
   "slug": "gravitas-5",
   "title": "Признать катастрофу, не теряя командования",
   "theme": "Масштабный провал на твоей зоне — честно назвать масштаб и взять на себя, но руль в руках; именно поэтому я не отпускаю штурвал",
-  "subtitle": "",
+  "subtitle": "Дирижабль в огне",
   "section": "gravitas",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Minimize",  "zone": "Warm",     "en": "I'm not going to stand here and minimize what this did to people." },
-    { "anchor": "Affected",  "zone": "Warm",     "en": "To everyone affected: I see what this did, and I'm not looking away." },
-    { "anchor": "Theater",   "zone": "Warm",     "en": "No one here needs theater — we need steadiness and truth." },
-    { "anchor": "Failure",   "zone": "Backbone", "en": "This is a failure — not a 'setback.' And it's mine to answer for." },
-    { "anchor": "Watch",     "zone": "Backbone", "en": "No softening it: it's the worst we've had — and it happened on my watch." },
-    { "anchor": "Scope",     "zone": "Backbone", "en": "Here's the full scope, unvarnished — then what I'm doing about it." },
-    { "anchor": "Helm",      "zone": "Weight",   "en": "I take the hit and I keep the helm. Both. Here's where we start." },
-    { "anchor": "Serious",   "zone": "Weight",   "en": "Yes, it's serious — that's exactly why I'm not letting go of the wheel." },
-    { "anchor": "Recovery",  "zone": "Weight",   "en": "The damage is real — and so is the recovery. It begins right now." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Катастрофа, все смотрят, а ты по-человечески: «я не стану minimize то, что это сделало с людьми»; «всем affected: я вижу, что произошло, и не отвожу глаз»; «никому здесь не нужен theater — нужны устойчивость и правда». Прямо: «это failure, а не „заминка\" — и отвечать мне»; «без смягчений: это худшее у нас, и случилось на моём watch»; «вот полный scope без прикрас — и что я с этим делаю». И командование сквозь катастрофу: «я беру удар и держу helm — и то, и другое; вот откуда стартуем»; «да, это serious — именно поэтому я не отпускаю штурвал»; «ущерб real — и recovery тоже; оно начинается прямо сейчас»."
+  "phrases": [
+    {
+      "anchor": "Minimize",
+      "zone": "Warm",
+      "en": "I'm not going to stand here and minimize what this did to people."
+    },
+    {
+      "anchor": "Affected",
+      "zone": "Warm",
+      "en": "To everyone affected: I see what this did, and I'm not looking away."
+    },
+    {
+      "anchor": "Theater",
+      "zone": "Warm",
+      "en": "No one here needs theater — we need steadiness and truth."
+    },
+    {
+      "anchor": "Failure",
+      "zone": "Backbone",
+      "en": "This is a failure — not a 'setback.' And it's mine to answer for."
+    },
+    {
+      "anchor": "Watch",
+      "zone": "Backbone",
+      "en": "No softening it: it's the worst we've had — and it happened on my watch."
+    },
+    {
+      "anchor": "Scope",
+      "zone": "Backbone",
+      "en": "Here's the full scope, unvarnished — then what I'm doing about it."
+    },
+    {
+      "anchor": "Helm",
+      "zone": "Weight",
+      "en": "I take the hit and I keep the helm. Both. Here's where we start."
+    },
+    {
+      "anchor": "Serious",
+      "zone": "Weight",
+      "en": "Yes, it's serious — that's exactly why I'm not letting go of the wheel."
+    },
+    {
+      "anchor": "Recovery",
+      "zone": "Weight",
+      "en": "The damage is real — and so is the recovery. It begins right now."
+    }
+  ],
+  "mnemo": "Ты не пытаешься minimize огромный разрыв в оболочке, а мелом обводишь affected секции, пока ветер срывает декоративный theater занавес с пассажирской палубы. На металлической балке уже горит слово failure, ты бросаешь взгляд на watch, раскрываешь латунный scope и видишь поле для посадки за рекой. Потом хватаешь helm, переводишь рычаг в serious режим и запускаешь recovery тросы, чтобы посадить дирижабль до того, как пламя дойдёт до хвоста."
 }

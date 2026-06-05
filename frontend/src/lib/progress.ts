@@ -4,6 +4,8 @@
 // is derived live from the rotation endpoint (avg_score / attempts), not stored here.
 
 export type BatchProgress = {
+  activated?: boolean; // user tapped "Активировать бетч" — it's now an active batch
+  activatedAt?: string; // ISO timestamp of activation (for recency ordering)
   l1_listened?: boolean; // played the full story at least once
   l1_retold?: boolean; // did at least one sequence retell
   l1_best_seq?: number; // best sequence score so far (informational)
@@ -11,6 +13,12 @@ export type BatchProgress = {
   l3_s2?: boolean; // exam stage 2 passed (story-stop phrase, avg ≥ 8)
   l3_passed?: boolean; // passed the whole 3-stage final exam (all stages ≥ 80%)
 };
+
+// A batch is "engaged" (appears in the In Progress count + the Library's active
+// row) once the learner has activated it or made any progress.
+export function isEngaged(p: BatchProgress): boolean {
+  return !!(p.activated || p.l1_listened || p.l1_retold || p.l3_s1 || p.l3_s2 || p.l3_passed);
+}
 
 const key = (batchId: number) => `ee-progress-${batchId}`;
 

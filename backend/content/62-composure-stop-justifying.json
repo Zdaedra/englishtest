@@ -2,19 +2,59 @@
   "slug": "composure-5",
   "title": "Не оправдываться под давлением",
   "theme": "На тебя давят за объяснениями — дать один чистый ответ и остановиться; уверенность не нуждается в защите, «нет» — полное предложение",
-  "subtitle": "",
+  "subtitle": "Ларец через базар",
   "section": "composure",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Asking",   "zone": "Warm",     "en": "I hear why you're asking — and my answer's still the same." },
-    { "anchor": "Respect",  "zone": "Warm",     "en": "I can give you respect without giving you more reasons." },
-    { "anchor": "Brief",    "zone": "Warm",     "en": "I'm going to keep this kind and brief." },
-    { "anchor": "Answer",   "zone": "Backbone", "en": "The answer is no — and I'm not going to dress it up." },
-    { "anchor": "Standing", "zone": "Backbone", "en": "I've given you the decision I'm comfortable standing behind." },
-    { "anchor": "Reasons",  "zone": "Backbone", "en": "Adding more reasons would only make this less clear." },
-    { "anchor": "Argument", "zone": "Weight",   "en": "My 'no' doesn't need a closing argument." },
-    { "anchor": "Silence",  "zone": "Weight",   "en": "I can let the silence sit — I don't need to fill it." },
-    { "anchor": "Selling",  "zone": "Weight",   "en": "I'm not selling you my boundaries — I'm stating them." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "На тебя давят, а ты ровно: «слышу, почему asking — и ответ тот же»; «могу дать тебе respect, не выдавая больше причин»; «оставлю это тёплым, но brief». Один ясный ответ: «answer — нет, и я не буду его наряжать»; «я дал решение, за которым standing»; «лишние reasons только сделают это менее ясным». И самодостаточность: «моему „нет\" не нужен closing argument»; «я могу дать silence стоять — не обязан её fill»; «я не selling тебе свои границы — я их называю»."
+  "phrases": [
+    {
+      "anchor": "Asking",
+      "zone": "Warm",
+      "en": "I hear why you're asking — and my answer's still the same."
+    },
+    {
+      "anchor": "Respect",
+      "zone": "Warm",
+      "en": "I can give you respect without giving you more reasons."
+    },
+    {
+      "anchor": "Brief",
+      "zone": "Warm",
+      "en": "I'm going to keep this kind and brief."
+    },
+    {
+      "anchor": "Answer",
+      "zone": "Backbone",
+      "en": "The answer is no — and I'm not going to dress it up."
+    },
+    {
+      "anchor": "Standing",
+      "zone": "Backbone",
+      "en": "I've given you the decision I'm comfortable standing behind."
+    },
+    {
+      "anchor": "Reasons",
+      "zone": "Backbone",
+      "en": "Adding more reasons would only make this less clear."
+    },
+    {
+      "anchor": "Argument",
+      "zone": "Weight",
+      "en": "My 'no' doesn't need a closing argument."
+    },
+    {
+      "anchor": "Silence",
+      "zone": "Weight",
+      "en": "I can let the silence sit — I don't need to fill it."
+    },
+    {
+      "anchor": "Selling",
+      "zone": "Weight",
+      "en": "I'm not selling you my boundaries — I'm stating them."
+    }
+  ],
+  "mnemo": "Сначала со всех сторон летит asking, ты слегка киваешь с respect и делаешь brief шаг между прилавками, не сбиваясь с пути. На груди у ларца блестит одна табличка answer, ты проходишь standing через узкий проход, пока торговцы бросают под ноги мешки reasons. Кто-то разворачивает перед тобой свиток argument, но ты входишь в прохладный двор, где стоит silence. За спиной ещё кричит selling, а ты просто закрываешь ворота и идёшь дальше с ларцом в руках."
 }

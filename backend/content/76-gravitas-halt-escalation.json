@@ -2,19 +2,59 @@
   "slug": "gravitas-8",
   "title": "Остановить опасную эскалацию словом",
   "theme": "Разгоняется опасное/необратимое — одним весомым словом нажать на тормоз, заморозить момент, взять стоп на себя",
-  "subtitle": "",
+  "subtitle": "Красный флаг",
   "section": "gravitas",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Hold",       "zone": "Warm",     "en": "Hold on one second — let's bring the room down before we move." },
-    { "anchor": "Win",        "zone": "Warm",     "en": "Take a breath — nobody needs to win the next ten seconds." },
-    { "anchor": "Later",      "zone": "Warm",     "en": "I'm stepping in because I don't want anyone paying for this later." },
-    { "anchor": "Escalation", "zone": "Backbone", "en": "This is escalation — not decision-making." },
-    { "anchor": "Adrenaline", "zone": "Backbone", "en": "We're not crossing an irreversible line on adrenaline." },
-    { "anchor": "Unwind",     "zone": "Backbone", "en": "Bring it back to the consequence we can't unwind." },
-    { "anchor": "Stop",       "zone": "Weight",   "en": "Stop. Not under these conditions." },
-    { "anchor": "Wear",       "zone": "Weight",   "en": "I'll wear the pause — be mad at me later." },
-    { "anchor": "Permanent",  "zone": "Weight",   "en": "We don't make permanent damage out of temporary heat." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Всё летит в стену, и ты твёрдо вклиниваешься: «hold секунду — сбавим градус, прежде чем двигаться»; «вдох — никому не нужно win следующие десять секунд»; «я вмешиваюсь, потому что не хочу, чтоб кто-то платил за это later». Прямо называешь: «это escalation, а не решение»; «мы не переходим необратимую черту на adrenaline»; «вернёмся к последствию, которое не unwind». И спокойный стоп: «stop — не на этих условиях»; «я wear эту паузу на себе — злитесь на меня потом»; «мы не делаем permanent ущерб из временного жара»."
+  "phrases": [
+    {
+      "anchor": "Hold",
+      "zone": "Warm",
+      "en": "Hold on one second — let's bring the room down before we move."
+    },
+    {
+      "anchor": "Win",
+      "zone": "Warm",
+      "en": "Take a breath — nobody needs to win the next ten seconds."
+    },
+    {
+      "anchor": "Later",
+      "zone": "Warm",
+      "en": "I'm stepping in because I don't want anyone paying for this later."
+    },
+    {
+      "anchor": "Escalation",
+      "zone": "Backbone",
+      "en": "This is escalation — not decision-making."
+    },
+    {
+      "anchor": "Adrenaline",
+      "zone": "Backbone",
+      "en": "We're not crossing an irreversible line on adrenaline."
+    },
+    {
+      "anchor": "Unwind",
+      "zone": "Backbone",
+      "en": "Bring it back to the consequence we can't unwind."
+    },
+    {
+      "anchor": "Stop",
+      "zone": "Weight",
+      "en": "Stop. Not under these conditions."
+    },
+    {
+      "anchor": "Wear",
+      "zone": "Weight",
+      "en": "I'll wear the pause — be mad at me later."
+    },
+    {
+      "anchor": "Permanent",
+      "zone": "Weight",
+      "en": "We don't make permanent damage out of temporary heat."
+    }
+  ],
+  "mnemo": "Ты хватаешь флаг hold и встаёшь перед стартовой линией, хотя на табло уже мигает win и все хотят славы прямо сейчас. За огненным кольцом видишь обломки later, слышишь escalation моторов и чувствуешь, как adrenaline гонит толпу вперёд. Ты быстро unwind аварийный трос, бьёшь ладонью по кнопке stop и надеваешь wear защитные перчатки, чтобы удержать раскалённый тормозной канат. Мотоциклы замирают в метре от трамплина, и огонь не превращается в permanent шрам на арене."
 }

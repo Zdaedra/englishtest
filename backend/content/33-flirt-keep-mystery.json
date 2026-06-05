@@ -2,19 +2,59 @@
   "slug": "flirt-9",
   "title": "Держать загадку",
   "theme": "Не выкладывать всё сразу — недосказанность, интрига, уйти на пике, оставить хотеть больше",
-  "subtitle": "",
+  "subtitle": "Съёмочная площадка",
   "section": "flirt",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Cliffhanger", "zone": "Warm",     "en": "Some things are better left as a cliffhanger." },
-    { "anchor": "Version",     "zone": "Warm",     "en": "You get the charming version tonight — the full version takes longer." },
-    { "anchor": "Imagination", "zone": "Warm",     "en": "There's more to that story — but I like where your imagination went." },
-    { "anchor": "Second",      "zone": "Backbone", "en": "That one's a story for the second date." },
-    { "anchor": "Purpose",     "zone": "Backbone", "en": "I'm leaving that one open on purpose — you'll live." },
-    { "anchor": "Explained",   "zone": "Backbone", "en": "Not everything good needs to be explained on the first pass." },
-    { "anchor": "Read",        "zone": "Weight",   "en": "This is where I leave before I become too easy to read." },
-    { "anchor": "Linger",      "zone": "Weight",   "en": "I'd rather leave you wanting than overstay — let it linger." },
-    { "anchor": "Ahead",       "zone": "Weight",   "en": "I'll quit while I'm ahead. Goodnight." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Кое-что лучше оставить как cliffhanger; сегодня — лишь обаятельная version, полная займёт дольше; «есть продолжение, но мне нравится, куда ушло твоё imagination». Намеренно держишь нить: это история для second свидания; «оставляю открытым on purpose — ты переживёшь»; не всё хорошее надо explained с первого раза. И уходишь на пике: «ухожу, пока не стал слишком легко read»; лучше оставить тебя хотеть, чем пересидеть — let it linger; всё, quit пока ahead — спокойной ночи."
+  "phrases": [
+    {
+      "anchor": "Cliffhanger",
+      "zone": "Warm",
+      "en": "Some things are better left as a cliffhanger."
+    },
+    {
+      "anchor": "Version",
+      "zone": "Warm",
+      "en": "You get the charming version tonight — the full version takes longer."
+    },
+    {
+      "anchor": "Imagination",
+      "zone": "Warm",
+      "en": "There's more to that story — but I like where your imagination went."
+    },
+    {
+      "anchor": "Second",
+      "zone": "Backbone",
+      "en": "That one's a story for the second date."
+    },
+    {
+      "anchor": "Purpose",
+      "zone": "Backbone",
+      "en": "I'm leaving that one open on purpose — you'll live."
+    },
+    {
+      "anchor": "Explained",
+      "zone": "Backbone",
+      "en": "Not everything good needs to be explained on the first pass."
+    },
+    {
+      "anchor": "Read",
+      "zone": "Weight",
+      "en": "This is where I leave before I become too easy to read."
+    },
+    {
+      "anchor": "Linger",
+      "zone": "Weight",
+      "en": "I'd rather leave you wanting than overstay — let it linger."
+    },
+    {
+      "anchor": "Ahead",
+      "zone": "Weight",
+      "en": "I'll quit while I'm ahead. Goodnight."
+    }
+  ],
+  "mnemo": "Каскадёр повисает на краю крыши — снимаем настоящий cliffhanger, но режиссёру нужна вторая version дубля. Оператор подключает imagination и ловит кадр через осколок зеркала; хлопушка щёлкает: дубль second. Актёр роняет ключ on purpose, сценарист бежит, чтобы всё explained, — режиссёр молча машет: не надо. Монтажёр read раскадровку, камера linger на пустом дверном проёме — и титр обещает: продолжение ahead."
 }

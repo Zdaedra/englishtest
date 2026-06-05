@@ -2,19 +2,59 @@
   "slug": "gravitas-3",
   "title": "Сделать необратимый звонок под неопределённостью",
   "theme": "Данных мало, решать надо сейчас и необратимо — взять решение на себя, признать риск, выбрать и двинуть комнату; не решить хуже",
-  "subtitle": "",
+  "subtitle": "Стрелка в тумане",
   "section": "gravitas",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Fog",      "zone": "Warm",     "en": "We're deciding in fog — not in failure." },
-    { "anchor": "Luxury",   "zone": "Warm",     "en": "We'd all love more data — we don't have that luxury today." },
-    { "anchor": "Uneasy",   "zone": "Warm",     "en": "Everyone's uneasy about this — me too. We move anyway." },
-    { "anchor": "Decision", "zone": "Backbone", "en": "My decision is this: we stop the spread and protect the core." },
-    { "anchor": "Downside", "zone": "Backbone", "en": "I'm choosing the option that limits the downside we can't recover from." },
-    { "anchor": "Pivot",    "zone": "Backbone", "en": "If new facts change the picture, we pivot fast — and I'll say so." },
-    { "anchor": "Call",     "zone": "Weight",   "en": "This is my call — and I'll carry the consequence." },
-    { "anchor": "Waiting",  "zone": "Weight",   "en": "Waiting is also a decision — and right now it's the riskier one." },
-    { "anchor": "Lock",     "zone": "Weight",   "en": "Lock it in — we move, and we learn on the way." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Все застыли, а ты признаёшь: «мы решаем в fog — а не в провале»; «всем бы больше данных — но сегодня нет такой luxury»; «всем uneasy — и мне тоже, и мы всё равно идём». Прямо: «моё decision такое: гасим распространение и защищаем ядро»; «выбираю вариант, что режет downside, из которого не вернуться»; «дадут новые факты — быстро pivot, и я скажу об этом». И спокойная ответственность: «это мой call — и последствие несу я»; «waiting — тоже решение, и прямо сейчас более рискованное»; «lock — двигаемся и учимся по ходу»."
+  "phrases": [
+    {
+      "anchor": "Fog",
+      "zone": "Warm",
+      "en": "We're deciding in fog — not in failure."
+    },
+    {
+      "anchor": "Luxury",
+      "zone": "Warm",
+      "en": "We'd all love more data — we don't have that luxury today."
+    },
+    {
+      "anchor": "Uneasy",
+      "zone": "Warm",
+      "en": "Everyone's uneasy about this — me too. We move anyway."
+    },
+    {
+      "anchor": "Decision",
+      "zone": "Backbone",
+      "en": "My decision is this: we stop the spread and protect the core."
+    },
+    {
+      "anchor": "Downside",
+      "zone": "Backbone",
+      "en": "I'm choosing the option that limits the downside we can't recover from."
+    },
+    {
+      "anchor": "Pivot",
+      "zone": "Backbone",
+      "en": "If new facts change the picture, we pivot fast — and I'll say so."
+    },
+    {
+      "anchor": "Call",
+      "zone": "Weight",
+      "en": "This is my call — and I'll carry the consequence."
+    },
+    {
+      "anchor": "Waiting",
+      "zone": "Weight",
+      "en": "Waiting is also a decision — and right now it's the riskier one."
+    },
+    {
+      "anchor": "Lock",
+      "zone": "Weight",
+      "en": "Lock it in — we move, and we learn on the way."
+    }
+  ],
+  "mnemo": "Из ущелья поднимается fog, а позади гремит пустой luxury-вагон, где уже нет времени сидеть мягко и ждать. Колёса входят в uneasy дрожь моста, ты хватаешь рычаг decision, видишь слева downside — обваленный путь над пропастью — и резко делаешь pivot на запасную ветку. В кабине звенит call, но waiting у семафора уже опаснее движения. Ты опускаешь металлический lock на стрелке, и поезд всем весом уходит в выбранный поворот."
 }

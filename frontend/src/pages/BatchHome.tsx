@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api, BatchDetail as Batch, BatchListItem, RotationItem } from "../api";
 import { usePlayer } from "../player/PlayerContext";
-import { getProgress, lessonStates } from "../lib/progress";
+import { getProgress, isEngaged, lessonStates, setProgress } from "../lib/progress";
 import { orderedSections } from "../lib/sections";
 import { getProfile, prioritySectionSlugs } from "../lib/profile";
 import { BatchCover } from "../ui/Art";
@@ -89,11 +89,23 @@ export default function BatchHome() {
   if (!batch) return <div className="screen"><p className="muted">Loading…</p></div>;
 
   const preview = batch.subtitle?.trim() || firstSentence(batch.mnemo?.story_ru || "");
-  const states = lessonStates(getProgress(batch.id), l2.done);
+  const prog = getProgress(batch.id);
+  const states = lessonStates(prog, l2.done);
   const openIdx = states.findIndex((s) => s === "open");
   const allDone = states.every((s) => s === "done");
   const activeIdx = openIdx >= 0 ? openIdx : 2; // all done → review the tests
   const ctaLesson = LESSONS[activeIdx];
+  const started = isEngaged(prog);
+  const ctaLabel = allDone ? "Повторить" : started ? "Продолжить" : "Активировать бетч";
+
+  // Activate the batch (mark it an active batch → In Progress + Library active
+  // row) and jump straight into the next open lesson.
+  const activate = () => {
+    if (!prog.activated) {
+      setProgress(batch.id, { activated: true, activatedAt: new Date().toISOString() });
+    }
+    nav(`/batch/${batch.id}/lesson/${ctaLesson.n}`);
+  };
 
   return (
     <div className="screen bh-screen">
@@ -110,6 +122,13 @@ export default function BatchHome() {
         <h1 className="bh-title">{batch.title}</h1>
         {preview && <p className="bh-sub">{preview}</p>}
       </div>
+
+      <button className="bh-activate" onClick={activate}>
+        <IconPlay size={18} /> {ctaLabel}
+      </button>
+      <p className="l3-hint">
+        <IconHeadphones size={15} /> Рекомендуется использовать наушники и тихое помещение
+      </p>
 
       <div className="bh-anchors">
         {ordered.map((p, i) => (
@@ -147,16 +166,6 @@ export default function BatchHome() {
         })}
       </div>
 
-      <button
-        className="l3-cta"
-        style={{ marginTop: 22 }}
-        onClick={() => nav(`/batch/${batch.id}/lesson/${ctaLesson.n}`)}
-      >
-        <IconPlay size={18} /> {allDone ? "Повторить" : "Начать"} {ctaLesson.cta}
-      </button>
-      <p className="l3-hint">
-        <IconHeadphones size={15} /> Рекомендуется использовать наушники и тихое помещение
-      </p>
     </div>
   );
 }

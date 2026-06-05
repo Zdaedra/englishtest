@@ -2,19 +2,59 @@
   "slug": "stage-11",
   "title": "Импровизировать, когда план рухнул",
   "theme": "Весь подготовленный план обрушился — срезали время, не тот зал, отказало демо — играть с листа; подать поворот как подарок залу, быстро найти стержень и собрать новую структуру на лету; импровизация и есть мастерство — мне не нужен план, у меня есть мысль",
-  "subtitle": "",
+  "subtitle": "Регата без карты",
   "section": "stage",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "plans",   "zone": "Warm",     "en": "Change of plans — and honestly the better kind. Let's just talk." },
-    { "anchor": "prepped", "zone": "Warm",     "en": "You're not quite the room I prepped for — so let's make this about you." },
-    { "anchor": "live",    "zone": "Warm",     "en": "Good. We get to make this live instead of polished." },
-    { "anchor": "core",    "zone": "Backbone", "en": "Let me cut to the core — there's really just one idea here." },
-    { "anchor": "shape",   "zone": "Backbone", "en": "Here's the new shape: one story, one lesson, one decision." },
-    { "anchor": "deck",    "zone": "Backbone", "en": "I don't need the deck — the argument lives in my head." },
-    { "anchor": "net",     "zone": "Weight",   "en": "No net today — and that's when I'm actually at my best." },
-    { "anchor": "raw",     "zone": "Weight",   "en": "Unscripted and raw beats polished and dead. Lucky you." },
-    { "anchor": "thought", "zone": "Weight",   "en": "I don't need a plan. I've got a thought — and that's plenty." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты подаёшь крах плана как подарок: смена plans — и к лучшему, давай просто поговорим; вы не тот зал, под который я prepped, — значит, сделаем про вас; и отлично — выйдет live, а не вылизанно. Быстро находишь стержень: режу к core — идея одна; вот новый shape — одна история, один урок, одно решение; deck не нужен, аргумент в голове. И мастерство: сегодня без net — и тут я лучше всего; raw и без сценария бьёт сильнее мёртвого глянца; мне не нужен план — у меня есть thought, и этого хватит."
+  "phrases": [
+    {
+      "anchor": "plans",
+      "zone": "Warm",
+      "en": "Change of plans — and honestly the better kind. Let's just talk."
+    },
+    {
+      "anchor": "prepped",
+      "zone": "Warm",
+      "en": "You're not quite the room I prepped for — so let's make this about you."
+    },
+    {
+      "anchor": "live",
+      "zone": "Warm",
+      "en": "Good. We get to make this live instead of polished."
+    },
+    {
+      "anchor": "core",
+      "zone": "Backbone",
+      "en": "Let me cut to the core — there's really just one idea here."
+    },
+    {
+      "anchor": "shape",
+      "zone": "Backbone",
+      "en": "Here's the new shape: one story, one lesson, one decision."
+    },
+    {
+      "anchor": "deck",
+      "zone": "Backbone",
+      "en": "I don't need the deck — the argument lives in my head."
+    },
+    {
+      "anchor": "net",
+      "zone": "Weight",
+      "en": "No net today — and that's when I'm actually at my best."
+    },
+    {
+      "anchor": "raw",
+      "zone": "Weight",
+      "en": "Unscripted and raw beats polished and dead. Lucky you."
+    },
+    {
+      "anchor": "thought",
+      "zone": "Weight",
+      "en": "I don't need a plan. I've got a thought — and that's plenty."
+    }
+  ],
+  "mnemo": "Шквал вырывает из рук plans, сметает заранее prepped узлы, и парусник резко входит в live волну. Ты хватаешься за core мачты, руками даёшь парусу новую shape и перебегаешь через мокрый deck к штурвалу. С борта срывается страховочная net, в лицо бьёт raw ветер, но ты ведёшь лодку по одной чистой thought, пока новый курс не рождается под ногами."
 }

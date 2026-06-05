@@ -2,19 +2,59 @@
   "slug": "flirt-3",
   "title": "Удержать заряженный момент",
   "theme": "Когда повисло напряжение — удержать момент, не суетясь заполнить; комфорт с искрой",
-  "subtitle": "",
+  "subtitle": "Снежный барс",
   "section": "flirt",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Pause",       "zone": "Warm",     "en": "I like this little pause between us." },
-    { "anchor": "Moment",      "zone": "Warm",     "en": "Let's not talk this moment to death." },
-    { "anchor": "Smile",       "zone": "Warm",     "en": "That smile said more than the sentence did." },
-    { "anchor": "Happening",   "zone": "Backbone", "en": "There's something happening here, and we both know it." },
-    { "anchor": "Away",        "zone": "Backbone", "en": "This is the part where someone usually looks away — I won't." },
-    { "anchor": "Rush",        "zone": "Backbone", "en": "Let's not rush past whatever just happened." },
-    { "anchor": "Comfortable", "zone": "Weight",   "en": "I'm comfortable right here — the question is whether you are." },
-    { "anchor": "Smaller",     "zone": "Weight",   "en": "I'm not going to make this smaller by explaining it." },
-    { "anchor": "Sit",         "zone": "Weight",   "en": "We don't have to do anything with this — we can just let it sit." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Между вами повисает pause, и ты не торопишь — «не будем заговаривать этот moment до смерти». Замечаешь её smile, что сказал больше слов. Называешь прямо: тут что-то happening, и оба это знают; «обычно тут отводят взгляд away — я не буду»; не надо rush мимо. И держишь спокойно: тебе comfortable, вопрос — ей ли; ты не делаешь это smaller объяснением — пусть просто sit в воздухе."
+  "phrases": [
+    {
+      "anchor": "Pause",
+      "zone": "Warm",
+      "en": "I like this little pause between us."
+    },
+    {
+      "anchor": "Moment",
+      "zone": "Warm",
+      "en": "Let's not talk this moment to death."
+    },
+    {
+      "anchor": "Smile",
+      "zone": "Warm",
+      "en": "That smile said more than the sentence did."
+    },
+    {
+      "anchor": "Happening",
+      "zone": "Backbone",
+      "en": "There's something happening here, and we both know it."
+    },
+    {
+      "anchor": "Away",
+      "zone": "Backbone",
+      "en": "This is the part where someone usually looks away — I won't."
+    },
+    {
+      "anchor": "Rush",
+      "zone": "Backbone",
+      "en": "Let's not rush past whatever just happened."
+    },
+    {
+      "anchor": "Comfortable",
+      "zone": "Weight",
+      "en": "I'm comfortable right here — the question is whether you are."
+    },
+    {
+      "anchor": "Smaller",
+      "zone": "Weight",
+      "en": "I'm not going to make this smaller by explaining it."
+    },
+    {
+      "anchor": "Sit",
+      "zone": "Weight",
+      "en": "We don't have to do anything with this — we can just let it sit."
+    }
+  ],
+  "mnemo": "На горной тропе твой шаг встаёт на pause: вот он, тот самый moment — из-за валуна выходит снежный барс, и ты не сдерживаешь smile под капюшоном. Это правда happening: зверь смотрит прямо на тебя и не уходит away. Без всякого rush ты поднимаешь камеру, устраиваешься comfortable на камне, складываешься smaller — и просто sit напротив, пока щёлкает затвор."
 }

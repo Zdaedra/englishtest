@@ -2,19 +2,59 @@
   "slug": "lead-4",
   "title": "Возразить старшему без бунта",
   "theme": "Несогласие наверх — назвать риск данными и удержать позицию, не теряя уважения; верность и правда одновременно",
-  "subtitle": "",
+  "subtitle": "Фотоэкспедиция",
   "section": "lead-presence",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Route",     "zone": "Warm",     "en": "I'm with you on the goal — it's the route I want to flag." },
-    { "anchor": "Team",      "zone": "Warm",     "en": "Same team here — I'd be doing you a disservice if I stayed quiet." },
-    { "anchor": "Angle",     "zone": "Warm",     "en": "I respect the call you're making — let me add the angle I think we're missing." },
-    { "anchor": "Push",      "zone": "Backbone", "en": "Can I push back on one thing? The numbers point the other way." },
-    { "anchor": "Risk",      "zone": "Backbone", "en": "I don't see it the same way — and here's the risk I'm carrying." },
-    { "anchor": "Exposure",  "zone": "Backbone", "en": "My concern isn't the decision itself — it's the exposure it creates." },
-    { "anchor": "Owe",       "zone": "Weight",   "en": "You own the call — I owe you the cleanest version of what I see." },
-    { "anchor": "Breaks",    "zone": "Weight",   "en": "I can back the decision and still be honest about where I think it breaks." },
-    { "anchor": "Expensive", "zone": "Weight",   "en": "I'd rather be uncomfortable now than quiet and expensive later." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты сначала на одной стороне: «я с тобой по цели — флагую только route»; «мы same team, и я оказал бы тебе медвежью услугу, промолчав»; «уважаю твоё решение — дай добавлю angle, который мы упускаем». Прямо: «можно push по одному пункту? цифры смотрят в другую сторону»; «я вижу иначе — вот risk, который несу»; «беспокоит не само решение — а exposure, что оно создаёт». И достоинство: «call за тобой — я owe тебе самую честную версию того, что вижу»; «могу поддержать решение и всё равно честно сказать, где оно breaks»; «лучше неудобно сейчас, чем тихо и expensive потом»."
+  "phrases": [
+    {
+      "anchor": "Route",
+      "zone": "Warm",
+      "en": "I'm with you on the goal — it's the route I want to flag."
+    },
+    {
+      "anchor": "Team",
+      "zone": "Warm",
+      "en": "Same team here — I'd be doing you a disservice if I stayed quiet."
+    },
+    {
+      "anchor": "Angle",
+      "zone": "Warm",
+      "en": "I respect the call you're making — let me add the angle I think we're missing."
+    },
+    {
+      "anchor": "Push",
+      "zone": "Backbone",
+      "en": "Can I push back on one thing? The numbers point the other way."
+    },
+    {
+      "anchor": "Risk",
+      "zone": "Backbone",
+      "en": "I don't see it the same way — and here's the risk I'm carrying."
+    },
+    {
+      "anchor": "Exposure",
+      "zone": "Backbone",
+      "en": "My concern isn't the decision itself — it's the exposure it creates."
+    },
+    {
+      "anchor": "Owe",
+      "zone": "Weight",
+      "en": "You own the call — I owe you the cleanest version of what I see."
+    },
+    {
+      "anchor": "Breaks",
+      "zone": "Weight",
+      "en": "I can back the decision and still be honest about where I think it breaks."
+    },
+    {
+      "anchor": "Expensive",
+      "zone": "Weight",
+      "en": "I'd rather be uncomfortable now than quiet and expensive later."
+    }
+  ],
+  "mnemo": "На капоте джипа проводник чертит route через дюны, и team затемно грузит штативы. На гребне ты ищешь angle пониже; машина вязнет, и все push её из песка — срезать по солончаку было бы лишний risk. В темноте ставишь длинную exposure на штативе; проводник делится последним чаем — теперь ты ему owe. Рассвет breaks над дюнами, первый луч режет гребни, и ты ловишь кадр на самый expensive объектив — он того стоил."
 }

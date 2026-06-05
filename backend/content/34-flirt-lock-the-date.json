@@ -2,19 +2,59 @@
   "slug": "flirt-10",
   "title": "Перевести флирт в свидание",
   "theme": "Закрепить продолжение, пока искра жива — перевести заряд в конкретный план, не дать стать «almost»",
-  "subtitle": "",
+  "subtitle": "Аукцион",
   "section": "flirt",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Almosts",     "zone": "Warm",     "en": "Before this becomes one of those great almosts — let's put a plan on it." },
-    { "anchor": "Disappear",   "zone": "Warm",     "en": "I don't want this to disappear into the night — give me a way to continue it." },
-    { "anchor": "Next",        "zone": "Warm",     "en": "Let's not leave this as a nice moment — I'd like the next one." },
-    { "anchor": "Number",      "zone": "Backbone", "en": "Put your number in my phone — I'll text you tomorrow with a real plan." },
-    { "anchor": "Pick",        "zone": "Backbone", "en": "Thursday or Saturday — you pick, I'll handle the rest." },
-    { "anchor": "Overthink",   "zone": "Backbone", "en": "Let's lock a night before either of us overthinks it." },
-    { "anchor": "Carry",       "zone": "Weight",   "en": "Let's carry this into a night that can hold it." },
-    { "anchor": "Consider",    "zone": "Weight",   "en": "Consider it a date — I'll make sure you're glad you said yes." },
-    { "anchor": "Electricity", "zone": "Weight",   "en": "Give me your number — I'll make sure the next time has the same electricity." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты не дашь вечеру стать одним из тех красивых almosts и не позволишь ему disappear в ночи — нужен next. Берёшь number прямо сейчас, даёшь лёгкий выбор: «четверг или суббота — pick, остальное на мне», и фиксируешь, пока никто не overthink. Закрываешь магнетично: давай carry этот заряд в вечер, который его удержит; consider это свиданием — и обещаешь, что в следующий раз будет та же electricity."
+  "phrases": [
+    {
+      "anchor": "Almosts",
+      "zone": "Warm",
+      "en": "Before this becomes one of those great almosts — let's put a plan on it."
+    },
+    {
+      "anchor": "Disappear",
+      "zone": "Warm",
+      "en": "I don't want this to disappear into the night — give me a way to continue it."
+    },
+    {
+      "anchor": "Next",
+      "zone": "Warm",
+      "en": "Let's not leave this as a nice moment — I'd like the next one."
+    },
+    {
+      "anchor": "Number",
+      "zone": "Backbone",
+      "en": "Put your number in my phone — I'll text you tomorrow with a real plan."
+    },
+    {
+      "anchor": "Pick",
+      "zone": "Backbone",
+      "en": "Thursday or Saturday — you pick, I'll handle the rest."
+    },
+    {
+      "anchor": "Overthink",
+      "zone": "Backbone",
+      "en": "Let's lock a night before either of us overthinks it."
+    },
+    {
+      "anchor": "Carry",
+      "zone": "Weight",
+      "en": "Let's carry this into a night that can hold it."
+    },
+    {
+      "anchor": "Consider",
+      "zone": "Weight",
+      "en": "Consider it a date — I'll make sure you're glad you said yes."
+    },
+    {
+      "anchor": "Electricity",
+      "zone": "Weight",
+      "en": "Give me your number — I'll make sure the next time has the same electricity."
+    }
+  ],
+  "mnemo": "Молоток завис: «раз… два…» — зал тонет в almosts, ещё миг — и лот disappear навсегда. Аукционист уже тянется к next лоту, но ты вскидываешь табличку с number семнадцать: твой pick перебивает ставку. Соперник overthink лишнюю секунду — и молоток падает! Носильщики помогают carry картину к свету, ты впервые consider её вблизи — и по рукам бежит чистое electricity."
 }

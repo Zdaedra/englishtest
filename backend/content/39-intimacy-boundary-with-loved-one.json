@@ -2,19 +2,59 @@
   "slug": "intimacy-5",
   "title": "Поставить границу с близким",
   "theme": "Сказать «нет» близкому без вины и без агрессии — защитить свой предел и сохранить связь и тепло",
-  "subtitle": "",
+  "subtitle": "Дайвинг",
   "section": "intimacy",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Less",       "zone": "Warm",     "en": "My 'no' here doesn't mean I love you any less." },
-    { "anchor": "Protecting",  "zone": "Warm",     "en": "I'm not pulling away from you — I'm protecting something I need." },
-    { "anchor": "Limit",       "zone": "Warm",     "en": "This is about my limit — not about you as a person." },
-    { "anchor": "Complete",    "zone": "Backbone", "en": "The answer is no — and 'no' is a complete sentence." },
-    { "anchor": "Explain",     "zone": "Backbone", "en": "I'm not available for that — and I'm not going to over-explain it." },
-    { "anchor": "Pressured",   "zone": "Backbone", "en": "I'm willing to talk — but I'm not willing to be pressured." },
-    { "anchor": "Ground",      "zone": "Weight",   "en": "I don't need to raise my voice to hold my ground." },
-    { "anchor": "Upset",       "zone": "Weight",   "en": "You're allowed to be upset with me. The answer is still no." },
-    { "anchor": "Line",        "zone": "Weight",   "en": "I'm staying connected — and I'm not moving the line." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты говоришь «нет» с любовью: моё «нет» не значит, что люблю тебя less; я не отдаляюсь — я protecting то, что мне нужно; это про мой limit, а не про тебя как человека. Дальше ясно: «нет» — это complete предложение; «я не доступен для этого и не стану over-explain»; готов говорить, но не быть pressured. И держишь спокойную твёрдость: мне не нужно повышать голос, чтобы hold my ground; ты вправе быть upset на меня — ответ всё равно «нет»; я остаюсь рядом — и не двигаю line."
+  "phrases": [
+    {
+      "anchor": "Less",
+      "zone": "Warm",
+      "en": "My 'no' here doesn't mean I love you any less."
+    },
+    {
+      "anchor": "Protecting",
+      "zone": "Warm",
+      "en": "I'm not pulling away from you — I'm protecting something I need."
+    },
+    {
+      "anchor": "Limit",
+      "zone": "Warm",
+      "en": "This is about my limit — not about you as a person."
+    },
+    {
+      "anchor": "Complete",
+      "zone": "Backbone",
+      "en": "The answer is no — and 'no' is a complete sentence."
+    },
+    {
+      "anchor": "Explain",
+      "zone": "Backbone",
+      "en": "I'm not available for that — and I'm not going to over-explain it."
+    },
+    {
+      "anchor": "Pressured",
+      "zone": "Backbone",
+      "en": "I'm willing to talk — but I'm not willing to be pressured."
+    },
+    {
+      "anchor": "Ground",
+      "zone": "Weight",
+      "en": "I don't need to raise my voice to hold my ground."
+    },
+    {
+      "anchor": "Upset",
+      "zone": "Weight",
+      "en": "You're allowed to be upset with me. The answer is still no."
+    },
+    {
+      "anchor": "Line",
+      "zone": "Weight",
+      "en": "I'm staying connected — and I'm not moving the line."
+    }
+  ],
+  "mnemo": "Манометр показывает: воздуха всё less, и только перчатки protecting ладони от острых кораллов. Дайв-компьютер пищит — limit глубины; осмотр затонувшей рубки complete, и ты жестами explain напарнику: уходим. Толща воды держит тебя pressured, ты отталкиваешься от песчаного ground — потревоженный скат, upset, взметает облако песка. Вы поднимаетесь по ходовой line к дрожащему наверху свету."
 }

@@ -2,19 +2,59 @@
   "slug": "charisma-1",
   "title": "Войти в комнату",
   "theme": "Появиться и первые секунды так, что тебя замечают — без позы и набивания",
-  "subtitle": "",
+  "subtitle": "Оседлать волну",
   "section": "charisma",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "There",    "zone": "Warm",     "en": "There they are." },
-    { "anchor": "Momentum", "zone": "Warm",     "en": "Don't stop on my account — I love walking into momentum." },
-    { "anchor": "Forward",  "zone": "Warm",     "en": "I've been looking forward to this one." },
-    { "anchor": "Rolling",  "zone": "Backbone", "en": "Let's get this rolling." },
-    { "anchor": "Grab",     "zone": "Backbone", "en": "Grab a seat — you'll want to be in on this." },
-    { "anchor": "Count",    "zone": "Backbone", "en": "We've got till the top of the hour — let's make it count." },
-    { "anchor": "Slow",     "zone": "Weight",   "en": "Let's slow this down for a second." },
-    { "anchor": "Name",     "zone": "Weight",   "en": "Let me name the thing the room's been circling." },
-    { "anchor": "Back",     "zone": "Weight",   "en": "Here's what I keep coming back to." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Ты входишь — они уже there, у дальней стены, и комната катится на полном momentum, не сбавляя хода. Ты шагаешь forward, и под ногами раскатывается rolling-дорожка; на ходу ты grab её край и отсчитываешь count три шага до центра. Там всё уходит в slow-motion, ты роняешь в тишину name неназванного — и весь свет комнаты возвращается back к тебе."
+  "phrases": [
+    {
+      "anchor": "There",
+      "zone": "Warm",
+      "en": "There they are."
+    },
+    {
+      "anchor": "Momentum",
+      "zone": "Warm",
+      "en": "Don't stop on my account — I love walking into momentum."
+    },
+    {
+      "anchor": "Forward",
+      "zone": "Warm",
+      "en": "I've been looking forward to this one."
+    },
+    {
+      "anchor": "Rolling",
+      "zone": "Backbone",
+      "en": "Let's get this rolling."
+    },
+    {
+      "anchor": "Grab",
+      "zone": "Backbone",
+      "en": "Grab a seat — you'll want to be in on this."
+    },
+    {
+      "anchor": "Count",
+      "zone": "Backbone",
+      "en": "We've got till the top of the hour — let's make it count."
+    },
+    {
+      "anchor": "Slow",
+      "zone": "Weight",
+      "en": "Let's slow this down for a second."
+    },
+    {
+      "anchor": "Name",
+      "zone": "Weight",
+      "en": "Let me name the thing the room's been circling."
+    },
+    {
+      "anchor": "Back",
+      "zone": "Weight",
+      "en": "Here's what I keep coming back to."
+    }
+  ],
+  "mnemo": "На горизонте встаёт она — there, — и ты гребёшь, разгоняя momentum, бросая корпус forward. Волна подхватывает, rolling под доской; на дуге ты grab за рейл и count секунды внутри трубы. Мир уходит в slow-motion, ты выныриваешь из пены и кричишь волне её name — а океан сам выносит тебя back к берегу."
 }

@@ -2,19 +2,59 @@
   "slug": "composure-7",
   "title": "Держать паузу под напором",
   "theme": "От тебя требуют ответа сейчас — не дать себя поторопить, взять паузу, назвать когда ответишь; пауза — это вес, а не слабость",
-  "subtitle": "",
+  "subtitle": "Блиц-пауза",
   "section": "composure",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Beat",       "zone": "Warm",     "en": "Give me a beat — I want to answer that well, not fast." },
-    { "anchor": "Mull",       "zone": "Warm",     "en": "Let me mull this for a moment." },
-    { "anchor": "Sloppy",     "zone": "Warm",     "en": "I hear the urgency — a moment now saves you a sloppy answer." },
-    { "anchor": "Speed",      "zone": "Backbone", "en": "I'm not making a call this size on speed alone." },
-    { "anchor": "Clear",      "zone": "Backbone", "en": "I'll give you a clear answer by end of day — not a minute sooner." },
-    { "anchor": "Space",      "zone": "Backbone", "en": "Pressure won't make the decision better — a little space will." },
-    { "anchor": "Stopwatch",  "zone": "Weight",   "en": "Good decisions don't get made on a stopwatch." },
-    { "anchor": "Clock",      "zone": "Weight",   "en": "I'm not letting the clock outrank my judgment." },
-    { "anchor": "Hesitation", "zone": "Weight",   "en": "My pause isn't hesitation — it's the weight of doing this right." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "На тебя давят, а ты спокойно: «дай мне beat — хочу ответить хорошо, не быстро»; «дай mull это минуту»; «слышу срочность — момент сейчас бережёт тебя от sloppy ответа». Прямо: «решение такого размера я не делаю на speed»; «дам clear ответ к концу дня — не минутой раньше»; «давление не улучшит решение — а немного space улучшит». И неторопливость из силы: «хорошие решения не делаются на stopwatch»; «я не дам clock встать выше моего суждения»; «моя пауза — не hesitation, а вес того, чтобы сделать это правильно»."
+  "phrases": [
+    {
+      "anchor": "Beat",
+      "zone": "Warm",
+      "en": "Give me a beat — I want to answer that well, not fast."
+    },
+    {
+      "anchor": "Mull",
+      "zone": "Warm",
+      "en": "Let me mull this for a moment."
+    },
+    {
+      "anchor": "Sloppy",
+      "zone": "Warm",
+      "en": "I hear the urgency — a moment now saves you a sloppy answer."
+    },
+    {
+      "anchor": "Speed",
+      "zone": "Backbone",
+      "en": "I'm not making a call this size on speed alone."
+    },
+    {
+      "anchor": "Clear",
+      "zone": "Backbone",
+      "en": "I'll give you a clear answer by end of day — not a minute sooner."
+    },
+    {
+      "anchor": "Space",
+      "zone": "Backbone",
+      "en": "Pressure won't make the decision better — a little space will."
+    },
+    {
+      "anchor": "Stopwatch",
+      "zone": "Weight",
+      "en": "Good decisions don't get made on a stopwatch."
+    },
+    {
+      "anchor": "Clock",
+      "zone": "Weight",
+      "en": "I'm not letting the clock outrank my judgment."
+    },
+    {
+      "anchor": "Hesitation",
+      "zone": "Weight",
+      "en": "My pause isn't hesitation — it's the weight of doing this right."
+    }
+  ],
+  "mnemo": "На столе стучит beat часов, ты не хватаешь первую фигуру, а даёшь позиции mull внутри головы. Рядом кто-то шипит про время, но ты не делаешь sloppy ход ради speed, а вдруг видишь clear диагональ и открываешь для ферзя space. Судья поднимает stopwatch, на табло мигает clock, но твоя hesitation превращается не в слабость, а в точный ход, после которого зал замолкает."
 }

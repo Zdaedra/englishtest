@@ -2,19 +2,59 @@
   "slug": "lead-1",
   "title": "Взять комнату без мандата",
   "theme": "В группе вакуум — спокойно взять инициативу, сфокусировать людей и создать порядок без титула",
-  "subtitle": "",
+  "subtitle": "Капитан в шторм",
   "section": "lead-presence",
-  "zones": ["Warm", "Backbone", "Weight"],
-  "phrases": [
-    { "anchor": "Gather", "zone": "Warm",     "en": "Let's gather this for a second — so we're not all carrying it separately." },
-    { "anchor": "Voices", "zone": "Warm",     "en": "I want to make sure the right voices are in before we move." },
-    { "anchor": "Tie",    "zone": "Warm",     "en": "Let me tie a few of these threads together for us." },
-    { "anchor": "Focus",  "zone": "Backbone", "en": "Here's the focus: what matters, what's unclear, and what we do next." },
-    { "anchor": "Order",  "zone": "Backbone", "en": "There are three things in front of us — let's take them in order." },
-    { "anchor": "Decide", "zone": "Backbone", "en": "Let's get one real decision made before anyone leaves." },
-    { "anchor": "Steer",  "zone": "Weight",   "en": "Someone's got to steer this — so I will. Call it the moment you disagree." },
-    { "anchor": "Stall",  "zone": "Weight",   "en": "I'm not in charge — I'm just not willing to watch us stall." },
-    { "anchor": "Got",    "zone": "Weight",   "en": "I've got us for now. Let's move." }
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
   ],
-  "mnemo": "Комната рассыпается, и ты спокойно: «давай gather это на секунду — чтоб не тащить порознь»; «хочу, чтобы нужные voices вошли, прежде чем двинемся»; «давай я tie эти нити вместе». Даёшь структуру: «вот focus — что важно, что неясно, что дальше»; «перед нами три вещи — возьмём по order»; «давайте decide хотя бы одно, пока все не разошлись». И спокойный авторитет: кто-то должен steer — значит я, скажи, как только не согласен; «я не главный — я просто не готов смотреть, как мы stall»; «я got нас сейчас — погнали»."
+  "phrases": [
+    {
+      "anchor": "Gather",
+      "zone": "Warm",
+      "en": "Let's gather this for a second — so we're not all carrying it separately."
+    },
+    {
+      "anchor": "Voices",
+      "zone": "Warm",
+      "en": "I want to make sure the right voices are in before we move."
+    },
+    {
+      "anchor": "Tie",
+      "zone": "Warm",
+      "en": "Let me tie a few of these threads together for us."
+    },
+    {
+      "anchor": "Focus",
+      "zone": "Backbone",
+      "en": "Here's the focus: what matters, what's unclear, and what we do next."
+    },
+    {
+      "anchor": "Order",
+      "zone": "Backbone",
+      "en": "There are three things in front of us — let's take them in order."
+    },
+    {
+      "anchor": "Decide",
+      "zone": "Backbone",
+      "en": "Let's get one real decision made before anyone leaves."
+    },
+    {
+      "anchor": "Steer",
+      "zone": "Weight",
+      "en": "Someone's got to steer this — so I will. Call it the moment you disagree."
+    },
+    {
+      "anchor": "Stall",
+      "zone": "Weight",
+      "en": "I'm not in charge — I'm just not willing to watch us stall."
+    },
+    {
+      "anchor": "Got",
+      "zone": "Weight",
+      "en": "I've got us for now. Let's move."
+    }
+  ],
+  "mnemo": "Шторм рвёт палубу, и ты первым делом gather разбегающуюся команду в круг у мачты; сквозь ветер ловишь перекличку — все voices на месте. Хватаешь хлещущие концы и tie их одним узлом, наводишь фонарь в focus на просвет в тучах. Поднимаешь паруса строго по order и, пока не ударила волна, decide курс. Встаёшь к штурвалу — steer, не даёшь судну stall в мёртвом дрейфе, и кричишь сквозь брызги: got вас — полный вперёд!"
 }

@@ -4,7 +4,7 @@
    ========================================================================== */
 :root {
   /* Surfaces */
-  --bg: #F8F8F6;
+  --bg: #F7F7F5;
   --card: #FFFFFF;
   --border: #ECECEC;
   --hairline: #F0F0EE;
@@ -21,6 +21,11 @@
   --accent-grad: linear-gradient(150deg, #3C342B, #211C16);
   --mark: #9A7B4F; /* warm bronze — the only textual accent */
   --mark-soft: rgba(154, 123, 79, .15);
+
+  /* Brand bronze — the premium home/nav accent (Home Screen v1 spec) */
+  --bronze: #B08A4A;
+  --bronze-ink: #8A6A36;
+  --bronze-soft: rgba(176, 138, 74, .14);
 
   --danger: #C0564B;
   --ok: #5C8A4A;
@@ -312,7 +317,7 @@ a { color: inherit; text-decoration: none; }
 /* ----- Apple-Music section carousels (Library browse) -------------------- */
 /* Each direction is a row: a bold tappable header + a horizontal scroller of
    square cover cards that bleeds under the screen edges. */
-.lib-row { margin: 2px 0 26px; }
+.lib-row { margin: 28px 0 22px; }
 .lib-row-head {
   display: flex;
   align-items: center;
@@ -327,14 +332,15 @@ a { color: inherit; text-decoration: none; }
 }
 .lib-row-head:disabled { opacity: 1; }
 .lib-row-title {
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 760;
   letter-spacing: -.02em;
-  line-height: 1.12;
+  line-height: 1.1;
 }
 .lib-row-chev { flex: none; color: var(--faint); margin-left: 1px; }
 .row-scroll {
   display: flex;
+  align-items: flex-start; /* top-align covers; ragged title heights fall below */
   gap: 14px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -348,7 +354,7 @@ a { color: inherit; text-decoration: none; }
 .row-scroll::-webkit-scrollbar { display: none; }
 .row-card {
   flex: 0 0 auto;
-  width: 150px;
+  width: 180px;
   scroll-snap-align: start;
   background: none;
   border: 0;
@@ -360,9 +366,9 @@ a { color: inherit; text-decoration: none; }
 .row-card:active { transform: scale(.96); }
 .row-card-art {
   display: block;
-  width: 150px;
-  height: 150px;
-  border-radius: 14px;
+  width: 180px;
+  height: 148px; /* editorial, a touch taller than 4:3 */
+  border-radius: 16px;
   overflow: hidden;
   background: var(--card);
   box-shadow: var(--shadow);
@@ -376,12 +382,12 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 .row-card-title {
-  font-size: 14.5px;
-  font-weight: 720;
-  letter-spacing: -.01em;
+  font-size: 15.5px;
+  font-weight: 760;
+  letter-spacing: -.012em;
   color: var(--text);
-  margin: 9px 2px 2px;
-  line-height: 1.22;
+  margin: 10px 2px 2px;
+  line-height: 1.2;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -389,13 +395,184 @@ a { color: inherit; text-decoration: none; }
 }
 .row-card-sub {
   font-size: 12.5px;
-  color: var(--muted);
+  color: var(--faint);
   margin: 0 2px;
-  line-height: 1.25;
+  line-height: 1.3;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ===== Home Screen v1 — premium bronze identity (spec) ================== */
+/* Brand header */
+.brand-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+.brand-title { margin: 0 0 6px; line-height: .98; }
+.brand-en {
+  display: block;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -.025em;
+  color: var(--text);
+}
+.brand-ex {
+  display: block;
+  font-size: 36px;
+  font-weight: 300;
+  letter-spacing: -.02em;
+  color: var(--bronze);
+}
+.brand-sub { font-size: 14.5px; line-height: 1.3; color: var(--muted); margin: 0; }
+.brand-head .avatar-btn { flex: none; width: 48px; height: 48px; }
+
+/* Progress overview — a lightweight Apple-Music metadata row (NOT cards) */
+.metrics { display: flex; flex-wrap: nowrap; gap: 18px; margin: 6px 0 24px; }
+.metric {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  column-gap: 8px;
+  white-space: nowrap;
+}
+.metric-ico {
+  grid-row: 1 / 3;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(176, 138, 74, .1);
+  color: #7A6040;
+}
+.metric-ico svg { width: 17px; height: 17px; }
+.metric-num { font-size: 21px; font-weight: 680; color: var(--text); line-height: 1.05; }
+.metric-label { font-size: 11.5px; color: var(--muted); line-height: 1.1; }
+
+/* Current Focus — label above + the hero */
+.focus-label {
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 4px 2px 11px;
+}
+.focus-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 360px;
+  border-radius: 28px;
+  overflow: hidden;
+  margin: 0 0 28px;
+  padding: 0;
+  border: 0;
+  text-align: left;
+  box-shadow: var(--shadow-lg);
+  isolation: isolate;
+  transition: transform .15s var(--spring);
+}
+.focus-hero:active { transform: scale(.99); }
+.focus-hero-art { position: absolute; inset: 0; }
+.focus-hero-art > *,
+.focus-hero-art img,
+.focus-hero-art svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.focus-hero-grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 8, 6, .82) 0%, rgba(10, 8, 6, .30) 44%, rgba(10, 8, 6, 0) 72%);
+}
+.focus-hero-kicker {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, .2);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.focus-hero-body {
+  position: absolute;
+  left: 22px;
+  right: 92px;
+  bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.focus-hero-title { font-size: 33px; font-weight: 780; letter-spacing: -.02em; color: #fff; line-height: 1.04; }
+.focus-hero-sub { font-size: 19px; font-weight: 500; color: rgba(255, 255, 255, .92); line-height: 1.2; }
+.focus-hero-meta {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .76);
+  margin-top: 7px;
+}
+.focus-hero-play {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+}
+.focus-hero-play svg { transform: translateX(1px); }
+
+/* Activate-batch CTA (BatchHome, bronze identity) */
+.bh-activate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin: 16px 0 10px;
+  padding: 16px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--bronze);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 720;
+  box-shadow: 0 10px 24px rgba(176, 138, 74, .34);
+  transition: transform .15s var(--spring);
+}
+.bh-activate:active { transform: scale(.98); }
+
+/* Completed marker on the Library "Активные" cards */
+.row-card-art { position: relative; }
+.row-card-done {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--bronze);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
 }
 
 .empty {
@@ -1152,7 +1329,7 @@ table.phrases input { padding: 8px; font-size: 13px; }
   top: 0;
   bottom: 0;
   left: 0;
-  width: calc(100% / 4);
+  width: calc(100% / 3);
   transform: translateX(calc(var(--active, 0) * 100%));
   /* Slower, calmer travel between tabs (was .42s). */
   transition: transform .6s var(--spring), opacity .25s ease;
@@ -1170,16 +1347,16 @@ table.phrases input { padding: 8px; font-size: 13px; }
   position: absolute;
   inset: 5px;
   border-radius: 23px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .8) 0%, rgba(255, 255, 255, .4) 100%);
-  -webkit-backdrop-filter: blur(14px) saturate(210%) brightness(1.06);
-  backdrop-filter: blur(14px) saturate(210%) brightness(1.06);
-  border: 1px solid rgba(255, 255, 255, .9);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .42) 0%, rgba(255, 255, 255, .16) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(220%) brightness(1.08);
+  backdrop-filter: blur(24px) saturate(220%) brightness(1.08);
+  border: 1px solid rgba(255, 255, 255, .7);
   box-shadow:
-    inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    inset 0 -1.5px 1px rgba(0, 0, 0, .05),
-    inset 2px 0 1px rgba(120, 190, 255, .28),
-    inset -2px 0 1px rgba(255, 150, 205, .26),
-    0 8px 22px rgba(0, 0, 0, .14);
+    inset 0 2px 1px rgba(255, 255, 255, .95),
+    inset 0 -2px 2px rgba(0, 0, 0, .05),
+    inset 3px 0 2px rgba(120, 190, 255, .3),
+    inset -3px 0 2px rgba(255, 150, 205, .28),
+    0 8px 24px rgba(0, 0, 0, .15);
   transform-origin: center;
 }
 /* Specular sweep: a bright curved gloss on the top half → reads as a domed,
@@ -1233,7 +1410,7 @@ table.phrases input { padding: 8px; font-size: 13px; }
 }
 /* Active = the app's signature emerald (same accent as the path/badges), heavier
    weight to read as selected through the glass. */
-.nav-tab.active { color: var(--map-green); font-weight: 680; }
+.nav-tab.active { color: var(--bronze); font-weight: 680; }
 .nav-tab svg { width: 19px; height: 19px; transition: transform .3s var(--spring); }
 /* The lens sits on the selected tab → its icon rests clearly magnified. The tap
    itself fires a one-shot pop (Web Animations API, see App.tsx::lensPop). */
@@ -1247,14 +1424,13 @@ table.phrases input { padding: 8px; font-size: 13px; }
   border: 0;
   display: grid;
   place-items: center;
-  color: #111111;
-  background: rgba(255, 255, 255, .58);
-  -webkit-backdrop-filter: saturate(190%) blur(26px);
-  backdrop-filter: saturate(190%) blur(26px);
+  color: #333;
+  background: rgba(255, 255, 255, .42);
+  -webkit-backdrop-filter: saturate(200%) blur(24px);
+  backdrop-filter: saturate(200%) blur(24px);
   box-shadow:
-    inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    0 12px 36px rgba(17, 17, 17, .10),
-    0 2px 8px rgba(17, 17, 17, .04);
+    inset 0 1.5px 0 rgba(255, 255, 255, .9),
+    0 8px 24px rgba(17, 17, 17, .08);
   transition: transform .26s var(--spring);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
