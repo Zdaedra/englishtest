@@ -346,9 +346,12 @@ a { color: inherit; text-decoration: none; }
   overflow-y: hidden;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
-  /* bleed past the .screen 18px padding so cards slide under the edges */
-  margin: 0 -18px;
-  padding: 2px 18px 8px;
+  /* Pin the first card to the .screen 18px content margin so it lines up with
+     the hero card and section labels. Bleed only on the RIGHT so cards still
+     slide under the right edge as a "more content" affordance. */
+  margin: 0 -18px 0 0;
+  padding: 2px 18px 8px 0;
+  scroll-padding-left: 0;
   scrollbar-width: none;
 }
 .row-scroll::-webkit-scrollbar { display: none; }
