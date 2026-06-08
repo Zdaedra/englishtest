@@ -1,9 +1,13 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PlayerProvider, usePlayer } from "./player/PlayerContext";
+import { AuthProvider, useAuth } from "./auth/AuthContext";
+import AuthScreen from "./pages/AuthScreen";
+import OnboardingFlow from "./pages/OnboardingFlow";
+import { isOnboarded, setOnboarded } from "./lib/onboarding";
 import { BatchCover } from "./ui/Art";
 import {
-  IconLibrary, IconWave, IconMic, IconSearch, IconPlay, IconPause,
+  IconLibrary, IconWave, IconFocus, IconSearch, IconPlay, IconPause,
 } from "./ui/icons";
 
 function MiniPlayer() {
@@ -47,7 +51,7 @@ function MiniPlayer() {
 const TABS = [
   { to: "/", label: "Библиотека", Icon: IconLibrary },
   { to: "/learn", label: "Обучение", Icon: IconWave },
-  { to: "/practice", label: "Практика", Icon: IconMic },
+  { to: "/practice", label: "Практика", Icon: IconFocus },
 ];
 const NTAB = TABS.length;
 
@@ -204,7 +208,16 @@ function FloatingNav() {
   );
 }
 
-export default function App() {
+function Shell() {
+  const { user, loading } = useAuth();
+  const [obDone, setObDone] = useState(false);
+  if (loading) {
+    return <div className="auth-screen"><div className="auth-splash">Executive English</div></div>;
+  }
+  if (!user) return <AuthScreen />;
+  if (!obDone && !isOnboarded(user.id)) {
+    return <OnboardingFlow onDone={() => { setOnboarded(user.id); setObDone(true); }} />;
+  }
   return (
     <PlayerProvider>
       <div className="shell">
@@ -213,5 +226,13 @@ export default function App() {
         <FloatingNav />
       </div>
     </PlayerProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Shell />
+    </AuthProvider>
   );
 }

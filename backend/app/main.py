@@ -1,16 +1,14 @@
-import hashlib
-import hmac
 from pathlib import Path
-from urllib.parse import parse_qs
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
 
 from .config import get_settings
 from .db import init_db
-from .routers import batches, imports, practice, sessions, settings, training
+from .auth import parse_session
+from .routers import auth, batches, imports, practice, progress, sessions, settings, training
 
 app = FastAPI(title="English Executive")
 
@@ -22,49 +20,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Single-user cookie auth gate -------------------------------------------
-# Replaces HTTP basic-auth so iOS Safari (and the home-screen PWA) remember the
-# login: one password entry sets a signed, year-long cookie. Cost-bearing TTS
-# stays protected. Disabled when ENGLISH_APP_PASSWORD is empty (local dev).
+# --- Per-user account auth gate ---------------------------------------------
+# Commercial multi-user: a signed session cookie (eng_auth) carries the user id.
+# Only the API + cost-bearing media are gated; the SPA shell/assets load freely
+# and the frontend gates itself via /api/auth/me. Register + login are public.
 _COOKIE = "eng_auth"
-_COOKIE_MAX_AGE = 31536000  # 1 year
-
-
-def _auth_token() -> str:
-    s = get_settings()
-    return hmac.new(s.cookie_secret.encode(), b"eng-auth-v1", hashlib.sha256).hexdigest()
-
-
-def _login_page(error: str = "") -> HTMLResponse:
-    err = f'<p class="err">{error}</p>' if error else ""
-    html = f"""<!doctype html><html lang="ru"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#F8F8F6">
-<title>English Executive — вход</title>
-<style>
-  body{{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-       background:#F8F8F6;color:#111111;
-       font-family:-apple-system,"SF Pro Display","SF Pro Text",system-ui,sans-serif}}
-  form{{width:min(360px,86vw);padding:32px 24px;background:#FFFFFF;border:1px solid #ECECEC;
-       border-radius:26px;box-shadow:0 10px 40px rgba(17,17,17,.06)}}
-  .brand{{font-size:24px;font-weight:800;letter-spacing:-.01em;margin:0 0 4px}}
-  .tag{{font-size:13px;color:#6B6B6B;margin:0 0 22px}}
-  input{{width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border-radius:14px;
-        border:1px solid #ECECEC;background:#F8F8F6;color:#111111;margin-bottom:14px;
-        outline:none;transition:border-color .2s}}
-  input:focus{{border-color:#6B6FCF;background:#FFFFFF}}
-  button{{width:100%;padding:15px;font-size:17px;font-weight:700;border:0;border-radius:14px;
-         background:#6B6FCF;color:#fff;cursor:pointer}}
-  .err{{color:#C0564B;font-size:14px;margin:0 0 12px}}
-</style></head><body>
-<form method="post" action="/login">
-  <h1 class="brand">English Executive</h1>
-  <p class="tag">Executive communication. Built for real conversations.</p>{err}
-  <input type="password" name="password" placeholder="Пароль" autofocus
-         autocomplete="current-password">
-  <button type="submit">Войти</button>
-</form></body></html>"""
-    return HTMLResponse(html)
+_PUBLIC = {"/api/auth/login", "/api/auth/register", "/api/health"}
 
 
 @app.middleware("http")
@@ -87,38 +48,25 @@ async def _cache_control(request: Request, call_next):
 
 @app.middleware("http")
 async def _auth_gate(request: Request, call_next):
-    s = get_settings()
-    if not s.app_password:  # gate disabled
-        return await call_next(request)
-
-    token = _auth_token()
     path = request.url.path
-
-    if path == "/login":
-        if request.method == "POST":
-            body = await request.body()
-            pw = (parse_qs(body.decode()).get("password") or [""])[0]
-            if hmac.compare_digest(pw, s.app_password):
-                resp = RedirectResponse("/", status_code=303)
-                resp.set_cookie(_COOKIE, token, max_age=_COOKIE_MAX_AGE,
-                                httponly=True, samesite="lax", path="/")
-                return resp
-            return _login_page("Неверный пароль")
-        return _login_page()
-
-    if hmac.compare_digest(request.cookies.get(_COOKIE, ""), token):
+    if not (path.startswith("/api/") or path.startswith("/audio/") or path.startswith("/covers/")):
         return await call_next(request)
-
-    if path.startswith("/api/") or path.startswith("/audio/"):
+    if path in _PUBLIC:
+        return await call_next(request)
+    uid = parse_session(request.cookies.get(_COOKIE, ""))
+    if uid is None:
         return Response(status_code=401)
-    return RedirectResponse("/login", status_code=303)
+    request.state.user_id = uid
+    return await call_next(request)
 
+app.include_router(auth.router)
 app.include_router(imports.router)
 app.include_router(batches.router)
 app.include_router(sessions.router)
 app.include_router(settings.router)
 app.include_router(training.router)
 app.include_router(practice.router)
+app.include_router(progress.router)
 
 
 @app.on_event("startup")

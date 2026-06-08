@@ -4,12 +4,19 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlmodel import Session, select
 
 from .. import content, cover, importer, models
+from ..auth import current_user_id
 from ..config import get_settings
 from ..content import BatchAuthor
 from ..db import engine, get_session
+from ..entitlements import user_entitlements
 from ..schemas import BatchIn, ParseRequest, ParseResponse
 
 router = APIRouter(prefix="/api/imports", tags=["imports"])
+
+
+def _require_import(session: Session, user_id: int) -> None:
+    if not user_entitlements(session, user_id)["import"]:
+        raise HTTPException(403, "core_required")
 
 
 def _slugify(title: str) -> str:
@@ -43,7 +50,9 @@ def _gen_cover_bg(batch_id: int, slug: str, title: str, theme: str,
 
 
 @router.post("/parse", response_model=ParseResponse)
-def parse(req: ParseRequest):
+def parse(req: ParseRequest, user_id: int = Depends(current_user_id),
+          session: Session = Depends(get_session)):
+    _require_import(session, user_id)
     try:
         return importer.parse(req.raw_text, use_llm=req.use_llm)
     except Exception as e:  # LLM/network failure shouldn't 500 silently
@@ -52,8 +61,10 @@ def parse(req: ParseRequest):
 
 @router.post("/commit")
 def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
+           user_id: int = Depends(current_user_id),
            session: Session = Depends(get_session)):
     """Create a new batch from the paste→parse UI flow (always a fresh slug)."""
+    _require_import(session, user_id)
     if not batch_in.phrases:
         raise HTTPException(status_code=400, detail="Batch has no phrases")
 
@@ -70,12 +81,14 @@ def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
 
 
 @router.post("/upsert")
-def upsert_authored(author: BatchAuthor, session: Session = Depends(get_session)):
+def upsert_authored(author: BatchAuthor, user_id: int = Depends(current_user_id),
+                    session: Session = Depends(get_session)):
     """Create-or-replace a batch from the authoring format, keyed by its slug.
 
     This is the corrections path: POST the same slug with edited content and the
     batch is rewritten in place (id + cover preserved). No hand-written scripts.
     """
+    _require_import(session, user_id)
     if not author.phrases:
         raise HTTPException(status_code=400, detail="Batch has no phrases")
     batch_in, warnings = content.to_batch_in(author)
@@ -86,8 +99,9 @@ def upsert_authored(author: BatchAuthor, session: Session = Depends(get_session)
 
 
 @router.post("/seed")
-def seed(session: Session = Depends(get_session)):
+def seed(user_id: int = Depends(current_user_id), session: Session = Depends(get_session)):
     """Load every backend/content/*.json file (idempotent upsert by slug)."""
+    _require_import(session, user_id)
     results = content.load_all(session)
     return {"loaded": [
         {"id": b.id, "slug": b.slug, "created": created, "warnings": warnings}

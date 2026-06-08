@@ -9,6 +9,7 @@ from sqlmodel import Session, select
 
 from .. import audio, content, cover, models, tts
 from .. import mnemo as mnemo_render
+from ..auth import current_user_id
 from ..db import get_session
 from ..schemas import ReviewIn
 
@@ -263,13 +264,20 @@ def make_cover(batch_id: int, body: Optional[CoverIn] = None,
 
 
 @router.post("/reviews")
-def post_review(rev: ReviewIn, session: Session = Depends(get_session)):
+def post_review(rev: ReviewIn, user_id: int = Depends(current_user_id),
+                session: Session = Depends(get_session)):
     p = session.get(models.Phrase, rev.phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
-    session.add(models.ReviewEvent(phrase_id=rev.phrase_id, event_type=rev.event_type,
-                                   score=rev.score, latency_ms=rev.latency_ms))
-    p.srs_status = _SRS_NEXT.get((p.srs_status, rev.score), p.srs_status)
-    session.add(p)
+    session.add(models.ReviewEvent(user_id=user_id, phrase_id=rev.phrase_id,
+                                   event_type=rev.event_type, score=rev.score,
+                                   latency_ms=rev.latency_ms))
+    st = session.exec(select(models.UserPhraseStat).where(
+        models.UserPhraseStat.user_id == user_id,
+        models.UserPhraseStat.phrase_id == p.id)).first()
+    if not st:
+        st = models.UserPhraseStat(user_id=user_id, phrase_id=p.id, batch_id=p.batch_id)
+    st.srs_status = _SRS_NEXT.get((st.srs_status, rev.score), st.srs_status)
+    session.add(st)
     session.commit()
-    return {"phrase_id": p.id, "srs_status": p.srs_status}
+    return {"phrase_id": p.id, "srs_status": st.srs_status}

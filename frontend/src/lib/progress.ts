@@ -37,7 +37,50 @@ export function setProgress(batchId: number, patch: Partial<BatchProgress>): Bat
   } catch {
     /* storage full / disabled — progress is non-critical */
   }
+  // Mirror to the server (per-user source of truth). Fire-and-forget; the local
+  // cache keeps the UI synchronous. activatedAt/completed_at are server-set.
+  const srv: Record<string, unknown> = {};
+  for (const k of ["activated", "l1_listened", "l1_retold", "l1_best_seq", "l3_s1", "l3_s2", "l3_passed"] as const) {
+    if (k in patch && patch[k] !== undefined) srv[k] = patch[k];
+  }
+  if (Object.keys(srv).length) {
+    import("../api").then(({ api }) => api.putProgress(batchId, srv as any).catch(() => {}));
+  }
   return next;
+}
+
+// Drop all local progress (on login/logout) so a shared browser never leaks one
+// account's progress to another before server hydration.
+export function clearLocalProgress(): void {
+  try {
+    const ks: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("ee-progress-")) ks.push(k);
+    }
+    ks.forEach((k) => localStorage.removeItem(k));
+  } catch { /* ignore */ }
+}
+
+// Pull this user's progress from the server into the local cache (on login).
+export async function hydrateProgress(): Promise<void> {
+  try {
+    const { api } = await import("../api");
+    const rows = await api.listProgress();
+    rows.forEach((r) => {
+      const bp: BatchProgress = {
+        activated: r.activated,
+        activatedAt: r.activated_at || undefined,
+        l1_listened: r.l1_listened,
+        l1_retold: r.l1_retold,
+        l1_best_seq: r.l1_best_seq ?? undefined,
+        l3_s1: r.l3_s1,
+        l3_s2: r.l3_s2,
+        l3_passed: r.l3_passed,
+      };
+      try { localStorage.setItem(key(r.batch_id), JSON.stringify(bp)); } catch { /* ignore */ }
+    });
+  } catch { /* offline / not critical */ }
 }
 
 export type LessonState = "locked" | "open" | "done";

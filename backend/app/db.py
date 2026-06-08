@@ -37,20 +37,15 @@ def _migrate(s: Session) -> None:
         s.execute(text("ALTER TABLE batch ADD COLUMN section VARCHAR DEFAULT ''"))
         s.commit()
 
-    # Feedback-training rollup columns on phrase (Test B).
-    pcols = {row[1] for row in s.execute(text("PRAGMA table_info(phrase)")).all()}
-    if "avg_score" not in pcols:
-        s.execute(text("ALTER TABLE phrase ADD COLUMN avg_score FLOAT"))
-        s.commit()
-    if "attempts" not in pcols:
-        s.execute(text("ALTER TABLE phrase ADD COLUMN attempts INTEGER DEFAULT 0"))
-        s.commit()
-    if "last_score" not in pcols:
-        s.execute(text("ALTER TABLE phrase ADD COLUMN last_score INTEGER"))
-        s.commit()
-    if "last_seen_at" not in pcols:
-        s.execute(text("ALTER TABLE phrase ADD COLUMN last_seen_at DATETIME"))
-        s.commit()
+    # Per-user scoping (commercial multi-user): add user_id to the per-user event
+    # tables on existing DBs. The old per-user columns on `phrase` are left in
+    # place but orphaned — the model no longer maps them (state moved to
+    # userphrasestat, created by create_all alongside the user table).
+    for tbl in ("phraseattempt", "sequenceattempt", "reviewevent", "batchprogress", "trainingevent"):
+        info = s.execute(text(f"PRAGMA table_info({tbl})")).all()
+        if info and "user_id" not in {row[1] for row in info}:
+            s.execute(text(f"ALTER TABLE {tbl} ADD COLUMN user_id INTEGER DEFAULT 0"))
+            s.commit()
 
 
 def init_db() -> None:

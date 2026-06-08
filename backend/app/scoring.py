@@ -77,6 +77,17 @@ _SEQUENCE_SYSTEM = (
     "{\"score\": <int 0..10>, \"missed_anchors\": [<str>...], \"order_ok\": <bool>}."
 )
 
+_COACH_SYSTEM = (
+    "Ты — персональный коуч по executive-английскому (тон взрослый, не школьный). "
+    "Контекст: собеседник сказал реплику (stimulus); учащийся должен был ответить "
+    "уверенной фразой; эталон — target_phrase; распознанная речь — user_said; балл 0..10. "
+    "Дай короткий практичный разбор про ПРИСУТСТВИЕ и ТОН (не про грамматику). "
+    "Верни СТРОГО JSON без markdown: {"
+    "\"feedback\": \"<1-2 предложения по-русски: как прозвучал ответ и что усилить>\", "
+    "\"better\": \"<одна сильная английская фраза — как сказал бы уверенный руководитель здесь>\", "
+    "\"tone\": \"<2-4 слова по-русски про тон, напр. 'спокойно и прямо'>\"}."
+)
+
 # Process-level cache: (kind, target, normalized_spoken) -> result dict.
 _cache: dict[tuple, dict] = {}
 
@@ -189,6 +200,31 @@ def score_anchor(anchor: str, user_said: str) -> dict:
     ratio = max(best_tok, whole)
     score = 10 if ratio >= 0.85 else _clamp(round(ratio * 10))
     return {"score": score, "correct_anchor": anchor, "via": "gate"}
+
+
+def coach_feedback(stimulus: str, target_phrase: str, user_said: str, score: int) -> dict:
+    """AI Coach (paid): a short executive-coaching breakdown of the answer —
+    {feedback, better, tone, via}. Falls back to a score-band note if the LLM is
+    unavailable, so the feature degrades gracefully."""
+    payload = json.dumps(
+        {"stimulus": stimulus, "target_phrase": target_phrase,
+         "user_said": user_said, "score": score}, ensure_ascii=False)
+    try:
+        data = _openai_json(_COACH_SYSTEM, payload, max_tokens=240, model=SEQUENCE_MODEL)
+        return {
+            "feedback": str(data.get("feedback", "")).strip(),
+            "better": str(data.get("better", "")).strip() or target_phrase,
+            "tone": str(data.get("tone", "")).strip(),
+            "via": "llm",
+        }
+    except Exception:
+        if score >= 8:
+            note = "Сильно — звучит уверенно и по делу."
+        elif score >= 5:
+            note = "Узнаваемо, но смазано — добавь чёткости и убери лишнее."
+        else:
+            note = "Пока далеко от цели — вернись к эталону и скажи короче."
+        return {"feedback": note, "better": target_phrase, "tone": "спокойно и прямо", "via": "fallback"}
 
 
 def score_sequence(anchors_in_order: list[str], story_ru: str, user_said: str) -> dict:

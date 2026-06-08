@@ -12,7 +12,7 @@ import Lesson1 from "./pages/Lesson1";
 import Lesson2 from "./pages/Lesson2";
 import Lesson3 from "./pages/Lesson3";
 import Playback from "./pages/Playback";
-import Practice from "./pages/Practice";
+import Training from "./pages/Training";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import ImportBatch from "./pages/ImportBatch";
@@ -32,7 +32,7 @@ const router = createHashRouter([
       { path: "batch/:id/lesson/2", element: <Lesson2 /> },
       { path: "batch/:id/lesson/3", element: <Lesson3 /> },
       { path: "play", element: <Playback /> },
-      { path: "practice", element: <Practice /> },
+      { path: "practice", element: <Training /> },
       { path: "profile", element: <Profile /> },
       { path: "settings", element: <Settings /> },
       { path: "import", element: <ImportBatch /> },

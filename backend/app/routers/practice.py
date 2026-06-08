@@ -14,6 +14,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlmodel import Session, select
 
 from .. import models, scoring, stt, tts
+from ..auth import current_user_id
 from ..db import get_session
 from .training import _check_rate
 
@@ -100,6 +101,7 @@ async def score(audio: UploadFile = File(...),
                 phrase_ids: str = Form(...),
                 used_phrase_ids: str = Form(""),
                 latency_ms: int | None = Form(None),
+                user_id: int = Depends(current_user_id),
                 session: Session = Depends(get_session)):
     """Score a spoken answer against the batch repertoire. Cheap string pre-rank
     picks the single likeliest phrase, then one real scoring call. Flags a session
@@ -108,7 +110,7 @@ async def score(audio: UploadFile = File(...),
     used = {int(x) for x in used_phrase_ids.split(",") if x.strip().isdigit()}
     if not cand:
         raise HTTPException(400, "No candidate phrases")
-    _check_rate(session)
+    _check_rate(session, user_id)
     raw = await audio.read()
     if len(raw) > _MAX_AUDIO_BYTES:
         raise HTTPException(413, "Audio clip too large.")
@@ -132,8 +134,8 @@ async def score(audio: UploadFile = File(...),
     result = scoring.score_phrase(p.anchor, p.phrase_en, transcript)
     sc = int(result["score"])
     is_repeat = sc >= 8 and best_pid in used
-    session.add(models.PhraseAttempt(phrase_id=best_pid, score=sc, transcript=transcript,
-                                     via="practice", latency_ms=latency_ms))
+    session.add(models.PhraseAttempt(user_id=user_id, phrase_id=best_pid, score=sc,
+                                     transcript=transcript, via="practice", latency_ms=latency_ms))
     session.commit()
     return {"score": sc, "phrase_id": best_pid, "anchor": p.anchor,
             "phrase_en": p.phrase_en, "transcript": transcript, "is_repeat": is_repeat}

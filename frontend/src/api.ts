@@ -56,8 +56,49 @@ export type PracticeScore = {
   score: number; phrase_id: number; anchor: string; phrase_en: string;
   transcript: string; is_repeat: boolean;
 };
+// --- Swipe-deck Training -----------------------------------------------------
+export type DeckCard = {
+  phrase_id: number; batch_id: number; batch_title: string; section: string;
+  slug: string; cover_url: string | null;
+  anchor: string; phrase_en: string;
+  stimulus: string; stimulus_id: number | null; stimulus_lang: string;
+  gloss_ru: string; conf: number; priority: number;
+  attempts: number; avg_score: number | null;
+};
+export type AnswerResult = {
+  event_id: number; phrase_id: number; anchor: string; transcript: string;
+  score: number; correct_phrase: string; feedback: string; via: string;
+  avg_score: number | null; attempts: number; auto_success: boolean;
+};
+export type SessionSummary = {
+  session_id: string; cards_total: number; cards_known: number; cards_unknown: number;
+  avg_score: number | null;
+  weakest: { batch_id: number; batch_title: string; success_rate: number } | null;
+  strongest: { batch_id: number; batch_title: string; success_rate: number } | null;
+  by_batch: { batch_id: number; batch_title: string; total: number; known: number; success_rate: number }[];
+};
+export type Coach = {
+  feedback: string; better: string; tone: string; correct_phrase: string; via: string;
+};
+export type ProgressRow = {
+  batch_id: number; activated: boolean; activated_at: string | null;
+  l1_listened: boolean; l1_retold: boolean; l1_best_seq: number | null;
+  l3_s1: boolean; l3_s2: boolean; l3_passed: boolean; completed_at: string | null;
+};
+
+export type Entitlements = {
+  voice_answer: boolean; server_stt: boolean; ai_coach: boolean; import: boolean;
+  max_active_batches: number | null; scored_per_day: number;
+};
+export type Me = { id: number; email: string; name: string; plan: string; entitlements?: Entitlements };
+
+// Global 401 handler — when a session expires mid-use, the AuthProvider hooks
+// this to drop back to the login screen.
+let _onUnauthorized: (() => void) | null = null;
+export function setOnUnauthorized(cb: () => void) { _onUnauthorized = cb; }
 
 async function j<T>(r: Response): Promise<T> {
+  if (r.status === 401) _onUnauthorized?.();
   if (!r.ok) throw new Error((await r.text()) || r.statusText);
   return r.json();
 }
@@ -144,10 +185,69 @@ export const api = {
   getRotation: (batchId: number) =>
     fetch(`/api/training/rotation/${batchId}`).then(j<RotationItem[]>),
   getMastery: () => fetch("/api/training/mastery").then(j<BatchMastery[]>),
+  // --- Swipe-deck Training ---
+  getDeck: (batchIds: number[], opts?: { maintenanceIds?: number[]; limit?: number; exclude?: number[] }) => {
+    const q = new URLSearchParams({ batch_ids: batchIds.join(",") });
+    if (opts?.maintenanceIds?.length) q.set("maintenance_ids", opts.maintenanceIds.join(","));
+    if (opts?.limit) q.set("limit", String(opts.limit));
+    if (opts?.exclude?.length) q.set("exclude", opts.exclude.join(","));
+    return fetch(`/api/training/deck?${q}`).then(j<DeckCard[]>);
+  },
+  trainSwipe: (sessionId: string, phraseId: number, dir: "left" | "right", ms?: number) =>
+    fetch("/api/training/swipe", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, phrase_id: phraseId, swipe_direction: dir, response_time_ms: ms ?? null }),
+    }).then(j<{ ok: boolean; self_ewma: number }>),
+  trainAnswer: (sessionId: string, phraseId: number, audio: Blob, filename: string, latencyMs?: number) => {
+    const fd = new FormData();
+    fd.append("audio", audio, filename);
+    fd.append("phrase_id", String(phraseId));
+    fd.append("session_id", sessionId);
+    if (latencyMs != null) fd.append("latency_ms", String(latencyMs));
+    return fetch("/api/training/answer", { method: "POST", body: fd }).then(j<AnswerResult>);
+  },
+  trainAnswerText: (sessionId: string, phraseId: number, transcript: string, ms?: number) =>
+    fetch("/api/training/answer-text", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, phrase_id: phraseId, transcript, response_time_ms: ms ?? null }),
+    }).then(j<AnswerResult>),
+  trainAnswerConfirm: (eventId: number, manualSuccess: boolean) =>
+    fetch("/api/training/answer/confirm", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ event_id: eventId, manual_success: manualSuccess }),
+    }).then(j<{ ok: boolean }>),
+  trainSummary: (sessionId: string) =>
+    fetch(`/api/training/session/${sessionId}/summary`).then(j<SessionSummary>),
+  coach: (phraseId: number, transcript: string, score: number): Promise<Coach | { locked: true }> =>
+    fetch("/api/training/coach", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ phrase_id: phraseId, transcript, score }),
+    }).then((r) => (r.status === 403 ? { locked: true as const }
+      : r.ok ? (r.json() as Promise<Coach>)
+        : r.text().then((t) => Promise.reject(new Error(t || r.statusText))))),
+  listProgress: () => fetch("/api/progress").then(j<ProgressRow[]>),
+  putProgress: (batchId: number, patch: Partial<Omit<ProgressRow, "batch_id" | "activated_at" | "completed_at">>) =>
+    fetch(`/api/progress/${batchId}`, {
+      method: "PUT", headers: { "content-type": "application/json" },
+      body: JSON.stringify(patch),
+    }).then(j<ProgressRow>),
   getSettings: () => fetch("/api/settings").then(j<any>),
   putSettings: (patch: any) =>
     fetch("/api/settings", {
       method: "PUT", headers: { "content-type": "application/json" },
       body: JSON.stringify(patch),
     }).then(j<any>),
+  // --- Auth (commercial multi-user) ---
+  me: () => fetch("/api/auth/me").then((r) => (r.ok ? (r.json() as Promise<Me>) : null)),
+  login: (email: string, password: string) =>
+    fetch("/api/auth/login", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    }).then(j<Me>),
+  register: (email: string, password: string, name?: string) =>
+    fetch("/api/auth/register", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email, password, name }),
+    }).then(j<Me>),
+  logout: () => fetch("/api/auth/logout", { method: "POST" }).then((r) => r.ok),
 };
