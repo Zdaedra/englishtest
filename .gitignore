@@ -9,6 +9,15 @@ backend/data/
 # Node / frontend build
 frontend/node_modules/
 frontend/dist/
+frontend/tsconfig.tsbuildinfo
+
+# Local content-pipeline artifacts & backups (generated; not source)
+backend/check_phrases.json
+_covers_staged/
+_covers_backup_*/
+_cover_redesign_log.tsv
+_prod_check_phrases.md
+.claude/consilium/
 
 # Secrets
 .env
