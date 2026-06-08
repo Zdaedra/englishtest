@@ -9,11 +9,22 @@ from sqlmodel import Session, select
 
 from .. import audio, content, cover, models, tts
 from .. import mnemo as mnemo_render
-from ..auth import current_user_id
+from ..auth import current_user_id, is_admin
 from ..db import get_session
 from ..schemas import ReviewIn
 
 router = APIRouter(prefix="/api/batches", tags=["batches"])
+
+
+def _visible(b: models.Batch, user_id: int, admin: bool) -> bool:
+    """A batch is visible if it's in the shared catalog (owner_id is NULL), the
+    caller owns it, or the caller is admin. Keeps private imports per-user."""
+    return b.owner_id is None or b.owner_id == user_id or admin
+
+
+def _owner_filter(user_id: int):
+    # noqa: E711 — SQLAlchemy needs `== None` for IS NULL.
+    return (models.Batch.owner_id == None) | (models.Batch.owner_id == user_id)  # noqa: E711
 
 # Recall pause baked after each anchor in the training drills (seconds): long
 # enough for the learner to say the word back before the next one.
@@ -44,9 +55,10 @@ _SRS_NEXT = {
 
 
 @router.get("")
-def list_batches(session: Session = Depends(get_session)):
+def list_batches(user_id: int = Depends(current_user_id), session: Session = Depends(get_session)):
     rows = session.exec(
         select(models.Batch).where(models.Batch.deleted_at == None)  # noqa: E711
+        .where(_owner_filter(user_id))
         .order_by(models.Batch.created_at.desc())
     ).all()
     out = []
@@ -67,12 +79,13 @@ def list_batches(session: Session = Depends(get_session)):
 
 
 @router.get("/phrases")
-def list_phrases(session: Session = Depends(get_session)):
+def list_phrases(user_id: int = Depends(current_user_id), session: Session = Depends(get_session)):
     """Flat index of every phrase across non-deleted batches — powers the library
     search's per-phrase results block. Read-only, no audio. Declared before
     /{batch_id} so the literal path wins the route match."""
     batches = session.exec(
         select(models.Batch).where(models.Batch.deleted_at == None)  # noqa: E711
+        .where(_owner_filter(user_id))
     ).all()
     title_by_id = {b.id: b.title for b in batches}
     ids = list(title_by_id.keys())
@@ -90,9 +103,10 @@ def list_phrases(session: Session = Depends(get_session)):
 
 
 @router.get("/{batch_id}")
-def get_batch(batch_id: int, session: Session = Depends(get_session)):
+def get_batch(batch_id: int, user_id: int = Depends(current_user_id),
+              session: Session = Depends(get_session)):
     b = session.get(models.Batch, batch_id)
-    if not b or b.deleted_at:
+    if not b or b.deleted_at or not _visible(b, user_id, is_admin(session, user_id)):
         raise HTTPException(404, "Batch not found")
     zones = session.exec(select(models.Zone).where(models.Zone.batch_id == batch_id)
                          .order_by(models.Zone.order_index)).all()
@@ -111,10 +125,14 @@ def get_batch(batch_id: int, session: Session = Depends(get_session)):
 
 
 @router.get("/phrase/{phrase_id}/audio")
-def phrase_audio(phrase_id: int, session: Session = Depends(get_session)):
+def phrase_audio(phrase_id: int, user_id: int = Depends(current_user_id),
+                 session: Session = Depends(get_session)):
     """One cached English clip for a single phrase (tap-to-hear, no full session)."""
     p = session.get(models.Phrase, phrase_id)
     if not p:
+        raise HTTPException(404, "Phrase not found")
+    b = session.get(models.Batch, p.batch_id)
+    if not b or not _visible(b, user_id, is_admin(session, user_id)):
         raise HTTPException(404, "Phrase not found")
     st = session.get(models.Setting, 1) or models.Setting(id=1)
     try:
@@ -163,7 +181,9 @@ def _anchor_segments(story: str, spans: list[dict], gap: float) -> list[dict]:
 
 
 @router.get("/{batch_id}/mnemo/audio")
-def mnemo_audio(batch_id: int, layout: str = "full", session: Session = Depends(get_session)):
+def mnemo_audio(batch_id: int, layout: str = "full",
+                user_id: int = Depends(current_user_id),
+                session: Session = Depends(get_session)):
     """Render the mnemonic story as audio in one of three layouts.
 
     full    — LEARNING: the whole story spoken by ONE gpt-4o-mini-tts narrator in
@@ -182,7 +202,7 @@ def mnemo_audio(batch_id: int, layout: str = "full", session: Session = Depends(
     if layout not in ("full", "anchors", "shuffle"):
         raise HTTPException(400, "Unknown layout")
     b = session.get(models.Batch, batch_id)
-    if not b or b.deleted_at:
+    if not b or b.deleted_at or not _visible(b, user_id, is_admin(session, user_id)):
         raise HTTPException(404, "Batch not found")
     mnemo = session.exec(select(models.MnemoStory).where(models.MnemoStory.batch_id == batch_id)).first()
     if not mnemo or not mnemo.story_ru.strip():
@@ -225,19 +245,25 @@ def mnemo_audio(batch_id: int, layout: str = "full", session: Session = Depends(
 
 
 @router.get("/{batch_id}/export")
-def export_batch(batch_id: int, session: Session = Depends(get_session)):
+def export_batch(batch_id: int, user_id: int = Depends(current_user_id),
+                 session: Session = Depends(get_session)):
     """Round-trip a batch back to the authoring JSON format (for corrections)."""
     b = session.get(models.Batch, batch_id)
-    if not b or b.deleted_at:
+    if not b or b.deleted_at or not _visible(b, user_id, is_admin(session, user_id)):
         raise HTTPException(404, "Batch not found")
     return content.to_authoring(session, b)
 
 
 @router.delete("/{batch_id}")
-def soft_delete(batch_id: int, session: Session = Depends(get_session)):
+def soft_delete(batch_id: int, user_id: int = Depends(current_user_id),
+                session: Session = Depends(get_session)):
     b = session.get(models.Batch, batch_id)
     if not b:
         raise HTTPException(404, "Batch not found")
+    # Only the owner of a private import, or an admin (for the shared catalog),
+    # may delete. Clients cannot vandalise the curated library.
+    if not (is_admin(session, user_id) or b.owner_id == user_id):
+        raise HTTPException(403, "admin_required")
     b.deleted_at = datetime.now(timezone.utc)
     session.add(b)
     session.commit()
@@ -246,10 +272,13 @@ def soft_delete(batch_id: int, session: Session = Depends(get_session)):
 
 @router.post("/{batch_id}/cover")
 def make_cover(batch_id: int, body: Optional[CoverIn] = None,
+               user_id: int = Depends(current_user_id),
                session: Session = Depends(get_session)):
     b = session.get(models.Batch, batch_id)
     if not b or b.deleted_at:
         raise HTTPException(404, "Batch not found")
+    if not (is_admin(session, user_id) or b.owner_id == user_id):
+        raise HTTPException(403, "admin_required")
     body = body or CoverIn()
     try:
         url = cover.generate_cover(b.id, b.slug, b.title, b.theme, b.subtitle,

@@ -171,6 +171,7 @@ def mastery(user_id: int = Depends(current_user_id), session: Session = Depends(
     """Per-batch mastery rollup for THIS user, from their UserPhraseStat rows."""
     batches = session.exec(
         select(models.Batch).where(models.Batch.deleted_at == None)  # noqa: E711
+        .where((models.Batch.owner_id == None) | (models.Batch.owner_id == user_id))  # noqa: E711
     ).all()
     stats = session.exec(select(models.UserPhraseStat).where(
         models.UserPhraseStat.user_id == user_id)).all()
@@ -250,6 +251,15 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
     maint = set(_parse_ids(maintenance_ids))
     excl = set(_parse_ids(exclude))
     all_ids = active + [m for m in maint if m not in active]
+    if not all_ids:
+        return []
+    # Restrict to batches visible to this user (shared catalog or own imports) so
+    # a guessed id can't surface another client's private import.
+    visible = set(session.exec(select(models.Batch.id).where(
+        models.Batch.id.in_(all_ids),
+        (models.Batch.owner_id == None) | (models.Batch.owner_id == user_id),  # noqa: E711
+    )).all())
+    all_ids = [i for i in all_ids if i in visible]
     if not all_ids:
         return []
     now = datetime.now(timezone.utc)

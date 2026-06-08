@@ -90,7 +90,7 @@ export type Entitlements = {
   voice_answer: boolean; server_stt: boolean; ai_coach: boolean; import: boolean;
   max_active_batches: number | null; scored_per_day: number;
 };
-export type Me = { id: number; email: string; name: string; plan: string; entitlements?: Entitlements };
+export type Me = { id: number; email: string; name: string; plan: string; is_admin?: boolean; entitlements?: Entitlements };
 
 // Global 401 handler — when a session expires mid-use, the AuthProvider hooks
 // this to drop back to the login screen.

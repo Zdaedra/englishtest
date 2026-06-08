@@ -58,8 +58,8 @@
 | Аудио: gapless-сессии (Active Recall / Listening) | короткий дневной лимит | ∞ (fair-use) | ∞ |
 | **AI Coach** (разбор ответа: как прозвучал, сильнее, тон) | ✗ (тизер→апселл) | ✗ (тизер→апселл) | **✓** |
 | Адаптив: статистика/mastery/итог сессии | ✓ | ✓ | ✓ |
-| Импорт своих наборов | ✗ | ✓ | ✓ |
-| Настройки Listening (голос/скорость/паузы) | ✓ | ✓ | ✓ |
+| Импорт **своих** наборов (приватные, видны только тебе) | ✗ | ✓ | ✓ |
+| Настройки Listening (голос/скорость/паузы) — **глобальный конфиг, только владелец/admin** | — | — | admin |
 
 ---
 
@@ -98,7 +98,13 @@
 
 - `User.plan`: расширить `free | core | ai` (сейчас `free | ai`).
 - Единый источник прав: `entitlements(plan) -> {voice_answer, server_stt, ai_coach, import, scored_per_day, max_active_batches}`. Бэкенд читает его на каждом гейте. **(реализовано: `backend/app/entitlements.py`)**
-- Точки проверки (существующие эндпоинты, реализовано): `/training/answer` и `/training/answer-text` (микрофон → `voice_answer`, т.е. `ai`; иначе 403 `ai_required`), `/training/coach` (`ai_coach` → `ai`), активация батча (`/progress` PUT → cap `max_active_batches` для Free → 403 `limit_active`), `/imports/*` (`import` → `core+` → 403 `core_required`), `_check_rate` (per-plan `scored_per_day`).
+- Точки проверки (существующие эндпоинты, реализовано): `/training/answer` и `/training/answer-text` (микрофон → `voice_answer`, т.е. `ai`; иначе 403 `ai_required`), `/training/coach` (`ai_coach` → `ai`), активация батча (`/progress` PUT → cap `max_active_batches` для Free → 403 `limit_active`), `/imports/parse|commit` (`import` → `core+` → 403 `core_required`), `_check_rate` (per-plan `scored_per_day`), `/sessions` (gapless → `gapless_per_day`, Free 3/день → 429 `daily_limit`).
+
+### Мульти-тенант хардненинг (pre-deploy, реализовано)
+- **Cookie-секрет** самогенерируется и персистится в `backend/data/.cookie_secret`, если `ENGLISH_COOKIE_SECRET` не задан → secure-by-default (старый дефолт `change-me` был подделываем). Явный env перекрывает.
+- **Роль `User.is_admin`**: первый зарегистрированный аккаунт = владелец (admin + plan `ai`). Только admin/владелец набора может: `DELETE /batches/{id}`, `POST /batches/{id}/cover`, `PUT /settings`, `/imports/upsert`, `/imports/seed` (иначе 403 `admin_required`).
+- **Приватность импортов**: `Batch.owner_id` (NULL = общий каталог, set = приватный набор клиента). Все листинги/чтение/деки фильтруются «общие ∪ свои»; чужой приватный батч → 404. Импорт клиента (`/imports/commit`) ставит `owner_id = клиент`; импорт admin → общий каталог.
+- **Изоляция учебных данных** (UserPhraseStat/BatchProgress/события) подтверждена тестами (мульти-юзер матрица).
 - `_check_rate` → берёт лимит из `entitlements(plan)`, а не константу.
 - Фронт: апселл-карточки на стенах (часть уже есть), бейдж плана в кабинете.
 - **Биллинг (Stripe)** ставит `plan` по факту оплаты (отдельное ТЗ; здесь не описывается).

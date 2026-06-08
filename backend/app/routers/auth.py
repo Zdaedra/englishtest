@@ -29,7 +29,7 @@ def _norm(email: str) -> str:
 
 def _serialize(u: models.User) -> dict:
     return {"id": u.id, "email": u.email, "name": u.name, "plan": u.plan,
-            "entitlements": ents(u.plan)}
+            "is_admin": u.is_admin, "entitlements": ents(u.plan)}
 
 
 def _set_cookie(response: Response, user_id: int) -> None:
@@ -46,8 +46,12 @@ def register(body: Credentials, response: Response, session: Session = Depends(g
         raise HTTPException(400, f"Пароль слишком короткий (минимум {MIN_PASSWORD} символов).")
     if session.exec(select(models.User).where(models.User.email == email)).first():
         raise HTTPException(409, "Этот email уже зарегистрирован.")
+    # Bootstrap: the very first account is the owner — admin (curates the shared
+    # catalog) and full-access plan, so no manual SQL is needed post-deploy.
+    first = session.exec(select(models.User).limit(1)).first() is None
     u = models.User(email=email, password_hash=hash_password(body.password),
-                    name=(body.name or "").strip())
+                    name=(body.name or "").strip(),
+                    is_admin=first, plan=("ai" if first else "free"))
     session.add(u)
     session.commit()
     session.refresh(u)

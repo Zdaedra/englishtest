@@ -4,7 +4,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlmodel import Session, select
 
 from .. import content, cover, importer, models
-from ..auth import current_user_id
+from ..auth import current_user_id, is_admin, require_admin
 from ..config import get_settings
 from ..content import BatchAuthor
 from ..db import engine, get_session
@@ -74,6 +74,13 @@ def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
     batch, _ = content.upsert(session, batch_in, slug=slug,
                               auto_title=True, auto_subtitle=True, auto_cover=False)
 
+    # Admin imports populate the shared catalog (owner_id NULL); a client's import
+    # is private to them (owner_id = the client) so it never leaks into the library.
+    batch.owner_id = None if is_admin(session, user_id) else user_id
+    session.add(batch)
+    session.commit()
+    session.refresh(batch)
+
     if get_settings().auto_cover:
         background_tasks.add_task(_gen_cover_bg, batch.id, batch.slug,
                                   batch.title, batch.theme, batch.subtitle)
@@ -81,14 +88,14 @@ def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
 
 
 @router.post("/upsert")
-def upsert_authored(author: BatchAuthor, user_id: int = Depends(current_user_id),
+def upsert_authored(author: BatchAuthor, user_id: int = Depends(require_admin),
                     session: Session = Depends(get_session)):
     """Create-or-replace a batch from the authoring format, keyed by its slug.
 
     This is the corrections path: POST the same slug with edited content and the
-    batch is rewritten in place (id + cover preserved). No hand-written scripts.
+    batch is rewritten in place (id + cover preserved). Admin-only — it edits the
+    shared curated catalog by slug, so clients must not reach it.
     """
-    _require_import(session, user_id)
     if not author.phrases:
         raise HTTPException(status_code=400, detail="Batch has no phrases")
     batch_in, warnings = content.to_batch_in(author)
@@ -99,9 +106,9 @@ def upsert_authored(author: BatchAuthor, user_id: int = Depends(current_user_id)
 
 
 @router.post("/seed")
-def seed(user_id: int = Depends(current_user_id), session: Session = Depends(get_session)):
-    """Load every backend/content/*.json file (idempotent upsert by slug)."""
-    _require_import(session, user_id)
+def seed(user_id: int = Depends(require_admin), session: Session = Depends(get_session)):
+    """Load every backend/content/*.json file (idempotent upsert by slug).
+    Admin-only — it populates the shared curated catalog."""
     results = content.load_all(session)
     return {"loaded": [
         {"id": b.id, "slug": b.slug, "created": created, "warnings": warnings}

@@ -36,16 +36,28 @@ def _migrate(s: Session) -> None:
     if "section" not in cols:
         s.execute(text("ALTER TABLE batch ADD COLUMN section VARCHAR DEFAULT ''"))
         s.commit()
+    # owner_id: NULL keeps every existing batch in the shared curated catalog;
+    # only user imports set it (private). Added with no FK clause (SQLite ALTER).
+    if "owner_id" not in cols:
+        s.execute(text("ALTER TABLE batch ADD COLUMN owner_id INTEGER"))
+        s.commit()
 
     # Per-user scoping (commercial multi-user): add user_id to the per-user event
     # tables on existing DBs. The old per-user columns on `phrase` are left in
     # place but orphaned — the model no longer maps them (state moved to
     # userphrasestat, created by create_all alongside the user table).
-    for tbl in ("phraseattempt", "sequenceattempt", "reviewevent", "batchprogress", "trainingevent"):
+    for tbl in ("phraseattempt", "sequenceattempt", "reviewevent", "batchprogress",
+                "trainingevent", "playbacksession"):
         info = s.execute(text(f"PRAGMA table_info({tbl})")).all()
         if info and "user_id" not in {row[1] for row in info}:
             s.execute(text(f"ALTER TABLE {tbl} ADD COLUMN user_id INTEGER DEFAULT 0"))
             s.commit()
+
+    # Owner/admin flag on existing user tables (new DBs get it via create_all).
+    uinfo = s.execute(text("PRAGMA table_info(user)")).all()
+    if uinfo and "is_admin" not in {row[1] for row in uinfo}:
+        s.execute(text("ALTER TABLE user ADD COLUMN is_admin BOOLEAN DEFAULT 0"))
+        s.commit()
 
 
 def init_db() -> None:

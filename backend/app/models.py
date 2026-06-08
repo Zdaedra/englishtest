@@ -23,6 +23,9 @@ class Batch(SQLModel, table=True):
     status: str = Field(default="draft")  # draft | approved
     source_text: str = ""
     cover_path: Optional[str] = None  # URL path to AI-generated cover, e.g. /covers/<slug>.png
+    # NULL = shared curated catalog (visible to everyone). Set = a user's private
+    # import (visible only to that user). Keeps client imports out of the catalog.
+    owner_id: Optional[int] = Field(default=None, foreign_key="user.id", index=True)
     created_at: datetime = Field(default_factory=_now)
     deleted_at: Optional[datetime] = None
 
@@ -124,6 +127,7 @@ class AudioAsset(SQLModel, table=True):
 
 class PlaybackSession(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=0, foreign_key="user.id", index=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
     mode: str = "recall"  # recall | listening | context
     order_mode: str = "ordered"  # ordered | zone_random | full_random
@@ -177,7 +181,8 @@ class User(SQLModel, table=True):
     email: str = Field(index=True, unique=True)
     password_hash: str
     name: str = ""
-    plan: str = Field(default="free")  # free | ai
+    plan: str = Field(default="free")  # free | core | ai
+    is_admin: bool = Field(default=False)  # owner: may curate the shared catalog
     created_at: datetime = Field(default_factory=_now)
 
 

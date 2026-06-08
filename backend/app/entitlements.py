@@ -12,6 +12,7 @@ ENTITLEMENTS: dict[str, dict] = {
         "import": False,
         "max_active_batches": 3,    # None => unlimited
         "scored_per_day": 30,
+        "gapless_per_day": 3,       # gapless audio sessions/day (TTS cost lever)
     },
     "core": {
         "voice_answer": False,      # Core: swipe + reveal + audio/import, but no mic
@@ -20,6 +21,7 @@ ENTITLEMENTS: dict[str, dict] = {
         "import": True,
         "max_active_batches": None,
         "scored_per_day": 200,
+        "gapless_per_day": None,
     },
     "ai": {
         "voice_answer": True,       # mic active: speak + AI scoring/coaching
@@ -28,6 +30,7 @@ ENTITLEMENTS: dict[str, dict] = {
         "import": True,
         "max_active_batches": None,
         "scored_per_day": 400,
+        "gapless_per_day": None,
     },
 }
 

@@ -17,6 +17,8 @@ export default function Profile() {
   const [count, setCount] = useState<number | null>(null);
   const [note, setNote] = useState("");
   const isAI = user?.plan === "ai";
+  const canImport = !!user?.entitlements?.import;
+  const isAdmin = !!user?.is_admin;
 
   useEffect(() => {
     api.listBatches().then((b) => setCount(b.length)).catch(() => setCount(null));
@@ -79,8 +81,8 @@ export default function Profile() {
       {note && <p className="muted small center" style={{ margin: "12px 4px 0" }}>{note}</p>}
 
       <div className="menu" style={{ marginTop: 18 }}>
-        {row(IconImport, "Import a batch", "Вставить новый набор фраз", "/import")}
-        {row(IconGear, "Listening", "Голос, скорость и паузы", "/settings")}
+        {canImport && row(IconImport, "Import a batch", "Вставить новый набор фраз", "/import")}
+        {isAdmin && row(IconGear, "Listening", "Голос, скорость и паузы", "/settings")}
         {row(IconInfo, "About", "Executive English — premium communication trainer", "/profile")}
       </div>
 
