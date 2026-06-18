@@ -28,3 +28,6 @@ _prod_check_phrases.md
 
 # OS
 .DS_Store
+
+# Playwright MCP scratch output
+.playwright-mcp/

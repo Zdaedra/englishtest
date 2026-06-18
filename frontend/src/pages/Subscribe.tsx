@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
+import { haptic } from "../lib/session";
 import { IconBack, IconCheck } from "../ui/icons";
 
 // Prices are placeholders matching the App Store Connect products we'll create
@@ -34,8 +35,8 @@ export default function Subscribe() {
   const [note, setNote] = useState("");
 
   // Stub until StoreKit is wired (needs the Apple Developer account + products).
-  const buy = (_plan: string, _period: "monthly" | "yearly") => setNote(t("sub.soon"));
-  const restore = () => setNote(t("sub.soon"));
+  const buy = (_plan: string, _period: "monthly" | "yearly") => { haptic("medium"); setNote(t("sub.soon")); };
+  const restore = () => { haptic("light"); setNote(t("sub.soon")); };
 
   return (
     <div className="screen sub-screen">

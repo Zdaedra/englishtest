@@ -41,6 +41,7 @@ export default function Onboarding() {
               <button
                 key={o.key}
                 className={`quest-opt${sel ? " sel" : ""}`}
+                aria-pressed={sel}
                 onClick={() => toggle(o.key)}
               >
                 <span className="qo-body">

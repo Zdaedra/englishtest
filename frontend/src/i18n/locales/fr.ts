@@ -381,6 +381,21 @@ const fr: Dict = {
   "ob1.q": "Qu'est-ce que tu veux travailler en premier ?",
   "ob1.sub": "Choisis 1–2 directions — on démarre la trajectoire avec. Le reste suivra.",
   "ob1.cta": "Construire ma trajectoire",
+
+  // ── Playback (player screen) ───────────────────────────────────────
+  "pb.nothing": "Rien en lecture.",
+  "pb.chooseSet": "Choisis un set dans ta Bibliothèque.",
+  "pb.goLibrary": "Aller à la Bibliothèque",
+  "pb.listen": "Écouter",
+  "pb.recall": "Se rappeler",
+  "pb.counter": "{{i}} sur {{n}}",
+  "pb.prevAria": "Précédent",
+  "pb.playPauseAria": "Lecture / pause",
+  "pb.nextAria": "Suivant",
+  "pb.seekAria": "Avance",
+  "pb.shuffle": "Aléatoire",
+  "pb.loop": "Boucle",
+  "pb.favorite": "Favori",
 };
 
 export default fr;

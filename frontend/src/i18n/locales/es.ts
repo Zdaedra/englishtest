@@ -381,6 +381,21 @@ const es: Dict = {
   "ob1.q": "¿Qué quieres mejorar primero?",
   "ob1.sub": "Elige 1–2 áreas — empezamos la trayectoria por ahí. El resto vendrá después.",
   "ob1.cta": "Construir la trayectoria",
+
+  // ── Playback (player screen) ───────────────────────────────────────
+  "pb.nothing": "No hay nada en reproducción.",
+  "pb.chooseSet": "Elige un set en tu Biblioteca.",
+  "pb.goLibrary": "Ir a la Biblioteca",
+  "pb.listen": "Escuchar",
+  "pb.recall": "Recordar",
+  "pb.counter": "{{i}} de {{n}}",
+  "pb.prevAria": "Anterior",
+  "pb.playPauseAria": "Reproducir / pausa",
+  "pb.nextAria": "Siguiente",
+  "pb.seekAria": "Buscar posición",
+  "pb.shuffle": "Aleatorio",
+  "pb.loop": "Bucle",
+  "pb.favorite": "Favorito",
 };
 
 export default es;

@@ -24,7 +24,7 @@ function MiniPlayer() {
     p.currentOrder != null ? p.phraseByOrder.get(p.currentOrder)?.anchor : null;
 
   return (
-    <button className="miniplayer" onClick={() => nav("/play")}>
+    <div className="miniplayer">
       <span className="mini-cover">
         <BatchCover seed={p.batch?.slug ?? "seed"} coverUrl={p.batch?.cover_url} />
       </span>
@@ -32,16 +32,16 @@ function MiniPlayer() {
         <div className="mini-title">{anchor || p.batch?.title || "…"}</div>
         <div className="mini-sub">{p.batch?.title}</div>
       </div>
-      <span
+      <button className="mini-open" aria-label={p.batch?.title || "Player"}
+        onClick={() => nav("/play")} />
+      <button
         className="mini-play"
-        onClick={(e) => {
-          e.stopPropagation();
-          p.toggle();
-        }}
+        aria-label={p.playing ? "Pause" : "Play"}
+        onClick={() => p.toggle()}
       >
         {p.playing ? <IconPause size={20} /> : <IconPlay size={20} />}
-      </span>
-    </button>
+      </button>
+    </div>
   );
 }
 
@@ -240,13 +240,11 @@ function FloatingNav() {
 function Shell() {
   const { user, loading } = useAuth();
   const [obDone, setObDone] = useState(false);
-  const [previewOb, setPreviewOb] = useState(false); // TEMP: preview onboarding без регистрации
   if (loading) {
     return <div className="auth-screen"><div className="auth-splash">Executive English</div></div>;
   }
   if (!user) {
-    if (previewOb) return <OnboardingFlow onDone={() => setPreviewOb(false)} />;
-    return <AuthScreen onPreviewOnboarding={() => setPreviewOb(true)} />;
+    return <AuthScreen />;
   }
   if (!obDone && !isOnboarded(user.id)) {
     return <OnboardingFlow onDone={() => { setOnboarded(user.id); setObDone(true); }} />;

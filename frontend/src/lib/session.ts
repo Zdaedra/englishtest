@@ -40,11 +40,16 @@ export function authHeaders(): Record<string, string> {
   return _token ? { Authorization: `Bearer ${_token}` } : {};
 }
 
-/** Light haptic tap on native (no-op on web). Fire-and-forget. */
-export function haptic(style: "light" | "medium" = "light"): void {
+/** Haptic feedback on native (no-op on web). Fire-and-forget. `success`/`error`
+ *  use the notification generator (commits: login, activate, buy, verdict);
+ *  `light`/`medium` use impact (taps, flips). */
+export function haptic(style: "light" | "medium" | "success" | "error" = "light"): void {
   if (!isNative()) return;
   import("@capacitor/haptics")
-    .then(({ Haptics, ImpactStyle }) =>
-      Haptics.impact({ style: style === "medium" ? ImpactStyle.Medium : ImpactStyle.Light }))
+    .then(({ Haptics, ImpactStyle, NotificationType }) => {
+      if (style === "success") return Haptics.notification({ type: NotificationType.Success });
+      if (style === "error") return Haptics.notification({ type: NotificationType.Error });
+      return Haptics.impact({ style: style === "medium" ? ImpactStyle.Medium : ImpactStyle.Light });
+    })
     .catch(() => { /* haptics unavailable */ });
 }

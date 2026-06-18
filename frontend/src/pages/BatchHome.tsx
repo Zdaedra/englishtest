@@ -6,6 +6,7 @@ import { getProgress, isEngaged, lessonStates, setProgress } from "../lib/progre
 import { orderedSections } from "../lib/sections";
 import { getProfile, prioritySectionSlugs } from "../lib/profile";
 import { useI18n } from "../i18n";
+import { haptic } from "../lib/session";
 import { BatchCover } from "../ui/Art";
 import { IconBack, IconCheck, IconChevron, IconHeadphones, IconPlay, IconLock } from "../ui/icons";
 
@@ -117,6 +118,7 @@ export default function BatchHome() {
   // Activate the batch (mark it an active batch → In Progress + Library active
   // row) and jump straight into the next open lesson.
   const activate = () => {
+    haptic("medium");
     if (!prog.activated) {
       setProgress(batch.id, { activated: true, activatedAt: new Date().toISOString() });
     }

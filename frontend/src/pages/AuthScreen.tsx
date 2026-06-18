@@ -18,7 +18,7 @@ function humanize(s: string, t: (k: string, vars?: Record<string, string | numbe
   return t("auth.errGeneric");
 }
 
-export default function AuthScreen({ onPreviewOnboarding }: { onPreviewOnboarding?: () => void }) {
+export default function AuthScreen() {
   const { login, register } = useAuth();
   const { t } = useI18n();
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -60,7 +60,7 @@ export default function AuthScreen({ onPreviewOnboarding }: { onPreviewOnboardin
           <input className="auth-input" type="password" placeholder={t("auth.password")}
             autoComplete={mode === "login" ? "current-password" : "new-password"}
             value={password} onChange={(e) => setPassword(e.target.value)} required />
-          {err && <p className="auth-err">{err}</p>}
+          {err && <p className="auth-err" role="alert">{err}</p>}
           <button className="l3-cta" type="submit" disabled={busy} style={{ marginTop: 6 }}>
             {busy ? "…" : mode === "login" ? t("auth.login") : t("auth.register")}
           </button>
@@ -69,11 +69,6 @@ export default function AuthScreen({ onPreviewOnboarding }: { onPreviewOnboardin
           onClick={() => { setMode(mode === "login" ? "register" : "login"); setErr(""); }}>
           {mode === "login" ? t("auth.toRegister") : t("auth.toLogin")}
         </button>
-        {onPreviewOnboarding && (
-          <button className="auth-preview" type="button" onClick={onPreviewOnboarding}>
-            {t("auth.previewOnboarding")}
-          </button>
-        )}
       </div>
     </div>
   );

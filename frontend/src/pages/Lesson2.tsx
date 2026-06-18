@@ -168,7 +168,12 @@ export default function Lesson2() {
             <ZoneHead title={g.title} level={g.level} total={g.total} count={g.items.length} />
             {g.items.map(({ p, n }) => (
               <div key={p.id} className={`phrase-card${activePhraseId === p.id ? " lit" : ""}`}>
-                <div className="pc-body" onClick={() => togglePhrase(p.id)}>
+                <div className="pc-body" role="button" tabIndex={0}
+                  aria-expanded={revealed.has(p.id)}
+                  onClick={() => togglePhrase(p.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); togglePhrase(p.id); }
+                  }}>
                   <div className="pc-anchor">
                     <span className="pc-num">{n}</span>{p.anchor}
                   </div>

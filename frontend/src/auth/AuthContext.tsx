@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { api, Me, setOnUnauthorized } from "../api";
 import { clearLocalProgress, hydrateProgress } from "../lib/progress";
-import { loadToken, setToken } from "../lib/session";
+import { loadToken, setToken, haptic } from "../lib/session";
 import { useI18n, type Lang } from "../i18n";
 
 const SUPPORTED = ["ru", "es", "de", "fr"];
@@ -56,10 +56,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = useCallback(async (email: string, password: string) => {
     await onAuthed(await api.login(email, password));
+    haptic("success");
   }, [onAuthed]);
 
   const register = useCallback(async (email: string, password: string, name?: string) => {
     await onAuthed(await api.register(email, password, name));
+    haptic("success");
   }, [onAuthed]);
 
   const logout = useCallback(async () => {

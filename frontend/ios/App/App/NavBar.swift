@@ -21,6 +21,7 @@ final class NavBarView: UIView {
     private var labelViews: [UILabel] = []
     private var sfNames: [String] = []
     private var active = 0
+    private var minimized = false
 
     private let barHeight: CGFloat = 56
     private let searchSize: CGFloat = 56
@@ -82,6 +83,9 @@ final class NavBarView: UIView {
             let btn = UIControl()
             btn.tag = i
             btn.addTarget(self, action: #selector(onTap(_:)), for: .touchUpInside)
+            btn.addTarget(self, action: #selector(onPress(_:)), for: .touchDown)
+            btn.addTarget(self, action: #selector(onRelease(_:)),
+                          for: [.touchUpInside, .touchUpOutside, .touchCancel])
 
             let icon = UIImageView()
             icon.contentMode = .center
@@ -122,6 +126,20 @@ final class NavBarView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        // Minimized (iOS 26 scroll-edge): capsule collapses to a circular pill
+        // showing only the active icon; search island fades out.
+        if minimized {
+            let s = barHeight
+            capsule.frame = CGRect(x: 0, y: bounds.height - s, width: s, height: s)
+            searchIsland.frame = CGRect(x: 0, y: bounds.height - searchSize, width: searchSize, height: searchSize)
+            for (i, btn) in tabButtons.enumerated() {
+                btn.frame = CGRect(x: 0, y: 0, width: s, height: s)
+                iconViews[i].frame = CGRect(x: (s - 24) / 2, y: (s - 24) / 2, width: 24, height: 24)
+                labelViews[i].frame = .zero
+            }
+            pill.frame = CGRect(x: pillInset, y: pillInset, width: s - pillInset * 2, height: s - pillInset * 2)
+            return
+        }
         let capW = bounds.width - searchSize - gap
         capsule.frame = CGRect(x: 0, y: bounds.height - barHeight, width: capW, height: barHeight)
         searchIsland.frame = CGRect(x: capW + gap, y: bounds.height - searchSize, width: searchSize, height: searchSize)
@@ -147,6 +165,34 @@ final class NavBarView: UIView {
     }
 
     // MARK: interaction
+
+    // Press-state: sub-100ms touch-reactive dip (the "last 15%" native feel).
+    @objc private func onPress(_ sender: UIControl) { scaleIcon(sender.tag, 0.88) }
+    @objc private func onRelease(_ sender: UIControl) {
+        scaleIcon(sender.tag, sender.tag == active ? 1.12 : 1.0)
+    }
+    private func scaleIcon(_ i: Int, _ s: CGFloat) {
+        guard i >= 0, i < iconViews.count else { return }
+        UIView.animate(withDuration: 0.12, delay: 0, options: [.allowUserInteraction, .beginFromCurrentState]) {
+            self.iconViews[i].transform = CGAffineTransform(scaleX: s, y: s)
+        }
+    }
+
+    // Scroll-edge minimize (driven by the plugin's scrollView KVO).
+    func setMinimized(_ on: Bool) {
+        guard on != minimized else { return }
+        minimized = on
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.9,
+                       initialSpringVelocity: 0.3, options: [.allowUserInteraction]) {
+            self.setNeedsLayout(); self.layoutIfNeeded()
+            self.searchIsland.alpha = on ? 0 : 1
+            for (i, lbl) in self.labelViews.enumerated() {
+                lbl.alpha = on ? 0 : 1
+                let hidden = on && i != self.active
+                self.tabButtons[i].alpha = hidden ? 0 : 1
+            }
+        }
+    }
 
     @objc private func onTap(_ sender: UIControl) {
         let idx = sender.tag
@@ -262,6 +308,8 @@ public class NavBarPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "setVisible", returnType: CAPPluginReturnPromise),
     ]
     private var bar: NavBarView?
+    private var scrollObs: NSKeyValueObservation?
+    private var lastY: CGFloat = 0
 
     @objc func present(_ call: CAPPluginCall) {
         let labels = call.getArray("labels", String.self) ?? ["Library", "Learn", "Practice"]
@@ -281,6 +329,19 @@ public class NavBarPlugin: CAPPlugin, CAPBridgedPlugin {
                 b.onSearch = { [weak self] in self?.notifyListeners("searchTapped", data: [:]) }
                 b.pin(to: container)
                 self.bar = b
+                // Minimize on scroll-down, expand on scroll-up (KVO on the web
+                // scrollView — no per-frame bridge traffic).
+                if let sv = self.webView?.scrollView {
+                    self.scrollObs = sv.observe(\.contentOffset, options: [.new]) { [weak self] sv, _ in
+                        guard let self = self else { return }
+                        let y = sv.contentOffset.y
+                        let dy = y - self.lastY
+                        if abs(dy) > 6 {
+                            self.bar?.setMinimized(dy > 0 && y > 40)
+                            self.lastY = y
+                        }
+                    }
+                }
             } else {
                 self.bar?.update(labels: labels)
             }

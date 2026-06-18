@@ -20,7 +20,11 @@ import ImportBatch from "./pages/ImportBatch";
 import Subscribe from "./pages/Subscribe";
 import { I18nProvider } from "./i18n";
 import { isNative } from "./lib/session";
+import { initDynamicType } from "./lib/dynamicType";
 import "./index.css";
+
+// HIG Dynamic Type — scale the rem base from the iOS system text-size (iOS only).
+initDynamicType();
 
 const router = createHashRouter([
   {

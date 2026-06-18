@@ -9,6 +9,7 @@ import { buildSprint } from "../lib/strategy";
 import { getProgress, isEngaged } from "../lib/progress";
 import { getStrategy, recordVisit } from "../lib/profile";
 import { useI18n } from "../i18n";
+import { useAuth } from "../auth/AuthContext";
 
 const numOf = (slug: string) => {
   const m = slug.match(/(\d+)\s*$/);
@@ -20,7 +21,10 @@ export default function Library() {
   const nav = useNavigate();
   const loc = useLocation();
   const { t } = useI18n();
+  const { user } = useAuth();
   const player = usePlayer();
+  const initials = ((user?.name?.trim() || user?.email || "")
+    .split(/[\s@._-]+/).filter(Boolean).slice(0, 2).map((s) => s[0]?.toUpperCase()).join("")) || "·";
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [err, setErr] = useState("");
   const [streak] = useState(() => recordVisit());
@@ -182,7 +186,7 @@ export default function Library() {
             <p className="brand-sub">Executive communication.<br />Built for real conversations.</p>
           </div>
           <button className="avatar-btn" onClick={() => nav("/profile")} aria-label={t("common.profile")}>
-            AV
+            {initials}
           </button>
         </div>
       )}
@@ -286,7 +290,7 @@ export default function Library() {
           {focus && (
             <>
             <p className="focus-label">{t("lib.focus")}</p>
-            <button className="focus-hero" onClick={() => nav(`/batch/${focus.id}`)}>
+            <div className="focus-hero">
               <span className="focus-hero-art">
                 <BatchCover seed={focus.slug} coverUrl={focus.cover_url} locked={focus.locked} />
               </span>
@@ -298,18 +302,16 @@ export default function Library() {
                   {t("lib.nPatterns", { n: focus.phrase_count })} · {Math.max(8, Math.round(focus.phrase_count * 1.5))} min
                 </span>
               </span>
-              <span
+              <button className="focus-hero-open" aria-label={focus.title}
+                onClick={() => nav(`/batch/${focus.id}`)} />
+              <button
                 className="focus-hero-play"
-                role="button"
                 aria-label={t("lib.listenAria")}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  startFocus();
-                }}
+                onClick={startFocus}
               >
                 <IconPlay size={22} />
-              </span>
-            </button>
+              </button>
+            </div>
             </>
           )}
 

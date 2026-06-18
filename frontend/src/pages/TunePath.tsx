@@ -61,7 +61,7 @@ export default function TunePath() {
         {NEEDS.map((n) => {
           const sel = need === n.key;
           return (
-            <button key={n.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => pickNeed(n)}>
+            <button key={n.key} className={`quest-opt${sel ? " sel" : ""}`} aria-pressed={sel} onClick={() => pickNeed(n)}>
               <span className="qo-body"><span className="qo-label">{t(`need.${n.key}`)}</span></span>
               {sel && <span className="qo-check"><IconCheck size={14} /></span>}
             </button>
@@ -74,7 +74,7 @@ export default function TunePath() {
         {FOCUSES.map((f) => {
           const sel = main === f.key;
           return (
-            <button key={f.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => pickMain(f.key)}>
+            <button key={f.key} className={`quest-opt${sel ? " sel" : ""}`} aria-pressed={sel} onClick={() => pickMain(f.key)}>
               <span className="qo-body"><span className="qo-label">{t(`focus.${f.key}`)}</span></span>
               {sel && <span className="qo-check"><IconCheck size={14} /></span>}
             </button>
@@ -87,7 +87,7 @@ export default function TunePath() {
         {FOCUSES.filter((f) => f.key !== main).map((f) => {
           const sel = secondary.includes(f.key);
           return (
-            <button key={f.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => toggleSecondary(f.key)}>
+            <button key={f.key} className={`quest-opt${sel ? " sel" : ""}`} aria-pressed={sel} onClick={() => toggleSecondary(f.key)}>
               <span className="qo-body"><span className="qo-label">{t(`focus.${f.key}`)}</span></span>
               {sel && <span className="qo-check"><IconCheck size={14} /></span>}
             </button>
@@ -100,7 +100,7 @@ export default function TunePath() {
         {INTENSITIES.map((it) => {
           const sel = intensity === it.key;
           return (
-            <button key={it.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => setIntensity(it.key)}>
+            <button key={it.key} className={`quest-opt${sel ? " sel" : ""}`} aria-pressed={sel} onClick={() => setIntensity(it.key)}>
               <span className="qo-body">
                 <span className="qo-label">{t(`tune.${it.key}`)}</span>
                 <span className="qo-hint">{t(`tune.${it.key}Hint`)}</span>
@@ -117,6 +117,7 @@ export default function TunePath() {
           <button
             key={n}
             className={`tune-size${sprintSize === n ? " sel" : ""}`}
+            aria-pressed={sprintSize === n}
             onClick={() => setSprintSize(n)}
           >
             {n}

@@ -329,7 +329,16 @@ export default function Training() {
             className="tr-card"
             ref={cardElRef}
             key={card.phrase_id}
+            role={face === "front" ? "button" : undefined}
+            tabIndex={face === "front" ? 0 : -1}
+            aria-label={face === "front" ? t("practice.tapToAnswer") : undefined}
             onClick={() => { if (face === "front") flipToBack(); }}
+            onKeyDown={(e) => {
+              if (face === "front" && (e.key === "Enter" || e.key === " ")) {
+                e.preventDefault();
+                flipToBack();
+              }
+            }}
           >
             <div className="tr-card-inner" ref={innerRef}>
               <div className="tr-face">
@@ -372,7 +381,7 @@ export default function Training() {
                           // AI · the mic is the whole face. Press → speak the phrase.
                           <>
                             <button className={`tr-mic big${micActive ? " on" : ""}`} onClick={onMic} disabled={busy}
-                              aria-label="Mic">
+                              aria-label={t("rec.recordAria")}>
                               {busy ? <span className="tr-mic-dots">…</span> : rec.recording ? <span className="tr-mic-stop" /> : <IconMic size={46} />}
                             </button>
                             {(speech.listening || rec.recording || busy) && (

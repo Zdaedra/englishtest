@@ -381,6 +381,21 @@ const de: Dict = {
   "ob1.q": "Was willst du zuerst stärken?",
   "ob1.sub": "Wähl 1–2 Richtungen — damit starten wir die Trajektorie. Der Rest folgt.",
   "ob1.cta": "Trajektorie aufbauen",
+
+  // ── Playback (player screen) ───────────────────────────────────────
+  "pb.nothing": "Es läuft gerade nichts.",
+  "pb.chooseSet": "Wähle ein Set in deiner Bibliothek.",
+  "pb.goLibrary": "Zur Bibliothek",
+  "pb.listen": "Hören",
+  "pb.recall": "Erinnern",
+  "pb.counter": "{{i}} von {{n}}",
+  "pb.prevAria": "Zurück",
+  "pb.playPauseAria": "Wiedergabe / Pause",
+  "pb.nextAria": "Weiter",
+  "pb.seekAria": "Spulen",
+  "pb.shuffle": "Zufall",
+  "pb.loop": "Schleife",
+  "pb.favorite": "Favorit",
 };
 
 export default de;

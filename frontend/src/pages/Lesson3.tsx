@@ -12,6 +12,7 @@ import {
   IconBack, IconCheck, IconChevron, IconHeadphones, IconMenu, IconPlay, IconShield, IconWave,
 } from "../ui/icons";
 import { useI18n } from "../i18n";
+import { haptic } from "../lib/session";
 
 // The final exam is three sequential stages. Each word must be produced ≥ ROUNDS
 // times within a stage, and the stage's mean score must reach PASS_AVG (= 80%) to
@@ -556,6 +557,7 @@ function VerdictCard({
   onRetake: () => void;
 }) {
   const { t } = useI18n();
+  useEffect(() => { haptic(verdict.pass ? "success" : "error"); }, [verdict.pass]);
   return (
     <div className="result-card">
       <div className={`verdict-pct ${verdict.pass ? "ok" : "no"}`}>
