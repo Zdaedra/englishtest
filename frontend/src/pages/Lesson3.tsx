@@ -11,6 +11,7 @@ import { RecFab, band } from "../ui/RecFab";
 import {
   IconBack, IconCheck, IconChevron, IconHeadphones, IconMenu, IconPlay, IconShield, IconWave,
 } from "../ui/icons";
+import { useI18n } from "../i18n";
 
 // The final exam is three sequential stages. Each word must be produced ≥ ROUNDS
 // times within a stage, and the stage's mean score must reach PASS_AVG (= 80%) to
@@ -24,6 +25,7 @@ type Stop = { anchor_id: string; start: number; end: number };
 export default function Lesson3() {
   const { id } = useParams();
   const nav = useNavigate();
+  const { t, tx } = useI18n();
   const player = usePlayer();
   const rec = useRecorder();
 
@@ -149,7 +151,7 @@ export default function Lesson3() {
   const handleError = (e: unknown) => {
     const msg = String(e);
     if (msg.includes("429") || msg.toLowerCase().includes("limit")) {
-      setNotice("Дневной лимит проверок исчерпан — продолжай без оценки.");
+      setNotice(t("rec.limit"));
     } else {
       setErr(msg);
     }
@@ -176,7 +178,7 @@ export default function Lesson3() {
     if (!rec.recording) { setRetellResult(null); await rec.start(); return; }
     const clip = await rec.stop();
     if (!clip || clip.ms < 600) {
-      setNotice("Не расслышал — нажми и перескажи историю.");
+      setNotice(t("rec.mishearRetell"));
       return;
     }
     setBusy(true);
@@ -223,13 +225,13 @@ export default function Lesson3() {
     if (!rec.recording) { setStopResult(null); await rec.start(); return; }
     const clip = await rec.stop();
     if (!clip || clip.ms < 600) {
-      setNotice("Не расслышал — нажми и говори чуть дольше.");
+      setNotice(t("rec.mishearLonger"));
       return;
     }
     setBusy(true);
     try {
       const r = await api.scorePhrase(stopPhrase.id, clip.blob, clip.filename, clip.ms);
-      if (!r.transcript?.trim()) { setNotice("Не расслышал — попробуй ещё раз."); return; }
+      if (!r.transcript?.trim()) { setNotice(t("rec.mishearRetry")); return; }
       scoresRef.current.push(r.score);
       setAnswered((n) => n + 1);
       setStopResult(r);
@@ -272,13 +274,13 @@ export default function Lesson3() {
     if (!rec.recording) { setAnchorResult(null); await rec.start(); return; }
     const clip = await rec.stop();
     if (!clip || clip.ms < 400) {
-      setNotice("Не расслышал — назови якорь чуть громче.");
+      setNotice(t("rec.mishearAnchor"));
       return;
     }
     setBusy(true);
     try {
       const r = await api.scoreAnchor(c.id, clip.blob, clip.filename, clip.ms);
-      if (!r.transcript?.trim()) { setNotice("Не расслышал — попробуй ещё раз."); return; }
+      if (!r.transcript?.trim()) { setNotice(t("rec.mishearRetry")); return; }
       scoresRef.current.push(r.score);
       setAnchorResult(r);
     } catch (e) {
@@ -313,29 +315,29 @@ export default function Lesson3() {
   }, []);
 
   if (err) return <div className="screen"><p className="error">{err}</p></div>;
-  if (!batch) return <div className="screen"><p className="muted">Loading…</p></div>;
+  if (!batch) return <div className="screen"><p className="muted">{t("common.loading")}</p></div>;
 
   const sub = allDone
-    ? "Все три этапа пройдены — батч закрыт."
-    : stage === 1 ? "Этап 1 — перескажи всю историю по памяти."
-    : stage === 2 ? "Этап 2 — история замирает на якоре, назови его фразу."
-    : "Этап 3 — звучит фраза, назови её якорь.";
+    ? t("l3.subDone")
+    : stage === 1 ? t("l3.sub1")
+    : stage === 2 ? t("l3.sub2")
+    : t("l3.sub3");
 
   return (
     <div className="screen l3-screen">
       <div className="l3-header">
-        <button className="l3-iconbtn" onClick={() => nav(`/batch/${batch.id}`)} aria-label="Назад">
+        <button className="l3-iconbtn" onClick={() => nav(`/batch/${batch.id}`)} aria-label={t("common.back")}>
           <IconBack size={20} />
         </button>
-        <button className="l3-iconbtn" onClick={() => nav(`/batch/${batch.id}`)} aria-label="Меню">
+        <button className="l3-iconbtn" onClick={() => nav(`/batch/${batch.id}`)} aria-label={t("l3.menuAria")}>
           <IconMenu size={20} />
         </button>
       </div>
 
       <div className="l3-hero">
         <div className="l3-hero-text">
-          <span className="l3-tag">Урок 3</span>
-          <h1 className="l3-title">Тесты</h1>
+          <span className="l3-tag">{t("lesson.tag", { n: 3 })}</span>
+          <h1 className="l3-title">{t("bh.l3.title")}</h1>
           <p className="l3-sub">{sub}</p>
         </div>
         <Art3D />
@@ -347,7 +349,7 @@ export default function Lesson3() {
         <div className="l3-warn">
           <span className="l3-warn-ic"><IconShield size={20} /></span>
           <p className="l3-warn-txt">
-            Этот браузер не умеет записывать звук. Откройте приложение в <b>Safari</b> или <b>Chrome</b>.
+            {tx("rec.browserNoAudioRich", { safari: <b>Safari</b>, chrome: <b>Chrome</b> })}
           </p>
           <IconChevron size={18} />
         </div>
@@ -363,8 +365,8 @@ export default function Lesson3() {
       ) : stage === 1 ? (
         !running ? (
           <StageIntro
-            n={1} title="Полный пересказ"
-            body="Перескажи всю мнемоническую историю своими словами, называя якоря по порядку. Нужно сделать это дважды; средний балл ≥ 80%."
+            n={1} title={t("l3.s1.title")}
+            body={t("l3.s1.body")}
             onStart={startStage1}
           />
         ) : retellResult ? (
@@ -374,32 +376,32 @@ export default function Lesson3() {
           />
         ) : (
           <>
-            <div className="train-counter">Пересказ {retellRound} / {ROUNDS}</div>
-            <p className="train-prompt sm" style={{ marginTop: 14 }}>Перескажи всю историю</p>
+            <div className="train-counter">{t("l3.retellCounter", { n: retellRound, total: ROUNDS })}</div>
+            <p className="train-prompt sm" style={{ marginTop: 14 }}>{t("l3.retellPrompt")}</p>
             <p className="train-hint">
               {rec.recording
-                ? "Передавай суть и называй якоря по порядку…"
-                : `Своими словами — все ${batch.mnemo.spans.length} якорей по порядку.`}
+                ? t("l3.retellRecording")
+                : t("l3.retellIdle", { n: batch.mnemo.spans.length })}
             </p>
             <RecFab recording={rec.recording} busy={busy} onClick={onMicRetell} />
             <p className="rec-label">
-              {rec.recording ? "Идёт запись — нажми «стоп»" : busy ? "Проверяем…" : "Нажми и говори"}
+              {rec.recording ? t("rec.recordingStop") : busy ? t("rec.checking") : t("rec.tapAndSpeak")}
             </p>
           </>
         )
       ) : stage === 2 ? (
         !running ? (
           <StageIntro
-            n={2} title="По мнемо-основе"
-            body="История запустится и замрёт на каждом якоре. Нажми «стоп», назови фразу этого якоря. Два полных прохода; средний балл ≥ 80%."
+            n={2} title={t("l3.s2.title")}
+            body={t("l3.s2.body")}
             onStart={startStage2}
           />
         ) : stopAnchor && stopPhrase ? (
           <>
             <div className="train-counter">
-              Проход {stopRound} / {ROUNDS} · {answered} / {stopTotal * ROUNDS}
+              {t("l3.passCounter", { r: stopRound, rounds: ROUNDS, a: answered, total: stopTotal * ROUNDS })}
             </div>
-            <p className="section-label center" style={{ marginTop: 4 }}>Какая фраза?</p>
+            <p className="section-label center" style={{ marginTop: 4 }}>{t("l3.whichPhrase")}</p>
             <p className="train-prompt">{stopPhrase.anchor}</p>
             {stopResult ? (
               <StopResult
@@ -411,10 +413,10 @@ export default function Lesson3() {
               <>
                 <RecFab recording={rec.recording} busy={busy} onClick={onMicStop} />
                 <p className="rec-label">
-                  {rec.recording ? "Идёт запись — нажми «стоп»" : busy ? "Проверяем…" : "Нажми и говори"}
+                  {rec.recording ? t("rec.recordingStop") : busy ? t("rec.checking") : t("rec.tapAndSpeak")}
                 </p>
                 <button className="btn btn-tint btn-block" style={{ marginTop: 14 }} onClick={skipStop}>
-                  Пропустить
+                  {t("common.skip")}
                 </button>
               </>
             )}
@@ -423,7 +425,7 @@ export default function Lesson3() {
           <div className="listening-note">
             <span className="pulse-dot" />
             <p className="train-hint" style={{ margin: 0 }}>
-              Слушай историю… ({answered} / {stopTotal * ROUNDS})
+              {t("l3.listening", { a: answered, total: stopTotal * ROUNDS })}
             </p>
           </div>
         )
@@ -431,8 +433,8 @@ export default function Lesson3() {
         // stage === 3
         !running ? (
           <StageIntro
-            n={3} title="Фраза → якорь"
-            body="Прозвучит английская фраза — назови её якорь (ключевое слово). Каждый якорь дважды; средний балл ≥ 80%."
+            n={3} title={t("l3.s3.title")}
+            body={t("l3.s3.body")}
             onStart={startStage3}
           />
         ) : cur3 ? (
@@ -441,16 +443,16 @@ export default function Lesson3() {
           ) : (
             <>
               <div className="train-counter">{pos + 1} / {order3Ref.current.length}</div>
-              <p className="section-label center" style={{ marginTop: 4 }}>Какой якорь?</p>
+              <p className="section-label center" style={{ marginTop: 4 }}>{t("l3.whichAnchor")}</p>
               <p className="train-prompt sm">{cur3.phrase_en}</p>
               <div className="mnemo-play" style={{ marginTop: 8 }}>
                 <button className="mp-pill" onClick={() => player.playPhrase(cur3.id)}>
-                  <IconPlay size={16} /> Повторить фразу
+                  <IconPlay size={16} /> {t("l3.repeatPhrase")}
                 </button>
               </div>
               <RecFab recording={rec.recording} busy={busy} onClick={onMicAnchor} />
               <p className="rec-label">
-                {rec.recording ? "Идёт запись — нажми «стоп»" : busy ? "Проверяем…" : "Назови якорь"}
+                {rec.recording ? t("rec.recordingStop") : busy ? t("rec.checking") : t("l3.sayAnchor")}
               </p>
             </>
           )
@@ -494,7 +496,8 @@ function WaveDeco() {
 }
 
 function ExamTrack({ stage, allDone }: { stage: StageNum; allDone: boolean }) {
-  const titles = ["Пересказ", "Мнемо-основа", "Якорь"];
+  const { t } = useI18n();
+  const titles = [t("l3.track.retell"), t("l3.track.mnemo"), t("l3.track.anchor")];
   const state = (n: StageNum) =>
     allDone || stage > n ? "done" : stage === n ? "on" : "";
   const Step = ({ n }: { n: StageNum }) => {
@@ -523,21 +526,22 @@ function ExamTrack({ stage, allDone }: { stage: StageNum; allDone: boolean }) {
 function StageIntro({
   n, title, body, onStart,
 }: { n: number; title: string; body: string; onStart: () => void }) {
+  const { t } = useI18n();
   return (
     <>
       <div className="l3-task">
         <div className="l3-task-head">
           <span className="l3-task-ic"><IconWave size={16} /></span>
-          <span className="l3-task-label">Этап {n} · {title}</span>
+          <span className="l3-task-label">{t("l3.stageLabel", { n, title })}</span>
         </div>
         <p className="l3-task-body">{body}</p>
         <WaveDeco />
       </div>
       <button className="l3-cta" onClick={onStart}>
-        <IconPlay size={18} /> Начать этап {n}
+        <IconPlay size={18} /> {t("l3.startStage", { n })}
       </button>
       <p className="l3-hint">
-        <IconHeadphones size={15} /> Рекомендуется использовать наушники и тихое помещение
+        <IconHeadphones size={15} /> {t("common.headphones")}
       </p>
     </>
   );
@@ -551,6 +555,7 @@ function VerdictCard({
   onForward: () => void;
   onRetake: () => void;
 }) {
+  const { t } = useI18n();
   return (
     <div className="result-card">
       <div className={`verdict-pct ${verdict.pass ? "ok" : "no"}`}>
@@ -559,30 +564,31 @@ function VerdictCard({
       <div className="center" style={{ marginBottom: 14 }}>
         <span className={`pass-pill ${verdict.pass ? "ok" : "no"}`}>
           {verdict.pass
-            ? <><IconCheck size={15} /> Этап {stage} пройден</>
-            : "Нужно ≥ 80%"}
+            ? <><IconCheck size={15} /> {t("l3.stagePassed", { n: stage })}</>
+            : t("l3.need80")}
         </span>
       </div>
       {verdict.pass ? (
         <button className="btn btn-primary train-cta" onClick={onForward}>
-          {stage === 3 ? "Завершить" : "Дальше"}
+          {stage === 3 ? t("l3.finish") : t("common.next")}
         </button>
       ) : (
-        <button className="btn btn-primary train-cta" onClick={onRetake}>Пересдать</button>
+        <button className="btn btn-primary train-cta" onClick={onRetake}>{t("l3.retake")}</button>
       )}
     </div>
   );
 }
 
 function DoneScreen({ onDone }: { onDone: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="result-card" style={{ textAlign: "center" }}>
       <div className="score-badge hi" style={{ paddingTop: 0, alignItems: "center" }}>
         <IconCheck size={40} />
       </div>
-      <p className="train-prompt sm" style={{ marginTop: 4 }}>Батч закрыт</p>
-      <p className="train-hint">Все три этапа сданы на ≥ 80%. Следующий батч на пути открыт.</p>
-      <button className="btn btn-primary train-cta" onClick={onDone}>Готово</button>
+      <p className="train-prompt sm" style={{ marginTop: 4 }}>{t("l3.batchClosed")}</p>
+      <p className="train-hint">{t("l3.doneBody")}</p>
+      <button className="btn btn-primary train-cta" onClick={onDone}>{t("common.done")}</button>
     </div>
   );
 }
@@ -590,6 +596,7 @@ function DoneScreen({ onDone }: { onDone: () => void }) {
 function RetellResultCard({
   result, round, onNext,
 }: { result: SequenceScore; round: number; onNext: () => void }) {
+  const { t } = useI18n();
   const last = round >= ROUNDS;
   return (
     <div className="result-card">
@@ -598,22 +605,22 @@ function RetellResultCard({
       </div>
       {result.missed_anchors.length > 0 && (
         <div className="result-row">
-          <div className="result-k">Пропущенные якоря</div>
+          <div className="result-k">{t("res.missedAnchors")}</div>
           <div className="miss-chips">
             {result.missed_anchors.map((a, i) => <span className="miss-chip" key={i}>{a}</span>)}
           </div>
         </div>
       )}
       <div className="result-row">
-        <div className="result-k">Порядок</div>
-        <div className="result-v">{result.order_ok ? "сохранён" : "нарушен"}</div>
+        <div className="result-k">{t("res.order")}</div>
+        <div className="result-v">{result.order_ok ? t("res.orderOk") : t("res.orderBroken")}</div>
       </div>
       <div className="result-row">
-        <div className="result-k">Мы услышали</div>
-        <div className="result-v heard">{result.transcript || "— тишина —"}</div>
+        <div className="result-k">{t("res.weHeard")}</div>
+        <div className="result-v heard">{result.transcript || t("res.silence")}</div>
       </div>
       <button className="btn btn-primary train-cta" onClick={onNext}>
-        {last ? "Подвести итог" : "Ещё пересказ"}
+        {last ? t("l3.summarize") : t("l3.moreRetell")}
       </button>
     </div>
   );
@@ -622,25 +629,26 @@ function RetellResultCard({
 function StopResult({
   result, onNext, onPlayCorrect,
 }: { result: PhraseScore; onNext: () => void; onPlayCorrect: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="result-card">
       <div className={`score-badge ${band(result.score)}`}>
         {result.score}<span className="score-out">/10</span>
       </div>
       <div className="result-row">
-        <div className="result-k">Правильная фраза</div>
+        <div className="result-k">{t("res.correctPhrase")}</div>
         <div className="result-v">
           {result.correct_phrase}
-          <button className="inline-play" onClick={onPlayCorrect} aria-label="Прослушать">
+          <button className="inline-play" onClick={onPlayCorrect} aria-label={t("res.playAria")}>
             <IconPlay size={15} />
           </button>
         </div>
       </div>
       <div className="result-row">
-        <div className="result-k">Мы услышали</div>
-        <div className="result-v heard">{result.transcript || "— тишина —"}</div>
+        <div className="result-k">{t("res.weHeard")}</div>
+        <div className="result-v heard">{result.transcript || t("res.silence")}</div>
       </div>
-      <button className="btn btn-primary train-cta" onClick={onNext}>Дальше</button>
+      <button className="btn btn-primary train-cta" onClick={onNext}>{t("common.next")}</button>
     </div>
   );
 }
@@ -648,20 +656,21 @@ function StopResult({
 function AnchorResultCard({
   result, onNext,
 }: { result: AnchorScore; onNext: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="result-card">
       <div className={`score-badge ${band(result.score)}`}>
         {result.score}<span className="score-out">/10</span>
       </div>
       <div className="result-row">
-        <div className="result-k">Правильный якорь</div>
+        <div className="result-k">{t("res.correctAnchor")}</div>
         <div className="result-v">{result.correct_anchor}</div>
       </div>
       <div className="result-row">
-        <div className="result-k">Мы услышали</div>
-        <div className="result-v heard">{result.transcript || "— тишина —"}</div>
+        <div className="result-k">{t("res.weHeard")}</div>
+        <div className="result-v heard">{result.transcript || t("res.silence")}</div>
       </div>
-      <button className="btn btn-primary train-cta" onClick={onNext}>Дальше</button>
+      <button className="btn btn-primary train-cta" onClick={onNext}>{t("common.next")}</button>
     </div>
   );
 }

@@ -134,3 +134,18 @@ export const SECTION_BY_SLUG: Record<string, Section> = Object.fromEntries(
 
 export const orderedSections = (): Section[] =>
   [...SECTIONS].sort((a, b) => a.order - b.order);
+
+// Localized section name / blurb (i18n). Falls back to the Russian field in this
+// file if a key is missing. Callers must also use useI18n() so they re-render on
+// language change.
+import { tg } from "../i18n";
+export function sectionName(slug: string): string {
+  const k = `section.${slug}.name`;
+  const v = tg(k);
+  return v === k ? (SECTION_BY_SLUG[slug]?.ru || slug) : v;
+}
+export function sectionBlurb(slug: string): string {
+  const k = `section.${slug}.blurb`;
+  const v = tg(k);
+  return v === k ? (SECTION_BY_SLUG[slug]?.blurb || "") : v;
+}

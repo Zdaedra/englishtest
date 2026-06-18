@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
+import { AuthProvider } from "./auth/AuthContext";
 import Library from "./pages/Library";
 import SectionDetail from "./pages/SectionDetail";
 import Learning from "./pages/Learning";
@@ -16,6 +17,9 @@ import Training from "./pages/Training";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import ImportBatch from "./pages/ImportBatch";
+import Subscribe from "./pages/Subscribe";
+import { I18nProvider } from "./i18n";
+import { isNative } from "./lib/session";
 import "./index.css";
 
 const router = createHashRouter([
@@ -36,6 +40,7 @@ const router = createHashRouter([
       { path: "profile", element: <Profile /> },
       { path: "settings", element: <Settings /> },
       { path: "import", element: <ImportBatch /> },
+      { path: "subscribe", element: <Subscribe /> },
     ],
   },
   { path: "/onboarding", element: <Onboarding /> },
@@ -43,7 +48,11 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <I18nProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </I18nProvider>
   </React.StrictMode>
 );
 
@@ -51,7 +60,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 // HTTP (the IP deploy) registration is blocked anyway, so there we instead tear
 // down any previously-stuck SW + caches — that's the #1 cause of a stale shell
 // surviving a deploy. On HTTPS we register normally.
-if ("serviceWorker" in navigator) {
+if (!isNative() && "serviceWorker" in navigator) {
   if (window.isSecureContext) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("/sw.js").catch(() => {});

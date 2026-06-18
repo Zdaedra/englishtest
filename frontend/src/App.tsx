@@ -1,10 +1,13 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PlayerProvider, usePlayer } from "./player/PlayerContext";
-import { AuthProvider, useAuth } from "./auth/AuthContext";
+import { useAuth } from "./auth/AuthContext";
 import AuthScreen from "./pages/AuthScreen";
 import OnboardingFlow from "./pages/OnboardingFlow";
 import { isOnboarded, setOnboarded } from "./lib/onboarding";
+import { isNative } from "./lib/session";
+import { NavBar, NAV_SF } from "./lib/navbar";
+import { useI18n } from "./i18n";
 import { BatchCover } from "./ui/Art";
 import {
   IconLibrary, IconWave, IconFocus, IconSearch, IconPlay, IconPause,
@@ -49,9 +52,9 @@ function MiniPlayer() {
 // on press (the iOS-feasible part of Liquid Glass — true backdrop refraction via
 // SVG feDisplacementMap is Chromium-only and broken in iOS Safari, WebKit #245510).
 const TABS = [
-  { to: "/", label: "Библиотека", Icon: IconLibrary },
-  { to: "/learn", label: "Обучение", Icon: IconWave },
-  { to: "/practice", label: "Практика", Icon: IconFocus },
+  { to: "/", labelKey: "nav.library", Icon: IconLibrary },
+  { to: "/learn", labelKey: "nav.learn", Icon: IconWave },
+  { to: "/practice", labelKey: "nav.practice", Icon: IconFocus },
 ];
 const NTAB = TABS.length;
 
@@ -75,7 +78,9 @@ function lensPop(btn: HTMLElement | null, peak: number, rest: number) {
 
 function FloatingNav() {
   const nav = useNavigate();
+  const { t, lang } = useI18n();
   const { pathname } = useLocation();
+  const native = isNative();
 
   const learnActive = pathname.startsWith("/learn");
   const practiceActive = pathname.startsWith("/practice");
@@ -101,6 +106,26 @@ function FloatingNav() {
     prevIdx.current = activeIndex;
   }, [activeIndex]);
   const gel = moveTick === 0 ? "" : moveTick % 2 ? " gel-a" : " gel-b";
+
+  // ---- Native iOS: hand the bar to the Liquid-Glass plugin -----------------
+  // react-router stays the navigation owner; the native bar only renders + emits
+  // tab/search events. Re-presented on language change to refresh labels.
+  useEffect(() => {
+    if (!native) return;
+    let subs: Array<{ remove: () => void }> = [];
+    const labels = [t("nav.library"), t("nav.learn"), t("nav.practice")];
+    NavBar.present({ labels, sf: NAV_SF, active: Math.max(0, activeIndex) }).catch(() => {});
+    NavBar.addListener("tabSelected", ({ index }) => nav(TABS[index]?.to ?? "/"))
+      .then((h) => subs.push(h)).catch(() => {});
+    NavBar.addListener("searchTapped", () => nav("/", { state: { focusSearch: Date.now() } }))
+      .then((h) => subs.push(h)).catch(() => {});
+    return () => { subs.forEach((s) => s.remove()); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [native, lang]);
+
+  useEffect(() => {
+    if (native) NavBar.setActive({ index: Math.max(0, activeIndex) }).catch(() => {});
+  }, [native, activeIndex]);
 
   // ---- Drag-to-select: the lens follows the finger along the bar -----------
   const capsuleRef = useRef<HTMLElement>(null);
@@ -152,6 +177,10 @@ function FloatingNav() {
   const shownActive = dragging ? Math.round(dragPos) : activeIndex;
   const pillPos = dragging ? dragPos : Math.max(activeIndex, 0);
 
+  // On native the Liquid-Glass bar is a native subview (added by the plugin) —
+  // don't render the web dock at all.
+  if (native) return null;
+
   return (
     <div className="nav-dock">
       <nav
@@ -165,22 +194,22 @@ function FloatingNav() {
         onPointerCancel={endDrag}
       >
         <span className={`nav-pill${gel}`} aria-hidden="true" />
-        {TABS.map((t, i) => {
-          const Icon = t.Icon;
+        {TABS.map((tab, i) => {
+          const Icon = tab.Icon;
           const active = shownActive === i;
           return (
             <button
-              key={t.to}
+              key={tab.to}
               className={`nav-tab${active ? " active" : ""}`}
               type="button"
               onClick={(e) => {
                 if (dragged.current) { dragged.current = false; return; } // drag already navigated
                 lensPop(e.currentTarget, 1.5, 1.18); // tapped tab will rest magnified
-                nav(t.to);
+                nav(tab.to);
               }}
             >
               <Icon />
-              <span>{t.label}</span>
+              <span>{t(tab.labelKey)}</span>
             </button>
           );
         })}
@@ -188,7 +217,7 @@ function FloatingNav() {
       <button
         className="nav-search"
         type="button"
-        aria-label="Поиск"
+        aria-label={t("nav.search")}
         onClick={(e) => {
           lensPop(e.currentTarget, 1.55, 1); // magnifier lenses up well past the button
           e.currentTarget.animate(
@@ -211,10 +240,14 @@ function FloatingNav() {
 function Shell() {
   const { user, loading } = useAuth();
   const [obDone, setObDone] = useState(false);
+  const [previewOb, setPreviewOb] = useState(false); // TEMP: preview onboarding без регистрации
   if (loading) {
     return <div className="auth-screen"><div className="auth-splash">Executive English</div></div>;
   }
-  if (!user) return <AuthScreen />;
+  if (!user) {
+    if (previewOb) return <OnboardingFlow onDone={() => setPreviewOb(false)} />;
+    return <AuthScreen onPreviewOnboarding={() => setPreviewOb(true)} />;
+  }
   if (!obDone && !isOnboarded(user.id)) {
     return <OnboardingFlow onDone={() => { setOnboarded(user.id); setObDone(true); }} />;
   }
@@ -230,9 +263,5 @@ function Shell() {
 }
 
 export default function App() {
-  return (
-    <AuthProvider>
-      <Shell />
-    </AuthProvider>
-  );
+  return <Shell />;
 }

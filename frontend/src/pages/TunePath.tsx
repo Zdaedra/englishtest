@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { getStrategy, setStrategy } from "../lib/profile";
 import { FOCUSES, NEEDS, Intensity } from "../lib/strategy";
 import { IconBack, IconCheck } from "../ui/icons";
+import { useI18n } from "../i18n";
 
-const INTENSITIES: { key: Intensity; label: string; hint: string }[] = [
-  { key: "narrow", label: "Узкий фокус", hint: "Почти всё — про выбранное" },
-  { key: "balanced", label: "Сбалансированно", hint: "Фокус + подмешиваем соседнее" },
-  { key: "explore", label: "Исследовать", hint: "Шире, разные направления" },
+const INTENSITIES: { key: Intensity }[] = [
+  { key: "narrow" }, { key: "balanced" }, { key: "explore" },
 ];
 
 export default function TunePath() {
   const nav = useNavigate();
+  const { t } = useI18n();
   const init = getStrategy();
   const [main, setMain] = useState(init.main);
   const [secondary, setSecondary] = useState<string[]>(init.secondary);
@@ -48,62 +48,62 @@ export default function TunePath() {
   return (
     <div className="screen tune">
       <button className="back-link" onClick={() => nav(-1)}>
-        <IconBack size={18} /> Назад
+        <IconBack size={18} /> {t("common.back")}
       </button>
 
       <div className="screen-head">
-        <h1 className="app-title">Настроить траекторию</h1>
-        <p className="app-sub">Под что собрать спринт — меняй когда угодно, путь перестроится.</p>
+        <h1 className="app-title">{t("tune.title")}</h1>
+        <p className="app-sub">{t("tune.sub")}</p>
       </div>
 
-      <p className="section-label">Что предстоит?</p>
+      <p className="section-label">{t("tune.whatsUp")}</p>
       <div className="quest-opts">
         {NEEDS.map((n) => {
           const sel = need === n.key;
           return (
             <button key={n.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => pickNeed(n)}>
-              <span className="qo-body"><span className="qo-label">{n.label}</span></span>
+              <span className="qo-body"><span className="qo-label">{t(`need.${n.key}`)}</span></span>
               {sel && <span className="qo-check"><IconCheck size={14} /></span>}
             </button>
           );
         })}
       </div>
 
-      <p className="section-label" style={{ marginTop: 22 }}>Главный фокус</p>
+      <p className="section-label" style={{ marginTop: 22 }}>{t("tune.mainFocus")}</p>
       <div className="quest-opts">
         {FOCUSES.map((f) => {
           const sel = main === f.key;
           return (
             <button key={f.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => pickMain(f.key)}>
-              <span className="qo-body"><span className="qo-label">{f.ru}</span></span>
+              <span className="qo-body"><span className="qo-label">{t(`focus.${f.key}`)}</span></span>
               {sel && <span className="qo-check"><IconCheck size={14} /></span>}
             </button>
           );
         })}
       </div>
 
-      <p className="section-label" style={{ marginTop: 22 }}>Дополнительно (0–2)</p>
+      <p className="section-label" style={{ marginTop: 22 }}>{t("tune.secondary")}</p>
       <div className="quest-opts">
         {FOCUSES.filter((f) => f.key !== main).map((f) => {
           const sel = secondary.includes(f.key);
           return (
             <button key={f.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => toggleSecondary(f.key)}>
-              <span className="qo-body"><span className="qo-label">{f.ru}</span></span>
+              <span className="qo-body"><span className="qo-label">{t(`focus.${f.key}`)}</span></span>
               {sel && <span className="qo-check"><IconCheck size={14} /></span>}
             </button>
           );
         })}
       </div>
 
-      <p className="section-label" style={{ marginTop: 22 }}>Интенсивность</p>
+      <p className="section-label" style={{ marginTop: 22 }}>{t("tune.intensity")}</p>
       <div className="quest-opts">
         {INTENSITIES.map((it) => {
           const sel = intensity === it.key;
           return (
             <button key={it.key} className={`quest-opt${sel ? " sel" : ""}`} onClick={() => setIntensity(it.key)}>
               <span className="qo-body">
-                <span className="qo-label">{it.label}</span>
-                <span className="qo-hint">{it.hint}</span>
+                <span className="qo-label">{t(`tune.${it.key}`)}</span>
+                <span className="qo-hint">{t(`tune.${it.key}Hint`)}</span>
               </span>
               {sel && <span className="qo-check"><IconCheck size={14} /></span>}
             </button>
@@ -111,7 +111,7 @@ export default function TunePath() {
         })}
       </div>
 
-      <p className="section-label" style={{ marginTop: 22 }}>Размер спринта</p>
+      <p className="section-label" style={{ marginTop: 22 }}>{t("tune.sprintSize")}</p>
       <div className="tune-sizes">
         {[3, 5, 7].map((n) => (
           <button
@@ -125,7 +125,7 @@ export default function TunePath() {
       </div>
 
       <button className="btn btn-primary btn-block quest-cta" onClick={save}>
-        Перестроить путь
+        {t("tune.rebuild")}
       </button>
     </div>
   );

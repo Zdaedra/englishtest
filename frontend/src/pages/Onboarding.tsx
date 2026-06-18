@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setProfile, SCENARIOS } from "../lib/profile";
 import { IconBack, IconCheck } from "../ui/icons";
+import { useI18n } from "../i18n";
 
 // One question, on purpose: what does the learner actually need English for?
 // The chosen scenarios are the whole strategy — they reorder the path so the
@@ -9,6 +10,7 @@ import { IconBack, IconCheck } from "../ui/icons";
 // drills adapt difficulty on their own as the learner goes.
 export default function Onboarding() {
   const nav = useNavigate();
+  const { t } = useI18n();
   const [scenarios, setScenarios] = useState<string[]>([]);
 
   const toggle = (key: string) =>
@@ -26,14 +28,12 @@ export default function Onboarding() {
   return (
     <div className="screen quest">
       <button className="back-link" onClick={() => nav("/", { replace: true })}>
-        <IconBack /> Позже
+        <IconBack /> {t("ob1.later")}
       </button>
 
       <div className="quest-step">
-        <h1 className="quest-q">Что хочешь прокачать в первую очередь?</h1>
-        <p className="app-sub">
-          Выбери 1–2 направления — с них и начнём траекторию. Остальное подтянется следом.
-        </p>
+        <h1 className="quest-q">{t("ob1.q")}</h1>
+        <p className="app-sub">{t("ob1.sub")}</p>
         <div className="quest-opts">
           {SCENARIOS.map((o) => {
             const sel = scenarios.includes(o.key);
@@ -44,7 +44,7 @@ export default function Onboarding() {
                 onClick={() => toggle(o.key)}
               >
                 <span className="qo-body">
-                  <span className="qo-label">{o.label}</span>
+                  <span className="qo-label">{t(`scenario.${o.key}`)}</span>
                 </span>
                 {sel && <span className="qo-check"><IconCheck size={14} /></span>}
               </button>
@@ -58,7 +58,7 @@ export default function Onboarding() {
         disabled={scenarios.length < 1}
         onClick={finish}
       >
-        Построить траекторию
+        {t("ob1.cta")}
       </button>
     </div>
   );

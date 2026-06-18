@@ -1,4 +1,5 @@
 // Shared mic affordance + score helpers used by all three lessons.
+import { tg } from "../i18n";
 
 // Map a 0..10 score to one of three bands for colour + copy.
 export function band(score: number): "lo" | "mid" | "hi" {
@@ -27,7 +28,7 @@ export function RecFab({
       className={`rec-fab${recording ? " on" : ""}`}
       disabled={busy}
       onClick={onClick}
-      aria-label={recording ? "Остановить запись" : "Записать ответ"}
+      aria-label={recording ? tg("rec.stopAria") : tg("rec.recordAria")}
     >
       {busy ? (
         <span className="rec-dots">…</span>

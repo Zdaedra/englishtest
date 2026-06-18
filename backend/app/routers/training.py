@@ -13,7 +13,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from .. import entitlements, models, scoring, stt
+from .. import access, entitlements, localize, models, scoring, stt
 from ..auth import current_user_id
 from ..db import get_session
 
@@ -241,7 +241,7 @@ def _aware(dt: datetime | None) -> datetime | None:
 
 @router.get("/deck")
 def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
-         exclude: str = "", user_id: int = Depends(current_user_id),
+         exclude: str = "", lang: str = "", user_id: int = Depends(current_user_id),
          session: Session = Depends(get_session)):
     """Cross-batch adaptive deck for the swipe-trainer, scoped to this user's stats.
     Weights toward weak spots (low phrase/batch mastery, recent fails, never-seen)
@@ -260,6 +260,16 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
         (models.Batch.owner_id == None) | (models.Batch.owner_id == user_id),  # noqa: E711
     )).all())
     all_ids = [i for i in all_ids if i in visible]
+    if not all_ids:
+        return []
+    # Freemium gate: a free user's deck only draws from usable batches (the free
+    # showcase batch + own imports); paid plans draw from all.
+    u = session.get(models.User, user_id)
+    plan = u.plan if u else "free"
+    lng = localize.resolve_lang(lang, u)
+    brows = session.exec(select(models.Batch).where(models.Batch.id.in_(all_ids))).all()
+    usable = {b.id for b in brows if access.batch_usable(plan, b, user_id)}
+    all_ids = [i for i in all_ids if i in usable]
     if not all_ids:
         return []
     now = datetime.now(timezone.utc)
@@ -326,16 +336,19 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
         chosen = random.choice(approved) if approved else None
         out.append({
             "phrase_id": p.id, "batch_id": p.batch_id,
-            "batch_title": b.title if b else "", "section": b.section if b else "",
+            "batch_title": localize.pick(b.title_i18n, lng, b.title) if b else "",
+            "section": b.section if b else "",
             "slug": b.slug if b else "", "cover_url": b.cover_path if b else None,
             "anchor": p.anchor, "phrase_en": p.phrase_en,
             "stimulus": chosen.text if chosen else "",
             "stimulus_id": chosen.id if chosen else None,
             "stimulus_lang": chosen.lang if chosen else "en",
-            "gloss_ru": p.gloss_ru,
+            "gloss_ru": localize.pick(p.gloss_i18n, lng, p.gloss_ru),
             "conf": round(_conf(p), 3), "priority": round(weight(p), 3),
             "attempts": (st.attempts if st else 0) or 0,
             "avg_score": st.avg_score if st else None,
+            # Per-card AI gate: true on the free batch for everyone, else ai plan.
+            "ai_allowed": access.ai_on_batch(plan, b),
         })
     return out
 
@@ -411,8 +424,10 @@ async def answer(audio: UploadFile = File(...), phrase_id: int = Form(...),
     p = session.get(models.Phrase, phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
-    if not entitlements.user_entitlements(session, user_id)["voice_answer"]:
-        raise HTTPException(403, "ai_required")  # the mic (spoken answer) is Executive AI
+    u = session.get(models.User, user_id)
+    b = session.get(models.Batch, p.batch_id)
+    if not access.ai_on_batch(u.plan if u else "free", b):
+        raise HTTPException(403, "ai_required")  # mic = AI plan (free on the showcase batch)
     _check_rate(session, user_id)
     raw = await _read_audio(audio)
     transcript = stt.transcribe(raw, filename=audio.filename or "clip.webm", language="en")
@@ -446,8 +461,10 @@ def answer_text(body: AnswerTextIn, user_id: int = Depends(current_user_id),
     p = session.get(models.Phrase, body.phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
-    if not entitlements.user_entitlements(session, user_id)["voice_answer"]:
-        raise HTTPException(403, "ai_required")  # the mic (spoken answer) is Executive AI
+    u = session.get(models.User, user_id)
+    b = session.get(models.Batch, p.batch_id)
+    if not access.ai_on_batch(u.plan if u else "free", b):
+        raise HTTPException(403, "ai_required")  # mic = AI plan (free on the showcase batch)
     _check_rate(session, user_id)
     transcript = (body.transcript or "").strip()
     result = scoring.score_phrase(p.anchor, p.phrase_en, transcript)
@@ -507,11 +524,11 @@ def coach(body: CoachIn, user_id: int = Depends(current_user_id),
     u = session.get(models.User, user_id)
     if not u:
         raise HTTPException(401, "Не авторизован.")
-    if u.plan != "ai":
-        raise HTTPException(403, "ai_plan_required")
     p = session.get(models.Phrase, body.phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
+    if not access.ai_on_batch(u.plan, session.get(models.Batch, p.batch_id)):
+        raise HTTPException(403, "ai_plan_required")
     _check_rate(session, user_id)
     cp = session.exec(select(models.CheckPhrase).where(
         models.CheckPhrase.phrase_id == p.id)).first()
@@ -522,7 +539,7 @@ def coach(body: CoachIn, user_id: int = Depends(current_user_id),
 
 
 @router.get("/session/{session_id}/summary")
-def session_summary(session_id: str, user_id: int = Depends(current_user_id),
+def session_summary(session_id: str, lang: str = "", user_id: int = Depends(current_user_id),
                     session: Session = Depends(get_session)):
     """Aggregate a finished training session from its events (this user only)."""
     evs = session.exec(select(models.TrainingEvent).where(
@@ -548,7 +565,8 @@ def session_summary(session_id: str, user_id: int = Depends(current_user_id),
         d["total"] += 1
         if _known(e):
             d["known"] += 1
-    titles = {b.id: b.title for b in session.exec(
+    _lng = localize.resolve_lang(lang, session.get(models.User, user_id))
+    titles = {b.id: localize.pick(b.title_i18n, _lng, b.title) for b in session.exec(
         select(models.Batch).where(models.Batch.id.in_(list(by_batch.keys())))).all()}
     rows = []
     for bid, d in by_batch.items():

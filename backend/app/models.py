@@ -22,7 +22,15 @@ class Batch(SQLModel, table=True):
     version: int = 1
     status: str = Field(default="draft")  # draft | approved
     source_text: str = ""
+    # Content i18n: {lang: value} for es/de/fr (ru is the base column above).
+    # Missing lang falls back to the base field. See app/localize.py.
+    title_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    subtitle_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    theme_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
     cover_path: Optional[str] = None  # URL path to AI-generated cover, e.g. /covers/<slug>.png
+    # Freemium: exactly one catalog batch is `is_free` — fully open to everyone
+    # (all phrases + mic/AI). Every other catalog batch needs a paid plan.
+    is_free: bool = Field(default=False)
     # NULL = shared curated catalog (visible to everyone). Set = a user's private
     # import (visible only to that user). Keeps client imports out of the catalog.
     owner_id: Optional[int] = Field(default=None, foreign_key="user.id", index=True)
@@ -34,6 +42,7 @@ class Zone(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
     title: str
+    title_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
     order_index: int = 0
     intensity_label: str = ""
 
@@ -48,6 +57,8 @@ class Phrase(SQLModel, table=True):
     anchor: str = ""
     phrase_en: str = ""
     gloss_ru: str = ""
+    # Content i18n: {lang: gloss} for es/de/fr (gloss_ru is the base).
+    gloss_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
     intensity_score: float = 0.0
     tags: list = Field(default_factory=list, sa_column=Column(JSON))
 
@@ -76,6 +87,10 @@ class MnemoStory(SQLModel, table=True):
     story_ru: str = ""
     # spans: [{anchor_id, phrase_id, start, end}]
     spans: list = Field(default_factory=list, sa_column=Column(JSON))
+    # Content i18n: per-language story text + recomputed spans (offsets differ per
+    # translation). {lang: "story…"} and {lang: [{anchor_id,phrase_id,start,end}]}.
+    story_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    spans_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
 
 
 class ContextExample(SQLModel, table=True):
@@ -183,6 +198,13 @@ class User(SQLModel, table=True):
     name: str = ""
     plan: str = Field(default="free")  # free | core | ai
     is_admin: bool = Field(default=False)  # owner: may curate the shared catalog
+    ui_lang: Optional[str] = Field(default=None)  # UI language pref: ru | es | de | fr
+    # Billing (Apple IAP). plan_source: manual | apple. plan_expires_at: when an
+    # auto-renew sub lapses (NULL = no expiry / manual). apple_original_tx_id ties
+    # the account to its App Store subscription across renewals.
+    plan_source: str = Field(default="manual")
+    plan_expires_at: Optional[datetime] = Field(default=None)
+    apple_original_tx_id: Optional[str] = Field(default=None, index=True)
     created_at: datetime = Field(default_factory=_now)
 
 

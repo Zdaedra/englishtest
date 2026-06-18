@@ -2,14 +2,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, DeckCard, AnswerResult, SessionSummary, Coach } from "../api";
 import { useAuth } from "../auth/AuthContext";
+import { useI18n } from "../i18n";
 import { useRecorder } from "../audio/useRecorder";
 import { useSpeech } from "../audio/useSpeech";
 import { getProgress, isEngaged } from "../lib/progress";
+import { haptic } from "../lib/session";
 import { SECTION_BY_SLUG } from "../lib/sections";
 import { BatchCover } from "../ui/Art";
-import { IconPlay, IconMic, IconChevron, IconClose, IconProfile, IconSwipeHand, IconTap, IconLock } from "../ui/icons";
+import { IconPlay, IconMic, IconProfile } from "../ui/icons";
 
-type Face = "front" | "reveal" | "voice" | "result";
+// Two-face card: the prompt, then the back. The back's content depends on plan —
+// AI gets a mic (records → scored), non-AI gets the model phrase (эталон). Both
+// self-assess with the «guessed / missed» buttons at the bottom.
+type Face = "front" | "back";
 const SESSION_LEN = 12;
 const FETCH_LIMIT = 24;
 
@@ -74,13 +79,12 @@ function deckSources(): { active: number[]; maint: number[] } {
 }
 
 function Head({ title }: { title?: string }) {
+  const { t } = useI18n();
   return (
     <div className="screen-head tr-head">
-      <span className="tr-eyebrow">Практика</span>
-      <h1>{title || "Тренировка"}</h1>
-      <p className="app-sub" style={{ marginBottom: 0 }}>
-        Ты в разговоре. Кто-то это сказал — что ответишь?
-      </p>
+      <span className="tr-eyebrow">{t("practice.eyebrow")}</span>
+      <h1>{title || t("practice.title")}</h1>
+      <p className="app-sub" style={{ marginBottom: 0 }}>{t("practice.headSub")}</p>
     </div>
   );
 }
@@ -88,6 +92,7 @@ function Head({ title }: { title?: string }) {
 export default function Training() {
   const nav = useNavigate();
   const { user } = useAuth();
+  const { t } = useI18n();
   const uid = user?.id;
   const rec = useRecorder();
   const speech = useSpeech();
@@ -114,9 +119,6 @@ export default function Training() {
 
   const cardElRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const affL = useRef<HTMLDivElement>(null);
-  const affR = useRef<HTMLDivElement>(null);
-  const drag = useRef({ down: false, startX: 0, dx: 0 });
 
   const sources = useMemo(deckSources, []);
   const card = queue && pos < queue.length ? queue[pos] : null;
@@ -137,17 +139,13 @@ export default function Training() {
 
   // AI Coach (paid) — fetch a coaching breakdown once a voice answer is scored.
   useEffect(() => {
-    if (face !== "result" || !result) return;
-    if (user?.plan === "ai") {
-      setCoach(null); setCoachState("loading");
-      api.coach(result.phrase_id, result.transcript, result.score)
-        .then((r) => { if ("locked" in r) setCoachState("locked"); else { setCoach(r); setCoachState("done"); } })
-        .catch(() => setCoachState("idle"));
-    } else {
-      setCoachState("locked");
-    }
+    if (!result || user?.plan !== "ai") return;
+    setCoach(null); setCoachState("loading");
+    api.coach(result.phrase_id, result.transcript, result.score)
+      .then((r) => { if ("locked" in r) setCoachState("locked"); else { setCoach(r); setCoachState("done"); } })
+      .catch(() => setCoachState("idle"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [face, result]);
+  }, [result]);
 
   // Edge-flip with content swap — no backface-visibility (which iOS Safari leaves
   // mirrored "inside-out"). Rotate to 90° (edge), swap content, rotate back from -90°.
@@ -168,14 +166,6 @@ export default function Training() {
     }, 150);
   };
 
-  const resetTransform = () => {
-    const el = cardElRef.current;
-    if (el) { el.style.transition = "transform .28s cubic-bezier(.22,1,.36,1)"; el.style.transform = "translateX(0) rotate(0)"; }
-  };
-  const setAff = (dx: number) => {
-    if (affR.current) affR.current.style.opacity = String(Math.min(1, Math.max(0, dx / 110)));
-    if (affL.current) affL.current.style.opacity = String(Math.min(1, Math.max(0, -dx / 110)));
-  };
   const leaveCard = (dir: "left" | "right", after: () => void) => {
     const el = cardElRef.current;
     if (!el || prefersReduced()) { after(); return; }
@@ -213,89 +203,65 @@ export default function Training() {
   }, [pos, queue, finishSession]);
 
   const countSwipe = () => { if (bumpSwipes(uid) >= EXPERIENCED_AT) setExperienced(true); };
-  const onDontKnow = () => {
+
+  // Front → back: a single tap flips the card. No pre-assessment — the learner
+  // judges themselves with the buttons on the back.
+  const flipToBack = () => {
     if (!card || face !== "front") return;
+    haptic("light");
     countSwipe();
-    api.trainSwipe(sessionId, card.phrase_id, "left", Date.now() - shownAtRef.current).catch(() => {});
-    resetTransform(); setAff(0); flip("reveal");
-  };
-  const onKnow = () => {
-    if (!card || face !== "front") return;
-    countSwipe();
-    resetTransform(); setAff(0); flip("voice");
+    flip("back");
   };
 
-  const interactive = face === "front" && !!card;
-  const onDown = (e: React.PointerEvent) => {
-    if (!interactive) return;
-    drag.current = { down: true, startX: e.clientX, dx: 0 };
-    try { cardElRef.current?.setPointerCapture(e.pointerId); } catch { /* non-fatal */ }
-  };
-  const onMove = (e: React.PointerEvent) => {
-    if (!drag.current.down) return;
-    const dx = e.clientX - drag.current.startX;
-    drag.current.dx = dx;
-    const el = cardElRef.current;
-    if (el) { el.style.transition = "none"; el.style.transform = `translateX(${dx}px) rotate(${dx * 0.035}deg)`; }
-    setAff(dx);
-  };
-  const onUp = () => {
-    if (!drag.current.down) return;
-    const dx = drag.current.dx;
-    drag.current.down = false;
-    const w = cardElRef.current?.offsetWidth ?? 320;
-    if (dx > w * 0.3) onKnow();
-    else if (dx < -w * 0.3) onDontKnow();
-    else { resetTransform(); setAff(0); }
+  // Self-assessment on the back. «guessed» leaves right, «missed» leaves left;
+  // both record the swipe and advance to the next card.
+  const judge = (known: boolean) => {
+    if (!card) return;
+    haptic("medium");
+    if (rec.recording) { void rec.stop(); }
+    api.trainSwipe(sessionId, card.phrase_id, known ? "right" : "left", Date.now() - shownAtRef.current).catch(() => {});
+    advance(known, known ? "right" : "left");
   };
 
   const handleScoreErr = (e: unknown) => {
     const msg = String(e);
     if (msg.includes("429") || msg.toLowerCase().includes("limit"))
-      setNotice("Дневной лимит проверок исчерпан — свайпай влево, чтобы повторять.");
+      setNotice(t("practice.limitReached"));
     else setErr(msg);
   };
 
-  // The mic (spoken answer) is an Executive AI feature. Without it the voice face
-  // shows a locked mic + the model answer for self-check.
-  const canVoice = !!user?.entitlements?.voice_answer;
+  // The mic is gated PER CARD: the backend allows it on the free showcase batch
+  // for everyone, and on every batch for the ai plan. Falls back to the plan
+  // entitlement if the deck predates the ai_allowed flag.
+  const canVoice = card?.ai_allowed ?? !!user?.entitlements?.voice_answer;
 
   // Voice answer (AI only): on-device Web Speech first (0 tokens), MediaRecorder +
   // server STT as fallback when speech is unsupported or errors.
   const onMic = useCallback(async () => {
-    if (!canVoice) { nav("/profile"); return; }  // locked mic -> upsell
+    if (!canVoice) { nav("/subscribe"); return; }  // locked mic -> upsell
     if (!card || busy) return;
     setNotice(""); setErr("");
     const useSpeechNow = speech.supported && !recFallback;
     if (useSpeechNow) {
       if (speech.listening) { speech.stop(); return; }
-      let t = "";
-      try { t = await speech.start("en-US"); }
-      catch { setRecFallback(true); setNotice("Распознавание недоступно — нажми и запишу аудио."); return; }
-      if (!t.trim()) { setNotice("Не расслышал — нажми и повтори."); return; }
+      let tr = "";
+      try { tr = await speech.start("en-US"); }
+      catch { setRecFallback(true); setNotice(t("practice.micUnavailable")); return; }
+      if (!tr.trim()) { setNotice(t("practice.micNoHear")); return; }
       setBusy(true);
-      try { const r = await api.trainAnswerText(sessionId, card.phrase_id, t); setResult(r); setFace("result"); }
+      try { const r = await api.trainAnswerText(sessionId, card.phrase_id, tr); setResult(r); }
       catch (e) { handleScoreErr(e); }
       finally { setBusy(false); }
       return;
     }
     if (!rec.recording) { await rec.start(); return; }
     const clip = await rec.stop();
-    if (!clip || clip.ms < 400) { setNotice("Не расслышал — нажми и скажи чуть дольше."); return; }
+    if (!clip || clip.ms < 400) { setNotice(t("practice.micLonger")); return; }
     setBusy(true);
-    try { const r = await api.trainAnswer(sessionId, card.phrase_id, clip.blob, clip.filename, clip.ms); setResult(r); setFace("result"); }
+    try { const r = await api.trainAnswer(sessionId, card.phrase_id, clip.blob, clip.filename, clip.ms); setResult(r); }
     catch (e) { handleScoreErr(e); }
     finally { setBusy(false); }
-  }, [canVoice, nav, card, busy, rec, speech, recFallback, sessionId]);
-
-  // The "×" on the voice face: move straight on to the next card (stops any
-  // recording first). The only control on that face.
-  const skipVoice = () => {
-    if (!card) return;
-    if (rec.recording) { void rec.stop(); }
-    api.trainSwipe(sessionId, card.phrase_id, "right", Date.now() - shownAtRef.current).catch(() => {});
-    advance(true, "right");
-  };
+  }, [canVoice, nav, card, busy, rec, speech, recFallback, sessionId, t]);
 
   const restart = () => {
     shownRef.current = 0; knownRef.current = 0;
@@ -305,20 +271,17 @@ export default function Training() {
   };
 
   if (phase === "error") return <div className="screen tr-screen"><p className="error">{err}</p></div>;
-  if (phase === "loading") return <div className="screen tr-screen"><p className="muted" style={{ marginTop: 28 }}>Готовим колоду…</p></div>;
+  if (phase === "loading") return <div className="screen tr-screen"><p className="muted" style={{ marginTop: 28 }}>{t("practice.loading")}</p></div>;
 
   if (phase === "empty") {
     return (
       <div className="screen tr-screen">
         <Head />
         <div className="pr-empty">
-          <p className="pr-empty-t">Пока нечего тренировать</p>
-          <p className="pr-empty-s">
-            Активируй любой навык в Библиотеке — его проверочные реплики сразу попадут
-            сюда в колоду для тренировки.
-          </p>
+          <p className="pr-empty-t">{t("practice.emptyTitle")}</p>
+          <p className="pr-empty-s">{t("practice.emptyText")}</p>
           <button className="l3-cta" style={{ marginTop: 18 }} onClick={() => nav("/learn")}>
-            <IconPlay size={18} /> В Обучение
+            <IconPlay size={18} /> {t("practice.toLearn")}
           </button>
         </div>
       </div>
@@ -331,18 +294,18 @@ export default function Training() {
         <Head />
         <div className="tr-summary">
           <p className="tr-sum-k">{summary.cards_known}<span>/{summary.cards_total}</span></p>
-          <p className="tr-sum-label">узнано в этом подходе</p>
+          <p className="tr-sum-label">{t("practice.sumKnown")}</p>
           {summary.avg_score != null && (
-            <p className="tr-sum-avg">Средний балл голосом · <b>{summary.avg_score}</b></p>
+            <p className="tr-sum-avg">{t("practice.sumAvg")} · <b>{summary.avg_score}</b></p>
           )}
           {summary.weakest && summary.strongest && summary.weakest.batch_id !== summary.strongest.batch_id && (
             <div className="tr-sum-rows">
-              <div className="tr-sum-row"><span className="tr-sum-tag no">Слабее</span>{summary.weakest.batch_title}</div>
-              <div className="tr-sum-row"><span className="tr-sum-tag ok">Сильнее</span>{summary.strongest.batch_title}</div>
+              <div className="tr-sum-row"><span className="tr-sum-tag no">{t("practice.weaker")}</span>{summary.weakest.batch_title}</div>
+              <div className="tr-sum-row"><span className="tr-sum-tag ok">{t("practice.stronger")}</span>{summary.strongest.batch_title}</div>
             </div>
           )}
-          <button className="l3-cta" onClick={restart}><IconPlay size={18} /> Ещё подход</button>
-          <button className="btn-ghost" onClick={() => nav("/learn")}>В Обучение</button>
+          <button className="l3-cta" onClick={restart}><IconPlay size={18} /> {t("practice.again")}</button>
+          <button className="btn-ghost" onClick={() => nav("/learn")}>{t("practice.toLearn")}</button>
         </div>
       </div>
     );
@@ -366,16 +329,11 @@ export default function Training() {
             className="tr-card"
             ref={cardElRef}
             key={card.phrase_id}
-            onPointerDown={onDown}
-            onPointerMove={onMove}
-            onPointerUp={onUp}
-            onPointerCancel={onUp}
-            onClick={() => { if (face === "reveal") advance(false, "left"); }}
-            style={{ touchAction: "none" }}
+            onClick={() => { if (face === "front") flipToBack(); }}
           >
             <div className="tr-card-inner" ref={innerRef}>
               <div className="tr-face">
-                {face === "front" && (
+                {face === "front" ? (
                   <>
                     <div className="tr-photo">
                       <BatchCover seed={card.slug || String(card.batch_id)} coverUrl={card.cover_url} className="tr-photo-img" />
@@ -383,22 +341,11 @@ export default function Training() {
                       <div className="tr-pill">{pillLabel(card)}</div>
                       <div className="tr-situ"><IconProfile size={13} /> {situLabel(card)}</div>
                     </div>
-                    <div className="tr-aff left" ref={affL}>не&nbsp;знаю</div>
-                    <div className="tr-aff right" ref={affR}>знаю</div>
                     <div className="tr-body">
                       <p className="tr-stim">{card.stimulus || card.gloss_ru || card.anchor}</p>
                     </div>
                     <div className="tr-foot">
-                      {!experienced && (
-                        <>
-                          <div className="tr-foot-row">
-                            <button className="tr-sh no" onClick={onDontKnow}>←&nbsp;Не&nbsp;знаю</button>
-                            <span className="tr-gesture" aria-hidden><IconSwipeHand size={30} /></span>
-                            <button className="tr-sh go" onClick={onKnow}>Знаю&nbsp;ответ&nbsp;→</button>
-                          </div>
-                          <div className="tr-foot-cue">Свайпни, чтобы ответить</div>
-                        </>
-                      )}
+                      {!experienced && <div className="tr-foot-cue">{t("practice.tapToAnswer")}</div>}
                       <div className="tr-dots">
                         {Array.from({ length: SESSION_LEN }).map((_, i) => (
                           <span key={i} className={i < shownRef.current ? "on" : ""} />
@@ -406,106 +353,44 @@ export default function Training() {
                       </div>
                     </div>
                   </>
-                )}
-
-                {face === "reveal" && (
-                  <div className="tr-reveal" role="button">
-                    <span className="tr-rv-ghost" aria-hidden>{(card.anchor || "").toUpperCase()}</span>
-                    <span className="tr-rv-label">Возможный ответ</span>
-                    <p className="tr-rv-phrase">{card.phrase_en}</p>
-                    <div className="tr-rv-foot">
-                      {!experienced && (
-                        <>
-                          <span className="tr-rv-tap" aria-hidden><IconTap size={20} /></span>
-                          <span className="tr-rv-cue">Нажми, чтобы продолжить</span>
-                        </>
+                ) : (
+                  <div className="tr-back2">
+                    <div className="tr-back2-mid">
+                      {canVoice ? (
+                        result ? (
+                          // AI · after the spoken answer is scored — compact verdict only.
+                          <div className="tr-score">
+                            <div className={`verdict-pct ${pctClass === "ok" ? "ok" : pctClass === "no" ? "no" : ""}`}>
+                              {pct}<span style={{ fontSize: 22, fontWeight: 700 }}>%</span>
+                            </div>
+                            <p className="tr-answer">{result.correct_phrase}</p>
+                            {coachState === "loading" && <p className="tr-coach-load">…</p>}
+                            {coachState === "done" && coach?.feedback && <p className="tr-coach-fb">{coach.feedback}</p>}
+                            {result.transcript && <p className="tr-heard">{t("practice.heard", { t: result.transcript })}</p>}
+                          </div>
+                        ) : (
+                          // AI · the mic is the whole face. Press → speak the phrase.
+                          <>
+                            <button className={`tr-mic big${micActive ? " on" : ""}`} onClick={onMic} disabled={busy}
+                              aria-label="Mic">
+                              {busy ? <span className="tr-mic-dots">…</span> : rec.recording ? <span className="tr-mic-stop" /> : <IconMic size={46} />}
+                            </button>
+                            {(speech.listening || rec.recording || busy) && (
+                              <p className="tr-mic-label">
+                                {speech.listening ? t("practice.micListening") : rec.recording ? t("practice.micRecording") : t("practice.micChecking")}
+                              </p>
+                            )}
+                          </>
+                        )
+                      ) : (
+                        // Non-AI · just the model phrase (эталон) to self-check against.
+                        <p className="tr-answer big">{card.phrase_en}</p>
                       )}
-                      <div className="tr-dots">
-                        {Array.from({ length: SESSION_LEN }).map((_, i) => (
-                          <span key={i} className={i < shownRef.current ? "on" : ""} />
-                        ))}
-                      </div>
                     </div>
-                  </div>
-                )}
-
-                {face === "voice" && (
-                  <div className="tr-back-voice">
-                    <div className="tr-voice-top">
-                      <span className="tr-back-label">Тебе сказали</span>
-                      <p className="tr-voice-stim">{card.stimulus || card.gloss_ru || card.anchor}</p>
+                    <div className="tr-judge">
+                      <button className="tr-judge-btn no" onClick={() => judge(false)}>{t("practice.missed")}</button>
+                      <button className="tr-judge-btn yes" onClick={() => judge(true)}>{t("practice.guessed")}</button>
                     </div>
-                    {canVoice ? (
-                      <>
-                        <div className="tr-voice-mid">
-                          <button className={`tr-mic big${micActive ? " on" : ""}`} onClick={onMic} disabled={busy}
-                            aria-label={micActive ? "Стоп" : "Сказать"}>
-                            {busy ? <span className="tr-mic-dots">…</span> : rec.recording ? <span className="tr-mic-stop" /> : <IconMic size={46} />}
-                          </button>
-                          {(speech.listening || rec.recording || busy || !experienced) && (
-                            <p className="tr-mic-label">
-                              {speech.listening ? "Слушаю…" : rec.recording ? "Идёт запись — нажми «стоп»" : busy ? "Проверяем…" : "Нажми и скажи свою фразу"}
-                            </p>
-                          )}
-                        </div>
-                        <div className="tr-voice-foot">
-                          <button className="tr-cancel" onClick={skipVoice} aria-label="Дальше"><IconClose size={20} /></button>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="tr-voice-mid">
-                          <button className="tr-mic big locked" onClick={() => nav("/profile")}
-                            aria-label="Голосовой ответ — в Executive AI">
-                            <IconMic size={46} />
-                            <span className="tr-mic-badge" aria-hidden><IconLock size={15} /></span>
-                          </button>
-                          {!experienced && (
-                            <p className="tr-mic-label">Сначала проверь себя — потом сверь с эталоном</p>
-                          )}
-                        </div>
-                        <div className="tr-voice-self">
-                          {!experienced && <span className="tr-back-label">Как можно ответить</span>}
-                          <p className="tr-answer">{card.phrase_en}</p>
-                        </div>
-                        <button className="tr-upsell" onClick={() => nav("/profile")}>
-                          <span className="tr-upsell-label">✦ Ответить голосом и получить разбор</span>
-                          <span className="tr-upsell-sub">Микрофон доступен в Executive AI →</span>
-                        </button>
-                        <div className="tr-voice-foot">
-                          <button className="tr-cancel" onClick={skipVoice} aria-label="Дальше"><IconClose size={20} /></button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                )}
-
-                {face === "result" && result && (
-                  <div className="tr-back-pad">
-                    <div className={`verdict-pct ${pctClass === "ok" ? "ok" : pctClass === "no" ? "no" : ""}`}>
-                      {pct}<span style={{ fontSize: 22, fontWeight: 700 }}>%</span>
-                    </div>
-                    <div className="tr-pips">{[0, 1, 2, 3, 4].map((i) => <span key={i} className={i < Math.round(result.score / 2) ? "on" : ""} />)}</div>
-                    {result.feedback && <p className="tr-feedback">{result.feedback}</p>}
-                    {coachState === "loading" && <p className="tr-coach-load">AI-коуч разбирает…</p>}
-                    {coachState === "done" && coach && (
-                      <div className="tr-coach">
-                        <span className="tr-coach-label">✦ AI-коуч</span>
-                        {coach.feedback && <p className="tr-coach-fb">{coach.feedback}</p>}
-                        {coach.better && <p className="tr-coach-better"><span>Сильнее</span>{coach.better}</p>}
-                        {coach.tone && <span className="tr-coach-tone">{coach.tone}</span>}
-                      </div>
-                    )}
-                    {coachState === "locked" && (
-                      <button className="tr-upsell" onClick={() => nav("/profile")}>
-                        <span className="tr-upsell-label">✦ Разбор от AI-коуча</span>
-                        <span className="tr-upsell-sub">Доступно в Executive AI →</span>
-                      </button>
-                    )}
-                    <span className="tr-back-label">Эталон</span>
-                    <p className="tr-answer">{result.correct_phrase}</p>
-                    {result.transcript && <p className="tr-heard">Услышал: {result.transcript}</p>}
-                    <button className="tr-next" onClick={() => advance(pct >= 80, "right")}>Дальше <IconChevron size={18} /></button>
                   </div>
                 )}
               </div>

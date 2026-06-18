@@ -29,6 +29,21 @@ INSTR = (
     "Keep one continuous, smooth flow from start to finish; no abrupt cuts."
 )
 
+# Localized stories (es/de/fr): same single warm narrator, but the surrounding
+# prose is in the learner's language, not Russian. gpt-4o-mini-tts reads it
+# natively; the embedded English anchors still land in clear American English.
+# Kept separate from INSTR so the Russian narration cache (hashed on instructions)
+# is untouched.
+INSTR_INTL = (
+    "You are one warm, calm storyteller narrating a very short mnemonic story. "
+    "Speak the narration text naturally in its own language, unhurried, with a "
+    "gentle engaging tone. Whenever an English word appears in the text, pronounce "
+    "it with clear, natural American-English pronunciation — never switching to a "
+    "different speaker. It is the SAME narrator who simply says those words in "
+    "English, with a light emphasis so they stand out as memory anchors. Keep one "
+    "continuous, smooth flow from start to finish; no abrupt cuts."
+)
+
 # Steering for the anchors-only drill: same narrator, just the English words.
 ANCHOR_INSTR = (
     "You are a warm, calm narrator. Pronounce each English word clearly and "
@@ -36,7 +51,7 @@ ANCHOR_INSTR = (
 )
 
 
-def render_full(story: str) -> tuple[str, float]:
+def render_full(story: str, instructions: str = INSTR) -> tuple[str, float]:
     """Synthesize the whole mnemonic story in one steered pass.
 
     Returns (audio_filename, duration_sec). MP3 (not WAV): the full story is a
@@ -46,7 +61,7 @@ def render_full(story: str) -> tuple[str, float]:
     is fine. Asset is content-hashed by tts.synth (story + voice + model + fmt +
     instructions)."""
     path, dur = tts.synth(story, voice=NARRATOR_VOICE, model=NARRATOR_MODEL,
-                          instructions=INSTR, fmt="mp3", speed=1.0)
+                          instructions=instructions, fmt="mp3", speed=1.0)
     return path.name, dur
 
 

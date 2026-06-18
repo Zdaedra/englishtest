@@ -39,7 +39,21 @@ def ents(plan: str | None) -> dict:
     return ENTITLEMENTS.get(plan or "free", ENTITLEMENTS["free"])
 
 
+def effective_plan(u) -> str:
+    """The plan in force right now — an expired Apple subscription falls back to
+    free. Naive datetimes are treated as UTC."""
+    if not u:
+        return "free"
+    exp = getattr(u, "plan_expires_at", None)
+    if exp is not None:
+        from datetime import datetime, timezone
+        e = exp if exp.tzinfo else exp.replace(tzinfo=timezone.utc)
+        if e < datetime.now(timezone.utc):
+            return "free"
+    return u.plan or "free"
+
+
 def user_entitlements(session: Session, user_id: int) -> dict:
     from . import models  # local import avoids a cycle at module load
     u = session.get(models.User, user_id)
-    return ents(u.plan if u else "free")
+    return ents(effective_plan(u))

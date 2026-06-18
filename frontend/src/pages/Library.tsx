@@ -4,10 +4,11 @@ import { api, BatchListItem, PhraseSearchItem } from "../api";
 import { usePlayer } from "../player/PlayerContext";
 import { BatchCover } from "../ui/Art";
 import { IconSearch, IconPlay } from "../ui/icons";
-import { orderedSections } from "../lib/sections";
+import { orderedSections, sectionName } from "../lib/sections";
 import { buildSprint } from "../lib/strategy";
 import { getProgress, isEngaged } from "../lib/progress";
 import { getStrategy, recordVisit } from "../lib/profile";
+import { useI18n } from "../i18n";
 
 const numOf = (slug: string) => {
   const m = slug.match(/(\d+)\s*$/);
@@ -18,6 +19,7 @@ const isClosed = (id: number) => !!getProgress(id).l3_passed;
 export default function Library() {
   const nav = useNavigate();
   const loc = useLocation();
+  const { t } = useI18n();
   const player = usePlayer();
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [err, setErr] = useState("");
@@ -58,17 +60,17 @@ export default function Library() {
     const bySlug: Record<string, BatchListItem[]> = {};
     for (const b of batches) (bySlug[b.section || "__other"] ||= []).push(b);
     for (const k in bySlug) bySlug[k].sort((a, c) => numOf(a.slug) - numOf(c.slug));
-    const out: { slug: string; title: string; items: BatchListItem[]; nav: boolean }[] = [];
+    const out: { slug: string; items: BatchListItem[]; nav: boolean }[] = [];
     const known = new Set<string>();
     for (const sec of orderedSections()) {
       known.add(sec.slug);
       const items = bySlug[sec.slug];
-      if (items?.length) out.push({ slug: sec.slug, title: sec.ru, items, nav: true });
+      if (items?.length) out.push({ slug: sec.slug, items, nav: true });
     }
     const other = batches
       .filter((b) => !known.has(b.section))
       .sort((a, c) => numOf(a.slug) - numOf(c.slug));
-    if (other.length) out.push({ slug: "__other", title: "Другое", items: other, nav: false });
+    if (other.length) out.push({ slug: "__other", items: other, nav: false });
     return out;
   }, [batches]);
 
@@ -156,19 +158,19 @@ export default function Library() {
               className="search-input"
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Поиск по библиотеке"
+              placeholder={t("lib.searchPlaceholder")}
               autoComplete="off"
               autoCorrect="off"
               spellCheck={false}
               enterKeyHint="search"
             />
             {q && (
-              <button className="search-clear" onClick={() => setQ("")} aria-label="Очистить">
+              <button className="search-clear" onClick={() => setQ("")} aria-label={t("lib.clearAria")}>
                 ×
               </button>
             )}
           </div>
-          <button className="search-cancel" onClick={closeSearch}>Отмена</button>
+          <button className="search-cancel" onClick={closeSearch}>{t("common.cancel")}</button>
         </div>
       ) : (
         <div className="brand-head">
@@ -179,7 +181,7 @@ export default function Library() {
             </h1>
             <p className="brand-sub">Executive communication.<br />Built for real conversations.</p>
           </div>
-          <button className="avatar-btn" onClick={() => nav("/profile")} aria-label="Профиль">
+          <button className="avatar-btn" onClick={() => nav("/profile")} aria-label={t("common.profile")}>
             AV
           </button>
         </div>
@@ -189,9 +191,9 @@ export default function Library() {
 
       {!err && batches.length === 0 && (
         <div className="empty">
-          <p>Your library is empty.</p>
+          <p>{t("lib.empty")}</p>
           <button className="btn btn-tint" onClick={() => nav("/import")}>
-            Import your first batch
+            {t("lib.importFirst")}
           </button>
         </div>
       )}
@@ -200,7 +202,7 @@ export default function Library() {
         <>
           {matchedBatches.length > 0 && (
             <section>
-              <p className="section-label">Коллекции · {matchedBatches.length}</p>
+              <p className="section-label">{t("lib.collections")} · {matchedBatches.length}</p>
               <div className="grid">
                 {matchedBatches.map((b, i) => (
                   <button
@@ -210,11 +212,11 @@ export default function Library() {
                     onClick={() => nav(`/batch/${b.id}`)}
                   >
                     <span className="album-art">
-                      <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                      <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                     </span>
                     <div className="album-title">{b.title}</div>
                     {b.preview && <div className="album-sub">{b.preview}</div>}
-                    <div className="album-meta">{b.phrase_count} patterns</div>
+                    <div className="album-meta">{t("lib.nPatterns", { n: b.phrase_count })}</div>
                   </button>
                 ))}
               </div>
@@ -222,7 +224,7 @@ export default function Library() {
           )}
           {matchedPhrases.length > 0 && (
             <section>
-              <p className="section-label">Фразы · {matchedPhrases.length}</p>
+              <p className="section-label">{t("lib.phrases")} · {matchedPhrases.length}</p>
               <div className="srch-list">
                 {matchedPhrases.map((p) => (
                   <button
@@ -241,7 +243,7 @@ export default function Library() {
           )}
           {matchedBatches.length === 0 && matchedPhrases.length === 0 && (
             <p className="muted" style={{ marginTop: 8 }}>
-              {phrases === null ? "Ищу…" : "Ничего не найдено"}
+              {phrases === null ? t("lib.searchingDots") : t("lib.noResults")}
             </p>
           )}
         </>
@@ -258,7 +260,7 @@ export default function Library() {
                 </svg>
               </span>
               <span className="metric-num">{totalPatterns}</span>
-              <span className="metric-label">Patterns</span>
+              <span className="metric-label">{t("lib.mPatterns")}</span>
             </div>
             <div className="metric">
               <span className="metric-ico">
@@ -267,7 +269,7 @@ export default function Library() {
                 </svg>
               </span>
               <span className="metric-num">{inProgress}</span>
-              <span className="metric-label">In Progress</span>
+              <span className="metric-label">{t("lib.mInProgress")}</span>
             </div>
             <div className="metric">
               <span className="metric-ico">
@@ -276,30 +278,30 @@ export default function Library() {
                 </svg>
               </span>
               <span className="metric-num">{streak}</span>
-              <span className="metric-label">Day Streak</span>
+              <span className="metric-label">{t("lib.mStreak")}</span>
             </div>
           </div>
 
           {/* Current Focus — the hero. */}
           {focus && (
             <>
-            <p className="focus-label">Current Focus</p>
+            <p className="focus-label">{t("lib.focus")}</p>
             <button className="focus-hero" onClick={() => nav(`/batch/${focus.id}`)}>
               <span className="focus-hero-art">
-                <BatchCover seed={focus.slug} coverUrl={focus.cover_url} />
+                <BatchCover seed={focus.slug} coverUrl={focus.cover_url} locked={focus.locked} />
               </span>
               <span className="focus-hero-grad" />
               <span className="focus-hero-body">
                 <span className="focus-hero-title">{focus.title}</span>
                 {focus.preview && <span className="focus-hero-sub">{focus.preview}</span>}
                 <span className="focus-hero-meta">
-                  {focus.phrase_count} patterns · {Math.max(8, Math.round(focus.phrase_count * 1.5))} min
+                  {t("lib.nPatterns", { n: focus.phrase_count })} · {Math.max(8, Math.round(focus.phrase_count * 1.5))} min
                 </span>
               </span>
               <span
                 className="focus-hero-play"
                 role="button"
-                aria-label="Слушать"
+                aria-label={t("lib.listenAria")}
                 onClick={(e) => {
                   e.stopPropagation();
                   startFocus();
@@ -315,13 +317,13 @@ export default function Library() {
           {activeRow.length > 0 && (
             <section className="lib-row" key="__active">
               <div className="lib-row-head">
-                <span className="lib-row-title">Активные</span>
+                <span className="lib-row-title">{t("lib.active")}</span>
               </div>
               <div className="row-scroll">
                 {activeRow.map((b) => (
                   <button key={b.id} className="row-card" onClick={() => nav(`/batch/${b.id}`)}>
                     <span className="row-card-art">
-                      <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                      <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                       {isClosed(b.id) && <span className="row-card-done">✓</span>}
                     </span>
                     <div className="row-card-title">{b.title}</div>
@@ -340,7 +342,9 @@ export default function Library() {
                 onClick={() => row.nav && nav(`/section/${row.slug}`)}
                 disabled={!row.nav}
               >
-                <span className="lib-row-title">{row.title}</span>
+                <span className="lib-row-title">
+                  {row.slug === "__other" ? t("lib.other") : sectionName(row.slug)}
+                </span>
                 {row.nav && (
                   <svg className="lib-row-chev" width="9" height="16" viewBox="0 0 9 16" fill="none">
                     <path d="M1 1l7 7-7 7" stroke="currentColor" strokeWidth="2"
@@ -352,7 +356,7 @@ export default function Library() {
                 {row.items.map((b) => (
                   <button key={b.id} className="row-card" onClick={() => nav(`/batch/${b.id}`)}>
                     <span className="row-card-art">
-                      <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                      <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                     </span>
                     <div className="row-card-title">{b.title}</div>
                     {b.preview && <div className="row-card-sub">{b.preview}</div>}

@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import { mediaUrl } from "../api";
+import { IconLock } from "./icons";
 
 // Unified generative art: one cohesive visual language for the whole library,
 // deterministically seeded per batch (by slug) so each batch has a stable,
@@ -92,22 +94,33 @@ export function BatchCover({
   seed,
   coverUrl,
   className = "",
+  locked = false,
 }: {
   seed: string;
   coverUrl?: string | null;
   className?: string;
+  locked?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
-  if (coverUrl && !failed) {
-    return (
-      <img
-        className={`bcover ${className}`}
-        src={coverUrl}
-        alt=""
-        loading="lazy"
-        onError={() => setFailed(true)}
-      />
-    );
-  }
-  return <BatchArt seed={seed} className={className} />;
+  const hasImg = coverUrl && !failed;
+  // When locked, wrap the cover so we can dim it + overlay a lock chip. The
+  // wrapper keeps the same sizing class so existing layouts are unchanged.
+  const inner = hasImg ? (
+    <img
+      className={locked ? "bcover" : `bcover ${className}`}
+      src={mediaUrl(coverUrl) ?? undefined}
+      alt=""
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  ) : (
+    <BatchArt seed={seed} className={locked ? "bcover" : className} />
+  );
+  if (!locked) return inner;
+  return (
+    <span className={`bcover bcover-lockwrap ${className}`}>
+      {inner}
+      <span className="bcover-lock" aria-hidden><IconLock size={18} /></span>
+    </span>
+  );
 }

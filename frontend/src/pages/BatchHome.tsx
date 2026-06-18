@@ -5,8 +5,9 @@ import { usePlayer } from "../player/PlayerContext";
 import { getProgress, isEngaged, lessonStates, setProgress } from "../lib/progress";
 import { orderedSections } from "../lib/sections";
 import { getProfile, prioritySectionSlugs } from "../lib/profile";
+import { useI18n } from "../i18n";
 import { BatchCover } from "../ui/Art";
-import { IconBack, IconCheck, IconChevron, IconHeadphones, IconPlay } from "../ui/icons";
+import { IconBack, IconCheck, IconChevron, IconHeadphones, IconPlay, IconLock } from "../ui/icons";
 
 function firstSentence(s: string): string {
   const t = (s || "").trim();
@@ -14,15 +15,12 @@ function firstSentence(s: string): string {
   return t.split(/(?<=[.!?…])\s/)[0].trim();
 }
 
-const LESSONS = [
-  { n: 1, title: "Мнемоническая основа", sub: "Запомни каркас якорей", cta: "урок" },
-  { n: 2, title: "Фразы", sub: "Привяжи фразы к якорям", cta: "фразы" },
-  { n: 3, title: "Тесты", sub: "Проверь на скорость", cta: "тесты" },
-];
+const LESSONS = [{ n: 1 }, { n: 2 }, { n: 3 }];
 
 export default function BatchHome() {
   const { id } = useParams();
   const nav = useNavigate();
+  const { t } = useI18n();
   const player = usePlayer();
   const [batch, setBatch] = useState<Batch | null>(null);
   const [rotation, setRotation] = useState<RotationItem[] | null>(null);
@@ -86,7 +84,25 @@ export default function BatchHome() {
   }, [batch, batchList]);
 
   if (err) return <div className="screen"><p className="error">{err}</p></div>;
-  if (!batch) return <div className="screen"><p className="muted">Loading…</p></div>;
+  if (!batch) return <div className="screen"><p className="muted">{t("common.loading")}</p></div>;
+
+  // Freemium paywall: locked (paid) batch → show an upsell instead of content.
+  if (batch.locked) {
+    return (
+      <div className="screen bh-screen">
+        <button className="bh-back" onClick={() => nav(-1)}><IconBack size={18} /> {t("common.back")}</button>
+        <span className="bh-cover bh-cover-locked">
+          <BatchCover seed={batch.slug} coverUrl={batch.cover_url} />
+          <span className="bh-lock-badge"><IconLock size={22} /></span>
+        </span>
+        <div className="bh-head">
+          <h1 className="bh-title">{batch.title}</h1>
+          <p className="bh-sub">{t("paywall.body")}</p>
+        </div>
+        <button className="bh-activate" onClick={() => nav("/subscribe")}>{t("paywall.cta")}</button>
+      </div>
+    );
+  }
 
   const preview = batch.subtitle?.trim() || firstSentence(batch.mnemo?.story_ru || "");
   const prog = getProgress(batch.id);
@@ -96,7 +112,7 @@ export default function BatchHome() {
   const activeIdx = openIdx >= 0 ? openIdx : 2; // all done → review the tests
   const ctaLesson = LESSONS[activeIdx];
   const started = isEngaged(prog);
-  const ctaLabel = allDone ? "Повторить" : started ? "Продолжить" : "Активировать бетч";
+  const ctaLabel = allDone ? t("bh.repeat") : started ? t("bh.continue") : t("bh.activate");
 
   // Activate the batch (mark it an active batch → In Progress + Library active
   // row) and jump straight into the next open lesson.
@@ -110,7 +126,7 @@ export default function BatchHome() {
   return (
     <div className="screen bh-screen">
       <button className="bh-back" onClick={() => nav(-1)}>
-        <IconBack size={18} /> Назад
+        <IconBack size={18} /> {t("common.back")}
       </button>
 
       <span className="bh-cover">
@@ -118,7 +134,7 @@ export default function BatchHome() {
       </span>
 
       <div className="bh-head">
-        {lessonNum > 0 && <span className="bh-tag">Урок {lessonNum}</span>}
+        {lessonNum > 0 && <span className="bh-tag">{t("lesson.tag", { n: lessonNum })}</span>}
         <h1 className="bh-title">{batch.title}</h1>
         {preview && <p className="bh-sub">{preview}</p>}
       </div>
@@ -127,7 +143,7 @@ export default function BatchHome() {
         <IconPlay size={18} /> {ctaLabel}
       </button>
       <p className="l3-hint">
-        <IconHeadphones size={15} /> Рекомендуется использовать наушники и тихое помещение
+        <IconHeadphones size={15} /> {t("common.headphones")}
       </p>
 
       <div className="bh-anchors">
@@ -139,7 +155,7 @@ export default function BatchHome() {
         ))}
       </div>
 
-      <p className="bh-steps-label">Этапы урока</p>
+      <p className="bh-steps-label">{t("bh.stages")}</p>
       <div className="bh-lessons">
         {LESSONS.map((l, i) => {
           const st = states[i];
@@ -153,11 +169,11 @@ export default function BatchHome() {
             >
               <span className="bh-lesson-num">{done ? <IconCheck size={18} /> : l.n}</span>
               <span className="bh-lesson-body">
-                <span className="bh-lesson-title">{l.title}</span>
+                <span className="bh-lesson-title">{t(`bh.l${l.n}.title`)}</span>
                 <span className="bh-lesson-sub">
                   {l.n === 2 && l2.attempted > 0 && !l2.done
-                    ? `${l.sub} · средний ${l2.mean.toFixed(1)}`
-                    : l.sub}
+                    ? `${t("bh.l2.sub")} · ${t("common.meanShort", { x: l2.mean.toFixed(1) })}`
+                    : t(`bh.l${l.n}.sub`)}
                 </span>
               </span>
               <IconChevron size={18} />

@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
-from .. import audio, models
+from .. import access, audio, models
 from ..auth import current_user_id, is_admin
 from ..config import get_settings
 from ..db import get_session
@@ -71,6 +71,11 @@ def create_session(req: SessionRequest, user_id: int = Depends(current_user_id),
     if (not batch or batch.deleted_at
             or not (batch.owner_id is None or batch.owner_id == user_id or admin)):
         raise HTTPException(404, "Batch not found")
+    # Freemium gate: only the free batch (+ own imports) is usable without a paid plan.
+    if not admin:
+        u = session.get(models.User, user_id)
+        if not access.batch_usable(u.plan if u else "free", batch, user_id):
+            raise HTTPException(403, "locked")
     phrases = session.exec(select(models.Phrase).where(models.Phrase.batch_id == req.batch_id)
                            .order_by(models.Phrase.order_index)).all()
     if not phrases:

@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { api, BatchListItem } from "../api";
 import { BatchCover } from "../ui/Art";
 import { IconBack } from "../ui/icons";
-import { SECTION_BY_SLUG } from "../lib/sections";
+import { sectionName, sectionBlurb } from "../lib/sections";
+import { useI18n } from "../i18n";
 
 const numOf = (slug: string) => {
   const m = slug.match(/(\d+)\s*$/);
@@ -13,6 +14,7 @@ const numOf = (slug: string) => {
 export default function SectionDetail() {
   const { slug = "" } = useParams();
   const nav = useNavigate();
+  const { t } = useI18n();
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [err, setErr] = useState("");
 
@@ -20,7 +22,7 @@ export default function SectionDetail() {
     api.listBatches().then(setBatches).catch((e) => setErr(String(e)));
   }, []);
 
-  const sec = SECTION_BY_SLUG[slug];
+  const blurb = sectionBlurb(slug);
   const items = useMemo(
     () =>
       batches
@@ -32,12 +34,12 @@ export default function SectionDetail() {
   return (
     <div className="screen">
       <button className="back-link" onClick={() => nav(-1)}>
-        <IconBack size={18} /> Библиотека
+        <IconBack size={18} /> {t("nav.library")}
       </button>
 
       <div className="screen-head">
-        <h1 className="app-title">{sec?.ru || slug}</h1>
-        {sec?.blurb && <p className="app-sub">{sec.blurb}</p>}
+        <h1 className="app-title">{sectionName(slug)}</h1>
+        {blurb && <p className="app-sub">{blurb}</p>}
       </div>
 
       {err && <p className="error">{err}</p>}
@@ -51,17 +53,17 @@ export default function SectionDetail() {
             onClick={() => nav(`/batch/${b.id}`)}
           >
             <span className="album-art">
-              <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+              <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
             </span>
             <div className="album-title">{b.title}</div>
             {b.preview && <div className="album-sub">{b.preview}</div>}
-            <div className="album-meta">{b.phrase_count} patterns</div>
+            <div className="album-meta">{t("lib.nPatterns", { n: b.phrase_count })}</div>
           </button>
         ))}
       </div>
 
       {!err && items.length === 0 && (
-        <p className="muted" style={{ marginTop: 8 }}>Скоро</p>
+        <p className="muted" style={{ marginTop: 8 }}>{t("lib.comingSoon")}</p>
       )}
     </div>
   );

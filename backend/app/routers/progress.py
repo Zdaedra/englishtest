@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from .. import models
+from .. import access, models
 from ..auth import current_user_id
 from ..db import get_session
 from ..entitlements import user_entitlements
@@ -66,7 +66,8 @@ def get_progress(batch_id: int, user_id: int = Depends(current_user_id),
 def put_progress(batch_id: int, patch: ProgressPatch,
                  user_id: int = Depends(current_user_id),
                  session: Session = Depends(get_session)):
-    if not session.get(models.Batch, batch_id):
+    batch = session.get(models.Batch, batch_id)
+    if not batch:
         raise HTTPException(404, "Batch not found")
     bp = session.exec(select(models.BatchProgress).where(
         models.BatchProgress.user_id == user_id,
@@ -76,6 +77,10 @@ def put_progress(batch_id: int, patch: ProgressPatch,
     now = datetime.now(timezone.utc)
     data = patch.model_dump(exclude_unset=True)
     if data.get("activated") and not bp.activated:
+        # Freemium gate: free users can only activate the free batch (+ own imports).
+        u = session.get(models.User, user_id)
+        if not access.batch_usable(u.plan if u else "free", batch, user_id):
+            raise HTTPException(403, "locked")
         # Free plan: cap simultaneously-active skills (an upgrade trigger).
         cap = user_entitlements(session, user_id)["max_active_batches"]
         if cap is not None:

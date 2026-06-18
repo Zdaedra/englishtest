@@ -5,6 +5,7 @@
 
 import { BatchListItem } from "../api";
 import { orderedSections } from "./sections";
+import { tg } from "../i18n";
 
 export type Intensity = "narrow" | "balanced" | "explore";
 
@@ -63,33 +64,33 @@ export function sectionsFor(focus: string): string[] {
 // Display weight mix (main / secondary / business / discovery), per the consilium.
 export function weightMix(s: Strategy): { label: string; pct: number }[] {
   const hasSec = s.secondary.length > 0;
-  const main = FOCUS_RU[s.main] ?? s.main;
-  const sec = hasSec ? s.secondary.map((k) => FOCUS_RU[k] ?? k).join(" / ") : "";
+  const main = tg(`focus.${s.main}`);
+  const sec = hasSec ? s.secondary.map((k) => tg(`focus.${k}`)).join(" / ") : "";
   if (s.intensity === "narrow")
     return [
       { label: main, pct: 75 },
-      ...(hasSec ? [{ label: sec, pct: 15 }] : [{ label: "Бизнес", pct: 15 }]),
-      { label: "Открытия", pct: 10 },
+      ...(hasSec ? [{ label: sec, pct: 15 }] : [{ label: tg("focus.business"), pct: 15 }]),
+      { label: tg("mix.discovery"), pct: 10 },
     ];
   if (s.intensity === "explore")
     return [
       { label: main, pct: 40 },
       ...(hasSec ? [{ label: sec, pct: 20 }] : []),
-      { label: "Бизнес", pct: 20 },
-      { label: "Открытия", pct: hasSec ? 20 : 40 },
+      { label: tg("focus.business"), pct: 20 },
+      { label: tg("mix.discovery"), pct: hasSec ? 20 : 40 },
     ];
   // balanced
   return hasSec
     ? [
         { label: main, pct: 50 },
         { label: sec, pct: 25 },
-        { label: "Бизнес", pct: 15 },
-        { label: "Открытия", pct: 10 },
+        { label: tg("focus.business"), pct: 15 },
+        { label: tg("mix.discovery"), pct: 10 },
       ]
     : [
         { label: main, pct: 60 },
-        { label: "Бизнес", pct: 15 },
-        { label: "Открытия", pct: 25 },
+        { label: tg("focus.business"), pct: 15 },
+        { label: tg("mix.discovery"), pct: 25 },
       ];
 }
 

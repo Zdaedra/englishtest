@@ -2,12 +2,13 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { api, BatchListItem, BatchMastery } from "../api";
-import { orderedSections, SECTION_BY_SLUG } from "../lib/sections";
+import { orderedSections, SECTION_BY_SLUG, sectionName } from "../lib/sections";
 import { getProgress } from "../lib/progress";
 import { getProfile, getStrategy, isOnboarded, prioritySectionSlugs } from "../lib/profile";
 import { buildSprint, weightMix } from "../lib/strategy";
 import { BatchCover } from "../ui/Art";
 import { IconArrowUp, IconCheck, IconPlay, IconRefresh, IconWave } from "../ui/icons";
+import { useI18n } from "../i18n";
 
 type NodeState = "completed" | "active" | "locked";
 
@@ -144,6 +145,7 @@ const daysSince = (iso: string | null) =>
 // locked. No level gates, no gamification — a calm map you read top to bottom.
 export default function Learning() {
   const nav = useNavigate();
+  const { t, lang } = useI18n();
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [mastery, setMastery] = useState<BatchMastery[]>([]);
   const [err, setErr] = useState("");
@@ -202,7 +204,7 @@ export default function Learning() {
   // The adaptive focus route: a small weighted sprint instead of all 89 at once.
   // Rebuilds live whenever the learner re-tunes (getStrategy reads the profile).
   const strategy = useMemo(() => getStrategy(), [batches]);
-  const mix = useMemo(() => weightMix(strategy), [strategy]);
+  const mix = useMemo(() => weightMix(strategy), [strategy, lang]);
   const sprint = useMemo(
     () => buildSprint(strategy, batches, (id) => !!getProgress(id).l3_passed),
     [strategy, batches]
@@ -267,22 +269,19 @@ export default function Learning() {
   return (
     <div className="screen map-screen">
       <div className="screen-head">
-        <h1 className="app-title">Обучение</h1>
-        <p className="app-sub">Твоя карта навыков — узел за узлом.</p>
+        <h1 className="app-title">{t("nav.learn")}</h1>
+        <p className="app-sub">{t("learn.sub")}</p>
         {total > 0 && (
-          <p className="path-meta">Пройдено {doneCount} из {total}</p>
+          <p className="path-meta">{t("learn.progress", { done: doneCount, total })}</p>
         )}
-        <p className="learn-note">
-          Навык закрывается прохождением всего бетча и сдачей тестов — можно прямо здесь
-          или открыв любой бетч в «Библиотеке».
-        </p>
+        <p className="learn-note">{t("learn.note")}</p>
       </div>
 
       {/* Training Focus — the live, re-tunable strategy control (consilium design). */}
       <button className="focus-card" onClick={() => nav("/tune")}>
         <div className="focus-head">
-          <span className="focus-kicker">Фокус обучения</span>
-          <span className="focus-adjust">Настроить →</span>
+          <span className="focus-kicker">{t("learn.focusKicker")}</span>
+          <span className="focus-adjust">{t("learn.adjust")}</span>
         </div>
         <div className="focus-mix">
           {mix.map((m, i) => (
@@ -296,22 +295,22 @@ export default function Learning() {
         <div className="sprint-block">
           <div className="review-head">
             <div className="review-head-main">
-              <span className="review-title">Текущий спринт</span>
-              <span className="review-sub">{sprint.length} батчей под твой фокус.</span>
+              <span className="review-title">{t("learn.sprintTitle")}</span>
+              <span className="review-sub">{t("learn.sprintSub", { n: sprint.length })}</span>
             </div>
           </div>
           <div className="review-rail">
             {sprint.map((b) => (
               <button className="review-card" key={b.id} onClick={() => nav(`/batch/${b.id}`)}>
                 <span className="review-thumb">
-                  <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                  <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                   {b.id === sprintActiveId && (
                     <span className="review-badge play"><IconPlay size={14} /></span>
                   )}
                 </span>
                 <span className="review-card-title">{b.title}</span>
                 <span className="review-card-hint">
-                  {b.id === sprintActiveId ? "Продолжить" : "В очереди"}
+                  {b.id === sprintActiveId ? t("learn.continue") : t("learn.queued")}
                 </span>
               </button>
             ))}
@@ -323,8 +322,8 @@ export default function Learning() {
         <div className="review-block">
           <div className="review-head">
             <div className="review-head-main">
-              <span className="review-title">На повторение</span>
-              <span className="review-sub">Подзабылось — освежи за пару минут.</span>
+              <span className="review-title">{t("learn.reviewTitle")}</span>
+              <span className="review-sub">{t("learn.reviewSub")}</span>
             </div>
             <span className="review-count">{dueList.length}</span>
           </div>
@@ -336,12 +335,12 @@ export default function Learning() {
                 onClick={() => nav(`/batch/${b.id}`)}
               >
                 <span className="review-thumb">
-                  <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                  <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                   <span className="review-badge"><IconRefresh size={15} /></span>
                 </span>
                 <span className="review-card-title">{b.title}</span>
                 <span className="review-card-hint">
-                  {reason === "weak" ? "Recall просел" : "Давно не трогал"}
+                  {reason === "weak" ? t("learn.recallWeak") : t("learn.longAgo")}
                 </span>
               </button>
             ))}
@@ -350,7 +349,7 @@ export default function Learning() {
       )}
 
       {chapters.length > 0 && (
-        <p className="section-label atlas-label">Атлас — все направления</p>
+        <p className="section-label atlas-label">{t("learn.atlas")}</p>
       )}
 
       <div className="map">
@@ -369,8 +368,8 @@ export default function Learning() {
             <div className="map-chapter" key={c.section.slug}>
               <div className="topic-header">
                 <div className="topic-head-main">
-                  <span className="topic-kicker">Раздел</span>
-                  <span className="topic-name">{c.section.ru}</span>
+                  <span className="topic-kicker">{t("learn.chapterKicker")}</span>
+                  <span className="topic-name">{sectionName(c.section.slug)}</span>
                 </div>
                 <span className="topic-count">{cDone}/{c.items.length}</span>
               </div>
@@ -392,13 +391,13 @@ export default function Learning() {
                       ref={st === "active" ? activeRef : undefined}
                     >
                       <div className="map-node-wrap">
-                        {st === "active" && <span className="map-bubble">Продолжить</span>}
+                        {st === "active" && <span className="map-bubble">{t("learn.continue")}</span>}
                         <button
                           className={`mnode ${st}${due ? " due" : ""}`}
                           onClick={() => nav(`/batch/${b.id}`)}
                         >
                           <span className="mnode-art">
-                            <BatchCover seed={b.slug} coverUrl={b.cover_url} />
+                            <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                           </span>
                           <span className="mnode-badge"><IconWave size={18} /></span>
                           {st === "completed" && (
@@ -418,12 +417,12 @@ export default function Learning() {
         })}
 
         {chapters.length > 0 && (
-          <div className="map-end">Дальше — новые разделы. Скоро.</div>
+          <div className="map-end">{t("learn.mapEnd")}</div>
         )}
       </div>
 
       {total === 0 && !err && (
-        <div className="empty"><p>Пока нечего проходить — батчи появятся здесь.</p></div>
+        <div className="empty"><p>{t("learn.empty")}</p></div>
       )}
 
       {/* Portaled to <body> so it's truly viewport-fixed: the routed screen keeps a
@@ -432,7 +431,7 @@ export default function Learning() {
       {activeId !== null &&
         showFab &&
         createPortal(
-          <button className="map-fab" onClick={jumpToActive} aria-label="К текущему узлу">
+          <button className="map-fab" onClick={jumpToActive} aria-label={t("learn.jumpAria")}>
             <IconArrowUp size={22} />
           </button>,
           document.body

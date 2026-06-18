@@ -41,6 +41,29 @@ def _migrate(s: Session) -> None:
     if "owner_id" not in cols:
         s.execute(text("ALTER TABLE batch ADD COLUMN owner_id INTEGER"))
         s.commit()
+    # Freemium: one catalog batch is fully free (rest need a paid plan).
+    if "is_free" not in cols:
+        s.execute(text("ALTER TABLE batch ADD COLUMN is_free BOOLEAN DEFAULT 0"))
+        s.commit()
+    # Content i18n: per-language JSON blobs (NULL = no translations yet → fall back
+    # to the base ru field). See app/localize.py / app/i18n_content.py.
+    for col in ("title_i18n", "subtitle_i18n", "theme_i18n"):
+        if col not in cols:
+            s.execute(text(f"ALTER TABLE batch ADD COLUMN {col} JSON"))
+            s.commit()
+    zcols = {row[1] for row in s.execute(text("PRAGMA table_info(zone)")).all()}
+    if zcols and "title_i18n" not in zcols:
+        s.execute(text("ALTER TABLE zone ADD COLUMN title_i18n JSON"))
+        s.commit()
+    pcols = {row[1] for row in s.execute(text("PRAGMA table_info(phrase)")).all()}
+    if pcols and "gloss_i18n" not in pcols:
+        s.execute(text("ALTER TABLE phrase ADD COLUMN gloss_i18n JSON"))
+        s.commit()
+    mcols = {row[1] for row in s.execute(text("PRAGMA table_info(mnemostory)")).all()}
+    for col in ("story_i18n", "spans_i18n"):
+        if mcols and col not in mcols:
+            s.execute(text(f"ALTER TABLE mnemostory ADD COLUMN {col} JSON"))
+            s.commit()
 
     # Per-user scoping (commercial multi-user): add user_id to the per-user event
     # tables on existing DBs. The old per-user columns on `phrase` are left in
@@ -55,8 +78,23 @@ def _migrate(s: Session) -> None:
 
     # Owner/admin flag on existing user tables (new DBs get it via create_all).
     uinfo = s.execute(text("PRAGMA table_info(user)")).all()
-    if uinfo and "is_admin" not in {row[1] for row in uinfo}:
+    ucols = {row[1] for row in uinfo}
+    if uinfo and "is_admin" not in ucols:
         s.execute(text("ALTER TABLE user ADD COLUMN is_admin BOOLEAN DEFAULT 0"))
+        s.commit()
+    # UI language preference (NULL = let the client decide / device default).
+    if uinfo and "ui_lang" not in ucols:
+        s.execute(text("ALTER TABLE user ADD COLUMN ui_lang VARCHAR"))
+        s.commit()
+    # Billing (Apple IAP) columns.
+    if uinfo and "plan_source" not in ucols:
+        s.execute(text("ALTER TABLE user ADD COLUMN plan_source VARCHAR DEFAULT 'manual'"))
+        s.commit()
+    if uinfo and "plan_expires_at" not in ucols:
+        s.execute(text("ALTER TABLE user ADD COLUMN plan_expires_at DATETIME"))
+        s.commit()
+    if uinfo and "apple_original_tx_id" not in ucols:
+        s.execute(text("ALTER TABLE user ADD COLUMN apple_original_tx_id VARCHAR"))
         s.commit()
 
 

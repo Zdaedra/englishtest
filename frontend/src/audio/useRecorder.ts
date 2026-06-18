@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from "react";
+import { tg } from "../i18n";
 
 // iOS Safari (and the standalone home-screen PWA) cannot use webkitSpeechRecognition,
 // so we capture a short clip with MediaRecorder and POST it to the STT endpoint.
@@ -46,7 +47,7 @@ export function useRecorder() {
   const start = useCallback(async (): Promise<boolean> => {
     setError("");
     if (!supported) {
-      setError("Запись звука не поддерживается в этом браузере.");
+      setError(tg("rec.unsupported"));
       return false;
     }
     try {
@@ -82,8 +83,8 @@ export function useRecorder() {
       streamRef.current = null;
       setError(
         e?.name === "NotAllowedError" || e?.name === "SecurityError"
-          ? "Нет доступа к микрофону. Разрешите его в настройках сайта."
-          : "Не удалось включить запись: " + String(e?.message || e)
+          ? tg("rec.noAccess")
+          : tg("rec.startFail", { msg: String(e?.message || e) })
       );
       return false;
     }
