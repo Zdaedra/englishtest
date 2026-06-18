@@ -24,7 +24,7 @@ Cautious (4-5)
 """
 
 
-def _stub_synth(text, voice=None, model=None, speed=None, fmt=None):
+def _stub_synth(text, voice=None, model=None, speed=None, fmt=None, instructions=None):
     s = get_settings()
     p = s.audio_dir / "phrases" / f"stub_{abs(hash(text)) % 10**8}.wav"
     with wave.open(str(p), "wb") as w:
@@ -76,6 +76,13 @@ def main():
     init_db()
     client = TestClient(app)
     assert client.get("/api/health").json() == {"ok": True}
+    # The API is auth-gated (multi-tenant). The first account in this fresh temp
+    # DB bootstraps as admin on the "ai" plan, which has the `import` entitlement;
+    # TestClient carries the eng_auth cookie to the calls below.
+    reg = client.post("/api/auth/register",
+                      json={"email": "smoke@example.com", "password": "smoke-pass-123"})
+    assert reg.status_code == 200, reg.text
+    print(f"[auth] registered smoke user admin={reg.json()['is_admin']} plan={reg.json()['plan']}")
     r = client.post("/api/imports/commit", json=b.model_dump())
     assert r.status_code == 200, r.text
     bid = r.json()["id"]
