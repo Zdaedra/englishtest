@@ -1,0 +1,30 @@
+name: tests
+
+# Runs the backend test suite on every push / PR that touches the backend.
+# Inert until this repo has a GitHub remote and is pushed there.
+on:
+  push:
+    paths:
+      - "backend/**"
+      - ".github/workflows/tests.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/tests.yml"
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Run pytest (offline — TTS/STT/LLM/cover stubbed, no API keys)
+        run: python -m pytest

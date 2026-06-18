@@ -1,0 +1,17 @@
+#!/bin/sh
+# Pre-push hook: run the backend test suite before allowing a push.
+# Enable with: scripts/setup-dev.sh  (sets core.hooksPath=scripts/git-hooks)
+root=$(git rev-parse --show-toplevel)
+cd "$root/backend" || exit 1
+
+if [ ! -x .venv/bin/python ]; then
+  echo "pre-push: backend/.venv missing — skipping tests (run scripts/setup-dev.sh)"
+  exit 0
+fi
+
+echo "pre-push: running backend test suite…"
+if ! .venv/bin/python -m pytest -q; then
+  echo "pre-push: ✗ tests failed — push aborted (use 'git push --no-verify' to override)"
+  exit 1
+fi
+echo "pre-push: ✓ tests passed"
