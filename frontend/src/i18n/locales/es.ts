@@ -316,6 +316,7 @@ const es: Dict = {
 
   // ── Learning map ───────────────────────────────────────────────────
   "learn.sub": "Tu mapa de habilidades — nodo a nodo.",
+  "learn.presence": "Presencia",
   "learn.progress": "{{done}} de {{total}} superados",
   "learn.note": "La habilidad se cierra al completar todo el set y aprobar los tests — aquí mismo o abriendo cualquier set en la «Biblioteca».",
   "learn.focusKicker": "Foco del aprendizaje",

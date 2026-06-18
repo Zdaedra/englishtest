@@ -82,6 +82,9 @@ def _migrate(s: Session) -> None:
         if "next_review_at" not in spcols:
             s.execute(text("ALTER TABLE userphrasestat ADD COLUMN next_review_at DATETIME"))
             s.commit()
+        if "latency_ewma_ms" not in spcols:
+            s.execute(text("ALTER TABLE userphrasestat ADD COLUMN latency_ewma_ms FLOAT"))
+            s.commit()
 
     # Per-user scoping (commercial multi-user): add user_id to the per-user event
     # tables on existing DBs. The old per-user columns on `phrase` are left in

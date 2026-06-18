@@ -31,6 +31,20 @@ INTERVAL_MAX_DAYS = 180.0
 # A fresh lapse is "due now" — re-drilled this or the next session, not in days.
 LAPSE_DELAY = timedelta(minutes=10)
 
+# Automaticity gate: "automatic" requires fast recall, not just accurate. Client
+# latency is dirty (think + network + mic + STT), so the threshold is generous
+# and applied to an EWMA, not a single attempt. base + per-word, in milliseconds.
+LAT_BASE_MS = 2500.0
+LAT_PER_WORD_MS = 700.0
+
+
+def is_fast(latency_ewma_ms: float | None, words: int | None) -> bool | None:
+    """Is the user's typical recall of this phrase fast enough to be 'automatic'?
+    Returns None when there's no latency signal yet (don't gate on missing data)."""
+    if latency_ewma_ms is None or not words:
+        return None
+    return latency_ewma_ms <= LAT_BASE_MS + LAT_PER_WORD_MS * words
+
 
 def band_from_score(score: float) -> str:
     """Map a 0..10 spoken-recall score to an SRS grade.
@@ -58,9 +72,10 @@ def _seed(st) -> None:
         st.reps, st.interval_days, st.ease = 0, 0.0, EASE_DEFAULT
 
 
-def advance(st, band: str, now: datetime | None = None) -> None:
+def advance(st, band: str, now: datetime | None = None, fast: bool | None = None) -> None:
     """Advance the schedule (interval / ease / reps / next_review_at) and srs_status
-    for one graded review. `band` is 'easy' | 'slow' | 'failed'. Mutates `st`."""
+    for one graded review. `band` is 'easy' | 'slow' | 'failed'. `fast` (if known)
+    gates the top tier: you can be accurate-but-slow, but not 'automatic'. Mutates `st`."""
     now = now or datetime.now(timezone.utc)
     _seed(st)
     ease = st.ease or EASE_DEFAULT
@@ -90,4 +105,8 @@ def advance(st, band: str, now: datetime | None = None) -> None:
     st.ease = round(ease, 3)
     st.interval_days = interval
     st.next_review_at = now + (timedelta(days=interval) if interval > 0 else LAPSE_DELAY)
-    st.srs_status = SRS_NEXT.get((st.srs_status or "new", band), st.srs_status or "new")
+    status = SRS_NEXT.get((st.srs_status or "new", band), st.srs_status or "new")
+    # Accuracy gets you to "familiar"; only accuracy + speed earns "automatic".
+    if status == "automatic" and fast is False:
+        status = "familiar"
+    st.srs_status = status

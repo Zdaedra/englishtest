@@ -65,14 +65,20 @@ def _stats_for(session: Session, user_id: int, phrase_ids: list[int]) -> dict[in
     return {r.phrase_id: r for r in rows}
 
 
-def _apply_rollup(st: models.UserPhraseStat, score: int) -> None:
+def _apply_rollup(st: models.UserPhraseStat, score: int,
+                  latency_ms: int | None = None, words: int | None = None) -> None:
     now = datetime.now(timezone.utc)
     st.avg_score = float(score) if st.avg_score is None else _EWMA_ALPHA * score + (1 - _EWMA_ALPHA) * st.avg_score
     st.attempts = (st.attempts or 0) + 1
     st.last_score = score
     st.last_seen_at = now
+    # Track typical recall speed (EWMA) to gate the "automatic" tier.
+    if latency_ms is not None and latency_ms > 0:
+        st.latency_ewma_ms = (float(latency_ms) if st.latency_ewma_ms is None
+                              else _EWMA_ALPHA * latency_ms + (1 - _EWMA_ALPHA) * st.latency_ewma_ms)
     # Advance the spaced-repetition schedule from this graded attempt.
-    srs.advance(st, srs.band_from_score(score), now)
+    fast = srs.is_fast(st.latency_ewma_ms, words)
+    srs.advance(st, srs.band_from_score(score), now, fast=fast)
 
 
 async def _read_audio(audio: UploadFile) -> bytes:
@@ -98,7 +104,7 @@ async def score_phrase(audio: UploadFile = File(...), phrase_id: int = Form(...)
     score = int(result["score"])
 
     st = _stat(session, user_id, p)
-    _apply_rollup(st, score)
+    _apply_rollup(st, score, latency_ms=latency_ms, words=len((p.phrase_en or "").split()))
     session.add(st)
     session.add(models.PhraseAttempt(user_id=user_id, phrase_id=phrase_id, score=score,
                                      transcript=transcript, via=result["via"],
@@ -435,7 +441,7 @@ def swipe(body: SwipeIn, user_id: int = Depends(current_user_id),
 def _record_answer(session: Session, user_id: int, p: models.Phrase, transcript: str,
                    score: int, feedback: str, via: str, latency_ms: int | None) -> models.TrainingEvent:
     st = _stat(session, user_id, p)
-    _apply_rollup(st, score)
+    _apply_rollup(st, score, latency_ms=latency_ms, words=len((p.phrase_en or "").split()))
     now = datetime.now(timezone.utc)
     if score >= 8:
         st.last_success_at = now

@@ -86,6 +86,9 @@ class UserPhraseStat(SQLModel, table=True):
     ease: float = 2.3
     reps: int = 0
     next_review_at: Optional[datetime] = None
+    # EWMA of answer latency (ms). Gates "automatic": a phrase is only mastered
+    # when recalled both accurately AND fast (ACT-R automaticity). See app/srs.py.
+    latency_ewma_ms: Optional[float] = None
 
 
 class MnemoStory(SQLModel, table=True):

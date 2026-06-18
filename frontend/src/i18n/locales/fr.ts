@@ -316,6 +316,7 @@ const fr: Dict = {
 
   // ── Learning map ───────────────────────────────────────────────────
   "learn.sub": "Ta carte de compétences — nœud après nœud.",
+  "learn.presence": "Présence",
   "learn.progress": "{{done}} sur {{total}} terminés",
   "learn.note": "Une compétence se valide en finissant tout le set et en passant les tests — ici même ou en ouvrant n'importe quel set dans la « Bibliothèque ».",
   "learn.focusKicker": "Focus d'apprentissage",

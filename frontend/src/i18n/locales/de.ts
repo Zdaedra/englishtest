@@ -316,6 +316,7 @@ const de: Dict = {
 
   // ── Learning map ───────────────────────────────────────────────────
   "learn.sub": "Deine Skill-Karte — Knoten für Knoten.",
+  "learn.presence": "Präsenz",
   "learn.progress": "{{done}} von {{total}} geschafft",
   "learn.note": "Ein Skill ist abgeschlossen, wenn du das ganze Set durchläufst und die Tests bestehst — direkt hier oder über ein beliebiges Set in der «Bibliothek».",
   "learn.focusKicker": "Lernfokus",

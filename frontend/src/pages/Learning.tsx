@@ -217,6 +217,28 @@ export default function Learning() {
     () => new Map(mastery.map((m) => [m.batch_id, m] as const)),
     [mastery]
   );
+
+  // Per-domain "presence" competence: share of a domain's phrases recalled at
+  // familiar/automatic (CEFR can-do feel, sober — not a game HUD). Only domains
+  // the learner has actually touched appear, so it never reads all-zero.
+  const domains = useMemo(() => {
+    return chapters
+      .map((c) => {
+        let total = 0, mastered = 0, shaky = 0;
+        for (const b of c.items) {
+          total += b.phrase_count || 0;
+          const srs = masteryById.get(b.id)?.srs || {};
+          mastered += (srs.familiar || 0) + (srs.automatic || 0);
+          shaky += srs.shaky || 0;
+        }
+        return { slug: c.section.slug, name: sectionName(c.section.slug),
+                 total, mastered, shaky, pct: total ? mastered / total : 0 };
+      })
+      .filter((d) => d.mastered + d.shaky > 0)
+      .sort((a, b) => b.pct - a.pct)
+      .slice(0, 6);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chapters, masteryById, lang]);
   const dueReason = (id: number): "weak" | "stale" | null => {
     if (!closed(id)) return null;
     const m = masteryById.get(id);
@@ -289,6 +311,35 @@ export default function Learning() {
           ))}
         </div>
       </button>
+
+      {/* Per-domain "presence" competence rings — a sober skills profile, not a HUD. */}
+      {domains.length > 0 && (
+        <div className="presence">
+          <p className="section-label">{t("learn.presence")}</p>
+          <div className="presence-row">
+            {domains.map((d) => {
+              const C = 2 * Math.PI * 22;
+              const dash = Math.max(0, Math.min(1, d.pct)) * C;
+              return (
+                <button key={d.slug} className="presence-ring" onClick={() => nav(`/section/${d.slug}`)}>
+                  <span className="presence-disc">
+                    <svg viewBox="0 0 52 52" width="52" height="52" aria-hidden="true">
+                      <circle cx="26" cy="26" r="22" fill="none" stroke="var(--hairline)" strokeWidth="4" />
+                      <circle cx="26" cy="26" r="22" fill="none" stroke="var(--mark)" strokeWidth="4"
+                        strokeLinecap="round" strokeDasharray={`${dash} ${C}`} transform="rotate(-90 26 26)" />
+                      <text x="26" y="26" textAnchor="middle" dominantBaseline="central" className="presence-pct">
+                        {Math.round(d.pct * 100)}
+                      </text>
+                    </svg>
+                    {d.shaky > 0 && <span className="presence-shaky">{d.shaky}</span>}
+                  </span>
+                  <span className="presence-name">{d.name}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Current sprint — the small active set under the chosen focus, not all 89. */}
       {sprint.length > 0 && (

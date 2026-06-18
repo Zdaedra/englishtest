@@ -482,6 +482,53 @@ a { color: inherit; text-decoration: none; }
   margin: 4px 2px 11px;
 }
 
+/* Per-domain "presence" competence rings on the Learning map. */
+.presence { margin: 2px 0 6px; }
+.presence-row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 2px 2px 6px;
+  scrollbar-width: none;
+}
+.presence-row::-webkit-scrollbar { display: none; }
+.presence-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  width: 66px;
+  background: none;
+  border: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.presence-disc { position: relative; display: block; width: 52px; height: 52px; }
+.presence-pct { font-size: 14px; font-weight: 700; fill: var(--text); }
+.presence-shaky {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  min-width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--bronze-soft);
+  color: var(--bronze-ink);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+.presence-name {
+  font-size: 0.6875rem;
+  line-height: 1.15;
+  color: var(--muted);
+  text-align: center;
+  max-width: 66px;
+}
+
 /* Spaced-repetition "to refresh" card — calm, adult, no badge/streak pressure. */
 .review-due {
   display: flex;
