@@ -79,6 +79,13 @@ class UserPhraseStat(SQLModel, table=True):
     self_ewma: Optional[float] = None
     last_failed_at: Optional[datetime] = None
     last_success_at: Optional[datetime] = None
+    # SM-2-lite spaced-repetition schedule (see app/srs.py). next_review_at is the
+    # due time the deck prioritizes; interval/ease/reps drive it and are seeded
+    # from avg_score the first time a phrase is scheduled (no cold-start reset).
+    interval_days: float = 0.0
+    ease: float = 2.3
+    reps: int = 0
+    next_review_at: Optional[datetime] = None
 
 
 class MnemoStory(SQLModel, table=True):

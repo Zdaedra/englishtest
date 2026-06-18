@@ -13,7 +13,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from .. import access, entitlements, localize, models, scoring, stt
+from .. import access, entitlements, localize, models, scoring, srs, stt
 from ..auth import current_user_id
 from ..db import get_session
 
@@ -66,10 +66,13 @@ def _stats_for(session: Session, user_id: int, phrase_ids: list[int]) -> dict[in
 
 
 def _apply_rollup(st: models.UserPhraseStat, score: int) -> None:
+    now = datetime.now(timezone.utc)
     st.avg_score = float(score) if st.avg_score is None else _EWMA_ALPHA * score + (1 - _EWMA_ALPHA) * st.avg_score
     st.attempts = (st.attempts or 0) + 1
     st.last_score = score
-    st.last_seen_at = datetime.now(timezone.utc)
+    st.last_seen_at = now
+    # Advance the spaced-repetition schedule from this graded attempt.
+    srs.advance(st, srs.band_from_score(score), now)
 
 
 async def _read_audio(audio: UploadFile) -> bytes:
@@ -175,6 +178,7 @@ def mastery(user_id: int = Depends(current_user_id), session: Session = Depends(
     ).all()
     stats = session.exec(select(models.UserPhraseStat).where(
         models.UserPhraseStat.user_id == user_id)).all()
+    now = datetime.now(timezone.utc)
     by_batch: dict[int, list] = {}
     for st in stats:
         by_batch.setdefault(st.batch_id, []).append(st)
@@ -183,11 +187,22 @@ def mastery(user_id: int = Depends(current_user_id), session: Session = Depends(
         rows = by_batch.get(b.id, [])
         scored = [s.avg_score for s in rows if s.avg_score is not None]
         seen = [s.last_seen_at for s in rows if s.last_seen_at is not None]
+        # SRS schedule rollup: how many phrases are due now, when the next one is
+        # due, and the qualitative state breakdown (for a competence map later).
+        nexts = [nr for s in rows if (nr := _aware(s.next_review_at)) is not None]
+        due = sum(1 for nr in nexts if nr <= now)
+        upcoming = [nr for nr in nexts if nr > now]
+        srs_counts: dict[str, int] = {}
+        for s in rows:
+            srs_counts[s.srs_status or "new"] = srs_counts.get(s.srs_status or "new", 0) + 1
         out.append({
             "batch_id": b.id,
             "avg_score": (sum(scored) / len(scored)) if scored else None,
             "attempts": sum(s.attempts or 0 for s in rows),
             "last_seen_at": max(seen).isoformat() if seen else None,
+            "due": due,
+            "next_review_at": min(upcoming).isoformat() if upcoming else None,
+            "srs": srs_counts,
         })
     return out
 
@@ -296,6 +311,18 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
         avg = (st.avg_score if st else None) or 0.0
         return (avg / 10.0) * (1 - 1.0 / (1 + attempts))
 
+    def _due_factor(st: models.UserPhraseStat | None) -> float:
+        """SRS spacing: lift (over)due phrases, suppress not-yet-due ones, leave
+        never-scheduled (new / pre-SRS) phrases neutral so new_boost still works."""
+        nr = _aware(st.next_review_at) if st else None
+        if nr is None:
+            return 1.0
+        if nr <= now:
+            overdue_days = (now - nr).total_seconds() / 86400.0
+            return 1.6 + min(1.4, overdue_days * 0.2)      # 1.6 → 3.0 as it overdues
+        ahead_days = (nr - now).total_seconds() / 86400.0
+        return max(0.15, 1.0 - min(0.85, ahead_days * 0.15))  # sink scheduled-future items
+
     def weight(p: models.Phrase) -> float:
         st = stats.get(p.id)
         phrase_weak = 1 - _conf(p)
@@ -304,9 +331,14 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
         recent_fail = lf is not None and timedelta(hours=24) <= (now - lf) <= timedelta(hours=72)
         fail_boost = 1.0 if recent_fail else 0.3
         new_boost = 0.6 if (not st or (st.attempts or 0) == 0) else 0.0
-        maint_factor = 0.12 if (p.batch_id in maint and p.batch_id not in active) else 1.0
+        is_maint = p.batch_id in maint and p.batch_id not in active
+        nr = _aware(st.next_review_at) if st else None
+        is_due = nr is not None and nr <= now
+        # Completed-batch (maintenance) phrases are normally suppressed, but a DUE
+        # review is exactly when they should resurface — so lift the floor then.
+        maint_factor = (0.8 if is_due else 0.12) if is_maint else 1.0
         w = (0.45 * phrase_weak + 0.30 * batch_weak
-             + 0.15 * fail_boost + 0.10 * new_boost) * maint_factor
+             + 0.15 * fail_boost + 0.10 * new_boost) * maint_factor * _due_factor(st)
         return max(0.01, w)
 
     def _seen_recent(p: models.Phrase) -> bool:

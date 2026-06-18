@@ -65,6 +65,24 @@ def _migrate(s: Session) -> None:
             s.execute(text(f"ALTER TABLE mnemostory ADD COLUMN {col} JSON"))
             s.commit()
 
+    # SM-2-lite spaced-repetition schedule on the per-user phrase state. Existing
+    # rows default to interval 0 / ease 2.3 / reps 0 / next_review NULL → they get
+    # seeded from avg_score the first time they're scored (see app/srs.py).
+    spcols = {row[1] for row in s.execute(text("PRAGMA table_info(userphrasestat)")).all()}
+    if spcols:
+        if "interval_days" not in spcols:
+            s.execute(text("ALTER TABLE userphrasestat ADD COLUMN interval_days FLOAT DEFAULT 0"))
+            s.commit()
+        if "ease" not in spcols:
+            s.execute(text("ALTER TABLE userphrasestat ADD COLUMN ease FLOAT DEFAULT 2.3"))
+            s.commit()
+        if "reps" not in spcols:
+            s.execute(text("ALTER TABLE userphrasestat ADD COLUMN reps INTEGER DEFAULT 0"))
+            s.commit()
+        if "next_review_at" not in spcols:
+            s.execute(text("ALTER TABLE userphrasestat ADD COLUMN next_review_at DATETIME"))
+            s.commit()
+
     # Per-user scoping (commercial multi-user): add user_id to the per-user event
     # tables on existing DBs. The old per-user columns on `phrase` are left in
     # place but orphaned — the model no longer maps them (state moved to

@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from .. import access, audio, content, cover, localize, models, tts
+from .. import access, audio, content, cover, localize, models, srs, tts
 from .. import mnemo as mnemo_render
 from ..auth import current_user_id, is_admin
 from ..db import get_session
@@ -44,14 +44,6 @@ class CoverIn(BaseModel):
     metaphor: Optional[str] = None
     quality: Optional[str] = None
     force: bool = False
-
-# SRS-lite transitions
-_SRS_NEXT = {
-    ("new", "easy"): "familiar", ("new", "slow"): "shaky", ("new", "failed"): "shaky",
-    ("shaky", "easy"): "familiar", ("shaky", "slow"): "shaky", ("shaky", "failed"): "shaky",
-    ("familiar", "easy"): "automatic", ("familiar", "slow"): "familiar", ("familiar", "failed"): "shaky",
-    ("automatic", "easy"): "automatic", ("automatic", "slow"): "familiar", ("automatic", "failed"): "shaky",
-}
 
 
 @router.get("")
@@ -369,7 +361,9 @@ def post_review(rev: ReviewIn, user_id: int = Depends(current_user_id),
         models.UserPhraseStat.phrase_id == p.id)).first()
     if not st:
         st = models.UserPhraseStat(user_id=user_id, phrase_id=p.id, batch_id=p.batch_id)
-    st.srs_status = _SRS_NEXT.get((st.srs_status, rev.score), st.srs_status)
+    # Advance the full SM-2-lite schedule (interval/ease/next_review + srs_status).
+    srs.advance(st, rev.score)
     session.add(st)
     session.commit()
-    return {"phrase_id": p.id, "srs_status": st.srs_status}
+    return {"phrase_id": p.id, "srs_status": st.srs_status,
+            "next_review_at": st.next_review_at.isoformat() if st.next_review_at else None}
