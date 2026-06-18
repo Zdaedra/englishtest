@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { api, DeckCard, AnswerResult, SessionSummary, Coach } from "../api";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
@@ -91,6 +91,10 @@ function Head({ title }: { title?: string }) {
 
 export default function Training() {
   const nav = useNavigate();
+  const loc = useLocation();
+  // Review mode (opened from the home "to refresh" card): a pure due-only session
+  // drawing from every engaged batch, not just the current sprint.
+  const review = !!(loc.state as { review?: boolean } | null)?.review;
   const { user } = useAuth();
   const { t } = useI18n();
   const uid = user?.id;
@@ -125,14 +129,15 @@ export default function Training() {
 
   const loadDeck = useCallback(() => {
     const { active, maint } = sources;
-    const batchIds = active.length ? active : maint;
-    const maintenanceIds = active.length ? maint : [];
+    // Review: draw due items from EVERY engaged batch (active + completed).
+    const batchIds = review ? [...new Set([...active, ...maint])] : (active.length ? active : maint);
+    const maintenanceIds = review ? [] : (active.length ? maint : []);
     if (!batchIds.length) { setPhase("empty"); setQueue([]); return; }
     setPhase("loading");
-    api.getDeck(batchIds, { maintenanceIds, limit: FETCH_LIMIT })
+    api.getDeck(batchIds, { maintenanceIds, limit: FETCH_LIMIT, dueOnly: review })
       .then((d) => { setQueue(d); setPhase(d.length ? "deck" : "empty"); shownAtRef.current = Date.now(); })
       .catch((e) => { setErr(String(e)); setPhase("error"); });
-  }, [sources]);
+  }, [sources, review]);
 
   useEffect(() => { loadDeck(); }, [loadDeck]);
   useEffect(() => { shownAtRef.current = Date.now(); }, [pos]);
@@ -318,7 +323,7 @@ export default function Training() {
 
   return (
     <div className="screen tr-screen">
-      <Head title={card?.batch_title} />
+      <Head title={review ? t("review.headTitle") : card?.batch_title} />
 
       <div className="tr-deck">
         {ghosts.map((g, i) => (

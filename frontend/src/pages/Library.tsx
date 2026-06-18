@@ -28,6 +28,8 @@ export default function Library() {
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [err, setErr] = useState("");
   const [streak] = useState(() => recordVisit());
+  // Spaced-repetition: how many practiced phrases are due to refresh right now.
+  const [dueCount, setDueCount] = useState(0);
 
   // Search (opened from the floating nav's search button).
   const [searchOpen, setSearchOpen] = useState(false);
@@ -37,6 +39,9 @@ export default function Library() {
 
   useEffect(() => {
     api.listBatches().then(setBatches).catch((e) => setErr(String(e)));
+    api.getMastery()
+      .then((ms) => setDueCount(ms.reduce((s, m) => s + (m.due || 0), 0)))
+      .catch(() => {/* non-fatal — just hides the review card */});
   }, []);
 
   useEffect(() => {
@@ -285,6 +290,25 @@ export default function Library() {
               <span className="metric-label">{t("lib.mStreak")}</span>
             </div>
           </div>
+
+          {/* Spaced repetition — a calm, opt-in refresh of phrases that are due.
+              Shown only when something is actually due; no badge/streak pressure. */}
+          {dueCount > 0 && (
+            <button className="review-due" onClick={() => nav("/practice", { state: { review: true } })}>
+              <span className="review-due-ico">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 4v4h4" />
+                </svg>
+              </span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("review.dueTitle")}</span>
+                <span className="review-due-sub">{t("review.dueSub", { n: dueCount })}</span>
+              </span>
+              <span className="review-due-go">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              </span>
+            </button>
+          )}
 
           {/* Current Focus — the hero. */}
           {focus && (

@@ -52,6 +52,9 @@ export type RotationItem = {
 export type BatchMastery = {
   batch_id: number; avg_score: number | null; attempts: number;
   last_seen_at: string | null;
+  // SM-2-lite schedule rollup: phrases due now, when the next is due, and the
+  // qualitative state breakdown (new/shaky/familiar/automatic).
+  due?: number; next_review_at?: string | null; srs?: Record<string, number>;
 };
 export type PhraseSearchItem = {
   phrase_id: number; batch_id: number; batch_title: string;
@@ -218,11 +221,12 @@ export const api = {
     apiFetch(`/api/training/rotation/${batchId}`).then(j<RotationItem[]>),
   getMastery: () => apiFetch("/api/training/mastery").then(j<BatchMastery[]>),
   // --- Swipe-deck Training ---
-  getDeck: (batchIds: number[], opts?: { maintenanceIds?: number[]; limit?: number; exclude?: number[] }) => {
+  getDeck: (batchIds: number[], opts?: { maintenanceIds?: number[]; limit?: number; exclude?: number[]; dueOnly?: boolean }) => {
     const q = new URLSearchParams({ batch_ids: batchIds.join(",") });
     if (opts?.maintenanceIds?.length) q.set("maintenance_ids", opts.maintenanceIds.join(","));
     if (opts?.limit) q.set("limit", String(opts.limit));
     if (opts?.exclude?.length) q.set("exclude", opts.exclude.join(","));
+    if (opts?.dueOnly) q.set("due_only", "1");
     q.set("lang", clang());
     return apiFetch(`/api/training/deck?${q}`).then(j<DeckCard[]>);
   },

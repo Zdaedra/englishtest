@@ -256,7 +256,8 @@ def _aware(dt: datetime | None) -> datetime | None:
 
 @router.get("/deck")
 def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
-         exclude: str = "", lang: str = "", user_id: int = Depends(current_user_id),
+         exclude: str = "", due_only: bool = False, lang: str = "",
+         user_id: int = Depends(current_user_id),
          session: Session = Depends(get_session)):
     """Cross-batch adaptive deck for the swipe-trainer, scoped to this user's stats.
     Weights toward weak spots (low phrase/batch mastery, recent fails, never-seen)
@@ -349,6 +350,14 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
     pool = [p for p in phrases if p.id not in excl and not _seen_recent(p)]
     if not pool:
         pool = phrases
+    if due_only:
+        # Pure refresh session: keep only phrases the schedule says are due now.
+        # Empty result is correct (nothing due → caller shows an "all caught up").
+        def _is_due(p: models.Phrase) -> bool:
+            st = stats.get(p.id)
+            nr = _aware(st.next_review_at) if st else None
+            return nr is not None and nr <= now
+        pool = [p for p in pool if _is_due(p)]
     keyed = sorted(pool, key=lambda p: random.random() ** (1.0 / weight(p)),
                    reverse=True)[:max(1, limit)]
 

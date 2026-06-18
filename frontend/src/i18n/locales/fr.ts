@@ -396,6 +396,11 @@ const fr: Dict = {
   "pb.shuffle": "Aléatoire",
   "pb.loop": "Boucle",
   "pb.favorite": "Favori",
+
+  // ── Spaced-repetition review ───────────────────────────────────────
+  "review.dueTitle": "À rafraîchir",
+  "review.dueSub": "Au bord de l'oubli : {{n}} · 5 min",
+  "review.headTitle": "Révision",
 };
 
 export default fr;

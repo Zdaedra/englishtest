@@ -410,6 +410,11 @@ const ru: Dict = {
   "pb.shuffle": "Вперемешку",
   "pb.loop": "По кругу",
   "pb.favorite": "В избранное",
+
+  // ── Spaced-repetition review ───────────────────────────────────────
+  "review.dueTitle": "К освежению",
+  "review.dueSub": "На грани забывания: {{n}} · 5 минут",
+  "review.headTitle": "Освежение",
 };
 
 export default ru;

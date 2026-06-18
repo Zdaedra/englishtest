@@ -396,6 +396,11 @@ const de: Dict = {
   "pb.shuffle": "Zufall",
   "pb.loop": "Schleife",
   "pb.favorite": "Favorit",
+
+  // ── Spaced-repetition review ───────────────────────────────────────
+  "review.dueTitle": "Zum Auffrischen",
+  "review.dueSub": "Kurz vorm Vergessen: {{n}} · 5 Min.",
+  "review.headTitle": "Auffrischen",
 };
 
 export default de;
