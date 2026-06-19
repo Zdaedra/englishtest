@@ -18,12 +18,12 @@ type Tier = {
 const TIERS: Tier[] = [
   {
     plan: "ai", nameKey: "sub.ai.name", taglineKey: "sub.ai.tagline",
-    monthly: "$24.99", yearly: "$149.99", savePct: "50%", flagship: true,
+    monthly: "$12.99", yearly: "$79.99", savePct: "49%", flagship: true,
     features: ["sub.ai.f1", "sub.ai.f2", "sub.ai.f3", "sub.ai.f4"],
   },
   {
     plan: "core", nameKey: "sub.core.name", taglineKey: "sub.core.tagline",
-    monthly: "$12.99", yearly: "$79.99", savePct: "49%",
+    monthly: "$6.99", yearly: "$39.99", savePct: "52%",
     features: ["sub.core.f1", "sub.core.f2", "sub.core.f3"],
   },
 ];
