@@ -95,6 +95,9 @@ export default function Training() {
   // Review mode (opened from the home "to refresh" card): a pure due-only session
   // drawing from every engaged batch, not just the current sprint.
   const review = !!(loc.state as { review?: boolean } | null)?.review;
+  // Confidence-check mode (from the Learning "calibration gap" card): drill only
+  // phrases swiped "known" but not produced aloud, across every engaged batch.
+  const gap = !!(loc.state as { gap?: boolean } | null)?.gap;
   const { user } = useAuth();
   const { t } = useI18n();
   const uid = user?.id;
@@ -129,15 +132,16 @@ export default function Training() {
 
   const loadDeck = useCallback(() => {
     const { active, maint } = sources;
-    // Review: draw due items from EVERY engaged batch (active + completed).
-    const batchIds = review ? [...new Set([...active, ...maint])] : (active.length ? active : maint);
-    const maintenanceIds = review ? [] : (active.length ? maint : []);
+    // Review / confidence-check: draw from EVERY engaged batch (active + completed).
+    const wide = review || gap;
+    const batchIds = wide ? [...new Set([...active, ...maint])] : (active.length ? active : maint);
+    const maintenanceIds = wide ? [] : (active.length ? maint : []);
     if (!batchIds.length) { setPhase("empty"); setQueue([]); return; }
     setPhase("loading");
-    api.getDeck(batchIds, { maintenanceIds, limit: FETCH_LIMIT, dueOnly: review })
+    api.getDeck(batchIds, { maintenanceIds, limit: FETCH_LIMIT, dueOnly: review, gapOnly: gap })
       .then((d) => { setQueue(d); setPhase(d.length ? "deck" : "empty"); shownAtRef.current = Date.now(); })
       .catch((e) => { setErr(String(e)); setPhase("error"); });
-  }, [sources, review]);
+  }, [sources, review, gap]);
 
   useEffect(() => { loadDeck(); }, [loadDeck]);
   useEffect(() => { shownAtRef.current = Date.now(); }, [pos]);
@@ -323,7 +327,7 @@ export default function Training() {
 
   return (
     <div className="screen tr-screen">
-      <Head title={review ? t("review.headTitle") : card?.batch_title} />
+      <Head title={gap ? t("calib.headTitle") : review ? t("review.headTitle") : card?.batch_title} />
 
       <div className="tr-deck">
         {ghosts.map((g, i) => (

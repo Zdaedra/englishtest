@@ -239,6 +239,9 @@ export default function Learning() {
       .slice(0, 6);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chapters, masteryById, lang]);
+
+  // Confidence-calibration gap: phrases swiped "known" but not produced aloud.
+  const gapCount = useMemo(() => mastery.reduce((s, m) => s + (m.gap || 0), 0), [mastery]);
   const dueReason = (id: number): "weak" | "stale" | null => {
     if (!closed(id)) return null;
     const m = masteryById.get(id);
@@ -339,6 +342,25 @@ export default function Learning() {
             })}
           </div>
         </div>
+      )}
+
+      {/* Confidence check — phrases you swiped "known" but never said aloud.
+          Surfacing the self-vs-objective gap is the top self-study insight. */}
+      {gapCount > 0 && (
+        <button className="review-due calib-card" onClick={() => nav("/practice", { state: { gap: true } })}>
+          <span className="review-due-ico">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="0.6" fill="currentColor" />
+            </svg>
+          </span>
+          <span className="review-due-text">
+            <span className="review-due-title">{t("calib.title")}</span>
+            <span className="review-due-sub">{t("calib.sub", { n: gapCount })}</span>
+          </span>
+          <span className="review-due-go">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+          </span>
+        </button>
       )}
 
       {/* Current sprint — the small active set under the chosen focus, not all 89. */}

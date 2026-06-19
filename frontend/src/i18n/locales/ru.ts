@@ -419,6 +419,9 @@ const ru: Dict = {
   "review.dueTitle": "К освежению",
   "review.dueSub": "На грани забывания: {{n}} · 5 минут",
   "review.headTitle": "Освежение",
+  "calib.title": "Проверка уверенности",
+  "calib.sub": "Отметил «знаю», но вслух не выходило: {{n}}",
+  "calib.headTitle": "Проверка уверенности",
 };
 
 export default ru;

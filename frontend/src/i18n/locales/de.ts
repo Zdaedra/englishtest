@@ -405,6 +405,9 @@ const de: Dict = {
   "review.dueTitle": "Zum Auffrischen",
   "review.dueSub": "Kurz vorm Vergessen: {{n}} · 5 Min.",
   "review.headTitle": "Auffrischen",
+  "calib.title": "Selbsteinschätzung prüfen",
+  "calib.sub": "Als «kenne ich» markiert, aber nicht laut gesagt: {{n}}",
+  "calib.headTitle": "Selbsteinschätzung prüfen",
 };
 
 export default de;

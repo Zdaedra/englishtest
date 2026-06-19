@@ -209,6 +209,8 @@ def mastery(user_id: int = Depends(current_user_id), session: Session = Depends(
             "due": due,
             "next_review_at": min(upcoming).isoformat() if upcoming else None,
             "srs": srs_counts,
+            # Confidence-calibration gap: swiped "known" but not produced aloud.
+            "gap": sum(1 for s in rows if _is_gap(s)),
         })
     return out
 
@@ -248,6 +250,17 @@ def rotation(batch_id: int, user_id: int = Depends(current_user_id),
 # --- Swipe-deck Training (Tinder-style cards) -------------------------------
 _SELF_ALPHA = 0.3
 _COOLDOWN = timedelta(seconds=90)
+# Calibration gap: the learner SWIPED "I know this" (high self_ewma) but the
+# objective spoken score is missing or weak — the over-confidence blind spot.
+_SELF_HI = 0.6
+_GAP_AVG = 6.0
+
+
+def _is_gap(st: "models.UserPhraseStat | None") -> bool:
+    """A confidence-calibration gap: felt known (swipe) but not produced aloud."""
+    if not st or st.self_ewma is None or st.self_ewma < _SELF_HI:
+        return False
+    return st.avg_score is None or st.avg_score < _GAP_AVG
 
 
 def _parse_ids(csv: str) -> list[int]:
@@ -262,7 +275,7 @@ def _aware(dt: datetime | None) -> datetime | None:
 
 @router.get("/deck")
 def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
-         exclude: str = "", due_only: bool = False, lang: str = "",
+         exclude: str = "", due_only: bool = False, gap_only: bool = False, lang: str = "",
          user_id: int = Depends(current_user_id),
          session: Session = Depends(get_session)):
     """Cross-batch adaptive deck for the swipe-trainer, scoped to this user's stats.
@@ -364,6 +377,9 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
             nr = _aware(st.next_review_at) if st else None
             return nr is not None and nr <= now
         pool = [p for p in pool if _is_due(p)]
+    if gap_only:
+        # Confidence check: only phrases swiped "known" but not produced aloud.
+        pool = [p for p in pool if _is_gap(stats.get(p.id))]
     keyed = sorted(pool, key=lambda p: random.random() ** (1.0 / weight(p)),
                    reverse=True)[:max(1, limit)]
 

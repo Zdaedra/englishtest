@@ -584,6 +584,8 @@ a { color: inherit; text-decoration: none; }
 .review-due-title { font-size: 1rem; font-weight: 650; color: var(--text); }
 .review-due-sub { font-size: 0.8125rem; color: var(--muted); }
 .review-due-go { color: var(--faint); flex: 0 0 auto; }
+/* Confidence-check card reuses .review-due but with the bronze "insight" tint. */
+.calib-card .review-due-ico { background: var(--bronze-soft); color: var(--bronze-ink); }
 .focus-hero {
   position: relative;
   display: block;
