@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 import { haptic } from "../lib/session";
+import { buyPlan, restorePurchases, iapAvailable } from "../lib/iap";
 import { IconBack, IconCheck } from "../ui/icons";
 
-// Prices are placeholders matching the App Store Connect products we'll create
-// (see TZ-ios-app.md §13). Once StoreKit is wired, these come live + localized
-// from the store; until then we show them statically and the buy button explains
-// that payment connects in an upcoming build.
+// Static prices mirror the App Store Connect products (Core $6.99/$39.99,
+// AI $12.99/$79.99). On native, the buy button runs the real StoreKit purchase
+// → server verify; on web (no StoreKit) it shows the "coming in the app" note.
 type Tier = {
   plan: "ai" | "core";
   nameKey: string; taglineKey: string;
@@ -31,12 +31,32 @@ const TIERS: Tier[] = [
 export default function Subscribe() {
   const nav = useNavigate();
   const { t } = useI18n();
-  const { user } = useAuth();
+  const { user, refresh } = useAuth();
   const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  // Stub until StoreKit is wired (needs the Apple Developer account + products).
-  const buy = (_plan: string, _period: "monthly" | "yearly") => { haptic("medium"); setNote(t("sub.soon")); };
-  const restore = () => { haptic("light"); setNote(t("sub.soon")); };
+  const buy = async (plan: "ai" | "core", period: "monthly" | "yearly") => {
+    haptic("medium");
+    if (!iapAvailable()) { setNote(t("sub.soon")); return; }  // web: no StoreKit
+    setBusy(true); setNote("");
+    try {
+      const newPlan = await buyPlan(plan, period);
+      if (newPlan) { await refresh(); haptic("success"); setNote(t("sub.thanks")); }
+    } catch { haptic("error"); setNote(t("sub.failed")); }
+    finally { setBusy(false); }
+  };
+
+  const restore = async () => {
+    haptic("light");
+    if (!iapAvailable()) { setNote(t("sub.soon")); return; }
+    setBusy(true); setNote("");
+    try {
+      const plan = await restorePurchases();
+      await refresh();
+      setNote(plan ? t("sub.restored") : t("sub.noRestore"));
+    } catch { setNote(t("sub.failed")); }
+    finally { setBusy(false); }
+  };
 
   return (
     <div className="screen sub-screen">
@@ -68,8 +88,8 @@ export default function Subscribe() {
             {current ? (
               <div className="sub-current">{t("sub.current")}</div>
             ) : (
-              <button className={`sub-buy${tr.flagship ? " primary" : ""}`} onClick={() => buy(tr.plan, "yearly")}>
-                {t("sub.choose")}
+              <button className={`sub-buy${tr.flagship ? " primary" : ""}`} disabled={busy} onClick={() => buy(tr.plan, "yearly")}>
+                {busy ? "…" : t("sub.choose")}
               </button>
             )}
           </div>
@@ -78,7 +98,7 @@ export default function Subscribe() {
 
       <p className="sub-free-note">{t("sub.freeNote")}</p>
       {note && <p className="sub-note">{note}</p>}
-      <button className="sub-restore" onClick={restore}>{t("sub.restore")}</button>
+      <button className="sub-restore" disabled={busy} onClick={restore}>{t("sub.restore")}</button>
     </div>
   );
 }

@@ -12,6 +12,7 @@ type AuthCtx = {
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name?: string) => Promise<void>;
   logout: () => Promise<void>;
+  refresh: () => Promise<void>;
 };
 
 const Ctx = createContext<AuthCtx>(null!);
@@ -71,8 +72,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }, []);
 
+  // Re-fetch the current user (e.g. after an IAP purchase updates the plan).
+  const refresh = useCallback(async () => {
+    try { const u = await api.me(); if (u) setUser(u); } catch { /* keep current */ }
+  }, []);
+
   return (
-    <Ctx.Provider value={{ user, loading, login, register, logout }}>
+    <Ctx.Provider value={{ user, loading, login, register, logout, refresh }}>
       {children}
     </Ctx.Provider>
   );
