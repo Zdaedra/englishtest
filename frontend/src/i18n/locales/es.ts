@@ -385,6 +385,13 @@ const es: Dict = {
   "ob1.q": "¿Qué quieres mejorar primero?",
   "ob1.sub": "Elige 1–2 áreas — empezamos la trayectoria por ahí. El resto vendrá después.",
   "ob1.cta": "Construir la trayectoria",
+  "ob2.kicker": "Cómo funciona",
+  "ob2.title": "Pruébalo ahora",
+  "ob2.sub": "Escucha la historia y toca cualquier palabra resaltada — la frase aparece sola.",
+  "ob2.play": "Escuchar la historia",
+  "ob2.outro": "Esto es el método: recuerdas la historia y las frases llegan solas.",
+  "ob2.cta": "Empezar",
+  "ob2.skip": "Saltar",
 
   // ── Playback (player screen) ───────────────────────────────────────
   "pb.nothing": "No hay nada en reproducción.",

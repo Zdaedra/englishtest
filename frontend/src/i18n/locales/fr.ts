@@ -385,6 +385,13 @@ const fr: Dict = {
   "ob1.q": "Qu'est-ce que tu veux travailler en premier ?",
   "ob1.sub": "Choisis 1–2 directions — on démarre la trajectoire avec. Le reste suivra.",
   "ob1.cta": "Construire ma trajectoire",
+  "ob2.kicker": "Comment ça marche",
+  "ob2.title": "Essaie maintenant",
+  "ob2.sub": "Écoute l'histoire et touche un mot surligné — la phrase apparaît d'elle-même.",
+  "ob2.play": "Écouter l'histoire",
+  "ob2.outro": "C'est ça, la méthode : tu retiens l'histoire, les phrases viennent seules.",
+  "ob2.cta": "Commencer",
+  "ob2.skip": "Passer",
 
   // ── Playback (player screen) ───────────────────────────────────────
   "pb.nothing": "Rien en lecture.",

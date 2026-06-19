@@ -385,6 +385,13 @@ const de: Dict = {
   "ob1.q": "Was willst du zuerst stärken?",
   "ob1.sub": "Wähl 1–2 Richtungen — damit starten wir die Trajektorie. Der Rest folgt.",
   "ob1.cta": "Trajektorie aufbauen",
+  "ob2.kicker": "So funktioniert's",
+  "ob2.title": "Probier es gleich aus",
+  "ob2.sub": "Hör die Geschichte und tippe ein hervorgehobenes Wort — der Satz erscheint von selbst.",
+  "ob2.play": "Geschichte hören",
+  "ob2.outro": "Das ist die Methode: Du merkst dir die Geschichte, die Sätze kommen von allein.",
+  "ob2.cta": "Loslegen",
+  "ob2.skip": "Überspringen",
 
   // ── Playback (player screen) ───────────────────────────────────────
   "pb.nothing": "Es läuft gerade nichts.",
