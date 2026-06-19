@@ -41,6 +41,15 @@ class Settings(BaseSettings):
     # Set ENGLISH_COVER_PROMPT_VERSION=1 to roll back to the abstract look.
     cover_prompt_version: int = 2
 
+    # Apple In-App Purchase (StoreKit 2) — App Store Server API verification.
+    # Set via ENGLISH_APPLE_* env (private key path points to the .p8, kept out of git).
+    apple_bundle_id: str = "net.executiveenglish.app"
+    apple_app_apple_id: int = 0
+    apple_environment: str = "sandbox"   # sandbox | production
+    apple_key_id: str = ""
+    apple_issuer_id: str = ""
+    apple_private_key_path: str = ""
+
     @property
     def db_path(self) -> Path:
         return self.data_dir / "app.db"

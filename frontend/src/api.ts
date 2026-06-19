@@ -153,6 +153,13 @@ export const api = {
     ).then((r) => ({ ...r, audio_url: mediaUrl(r.audio_url)! })),
   deleteBatch: (id: number) =>
     apiFetch(`/api/batches/${id}`, { method: "DELETE" }).then(j<{ ok: boolean }>),
+  // Apple IAP: after a StoreKit 2 purchase/restore, POST the signed transaction
+  // (Transaction.jwsRepresentation) for server-side verification → applies the plan.
+  verifyPurchase: (signedTransaction: string) =>
+    apiFetch("/api/billing/verify", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ signed_transaction: signedTransaction }),
+    }).then(j<{ ok: boolean; plan: string; plan_expires_at: string | null }>),
   parse: (raw_text: string, use_llm = false) =>
     apiFetch("/api/imports/parse", {
       method: "POST", headers: { "content-type": "application/json" },

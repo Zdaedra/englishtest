@@ -14,6 +14,10 @@ services:
       # Cookie auth gate (replaces Caddy basic-auth so iOS remembers login).
       - ENGLISH_APP_PASSWORD=${ENGLISH_APP_PASSWORD}
       - ENGLISH_COOKIE_SECRET=${ENGLISH_COOKIE_SECRET}
+      # Apple IAP (StoreKit 2) — bundle id has a config default; these enable
+      # transaction verification. Not secrets. Flip ENV to production at launch.
+      - ENGLISH_APPLE_APP_APPLE_ID=${ENGLISH_APPLE_APP_APPLE_ID:-6782193688}
+      - ENGLISH_APPLE_ENV=${ENGLISH_APPLE_ENV:-sandbox}
     volumes:
       - english_data:/srv/backend/data
     expose:
