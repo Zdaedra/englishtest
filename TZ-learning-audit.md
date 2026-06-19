@@ -4,6 +4,8 @@ assessment / competitive) → adversarial feasibility pass → synthesis, ground
 code-audit of the actual learning system. Every recommendation is tagged by lever:
 A) content-only (no code) · B) training-flow (needs code) · C) product. -->
 
+> **Correction (2026-06-18):** A claim repeated below — that `CheckPhrase` is "dormant / wired-and-empty" — is **WRONG**. Production has **3191 English `stimulus` cues** (~4 per phrase, all 801 phrases / 89 batches): interlocutor-line / adjacency-pair prompts (e.g. *"I don't think we need to involve Legal on this at all"* → produce the disagreement move) — which IS the situational-cue design recommended below, already shipped. The lens agents inferred "empty" from reading code (the table is wired) without querying the DB. Disregard the "populate CheckPhrase" recommendation + its P1; the rest stands. **Shipped since this audit:** SM-2-lite scheduler, home "to refresh" surface + due-only sessions, latency→automaticity, per-domain presence rings, substance-gated daily reminder (Apple-gated delivery).
+
 # Executive English — Final Pedagogy Audit
 
 **For:** Founder
