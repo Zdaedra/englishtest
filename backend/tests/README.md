@@ -1,4 +1,8 @@
-# Backend tests
+# Backend tests — `smoketest3`
+
+This collection is codenamed **`smoketest3`** (the canonical backend suite). Run
+it as a named group with `make smoketest3` or `pytest -m smoketest3` — that
+selects exactly these tests.
 
 Offline pytest suite for the FastAPI backend. Every paid/network boundary
 (OpenAI TTS, STT, the AI scorers, cover-art generation, LLM) is stubbed in

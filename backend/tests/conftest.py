@@ -163,3 +163,11 @@ def commit_sample_batch(client, *, as_admin_catalog=True):
 def phrase_ids(client, batch_id):
     detail = client.get(f"/api/batches/{batch_id}").json()
     return [p["id"] for p in detail["phrases"]]
+
+
+def pytest_collection_modifyitems(config, items):
+    """Tag the whole collection with the project codename "smoketest3" so it can
+    be run as a named group: `pytest -m smoketest3` selects exactly this suite."""
+    mark = pytest.mark.smoketest3
+    for item in items:
+        item.add_marker(mark)
