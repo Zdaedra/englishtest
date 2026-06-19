@@ -89,6 +89,9 @@ class UserPhraseStat(SQLModel, table=True):
     # EWMA of answer latency (ms). Gates "automatic": a phrase is only mastered
     # when recalled both accurately AND fast (ACT-R automaticity). See app/srs.py.
     latency_ewma_ms: Optional[float] = None
+    # How many times this phrase has been drilled (swipe or scored). Rotates the
+    # situational-cue variant so the learner cycles all of them, not one repeated.
+    shown_count: int = 0
 
 
 class MnemoStory(SQLModel, table=True):

@@ -70,6 +70,7 @@ def _apply_rollup(st: models.UserPhraseStat, score: int,
     now = datetime.now(timezone.utc)
     st.avg_score = float(score) if st.avg_score is None else _EWMA_ALPHA * score + (1 - _EWMA_ALPHA) * st.avg_score
     st.attempts = (st.attempts or 0) + 1
+    st.shown_count = (st.shown_count or 0) + 1
     st.last_score = score
     st.last_seen_at = now
     # Track typical recall speed (EWMA) to gate the "automatic" tier.
@@ -394,9 +395,13 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
     for p in keyed:
         b = batches.get(p.batch_id)
         st = stats.get(p.id)
-        cps = cp_by_phrase.get(p.id, [])
+        # Rotate the situational cue by how many times this phrase has been drilled,
+        # so the learner cycles through ALL variants (varied contexts → better
+        # transfer) instead of getting one repeated or others never seen. Stable
+        # order by (order_index, id) keeps the rotation deterministic.
+        cps = sorted(cp_by_phrase.get(p.id, []), key=lambda c: (c.order_index or 0, c.id or 0))
         approved = [c for c in cps if c.status == "approved"] or cps
-        chosen = random.choice(approved) if approved else None
+        chosen = approved[((st.shown_count if st else 0) or 0) % len(approved)] if approved else None
         out.append({
             "phrase_id": p.id, "batch_id": p.batch_id,
             "batch_title": localize.pick(b.title_i18n, lng, b.title) if b else "",
@@ -435,6 +440,7 @@ def swipe(body: SwipeIn, user_id: int = Depends(current_user_id),
     knew = body.swipe_direction == "right"
     val = 1.0 if knew else 0.0
     st.self_ewma = val if st.self_ewma is None else _SELF_ALPHA * val + (1 - _SELF_ALPHA) * st.self_ewma
+    st.shown_count = (st.shown_count or 0) + 1
     now = datetime.now(timezone.utc)
     st.last_seen_at = now
     if knew:
