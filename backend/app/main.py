@@ -2,7 +2,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from .config import get_settings
@@ -106,6 +106,16 @@ def _startup():
 @app.get("/api/health")
 def health():
     return {"ok": True}
+
+
+# Public Privacy Policy (App Store requires a reachable URL). Registered before the
+# SPA catch-all mount so /privacy returns the policy, not the app shell.
+_privacy_file = Path(__file__).resolve().parent / "static" / "privacy.html"
+
+
+@app.get("/privacy")
+def privacy():
+    return FileResponse(str(_privacy_file), media_type="text/html")
 
 
 # Static rendered audio (sessions + phrases)

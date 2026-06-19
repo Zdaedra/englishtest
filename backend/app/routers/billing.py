@@ -24,10 +24,13 @@ from ..db import get_session
 
 router = APIRouter(prefix="/api/billing", tags=["billing"])
 
-# App Store Connect product ids → our plan tier.
+# App Store Connect product ids → our plan tier. These must match the products
+# created in App Store Connect → Subscriptions for bundle net.executiveenglish.app.
 PRODUCT_PLAN: dict[str, str] = {
-    "core_monthly": "core", "core_yearly": "core",
-    "ai_monthly": "ai", "ai_yearly": "ai",
+    "net.executiveenglish.core.monthly": "core",
+    "net.executiveenglish.core.yearly": "core",
+    "net.executiveenglish.ai.monthly": "ai",
+    "net.executiveenglish.ai.yearly": "ai",
 }
 
 
