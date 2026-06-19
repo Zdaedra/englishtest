@@ -5,6 +5,8 @@ import { useAuth } from "../auth/AuthContext";
 import { useI18n, LANGS } from "../i18n";
 import LangSwitcher from "../ui/LangSwitcher";
 import { IconGear, IconImport, IconInfo, IconChevron } from "../ui/icons";
+import { isNative } from "../lib/session";
+import { remindersEnabled, enableReminders, disableReminders } from "../lib/reminders";
 
 function initials(name: string, email: string): string {
   const src = (name || email || "?").trim();
@@ -20,6 +22,12 @@ export default function Profile() {
   const [count, setCount] = useState<number | null>(null);
   const [confirmDel, setConfirmDel] = useState(false);
   const [delBusy, setDelBusy] = useState(false);
+  const native = isNative();
+  const [remOn, setRemOn] = useState(remindersEnabled());
+  const toggleRem = async () => {
+    if (remOn) { await disableReminders(); setRemOn(false); }
+    else { setRemOn(await enableReminders()); }
+  };
   const isAI = user?.plan === "ai";
   const canImport = !!user?.entitlements?.import;
   const isAdmin = !!user?.is_admin;
@@ -98,6 +106,21 @@ export default function Profile() {
         </div>
         {canImport && row(IconImport, t("profile.importTitle"), t("profile.importSub"), "/import")}
         {isAdmin && row(IconGear, t("profile.listeningTitle"), t("profile.listeningSub"), "/settings")}
+        {/* Daily review reminder — native only (local notification). */}
+        {native && (
+          <button className="menu-row" onClick={toggleRem} role="switch" aria-checked={remOn}>
+            <span className="menu-ico" aria-hidden>
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.7 21a2 2 0 0 1-3.4 0" />
+              </svg>
+            </span>
+            <div className="menu-body">
+              <div className="menu-title">{t("profile.reminderTitle")}</div>
+              <div className="menu-sub">{t("profile.reminderSub")}</div>
+            </div>
+            <span className={"switch" + (remOn ? " on" : "")} aria-hidden><span className="switch-knob" /></span>
+          </button>
+        )}
         {row(IconInfo, t("profile.aboutTitle"), t("profile.aboutSub"), "/profile")}
       </div>
 

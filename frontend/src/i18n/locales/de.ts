@@ -86,6 +86,9 @@ const de: Dict = {
   "profile.aboutTitle": "Über",
   "profile.aboutSub": "Executive English — Premium-Kommunikationstrainer",
   "profile.logout": "Abmelden",
+  "review.notif": "Kurz vorm Vergessen: {{n}} · 5 Min. auffrischen",
+  "profile.reminderTitle": "Wiederholungs-Erinnerung",
+  "profile.reminderSub": "Einmal täglich — nur wenn etwas fällig ist",
 
   "practice.tapToAnswer": "Tippen zum Antworten",
   "practice.guessed": "Gewusst",

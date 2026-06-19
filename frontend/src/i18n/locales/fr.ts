@@ -86,6 +86,9 @@ const fr: Dict = {
   "profile.aboutTitle": "À propos",
   "profile.aboutSub": "Executive English — coach de communication premium",
   "profile.logout": "Se déconnecter",
+  "review.notif": "Au bord de l'oubli : {{n}} · révise en 5 min",
+  "profile.reminderTitle": "Rappel de révision",
+  "profile.reminderSub": "Une fois par jour — seulement s'il y a à réviser",
 
   "practice.tapToAnswer": "Touche pour répondre",
   "practice.guessed": "Trouvé",

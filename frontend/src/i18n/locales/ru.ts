@@ -96,6 +96,9 @@ const ru: Dict = {
   "profile.aboutTitle": "О приложении",
   "profile.aboutSub": "Executive English — премиум-тренажёр коммуникации",
   "profile.logout": "Выйти",
+  "review.notif": "На грани забывания: {{n}} · освежи за 5 минут",
+  "profile.reminderTitle": "Напоминание о повторении",
+  "profile.reminderSub": "Раз в день — только если есть что освежить",
 
   // ── Practice (swipe trainer) ───────────────────────────────────────
   "practice.tapToAnswer": "Нажми, чтобы ответить",

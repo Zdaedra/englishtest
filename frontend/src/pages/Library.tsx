@@ -8,6 +8,7 @@ import { orderedSections, sectionName } from "../lib/sections";
 import { buildSprint } from "../lib/strategy";
 import { getProgress, isEngaged } from "../lib/progress";
 import { getStrategy, recordVisit } from "../lib/profile";
+import { syncReviewReminder } from "../lib/reminders";
 import { useI18n } from "../i18n";
 import { useAuth } from "../auth/AuthContext";
 
@@ -42,6 +43,8 @@ export default function Library() {
     api.getMastery()
       .then((ms) => setDueCount(ms.reduce((s, m) => s + (m.due || 0), 0)))
       .catch(() => {/* non-fatal — just hides the review card */});
+    // Re-sync the daily review reminder from the live due-set on each home open.
+    void syncReviewReminder();
   }, []);
 
   useEffect(() => {

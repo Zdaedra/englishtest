@@ -86,6 +86,9 @@ const es: Dict = {
   "profile.aboutTitle": "Acerca de",
   "profile.aboutSub": "Executive English — entrenador premium de comunicación",
   "profile.logout": "Cerrar sesión",
+  "review.notif": "Al borde del olvido: {{n}} · repasa en 5 min",
+  "profile.reminderTitle": "Recordatorio de repaso",
+  "profile.reminderSub": "Una vez al día — solo si hay algo que repasar",
 
   "practice.tapToAnswer": "Toca para responder",
   "practice.guessed": "Acerté",
