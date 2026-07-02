@@ -35,6 +35,17 @@
   --map-green-ink: #15714F;
   --map-green-soft: rgba(28, 140, 99, .14);
 
+  /* Focus-domain identity — color lives ONLY in the small icon-chips + thin bar
+     fills (calm palette: bronze=your focus, emerald=discovery, slate=business). */
+  --slate: #5B6B7A;
+  --slate-ink: #46535F;
+  --slate-soft: rgba(91, 107, 122, .14);
+  --bar-track: rgba(17, 17, 17, .08);
+  --bar-bronze: #C8B084;
+  --bar-green: #86C7AF;
+  --bar-slate: #AAB4BD;
+  --bar-muted: #CBC6BE;
+
   /* Shape */
   --r-sm: 12px;
   --r: 18px;
@@ -151,6 +162,8 @@ a { color: inherit; text-decoration: none; }
 .lib-head-text { min-width: 0; }
 .avatar-btn {
   flex: none;
+  position: relative;
+  overflow: hidden;
   width: 42px;
   height: 42px;
   border-radius: 999px;
@@ -586,6 +599,63 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Spaced-repetition "to refresh" card — calm, adult, no badge/streak pressure. */
+/* Call Analyzer — upgrade cards: original (dim) → native (accent) → why. */
+.an-results { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+.an-card {
+  padding: 14px 16px; border: 1px solid var(--hairline); border-radius: 16px;
+  background: var(--card);
+}
+.an-original { font-size: 0.875rem; color: var(--faint); margin: 0 0 6px; }
+.an-native { font-size: 1.0625rem; font-weight: 650; color: var(--accent); margin: 0; }
+.an-note { font-size: 0.8125rem; color: var(--text-2); margin: 6px 0 0; }
+
+/* League placement test — intro / quiz / result. Same calm card language. */
+.league-screen { display: flex; flex-direction: column; }
+.league-intro, .league-result { text-align: center; padding-top: 8vh; }
+.league-title, .league-tier { font-size: clamp(26px, 7vw, 34px); margin: 0 0 12px; }
+.league-sub, .league-tier-sub {
+  font-size: 1rem; line-height: 1.5; color: var(--text-2); margin: 0 auto 10px; max-width: 34em;
+}
+.league-note, .league-score { font-size: 0.8125rem; color: var(--faint); margin: 0 0 24px; }
+.league-start { min-width: 220px; }
+.league-count { font-size: 0.75rem; font-weight: 700; letter-spacing: .1em; color: var(--faint); margin: 6px 0 14px; }
+.league-situation { font-size: 1.0625rem; line-height: 1.45; font-weight: 600; margin: 0 0 6px; }
+.league-ask { font-size: 0.8125rem; color: var(--faint); margin: 0 0 14px; }
+.league-opts { display: flex; flex-direction: column; gap: 10px; }
+.league-opt {
+  text-align: left; padding: 14px 16px; border: 1px solid var(--hairline);
+  border-radius: 16px; background: var(--card); color: var(--text);
+  font-size: 0.9375rem; line-height: 1.4; cursor: pointer;
+  transition: transform .12s var(--spring);
+}
+.league-opt:active { transform: scale(0.98); }
+.league-eyebrow {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--faint); margin: 0 0 6px;
+}
+.league-missed { margin: 6px 0 26px; }
+.league-missed-lbl { font-size: 0.8125rem; color: var(--faint); margin: 0 0 8px; }
+.league-missed-phrase { font-size: 1rem; font-weight: 600; color: var(--accent); margin: 0 0 6px; }
+
+/* "Your week" rollup — same calm card language as .review-due, read-only. */
+.week-card {
+  margin: 2px 0 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  background: var(--card);
+}
+.week-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.week-title { font-size: 0.9375rem; font-weight: 700; }
+.week-stats { font-size: 0.75rem; color: var(--faint); white-space: nowrap; }
+.week-list { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+.week-lbl {
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--faint);
+}
+.week-phrase { font-size: 0.9375rem; font-weight: 600; color: var(--accent); }
+.week-phrase.dim { color: var(--text-2); }
+
 .review-due {
   display: flex;
   align-items: center;
@@ -618,6 +688,61 @@ a { color: inherit; text-decoration: none; }
 .review-due-go { color: var(--faint); flex: 0 0 auto; }
 /* Confidence-check card reuses .review-due but with the bronze "insight" tint. */
 .calib-card .review-due-ico { background: var(--bronze-soft); color: var(--bronze-ink); }
+
+/* ── Liquid Glass (iOS-26 material) for the Learning cards ───────────────────
+   "На повторение" / "Калибровка" / collapsed "Твои домены" become translucent
+   frosted glass, using the same lens recipe as the nav: a translucent body, a
+   heavy backdrop blur + saturate + brightness, a light refractive rim, and a
+   soft specular top edge. Scoped to these three Learning variants so Library's
+   solid review card is left as-is. */
+.refresh-card, .calib-card, .dom-collapsed {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .40) 0%, rgba(255, 255, 255, .16) 100%);
+  -webkit-backdrop-filter: blur(20px) saturate(230%) brightness(1.10);
+  backdrop-filter: blur(20px) saturate(230%) brightness(1.10);
+  border: 1px solid rgba(255, 255, 255, .9);
+  box-shadow:
+    inset 0 2px 1px rgba(255, 255, 255, .98),    /* crisp top light edge */
+    inset 0 -5px 9px rgba(255, 255, 255, .50),   /* bottom catch-light (light wraps the dome) */
+    inset 5px 0 9px rgba(120, 190, 255, .22),    /* cool left rim — light bending */
+    inset -5px 0 9px rgba(255, 150, 205, .20),   /* warm right rim */
+    0 18px 42px -12px rgba(17, 17, 17, .26);     /* lifts off the page = a floating slab */
+}
+/* Convex dome — a bright radial gloss high on the surface, fading down. This is
+   what makes the slab read as a domed, light-bending lens even over a plain bg.
+   Sits ABOVE the frost (z1) but BELOW the content (z2), so text stays crisp. */
+.refresh-card::before, .calib-card::before, .dom-collapsed::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1;
+  background:
+    radial-gradient(130% 80% at 50% -16%, rgba(255, 255, 255, .82) 0%, rgba(255, 255, 255, .16) 38%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(0deg, rgba(255, 255, 255, .30) 0%, rgba(255, 255, 255, 0) 20%);
+}
+/* Defined specular crescent across the domed top — the strongest "curved glass"
+   cue (same recipe as the nav lens). Behind the content, so text stays crisp. */
+.refresh-card::after, .calib-card::after, .dom-collapsed::after {
+  content: ""; position: absolute; top: 4px; left: 11px; right: 11px; height: 44%;
+  border-radius: 15px 15px 90px 90px / 14px 14px 64px 64px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none; z-index: 1;
+}
+.refresh-card > *, .calib-card > *, .dom-collapsed > * { position: relative; z-index: 2; }
+@media (prefers-color-scheme: dark) {
+  .refresh-card, .calib-card, .dom-collapsed {
+    background: linear-gradient(180deg, rgba(80, 86, 84, .46) 0%, rgba(40, 44, 42, .22) 100%);
+    border-color: rgba(255, 255, 255, .24);
+    box-shadow:
+      inset 0 2px 1px rgba(255, 255, 255, .20),
+      inset 0 -5px 9px rgba(255, 255, 255, .07),
+      inset 5px 0 9px rgba(120, 190, 255, .15),
+      inset -5px 0 9px rgba(255, 150, 205, .13),
+      0 18px 42px -12px rgba(0, 0, 0, .58);
+  }
+  .refresh-card::before, .calib-card::before, .dom-collapsed::before {
+    background:
+      radial-gradient(135% 95% at 50% -12%, rgba(255, 255, 255, .28) 0%, rgba(255, 255, 255, .05) 42%, rgba(255, 255, 255, 0) 62%),
+      linear-gradient(0deg, rgba(255, 255, 255, .08) 0%, rgba(255, 255, 255, 0) 22%);
+  }
+}
 .focus-hero {
   position: relative;
   display: block;
@@ -1335,6 +1460,76 @@ a { color: inherit; text-decoration: none; }
   box-shadow: var(--shadow);
   margin-bottom: 14px;
 }
+/* Tappable avatar — tap to upload a photo. Initials show until a photo is set. */
+.avatar-edit { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .15s var(--spring); }
+.avatar-edit:active { transform: scale(.96); }
+.avatar-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 999px; }
+.avatar-cam {
+  position: absolute; right: -1px; bottom: -1px; z-index: 2;
+  width: 26px; height: 26px; border-radius: 999px;
+  display: grid; place-items: center;
+  background: var(--card); color: var(--accent);
+  box-shadow: 0 2px 8px rgba(17, 17, 17, .22);
+}
+
+/* Photo crop/center editor — pan & zoom inside a circular viewport. */
+.ava-modal {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(17, 17, 17, .5);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  animation: fade-up .2s var(--spring) both;
+}
+.ava-sheet {
+  width: 100%; max-width: 340px;
+  background: var(--card); border-radius: 24px; padding: 18px;
+  box-shadow: 0 24px 60px rgba(17, 17, 17, .3);
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.ava-title { margin: 2px 0 0; font-size: 0.9375rem; font-weight: 650; color: var(--text); }
+.ava-stage {
+  position: relative; flex: none; overflow: hidden; border-radius: 18px;
+  background: #11110F; touch-action: none; cursor: grab;
+}
+.ava-stage:active { cursor: grabbing; }
+.ava-img { position: absolute; left: 50%; top: 50%; user-select: none; -webkit-user-drag: none; pointer-events: none; will-change: transform; }
+/* Circular mask hint over the square stage — what will become the round avatar. */
+.ava-ring {
+  position: absolute; inset: 0; pointer-events: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px rgba(17, 17, 17, .55);
+  outline: 2px solid rgba(255, 255, 255, .9); outline-offset: -2px;
+}
+.ava-zoom { width: 100%; accent-color: var(--accent); }
+.ava-actions { display: flex; gap: 10px; width: 100%; }
+.ava-actions .btn, .ava-actions .btn-ghost { flex: 1; width: auto; margin: 0; }
+.ava-repick { background: none; border: 0; color: var(--accent); font-size: 0.8125rem; font-weight: 650; padding: 2px; }
+
+/* About screen */
+.about-head { text-align: center; margin: 6px 0 18px; }
+.about-logo {
+  width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 12px;
+  display: grid; place-items: center;
+  background: var(--accent-grad); color: #fff;
+  font-size: 1.5rem; font-weight: 800; letter-spacing: .04em; box-shadow: var(--shadow);
+}
+.about-name { margin: 0; }
+.about-desc { color: var(--muted); font-size: 0.9375rem; line-height: 1.5; margin: 0 4px 16px; }
+.about-foot { text-align: center; color: var(--faint); font-size: 0.75rem; margin: 22px 0 0; }
+/* native time picker chip inside a menu row */
+.time-input {
+  flex: none; border: 1px solid var(--border); background: var(--card); color: var(--text);
+  border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.875rem; font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Legal disclosure (paywall auto-renew + Privacy/Terms links; signup notice). */
+.sub-legal-note { font-size: 0.72rem; color: var(--faint); text-align: center; line-height: 1.45; margin: 20px 6px 0; }
+.sub-legal-links { text-align: center; margin: 8px 0 0; font-size: 0.8rem; }
+.sub-legal-links a { color: var(--muted); text-decoration: none; }
+.auth-legal { text-align: center; font-size: 0.75rem; color: var(--faint); line-height: 1.55; margin: 12px 0 2px; }
+.auth-legal a { color: var(--muted); }
 .menu { margin-top: 20px; }
 .menu-row {
   display: flex;
@@ -1361,9 +1556,9 @@ a { color: inherit; text-decoration: none; }
   place-items: center;
   flex: none;
 }
-.menu-body { flex: 1; }
+.menu-body { flex: 1; min-width: 0; }   /* min-width:0 lets a long email wrap instead of shoving the action button past the card edge */
 .menu-title { font-size: 0.9375rem; font-weight: 650; }
-.menu-sub { font-size: 0.8125rem; color: var(--muted); margin-top: 2px; }
+.menu-sub { font-size: 0.8125rem; color: var(--muted); margin-top: 2px; overflow-wrap: anywhere; }
 .menu-chevron { color: var(--faint); }
 
 .field { display: block; margin: 0 0 16px; }
@@ -2215,6 +2410,20 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 .sub-feats { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .sub-feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.90625rem; line-height: 1.35; color: var(--text-2); }
 .sub-tick { flex: none; width: 22px; height: 22px; border-radius: 999px; background: var(--bronze-soft); color: var(--bronze-ink); display: grid; place-items: center; margin-top: 1px; }
+.period-seg {
+  display: flex; gap: 4px; padding: 4px; margin: 0 auto 20px; max-width: 340px;
+  background: var(--accent-tint); border-radius: 14px;
+}
+.period-tab {
+  flex: 1; border: 0; cursor: pointer; font: inherit; padding: 11px 8px; border-radius: 10px;
+  font-size: 0.9375rem; font-weight: 720; color: var(--muted); background: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  transition: background .2s, color .2s, box-shadow .2s;
+}
+.period-tab.active { background: var(--card); color: var(--text); box-shadow: 0 4px 12px -6px rgba(0,0,0,.22); }
+.period-pill { font-size: 0.6875rem; font-weight: 820; color: var(--map-green); }
+.period-tab.active .period-pill { color: var(--map-green-ink); }
+
 .sub-buy {
   width: 100%; height: 52px; border: 0; border-radius: 16px; cursor: pointer;
   font-size: 1rem; font-weight: 720; color: var(--text);
@@ -2394,47 +2603,81 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 }
 .learn-redo:active { opacity: .55; }
 
-/* ----- Adaptive focus route: Training Focus + sprint + Tune (consilium) --- */
-.focus-card {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 14px 16px;
-  box-shadow: var(--shadow);
-  margin: 4px 0 22px;
-  transition: transform .15s var(--spring);
+/* ===== Learning top (consilium redesign) ================================== */
+/* Header: title + 2-line subtitle, with an (i) that reveals the "how it closes"
+   note on demand instead of as standing clutter. */
+.lh-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.lh-head-text { min-width: 0; }
+.lh-head .app-sub { margin: 4px 0 0; line-height: 1.35; }
+.lh-info { flex: none; color: var(--faint); display: grid; place-items: center; background: none; border: 0; }
+.lh-info:active { color: var(--mark); }
+.lh-note {
+  margin: -4px 0 16px; font-size: 0.84375rem; line-height: 1.45; color: var(--muted);
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r-sm);
+  padding: 12px 14px; box-shadow: var(--shadow);
 }
-.focus-card:active { transform: scale(.985); }
-.focus-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 10px;
+
+/* Adaptive action-strip — reuses the .review-due pill; refresh = emerald cue. */
+.act-strip { display: flex; flex-direction: column; gap: 10px; margin: 0 0 12px; }
+.refresh-card .review-due-ico { background: var(--map-green-soft); color: var(--map-green-ink); }
+.act-count {
+  flex: none; min-width: 24px; text-align: center; font-size: 0.8125rem; font-weight: 700;
+  color: var(--map-green-ink); background: var(--map-green-soft); border-radius: 999px; padding: 2px 8px;
 }
-.focus-kicker {
-  font-size: 0.75rem;
-  font-weight: 750;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--faint);
+
+/* "Твои домены" — one row per focus bucket: icon-chip · name · competence% (+ focus
+   micro) · a single track whose FILL = real competence, MARKER = focus allocation. */
+.dom-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg);
+  padding: 16px; box-shadow: var(--shadow); margin: 0 0 14px;
 }
-.focus-adjust {
-  font-size: 0.8125rem;
-  font-weight: 650;
-  color: var(--map-green-ink);
+.dom-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.dom-kicker { font-size: 0.6875rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--faint); }
+.dom-adjust { font-size: 0.8125rem; font-weight: 650; color: var(--map-green-ink); background: none; border: 0; }
+.dom-row {
+  display: grid; grid-template-columns: 40px 1fr auto; column-gap: 12px; row-gap: 8px;
+  align-items: center; margin-bottom: 16px;
 }
-.focus-mix { display: flex; flex-wrap: wrap; gap: 6px; }
-.focus-chip {
-  font-size: 0.78125rem;
-  font-weight: 600;
-  color: var(--map-green-ink);
-  background: var(--map-green-soft);
-  border-radius: 999px;
-  padding: 4px 10px;
+.dom-row:last-of-type { margin-bottom: 0; }
+.dom-ico {
+  grid-column: 1; grid-row: 1 / span 2; align-self: center;
+  width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center;
 }
+.dom-row.main .dom-ico { background: var(--mark-soft); color: var(--mark); }
+.dom-row.secondary .dom-ico { background: var(--mark-soft); color: var(--mark); }
+.dom-row.business .dom-ico { background: var(--slate-soft); color: var(--slate-ink); }
+.dom-row.discovery .dom-ico { background: var(--map-green-soft); color: var(--map-green-ink); }
+.dom-name { grid-column: 2; grid-row: 1; font-size: 0.9375rem; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dom-vals { grid-column: 3; grid-row: 1; display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15; }
+.dom-pct { font-size: 0.9375rem; font-weight: 650; color: var(--text); font-variant-numeric: tabular-nums; }
+.dom-focus { font-size: 0.6875rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+.dom-track { grid-column: 2 / 4; grid-row: 2; position: relative; height: 7px; border-radius: 4px; background: var(--bar-track); }
+.dom-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; min-width: 4px; }
+.dom-row.main .dom-fill, .dom-row.secondary .dom-fill { background: var(--bar-bronze); }
+.dom-row.business .dom-fill { background: var(--bar-slate); }
+.dom-row.discovery .dom-fill { background: var(--bar-green); }
+.dom-marker { position: absolute; top: -3px; bottom: -3px; width: 2px; border-radius: 1px; transform: translateX(-1px); }
+.dom-row.main .dom-marker, .dom-row.secondary .dom-marker { background: var(--mark); }
+.dom-row.business .dom-marker { background: var(--slate); }
+.dom-row.discovery .dom-marker { background: var(--map-green); }
+.dom-legend { display: flex; gap: 16px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--hairline); }
+.dom-leg { display: flex; align-items: center; gap: 6px; font-size: 0.6875rem; color: var(--muted); }
+.dom-leg-fill { width: 14px; height: 6px; border-radius: 3px; background: var(--bar-bronze); }
+.dom-leg-mark { width: 2px; height: 12px; border-radius: 1px; background: var(--mark); }
+/* Domains card header is a collapse toggle (kicker + chevron). */
+.dom-toggle { display: flex; align-items: center; gap: 7px; background: none; border: 0; padding: 0; }
+.dom-chev { color: var(--faint); }
+/* Collapsed domains = a card the exact size of "На повторение" (reuses .review-due),
+   with the bronze "focus" tint on the leading icon. */
+.dom-collapsed .review-due-ico { background: var(--bronze-soft); color: var(--bronze-ink); }
+
+/* Three quiet stats — momentum · scale · status. Hairline dividers, no hero zero. */
+.lstats { display: flex; margin: 0 0 22px; }
+.lstat { flex: 1; text-align: center; padding: 2px 6px; }
+.lstat + .lstat { border-left: 1px solid var(--hairline); }
+.lstat-num { display: block; font-size: 1.3125rem; font-weight: 650; color: var(--text); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.lstat-cap { display: block; font-size: 0.71875rem; color: var(--muted); line-height: 1.25; margin-top: 2px; }
+
 .sprint-block { margin: 0 0 22px; }
 .review-badge.play { background: var(--accent); }
 .atlas-label { margin-top: 4px; }
@@ -2699,48 +2942,115 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 }
 .map-chapter { display: flex; flex-direction: column; }
 
-/* Topic header — a dark, rounded anchor card that opens each section. */
+/* Sprint header — a LIGHT, flat section divider (design-panel verdict: the old
+   near-black slab was the heaviest object on a light screen yet only a divider —
+   hierarchy inversion. Flat white + hairline, NO shadow, so it reads quieter than
+   the floating tappable cards above and never looks like a third card to soup). */
 .topic-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin: 18px 0 6px;
-  padding: 20px 22px;
-  min-height: 86px;
-  border-radius: 28px;
-  background: linear-gradient(155deg, #262626, #0E0E0F);
-  color: #fff;
-  box-shadow: 0 14px 38px rgba(17, 17, 17, .18);
+  padding: 14px 18px;
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  color: var(--text);
 }
-.topic-head-main { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.topic-head-main { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
 .topic-kicker {
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, .5);
+  color: var(--map-green-ink);   /* emerald wayfinding accent, ties to the path */
 }
 .topic-name {
-  font-size: 1.3125rem;
-  font-weight: 740;
+  font-size: 1.25rem;
+  font-weight: 760;
   letter-spacing: -.02em;
-  line-height: 1.1;
+  line-height: 1.05;
+  color: var(--text);
 }
+/* Progress: honest soft pill (pale at 0/5 — no false "done" cue); only a COMPLETED
+   sprint earns the saturated emerald. */
 .topic-count {
   flex: none;
   font-size: 0.8125rem;
   font-weight: 750;
   letter-spacing: .01em;
-  padding: 7px 14px;
+  padding: 6px 13px;
   border-radius: 999px;
+  background: var(--map-green-soft);
+  color: var(--map-green-ink);
+  font-variant-numeric: tabular-nums;
+}
+.topic-count.done {
   background: var(--map-green);
   color: #fff;
+  box-shadow: 0 4px 14px rgba(28, 140, 99, .35);
+}
+/* Reorder toggle on the (dark) topic header: a subtle ⇅ chip, "Готово" = green pill */
+.topic-right { display: flex; align-items: center; gap: 10px; flex: none; }
+.topic-reorder {
+  flex: none; width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center; border: 0;
+  background: rgba(255, 255, 255, .14); color: #fff;
+}
+.topic-reorder:active { transform: scale(.92); }
+.topic-reorder.done {
+  width: auto; height: 36px; padding: 0 16px; border-radius: 999px;
+  font-size: 0.8125rem; font-weight: 750; background: var(--map-green);
   box-shadow: 0 4px 14px rgba(28, 140, 99, .4);
 }
 
+/* Plan header: the section label + a single global reorder toggle. */
+.map-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
+.map-head .atlas-label { margin: 0; }
+.map-reorder {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 13px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--card); color: var(--muted);
+  font-size: 0.8125rem; font-weight: 650; box-shadow: var(--shadow);
+}
+.map-reorder:active { transform: scale(.94); }
+.map-reorder.done {
+  border: 0; background: var(--map-green); color: #fff;
+  box-shadow: 0 4px 14px rgba(28, 140, 99, .4);
+}
+
+/* Per-sprint domain mix — small chips showing how many batches of each focus
+   bucket the sprint holds. On the LIGHT header: soft-tint pill + matching INK
+   glyph/text (the canonical on-light pattern; the pale --bar-* tokens are for
+   progress tracks and read washed-out here — design-panel fix). */
+.sprint-mix { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1px; }
+.sprint-chip {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 9px 2px 7px; border-radius: 999px;
+  font-size: 0.6875rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.sprint-chip svg { width: 13px; height: 13px; }   /* glyph follows currentColor (the chip ink) */
+.sprint-chip.main, .sprint-chip.secondary { background: var(--bronze-soft); color: var(--bronze-ink); }
+.sprint-chip.business { background: var(--slate-soft); color: var(--slate-ink); }
+.sprint-chip.discovery { background: var(--map-green-soft); color: var(--map-green-ink); }
+
 /* Serpentine of nodes strung onto a real road (the measured SVG below). */
 .map-nodes { position: relative; padding: 40px 0 10px; }
+
+/* Domain marker on a node — a small, low-key tag (top-left, clear of the
+   bottom-left count pill) so each tile reveals which focus bucket it belongs to. */
+.mnode-dom {
+  position: absolute; top: 7px; left: 7px; z-index: 3;
+  width: 23px; height: 23px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .92); backdrop-filter: blur(8px);
+  box-shadow: 0 1px 4px rgba(17, 17, 17, .18); pointer-events: none;
+}
+.mnode-dom svg { width: 14px; height: 14px; }
+.mnode-dom.main, .mnode-dom.secondary { color: var(--bronze-ink); }
+.mnode-dom.business { color: var(--slate-ink); }
+.mnode-dom.discovery { color: var(--map-green-ink); }
 
 /* The road overlay: drawn behind the nodes (z 0) while rows sit above (z 2), so
    each tile reads as resting on top of the road and the line tucks under it. */
@@ -2780,7 +3090,9 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   flex-direction: column;
   align-items: center;
   width: 156px;
-  transition: transform .3s var(--spring);
+  /* Matches the reorder FLIP glide (Learning.tsx) so a pure left↔right side-flip
+     eases just as smoothly as a full move. */
+  transition: transform .46s var(--spring);
 }
 .map-row.left .map-node-wrap { transform: translateX(-86px); }
 .map-row.right .map-node-wrap { transform: translateX(86px); }
@@ -2820,6 +3132,36 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   place-items: center;
   box-shadow: 0 4px 12px rgba(17, 17, 17, .16);
   z-index: 2;
+}
+
+/* Tap-reorder mode: a dim overlay on the node with two big ↑/↓ tap targets.
+   Tap-based (no drag) — never fights the page scroll. */
+.mnode.reordering { cursor: default; }
+.mnode-reorder {
+  position: absolute; inset: 0; z-index: 4; border-radius: 30px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: rgba(17, 17, 17, .42);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+}
+.mnode-arrow {
+  width: 46px; height: 46px; border-radius: 50%; border: 0;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .94); color: #1B1B1B;
+  box-shadow: 0 4px 12px rgba(17, 17, 17, .25);
+  transition: transform .12s var(--spring);
+}
+.mnode-arrow:active { transform: scale(.88); }
+.mnode-arrow:disabled { opacity: .35; }
+
+/* Phrase count / progress on the cover (k learned / N total) — frosted dark pill,
+   bottom-left so it never collides with the completion seal (bottom-right). */
+.mnode-count {
+  position: absolute; left: 7px; bottom: 7px; z-index: 3;
+  font-size: 0.6875rem; font-weight: 700; color: #fff;
+  background: rgba(0, 0, 0, .55);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  padding: 2px 7px; border-radius: 999px; font-variant-numeric: tabular-nums;
+  pointer-events: none;
 }
 
 /* Completed — full-colour and inviting, just a touch calmer, with a green check
@@ -3044,9 +3386,19 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 .quest-cta { margin-top: 26px; }
 
 /* ===== Practice — карточка коммуникационной ситуации ===================== */
+/* Practice is a FIXED viewport — header + deck fit one screen, no vertical scroll
+   (the deck flexes to fill; the card auto-fits its text). No up/down dragging. */
 .tr-screen {
   background: var(--card);
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  display: flex;
+  flex-direction: column;
+  /* Tighter than the global .screen reserve (safe-area+92) — the nav-dock only
+     occupies safe-area+62, so this lets the card stretch much closer to the bar
+     (the card is the product; minimise dead space below it). */
+  padding-bottom: calc(env(safe-area-inset-bottom) + 66px);
 }
 .tr-head { margin-bottom: 14px; }
 .tr-eyebrow {
@@ -3065,10 +3417,11 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 /* Deck stack — premium object, ~64% of the screen, clear of the floating nav */
 .tr-deck {
   position: relative;
-  height: min(66dvh, 560px);
+  flex: 1 1 auto;
+  min-height: 0;
   perspective: 1500px;
 }
-.tr-card { position: absolute; inset: 0; will-change: transform; }
+.tr-card { position: absolute; inset: 0; will-change: transform; touch-action: pan-y; }
 .tr-card.ghost {
   transform: translateY(calc(var(--gi) * 10px)) scale(calc(1 - var(--gi) * 0.035));
   opacity: .5; filter: saturate(.9); pointer-events: none;
@@ -3085,7 +3438,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 .tr-back-pad { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 32px 30px; }
 
 /* Photo header — scene dissolves softly into the card body (begins mid-photo) */
-.tr-photo { position: absolute; top: 0; left: 0; right: 0; height: 36%; overflow: hidden; }
+.tr-photo { position: absolute; top: 0; left: 0; right: 0; height: 33%; overflow: hidden; }
 .tr-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tr-photo-fade {
   position: absolute; inset: 0;
@@ -3111,15 +3464,43 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 }
 
 /* Card body — phrase as dialogue, centred slightly above the card middle.
-   Bottom padding reserves the interaction zone + breathing room above it. */
+   Bottom padding reserves the mic zone; the content can never reach it because
+   useFitText (Training.tsx) shrinks --fit until the block clears the reserve. */
 .tr-body {
-  position: absolute; top: 34%; left: 0; right: 0; bottom: 0;
-  display: flex; align-items: center; padding: 0 28px 162px; z-index: 1;
+  position: absolute; top: 40%; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+  /* Starts at 40% (a clear ~45px gap below the 33% photo so the text never hugs
+     the image) and reads top-down; bottom padding reserves the mic. */
+  padding: 4px 28px 96px; z-index: 1;
+}
+/* Measured wrapper — its scrollHeight is what auto-fit compares to the reserve. */
+.tr-fit { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; width: 100%; }
+.tr-stim-label {
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--faint);
 }
 .tr-stim {
   text-align: left; margin: 0;
-  font-size: clamp(32px, 7vw, 44px); font-weight: 600; line-height: 1.14;
+  font-size: calc(clamp(28px, 6.4vw, 40px) * var(--fit, 1)); font-weight: 600; line-height: 1.14;
   letter-spacing: -.02em; color: var(--text);
+}
+/* RU active-recall prompt: a readable scene (not hero-huge) + the task line.
+   font-size carries a --fit multiplier so long cards shrink to clear the mic. */
+/* Hierarchy swap: the SITUATION is supporting context (small, regular weight),
+   the TASK is the hero prompt (large, bold). */
+.tr-situation {
+  text-align: left; margin: 0;
+  font-size: calc(clamp(14.5px, 3.7vw, 16px) * var(--fit, 1)); font-weight: 450; line-height: 1.42;
+  letter-spacing: 0; color: var(--text-2);
+}
+.tr-task {
+  text-align: left; margin: calc(14px * var(--fit, 1)) 0 0;
+  font-size: calc(clamp(19px, 4.7vw, 23px) * var(--fit, 1)); font-weight: 700; line-height: 1.28;
+  letter-spacing: -.01em; color: var(--text);
+}
+.tr-task-lbl {
+  display: block; font-size: 0.6875rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 3px;
 }
 
 /* Interaction zone — a real control: ← Не знаю | [hand] | Знаю ответ →,
@@ -3234,6 +3615,45 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   display: block; margin: 26px auto 0; padding: 12px 20px; border: 0; background: none;
   color: var(--danger); font-size: 0.9375rem; font-weight: 600;
 }
+
+/* ── Email verification gate ──────────────────────────────────────── */
+.verify-card {
+  width: min(380px, 92vw); background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: 34px 26px;
+  text-align: center; animation: fade-up .42s var(--spring) both;
+}
+.verify-mark { font-size: 2.75rem; line-height: 1; margin-bottom: 10px; }
+.verify-title { font-size: 1.375rem; font-weight: 800; letter-spacing: -.02em; margin: 0 0 8px; }
+.verify-body { font-size: 0.9375rem; color: var(--muted); line-height: 1.5; margin: 0 0 22px; word-break: break-word; }
+.verify-card .sub-buy { margin-bottom: 10px; }
+.verify-edit { display: flex; flex-direction: column; gap: 10px; }
+.verify-input {
+  width: 100%; box-sizing: border-box; padding: 14px 16px; font-size: 1rem;
+  border-radius: 14px; border: 1px solid var(--border); background: #FAFAF8; color: var(--text);
+  outline: none; transition: border-color .2s, background .2s;
+}
+.verify-input:focus { border-color: var(--map-green); background: var(--card); }
+.verify-link {
+  display: block; width: 100%; margin-top: 2px; padding: 10px; border: 0; background: none;
+  color: var(--map-green-ink); font-size: 0.875rem; font-weight: 600;
+}
+.verify-note { font-size: 0.84375rem; color: var(--bronze-ink); margin: 12px 0 0; }
+.verify-logout {
+  display: block; margin: 18px auto 0; padding: 10px 18px; border: 0; background: none;
+  color: var(--danger); font-size: 0.9375rem; font-weight: 600;
+}
+/* small inline "change" action on a cabinet row + the email editor */
+.row-action {
+  flex: none; border: 0; cursor: pointer; font: inherit;
+  border-radius: 999px; padding: 8px 14px;
+  font-size: 0.8125rem; font-weight: 700; color: var(--bronze-ink);
+  background: var(--bronze-soft);
+}
+.email-edit { flex-wrap: wrap; gap: 10px; align-items: stretch; }
+.email-edit .verify-input { flex: 1 1 100%; }
+.email-edit-row { display: flex; gap: 8px; width: 100%; }
+.email-edit-row .sub-buy { height: 46px; }
+.email-edit .verify-note { width: 100%; }
 /* Account deletion (Apple-required) — quiet by default, two-tap confirm */
 .cab-danger {
   display: block; margin: 6px auto 8px; padding: 10px 18px; border: 0; background: none;
@@ -3664,6 +4084,39 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   flex: 1; min-height: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
 }
+/* Pinned cue at the top of the back face (tap → flip to front). */
+.tr-back-prompt {
+  width: 100%; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 0 4px 10px; margin-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.tr-back-prompt-text {
+  font-size: clamp(17px, 4.4vw, 23px); font-weight: 620; line-height: 1.2;
+  letter-spacing: -.01em; color: var(--text);
+}
+.tr-back-prompt-hint {
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: .02em; color: var(--muted);
+}
+.tr-back-prompt:active { opacity: .6; }
+
+/* Hands-free (Pimsleur) loop: toggle + the talking/listening orb. */
+/* Conversation-mode toggle — now BELOW the deck (was a top bar). flex:0 so the
+   deck keeps all the freed height and this pill sits just under the card. */
+.tr-hf-bar { display: flex; justify-content: center; margin: 8px 0 0; flex: 0 0 auto; }
+.tr-hf-toggle {
+  display: inline-flex; align-items: center; gap: 7px; cursor: pointer; font: inherit;
+  border: 1.5px solid var(--border); background: var(--card); color: var(--text-2);
+  border-radius: 999px; padding: 9px 18px; font-size: 0.875rem; font-weight: 700;
+  transition: transform .15s var(--spring), background .2s, color .2s, border-color .2s;
+}
+.tr-hf-toggle:active { transform: scale(.97); }
+.tr-hf-toggle.on {
+  background: linear-gradient(135deg, #27AB7B 0%, #1C8C63 100%); color: #fff; border-color: transparent;
+  box-shadow: 0 10px 24px -10px rgba(28, 140, 99, .55);
+}
+.tr-hf-live { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.tr-hf-label { font-size: 1rem; font-weight: 680; color: var(--text-2); margin: 0; }
+.tr-hf-label.go { font-size: 1.375rem; font-weight: 800; color: var(--accent); }  /* «Говори» — your turn */
 .tr-back2 .tr-answer { margin: 0; text-align: center; }
 .tr-answer.big { font-size: clamp(28px, 7.2vw, 46px); font-weight: 600; }
 .tr-score { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
@@ -3671,6 +4124,137 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 .tr-score .tr-answer { font-size: clamp(22px, 5.6vw, 34px); }
 .tr-score .tr-coach-fb { text-align: center; margin: 2px 0 0; }
 .tr-score .tr-heard { margin: 4px 0 0; }
+
+/* ── Practice card redesign (2026-06-20): clean front + inline AI answer ────── */
+
+/* Bottom control zone of the FRONT face (mic idle/recording). */
+/* Mic sits low in the card — the card is well clear of the screen's home
+   indicator (the .screen padding already reserves it), so NO safe-area inset
+   here; adding it would shove the mic up into the text. */
+.tr-mic-zone {
+  position: absolute; left: 0; right: 0; bottom: 18px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 3;
+}
+
+/* Liquid-Glass mic — the nav-«глазок» lens recipe + emerald cast & icon. */
+.tr-mic-glass {
+  width: 76px; height: 76px; border-radius: 50%; position: relative;
+  border: 1px solid rgba(255, 255, 255, .7);
+  display: grid; place-items: center; color: var(--accent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .42) 0%, rgba(255, 255, 255, .16) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(220%) brightness(1.08);
+  backdrop-filter: blur(24px) saturate(220%) brightness(1.08);
+  box-shadow:
+    inset 0 2px 1px rgba(255, 255, 255, .95),
+    inset 0 -2px 2px rgba(0, 0, 0, .05),
+    inset 3px 0 2px rgba(120, 190, 255, .30),
+    inset -3px 0 2px rgba(255, 150, 205, .28),
+    0 12px 30px -10px rgba(28, 140, 99, .30),
+    0 4px 12px rgba(17, 17, 17, .10);
+  transition: transform .18s var(--spring), box-shadow .2s ease, opacity .16s ease;
+}
+.tr-mic-glass::after {
+  content: ""; position: absolute; top: 5px; left: 13px; right: 13px; height: 34%;
+  border-radius: 999px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, 0) 100%);
+}
+.tr-mic-glass > * { position: relative; z-index: 1; }
+.tr-mic-glass:active { transform: scale(.92); }
+.tr-mic-glass:disabled { opacity: .7; }
+/* Recording — unmistakably ON: saturated emerald glass, bright rim, a steady inner
+   glow + a breathing ring and a gentle scale pulse so it clearly reads as live. */
+.tr-mic-glass.on {
+  color: #fff;
+  border-color: rgba(39, 171, 123, .9);
+  background: linear-gradient(180deg, rgba(46, 190, 138, .62) 0%, rgba(28, 140, 99, .46) 100%);
+  animation: tr-mic-breathe 1.35s ease-in-out infinite;
+}
+.tr-mic-glass.on::after { opacity: .45; }   /* let the green read through the gloss cap */
+@keyframes tr-mic-breathe {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(39, 171, 123, .55), 0 0 18px 2px rgba(39, 171, 123, .35), 0 14px 32px -10px rgba(28, 140, 99, .5); }
+  60%  { transform: scale(1.07); box-shadow: 0 0 0 18px rgba(39, 171, 123, 0), 0 0 28px 5px rgba(39, 171, 123, .5), 0 14px 32px -10px rgba(28, 140, 99, .5); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(39, 171, 123, 0), 0 0 18px 2px rgba(39, 171, 123, .35), 0 14px 32px -10px rgba(28, 140, 99, .5); }
+}
+.tr-mic-glass .tr-mic-stop { background: var(--accent); }
+.tr-mic-glass.on .tr-mic-stop { background: #fff; }   /* white stop square on the green */
+.tr-mic-glass.dim { opacity: .5; }   /* Режим разговора · cue stage — not your turn yet */
+
+/* Gated gesture hint (first HINT_REPS reps). */
+.tr-hint { margin: 0; text-align: center; font-size: 0.875rem; font-weight: 600; color: var(--muted); }
+.tr-hint.front {
+  position: absolute; left: 0; right: 0; bottom: calc(30px + env(safe-area-inset-bottom)); z-index: 3;
+}
+.tr-hint-swipe { margin-top: 8px; opacity: .8; }   /* shown first HINT_REPS reps under the verdict */
+
+/* ── Long-press batch context menu (bottom action-sheet) ───────────────────── */
+.bm-backdrop {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(17, 17, 17, .28);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0 10px calc(10px + env(safe-area-inset-bottom));
+  animation: bm-fade .18s ease;
+}
+@keyframes bm-fade { from { opacity: 0; } to { opacity: 1; } }
+.bm-sheet {
+  width: 100%; max-width: 460px; border-radius: 26px; overflow: hidden; padding: 8px;
+  background: rgba(255, 255, 255, .82);
+  -webkit-backdrop-filter: saturate(180%) blur(28px); backdrop-filter: saturate(180%) blur(28px);
+  box-shadow: 0 -8px 40px -12px rgba(17, 17, 17, .4), inset 0 1px 0 rgba(255, 255, 255, .7);
+  animation: bm-rise .26s cubic-bezier(.22, 1, .36, 1);
+}
+@keyframes bm-rise { from { transform: translateY(110%); } to { transform: translateY(0); } }
+.bm-title {
+  margin: 6px 12px 8px; font-size: .8125rem; font-weight: 700; color: var(--faint);
+  text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bm-item, .bm-cancel {
+  display: block; width: 100%; border: 0; cursor: pointer; font: inherit;
+  padding: 15px 16px; border-radius: 16px; font-size: 1.0625rem; font-weight: 600;
+  color: var(--text); background: transparent; text-align: center;
+  transition: background .12s, transform .12s var(--spring);
+}
+.bm-item:active, .bm-cancel:active { transform: scale(.98); background: rgba(17, 17, 17, .06); }
+.bm-item.danger { color: var(--danger); }
+.bm-item:disabled, .bm-cancel:disabled { opacity: .5; }
+.bm-cancel { margin-top: 6px; font-weight: 700; background: rgba(17, 17, 17, .05); }
+
+/* Inline AI result on the FRONT bottom zone (replaces the mic; order %→you→model→coach). */
+.tr-result {
+  position: absolute; left: 0; right: 0; bottom: calc(22px + env(safe-area-inset-bottom));
+  padding: 0 22px; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+}
+.tr-result .verdict-pct { margin: 0; }
+.tr-result-lbl {
+  display: block; font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 2px;
+}
+.tr-said { margin: 0; text-align: center; font-size: 0.9375rem; color: var(--text-2); }
+.tr-model { margin: 2px 0 0; text-align: center; font-size: clamp(18px, 4.8vw, 24px); font-weight: 600; color: var(--accent); }
+/* Word-hit map on the model phrase: words the learner produced stay solid,
+   the ones they missed light up — read the gaps, not the whole line. */
+.tr-model .w-hit { color: var(--accent); }
+.tr-model .w-miss { color: var(--danger); opacity: 0.92; }
+/* Live partial transcript under the mic while Web Speech listens. */
+.tr-mic-live {
+  margin: 12px 0 0; max-width: 82%; text-align: center;
+  font-size: 0.9375rem; line-height: 1.35; color: var(--text-2);
+  font-style: italic;
+}
+.tr-result .tr-coach-fb { text-align: center; margin: 2px 0 0; }
+.tr-answer.big .tr-result-lbl { margin-bottom: 6px; }
+
+/* Front AI result takes over the whole card body (below the photo) — no overlap
+   with the stimulus, which is unmounted while the result is up. Score + phrase only. */
+.tr-result.tr-result-front {
+  top: 36%; bottom: 0; justify-content: center; gap: 16px;
+  padding: 22px 26px calc(26px + env(safe-area-inset-bottom));
+  background: var(--card);
+}
+.tr-result-front .verdict-pct { font-size: clamp(44px, 13vw, 64px); }
+.tr-result-front .tr-model { font-size: clamp(20px, 5.4vw, 26px); }
+
 .tr-judge { display: flex; gap: 12px; padding-top: 18px; }
 .tr-judge-btn {
   flex: 1; height: 56px; border: 0; border-radius: 18px;
@@ -3759,6 +4343,15 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
     --map-green-ink: #3ED199;
     --map-green-soft: rgba(47, 185, 133, .22);
 
+    --slate: #93A3B2;
+    --slate-ink: #A6B4C1;
+    --slate-soft: rgba(147, 163, 178, .20);
+    --bar-track: rgba(255, 255, 255, .12);
+    --bar-bronze: #9E7C44;
+    --bar-green: #2E8F69;
+    --bar-slate: #6E7E8C;
+    --bar-muted: #4A4A48;
+
     --shadow: 0 1px 2px rgba(0, 0, 0, .6), 0 10px 28px rgba(0, 0, 0, .55);
     --shadow-lg: 0 18px 50px rgba(0, 0, 0, .65);
   }
@@ -3789,3 +4382,22 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 }
 .focus-hero-play { z-index: 2; }            /* already absolutely positioned */
 .mini-play { position: relative; z-index: 2; } /* relative keeps its flex flow */
+
+/* --- Coach-mark tutorial overlay (first-launch, contextual per screen) --- */
+.cm-root { position: fixed; inset: 0; z-index: 1000; -webkit-tap-highlight-color: transparent; touch-action: pan-y; animation: fade-up .25s var(--spring); }
+.cm-svg { position: absolute; inset: 0; }
+.cm-cap { position: absolute; color: #F4EFE7; text-align: center; pointer-events: none; }
+.cm-cap .cm-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; text-shadow: 0 1px 10px rgba(0,0,0,.6); }
+.cm-cap .cm-body { font-size: .85rem; line-height: 1.45; color: #E8E1D4; text-shadow: 0 1px 10px rgba(0,0,0,.7); }
+.cm-video { width: 100%; max-height: 160px; object-fit: cover; border-radius: 14px; margin-bottom: 10px; background: rgba(0,0,0,.35); }
+.cm-foot { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 14px; pointer-events: auto; }
+.cm-dots { display: flex; gap: 5px; }
+.cm-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.4); transition: width .2s, background .2s, border-radius .2s; }
+.cm-dots span.on { width: 16px; border-radius: 3px; background: var(--bronze, #B08A4A); }
+.cm-skip { background: none; border: none; color: rgba(255,255,255,.72); font-size: .8rem; padding: 4px 10px; cursor: pointer; }
+
+/* --- Contextual one-line method hints (the light tutorial layer) --- */
+.teach-tip { position: fixed; left: 16px; right: 16px; top: calc(env(safe-area-inset-top, 0px) + 14px); z-index: 1100; display: flex; align-items: flex-start; gap: 10px; background: rgba(38,33,27,.96); color: #F4EFE7; padding: 12px 14px; border-radius: 16px; box-shadow: 0 12px 36px rgba(0,0,0,.3); font-size: .85rem; line-height: 1.45; animation: tip-in .3s var(--spring); cursor: pointer; }
+.teach-tip-text { flex: 1; }
+.teach-tip-x { color: rgba(255,255,255,.6); font-size: 1.15rem; line-height: 1; }
+@keyframes tip-in { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }

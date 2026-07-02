@@ -12,21 +12,26 @@ import { IconBack, IconCheck } from "../ui/icons";
 type Tier = {
   plan: "ai" | "core";
   nameKey: string; taglineKey: string;
-  monthly: string; yearly: string; savePct: string;
+  // monthlyEq = the yearly price ÷ 12, shown as the per-month equivalent when the
+  // yearly period is selected.
+  monthly: string; yearly: string; monthlyEq: string; savePct: string;
   features: string[]; flagship?: boolean;
 };
 const TIERS: Tier[] = [
   {
     plan: "ai", nameKey: "sub.ai.name", taglineKey: "sub.ai.tagline",
-    monthly: "$12.99", yearly: "$79.99", savePct: "49%", flagship: true,
+    monthly: "$12.99", yearly: "$79.99", monthlyEq: "$6.67", savePct: "49%", flagship: true,
     features: ["sub.ai.f1", "sub.ai.f2", "sub.ai.f3", "sub.ai.f4"],
   },
   {
     plan: "core", nameKey: "sub.core.name", taglineKey: "sub.core.tagline",
-    monthly: "$6.99", yearly: "$39.99", savePct: "52%",
+    monthly: "$6.99", yearly: "$39.99", monthlyEq: "$3.33", savePct: "52%",
     features: ["sub.core.f1", "sub.core.f2", "sub.core.f3"],
   },
 ];
+
+// Biggest annual discount across tiers — labels the "yearly" toggle.
+const MAX_SAVE = Math.max(...TIERS.map((t) => parseInt(t.savePct, 10)));
 
 export default function Subscribe() {
   const nav = useNavigate();
@@ -34,6 +39,8 @@ export default function Subscribe() {
   const { user, refresh } = useAuth();
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
+  // Billing period chooser — annual is the default (best value).
+  const [period, setPeriod] = useState<"monthly" | "yearly">("yearly");
 
   const buy = async (plan: "ai" | "core", period: "monthly" | "yearly") => {
     haptic("medium");
@@ -69,6 +76,23 @@ export default function Subscribe() {
         <p className="sub-sub">{t("sub.subtitle")}</p>
       </div>
 
+      <div className="period-seg" role="tablist" aria-label={t("sub.title")}>
+        <button
+          role="tab" aria-selected={period === "monthly"}
+          className={`period-tab${period === "monthly" ? " active" : ""}`}
+          onClick={() => setPeriod("monthly")}
+        >
+          {t("sub.monthly")}
+        </button>
+        <button
+          role="tab" aria-selected={period === "yearly"}
+          className={`period-tab${period === "yearly" ? " active" : ""}`}
+          onClick={() => setPeriod("yearly")}
+        >
+          {t("sub.yearly")}<span className="period-pill">−{MAX_SAVE}%</span>
+        </button>
+      </div>
+
       {TIERS.map((tr) => {
         const current = user?.plan === tr.plan;
         return (
@@ -77,8 +101,14 @@ export default function Subscribe() {
             <div className="sub-card-name">{t(tr.nameKey)}</div>
             <div className="sub-card-tag">{t(tr.taglineKey)}</div>
             <div className="sub-price">
-              <span className="sub-price-mo"><b>{tr.monthly}</b>{t("sub.perMonth")}</span>
-              <span className="sub-price-yr">{t("sub.orYear", { price: tr.yearly })} · <span className="sub-save">−{tr.savePct}</span></span>
+              {period === "yearly" ? (
+                <>
+                  <span className="sub-price-mo"><b>{tr.yearly}</b>{t("sub.perYear")}</span>
+                  <span className="sub-price-yr">{t("sub.perMoEq", { price: tr.monthlyEq })} · <span className="sub-save">−{tr.savePct}</span></span>
+                </>
+              ) : (
+                <span className="sub-price-mo"><b>{tr.monthly}</b>{t("sub.perMonth")}</span>
+              )}
             </div>
             <ul className="sub-feats">
               {tr.features.map((f) => (
@@ -88,7 +118,7 @@ export default function Subscribe() {
             {current ? (
               <div className="sub-current">{t("sub.current")}</div>
             ) : (
-              <button className={`sub-buy${tr.flagship ? " primary" : ""}`} disabled={busy} onClick={() => buy(tr.plan, "yearly")}>
+              <button className={`sub-buy${tr.flagship ? " primary" : ""}`} disabled={busy} onClick={() => buy(tr.plan, period)}>
                 {busy ? "…" : t("sub.choose")}
               </button>
             )}
@@ -96,9 +126,19 @@ export default function Subscribe() {
         );
       })}
 
-      <p className="sub-free-note">{t("sub.freeNote")}</p>
+      {user?.plan !== "ai" && user?.plan !== "core" && (
+        <p className="sub-free-note">{t("sub.freeNote")}</p>
+      )}
       {note && <p className="sub-note">{note}</p>}
       <button className="sub-restore" disabled={busy} onClick={restore}>{t("sub.restore")}</button>
+
+      {/* App Store §3.1.2 — auto-renew disclosure + required legal links. */}
+      <p className="sub-legal-note">{t("sub.autorenew")}</p>
+      <div className="sub-legal-links">
+        <a href="https://executive-english.net/terms" target="_blank" rel="noreferrer">{t("about.terms")}</a>
+        <span aria-hidden> · </span>
+        <a href="https://executive-english.net/privacy" target="_blank" rel="noreferrer">{t("about.privacy")}</a>
+      </div>
     </div>
   );
 }

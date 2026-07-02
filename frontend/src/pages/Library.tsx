@@ -1,16 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { api, BatchListItem, PhraseSearchItem } from "../api";
+import { api, BatchListItem, BatchMastery, PhraseSearchItem, WeeklySummary } from "../api";
 import { usePlayer } from "../player/PlayerContext";
 import { BatchCover } from "../ui/Art";
+import { BatchTapButton } from "../ui/BatchTapButton";
+import { useProgressVersion } from "../ui/BatchMenu";
 import { IconSearch, IconPlay } from "../ui/icons";
 import { orderedSections, sectionName } from "../lib/sections";
 import { buildSprint } from "../lib/strategy";
-import { getProgress, isEngaged } from "../lib/progress";
+import { getProgress, isActive } from "../lib/progress";
 import { getStrategy, recordVisit } from "../lib/profile";
+import { useTeach } from "../tutorial/teach";
+import { getAvatar } from "../lib/avatar";
 import { syncReviewReminder } from "../lib/reminders";
-import { useI18n } from "../i18n";
+import { getLeagueResult } from "../lib/league";
 import { useAuth } from "../auth/AuthContext";
+import { useI18n } from "../i18n";
 
 const numOf = (slug: string) => {
   const m = slug.match(/(\d+)\s*$/);
@@ -24,13 +29,24 @@ export default function Library() {
   const { t } = useI18n();
   const { user } = useAuth();
   const player = usePlayer();
+  const pv = useProgressVersion();   // re-render after a long-press menu action
   const initials = ((user?.name?.trim() || user?.email || "")
     .split(/[\s@._-]+/).filter(Boolean).slice(0, 2).map((s) => s[0]?.toUpperCase()).join("")) || "·";
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [err, setErr] = useState("");
-  const [streak] = useState(() => recordVisit());
+  // Work streak: server truth (days actually trained, with a freeze bridge);
+  // the localStorage visit counter is only the instant fallback while it loads.
+  const [streak, setStreak] = useState(() => recordVisit());
   // Spaced-repetition: how many practiced phrases are due to refresh right now.
   const [dueCount, setDueCount] = useState(0);
+  const [mastery, setMastery] = useState<BatchMastery[]>([]);
+  // "Your week" rollup — shown once there's a meaningful amount of work in it.
+  const [weekly, setWeekly] = useState<WeeklySummary | null>(null);
+  // League placement test — the entry card retires after the first run.
+  const [leagueTaken] = useState(() => !!getLeagueResult());
+  const { tip } = useTeach();
+  useEffect(() => { if (dueCount > 0) tip("refresh"); }, [dueCount, tip]);
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   // Search (opened from the floating nav's search button).
   const [searchOpen, setSearchOpen] = useState(false);
@@ -41,11 +57,31 @@ export default function Library() {
   useEffect(() => {
     api.listBatches().then(setBatches).catch((e) => setErr(String(e)));
     api.getMastery()
-      .then((ms) => setDueCount(ms.reduce((s, m) => s + (m.due || 0), 0)))
+      .then((ms) => {
+        setMastery(ms);
+        const due = ms.reduce((s, m) => s + (m.due || 0), 0);
+        setDueCount(due);
+        // Re-sync tomorrow's reminder body with the live due-count.
+        void syncReviewReminder(due);
+      })
       .catch(() => {/* non-fatal — just hides the review card */});
+    api.getStreak()
+      .then((s) => setStreak(s.streak))
+      .catch(() => {/* non-fatal — keeps the local fallback */});
+    api.getWeekly()
+      .then(setWeekly)
+      .catch(() => {/* non-fatal — just hides the week card */});
     // Re-sync the daily review reminder from the live due-set on each home open.
     void syncReviewReminder();
   }, []);
+
+  // Profile photo, shared from the Profile page (kept in sync via the event).
+  useEffect(() => {
+    const load = () => setAvatar(getAvatar(user?.id));
+    load();
+    window.addEventListener("ee-avatar-changed", load);
+    return () => window.removeEventListener("ee-avatar-changed", load);
+  }, [user?.id]);
 
   useEffect(() => {
     const st = loc.state as { focusSearch?: number } | null;
@@ -86,32 +122,30 @@ export default function Library() {
     return out;
   }, [batches]);
 
-  // Progress metrics (lightweight metadata, real data).
-  const totalPatterns = useMemo(
-    () => batches.reduce((s, b) => s + (b.phrase_count || 0), 0),
-    [batches]
+  // Progress metrics — PHRASES, not batches (per request). Mastered =
+  // familiar+automatic; in-work = shaky. Straight off the SRS mastery rollup.
+  const phrasesMastered = useMemo(
+    () => mastery.reduce((s, m) => { const r = m.srs || {}; return s + (r.familiar || 0) + (r.automatic || 0); }, 0),
+    [mastery]
   );
-  const inProgress = useMemo(
-    () => batches.filter((b) => {
-      const p = getProgress(b.id);
-      return !p.l3_passed && isEngaged(p);
-    }).length,
-    [batches]
+  const phrasesInWork = useMemo(
+    () => mastery.reduce((s, m) => s + ((m.srs || {}).shaky || 0), 0),
+    [mastery]
   );
 
-  // Active batches — what the learner has activated / started / finished. Shown
-  // as the FIRST library row (in-progress first, completed last).
+  // Active batches — what's in the practice-deck rotation (activated). Shown as the
+  // FIRST library row (in-progress first, completed last). Long-press → menu.
   const activeRow = useMemo(
     () =>
       batches
-        .filter((b) => isEngaged(getProgress(b.id)))
+        .filter((b) => isActive(getProgress(b.id)))
         .sort((a, c) => {
           const ac = isClosed(a.id) ? 1 : 0;
           const cc = isClosed(c.id) ? 1 : 0;
           if (ac !== cc) return ac - cc;
           return numOf(a.slug) - numOf(c.slug);
         }),
-    [batches]
+    [batches, pv]
   );
 
   // Current Focus = the active batch of the learner's sprint (or, if nothing
@@ -194,7 +228,7 @@ export default function Library() {
             <p className="brand-sub">Executive communication.<br />Built for real conversations.</p>
           </div>
           <button className="avatar-btn" onClick={() => nav("/profile")} aria-label={t("common.profile")}>
-            {initials}
+            {avatar ? <img className="avatar-img" src={avatar} alt="" /> : initials}
           </button>
         </div>
       )}
@@ -217,11 +251,12 @@ export default function Library() {
               <p className="section-label">{t("lib.collections")} · {matchedBatches.length}</p>
               <div className="grid">
                 {matchedBatches.map((b, i) => (
-                  <button
+                  <BatchTapButton
                     key={b.id}
+                    batchId={b.id}
+                    title={b.title}
                     className="album"
                     style={{ animationDelay: `${i * 40}ms` }}
-                    onClick={() => nav(`/batch/${b.id}`)}
                   >
                     <span className="album-art">
                       <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
@@ -229,7 +264,7 @@ export default function Library() {
                     <div className="album-title">{b.title}</div>
                     {b.preview && <div className="album-sub">{b.preview}</div>}
                     <div className="album-meta">{t("lib.nPatterns", { n: b.phrase_count })}</div>
-                  </button>
+                  </BatchTapButton>
                 ))}
               </div>
             </section>
@@ -267,12 +302,12 @@ export default function Library() {
           <div className="metrics">
             <div className="metric">
               <span className="metric-ico">
-                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M4 9v6M8 5v14M12 8v8M16 4v16M20 10v4" />
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 6L9 17l-5-5" />
                 </svg>
               </span>
-              <span className="metric-num">{totalPatterns}</span>
-              <span className="metric-label">{t("lib.mPatterns")}</span>
+              <span className="metric-num">{phrasesMastered}</span>
+              <span className="metric-label">{t("lib.mMastered")}</span>
             </div>
             <div className="metric">
               <span className="metric-ico">
@@ -280,8 +315,8 @@ export default function Library() {
                   <path d="M3 17l5-6 4 4 6-8" /><path d="M18 7h3v3" />
                 </svg>
               </span>
-              <span className="metric-num">{inProgress}</span>
-              <span className="metric-label">{t("lib.mInProgress")}</span>
+              <span className="metric-num">{phrasesInWork}</span>
+              <span className="metric-label">{t("lib.mInWork")}</span>
             </div>
             <div className="metric">
               <span className="metric-ico">
@@ -313,11 +348,56 @@ export default function Library() {
             </button>
           )}
 
+          {/* League test — the conversion hook, shown until taken once. */}
+          {!leagueTaken && (
+            <button className="review-due league-entry" onClick={() => nav("/league")}>
+              <span className="review-due-ico">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 21h8M12 17v4M6 3h12v6a6 6 0 01-12 0V3z" /><path d="M6 5H3v2a4 4 0 004 4M18 5h3v2a4 4 0 01-4 4" />
+                </svg>
+              </span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("league.entryTitle")}</span>
+                <span className="review-due-sub">{t("league.entrySub")}</span>
+              </span>
+              <span className="review-due-go">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              </span>
+            </button>
+          )}
+
+          {/* Your week — a calm progress cue: how much work landed and which
+              phrases stood out. Only once the week has real substance. */}
+          {weekly && weekly.attempts >= 5 && (
+            <div className="week-card">
+              <div className="week-head">
+                <span className="week-title">{t("week.title")}</span>
+                <span className="week-stats">{t("week.stats", { days: weekly.days_active, n: weekly.attempts })}</span>
+              </div>
+              {weekly.best.length > 0 && (
+                <div className="week-list">
+                  <span className="week-lbl">{t("week.best")}</span>
+                  {weekly.best.slice(0, 2).map((p) => (
+                    <span className="week-phrase" key={p.phrase_id}>{p.phrase_en}</span>
+                  ))}
+                </div>
+              )}
+              {weekly.focus.length > 0 && (
+                <div className="week-list">
+                  <span className="week-lbl">{t("week.focus")}</span>
+                  {weekly.focus.slice(0, 1).map((p) => (
+                    <span className="week-phrase dim" key={p.phrase_id}>{p.phrase_en}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Current Focus — the hero. */}
           {focus && (
             <>
             <p className="focus-label">{t("lib.focus")}</p>
-            <div className="focus-hero">
+            <div className="focus-hero" data-tour="hero">
               <span className="focus-hero-art">
                 <BatchCover seed={focus.slug} coverUrl={focus.cover_url} locked={focus.locked} />
               </span>
@@ -329,8 +409,8 @@ export default function Library() {
                   {t("lib.nPatterns", { n: focus.phrase_count })} · {Math.max(8, Math.round(focus.phrase_count * 1.5))} min
                 </span>
               </span>
-              <button className="focus-hero-open" aria-label={focus.title}
-                onClick={() => nav(`/batch/${focus.id}`)} />
+              <BatchTapButton className="focus-hero-open" batchId={focus.id} title={focus.title}
+                ariaLabel={focus.title}>{null}</BatchTapButton>
               <button
                 className="focus-hero-play"
                 aria-label={t("lib.listenAria")}
@@ -350,14 +430,14 @@ export default function Library() {
               </div>
               <div className="row-scroll">
                 {activeRow.map((b) => (
-                  <button key={b.id} className="row-card" onClick={() => nav(`/batch/${b.id}`)}>
+                  <BatchTapButton key={b.id} batchId={b.id} title={b.title} className="row-card">
                     <span className="row-card-art">
                       <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                       {isClosed(b.id) && <span className="row-card-done">✓</span>}
                     </span>
                     <div className="row-card-title">{b.title}</div>
                     {b.preview && <div className="row-card-sub">{b.preview}</div>}
-                  </button>
+                  </BatchTapButton>
                 ))}
               </div>
             </section>
@@ -383,13 +463,13 @@ export default function Library() {
               </button>
               <div className="row-scroll">
                 {row.items.map((b) => (
-                  <button key={b.id} className="row-card" onClick={() => nav(`/batch/${b.id}`)}>
+                  <BatchTapButton key={b.id} batchId={b.id} title={b.title} className="row-card">
                     <span className="row-card-art">
                       <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
                     </span>
                     <div className="row-card-title">{b.title}</div>
                     {b.preview && <div className="row-card-sub">{b.preview}</div>}
-                  </button>
+                  </BatchTapButton>
                 ))}
               </div>
             </section>

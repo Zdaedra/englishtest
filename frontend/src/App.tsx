@@ -3,12 +3,16 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PlayerProvider, usePlayer } from "./player/PlayerContext";
 import { useAuth } from "./auth/AuthContext";
 import AuthScreen from "./pages/AuthScreen";
+import VerifyEmail from "./pages/VerifyEmail";
 import OnboardingFlow from "./pages/OnboardingFlow";
 import { isOnboarded, setOnboarded } from "./lib/onboarding";
 import { isNative } from "./lib/session";
 import { NavBar, NAV_SF } from "./lib/navbar";
 import { useI18n } from "./i18n";
 import { BatchCover } from "./ui/Art";
+import { BatchMenuProvider } from "./ui/BatchMenu";
+import RouteTour from "./tutorial/RouteTour";
+import { TeachProvider } from "./tutorial/teach";
 import {
   IconLibrary, IconWave, IconFocus, IconSearch, IconPlay, IconPause,
 } from "./ui/icons";
@@ -94,7 +98,7 @@ function FloatingNav() {
       pathname.startsWith("/settings") ||
       pathname.startsWith("/import") ||
       pathname.startsWith("/play"));
-  // Profile lives in the top-right avatar, not the bar — on /profile no tab lights.
+  // Profile lives in the top-right account button, not the bar — on /profile no tab lights.
   const activeIndex = libActive ? 0 : learnActive ? 1 : practiceActive ? 2 : -1;
 
   // Replay a one-shot "gel" stretch on the pill whenever the active tab changes.
@@ -185,6 +189,7 @@ function FloatingNav() {
     <div className="nav-dock">
       <nav
         ref={capsuleRef}
+        data-tour="nav"
         className={`nav-capsule${dragging ? " dragging" : ""}`}
         data-noactive={!dragging && activeIndex < 0}
         style={{ "--active": pillPos } as CSSProperties}
@@ -246,16 +251,26 @@ function Shell() {
   if (!user) {
     return <AuthScreen />;
   }
+  // Mandatory email verification: gate everything until the account is confirmed
+  // (server also enforces this — see the auth gate in backend/app/main.py).
+  if (user.email_verified === false) {
+    return <VerifyEmail />;
+  }
   if (!obDone && !isOnboarded(user.id)) {
     return <OnboardingFlow onDone={() => { setOnboarded(user.id); setObDone(true); }} />;
   }
   return (
     <PlayerProvider>
-      <div className="shell">
-        <Outlet />
-        <MiniPlayer />
-        <FloatingNav />
-      </div>
+      <BatchMenuProvider>
+        <TeachProvider>
+          <div className="shell">
+            <Outlet />
+            <MiniPlayer />
+            <FloatingNav />
+            <RouteTour uid={user.id} />
+          </div>
+        </TeachProvider>
+      </BatchMenuProvider>
     </PlayerProvider>
   );
 }

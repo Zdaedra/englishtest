@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { IconBack } from "../ui/icons";
 
@@ -12,7 +12,9 @@ Curious (1-3)
 
 export default function ImportBatch() {
   const nav = useNavigate();
-  const [raw, setRaw] = useState("");
+  const loc = useLocation();
+  // Prefill from the Call Analyzer's "train these phrases" hand-off.
+  const [raw, setRaw] = useState<string>((loc.state as { raw?: string } | null)?.raw || "");
   const [useLlm, setUseLlm] = useState(false);
   const [preview, setPreview] = useState<any>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
