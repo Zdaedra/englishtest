@@ -6,6 +6,10 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
         <string>Executive English</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Executive English records your speech so you can practice and get instant coaching. Your recording is transcribed by a secure AI speech service to score your answers; the audio itself is not stored.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Executive English uses on-device speech recognition to transcribe your spoken answers so it can score them. Recognition runs on your iPhone and the audio is not stored.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
