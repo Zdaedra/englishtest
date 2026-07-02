@@ -12,6 +12,7 @@ import { useProgressVersion } from "../ui/BatchMenu";
 import { setQueueSiblings, clearQueueSiblings, runBatchAction } from "../lib/batchActions";
 import { IconArrowUp, IconCheck, IconInfo, IconRefresh } from "../ui/icons";
 import { useI18n } from "../i18n";
+import { useAuth } from "../auth/AuthContext";
 
 type NodeState = "completed" | "active" | "locked";
 
@@ -202,6 +203,10 @@ function ChipGlyph({ variant }: { variant: DomVariant }) {
 export default function Learning() {
   const nav = useNavigate();
   const { t, lang } = useI18n();
+  const { user } = useAuth();
+  // The confidence check asks to PRODUCE the phrase aloud — pointless while the
+  // mic is plan-locked (a mic-less user would just re-swipe the same cards).
+  const canVoice = !!user?.entitlements?.voice_answer;
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [mastery, setMastery] = useState<BatchMastery[]>([]);
   const [err, setErr] = useState("");
@@ -425,7 +430,7 @@ export default function Learning() {
 
       {/* Adaptive action-strip — "what to do now", shown ONLY when there's a real
           task (due review / confidence check). Never a standing notifications panel. */}
-      {(dueTotal > 0 || gapCount > 0) && (
+      {(dueTotal > 0 || (gapCount > 0 && canVoice)) && (
         <div className="act-strip">
           {dueTotal > 0 && (
             <button className="review-due refresh-card" onClick={() => nav("/practice", { state: { review: true } })}>
@@ -440,7 +445,7 @@ export default function Learning() {
               </span>
             </button>
           )}
-          {gapCount > 0 && (
+          {gapCount > 0 && canVoice && (
             <button className="review-due calib-card" onClick={() => nav("/practice", { state: { gap: true } })}>
               <span className="review-due-ico">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

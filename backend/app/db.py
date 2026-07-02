@@ -160,6 +160,10 @@ def _migrate(s: Session) -> None:
         s.execute(text("UPDATE batchprogress SET on_path_at=COALESCE(on_path_at, activated_at, updated_at) WHERE on_path=1"))
         s.execute(text("UPDATE batchprogress SET activated_at=COALESCE(activated_at, updated_at) WHERE activated=1"))
         s.commit()
+    # Manual path order (drag), synced cross-device. NULL = computed order.
+    if bpinfo and "path_rank" not in {row[1] for row in bpinfo}:
+        s.execute(text("ALTER TABLE batchprogress ADD COLUMN path_rank INTEGER"))
+        s.commit()
 
 
 def init_db() -> None:

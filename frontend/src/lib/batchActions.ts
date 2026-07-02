@@ -3,7 +3,7 @@
 //   on_path = curated learning trajectory (Learning map) · activated = practice deck
 //   invariant: activated ⊆ on_path. See TZ-batch-management.md §12.
 import { api } from "../api";
-import { getProgress, writeLocalProgress, BatchProgress } from "./progress";
+import { getProgress, setProgress, writeLocalProgress, BatchProgress } from "./progress";
 
 export type BatchAction =
   | "addPath" | "removePath" | "addActive" | "removeActive" | "reactivate"
@@ -64,10 +64,10 @@ const PATCHES: Record<PatchAction, Partial<BatchProgress>> = {
   removeActive: { activated: false },
 };
 
-// Local-only queue reorder. up/down swap with a neighbour; start/end lift the
-// batch to the very front / back of the plan. Either way we re-index the whole
-// sibling group's path_rank (0…n) so the new order is total and stable. No server
-// mirror — ordering is device-local UI.
+// Queue reorder. up/down swap with a neighbour; start/end lift the batch to the
+// very front / back of the plan. Either way we re-index the whole sibling
+// group's path_rank (0…n) so the new order is total and stable. setProgress
+// mirrors each rank to the server, so the manual order survives devices.
 type ReorderDir = -1 | 1 | "start" | "end";
 function reorder(batchId: number, dir: ReorderDir): void {
   const sibs = queueSiblings[batchId];
@@ -88,7 +88,7 @@ function reorder(batchId: number, dir: ReorderDir): void {
     if (j < 0 || j >= next.length) return;
     [next[i], next[j]] = [next[j], next[i]];
   }
-  next.forEach((id, idx) => writeLocalProgress(id, { path_rank: idx }));
+  next.forEach((id, idx) => setProgress(id, { path_rank: idx }));
 }
 
 export type ActionResult = { ok: boolean; locked?: boolean };

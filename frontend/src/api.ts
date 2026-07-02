@@ -110,6 +110,7 @@ export type Coach = {
 };
 export type ProgressRow = {
   batch_id: number; on_path: boolean; on_path_at: string | null;
+  path_rank: number | null;
   activated: boolean; activated_at: string | null;
   l1_listened: boolean; l1_retold: boolean; l1_best_seq: number | null;
   l3_s1: boolean; l3_s2: boolean; l3_passed: boolean; completed_at: string | null;

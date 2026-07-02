@@ -119,12 +119,22 @@ def test_deactivate_always_allowed_and_frees_a_slot(make_user):
                     json={"activated": True}).status_code == 200
 
 
+def _seq_proof(uid, bid, score=8):
+    """A real spoken exam attempt — the server-side evidence behind l3_passed."""
+    with Session(engine()) as s:
+        s.add(models.SequenceAttempt(user_id=uid, batch_id=bid, score=score,
+                                     transcript="t", missed_anchors=[], order_ok=True,
+                                     via="llm"))
+        s.commit()
+
+
 def test_completed_batch_does_not_count_toward_cap(make_user):
     """Cap counts active-practice (activated && !l3_passed); maintenance is free."""
     ids = [_free_batch(f"cap-{i}") for i in range(3)]
     free = make_user(plan="free")
     for bid in ids:
         free.put(f"/api/progress/{bid}", json={"activated": True})  # 3/3
+    _seq_proof(free.user["id"], ids[0])
     free.put(f"/api/progress/{ids[0]}", json={"l3_passed": True})    # → maintenance
     bid4 = _free_batch("cap-4")
     r = free.put(f"/api/progress/{bid4}", json={"activated": True})
@@ -253,3 +263,41 @@ def test_streak_endpoint_respects_timezone(make_user):
     # at UTC+2 that event lands on the local "today" — unless we're within 2h of
     # local midnight rollover; both interpretations keep the streak alive
     assert plus2["streak"] == 1 and utc["streak"] == 1
+
+
+# --- L3 verdict must be earned (anti-tamper) ----------------------------------
+def test_l3_passed_without_exam_attempts_is_409(make_user):
+    bid = _free_batch("l3-cheat")
+    free = make_user(plan="free")
+    r = free.put(f"/api/progress/{bid}", json={"l3_passed": True})
+    assert r.status_code == 409
+    assert r.json()["detail"] == "l3_unproven"
+    assert free.get(f"/api/progress/{bid}").json()["l3_passed"] is False
+
+
+def test_l3_passed_with_exam_proof_is_accepted(make_user):
+    bid = _free_batch("l3-legit")
+    free = make_user(plan="free")
+    _seq_proof(free.user["id"], bid)
+    r = free.put(f"/api/progress/{bid}", json={"l3_passed": True})
+    assert r.status_code == 200, r.text
+    assert r.json()["l3_passed"] is True and r.json()["completed_at"]
+
+
+def test_l3_low_scores_are_not_proof(make_user):
+    bid = _free_batch("l3-low")
+    free = make_user(plan="free")
+    _seq_proof(free.user["id"], bid, score=4)
+    assert free.put(f"/api/progress/{bid}", json={"l3_passed": True}).status_code == 409
+
+
+# --- Manual path order (path_rank), cross-device -------------------------------
+def test_path_rank_roundtrip_and_clear(make_user):
+    bid = _free_batch("rank-1")
+    free = make_user(plan="free")
+    r = free.put(f"/api/progress/{bid}", json={"path_rank": 4})
+    assert r.status_code == 200 and r.json()["path_rank"] == 4
+    assert free.get("/api/progress").json()[0]["path_rank"] == 4
+    # explicit null clears the manual order (back to the computed plan)
+    r = free.put(f"/api/progress/{bid}", json={"path_rank": None})
+    assert r.status_code == 200 and r.json()["path_rank"] is None

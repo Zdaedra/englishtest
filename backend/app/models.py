@@ -242,6 +242,9 @@ class BatchProgress(SQLModel, table=True):
     # activated ⊆ on_path (you can only drill what's on your path).
     on_path: bool = False
     on_path_at: Optional[datetime] = None
+    # Manual queue order across the whole plan (drag on the Learning map). NULL =
+    # follow the computed domain apportionment; synced so it survives devices.
+    path_rank: Optional[int] = None
     activated: bool = False
     activated_at: Optional[datetime] = None
     l1_listened: bool = False

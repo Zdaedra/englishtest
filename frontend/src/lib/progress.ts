@@ -6,7 +6,7 @@
 export type BatchProgress = {
   on_path?: boolean; // on the curated learning trajectory (drawn on the Learning map)
   on_path_at?: string; // ISO timestamp added to the path
-  path_rank?: number; // manual queue order across the whole plan (local-only, UI ordering)
+  path_rank?: number; // manual queue order across the whole plan (server-synced)
   activated?: boolean; // in the practice-deck rotation (invariant: activated ⊆ on_path)
   activatedAt?: string; // ISO timestamp of activation (for recency ordering)
   l1_listened?: boolean; // played the full story at least once
@@ -50,7 +50,7 @@ export function setProgress(batchId: number, patch: Partial<BatchProgress>): Bat
   // Mirror to the server (per-user source of truth). Fire-and-forget; the local
   // cache keeps the UI synchronous. activatedAt/completed_at are server-set.
   const srv: Record<string, unknown> = {};
-  for (const k of ["on_path", "activated", "l1_listened", "l1_retold", "l1_best_seq", "l3_s1", "l3_s2", "l3_passed"] as const) {
+  for (const k of ["on_path", "path_rank", "activated", "l1_listened", "l1_retold", "l1_best_seq", "l3_s1", "l3_s2", "l3_passed"] as const) {
     if (k in patch && patch[k] !== undefined) srv[k] = patch[k];
   }
   if (Object.keys(srv).length) {
@@ -82,8 +82,9 @@ export function clearLocalProgress(): void {
 // Drop every batch's manual queue rank so the plan falls back to the freshly
 // computed domain apportionment. Called when the learner re-tunes their domains —
 // a new focus mix should rebuild the order rather than be frozen by old manual
-// drags. path_rank is local-only (never mirrored), so this is a pure-local sweep.
+// drags. Mirrors the clear to the server (explicit null) so other devices follow.
 export function clearAllPathRanks(): void {
+  const cleared: number[] = [];
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
@@ -92,9 +93,14 @@ export function clearAllPathRanks(): void {
       if (p && p.path_rank != null) {
         delete p.path_rank;
         localStorage.setItem(k, JSON.stringify(p));
+        cleared.push(Number(k.slice("ee-progress-".length)));
       }
     }
   } catch { /* non-critical */ }
+  if (cleared.length) {
+    import("../api").then(({ api }) =>
+      cleared.forEach((id) => api.putProgress(id, { path_rank: null } as any).catch(() => {})));
+  }
 }
 
 // Pull this user's progress from the server into the local cache (on login).
@@ -106,6 +112,7 @@ export async function hydrateProgress(): Promise<void> {
       const bp: BatchProgress = {
         on_path: r.on_path,
         on_path_at: r.on_path_at || undefined,
+        path_rank: r.path_rank ?? undefined,
         activated: r.activated,
         activatedAt: r.activated_at || undefined,
         l1_listened: r.l1_listened,

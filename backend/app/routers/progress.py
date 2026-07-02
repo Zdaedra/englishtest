@@ -21,6 +21,7 @@ def _serialize(bp: models.BatchProgress) -> dict:
         "batch_id": bp.batch_id,
         "on_path": bp.on_path,
         "on_path_at": bp.on_path_at.isoformat() if bp.on_path_at else None,
+        "path_rank": bp.path_rank,
         "activated": bp.activated,
         "activated_at": bp.activated_at.isoformat() if bp.activated_at else None,
         "l1_listened": bp.l1_listened,
@@ -35,13 +36,16 @@ def _serialize(bp: models.BatchProgress) -> dict:
 
 def _empty(batch_id: int) -> dict:
     return {"batch_id": batch_id, "on_path": False, "on_path_at": None,
-            "activated": False, "activated_at": None,
+            "path_rank": None, "activated": False, "activated_at": None,
             "l1_listened": False, "l1_retold": False, "l1_best_seq": None,
             "l3_s1": False, "l3_s2": False, "l3_passed": False, "completed_at": None}
 
 
 class ProgressPatch(BaseModel):
     on_path: bool | None = None
+    # Explicit null clears the manual order (falls back to the computed plan);
+    # "not sent" leaves it untouched (exclude_unset distinguishes the two).
+    path_rank: int | None = None
     activated: bool | None = None
     l1_listened: bool | None = None
     l1_retold: bool | None = None
@@ -137,6 +141,17 @@ def put_progress(batch_id: int, patch: ProgressPatch,
         bp = models.BatchProgress(user_id=user_id, batch_id=batch_id)
     now = datetime.now(timezone.utc)
     data = patch.model_dump(exclude_unset=True)
+
+    # The exam verdict must be EARNED: the client computes its L3 gate locally, but
+    # a bare "l3_passed: true" with no spoken exam attempts on record is tampering
+    # (or a broken client) — reject it. Any real pass leaves SequenceAttempt rows.
+    if data.get("l3_passed") and not bp.l3_passed:
+        proof = session.exec(select(models.SequenceAttempt).where(
+            models.SequenceAttempt.user_id == user_id,
+            models.SequenceAttempt.batch_id == batch_id,
+            models.SequenceAttempt.score >= 7)).first()
+        if not proof:
+            raise HTTPException(409, "l3_unproven")
 
     # Resolve the two axes with the invariant activated ⊆ on_path. Engaging a lesson
     # keeps the batch on-path AND active (so starting a lesson never drops it from

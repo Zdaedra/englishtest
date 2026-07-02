@@ -185,6 +185,7 @@ const fr: Dict = {
   "practice.weaker": "Plus faible",
   "practice.stronger": "Plus forte",
   "practice.again": "Encore une série",
+  "practice.hfSkip": "Échec de l'évaluation — carte passée, on continue",
   "practice.limitReached": "Limite quotidienne de vérifications atteinte.",
   "practice.micNoHear": "Pas entendu — touche et répète.",
   "practice.micUnavailable": "Reconnaissance indisponible — touche, j'enregistre l'audio.",

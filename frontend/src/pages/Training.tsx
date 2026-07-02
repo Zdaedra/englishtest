@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { api, DeckCard, AnswerResult, SessionSummary, Coach } from "../api";
+import { api, DeckCard, AnswerResult, SessionSummary } from "../api";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 import { useTeach } from "../tutorial/teach";
@@ -163,8 +163,6 @@ export default function Training() {
   useEffect(() => { if (result && typeof result.score === "number") tip("meaning"); }, [result, tip]);
   useEffect(() => { if (review) tip("spacing"); }, [review, tip]);
   const [summary, setSummary] = useState<SessionSummary | null>(null);
-  const [coach, setCoach] = useState<Coach | null>(null);
-  const [coachState, setCoachState] = useState<"idle" | "loading" | "locked" | "done">("idle");
 
   // Voice→AI consent (Apple §5.1.2(i) + GDPR): a one-time gate before the first
   // recording, since the clip + transcript go to OpenAI/Anthropic. Local flag gates
@@ -263,7 +261,6 @@ export default function Training() {
       shownRef.current += 1;
       if (known) knownRef.current += 1;
       setFace("front"); setResult(null); setBusy(false); setNotice("");
-      setCoach(null); setCoachState("idle");
       const el = cardElRef.current;
       if (el) { el.style.transition = ""; el.style.transform = ""; }
       if (shownRef.current >= SESSION_LEN || pos + 1 >= (queue?.length ?? 0)) finishSession();
@@ -443,16 +440,30 @@ export default function Training() {
       }
       setNotice("");
       setHfStage("score"); setBusy(true);
-      try {
-        const r = await api.trainAnswer(sessionId, card.phrase_id, clip.blob, clip.filename, clip.ms);
-        if (cancelled) return;
-        setResult(r); setBusy(false); setHfStage("");
-        completeRep();                                     // retires the swipe hint over time
-        // No auto-advance: the learner reads the verdict, then swipes to the next card.
-      } catch (e) {
-        if (cancelled) return;
-        setBusy(false); setHfStage(""); handleScoreErr(e);
-        setHandsFree(false); hf.close();                   // stop the loop on error
+      // One card's transient failure must not kill the whole loop: retry once,
+      // then skip the card (no swipe recorded) and keep going. Only a rate/budget
+      // 429 stops the mode — the quota won't come back mid-session.
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const r = await api.trainAnswer(sessionId, card.phrase_id, clip.blob, clip.filename, clip.ms);
+          if (cancelled) return;
+          setResult(r); setBusy(false); setHfStage("");
+          completeRep();                                   // retires the swipe hint over time
+          // No auto-advance: the learner reads the verdict, then swipes to the next card.
+          return;
+        } catch (e) {
+          if (cancelled) return;
+          const msg = String(e);
+          if (msg.includes("429") || msg.toLowerCase().includes("limit")) {
+            setBusy(false); setHfStage(""); handleScoreErr(e);
+            setHandsFree(false); hf.close();               // out of quota — stop honestly
+            return;
+          }
+          if (attempt === 0) { await delay(1200); continue; }
+          setBusy(false); setHfStage("");
+          setNotice(t("practice.hfSkip"));                 // transient — skip, loop lives
+          advance(false, "left");
+        }
       }
     };
     run();

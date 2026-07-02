@@ -252,7 +252,9 @@ export function buildTrajectory(
   sectionPriority: string[]
 ): Trajectory {
   const buckets = focusBuckets(s);
-  const S = Math.max(1, s.sprintSize || 5);
+  // Clamp: the UI offers 3/5/7, but a corrupt profile must not produce a
+  // 999-batch sprint (breaks the map's road measurement).
+  const S = Math.min(12, Math.max(1, s.sprintSize || 5));
   const fallbackKey =
     buckets.find((b) => b.key === "discovery")?.key ??
     buckets[buckets.length - 1]?.key ??

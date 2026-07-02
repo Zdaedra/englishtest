@@ -196,6 +196,7 @@ const ru: Dict = {
   "practice.weaker": "Слабее",
   "practice.stronger": "Сильнее",
   "practice.again": "Ещё подход",
+  "practice.hfSkip": "Сбой оценки — карточка пропущена, едем дальше",
   "practice.limitReached": "Дневной лимит проверок исчерпан.",
   "practice.micNoHear": "Не расслышал — нажми и повтори.",
   "practice.micUnavailable": "Распознавание недоступно — нажми и запишу аудио.",
