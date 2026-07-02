@@ -15,9 +15,12 @@ import Lesson3 from "./pages/Lesson3";
 import Playback from "./pages/Playback";
 import Training from "./pages/Training";
 import Profile from "./pages/Profile";
+import About from "./pages/About";
 import Settings from "./pages/Settings";
 import ImportBatch from "./pages/ImportBatch";
 import Subscribe from "./pages/Subscribe";
+import League from "./pages/League";
+import Analyzer from "./pages/Analyzer";
 import { I18nProvider } from "./i18n";
 import { isNative } from "./lib/session";
 import { initDynamicType } from "./lib/dynamicType";
@@ -42,9 +45,12 @@ const router = createHashRouter([
       { path: "play", element: <Playback /> },
       { path: "practice", element: <Training /> },
       { path: "profile", element: <Profile /> },
+      { path: "about", element: <About /> },
       { path: "settings", element: <Settings /> },
       { path: "import", element: <ImportBatch /> },
       { path: "subscribe", element: <Subscribe /> },
+      { path: "league", element: <League /> },
+      { path: "analyze", element: <Analyzer /> },
     ],
   },
   { path: "/onboarding", element: <Onboarding /> },

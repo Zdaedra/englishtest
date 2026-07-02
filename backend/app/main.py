@@ -2,13 +2,15 @@ from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
+from sqlmodel import Session
 
+from . import models
 from .config import get_settings
-from .db import init_db
+from .db import engine, init_db
 from .auth import parse_session
-from .routers import auth, batches, billing, imports, practice, progress, sessions, settings, training
+from .routers import admin_stats, analyzer, auth, batches, billing, imports, practice, progress, sessions, settings, training, tutorial
 
 app = FastAPI(title="English Executive")
 
@@ -31,7 +33,15 @@ app.add_middleware(
 # and the frontend gates itself via /api/auth/me. Register + login are public.
 _COOKIE = "eng_auth"
 _PUBLIC = {"/api/auth/login", "/api/auth/register", "/api/health",
+           "/api/auth/verify-email",  # magic link is opened in a browser, no session
+           "/api/policy/versions",    # legal-doc versions (read before/at login)
+           "/api/tutorial/manifest",  # which coach-mark steps have a video (read-only file listing)
            "/api/billing/apple-notifications"}  # Apple posts the webhook unauthenticated
+# Authed endpoints an unverified account may still reach (account management) so it
+# can confirm/resend/change its email, switch UI language, or delete itself. Every
+# other /api path is blocked with 403 email_unverified until the email is confirmed.
+_VERIFY_EXEMPT = {"/api/auth/me", "/api/auth/logout", "/api/auth/ui-lang",
+                  "/api/auth/resend-verification", "/api/auth/change-email"}
 
 
 @app.middleware("http")
@@ -85,6 +95,15 @@ async def _auth_gate(request: Request, call_next):
     if uid is None:
         return Response(status_code=401)
     request.state.user_id = uid
+    # Mandatory email verification: an authed-but-unconfirmed account may only hit
+    # the account-management endpoints (resend/change/logout/me/ui-lang) until it
+    # confirms its email. Everything else is blocked so the gate has real teeth.
+    if path not in _VERIFY_EXEMPT:
+        with Session(engine()) as s:
+            u = s.get(models.User, uid)
+            if u is not None and not u.email_verified:
+                return JSONResponse({"code": "email_unverified",
+                                     "msg": "Подтвердите email."}, status_code=403)
     return await call_next(request)
 
 app.include_router(auth.router)
@@ -96,11 +115,21 @@ app.include_router(settings.router)
 app.include_router(training.router)
 app.include_router(practice.router)
 app.include_router(progress.router)
+app.include_router(analyzer.router)
+app.include_router(tutorial.router)
+# Stats cabinet — under /admin (NOT /api, so it bypasses the per-user auth gate)
+# and self-guarded by its own HTTP Basic auth. Registered before the SPA catch-all
+# mount so /admin resolves here, not the app shell.
+app.include_router(admin_stats.router)
 
 
 @app.on_event("startup")
-def _startup():
+async def _startup():
     init_db()
+    # Daily in-process purge of old voice transcripts (data minimisation).
+    import asyncio
+    from .retention import retention_loop
+    asyncio.create_task(retention_loop())
 
 
 @app.get("/api/health")
@@ -118,12 +147,29 @@ def privacy():
     return FileResponse(str(_privacy_file), media_type="text/html")
 
 
+_terms_file = Path(__file__).resolve().parent / "static" / "terms.html"
+
+
+@app.get("/terms")
+def terms():
+    return FileResponse(str(_terms_file), media_type="text/html")
+
+
+@app.get("/api/policy/versions")
+def policy_versions():
+    from .policy import PRIVACY_VERSION, TERMS_VERSION
+    return {"privacy": PRIVACY_VERSION, "terms": TERMS_VERSION}
+
+
 # Static rendered audio (sessions + phrases)
 _s = get_settings()
 app.mount("/audio", StaticFiles(directory=str(_s.audio_dir)), name="audio")
 
 # AI-generated batch cover art
 app.mount("/covers", StaticFiles(directory=str(_s.covers_dir)), name="covers")
+
+# Coach-mark tutorial videos (dropped in by the founder later; manifest lists them).
+app.mount("/tutorial", StaticFiles(directory=str(_s.tutorial_dir)), name="tutorial")
 
 # Serve built frontend if present (production single-container).
 _dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"

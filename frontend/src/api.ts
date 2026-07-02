@@ -58,6 +58,18 @@ export type BatchMastery = {
   // Confidence-calibration gap: swiped "known" but never produced aloud (or weakly).
   gap?: number;
 };
+export type StreakInfo = {
+  streak: number; today_done: boolean; freeze_available: boolean;
+  last_active: string | null;
+};
+export type CallUpgrade = { original: string; native: string; note: string };
+export type WeeklyPhrase = {
+  phrase_id: number; anchor: string; phrase_en: string; avg_score: number;
+};
+export type WeeklySummary = {
+  attempts: number; days_active: number; phrases: number; avg_score: number | null;
+  best: WeeklyPhrase[]; focus: WeeklyPhrase[];
+};
 export type PhraseSearchItem = {
   phrase_id: number; batch_id: number; batch_title: string;
   anchor: string; phrase_en: string; gloss_ru: string; order_index: number;
@@ -76,6 +88,7 @@ export type DeckCard = {
   slug: string; cover_url: string | null;
   anchor: string; phrase_en: string;
   stimulus: string; stimulus_id: number | null; stimulus_lang: string;
+  situation_ru?: string; task_ru?: string;  // LLM-generated RU active-recall prompt
   gloss_ru: string; conf: number; priority: number;
   attempts: number; avg_score: number | null;
   ai_allowed?: boolean; // mic/AI usable on this card's batch (free showcase batch or ai plan)
@@ -96,7 +109,8 @@ export type Coach = {
   feedback: string; better: string; tone: string; correct_phrase: string; via: string;
 };
 export type ProgressRow = {
-  batch_id: number; activated: boolean; activated_at: string | null;
+  batch_id: number; on_path: boolean; on_path_at: string | null;
+  activated: boolean; activated_at: string | null;
   l1_listened: boolean; l1_retold: boolean; l1_best_seq: number | null;
   l3_s1: boolean; l3_s2: boolean; l3_passed: boolean; completed_at: string | null;
 };
@@ -105,7 +119,7 @@ export type Entitlements = {
   voice_answer: boolean; server_stt: boolean; ai_coach: boolean; import: boolean;
   max_active_batches: number | null; scored_per_day: number;
 };
-export type Me = { id: number; email: string; name: string; plan: string; is_admin?: boolean; ui_lang?: string | null; entitlements?: Entitlements; token?: string };
+export type Me = { id: number; email: string; name: string; plan: string; is_admin?: boolean; ui_lang?: string | null; entitlements?: Entitlements; email_verified?: boolean; token?: string };
 
 // Web: same-origin, "" → relative paths, cookie auth. Native (Capacitor): the
 // webview origin is capacitor://localhost, so the API needs an absolute base and
@@ -142,6 +156,11 @@ async function j<T>(r: Response): Promise<T> {
 
 export const api = {
   listBatches: () => apiFetch(`/api/batches?lang=${clang()}`).then(j<BatchListItem[]>),
+  tutorialManifest: () =>
+    apiFetch("/api/tutorial/manifest")
+      .then(j<{ media: Record<string, { video: string; poster?: string }> }>)
+      .then((r) => r.media)
+      .catch(() => ({} as Record<string, { video: string; poster?: string }>)),
   getBatch: (id: number) => apiFetch(`/api/batches/${id}?lang=${clang()}`).then(j<BatchDetail>),
   phraseAudio: (phraseId: number) =>
     apiFetch(`/api/batches/phrase/${phraseId}/audio`).then(
@@ -209,9 +228,10 @@ export const api = {
     apiFetch(`/api/practice/questions?batch_ids=${batchIds.join(",")}`).then(
       j<{ questions: PracticeQuestion[] }>
     ),
-  practicePromptAudio: (text: string) => {
+  practicePromptAudio: (text: string, lang = "ru") => {
     const fd = new FormData();
     fd.append("text", text);
+    fd.append("lang", lang);
     return apiFetch("/api/practice/prompt-audio", { method: "POST", body: fd }).then(
       j<{ audio_url: string; duration: number }>
     ).then((r) => ({ ...r, audio_url: mediaUrl(r.audio_url)! }));
@@ -229,6 +249,20 @@ export const api = {
   getRotation: (batchId: number) =>
     apiFetch(`/api/training/rotation/${batchId}`).then(j<RotationItem[]>),
   getMastery: () => apiFetch("/api/training/mastery").then(j<BatchMastery[]>),
+  // Work-based day streak (server-side; a day counts only if the user trained).
+  getStreak: () =>
+    apiFetch(`/api/progress/streak?tz_offset=${new Date().getTimezoneOffset()}`)
+      .then(j<StreakInfo>),
+  // Last-7-days rollup — "your phrases of the week".
+  getWeekly: () =>
+    apiFetch(`/api/training/weekly?tz_offset=${new Date().getTimezoneOffset()}`)
+      .then(j<WeeklySummary>),
+  // Call Analyzer (AI plan): real-meeting text → native-league phrasing upgrades.
+  analyzeCall: (text: string) =>
+    apiFetch("/api/analyzer/call", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ text }),
+    }).then(j<{ upgrades: CallUpgrade[]; via: string }>),
   // --- Swipe-deck Training ---
   getDeck: (batchIds: number[], opts?: { maintenanceIds?: number[]; limit?: number; exclude?: number[]; dueOnly?: boolean; gapOnly?: boolean }) => {
     const q = new URLSearchParams({ batch_ids: batchIds.join(",") });
@@ -298,6 +332,23 @@ export const api = {
     }).then(j<Me>),
   logout: () => apiFetch("/api/auth/logout", { method: "POST" }).then((r) => r.ok),
   deleteAccount: () => apiFetch("/api/auth/me", { method: "DELETE" }).then((r) => r.ok),
+  // Privacy: export everything tied to the account (access/portability right).
+  exportData: () => apiFetch("/api/auth/export").then(j<Record<string, unknown>>),
+  // Privacy: append-only consent audit (voice_ai | privacy_terms | withdraw_voice_ai).
+  recordConsent: (kind: string, granted = true) =>
+    apiFetch("/api/auth/consent", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ kind, granted }),
+    }).then((r) => r.ok).catch(() => false),
+  // Email verification (magic link). resend re-sends the link; changeEmail swaps
+  // the address (server marks it unverified + emails a fresh link → re-verify).
+  resendVerification: () =>
+    apiFetch("/api/auth/resend-verification", { method: "POST" }).then(j<{ ok: boolean }>),
+  changeEmail: (email: string) =>
+    apiFetch("/api/auth/change-email", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email }),
+    }).then(j<Me>),
   // Best-effort UI-language sync (fire-and-forget; ignored when logged out).
   setUiLang: (lang: string) =>
     apiFetch("/api/auth/ui-lang", {
