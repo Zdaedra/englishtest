@@ -65,6 +65,12 @@ export default function AuthScreen() {
             {busy ? "…" : mode === "login" ? t("auth.login") : t("auth.register")}
           </button>
         </form>
+        <p className="auth-legal">
+          {t("auth.legalNote")}<br />
+          <a href="https://executive-english.net/terms" target="_blank" rel="noreferrer">{t("about.terms")}</a>
+          {" · "}
+          <a href="https://executive-english.net/privacy" target="_blank" rel="noreferrer">{t("about.privacy")}</a>
+        </p>
         <button className="auth-toggle" type="button"
           onClick={() => { setMode(mode === "login" ? "register" : "login"); setErr(""); }}>
           {mode === "login" ? t("auth.toRegister") : t("auth.toLogin")}
