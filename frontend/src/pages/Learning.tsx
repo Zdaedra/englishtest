@@ -384,6 +384,11 @@ export default function Learning() {
 
   // Confidence-calibration gap: phrases swiped "known" but not produced aloud.
   const gapCount = useMemo(() => mastery.reduce((s, m) => s + (m.gap || 0), 0), [mastery]);
+  // Arena eligibility: enough learned phrases (familiar/automatic) to weave a scene.
+  const learnedTotal = useMemo(
+    () => mastery.reduce((s, m) => { const r = m.srs || {}; return s + (r.familiar || 0) + (r.automatic || 0); }, 0),
+    [mastery]
+  );
   const dueReason = (id: number): "weak" | "stale" | null => {
     if (!closed(id)) return null;
     const m = masteryById.get(id);
@@ -430,7 +435,7 @@ export default function Learning() {
 
       {/* Adaptive action-strip — "what to do now", shown ONLY when there's a real
           task (due review / confidence check). Never a standing notifications panel. */}
-      {(dueTotal > 0 || (gapCount > 0 && canVoice)) && (
+      {(dueTotal > 0 || (canVoice && (gapCount > 0 || learnedTotal >= 3))) && (
         <div className="act-strip">
           {dueTotal > 0 && (
             <button className="review-due refresh-card" onClick={() => nav("/practice", { state: { review: true } })}>
@@ -440,6 +445,24 @@ export default function Learning() {
                 <span className="review-due-sub">{t("learn.reviewSub")}</span>
               </span>
               <span className="act-count">{dueTotal}</span>
+              <span className="review-due-go">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              </span>
+            </button>
+          )}
+          {/* Arena — learned phrases return "in battle": one fresh LLM scene per
+              round. AI plan (LLM spend) + needs ≥3 learned phrases to weave. */}
+          {canVoice && learnedTotal >= 3 && (
+            <button className="review-due arena-card" onClick={() => nav("/arena")}>
+              <span className="review-due-ico">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 5h16M4 5v11a2 2 0 002 2h12a2 2 0 002-2V5M9 21h6M12 18v3" /><path d="M8 9l3 3-3 3M13 15h3" />
+                </svg>
+              </span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("arena.entryTitle")}</span>
+                <span className="review-due-sub">{t("arena.entrySub")}</span>
+              </span>
               <span className="review-due-go">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
               </span>

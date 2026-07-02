@@ -106,6 +106,13 @@ def stub_network(monkeypatch):
                                     "native": "Let me push back on that",
                                     "note": "короче и весомее"}], "via": "llm"},
     )
+    monkeypatch.setattr(
+        "app.scoring.weave_scenario",
+        lambda items: {"title_ru": "Сцена", "via": "llm",
+                       "beats": [{"situation_ru": f"Ситуация {i + 1}",
+                                  "task_ru": f"Задача {i + 1}"}
+                                 for i in range(len(items))]},
+    )
     monkeypatch.setattr("app.cover.generate_cover", lambda *a, **k: "/covers/stub.png")
     monkeypatch.setattr("app.llm.parse_batch", lambda raw: {"phrases": []})
     monkeypatch.setattr("app.llm.chat", lambda system, user, temperature=None: "{}")

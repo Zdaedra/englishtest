@@ -599,6 +599,31 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Spaced-repetition "to refresh" card — calm, adult, no badge/streak pressure. */
+/* Arena — one woven scene, 3 beats; reuses the league/trainer type scale. */
+.arena-empty { text-align: center; padding-top: 8vh; }
+.arena-title { font-size: clamp(26px, 7vw, 34px); margin: 0 0 12px; }
+.arena-play { padding-top: 6px; }
+.arena-scene-title {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--faint); margin: 0 0 10px;
+}
+.arena-task { font-size: 0.9375rem; color: var(--text-2); margin: 0 0 18px; }
+.arena-mic { display: flex; flex-direction: column; align-items: center; margin-top: 26px; }
+.arena-result { text-align: center; margin-top: 22px; }
+.arena-result .verdict-pct { font-size: clamp(40px, 11vw, 56px); }
+.arena-next { margin-top: 20px; min-width: 220px; }
+.arena-recap-list { margin: 18px 0 24px; text-align: left; display: inline-block; }
+.arena-recap-row { font-size: 0.9375rem; font-weight: 600; color: var(--accent); margin: 0 0 8px; }
+.arena-recap-score {
+  display: inline-block; min-width: 48px; margin-right: 10px;
+  font-variant-numeric: tabular-nums; color: var(--faint); font-weight: 700;
+}
+.arena-recap-score.ok { color: var(--map-green); }
+.arena-home {
+  display: block; margin: 12px auto 0; background: none; border: 0;
+  color: var(--faint); font-size: 0.875rem; cursor: pointer;
+}
+
 /* Call Analyzer — upgrade cards: original (dim) → native (accent) → why. */
 .an-results { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
 .an-card {

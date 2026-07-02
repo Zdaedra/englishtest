@@ -74,14 +74,12 @@ export type PhraseSearchItem = {
   phrase_id: number; batch_id: number; batch_title: string;
   anchor: string; phrase_en: string; gloss_ru: string; order_index: number;
 };
-export type PracticeQuestion = {
-  id: string; batch_id: number; batch_title: string; prompt_ru: string;
-  zone: string; accept_phrase_ids: number[]; hint_anchor: string;
+// Arena: one LLM-woven scene, 3 beats, each targeting a learned phrase.
+export type ScenarioBeat = {
+  phrase_id: number; anchor: string; phrase_en: string; gloss_ru: string;
+  situation_ru: string; task_ru: string;
 };
-export type PracticeScore = {
-  score: number; phrase_id: number; anchor: string; phrase_en: string;
-  transcript: string; is_repeat: boolean;
-};
+export type Scenario = { title_ru: string; via: string; beats: ScenarioBeat[] };
 // --- Swipe-deck Training -----------------------------------------------------
 export type DeckCard = {
   phrase_id: number; batch_id: number; batch_title: string; section: string;
@@ -220,10 +218,9 @@ export const api = {
     return apiFetch("/api/training/score-anchor", { method: "POST", body: fd }).then(j<AnchorScore>);
   },
   listPhrases: () => apiFetch(`/api/batches/phrases?lang=${clang()}`).then(j<PhraseSearchItem[]>),
-  getPracticeQuestions: (batchIds: number[]) =>
-    apiFetch(`/api/practice/questions?batch_ids=${batchIds.join(",")}`).then(
-      j<{ questions: PracticeQuestion[] }>
-    ),
+  // Arena: weave 3 due/learned phrases into one fresh scene (AI plan).
+  getScenario: () =>
+    apiFetch("/api/practice/scenario", { method: "POST" }).then(j<Scenario>),
   practicePromptAudio: (text: string, lang = "ru") => {
     const fd = new FormData();
     fd.append("text", text);
@@ -231,16 +228,6 @@ export const api = {
     return apiFetch("/api/practice/prompt-audio", { method: "POST", body: fd }).then(
       j<{ audio_url: string; duration: number }>
     ).then((r) => ({ ...r, audio_url: mediaUrl(r.audio_url)! }));
-  },
-  practiceScore: (
-    phraseIds: number[], usedPhraseIds: number[], audio: Blob, filename: string, latencyMs?: number
-  ) => {
-    const fd = new FormData();
-    fd.append("audio", audio, filename);
-    fd.append("phrase_ids", phraseIds.join(","));
-    fd.append("used_phrase_ids", usedPhraseIds.join(","));
-    if (latencyMs != null) fd.append("latency_ms", String(latencyMs));
-    return apiFetch("/api/practice/score", { method: "POST", body: fd }).then(j<PracticeScore>);
   },
   getRotation: (batchId: number) =>
     apiFetch(`/api/training/rotation/${batchId}`).then(j<RotationItem[]>),

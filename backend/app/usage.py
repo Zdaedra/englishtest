@@ -25,6 +25,7 @@ EST_USD: dict[str, float] = {
     "coach": 0.000445,            # AI coach (gpt-4.1-mini)
     "stt": 0.000250,              # one server transcription (~5s @ gpt-4o-mini-transcribe)
     "analyze": 0.002000,          # call-analyzer pass (~2k in / 500 out @ gpt-4.1-mini)
+    "scenario": 0.001000,         # arena scene weave (~600 in / 500 out @ gpt-4.1-mini)
 }
 
 

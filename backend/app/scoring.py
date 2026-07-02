@@ -285,6 +285,41 @@ def analyze_call(text: str) -> dict:
         return {"upgrades": [], "via": "fallback"}
 
 
+_SCENARIO_SYSTEM = """Ты — методист приложения Executive English (деловой/светский
+английский для носителей русского). Даны 3 целевые английские фразы с их смыслом.
+Напиши СВЯЗНУЮ мини-сцену на русском — одна локация, один собеседник, деловой или
+светский контекст с реальными ставками — которая разворачивается в 3 такта, по
+одному на каждую фразу В ЗАДАННОМ ПОРЯДКЕ. Для каждого такта: situation_ru (1–2
+живых предложения, продолжающих ОДНУ историю; на «ты») и task_ru (одно
+повелительное предложение — что ты хочешь сделать репликой). Правила: сцена
+должна естественно подводить к каждой целевой фразе; НЕ переводи фразы и НЕ
+используй их слова; не раскрывай ответ. Верни СТРОГО JSON
+{"title_ru": str, "beats": [{"situation_ru": str, "task_ru": str}, ×3]} без markdown."""
+
+
+def weave_scenario(items: list[dict]) -> dict:
+    """Arena: weave 3 learned phrases into ONE fresh coherent scene (the Langua
+    pattern — reviews return "in battle", not on flashcards). `items` =
+    [{anchor, phrase_en, gloss_ru}]. Returns {title_ru, beats, via}; beats align
+    with `items` by index. Falls back to via="fallback" so the router can serve
+    each phrase's own authored situation instead."""
+    payload = json.dumps(
+        [{"anchor": i.get("anchor", ""), "phrase_en": i.get("phrase_en", ""),
+          "meaning_ru": i.get("gloss_ru", "")} for i in items], ensure_ascii=False)
+    try:
+        data = _openai_json(_SCENARIO_SYSTEM, payload, max_tokens=500,
+                            model=get_settings().model_coach)
+        beats = [{"situation_ru": str(b.get("situation_ru", "")).strip(),
+                  "task_ru": str(b.get("task_ru", "")).strip()}
+                 for b in (data.get("beats") or [])]
+        if len(beats) != len(items) or not all(b["situation_ru"] for b in beats):
+            raise ValueError("beat shape mismatch")
+        return {"title_ru": str(data.get("title_ru", "")).strip(), "beats": beats,
+                "via": "llm"}
+    except Exception:
+        return {"title_ru": "", "beats": [], "via": "fallback"}
+
+
 def score_sequence(anchors_in_order: list[str], story_ru: str, user_said: str) -> dict:
     """Test A. Returns {score, missed_anchors, order_ok, via}."""
     if len(_tokens(_normalize(user_said))) < _MIN_TOKENS:

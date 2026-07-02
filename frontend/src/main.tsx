@@ -21,6 +21,7 @@ import ImportBatch from "./pages/ImportBatch";
 import Subscribe from "./pages/Subscribe";
 import League from "./pages/League";
 import Analyzer from "./pages/Analyzer";
+import Arena from "./pages/Arena";
 import { I18nProvider } from "./i18n";
 import { isNative } from "./lib/session";
 import { initDynamicType } from "./lib/dynamicType";
@@ -51,6 +52,7 @@ const router = createHashRouter([
       { path: "subscribe", element: <Subscribe /> },
       { path: "league", element: <League /> },
       { path: "analyze", element: <Analyzer /> },
+      { path: "arena", element: <Arena /> },
     ],
   },
   { path: "/onboarding", element: <Onboarding /> },
