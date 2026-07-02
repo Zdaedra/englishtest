@@ -172,3 +172,57 @@ def test_session_summary(make_user):
     r = admin.get("/api/training/session/s1/summary")
     assert r.status_code == 200, r.text
     assert r.json()["session_id"] == "s1"
+
+
+# --- Weekly rollup (/api/training/weekly) ------------------------------------
+from datetime import datetime, timedelta, timezone  # noqa: E402
+
+
+def _event(uid, bid, pid, *, score=None, mode="swipe", days_ago=0):
+    return models.TrainingEvent(
+        user_id=uid, session_id="w", batch_id=bid, phrase_id=pid,
+        training_mode=mode, ai_score=score, attempt_number=1,
+        created_at=datetime.now(timezone.utc).replace(tzinfo=None, hour=12)
+        - timedelta(days=days_ago))
+
+
+def test_weekly_empty(make_user):
+    c = make_user(plan="ai", is_admin=True)
+    body = c.get("/api/training/weekly").json()
+    assert body["attempts"] == 0 and body["best"] == [] and body["focus"] == []
+
+
+def test_weekly_rolls_up_best_and_focus(make_user):
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    pids = phrase_ids(admin, bid)
+    uid = admin.user["id"]  # type: ignore[attr-defined]
+    with Session(engine()) as s:
+        # strong phrase: two high spoken scores; weak phrase: two low ones
+        s.add(_event(uid, bid, pids[0], score=9, days_ago=1))
+        s.add(_event(uid, bid, pids[0], score=10, days_ago=2))
+        s.add(_event(uid, bid, pids[1], score=3, days_ago=1))
+        s.add(_event(uid, bid, pids[1], score=4, days_ago=0))
+        s.add(_event(uid, bid, pids[2], days_ago=10))  # outside the window
+        s.commit()
+    body = admin.get("/api/training/weekly").json()
+    assert body["attempts"] == 4
+    assert body["days_active"] == 3
+    assert body["phrases"] == 2
+    assert [b["phrase_id"] for b in body["best"]] == [pids[0]]
+    assert body["best"][0]["avg_score"] == 9.5
+    assert [f["phrase_id"] for f in body["focus"]] == [pids[1]]
+    assert body["focus"][0]["phrase_en"]
+
+
+def test_weekly_swipes_count_as_work_not_quality(make_user):
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    pid = phrase_ids(admin, bid)[0]
+    uid = admin.user["id"]  # type: ignore[attr-defined]
+    with Session(engine()) as s:
+        s.add(_event(uid, bid, pid))  # swipe, no ai_score
+        s.commit()
+    body = admin.get("/api/training/weekly").json()
+    assert body["attempts"] == 1 and body["avg_score"] is None
+    assert body["best"] == [] and body["focus"] == []

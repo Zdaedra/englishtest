@@ -94,6 +94,40 @@ export function weightMix(s: Strategy): { label: string; pct: number }[] {
       ];
 }
 
+// Focus buckets — like weightMix, but each row also carries the focus KEY and the
+// set of section slugs it covers, so the Learning screen can join allocation
+// (intent) with real per-domain competence (fact) in one row. Same percentages as
+// weightMix; the extra fields let "Твои домены" show fill = competence, marker = focus.
+export type FocusBucket = { key: string; label: string; pct: number; sections: string[] };
+export function focusBuckets(s: Strategy): FocusBucket[] {
+  const hasSec = s.secondary.length > 0;
+  const others = orderedSections()
+    .map((x) => x.slug)
+    .filter(
+      (slug) =>
+        !sectionsFor(s.main).includes(slug) &&
+        !s.secondary.some((k) => sectionsFor(k).includes(slug)) &&
+        !BUSINESS_SECTIONS.includes(slug)
+    );
+  const main: FocusBucket = { key: s.main, label: tg(`focus.${s.main}`), pct: 0, sections: sectionsFor(s.main) };
+  const sec: FocusBucket = { key: "secondary", label: s.secondary.map((k) => tg(`focus.${k}`)).join(" / "), pct: 0, sections: s.secondary.flatMap(sectionsFor) };
+  const biz: FocusBucket = { key: "business", label: tg("focus.business"), pct: 0, sections: BUSINESS_SECTIONS };
+  const disc: FocusBucket = { key: "discovery", label: tg("mix.discovery"), pct: 0, sections: others };
+  const at = (b: FocusBucket, pct: number) => ({ ...b, pct });
+  if (s.intensity === "narrow")
+    return hasSec
+      ? [at(main, 75), at(sec, 15), at(disc, 10)]
+      : [at(main, 75), at(biz, 15), at(disc, 10)];
+  if (s.intensity === "explore")
+    return hasSec
+      ? [at(main, 40), at(sec, 20), at(biz, 20), at(disc, 20)]
+      : [at(main, 40), at(biz, 20), at(disc, 40)];
+  // balanced
+  return hasSec
+    ? [at(main, 50), at(sec, 25), at(biz, 15), at(disc, 10)]
+    : [at(main, 60), at(biz, 15), at(disc, 25)];
+}
+
 type Alloc = { main: number; sec: number; bridge: number; disc: number };
 function alloc(s: Strategy): Alloc {
   const N = s.sprintSize;
@@ -179,4 +213,98 @@ export function buildSprint(
     }
   }
   return out.slice(0, s.sprintSize);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Domain-apportioned trajectory (the whole learning plan, not one sprint).
+//
+// THE PROBLEM this solves: grouping the map by section produced "all Charisma,
+// then all Flirt, then …" — the focus mix the learner configured was invisible.
+// Instead the whole field is woven into one ordered plan and chunked into
+// fixed-size SPRINTS, so inside every sprint the domains appear in proportion to
+// their focus %. A domain that can't fit its share early simply spills later.
+//
+// THE MATH — sequential highest-averages (Sainte-Laguë). We build the order one
+// batch at a time. At each step we take from the domain with the highest priority
+//     pᵈ = weightᵈ / (2·placedᵈ + 1)
+// among domains that still have batches. This is the apportionment rule that
+// spreads a LOW-weight domain EVENLY across the plan instead of starving it: a
+// 10%-weight domain surfaces ~once per two 5-slot sprints, rather than rounding
+// to zero every sprint and dumping at the very end (the failure of a memoryless
+// per-sprint round). When a high-weight domain runs dry its share flows to the
+// rest, so its surplus batches naturally land in later sprints — the carry-over
+// the design calls for. Verified across configs in the math harness.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type Sprint = { items: BatchListItem[] };
+export type Trajectory = {
+  order: BatchListItem[]; // the full plan, flattened (sprint 1 then sprint 2 …)
+  sprints: Sprint[]; // `order` chunked into sprints of `sprintSize`
+  domainOf: Map<number, string>; // batchId → focus-bucket key (for per-sprint mix)
+};
+
+// Build the full domain-apportioned trajectory. `sectionPriority` is the
+// learner's section order (scenarios first) — passed in to keep this module free
+// of a profile import (profile.ts already depends on strategy.ts).
+export function buildTrajectory(
+  s: Strategy,
+  batches: BatchListItem[],
+  sectionPriority: string[]
+): Trajectory {
+  const buckets = focusBuckets(s);
+  const S = Math.max(1, s.sprintSize || 5);
+  const fallbackKey =
+    buckets.find((b) => b.key === "discovery")?.key ??
+    buckets[buckets.length - 1]?.key ??
+    "discovery";
+
+  // section slug → bucket key (every section resolves to exactly one bucket;
+  // anything a focus config drops is swept into the fallback so nothing strands).
+  const secToBucket = new Map<string, string>();
+  for (const bk of buckets) for (const sec of bk.sections) secToBucket.set(sec, bk.key);
+
+  const secRank = new Map(sectionPriority.map((slug, i) => [slug, i] as const));
+  const queues = new Map<string, BatchListItem[]>(buckets.map((b) => [b.key, []]));
+  for (const b of batches) {
+    if (!b.section) continue;
+    const key = secToBucket.get(b.section) ?? fallbackKey;
+    (queues.get(key) ?? queues.set(key, []).get(key)!).push(b);
+  }
+  for (const arr of queues.values())
+    arr.sort(
+      (a, b) =>
+        (secRank.get(a.section!) ?? 1e9) - (secRank.get(b.section!) ?? 1e9) ||
+        numOf(a.slug) - numOf(b.slug)
+    );
+
+  const domainOf = new Map<number, string>();
+  for (const [key, arr] of queues) for (const b of arr) domainOf.set(b.id, key);
+
+  // Walk the plan one batch at a time by Sainte-Laguë priority. The cursor per
+  // domain advances through its (already section-ordered) queue.
+  const cursor = new Map<string, number>(buckets.map((b) => [b.key, 0]));
+  let total = 0;
+  for (const arr of queues.values()) total += arr.length;
+  const order: BatchListItem[] = [];
+  while (order.length < total) {
+    let best: FocusBucket | null = null;
+    let bestVal = -1;
+    for (const bk of buckets) {
+      const q = queues.get(bk.key)!;
+      const c = cursor.get(bk.key)!;
+      if (c >= q.length) continue; // depleted
+      // placed so far for this domain = cursor; +1e-9 keeps ties left-to-right
+      // (buckets are main, secondary, business, discovery — the focus order).
+      const val = bk.pct / (2 * c + 1);
+      if (val > bestVal + 1e-9) { bestVal = val; best = bk; }
+    }
+    if (!best) break; // safety: nothing left to place
+    const c = cursor.get(best.key)!;
+    order.push(queues.get(best.key)![c]);
+    cursor.set(best.key, c + 1);
+  }
+
+  const sprints: Sprint[] = [];
+  for (let i = 0; i < order.length; i += S) sprints.push({ items: order.slice(i, i + S) });
+  return { order, sprints, domainOf };
 }

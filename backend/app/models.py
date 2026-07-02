@@ -57,6 +57,11 @@ class Phrase(SQLModel, table=True):
     anchor: str = ""
     phrase_en: str = ""
     gloss_ru: str = ""
+    # Active-recall prompt (LLM-generated, cached): a RU scene + the communicative
+    # task, shown on the card FRONT instead of an ambiguous English stimulus. The
+    # English phrase_en is revealed only after answering. See gen_context.py.
+    situation_ru: str = ""
+    task_ru: str = ""
     # Content i18n: {lang: gloss} for es/de/fr (gloss_ru is the base).
     gloss_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
     intensity_score: float = 0.0
@@ -211,6 +216,10 @@ class User(SQLModel, table=True):
     name: str = ""
     plan: str = Field(default="free")  # free | core | ai
     is_admin: bool = Field(default=False)  # owner: may curate the shared catalog
+    # Mandatory email verification: a fresh signup is False until the user clicks
+    # the magic link emailed to them; existing accounts are grandfathered True by
+    # the db migration so they're never locked out. See app/mail.py + the auth gate.
+    email_verified: bool = Field(default=False)
     ui_lang: Optional[str] = Field(default=None)  # UI language pref: ru | es | de | fr
     # Billing (Apple IAP). plan_source: manual | apple. plan_expires_at: when an
     # auto-renew sub lapses (NULL = no expiry / manual). apple_original_tx_id ties
@@ -228,6 +237,11 @@ class BatchProgress(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: int = Field(default=0, foreign_key="user.id", index=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
+    # Two axes (long-press batch management): on_path = curated learning trajectory
+    # (drawn on the Learning map); activated = practice-deck rotation. Invariant:
+    # activated ⊆ on_path (you can only drill what's on your path).
+    on_path: bool = False
+    on_path_at: Optional[datetime] = None
     activated: bool = False
     activated_at: Optional[datetime] = None
     l1_listened: bool = False
@@ -259,6 +273,40 @@ class TrainingEvent(SQLModel, table=True):
     attempt_number: int = 1
     shown_at: datetime = Field(default_factory=_now)
     created_at: datetime = Field(default_factory=_now)
+
+
+class ConsentRecord(SQLModel, table=True):
+    """Append-only audit of a user's consents (privacy/terms acceptance, voice→AI
+    processing, withdrawals). Each event is a NEW row — never updated — so the full
+    history ("granted on X, withdrew on Y") is provable to a regulator."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+    kind: str = ""              # voice_ai | privacy_terms | withdraw_voice_ai
+    granted: bool = True
+    policy_version: str = ""    # PRIVACY/TERMS version at consent time ("" for voice)
+    user_agent: str = ""        # for audit
+    created_at: datetime = Field(default_factory=_now)
+
+
+class DeletionLog(SQLModel, table=True):
+    """Non-PII proof that an account was deleted (GDPR/CCPA want evidence, but we
+    must not retain the deleted user's personal data — so store only the id + when)."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    deleted_user_id: int = 0
+    transcripts_purged: int = 0
+    deleted_at: datetime = Field(default_factory=_now)
+
+
+class UsageLedger(SQLModel, table=True):
+    """Per-user, per-calendar-month accrued estimated AI cost (micro-USD). The
+    profitability guardrail — `usage.accrue` adds to it on every billable AI call,
+    and the daily-cap check also blocks paid AI once the month crosses the plan's
+    cost cap. Not PII; safe to keep."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+    period: int = Field(index=True)   # yyyymm, e.g. 202606
+    micros: int = 0                   # accrued estimated cost in micro-USD
+    updated_at: datetime = Field(default_factory=_now)
 
 
 class Setting(SQLModel, table=True):

@@ -4,7 +4,10 @@
 // is derived live from the rotation endpoint (avg_score / attempts), not stored here.
 
 export type BatchProgress = {
-  activated?: boolean; // user tapped "Активировать бетч" — it's now an active batch
+  on_path?: boolean; // on the curated learning trajectory (drawn on the Learning map)
+  on_path_at?: string; // ISO timestamp added to the path
+  path_rank?: number; // manual queue order across the whole plan (local-only, UI ordering)
+  activated?: boolean; // in the practice-deck rotation (invariant: activated ⊆ on_path)
   activatedAt?: string; // ISO timestamp of activation (for recency ordering)
   l1_listened?: boolean; // played the full story at least once
   l1_retold?: boolean; // did at least one sequence retell
@@ -19,6 +22,13 @@ export type BatchProgress = {
 export function isEngaged(p: BatchProgress): boolean {
   return !!(p.activated || p.l1_listened || p.l1_retold || p.l3_s1 || p.l3_s2 || p.l3_passed);
 }
+
+// Two-axis batch management. on_path = curated learning trajectory (Learning map);
+// active = practice-deck rotation. Invariant: active ⊆ on_path.
+// active ⊆ on_path — enforce the invariant on read so a stale local cache (on_path
+// missing but activated set, e.g. pre-migration) still treats an active batch as on-path.
+export function isOnPath(p: BatchProgress): boolean { return !!(p.on_path || p.activated); }
+export function isActive(p: BatchProgress): boolean { return !!p.activated; }
 
 const key = (batchId: number) => `ee-progress-${batchId}`;
 
@@ -40,13 +50,20 @@ export function setProgress(batchId: number, patch: Partial<BatchProgress>): Bat
   // Mirror to the server (per-user source of truth). Fire-and-forget; the local
   // cache keeps the UI synchronous. activatedAt/completed_at are server-set.
   const srv: Record<string, unknown> = {};
-  for (const k of ["activated", "l1_listened", "l1_retold", "l1_best_seq", "l3_s1", "l3_s2", "l3_passed"] as const) {
+  for (const k of ["on_path", "activated", "l1_listened", "l1_retold", "l1_best_seq", "l3_s1", "l3_s2", "l3_passed"] as const) {
     if (k in patch && patch[k] !== undefined) srv[k] = patch[k];
   }
   if (Object.keys(srv).length) {
     import("../api").then(({ api }) => api.putProgress(batchId, srv as any).catch(() => {}));
   }
   return next;
+}
+
+// Local-only write (no server mirror). For callers (batchActions) that drive the
+// server PUT themselves and must roll back the local cache on failure (cap-403).
+export function writeLocalProgress(batchId: number, patch: Partial<BatchProgress>): void {
+  const next = { ...getProgress(batchId), ...patch };
+  try { localStorage.setItem(key(batchId), JSON.stringify(next)); } catch { /* non-critical */ }
 }
 
 // Drop all local progress (on login/logout) so a shared browser never leaks one
@@ -62,6 +79,24 @@ export function clearLocalProgress(): void {
   } catch { /* ignore */ }
 }
 
+// Drop every batch's manual queue rank so the plan falls back to the freshly
+// computed domain apportionment. Called when the learner re-tunes their domains —
+// a new focus mix should rebuild the order rather than be frozen by old manual
+// drags. path_rank is local-only (never mirrored), so this is a pure-local sweep.
+export function clearAllPathRanks(): void {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith("ee-progress-")) continue;
+      const p = JSON.parse(localStorage.getItem(k) || "{}");
+      if (p && p.path_rank != null) {
+        delete p.path_rank;
+        localStorage.setItem(k, JSON.stringify(p));
+      }
+    }
+  } catch { /* non-critical */ }
+}
+
 // Pull this user's progress from the server into the local cache (on login).
 export async function hydrateProgress(): Promise<void> {
   try {
@@ -69,6 +104,8 @@ export async function hydrateProgress(): Promise<void> {
     const rows = await api.listProgress();
     rows.forEach((r) => {
       const bp: BatchProgress = {
+        on_path: r.on_path,
+        on_path_at: r.on_path_at || undefined,
         activated: r.activated,
         activatedAt: r.activated_at || undefined,
         l1_listened: r.l1_listened,

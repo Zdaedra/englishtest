@@ -59,6 +59,24 @@ def _migrate(s: Session) -> None:
     if pcols and "gloss_i18n" not in pcols:
         s.execute(text("ALTER TABLE phrase ADD COLUMN gloss_i18n JSON"))
         s.commit()
+    # LLM-generated active-recall prompt (RU scene + task), cached per phrase.
+    for col in ("situation_ru", "task_ru"):
+        if pcols and col not in pcols:
+            s.execute(text(f"ALTER TABLE phrase ADD COLUMN {col} VARCHAR DEFAULT ''"))
+            s.commit()
+    # Drop legacy single-user phrase-stat columns. They moved to UserPhraseStat in the
+    # multi-tenant refactor, but old prod DBs kept them — and `srs_status` is NOT NULL
+    # with no default, which broke EVERY new phrase INSERT (i.e. batch imports). Current
+    # code reads none of these on Phrase. DROP COLUMN needs SQLite ≥ 3.35; swallow per
+    # column so an unsupported/blocked drop never breaks startup.
+    for col in ("srs_status", "avg_score", "attempts", "last_score", "last_seen_at",
+                "self_ewma", "last_failed_at", "last_success_at"):
+        if pcols and col in pcols:
+            try:
+                s.execute(text(f"ALTER TABLE phrase DROP COLUMN {col}"))
+                s.commit()
+            except Exception:
+                s.rollback()
     mcols = {row[1] for row in s.execute(text("PRAGMA table_info(mnemostory)")).all()}
     for col in ("story_i18n", "spans_i18n"):
         if mcols and col not in mcols:
@@ -119,6 +137,28 @@ def _migrate(s: Session) -> None:
         s.commit()
     if uinfo and "apple_original_tx_id" not in ucols:
         s.execute(text("ALTER TABLE user ADD COLUMN apple_original_tx_id VARCHAR"))
+        s.commit()
+    # Mandatory email verification. Backfill existing accounts to verified (1) so
+    # the new gate never locks out anyone who registered before it shipped; only
+    # fresh signups (created with email_verified=0) must confirm.
+    if uinfo and "email_verified" not in ucols:
+        s.execute(text("ALTER TABLE user ADD COLUMN email_verified BOOLEAN DEFAULT 1"))
+        s.commit()
+
+    # Two-axis batch management: on_path (curated learning path) + activated (deck).
+    # One-time backfill (consilium P0): everything currently "engaged" stays on the
+    # path AND in the deck. The deck source switches from isEngaged → activated, so
+    # we MUST also set activated for engaged rows — otherwise users who did lessons
+    # but never pressed Activate would silently lose their practice deck + review pool.
+    bpinfo = s.execute(text("PRAGMA table_info(batchprogress)")).all()
+    if bpinfo and "on_path" not in {row[1] for row in bpinfo}:
+        s.execute(text("ALTER TABLE batchprogress ADD COLUMN on_path BOOLEAN DEFAULT 0"))
+        s.execute(text("ALTER TABLE batchprogress ADD COLUMN on_path_at DATETIME"))
+        engaged = ("activated=1 OR l1_listened=1 OR l1_retold=1 "
+                   "OR l3_s1=1 OR l3_s2=1 OR l3_passed=1")
+        s.execute(text(f"UPDATE batchprogress SET on_path=1, activated=1 WHERE {engaged}"))
+        s.execute(text("UPDATE batchprogress SET on_path_at=COALESCE(on_path_at, activated_at, updated_at) WHERE on_path=1"))
+        s.execute(text("UPDATE batchprogress SET activated_at=COALESCE(activated_at, updated_at) WHERE activated=1"))
         s.commit()
 
 

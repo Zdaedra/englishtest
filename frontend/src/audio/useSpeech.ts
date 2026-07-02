@@ -14,6 +14,8 @@ function Ctor(): AnySR {
 export function useSpeech() {
   const supported = !!Ctor();
   const [listening, setListening] = useState(false);
+  // Live partial transcript while listening ("the app hears you"), cleared on end.
+  const [interim, setInterim] = useState("");
   const ref = useRef<AnySR>(null);
 
   // Resolves with the recognized transcript (one-shot). Rejects on error / no speech.
@@ -24,32 +26,40 @@ export function useSpeech() {
       const r = new C();
       ref.current = r;
       r.lang = lang;
-      r.interimResults = false;
+      r.interimResults = true;
       r.maxAlternatives = 1;
       r.continuous = false;
       let settled = false;
+      let finalTr = "";
       r.onresult = (e: any) => {
-        settled = true;
-        const t = e?.results?.[0]?.[0]?.transcript || "";
-        setListening(false);
-        resolve(t);
+        let partial = "";
+        for (let i = e?.resultIndex ?? 0; i < (e?.results?.length ?? 0); i++) {
+          const res = e.results[i];
+          const tr = res?.[0]?.transcript || "";
+          if (res?.isFinal) finalTr += tr;
+          else partial += tr;
+        }
+        setInterim((finalTr + partial).trim());
       };
       r.onerror = (e: any) => {
         if (settled) return;
         settled = true;
-        setListening(false);
+        setListening(false); setInterim("");
         reject(new Error(e?.error || "speech-error"));
       };
       r.onend = () => {
-        setListening(false);
-        if (!settled) { settled = true; reject(new Error("no-speech")); }
+        setListening(false); setInterim("");
+        if (settled) return;
+        settled = true;
+        if (finalTr.trim()) resolve(finalTr.trim());
+        else reject(new Error("no-speech"));
       };
-      try { r.start(); setListening(true); }
+      try { r.start(); setListening(true); setInterim(""); }
       catch (e) { setListening(false); reject(e as Error); }
     });
   }, []);
 
   const stop = useCallback(() => { try { ref.current?.stop(); } catch { /* ignore */ } }, []);
 
-  return { supported, listening, start, stop };
+  return { supported, listening, interim, start, stop };
 }

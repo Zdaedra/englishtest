@@ -9,11 +9,11 @@ average, and return the score + correct answer + transcript. No raw audio stored
 import random
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from .. import access, entitlements, localize, models, scoring, srs, stt
+from .. import access, entitlements, localize, models, scoring, srs, stt, usage
 from ..auth import current_user_id
 from ..db import get_session
 
@@ -30,8 +30,11 @@ def _today_start() -> datetime:
 
 
 def _check_rate(session: Session, user_id: int) -> None:
-    """Per-plan daily cap on scored attempts (the cost lever for free/core/ai)."""
-    cap = entitlements.user_entitlements(session, user_id)["scored_per_day"]
+    """Per-plan limits on paid AI: a daily scored-attempt cap AND a monthly estimated
+    AI-cost ceiling (the profitability guardrail). Either being hit => 429, and the
+    client falls back to self-grade. Called by every endpoint that spends on AI."""
+    ents = entitlements.user_entitlements(session, user_id)
+    cap = ents["scored_per_day"]
     start = _today_start()
     n = len(session.exec(
         select(models.PhraseAttempt).where(
@@ -43,6 +46,9 @@ def _check_rate(session: Session, user_id: int) -> None:
             models.SequenceAttempt.created_at >= start)).all())
     if n >= cap:
         raise HTTPException(429, "Daily scoring limit reached — continue without feedback (self-grade).")
+    budget = ents.get("monthly_ai_cost_cap_usd")
+    if budget is not None and usage.month_cost_usd(session, user_id) >= budget:
+        raise HTTPException(429, "Monthly AI limit reached — continue without feedback (self-grade).")
 
 
 def _stat(session: Session, user_id: int, phrase: models.Phrase) -> models.UserPhraseStat:
@@ -110,6 +116,7 @@ async def score_phrase(audio: UploadFile = File(...), phrase_id: int = Form(...)
     session.add(models.PhraseAttempt(user_id=user_id, phrase_id=phrase_id, score=score,
                                      transcript=transcript, via=result["via"],
                                      latency_ms=latency_ms))
+    usage.accrue(session, user_id, "stt", usage.score_key(result["via"]))
     session.commit()
     return {"phrase_id": phrase_id, "anchor": p.anchor, "transcript": transcript,
             "score": score, "correct_phrase": p.phrase_en, "via": result["via"],
@@ -135,6 +142,7 @@ async def score_anchor(audio: UploadFile = File(...), phrase_id: int = Form(...)
     session.add(models.PhraseAttempt(user_id=user_id, phrase_id=phrase_id, score=score,
                                      transcript=transcript, via=result["via"],
                                      latency_ms=latency_ms))
+    usage.accrue(session, user_id, "stt")  # anchor uses string-sim (no LLM), only server STT
     session.commit()
     return {"phrase_id": phrase_id, "anchor": p.anchor, "transcript": transcript,
             "score": score, "correct_anchor": p.anchor, "via": result["via"]}
@@ -170,6 +178,7 @@ async def score_sequence(audio: UploadFile = File(...), batch_id: int = Form(...
         user_id=user_id, batch_id=batch_id, score=score, transcript=transcript,
         missed_anchors=result["missed_anchors"], order_ok=result["order_ok"],
         via=result["via"], latency_ms=latency_ms))
+    usage.accrue(session, user_id, "stt", usage.sequence_key(result["via"]))
     session.commit()
     return {"batch_id": batch_id, "transcript": transcript, "score": score,
             "missed_anchors": result["missed_anchors"], "order_ok": result["order_ok"],
@@ -411,6 +420,10 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
             "stimulus": chosen.text if chosen else "",
             "stimulus_id": chosen.id if chosen else None,
             "stimulus_lang": chosen.lang if chosen else "en",
+            # LLM-generated RU active-recall prompt (scene + task); front shows these
+            # when present, else falls back to the stimulus/gloss.
+            "situation_ru": p.situation_ru or "",
+            "task_ru": p.task_ru or "",
             "gloss_ru": localize.pick(p.gloss_i18n, lng, p.gloss_ru),
             "conf": round(_conf(p), 3), "priority": round(weight(p), 3),
             "attempts": (st.attempts if st else 0) or 0,
@@ -506,6 +519,7 @@ async def answer(audio: UploadFile = File(...), phrase_id: int = Form(...),
     ev = _record_answer(session, user_id, p, transcript, score, feedback, result["via"], latency_ms)
     ev.session_id = session_id
     session.add(ev)
+    usage.accrue(session, user_id, "stt", usage.score_key(result["via"]))
     st = _stat(session, user_id, p)
     session.commit()
     session.refresh(ev)
@@ -542,6 +556,7 @@ def answer_text(body: AnswerTextIn, user_id: int = Depends(current_user_id),
     ev = _record_answer(session, user_id, p, transcript, score, feedback, result["via"], body.response_time_ms)
     ev.session_id = body.session_id
     session.add(ev)
+    usage.accrue(session, user_id, usage.score_key(result["via"]))  # client STT => no server STT cost
     st = _stat(session, user_id, p)
     session.commit()
     session.refresh(ev)
@@ -603,6 +618,8 @@ def coach(body: CoachIn, user_id: int = Depends(current_user_id),
         models.CheckPhrase.phrase_id == p.id)).first()
     stimulus = cp.text if cp else (p.gloss_ru or "")
     res = scoring.coach_feedback(stimulus, p.phrase_en, body.transcript, body.score)
+    usage.accrue(session, user_id, usage.coach_key(res["via"]))
+    session.commit()
     return {"feedback": res["feedback"], "better": res["better"], "tone": res["tone"],
             "correct_phrase": p.phrase_en, "via": res["via"]}
 
@@ -649,4 +666,47 @@ def session_summary(session_id: str, lang: str = "", user_id: int = Depends(curr
         "weakest": rows[0] if rows else None,
         "strongest": rows[-1] if rows else None,
         "by_batch": rows,
+    }
+
+
+@router.get("/weekly")
+def weekly_summary(tz_offset: int = Query(0, ge=-14 * 60, le=14 * 60),
+                   user_id: int = Depends(current_user_id),
+                   session: Session = Depends(get_session)):
+    """Last-7-days rollup: how much the learner worked and which phrases stood
+    out — the 'your phrases of the week' progress cue. `tz_offset` as in /streak."""
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
+    since = now - timedelta(days=7)
+    evs = session.exec(select(models.TrainingEvent).where(
+        models.TrainingEvent.user_id == user_id,
+        models.TrainingEvent.created_at >= since)).all()
+    if not evs:
+        return {"attempts": 0, "days_active": 0, "phrases": 0, "avg_score": None,
+                "best": [], "focus": []}
+    days = {(e.created_at - timedelta(minutes=tz_offset)).date() for e in evs if e.created_at}
+    # Spoken-recall quality per phrase (subjective swipes don't rank phrases).
+    per: dict[int, list[int]] = {}
+    for e in evs:
+        if e.ai_score is not None:
+            per.setdefault(e.phrase_id, []).append(e.ai_score)
+    ranked = sorted(((pid, sum(ss) / len(ss)) for pid, ss in per.items()),
+                    key=lambda x: x[1], reverse=True)
+    best = [(pid, avg) for pid, avg in ranked[:3] if avg >= 8]
+    focus = [(pid, avg) for pid, avg in reversed(ranked[-3:]) if avg < 8 and (pid, avg) not in best]
+    pmap = {p.id: p for p in session.exec(select(models.Phrase).where(
+        models.Phrase.id.in_([pid for pid, _ in best + focus]))).all()} if (best or focus) else {}
+
+    def _row(pid: int, avg: float) -> dict:
+        p = pmap.get(pid)
+        return {"phrase_id": pid, "anchor": p.anchor if p else "",
+                "phrase_en": p.phrase_en if p else "", "avg_score": round(avg, 1)}
+
+    scores = [s for ss in per.values() for s in ss]
+    return {
+        "attempts": len(evs),
+        "days_active": len(days),
+        "phrases": len({e.phrase_id for e in evs}),
+        "avg_score": round(sum(scores) / len(scores), 1) if scores else None,
+        "best": [_row(*b) for b in best],
+        "focus": [_row(*f) for f in focus],
     }

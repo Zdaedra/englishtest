@@ -100,6 +100,12 @@ def stub_network(monkeypatch):
             "feedback": "fb", "better": "better", "tone": "warm",
             "correct_phrase": target, "via": "llm"},
     )
+    monkeypatch.setattr(
+        "app.scoring.analyze_call",
+        lambda text: {"upgrades": [{"original": "I think this is not good",
+                                    "native": "Let me push back on that",
+                                    "note": "короче и весомее"}], "via": "llm"},
+    )
     monkeypatch.setattr("app.cover.generate_cover", lambda *a, **k: "/covers/stub.png")
     monkeypatch.setattr("app.llm.parse_batch", lambda raw: {"phrases": []})
     monkeypatch.setattr("app.llm.chat", lambda system, user, temperature=None: "{}")
@@ -122,7 +128,7 @@ def make_user():
     counter = {"n": 0}
 
     def _make(email=None, password="password123", plan=None, is_admin=None,
-              plan_expires_at=None):
+              plan_expires_at=None, verified=True):
         counter["n"] += 1
         email = email or f"user{counter['n']}@example.com"
         c = TestClient(app)
@@ -130,19 +136,23 @@ def make_user():
                    json={"email": email, "password": password})
         assert r.status_code == 200, r.text
         data = r.json()
-        if plan is not None or is_admin is not None or plan_expires_at is not None:
-            with Session(engine()) as s:
-                u = s.get(models.User, data["id"])
-                if plan is not None:
-                    u.plan = plan
-                if is_admin is not None:
-                    u.is_admin = is_admin
-                if plan_expires_at is not None:
-                    u.plan_expires_at = plan_expires_at
-                s.add(u)
-                s.commit()
-                data["plan"] = u.plan
-                data["is_admin"] = u.is_admin
+        # Email verification is mandatory and a fresh non-owner signup is
+        # unverified — but most tests aren't about that gate, so verify by default
+        # (pass verified=False to exercise the gate explicitly).
+        with Session(engine()) as s:
+            u = s.get(models.User, data["id"])
+            u.email_verified = verified
+            if plan is not None:
+                u.plan = plan
+            if is_admin is not None:
+                u.is_admin = is_admin
+            if plan_expires_at is not None:
+                u.plan_expires_at = plan_expires_at
+            s.add(u)
+            s.commit()
+            data["plan"] = u.plan
+            data["is_admin"] = u.is_admin
+            data["email_verified"] = u.email_verified
         c.headers.update({"Authorization": f"Bearer {data['token']}"})
         c.user = data  # type: ignore[attr-defined]
         return c

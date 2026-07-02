@@ -1,15 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { api, DeckCard, AnswerResult, SessionSummary, Coach } from "../api";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
+import { useTeach } from "../tutorial/teach";
 import { useRecorder } from "../audio/useRecorder";
 import { useSpeech } from "../audio/useSpeech";
-import { getProgress, isEngaged } from "../lib/progress";
-import { haptic } from "../lib/session";
+import { nativeRecognize, nativeSttStop } from "../audio/nativeStt";
+import { useHandsFree } from "../audio/useHandsFree";
+import { speakCueAudio, cancelSpeak, unlockAudio, prefetchCueAudio } from "../lib/speak";
+import { getProgress } from "../lib/progress";
+import { haptic, isNative } from "../lib/session";
 import { SECTION_BY_SLUG } from "../lib/sections";
 import { BatchCover } from "../ui/Art";
-import { IconPlay, IconMic, IconProfile } from "../ui/icons";
+import { IconPlay, IconMic } from "../ui/icons";
 
 // Two-face card: the prompt, then the back. The back's content depends on plan —
 // AI gets a mic (records → scored), non-AI gets the model phrase (эталон). Both
@@ -18,9 +22,10 @@ type Face = "front" | "back";
 const SESSION_LEN = 12;
 const FETCH_LIMIT = 24;
 
-// Once the learner has done this many swipes (cumulative, per user), the card
-// stops showing the "how to use" helper text — they know the gesture by now.
-const EXPERIENCED_AT = 20;
+// After this many COMPLETED reps (cumulative, per user) the card stops showing
+// the gesture hint — they know it by now. Counted on answer-complete, never on
+// tap, so the no-flip AI flow still retires the hint.
+const HINT_REPS = 8;
 const swipeKey = (uid?: number) => `ee-swipes-${uid ?? 0}`;
 const getSwipes = (uid?: number) => {
   try { return Number(localStorage.getItem(swipeKey(uid))) || 0; } catch { return 0; }
@@ -42,18 +47,6 @@ const PILL: Record<string, string> = {
 const pillLabel = (c: DeckCard) =>
   PILL[c.section] || SECTION_BY_SLUG[c.section]?.en || c.batch_title || "Executive";
 
-// Situation context per section — instant framing ("where am I"). A reasonable
-// default until a per-phrase scene is curated.
-const SITU: Record<string, string> = {
-  "live-tone": "One-on-one", pitch: "Investor pitch", negotiation: "Negotiation table",
-  pressure: "Hot-seat Q&A", repair: "Making amends", leadership: "Team meeting",
-  requests: "Quick ask", written: "Message thread", "small-talk": "Casual meeting",
-  charisma: "Working the room", flirt: "On a date", intimacy: "Close conversation",
-  "lead-presence": "Leading the room", composure: "Under provocation",
-  gravitas: "Crisis war-room", stage: "On stage",
-};
-const situLabel = (c: DeckCard) => SITU[c.section] || "Conversation";
-
 const prefersReduced = () =>
   typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -71,11 +64,48 @@ function deckSources(): { active: number[]; maint: number[] } {
       const id = Number(k.slice("ee-progress-".length));
       if (Number.isNaN(id)) continue;
       const p = getProgress(id);
-      if (!isEngaged(p)) continue;
+      if (!p.activated) continue;        // deck = activated set (active ⊆ on_path)
       (p.l3_passed ? maint : active).push(id);
     }
   } catch { /* ignore */ }
   return { active, maint };
+}
+
+// What the hands-free voice reads: the RU situation when generated (the learner
+// hears the scene in Russian, then produces English), else the legacy stimulus.
+function cueOf(c: DeckCard): [string, string] {
+  return c.situation_ru
+    ? [c.situation_ru, "ru"]
+    : [c.stimulus || c.gloss_ru || c.anchor, c.stimulus_lang || "en"];
+}
+
+// Word-level hit map of the model phrase against what the learner actually said —
+// the Speak-style visual: hits stay solid, misses light up as the thing to notice.
+// Crude inflection tolerance (shared 4-char stem) so "understands"≈"understand".
+function diffWords(model: string, said: string): { w: string; hit: boolean }[] {
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9']/g, "");
+  const heard = said.split(/\s+/).map(norm).filter(Boolean);
+  return (model || "").split(/\s+/).map((w) => {
+    const n = norm(w);
+    const hit = !!n && heard.some((h) =>
+      h === n || (h.length >= 4 && n.length >= 4 && h.slice(0, 4) === n.slice(0, 4)));
+    return { w, hit };
+  });
+}
+
+// The model phrase rendered as the word-hit map (falls back to plain text when
+// there's no transcript to compare against, e.g. a swipe self-grade).
+function ModelPhrase({ label, model, said }: { label: string; model: string; said?: string }) {
+  return (
+    <p className="tr-model">
+      <span className="tr-result-lbl">{label}</span>
+      {said?.trim()
+        ? diffWords(model, said).map((x, i) => (
+            <span key={i} className={x.hit ? "w-hit" : "w-miss"}>{x.w}{" "}</span>
+          ))
+        : model}
+    </p>
+  );
 }
 
 function Head({ title }: { title?: string }) {
@@ -103,6 +133,12 @@ export default function Training() {
   const uid = user?.id;
   const rec = useRecorder();
   const speech = useSpeech();
+  const hf = useHandsFree();
+  // Hands-free (Pimsleur-style) loop: speak the cue → record → score → advance,
+  // all on one mic stream opened by the toggle tap (iOS needs a gesture once).
+  const [handsFree, setHandsFree] = useState(false);
+  const [hfStage, setHfStage] = useState<"cue" | "listen" | "score" | "">("");
+  const hfRunningRef = useRef<number | null>(null);
 
   const [queue, setQueue] = useState<DeckCard[] | null>(null);
   const [pos, setPos] = useState(0);
@@ -116,16 +152,39 @@ export default function Training() {
   const shownAtRef = useRef(Date.now());
 
   const [face, setFace] = useState<Face>("front");
-  const [experienced, setExperienced] = useState(() => getSwipes(uid) >= EXPERIENCED_AT);
+  const [experienced, setExperienced] = useState(() => getSwipes(uid) >= HINT_REPS);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<AnswerResult | null>(null);
   const [recFallback, setRecFallback] = useState(false);
+  const [nativeListening, setNativeListening] = useState(false);
+  // Contextual method hints (fire-once): the meaning-scoring reframe at the first
+  // score, and the spaced-repetition reassurance when a refresh session first opens.
+  const { tip } = useTeach();
+  useEffect(() => { if (result && typeof result.score === "number") tip("meaning"); }, [result, tip]);
+  useEffect(() => { if (review) tip("spacing"); }, [review, tip]);
   const [summary, setSummary] = useState<SessionSummary | null>(null);
   const [coach, setCoach] = useState<Coach | null>(null);
   const [coachState, setCoachState] = useState<"idle" | "loading" | "locked" | "done">("idle");
 
+  // Voice→AI consent (Apple §5.1.2(i) + GDPR): a one-time gate before the first
+  // recording, since the clip + transcript go to OpenAI/Anthropic. Local flag gates
+  // the UI; the server gets an append-only audit record.
+  const [showVoiceConsent, setShowVoiceConsent] = useState(false);
+  const voiceConsentKey = uid != null ? `ee-voice-consent-${uid}` : null;
+  const hasVoiceConsent = () => {
+    try { return !!voiceConsentKey && localStorage.getItem(voiceConsentKey) === "1"; }
+    catch { return false; }
+  };
+  const acceptVoiceConsent = () => {
+    try { if (voiceConsentKey) localStorage.setItem(voiceConsentKey, "1"); } catch { /* private */ }
+    api.recordConsent("voice_ai").catch(() => {});   // server audit (best-effort)
+    setShowVoiceConsent(false);
+  };
+
   const cardElRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const fitRef = useRef<HTMLDivElement>(null);
 
   const sources = useMemo(deckSources, []);
   const card = queue && pos < queue.length ? queue[pos] : null;
@@ -146,15 +205,17 @@ export default function Training() {
   useEffect(() => { loadDeck(); }, [loadDeck]);
   useEffect(() => { shownAtRef.current = Date.now(); }, [pos]);
 
-  // AI Coach (paid) — fetch a coaching breakdown once a voice answer is scored.
-  useEffect(() => {
-    if (!result || user?.plan !== "ai") return;
-    setCoach(null); setCoachState("loading");
-    api.coach(result.phrase_id, result.transcript, result.score)
-      .then((r) => { if ("locked" in r) setCoachState("locked"); else { setCoach(r); setCoachState("done"); } })
-      .catch(() => setCoachState("idle"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [result]);
+  // AI Coach fetch is DISABLED — the redesigned result shows only score + native
+  // phrase (product call 2026-06-21), so the coaching breakdown was no longer
+  // rendered and the per-answer api.coach() call was pure wasted LLM spend.
+  // To restore: re-add the effect below and render coach/coachState in the result.
+  //   useEffect(() => {
+  //     if (!result || user?.plan !== "ai") return;
+  //     setCoach(null); setCoachState("loading");
+  //     api.coach(result.phrase_id, result.transcript, result.score)
+  //       .then((r) => { if ("locked" in r) setCoachState("locked"); else { setCoach(r); setCoachState("done"); } })
+  //       .catch(() => setCoachState("idle"));
+  //   }, [result]);
 
   // Edge-flip with content swap — no backface-visibility (which iOS Safari leaves
   // mirrored "inside-out"). Rotate to 90° (edge), swap content, rotate back from -90°.
@@ -211,14 +272,15 @@ export default function Training() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pos, queue, finishSession]);
 
-  const countSwipe = () => { if (bumpSwipes(uid) >= EXPERIENCED_AT) setExperienced(true); };
+  // Count a COMPLETED rep (answer scored in AI, or judged in non-AI) — retires the
+  // gesture hint. Never called on tap/flip, so the no-flip AI flow still counts.
+  const completeRep = () => { if (bumpSwipes(uid) >= HINT_REPS) setExperienced(true); };
 
-  // Front → back: a single tap flips the card. No pre-assessment — the learner
-  // judges themselves with the buttons on the back.
+  // Front → back: a single tap flips the card (non-AI only). Self-rating happens
+  // with the buttons on the back.
   const flipToBack = () => {
     if (!card || face !== "front") return;
     haptic("light");
-    countSwipe();
     flip("back");
   };
 
@@ -228,8 +290,47 @@ export default function Training() {
     if (!card) return;
     haptic("medium");
     if (rec.recording) { void rec.stop(); }
+    completeRep();
     api.trainSwipe(sessionId, card.phrase_id, known ? "right" : "left", Date.now() - shownAtRef.current).catch(() => {});
     advance(known, known ? "right" : "left");
+  };
+
+  // AI advance: the % IS the verdict — derive known from the score (no manual
+  // self-rating, which would pollute the SRS signal) and move on. Swipe direction
+  // is purely cosmetic (the card flies the way the finger went); known stays score-based.
+  const aiNext = (dir: "left" | "right" = "right") => {
+    if (!card || !result) return;
+    haptic("medium");
+    const known = result.score >= 6;
+    api.trainSwipe(sessionId, card.phrase_id, known ? "right" : "left", Date.now() - shownAtRef.current).catch(() => {});
+    advance(known, dir);
+  };
+
+  // Swipe-to-advance for the AI result frame (replaces the «Дальше» button).
+  // Either direction advances — the % is already the verdict. Non-AI keeps buttons.
+  const drag = useRef({ x0: 0, active: false, dx: 0 });
+  const canSwipe = () => !!card && canVoice && !!result;
+  const onCardDown = (e: React.PointerEvent) => {
+    if (!canSwipe()) return;
+    drag.current = { x0: e.clientX, active: true, dx: 0 };
+    if (cardElRef.current) cardElRef.current.style.transition = "none";
+  };
+  const onCardMove = (e: React.PointerEvent) => {
+    const d = drag.current;
+    if (!d.active) return;
+    d.dx = e.clientX - d.x0;
+    if (cardElRef.current) cardElRef.current.style.transform = `translateX(${d.dx}px) rotate(${d.dx * 0.04}deg)`;
+  };
+  const onCardUp = () => {
+    const d = drag.current;
+    if (!d.active) return;
+    d.active = false;
+    const el = cardElRef.current;
+    if (Math.abs(d.dx) < 70) {                          // not far enough → snap back
+      if (el) { el.style.transition = "transform .22s cubic-bezier(.22,1,.36,1)"; el.style.transform = ""; }
+      return;
+    }
+    aiNext(d.dx > 0 ? "right" : "left");
   };
 
   const handleScoreErr = (e: unknown) => {
@@ -244,13 +345,17 @@ export default function Training() {
   // entitlement if the deck predates the ai_allowed flag.
   const canVoice = card?.ai_allowed ?? !!user?.entitlements?.voice_answer;
 
-  // Voice answer (AI only): on-device Web Speech first (0 tokens), MediaRecorder +
-  // server STT as fallback when speech is unsupported or errors.
+  // Voice answer (AI only). STT ladder, cheapest first: web Web-Speech (web, 0 tokens)
+  // → native on-device SFSpeechRecognizer (native iOS, free/private) → MediaRecorder +
+  // server STT (fallback). The phrase answer is English-only, so on-device is safe here;
+  // the mixed RU+EN sequence exam is a separate flow and stays on the server.
   const onMic = useCallback(async () => {
     if (!canVoice) { nav("/subscribe"); return; }  // locked mic -> upsell
+    if (!hasVoiceConsent()) { setShowVoiceConsent(true); return; }  // consent before voice→AI
     if (!card || busy) return;
     setNotice(""); setErr("");
-    const useSpeechNow = speech.supported && !recFallback;
+    // Web: webkitSpeechRecognition transcribes free via Apple's service.
+    const useSpeechNow = speech.supported && !recFallback && !isNative();
     if (useSpeechNow) {
       if (speech.listening) { speech.stop(); return; }
       let tr = "";
@@ -258,7 +363,24 @@ export default function Training() {
       catch { setRecFallback(true); setNotice(t("practice.micUnavailable")); return; }
       if (!tr.trim()) { setNotice(t("practice.micNoHear")); return; }
       setBusy(true);
-      try { const r = await api.trainAnswerText(sessionId, card.phrase_id, tr); setResult(r); }
+      try { const r = await api.trainAnswerText(sessionId, card.phrase_id, tr); setResult(r); completeRep(); }
+      catch (e) { handleScoreErr(e); }
+      finally { setBusy(false); }
+      return;
+    }
+    // Native iOS: on-device recognition (audio never leaves the phone, no server STT).
+    // One-shot like the web path; on failure flip recFallback so the rest of the
+    // session uses the server path instead of wasting taps.
+    if (isNative() && !recFallback) {
+      if (nativeListening) { await nativeSttStop(); return; }  // tap-to-stop
+      setNativeListening(true);
+      let tr = "";
+      try { tr = await nativeRecognize("en-US"); }
+      catch { setNativeListening(false); setRecFallback(true); setNotice(t("practice.micUnavailable")); return; }
+      setNativeListening(false);
+      if (!tr.trim()) { setNotice(t("practice.micNoHear")); return; }
+      setBusy(true);
+      try { const r = await api.trainAnswerText(sessionId, card.phrase_id, tr); setResult(r); completeRep(); }
       catch (e) { handleScoreErr(e); }
       finally { setBusy(false); }
       return;
@@ -267,10 +389,114 @@ export default function Training() {
     const clip = await rec.stop();
     if (!clip || clip.ms < 400) { setNotice(t("practice.micLonger")); return; }
     setBusy(true);
-    try { const r = await api.trainAnswer(sessionId, card.phrase_id, clip.blob, clip.filename, clip.ms); setResult(r); }
+    try { const r = await api.trainAnswer(sessionId, card.phrase_id, clip.blob, clip.filename, clip.ms); setResult(r); completeRep(); }
     catch (e) { handleScoreErr(e); }
     finally { setBusy(false); }
-  }, [canVoice, nav, card, busy, rec, speech, recFallback, sessionId, t]);
+  }, [canVoice, nav, card, busy, rec, speech, recFallback, nativeListening, sessionId, t]);
+
+  // --- Hands-free auto-loop --------------------------------------------------
+  const toggleHandsFree = async () => {
+    if (handsFree) { setHandsFree(false); setHfStage(""); hf.close(); cancelSpeak(); return; }
+    if (!canVoice) { nav("/subscribe"); return; }        // mic is a paid feature
+    if (!hasVoiceConsent()) { setShowVoiceConsent(true); return; }  // consent before voice→AI
+    haptic("medium");
+    // iOS unlocks audio + speechSynthesis only inside a user gesture — warm both
+    // here, synchronously, before the await breaks out of the tap context.
+    unlockAudio();
+    if (card) { const [cu, cl] = cueOf(card); prefetchCueAudio(cu, cl); }
+    try { window.speechSynthesis?.speak(new SpeechSynthesisUtterance("")); } catch { /* noop */ }
+    const ok = await hf.open();                           // gesture → grants the mic
+    if (!ok) { setNotice(t("practice.micUnavailable")); return; }
+    setHandsFree(true);
+  };
+
+  // Drive one card automatically while hands-free is on: cue → record → score →
+  // advance, looping into the next card (which re-runs this effect).
+  useEffect(() => {
+    if (!handsFree || phase !== "deck" || !card) return;
+    if (hfRunningRef.current === card.phrase_id) return;  // already running this card
+    hfRunningRef.current = card.phrase_id;
+    let cancelled = false;
+    const delay = (ms: number) => new Promise((r) => window.setTimeout(r, ms));
+    const run = async () => {
+      setResult(null); setNotice(""); setFace("front");
+      setHfStage("cue");
+      { const [cu, cl] = cueOf(card); await speakCueAudio(cu, cl); }
+      if (cancelled) return;
+      flip("back");
+      await delay(380);
+      if (cancelled) return;
+      setHfStage("listen");                               // ← your turn to speak
+      let clip = await hf.record(6500);
+      if (cancelled) return;
+      if (!clip || clip.ms < 400) {                       // missed the window → one more chance
+        setNotice(t("practice.micNoHear"));
+        setHfStage("listen");
+        clip = await hf.record(6500);
+        if (cancelled) return;
+      }
+      if (!clip || clip.ms < 400) {                       // still nothing → skip as missed
+        setNotice("");
+        api.trainSwipe(sessionId, card.phrase_id, "left", clip?.ms ?? 0).catch(() => {});
+        advance(false, "left");
+        return;
+      }
+      setNotice("");
+      setHfStage("score"); setBusy(true);
+      try {
+        const r = await api.trainAnswer(sessionId, card.phrase_id, clip.blob, clip.filename, clip.ms);
+        if (cancelled) return;
+        setResult(r); setBusy(false); setHfStage("");
+        completeRep();                                     // retires the swipe hint over time
+        // No auto-advance: the learner reads the verdict, then swipes to the next card.
+      } catch (e) {
+        if (cancelled) return;
+        setBusy(false); setHfStage(""); handleScoreErr(e);
+        setHandsFree(false); hf.close();                   // stop the loop on error
+      }
+    };
+    run();
+    return () => { cancelled = true; cancelSpeak(); hf.stopNow(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handsFree, card?.phrase_id, phase]);
+
+  // While hands-free runs, warm the NEXT card's cue so its playback is instant
+  // (hides the first-synth latency the learner complained about).
+  useEffect(() => {
+    if (!handsFree || !card) return;
+    const nxt = queue?.[pos + 1];
+    if (nxt) { const [cu, cl] = cueOf(nxt); prefetchCueAudio(cu, cl); }
+  }, [handsFree, card?.phrase_id, pos, queue]);
+
+  // Auto-fit the situation/task so a long card never collides with the mic:
+  // shrink --fit (font multiplier) in small steps until the text block clears
+  // the reserved mic zone, or we hit a readable floor (0.8). The card front is
+  // RU-content of unbounded length, so this guarantees no overlap on every card.
+  useLayoutEffect(() => {
+    const body = bodyRef.current, fit = fitRef.current;
+    if (!body || !fit) return;
+    const run = () => {
+      fit.style.setProperty("--fit", "1");
+      const cs = getComputedStyle(body);
+      const avail = body.clientHeight - parseFloat(cs.paddingTop || "0") - parseFloat(cs.paddingBottom || "0");
+      if (avail <= 0) return;
+      let scale = 1;
+      // 5 steps max (1.0 → 0.8); reflow-measured each time so fixed parts count.
+      while (fit.scrollHeight > avail && scale > 0.8) {
+        scale = Math.max(0.8, Math.round((scale - 0.04) * 1000) / 1000);
+        fit.style.setProperty("--fit", String(scale));
+      }
+    };
+    run();
+    // Re-measure once webfonts settle (metrics shift) and on viewport changes.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run).catch(() => {});
+    window.addEventListener("resize", run);
+    return () => window.removeEventListener("resize", run);
+  }, [card?.phrase_id, face, result, handsFree, canVoice]);
+
+  // Release the mic stream when leaving the screen.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => { hf.close(); cancelSpeak(); }, []);
 
   const restart = () => {
     shownRef.current = 0; knownRef.current = 0;
@@ -323,12 +549,10 @@ export default function Training() {
   const pct = result ? Math.round(result.score * 10) : 0;
   const pctClass = pct >= 80 ? "ok" : pct >= 50 ? "mid" : "no";
   const ghosts = queue ? queue.slice(pos + 1, pos + 3) : [];
-  const micActive = rec.recording || speech.listening;
+  const micActive = rec.recording || speech.listening || nativeListening;
 
   return (
     <div className="screen tr-screen">
-      <Head title={gap ? t("calib.headTitle") : review ? t("review.headTitle") : card?.batch_title} />
-
       <div className="tr-deck">
         {ghosts.map((g, i) => (
           <div className="tr-card ghost" key={`g-${g.phrase_id}`} style={{ "--gi": ghosts.length - i } as React.CSSProperties} aria-hidden />
@@ -336,18 +560,24 @@ export default function Training() {
         {card && (
           <div
             className="tr-card"
+            data-tour="card"
             ref={cardElRef}
             key={card.phrase_id}
-            role={face === "front" ? "button" : undefined}
-            tabIndex={face === "front" ? 0 : -1}
-            aria-label={face === "front" ? t("practice.tapToAnswer") : undefined}
-            onClick={() => { if (face === "front") flipToBack(); }}
+            // Only non-AI flips on tap. AI answers inline via the mic; hands-free is auto.
+            role={!canVoice && !handsFree && face === "front" ? "button" : undefined}
+            tabIndex={!canVoice && !handsFree && face === "front" ? 0 : -1}
+            aria-label={!canVoice && face === "front" ? t("practice.hintTapFlip") : undefined}
+            onClick={() => { if (!handsFree && !canVoice && face === "front") flipToBack(); }}
             onKeyDown={(e) => {
-              if (face === "front" && (e.key === "Enter" || e.key === " ")) {
+              if (!handsFree && !canVoice && face === "front" && (e.key === "Enter" || e.key === " ")) {
                 e.preventDefault();
                 flipToBack();
               }
             }}
+            onPointerDown={onCardDown}
+            onPointerMove={onCardMove}
+            onPointerUp={onCardUp}
+            onPointerCancel={onCardUp}
           >
             <div className="tr-card-inner" ref={innerRef}>
               <div className="tr-face">
@@ -357,58 +587,104 @@ export default function Training() {
                       <BatchCover seed={card.slug || String(card.batch_id)} coverUrl={card.cover_url} className="tr-photo-img" />
                       <div className="tr-photo-fade" />
                       <div className="tr-pill">{pillLabel(card)}</div>
-                      <div className="tr-situ"><IconProfile size={13} /> {situLabel(card)}</div>
                     </div>
-                    <div className="tr-body">
-                      <p className="tr-stim">{card.stimulus || card.gloss_ru || card.anchor}</p>
-                    </div>
-                    <div className="tr-foot">
-                      {!experienced && <div className="tr-foot-cue">{t("practice.tapToAnswer")}</div>}
-                      <div className="tr-dots">
-                        {Array.from({ length: SESSION_LEN }).map((_, i) => (
-                          <span key={i} className={i < shownRef.current ? "on" : ""} />
-                        ))}
+                    {/* Stimulus — hidden once the AI result takes over the card. */}
+                    {!(canVoice && !handsFree && result) && (
+                      <div className="tr-body" ref={bodyRef}>
+                        <div className="tr-fit" ref={fitRef}>
+                          <span className="tr-stim-label">{t("practice.situationLabel")}</span>
+                          {card.situation_ru ? (
+                            <>
+                              <p className="tr-situation">{card.situation_ru}</p>
+                              {card.task_ru && (
+                                <p className="tr-task"><span className="tr-task-lbl">{t("practice.taskLabel")}</span>{card.task_ru}</p>
+                              )}
+                            </>
+                          ) : (
+                            <p className="tr-stim">{card.stimulus || card.gloss_ru || card.anchor}</p>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    )}
+
+                    {/* AI mode answers INLINE on the front — no flip. Result = score + model phrase only. */}
+                    {canVoice && !handsFree && (
+                      result ? (
+                        <div className="tr-result tr-result-front">
+                          <div className={`verdict-pct ${pctClass === "ok" ? "ok" : pctClass === "no" ? "no" : ""}`}>
+                            {pct}<span style={{ fontSize: 22, fontWeight: 700 }}>%</span>
+                          </div>
+                          <ModelPhrase label={t("practice.modelLabel")} model={result.correct_phrase} said={result.transcript} />
+                          {!experienced && <p className="tr-hint tr-hint-swipe">{t("practice.hintSwipeNext")}</p>}
+                        </div>
+                      ) : (
+                        <div className="tr-mic-zone">
+                          <button className={`tr-mic-glass${micActive ? " on" : ""}`} data-tour="mic" onClick={onMic} disabled={busy}
+                            aria-label={t("rec.recordAria")}>
+                            {busy ? <span className="tr-mic-dots">…</span> : rec.recording ? <span className="tr-mic-stop" /> : <IconMic size={28} />}
+                          </button>
+                          {/* Live partial transcript — instant "it hears me" feedback. */}
+                          {speech.listening && speech.interim && (
+                            <p className="tr-mic-live" aria-live="polite">{speech.interim}</p>
+                          )}
+                          {(speech.listening || nativeListening || rec.recording || busy) ? (
+                            <p className="tr-mic-label">
+                              {(speech.listening || nativeListening) ? t("practice.micListening") : rec.recording ? t("practice.micRecording") : t("practice.micChecking")}
+                            </p>
+                          ) : !experienced ? (
+                            <p className="tr-hint">{t("practice.hintTapMic")}</p>
+                          ) : null}
+                        </div>
+                      )
+                    )}
+
+                    {/* Non-AI: a one-time hint to tap-flip. */}
+                    {!canVoice && !handsFree && !experienced && (
+                      <p className="tr-hint front">{t("practice.hintTapFlip")}</p>
+                    )}
                   </>
                 ) : (
                   <div className="tr-back2">
+                    <button className="tr-back-prompt" onClick={() => { if (!handsFree) flip("front"); }}
+                      aria-label={t("practice.flipBack")}>
+                      <span className="tr-back-prompt-text">{card.stimulus || card.gloss_ru || card.anchor}</span>
+                      {!handsFree && <span className="tr-back-prompt-hint">↩ {t("practice.flipBack")}</span>}
+                    </button>
                     <div className="tr-back2-mid">
-                      {canVoice ? (
+                      {handsFree ? (
                         result ? (
-                          // AI · after the spoken answer is scored — compact verdict only.
-                          <div className="tr-score">
+                          <div className="tr-result">
                             <div className={`verdict-pct ${pctClass === "ok" ? "ok" : pctClass === "no" ? "no" : ""}`}>
                               {pct}<span style={{ fontSize: 22, fontWeight: 700 }}>%</span>
                             </div>
-                            <p className="tr-answer">{result.correct_phrase}</p>
-                            {coachState === "loading" && <p className="tr-coach-load">…</p>}
-                            {coachState === "done" && coach?.feedback && <p className="tr-coach-fb">{coach.feedback}</p>}
-                            {result.transcript && <p className="tr-heard">{t("practice.heard", { t: result.transcript })}</p>}
+                            <ModelPhrase label={t("practice.modelLabel")} model={result.correct_phrase} said={result.transcript} />
+                            {!experienced && <p className="tr-hint tr-hint-swipe">{t("practice.hintSwipeNext")}</p>}
                           </div>
                         ) : (
-                          // AI · the mic is the whole face. Press → speak the phrase.
-                          <>
-                            <button className={`tr-mic big${micActive ? " on" : ""}`} onClick={onMic} disabled={busy}
-                              aria-label={t("rec.recordAria")}>
-                              {busy ? <span className="tr-mic-dots">…</span> : rec.recording ? <span className="tr-mic-stop" /> : <IconMic size={46} />}
-                            </button>
-                            {(speech.listening || rec.recording || busy) && (
-                              <p className="tr-mic-label">
-                                {speech.listening ? t("practice.micListening") : rec.recording ? t("practice.micRecording") : t("practice.micChecking")}
-                              </p>
-                            )}
-                          </>
+                          <div className="tr-hf-live">
+                            <div className={`tr-mic-glass${hfStage === "listen" ? " on" : ""}${hfStage === "cue" ? " dim" : ""}`} aria-hidden>
+                              {hfStage === "score" ? <span className="tr-mic-dots">…</span> : <IconMic size={28} />}
+                            </div>
+                            <p className={`tr-hf-label${hfStage === "listen" ? " go" : ""}`}>
+                              {hfStage === "cue" ? t("practice.hfCue")
+                                : hfStage === "score" ? t("practice.micChecking")
+                                : t("practice.hfListen")}
+                            </p>
+                          </div>
                         )
                       ) : (
-                        // Non-AI · just the model phrase (эталон) to self-check against.
-                        <p className="tr-answer big">{card.phrase_en}</p>
+                        // Non-AI · the model phrase to self-check against.
+                        <p className="tr-answer big">
+                          <span className="tr-result-lbl">{t("practice.modelLabel")}</span>{card.phrase_en}
+                        </p>
                       )}
                     </div>
-                    <div className="tr-judge">
-                      <button className="tr-judge-btn no" onClick={() => judge(false)}>{t("practice.missed")}</button>
-                      <button className="tr-judge-btn yes" onClick={() => judge(true)}>{t("practice.guessed")}</button>
-                    </div>
+                    {!handsFree && !canVoice && (
+                      <div className="tr-judge">
+                        <button className="tr-judge-btn no" onClick={() => judge(false)}>{t("practice.missed")}</button>
+                        <button className="tr-judge-btn yes" onClick={() => judge(true)}>{t("practice.guessed")}</button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -417,8 +693,32 @@ export default function Training() {
         )}
       </div>
 
+      {/* Conversation-mode toggle lives BELOW the card now — frees the top so the
+          card can be tall and uncramped (no page header on the practice screen). */}
+      {canVoice && (
+        <div className="tr-hf-bar">
+          <button className={`tr-hf-toggle${handsFree ? " on" : ""}`} data-tour="handsfree" onClick={toggleHandsFree}>
+            <IconMic size={15} />
+            {handsFree ? t("practice.hfStop") : t("practice.hfStart")}
+          </button>
+        </div>
+      )}
+
       {notice && <p className="muted small center" style={{ marginTop: 12 }}>{notice}</p>}
       {rec.error && <p className="error center" style={{ marginTop: 8 }}>{rec.error}</p>}
+
+      {showVoiceConsent && (
+        <div className="ava-modal" role="dialog" aria-modal="true">
+          <div className="ava-sheet">
+            <p className="ava-title">{t("voice.consentTitle")}</p>
+            <p className="muted small" style={{ textAlign: "center", margin: 0, lineHeight: 1.5 }}>{t("voice.consentText")}</p>
+            <div className="ava-actions">
+              <button className="btn-ghost" onClick={() => setShowVoiceConsent(false)}>{t("common.cancel")}</button>
+              <button className="btn" onClick={acceptVoiceConsent}>{t("voice.consentAccept")}</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

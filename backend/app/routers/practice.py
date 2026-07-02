@@ -86,11 +86,15 @@ def questions(batch_ids: str = "", session: Session = Depends(get_session)):
 
 
 @router.post("/prompt-audio")
-def prompt_audio(text: str = Form(...), session: Session = Depends(get_session)):
-    """TTS of a RU situational prompt (voice-first). Cached on disk by tts."""
+def prompt_audio(text: str = Form(...), lang: str = Form("ru"),
+                 session: Session = Depends(get_session)):
+    """TTS of a short prompt/cue (voice-first). `lang` picks the voice: en → the
+    English voice, anything else → the Russian voice (so an English conversation
+    cue isn't read by a RU-tuned voice). Cached on disk by tts."""
     st = session.get(models.Setting, 1) or models.Setting(id=1)
+    voice = st.tts_voice if lang.lower().startswith("en") else st.tts_voice_ru
     try:
-        path, dur = tts.synth(text, voice=st.tts_voice_ru)
+        path, dur = tts.synth(text, voice=voice)
     except Exception as e:
         raise HTTPException(502, f"TTS failed: {e}")
     return {"audio_url": f"/audio/phrases/{path.name}", "duration": dur}

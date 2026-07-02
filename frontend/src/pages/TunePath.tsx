@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStrategy, setStrategy } from "../lib/profile";
+import { clearAllPathRanks } from "../lib/progress";
 import { FOCUSES, NEEDS, Intensity } from "../lib/strategy";
 import { IconBack, IconCheck } from "../ui/icons";
 import { useI18n } from "../i18n";
@@ -42,6 +43,8 @@ export default function TunePath() {
 
   const save = () => {
     setStrategy({ main, secondary, intensity, sprintSize, need });
+    // A new focus mix re-apportions the plan — drop stale manual drag order.
+    clearAllPathRanks();
     nav("/learn", { replace: true });
   };
 

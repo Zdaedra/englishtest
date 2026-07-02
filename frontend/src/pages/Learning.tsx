@@ -2,12 +2,15 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { api, BatchListItem, BatchMastery } from "../api";
-import { orderedSections, SECTION_BY_SLUG, sectionName } from "../lib/sections";
+import { orderedSections } from "../lib/sections";
 import { getProgress } from "../lib/progress";
 import { getProfile, getStrategy, isOnboarded, prioritySectionSlugs } from "../lib/profile";
-import { buildSprint, weightMix } from "../lib/strategy";
+import { buildTrajectory, focusBuckets } from "../lib/strategy";
 import { BatchCover } from "../ui/Art";
-import { IconArrowUp, IconCheck, IconPlay, IconRefresh, IconWave } from "../ui/icons";
+import { BatchTapButton } from "../ui/BatchTapButton";
+import { useProgressVersion } from "../ui/BatchMenu";
+import { setQueueSiblings, clearQueueSiblings, runBatchAction } from "../lib/batchActions";
+import { IconArrowUp, IconCheck, IconInfo, IconRefresh } from "../ui/icons";
 import { useI18n } from "../i18n";
 
 type NodeState = "completed" | "active" | "locked";
@@ -20,6 +23,11 @@ type NodeState = "completed" | "active" | "locked";
 // and it re-measures on resize, web-font load and cover-image load so the road
 // never drifts after async layout shifts. `frac` paints the travelled portion
 // green; everything ahead stays a calm light gray.
+//
+// SIDE_SHIFT mirrors the `.map-row.left/.right .map-node-wrap` translateX in
+// index.css. The road derives a node's column from this constant + its layout
+// box, never from a transformed rect — keep the two in sync if the CSS changes.
+const SIDE_SHIFT = 86;
 function MapTrack({ done, sig }: { done: number; sig: string }) {
   const ref = useRef<SVGSVGElement | null>(null);
   const [paths, setPaths] = useState<{ full: string; done: string }>({
@@ -35,19 +43,40 @@ function MapTrack({ done, sig }: { done: number; sig: string }) {
 
     let raf = 0;
     const measure = () => {
-      const rootRect = root.getBoundingClientRect();
+      // Anchors come from the LAYOUT box (offsetTop/offsetLeft), never
+      // getBoundingClientRect. getBoundingClientRect bakes in CSS transforms —
+      // and a reorder runs two of them at once (the side-flip's animated
+      // translateX, plus the FLIP translate(dx,dy)). Measuring during those put
+      // the moved node's connector in the wrong column, which is what broke the
+      // road. offsetTop/offsetLeft are transform-immune, so each node reports its
+      // RESTING slot regardless of any in-flight animation: the road is a fixed
+      // track and tiles glide onto it. This is the hard-anchored connector model
+      // (PowerPoint-style): every node exposes a fixed top-centre (entry) and
+      // bottom-centre (exit), and segments are rebuilt from those anchors.
+      const w = root.clientWidth;
       const pts = Array.from(
         root.querySelectorAll<HTMLElement>(".mnode")
       ).map((el) => {
-        const r = el.getBoundingClientRect();
+        let x = 0, top = 0;
+        let p: HTMLElement | null = el;
+        while (p && p !== root) {
+          top += p.offsetTop;
+          x += p.offsetLeft;
+          p = p.offsetParent as HTMLElement | null;
+        }
+        // offsetLeft ignores the wrap's resting translateX(±SIDE_SHIFT), so add
+        // it back from the side the layout assigned — that is the real column.
+        const wrap = el.closest<HTMLElement>(".map-node-wrap");
+        const tx = wrap?.dataset.side === "left" ? -SIDE_SHIFT
+          : wrap?.dataset.side === "right" ? SIDE_SHIFT : 0;
         return {
-          x: r.left - rootRect.left + r.width / 2,
-          top: r.top - rootRect.top,
-          bottom: r.bottom - rootRect.top,
+          x: x + el.offsetWidth / 2 + tx,
+          top,
+          bottom: top + el.offsetHeight,
         };
       });
       setBox((prev) => {
-        const next = { w: rootRect.width, h: root.scrollHeight };
+        const next = { w, h: root.scrollHeight };
         return prev.w === next.w && prev.h === next.h ? prev : next;
       });
       if (pts.length < 2) {
@@ -88,8 +117,13 @@ function MapTrack({ done, sig }: { done: number; sig: string }) {
       raf = requestAnimationFrame(measure);
     };
 
+    let alive = true;
     measure();
-    const ro = new ResizeObserver(schedule);
+    // Re-measure only on genuine layout changes (label reflow, image load,
+    // viewport). Reorders are caught by the effect's [sig] dependency, which
+    // re-runs measure() against the freshly committed DOM. No transform-timing
+    // band-aids are needed: offset-based anchors stay correct mid-animation.
+    const ro = new ResizeObserver(() => schedule());
     ro.observe(root);
     const imgs = Array.from(root.querySelectorAll("img"));
     imgs.forEach((img) => {
@@ -98,7 +132,6 @@ function MapTrack({ done, sig }: { done: number; sig: string }) {
     });
     const fonts = (document as Document & { fonts?: { ready?: Promise<unknown> } })
       .fonts;
-    let alive = true;
     fonts?.ready?.then(() => alive && schedule());
 
     return () => {
@@ -139,6 +172,29 @@ const STALE_DAYS = 14; // not drilled in two weeks = gone cold
 const daysSince = (iso: string | null) =>
   iso ? (Date.now() - new Date(iso).getTime()) / 86_400_000 : Infinity;
 
+// Focus-bucket visual identity. Color lives ONLY here (a small chip) — never on a
+// wide bar — to keep the calm bronze/emerald palette (consilium decision). The main
+// focus always reads bronze ("your focus"); business=slate, discovery=emerald.
+type DomVariant = "main" | "secondary" | "business" | "discovery";
+function domVariant(key: string): DomVariant {
+  if (key === "business") return "business";
+  if (key === "discovery") return "discovery";
+  if (key === "secondary") return "secondary";
+  return "main";
+}
+function ChipGlyph({ variant }: { variant: DomVariant }) {
+  const p = { width: 20, height: 20, viewBox: "0 0 24 24", fill: "none",
+    stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (variant === "business")
+    return (<svg {...p}><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>);
+  if (variant === "discovery")
+    return (<svg {...p}><circle cx="12" cy="12" r="9" /><path d="M15.5 8.5l-2 5-5 2 2-5 5-2z" /></svg>);
+  if (variant === "secondary")
+    return (<svg {...p}><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.8 6.8 18l1.2-5.6L4 8.6l5.6-.6L12 3z" /></svg>);
+  // main — a spark/charisma glyph
+  return (<svg {...p}><path d="M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3" /></svg>);
+}
+
 // The Learning Map: the path itself is the product. Batches are nodes on a
 // serpentine spine, grouped under dark "topic header" cards. Exactly one node is
 // active (the resume point); everything before it is closed, everything after is
@@ -149,7 +205,13 @@ export default function Learning() {
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [mastery, setMastery] = useState<BatchMastery[]>([]);
   const [err, setErr] = useState("");
+  const pv = useProgressVersion();   // re-render after a long-press menu action
   const activeRef = useRef<HTMLDivElement | null>(null);
+  const [showInfo, setShowInfo] = useState(false);   // (i) → how learning works
+  const [domOpen, setDomOpen] = useState(false);     // "Твои домены" expanded? (default collapsed)
+  const [reordering, setReordering] = useState(false);   // global tap-reorder mode
+  const flipPrev = useRef<Map<number, DOMRect>>(new Map());   // FLIP: node rects before a reorder
+  const flipArmed = useRef(false);
 
   // No profile yet → send the learner through onboarding first.
   useEffect(() => {
@@ -162,31 +224,93 @@ export default function Learning() {
     api.getMastery().then(setMastery).catch(() => {});
   }, [nav]);
 
-  // The spine: sections ordered by the learner's chosen scenarios first, then the
-  // natural order; batches within a section oldest-first. Empty sections drop out.
-  const chapters = useMemo(() => {
-    const bySection = new Map<string, BatchListItem[]>();
-    for (const b of batches) {
-      if (!b.section) continue;
-      const arr = bySection.get(b.section) ?? [];
-      arr.push(b);
-      bySection.set(b.section, arr);
-    }
-    const natural = orderedSections().map((s) => s.slug);
-    const order = prioritySectionSlugs(getProfile(), natural);
-    return order
-      .map((slug) => SECTION_BY_SLUG[slug])
-      .filter((s): s is NonNullable<typeof s> => !!s)
-      .map((s) => ({
-        section: s,
-        items: (bySection.get(s.slug) ?? []).sort((a, b) =>
-          a.created_at.localeCompare(b.created_at)
-        ),
-      }))
-      .filter((c) => c.items.length > 0);
-  }, [batches]);
+  // The plan: every batch woven into domain-apportioned SPRINTS (the configured
+  // focus mix made visible), not grouped section-by-section. Strategy + focus
+  // buckets drive the order; the whole field is laid out ahead.
+  const strategy = useMemo(() => getStrategy(), [batches]);
+  const buckets = useMemo(() => focusBuckets(strategy), [strategy, lang]);
+  const sectionPriority = useMemo(
+    () => prioritySectionSlugs(getProfile(), orderedSections().map((x) => x.slug)),
+    [batches]
+  );
+  const traj = useMemo(
+    () => buildTrajectory(strategy, batches, sectionPriority),
+    [strategy, batches, sectionPriority]
+  );
+  // The computed order, with any manual drag (path_rank) layered on top as a
+  // total override. Re-tuning domains clears path_rank, so the mix drives again.
+  const flat = useMemo(() => {
+    const baseIndex = new Map(traj.order.map((b, i) => [b.id, i] as const));
+    return traj.order.slice().sort((a, b) => {
+      const ra = getProgress(a.id).path_rank;
+      const rb = getProgress(b.id).path_rank;
+      const ka = ra == null ? baseIndex.get(a.id)! : ra;
+      const kb = rb == null ? baseIndex.get(b.id)! : rb;
+      if (ka !== kb) return ka - kb;
+      return baseIndex.get(a.id)! - baseIndex.get(b.id)!;
+    });
+  }, [traj, pv]);
+  const sprintSize = Math.max(1, strategy.sprintSize || 5);
+  const sprints = useMemo(() => {
+    const out: BatchListItem[][] = [];
+    for (let i = 0; i < flat.length; i += sprintSize) out.push(flat.slice(i, i + sprintSize));
+    return out;
+  }, [flat, sprintSize]);
 
-  const flat = useMemo(() => chapters.flatMap((c) => c.items), [chapters]);
+  // Register the WHOLE plan as one sibling list so the long-press menu's move
+  // up/down/start/end act across sprint boundaries (cleared when we leave).
+  useEffect(() => {
+    const ids = flat.map((b) => b.id);
+    const map: Record<number, number[]> = {};
+    for (const id of ids) map[id] = ids;
+    setQueueSiblings(map);
+    return () => clearQueueSiblings();
+  }, [flat]);
+
+  // FLIP animation for reorder: capture node positions the instant a reorder fires
+  // (DOM still in the old order — the event runs before React re-renders), then
+  // animate each node from its old screen spot to its new one. Makes the queue move
+  // glide (whether reordered by drag or the menu's up/down) instead of jumping.
+  useEffect(() => {
+    const capture = () => {
+      const m = new Map<number, DOMRect>();
+      document.querySelectorAll<HTMLElement>(".map-node-wrap[data-bid]")
+        .forEach((el) => m.set(Number(el.dataset.bid), el.getBoundingClientRect()));
+      flipPrev.current = m;
+      flipArmed.current = true;
+    };
+    window.addEventListener("ee-progress-changed", capture);
+    return () => window.removeEventListener("ee-progress-changed", capture);
+  }, []);
+  useLayoutEffect(() => {
+    if (!flipArmed.current) return;
+    flipArmed.current = false;
+    const prev = flipPrev.current;
+    document.querySelectorAll<HTMLElement>(".map-node-wrap[data-bid]").forEach((el) => {
+      const old = prev.get(Number(el.dataset.bid));
+      if (!old) return;
+      const now = el.getBoundingClientRect();
+      const dx = old.left - now.left, dy = old.top - now.top;
+      if (!dx && !dy) return;
+      // WAAPI, not CSS transition: the animation auto-reverts to the element's
+      // resting CSS transform when it ends, so NOTHING is left inline. A stuck
+      // inline transform was what knocked tiles off the road after a reorder.
+      const sideX = el.dataset.side === "left" ? -86 : el.dataset.side === "right" ? 86 : 0;
+      if (typeof el.animate === "function") {
+        // Longer, app-standard --spring easing → a plush glide instead of a snap.
+        // The travel distance scales the duration a touch so far moves don't feel
+        // rushed and tiny nudges stay quick (clamped 360–620ms).
+        const dist = Math.hypot(dx, dy);
+        const dur = Math.max(360, Math.min(620, 360 + dist * 0.6));
+        el.animate(
+          [{ transform: `translateX(${sideX}px) translate(${dx}px, ${dy}px)` },
+           { transform: `translateX(${sideX}px)` }],
+          { duration: dur, easing: "cubic-bezier(.22, 1, .36, 1)" },
+        );
+      }
+    });
+  }, [pv]);
+
   const closed = (id: number) => !!getProgress(id).l3_passed;
 
   // Exactly one active node: the first not-yet-closed batch on the spine.
@@ -199,17 +323,20 @@ export default function Learning() {
     closed(id) ? "completed" : id === activeId ? "active" : "locked";
 
   const total = flat.length;
-  const doneCount = flat.filter((b) => closed(b.id)).length;
 
-  // The adaptive focus route: a small weighted sprint instead of all 89 at once.
-  // Rebuilds live whenever the learner re-tunes (getStrategy reads the profile).
-  const strategy = useMemo(() => getStrategy(), [batches]);
-  const mix = useMemo(() => weightMix(strategy), [strategy, lang]);
-  const sprint = useMemo(
-    () => buildSprint(strategy, batches, (id) => !!getProgress(id).l3_passed),
-    [strategy, batches]
-  );
-  const sprintActiveId = sprint[0]?.id ?? null;
+  // Per-sprint domain mix: how many batches of each focus bucket a sprint holds,
+  // shown as small chips in the sprint header so the configured mix is visible.
+  const bucketByKey = useMemo(() => new Map(buckets.map((b) => [b.key, b] as const)), [buckets]);
+  const sprintMix = (items: BatchListItem[]) => {
+    const counts = new Map<string, number>();
+    for (const b of items) {
+      const k = traj.domainOf.get(b.id) ?? "discovery";
+      counts.set(k, (counts.get(k) ?? 0) + 1);
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([key, n]) => ({ key, n, variant: domVariant(key), label: bucketByKey.get(key)?.label ?? "" }));
+  };
 
   // Adaptive review. A node is "due" only if it's closed AND its recall has a real
   // signal that has drifted: low rolling average, or gone stale. Never re-locks.
@@ -218,27 +345,37 @@ export default function Learning() {
     [mastery]
   );
 
-  // Per-domain "presence" competence: share of a domain's phrases recalled at
-  // familiar/automatic (CEFR can-do feel, sober — not a game HUD). Only domains
-  // the learner has actually touched appear, so it never reads all-zero.
-  const domains = useMemo(() => {
-    return chapters
-      .map((c) => {
-        let total = 0, mastered = 0, shaky = 0;
-        for (const b of c.items) {
-          total += b.phrase_count || 0;
-          const srs = masteryById.get(b.id)?.srs || {};
-          mastered += (srs.familiar || 0) + (srs.automatic || 0);
-          shaky += srs.shaky || 0;
+  // Real competence per SECTION: (familiar+automatic)/total. Aggregated up to the
+  // focus buckets below — the honest "where I actually am".
+  const sectionComp = useMemo(() => {
+    const m = new Map<string, { mastered: number; total: number }>();
+    for (const b of batches) {
+      if (!b.section) continue;
+      const srs = masteryById.get(b.id)?.srs || {};
+      const cur = m.get(b.section) ?? { mastered: 0, total: 0 };
+      cur.total += b.phrase_count || 0;
+      cur.mastered += (srs.familiar || 0) + (srs.automatic || 0);
+      m.set(b.section, cur);
+    }
+    return m;
+  }, [batches, masteryById]);
+
+  // The "Твои домены" rows: focus allocation (intent) joined with real competence
+  // (fact). The track fill = comp; a thin marker = focus pct. One honest story.
+  const domainRows = useMemo(
+    () =>
+      buckets.map((bk) => {
+        let mastered = 0, total = 0;
+        for (const slug of bk.sections) {
+          const c = sectionComp.get(slug);
+          if (c) { mastered += c.mastered; total += c.total; }
         }
-        return { slug: c.section.slug, name: sectionName(c.section.slug),
-                 total, mastered, shaky, pct: total ? mastered / total : 0 };
-      })
-      .filter((d) => d.mastered + d.shaky > 0)
-      .sort((a, b) => b.pct - a.pct)
-      .slice(0, 6);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chapters, masteryById, lang]);
+        return { ...bk, variant: domVariant(bk.key), comp: total ? mastered / total : 0 };
+      }),
+    [buckets, sectionComp]
+  );
+
+  const dueTotal = useMemo(() => mastery.reduce((s, m) => s + (m.due || 0), 0), [mastery]);
 
   // Confidence-calibration gap: phrases swiped "known" but not produced aloud.
   const gapCount = useMemo(() => mastery.reduce((s, m) => s + (m.gap || 0), 0), [mastery]);
@@ -252,27 +389,8 @@ export default function Learning() {
   };
   const isDue = (id: number) => dueReason(id) !== null;
 
-  // The review rail: most-urgent first (weakest recall, then stalest), capped so it
-  // stays a glanceable nudge rather than a second backlog.
-  const dueList = useMemo(() => {
-    return flat
-      .map((b) => ({ b, reason: dueReason(b.id), m: masteryById.get(b.id) }))
-      .filter((x): x is { b: BatchListItem; reason: "weak" | "stale"; m: BatchMastery } =>
-        x.reason !== null)
-      .sort((a, b) => {
-        const av = a.m.avg_score ?? 99;
-        const bv = b.m.avg_score ?? 99;
-        if (av !== bv) return av - bv; // weakest recall first
-        return daysSince(a.m.last_seen_at) > daysSince(b.m.last_seen_at) ? -1 : 1; // then stalest
-      })
-      .slice(0, 6);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [flat, masteryById]);
-
-  // Centre the current node so "where am I" is answered on open.
-  useEffect(() => {
-    activeRef.current?.scrollIntoView({ block: "center" });
-  }, [activeId, total]);
+  // Open at the TOP (focus card + stats first), not jumped to the active node.
+  // The floating "jump to active" FAB still rides the learner down on demand.
 
   // The jump FAB is a utility, not décor — it only appears once the learner has
   // scrolled away from the top, then quietly offers a ride back to the active node.
@@ -293,192 +411,216 @@ export default function Learning() {
 
   return (
     <div className="screen map-screen">
-      <div className="screen-head">
-        <h1 className="app-title">{t("nav.learn")}</h1>
-        <p className="app-sub">{t("learn.sub")}</p>
-        {total > 0 && (
-          <p className="path-meta">{t("learn.progress", { done: doneCount, total })}</p>
-        )}
-        <p className="learn-note">{t("learn.note")}</p>
+      <div className="screen-head lh-head">
+        <div className="lh-head-text">
+          <h1 className="app-title">{t("nav.learn")}</h1>
+          <p className="app-sub">{t("learn.sub")}</p>
+        </div>
+        <button className="lh-info" onClick={() => setShowInfo((v) => !v)}
+          aria-label={t("learn.infoAria")} aria-expanded={showInfo}>
+          <IconInfo size={20} />
+        </button>
       </div>
+      {showInfo && <p className="lh-note">{t("learn.note")}</p>}
 
-      {/* Training Focus — the live, re-tunable strategy control (consilium design). */}
-      <button className="focus-card" onClick={() => nav("/tune")}>
-        <div className="focus-head">
-          <span className="focus-kicker">{t("learn.focusKicker")}</span>
-          <span className="focus-adjust">{t("learn.adjust")}</span>
+      {/* Adaptive action-strip — "what to do now", shown ONLY when there's a real
+          task (due review / confidence check). Never a standing notifications panel. */}
+      {(dueTotal > 0 || gapCount > 0) && (
+        <div className="act-strip">
+          {dueTotal > 0 && (
+            <button className="review-due refresh-card" onClick={() => nav("/practice", { state: { review: true } })}>
+              <span className="review-due-ico"><IconRefresh size={19} /></span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("learn.reviewTitle")}</span>
+                <span className="review-due-sub">{t("learn.reviewSub")}</span>
+              </span>
+              <span className="act-count">{dueTotal}</span>
+              <span className="review-due-go">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              </span>
+            </button>
+          )}
+          {gapCount > 0 && (
+            <button className="review-due calib-card" onClick={() => nav("/practice", { state: { gap: true } })}>
+              <span className="review-due-ico">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="0.6" fill="currentColor" />
+                </svg>
+              </span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("calib.title")}</span>
+                <span className="review-due-sub">{t("calib.sub", { n: gapCount })}</span>
+              </span>
+              <span className="review-due-go">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              </span>
+            </button>
+          )}
         </div>
-        <div className="focus-mix">
-          {mix.map((m, i) => (
-            <span key={i} className="focus-chip">{m.label} · {m.pct}%</span>
-          ))}
-        </div>
-      </button>
+      )}
 
-      {/* Per-domain "presence" competence rings — a sober skills profile, not a HUD. */}
-      {domains.length > 0 && (
-        <div className="presence">
-          <p className="section-label">{t("learn.presence")}</p>
-          <div className="presence-row">
-            {domains.map((d) => {
-              const C = 2 * Math.PI * 22;
-              const dash = Math.max(0, Math.min(1, d.pct)) * C;
+      {/* Твои домены — collapsed by default to a card the size of "На повторение".
+          Expanded, it shows each domain's competence (fill) vs focus share (marker)
+          and the link to re-tune the mix. */}
+      {domainRows.length > 0 && (
+        domOpen ? (
+          <div className="dom-card">
+            <div className="dom-head">
+              <button className="dom-toggle" onClick={() => setDomOpen(false)} aria-expanded={true}>
+                <span className="dom-kicker">{t("learn.domains")}</span>
+                <svg className="dom-chev open" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 15l6-6 6 6" /></svg>
+              </button>
+              <button className="dom-adjust" onClick={() => nav("/tune")}>{t("learn.adjust")}</button>
+            </div>
+            {domainRows.map((d, i) => {
+              const comp = Math.round(d.comp * 100);
               return (
-                <button key={d.slug} className="presence-ring" onClick={() => nav(`/section/${d.slug}`)}>
-                  <span className="presence-disc">
-                    <svg viewBox="0 0 52 52" width="52" height="52" aria-hidden="true">
-                      <circle cx="26" cy="26" r="22" fill="none" stroke="var(--hairline)" strokeWidth="4" />
-                      <circle cx="26" cy="26" r="22" fill="none" stroke="var(--mark)" strokeWidth="4"
-                        strokeLinecap="round" strokeDasharray={`${dash} ${C}`} transform="rotate(-90 26 26)" />
-                      <text x="26" y="26" textAnchor="middle" dominantBaseline="central" className="presence-pct">
-                        {Math.round(d.pct * 100)}
-                      </text>
-                    </svg>
-                    {d.shaky > 0 && <span className="presence-shaky">{d.shaky}</span>}
+                <div className={`dom-row ${d.variant}`} key={i}>
+                  <span className="dom-ico"><ChipGlyph variant={d.variant} /></span>
+                  <span className="dom-name">{d.label}</span>
+                  <span className="dom-vals">
+                    <span className="dom-pct">{comp}%</span>
+                    <span className="dom-focus">{t("learn.focusShare", { n: d.pct })}</span>
                   </span>
-                  <span className="presence-name">{d.name}</span>
-                </button>
+                  <span className="dom-track">
+                    <span className="dom-fill" style={{ width: `${comp > 0 ? Math.max(comp, 3) : 0}%` }} />
+                    <span className="dom-marker" style={{ left: `${d.pct}%` }} />
+                  </span>
+                </div>
               );
             })}
-          </div>
-        </div>
-      )}
-
-      {/* Confidence check — phrases you swiped "known" but never said aloud.
-          Surfacing the self-vs-objective gap is the top self-study insight. */}
-      {gapCount > 0 && (
-        <button className="review-due calib-card" onClick={() => nav("/practice", { state: { gap: true } })}>
-          <span className="review-due-ico">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="0.6" fill="currentColor" />
-            </svg>
-          </span>
-          <span className="review-due-text">
-            <span className="review-due-title">{t("calib.title")}</span>
-            <span className="review-due-sub">{t("calib.sub", { n: gapCount })}</span>
-          </span>
-          <span className="review-due-go">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
-          </span>
-        </button>
-      )}
-
-      {/* Current sprint — the small active set under the chosen focus, not all 89. */}
-      {sprint.length > 0 && (
-        <div className="sprint-block">
-          <div className="review-head">
-            <div className="review-head-main">
-              <span className="review-title">{t("learn.sprintTitle")}</span>
-              <span className="review-sub">{t("learn.sprintSub", { n: sprint.length })}</span>
+            <div className="dom-legend">
+              <span className="dom-leg"><span className="dom-leg-fill" />{t("learn.legendComp")}</span>
+              <span className="dom-leg"><span className="dom-leg-mark" />{t("learn.legendFocus")}</span>
             </div>
           </div>
-          <div className="review-rail">
-            {sprint.map((b) => (
-              <button className="review-card" key={b.id} onClick={() => nav(`/batch/${b.id}`)}>
-                <span className="review-thumb">
-                  <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
-                  {b.id === sprintActiveId && (
-                    <span className="review-badge play"><IconPlay size={14} /></span>
-                  )}
-                </span>
-                <span className="review-card-title">{b.title}</span>
-                <span className="review-card-hint">
-                  {b.id === sprintActiveId ? t("learn.continue") : t("learn.queued")}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
+        ) : (
+          <button className="review-due dom-collapsed" onClick={() => setDomOpen(true)} aria-expanded={false}>
+            <span className="review-due-ico">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h7M15 18h5" /><circle cx="16" cy="6" r="2" /><circle cx="8" cy="12" r="2" /><circle cx="13" cy="18" r="2" /></svg>
+            </span>
+            <span className="review-due-text">
+              <span className="review-due-title">{t("learn.domains")}</span>
+              <span className="review-due-sub">{t("learn.domainsSub")}</span>
+            </span>
+            <span className="review-due-go">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+            </span>
+          </button>
+        )
       )}
 
-      {dueList.length > 0 && (
-        <div className="review-block">
-          <div className="review-head">
-            <div className="review-head-main">
-              <span className="review-title">{t("learn.reviewTitle")}</span>
-              <span className="review-sub">{t("learn.reviewSub")}</span>
-            </div>
-            <span className="review-count">{dueList.length}</span>
-          </div>
-          <div className="review-rail">
-            {dueList.map(({ b, reason }) => (
-              <button
-                className="review-card"
-                key={b.id}
-                onClick={() => nav(`/batch/${b.id}`)}
-              >
-                <span className="review-thumb">
-                  <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
-                  <span className="review-badge"><IconRefresh size={15} /></span>
-                </span>
-                <span className="review-card-title">{b.title}</span>
-                <span className="review-card-hint">
-                  {reason === "weak" ? t("learn.recallWeak") : t("learn.longAgo")}
-                </span>
+      {/* The plan header + a single global reorder toggle (move up/down across the
+          whole plan; move-to-start/end live in the long-press menu). */}
+      {sprints.length > 0 && (
+        <div className="map-head">
+          <p className="section-label atlas-label">{t("learn.plan")}</p>
+          {flat.length > 1 && (
+            reordering ? (
+              <button className="map-reorder done" onClick={() => setReordering(false)}>
+                {t("learn.reorderDone")}
               </button>
-            ))}
-          </div>
+            ) : (
+              <button className="map-reorder" onClick={() => setReordering(true)} aria-label={t("learn.reorder")}>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 4v16M8 4L5 7M8 4l3 3M16 20V4M16 20l-3-3M16 20l3-3" /></svg>
+                <span>{t("learn.reorder")}</span>
+              </button>
+            )
+          )}
         </div>
-      )}
-
-      {chapters.length > 0 && (
-        <p className="section-label atlas-label">{t("learn.atlas")}</p>
       )}
 
       <div className="map">
-        {chapters.map((c) => {
-          const cDone = c.items.filter((b) => closed(b.id)).length;
-          // How far the road is travelled in this section: up to the last node
-          // that's been reached (completed or active). `reached` is that node's
-          // index, which also equals the count of connector segments leading into
-          // it — so the green fills exactly that many whole segments and lands on
-          // the active node.
+        {sprints.map((items, si) => {
+          const cDone = items.filter((b) => closed(b.id)).length;
+          // Road travel: up to the last reached (completed/active) node in this
+          // sprint — that index = the number of whole connector segments to paint.
           let reached = -1;
-          c.items.forEach((b, i) => {
+          items.forEach((b, i) => {
             if (stateOf(b.id) !== "locked") reached = i;
           });
+          const mix = sprintMix(items);
           return (
-            <div className="map-chapter" key={c.section.slug}>
+            <div className="map-chapter" key={`sprint-${si}`}>
               <div className="topic-header">
                 <div className="topic-head-main">
-                  <span className="topic-kicker">{t("learn.chapterKicker")}</span>
-                  <span className="topic-name">{sectionName(c.section.slug)}</span>
+                  <span className="topic-kicker">{t("learn.sprintKicker")}</span>
+                  <span className="topic-name">{t("learn.sprintLabel", { n: si + 1 })}</span>
+                  <span className="sprint-mix">
+                    {mix.map((m) => (
+                      <span className={`sprint-chip ${m.variant}`} key={m.key} title={m.label}>
+                        <ChipGlyph variant={m.variant} />
+                        <span className="sprint-chip-n">{m.n}</span>
+                      </span>
+                    ))}
+                  </span>
                 </div>
-                <span className="topic-count">{cDone}/{c.items.length}</span>
+                <div className="topic-right">
+                  <span className={`topic-count${cDone === items.length && items.length > 0 ? " done" : ""}`}>{cDone}/{items.length}</span>
+                </div>
               </div>
 
               <div className="map-nodes">
                 <MapTrack
                   done={reached}
-                  sig={`${c.items.length}|${reached}|${activeId ?? -1}`}
+                  sig={`${items.map((x) => x.id).join(",")}|${reached}|${activeId ?? -1}`}
                 />
-                {c.items.map((b) => {
+                {items.map((b, idx) => {
                   gi += 1;
+                  const gIdx = si * sprintSize + idx;   // index in the whole plan
                   const st = stateOf(b.id);
                   const due = st === "completed" && isDue(b.id);
                   const side = gi % 2 === 0 ? "left" : "right";
+                  const srs = masteryById.get(b.id)?.srs || {};
+                  const learned = (srs.familiar || 0) + (srs.automatic || 0);
+                  const tot = b.phrase_count || 0;
+                  const variant = domVariant(traj.domainOf.get(b.id) ?? "discovery");
+                  const art = (
+                    <>
+                      <span className="mnode-art">
+                        <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
+                      </span>
+                      <span className={`mnode-dom ${variant}`} aria-hidden="true"><ChipGlyph variant={variant} /></span>
+                      {tot > 0 && <span className="mnode-count">{learned}/{tot}</span>}
+                    </>
+                  );
                   return (
                     <div
                       className={`map-row ${side}`}
                       key={b.id}
                       ref={st === "active" ? activeRef : undefined}
                     >
-                      <div className="map-node-wrap">
-                        {st === "active" && <span className="map-bubble">{t("learn.continue")}</span>}
-                        <button
-                          className={`mnode ${st}${due ? " due" : ""}`}
-                          onClick={() => nav(`/batch/${b.id}`)}
-                        >
-                          <span className="mnode-art">
-                            <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
-                          </span>
-                          <span className="mnode-badge"><IconWave size={18} /></span>
-                          {st === "completed" && (
-                            <span className={`mnode-check${due ? " due-seal" : ""}`}>
-                              {due ? <IconRefresh size={15} /> : <IconCheck size={15} />}
+                      <div className="map-node-wrap" data-bid={b.id} data-side={side}>
+                        {st === "active" && !reordering && <span className="map-bubble">{t("learn.continue")}</span>}
+                        {reordering ? (
+                          <div className={`mnode ${st}${due ? " due" : ""} reordering`}>
+                            {art}
+                            <span className="mnode-reorder">
+                              <button className="mnode-arrow" disabled={gIdx === 0}
+                                aria-label={t("batch.menu.moveUp")}
+                                onClick={() => runBatchAction(b.id, "moveUp")}>
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+                              </button>
+                              <button className="mnode-arrow" disabled={gIdx === flat.length - 1}
+                                aria-label={t("batch.menu.moveDown")}
+                                onClick={() => runBatchAction(b.id, "moveDown")}>
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+                              </button>
                             </span>
-                          )}
-                        </button>
+                          </div>
+                        ) : (
+                          <BatchTapButton
+                            className={`mnode ${st}${due ? " due" : ""}`}
+                            batchId={b.id} title={b.title}
+                          >
+                            {art}
+                            {st === "completed" && (
+                              <span className={`mnode-check${due ? " due-seal" : ""}`}>
+                                {due ? <IconRefresh size={15} /> : <IconCheck size={15} />}
+                              </span>
+                            )}
+                          </BatchTapButton>
+                        )}
                         <span className="mnode-label">{b.title}</span>
                       </div>
                     </div>
@@ -489,7 +631,7 @@ export default function Learning() {
           );
         })}
 
-        {chapters.length > 0 && (
+        {sprints.length > 0 && (
           <div className="map-end">{t("learn.mapEnd")}</div>
         )}
       </div>
