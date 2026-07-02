@@ -1031,3 +1031,17 @@
 - **🐛 Critical fix:** 46 ранее сохранённых файлов хранили `mnemo` как dict `{story_ru:...}`, а `BatchAuthor.mnemo: str` (pydantic v2) → деплой упал бы на всех 46. Мигрировал все в строку (как бизнес-эталон 01-13). Все 76 теперь грузятся через BatchAuthor чисто, якоря в ascending-порядке.
 - **Деплой:** rsync 76 файлов → Hetzner `/root/english/backend/content/` → `seed_presence` (DONE: 0 created, **76 updated**, бизнес 01-13 пропущены by-section) → `warm_presence` (DONE, всё аудио прогрето: `mnemo[full,anchors,shuffle] + 9/9 phrases`).
 - **Не тронуто:** бизнес-батчи 01-13 (gold-standard) — git-diff подтвердил, в трансфере отсутствуют.
+
+## 2026-07-02 — Retention-контур + конверсия: 6 фич по итогам рыночного анализа
+Контекст: анализ «продукт × рынок 2026» (Speak/Praktika/Loora/Fluently/Langua/Busuu). Ниша «advanced-профессионал → native-like фразы + мнемоника + SRS + STT» целиком не занята никем; главный конкурент по ЦА — Fluently (YC, Call Analyzer). Выявлено: в рабочем дереве SRS-в-колоде и CheckPhrase-подсказки УЖЕ сделаны (не закоммичены), аудит-отчёты это не отражали.
+
+Сделано (всё локально, НЕ закоммичено, деплоя не было):
+1. **Серверный стрик со freeze** — `GET /api/progress/streak?tz_offset=`, считает по дням реальной работы (TrainingEvent), одиночный пропуск мостится freeze (перезаработок: 7 активных дней). `compute_streak()` в progress.py + 12 тестов. Library показывает серверное значение (localStorage recordVisit — фолбэк).
+2. **Персонализированный daily-пуш** — reminders.ts: тело пуша = «На грани забывания: N» из живого due-set (ключ `ee-reminder-due`, синк на home-open), фолбэк generic.
+3. **Пословная подсветка (Speak-паттерн, адаптирован)** — живой interim-транскрипт под микрофоном (useSpeech.interim, interimResults=true) + пословный дифф эталона на результате (`diffWords`/`ModelPhrase` в Training.tsx, `.w-hit/.w-miss`). Live-подсветку эталона НЕ делали сознательно: у нас recall, не repeat-after-me.
+4. **Weekly summary** — `GET /api/training/weekly` (best/focus фразы по spoken-скорам, days_active, attempts) + карточка «Твоя неделя» в Library (порог ≥5 attempts). 3 теста.
+5. **Placement-тест «Проверь лигу»** — /league: 7 рабочих ситуаций, все варианты корректны, 1 native-like; 4 лиги (functional/confident/sharp/native); результат в `ee-league`; entry-карточка в Library (прячется после прохождения); CTA free→/subscribe. Контент в lib/league.ts (EN), хром i18n ×4. Проверено в preview end-to-end.
+6. **Call Analyzer-lite (ответ Fluently)** — `POST /api/analyzer/call` (гейт ai_coach → 403 locked, monthly-cap 429, EST_USD["analyze"]=0.002), `scoring.analyze_call()` (модель model_coach, до 5 апгрейдов original→native+note). Страница /analyze (тизер для free/core), пункт в Profile-меню, CTA «Тренировать эти фразы» → prefill /import строками «N. Anchor → phrase». 5 тестов + стаб в conftest.
+
+Итог: backend 160 passed, tsc чистый, vite build ok. Preview-проверка: league-флоу и analyzer-флоу целиком (analyzer — со стабом fetch, реальные LLM-токены не жглись).
+Осталось на устройстве: живой Web Speech interim на iPhone, пуш с due-числом на native-билде.
