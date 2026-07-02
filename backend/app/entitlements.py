@@ -13,6 +13,10 @@ ENTITLEMENTS: dict[str, dict] = {
         "max_active_batches": 3,    # None => unlimited
         "scored_per_day": 30,
         "gapless_per_day": 3,       # gapless audio sessions/day (TTS cost lever)
+        # Monthly estimated-AI-cost ceiling (USD). Bounds worst-case COGS to a known
+        # fraction of revenue — see usage.py / TZ-ai-cost-strategy.md. Free generates
+        # no revenue, so this is a tight abuse backstop; the daily cap is the main gate.
+        "monthly_ai_cost_cap_usd": 0.30,
     },
     "core": {
         "voice_answer": False,      # Core: swipe + reveal + audio/import, but no mic
@@ -22,6 +26,7 @@ ENTITLEMENTS: dict[str, dict] = {
         "max_active_batches": None,
         "scored_per_day": 200,
         "gapless_per_day": None,
+        "monthly_ai_cost_cap_usd": 0.60,
     },
     "ai": {
         "voice_answer": True,       # mic active: speak + AI scoring/coaching
@@ -31,6 +36,10 @@ ENTITLEMENTS: dict[str, dict] = {
         "max_active_batches": None,
         "scored_per_day": 400,
         "gapless_per_day": None,
+        # AI tier: floor net revenue ≈ $5.67/mo (annual plan, 15% Apple). $1.50 cap =>
+        # worst-case AI COGS ≤ ~26% of that; a real heavy user sits near $0.5–1.0/mo,
+        # so the cap only ever bites scripted/abusive usage.
+        "monthly_ai_cost_cap_usd": 1.50,
     },
 }
 

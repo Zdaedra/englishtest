@@ -24,10 +24,11 @@ from difflib import SequenceMatcher
 
 import httpx
 
-from .config import get_secrets
+from .config import get_secrets, get_settings
 
-SCORING_MODEL = "gpt-4.1-nano"       # phrase drill (Test B) — cheap, high-frequency
-SEQUENCE_MODEL = "gpt-4.1-mini"      # sequence exam (Test A) — the hard gate, needs reasoning
+# Models are config-driven (ENGLISH_MODEL_SCORE / _SEQUENCE / _COACH in config.py).
+# Defaults there: phrase drill = gpt-4.1-nano (cheap, high-frequency, has the local
+# gate); sequence exam + coach = gpt-4.1-mini (the hard gate, needs reasoning).
 
 # Local-gate thresholds: above these the spoken answer is "essentially the target"
 # and we award 10 without spending an LLM call.
@@ -119,23 +120,34 @@ def local_gate(correct: str, user_said: str) -> int | None:
 
 
 def _openai_json(system: str, user: str, max_tokens: int = 80,
-                 model: str = SCORING_MODEL) -> dict:
+                 model: str | None = None) -> dict:
+    if model is None:
+        model = get_settings().model_score
     api_key = get_secrets().openai_api_key
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY not set — cannot score.")
+    body = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+        "response_format": {"type": "json_object"},
+    }
+    # GPT-5 / o-series are reasoning models: they reject `max_tokens` + a custom
+    # `temperature`, and spend hidden reasoning tokens, so they need
+    # `max_completion_tokens` with a budget large enough to leave room for the JSON
+    # after the reasoning. Classic chat models keep the cheap, deterministic shape.
+    # This is what makes ENGLISH_MODEL_* env-swaps work across model families.
+    if model.startswith(("gpt-5", "o1", "o3", "o4")):
+        body["max_completion_tokens"] = max(max_tokens, 2000)
+    else:
+        body["temperature"] = 0
+        body["max_tokens"] = max_tokens
     r = httpx.post(
         "https://api.openai.com/v1/chat/completions",
         headers={"Authorization": f"Bearer {api_key}", "content-type": "application/json"},
-        json={
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user},
-            ],
-            "temperature": 0,
-            "max_tokens": max_tokens,
-            "response_format": {"type": "json_object"},
-        },
+        json=body,
         timeout=60,
     )
     r.raise_for_status()
@@ -166,10 +178,23 @@ def score_phrase(anchor: str, correct_phrase: str, user_said: str) -> dict:
         {"anchor": anchor, "correct_phrase": correct_phrase, "user_said": user_said},
         ensure_ascii=False,
     )
+    s = get_settings()
     try:
-        data = _openai_json(_PHRASE_SYSTEM, user_payload, max_tokens=40)
+        data = _openai_json(_PHRASE_SYSTEM, user_payload, max_tokens=40, model=s.model_score)
         score = _clamp(data.get("score"))
         via = "llm"
+        # Cascade: the cheap model is trusted at the extremes (clear pass/fail); only
+        # its ambiguous-band verdict gets re-scored on the stronger model, which is the
+        # only place the two disagree. Falls back to the cheap score if escalation errors.
+        if (s.cascade_score_enabled and s.model_sequence != s.model_score
+                and s.cascade_score_low <= score <= s.cascade_score_high):
+            try:
+                data2 = _openai_json(_PHRASE_SYSTEM, user_payload, max_tokens=40,
+                                     model=s.model_sequence)
+                score = _clamp(data2.get("score"))
+                via = "llm:escalated"
+            except Exception:
+                pass  # keep the cheap-model score
     except Exception:
         # Graceful fallback: derive a coarse score from string similarity so a
         # transient LLM/network failure never hard-blocks the drill.
@@ -177,7 +202,7 @@ def score_phrase(anchor: str, correct_phrase: str, user_said: str) -> dict:
         score = _clamp(round(ratio * 10))
         via = "fallback"
     out = {"score": score, "correct_phrase": correct_phrase, "via": via}
-    if via == "llm":
+    if via in ("llm", "llm:escalated"):
         _cache[ck] = {"score": score, "correct_phrase": correct_phrase}
     return out
 
@@ -210,7 +235,8 @@ def coach_feedback(stimulus: str, target_phrase: str, user_said: str, score: int
         {"stimulus": stimulus, "target_phrase": target_phrase,
          "user_said": user_said, "score": score}, ensure_ascii=False)
     try:
-        data = _openai_json(_COACH_SYSTEM, payload, max_tokens=240, model=SEQUENCE_MODEL)
+        data = _openai_json(_COACH_SYSTEM, payload, max_tokens=240,
+                            model=get_settings().model_coach)
         return {
             "feedback": str(data.get("feedback", "")).strip(),
             "better": str(data.get("better", "")).strip() or target_phrase,
@@ -227,6 +253,38 @@ def coach_feedback(stimulus: str, target_phrase: str, user_said: str, score: int
         return {"feedback": note, "better": target_phrase, "tone": "спокойно и прямо", "via": "fallback"}
 
 
+_ANALYZE_SYSTEM = """You are an executive English coach for advanced non-native
+professionals. You get notes or a rough transcript of a real work call/meeting the
+user took part in. Find up to 5 places where the phrasing is correct but below
+native executive register, and give the native-league upgrade. Rules:
+- Only pick REAL fragments from the text (quote them as `original`).
+- `native` is what a sharp native executive would say in that moment — idiomatic,
+  concise, register-appropriate. A usable line, not a translation exercise.
+- `note` is ONE short sentence (Russian) on why the upgrade lands better.
+- Skip greetings/filler; prefer moments of stakes: pushback, deadlines, asks, repair.
+- If the text has fewer than 5 upgradable moments, return fewer. Never invent.
+Return JSON: {"upgrades":[{"original":"...","native":"...","note":"..."}]}"""
+
+
+def analyze_call(text: str) -> dict:
+    """Call Analyzer (AI plan): mine a real-meeting transcript/notes for
+    native-league phrasing upgrades. Returns {upgrades: [{original, native, note}], via}."""
+    try:
+        data = _openai_json(_ANALYZE_SYSTEM, text, max_tokens=700,
+                            model=get_settings().model_coach)
+        ups = []
+        for u in (data.get("upgrades") or [])[:5]:
+            native = str(u.get("native", "")).strip()
+            if not native:
+                continue
+            ups.append({"original": str(u.get("original", "")).strip(),
+                        "native": native,
+                        "note": str(u.get("note", "")).strip()})
+        return {"upgrades": ups, "via": "llm"}
+    except Exception:
+        return {"upgrades": [], "via": "fallback"}
+
+
 def score_sequence(anchors_in_order: list[str], story_ru: str, user_said: str) -> dict:
     """Test A. Returns {score, missed_anchors, order_ok, via}."""
     if len(_tokens(_normalize(user_said))) < _MIN_TOKENS:
@@ -238,7 +296,7 @@ def score_sequence(anchors_in_order: list[str], story_ru: str, user_said: str) -
     )
     try:
         data = _openai_json(_SEQUENCE_SYSTEM, user_payload, max_tokens=160,
-                            model=SEQUENCE_MODEL)
+                            model=get_settings().model_sequence)
         missed = data.get("missed_anchors") or []
         if not isinstance(missed, list):
             missed = []

@@ -15,9 +15,44 @@ class Settings(BaseSettings):
     app_password: str = ""
     cookie_secret: str = "change-me"
 
+    # Stats cabinet (admin analytics dashboard). Served at /admin behind HTTP Basic
+    # auth using these two values; if EITHER is empty the cabinet is fully disabled
+    # (every /admin route → 404), so it can never be left open by accident.
+    stats_user: str = ""
+    stats_password: str = ""
+
+    # Privacy: voice transcripts (free text of spoken answers) are auto-purged after
+    # this many days; numeric scores/progress are kept. 0 disables purging.
+    transcript_retention_days: int = 365
+
+    # Email verification (magic link). public_base_url is the origin the link points
+    # at (must be the user-facing site, NOT capacitor://localhost). mail_from is the
+    # verified Resend sender. The Resend API key is a secret (see Secrets below).
+    public_base_url: str = "https://executive-english.net"
+    mail_from: str = "Executive English <noreply@executive-english.net>"
+
     # LLM provider abstraction: auto | meridian | anthropic | openai
     llm_provider: str = "auto"
     meridian_url: str = "http://172.17.0.1:3456"
+
+    # Task → model routing (the "bridges"). Env-overridable so a model swaps with an
+    # env change + restart (get_settings is lru-cached) — no code deploy. Defaults are
+    # the current production models, so an unset env is byte-identical to before.
+    # Strategy / candidates: TZ-ai-cost-strategy.md.
+    model_stt: str = "gpt-4o-mini-transcribe"           # ENGLISH_MODEL_STT
+    model_score: str = "gpt-4.1-nano"                   # ENGLISH_MODEL_SCORE (phrase drill, Test B)
+    model_sequence: str = "gpt-4.1-mini"               # ENGLISH_MODEL_SEQUENCE (sequence exam, Test A)
+    model_coach: str = "gpt-4.1-mini"                  # ENGLISH_MODEL_COACH (AI coach)
+    model_import: str = "gpt-4o-mini"                  # ENGLISH_MODEL_IMPORT (llm chat/parse, OpenAI leg)
+    model_import_anthropic: str = "claude-sonnet-4-6"  # ENGLISH_MODEL_IMPORT_ANTHROPIC (Anthropic leg)
+
+    # Cascade: the cheap scoring model (model_score) is trusted at the extremes
+    # (clear pass / clear fail); only its ambiguous-band verdicts are re-scored on the
+    # stronger model (model_sequence) — that's the only place the two actually disagree.
+    # Cheap for the easy 90%, the strong model only for the hard cases. Env-tunable.
+    cascade_score_enabled: bool = True   # ENGLISH_CASCADE_SCORE (set 0 to disable)
+    cascade_score_low: int = 4           # ENGLISH_CASCADE_SCORE_LOW  (inclusive)
+    cascade_score_high: int = 7          # ENGLISH_CASCADE_SCORE_HIGH (inclusive)
 
     # TTS
     tts_model: str = "tts-1"
@@ -66,6 +101,13 @@ class Settings(BaseSettings):
     def exports_dir(self) -> Path:
         return self.data_dir / "exports"
 
+    @property
+    def tutorial_dir(self) -> Path:
+        # Coach-mark tutorial videos. Lives under the persistent data volume so
+        # clips dropped here survive redeploys; <data-tour key>.mp4 (+ optional
+        # poster) auto-fills that step's slot — no app rebuild. See routers/tutorial.py.
+        return self.data_dir / "tutorial"
+
 
 # These come from the master .env (no ENGLISH_ prefix), read separately.
 class Secrets(BaseSettings):
@@ -74,6 +116,9 @@ class Secrets(BaseSettings):
     openai_api_key: str = ""
     anthropic_api_key: str = ""
     anthropic_base_url: str = "https://api.anthropic.com"
+    # Resend (transactional email for verification links). Empty => dev mode: the
+    # link is logged instead of sent, so the flow is testable without a live key.
+    resend_api_key: str = ""
 
 
 @lru_cache
@@ -83,6 +128,7 @@ def get_settings() -> Settings:
     s.audio_dir.joinpath("sessions").mkdir(parents=True, exist_ok=True)
     s.covers_dir.mkdir(parents=True, exist_ok=True)
     s.exports_dir.mkdir(parents=True, exist_ok=True)
+    s.tutorial_dir.mkdir(parents=True, exist_ok=True)
     return s
 
 
