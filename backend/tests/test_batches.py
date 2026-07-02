@@ -38,28 +38,13 @@ def test_private_import_is_isolated_between_users(make_user):
     assert other.get(f"/api/batches/{bid}").status_code == 404
 
 
-def test_review_easy_promotes_status(make_user):
+def test_legacy_reviews_endpoint_removed(make_user):
+    """Removed 2026-07-02: SRS writes flow only through /api/training/*."""
     admin = make_user(plan="ai", is_admin=True)
     bid = commit_sample_batch(admin)
     pid = phrase_ids(admin, bid)[0]
     r = admin.post("/api/batches/reviews", json={"phrase_id": pid, "score": "easy"})
-    assert r.status_code == 200, r.text
-    assert r.json()["srs_status"] == "familiar"
-
-
-def test_review_failed_demotes_to_shaky(make_user):
-    admin = make_user(plan="ai", is_admin=True)
-    bid = commit_sample_batch(admin)
-    pid = phrase_ids(admin, bid)[0]
-    r = admin.post("/api/batches/reviews", json={"phrase_id": pid, "score": "failed"})
-    assert r.status_code == 200, r.text
-    assert r.json()["srs_status"] == "shaky"
-
-
-def test_review_missing_phrase_is_404(make_user):
-    admin = make_user(plan="ai", is_admin=True)
-    r = admin.post("/api/batches/reviews", json={"phrase_id": 999999, "score": "easy"})
-    assert r.status_code == 404
+    assert r.status_code in (404, 405)
 
 
 def test_phrase_audio_renders_stubbed(make_user):

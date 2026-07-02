@@ -92,11 +92,13 @@ def main():
     assert len(detail["phrases"]) == 5
     lst = client.get("/api/batches").json()
     assert any(x["id"] == bid for x in lst)
-    # review (SRS-lite)
+    # SRS via the swipe path (the legacy /batches/reviews endpoint is removed)
     pid = detail["phrases"][0]["id"]
-    rv = client.post("/api/batches/reviews", json={"phrase_id": pid, "score": "easy"}).json()
-    print(f"[api] review easy -> srs_status={rv['srs_status']}")
-    assert rv["srs_status"] == "familiar"
+    rv = client.post("/api/training/swipe",
+                     json={"session_id": "smoke", "phrase_id": pid,
+                           "swipe_direction": "right"}).json()
+    print(f"[api] swipe right -> self_ewma={rv['self_ewma']}")
+    assert rv["ok"] is True
     print("\nALL SMOKE CHECKS PASSED")
 
 

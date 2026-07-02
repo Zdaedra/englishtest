@@ -7,11 +7,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from .. import access, audio, content, cover, localize, models, srs, tts
+from .. import access, audio, content, cover, localize, models, tts
 from .. import mnemo as mnemo_render
 from ..auth import current_user_id, is_admin
 from ..db import get_session
-from ..schemas import ReviewIn
 
 router = APIRouter(prefix="/api/batches", tags=["batches"])
 
@@ -347,23 +346,6 @@ def make_cover(batch_id: int, body: Optional[CoverIn] = None,
     return {"id": b.id, "cover_url": url}
 
 
-@router.post("/reviews")
-def post_review(rev: ReviewIn, user_id: int = Depends(current_user_id),
-                session: Session = Depends(get_session)):
-    p = session.get(models.Phrase, rev.phrase_id)
-    if not p:
-        raise HTTPException(404, "Phrase not found")
-    session.add(models.ReviewEvent(user_id=user_id, phrase_id=rev.phrase_id,
-                                   event_type=rev.event_type, score=rev.score,
-                                   latency_ms=rev.latency_ms))
-    st = session.exec(select(models.UserPhraseStat).where(
-        models.UserPhraseStat.user_id == user_id,
-        models.UserPhraseStat.phrase_id == p.id)).first()
-    if not st:
-        st = models.UserPhraseStat(user_id=user_id, phrase_id=p.id, batch_id=p.batch_id)
-    # Advance the full SM-2-lite schedule (interval/ease/next_review + srs_status).
-    srs.advance(st, rev.score)
-    session.add(st)
-    session.commit()
-    return {"phrase_id": p.id, "srs_status": st.srs_status,
-            "next_review_at": st.next_review_at.isoformat() if st.next_review_at else None}
+# (POST /reviews removed 2026-07-02: legacy SRS-lite write path with zero frontend
+# callers. All scheduling now flows through /api/training/{answer,swipe} so there
+# is one SRS writer. The ReviewEvent table stays — historical rows + GDPR delete.)

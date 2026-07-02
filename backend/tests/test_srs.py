@@ -85,3 +85,75 @@ def test_srs_next_table_is_total_over_known_states():
     for s in states:
         for b in bands:
             assert (s, b) in srs.SRS_NEXT, f"missing transition ({s},{b})"
+
+
+# --- Self-report (swipe) scheduling — the mic-less due loop ------------------
+from conftest import commit_sample_batch, phrase_ids  # noqa: E402
+from sqlmodel import Session  # noqa: E402
+
+from app.db import engine  # noqa: E402
+
+
+def _stat_row(uid, pid):
+    with Session(engine()) as s:
+        return s.exec(models.UserPhraseStat.__table__.select().where(
+            models.UserPhraseStat.user_id == uid,
+            models.UserPhraseStat.phrase_id == pid)).first()
+
+
+def test_swipe_right_schedules_unspoken_phrase(make_user):
+    """A free/core learner (no mic) still gets a real SM-2 schedule from swipes."""
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    pid = phrase_ids(admin, bid)[0]
+    free = make_user(plan="free")
+    r = free.post("/api/training/swipe",
+                  json={"session_id": "s", "phrase_id": pid, "swipe_direction": "right"})
+    assert r.status_code == 200, r.text
+    st = _stat_row(free.user["id"], pid)
+    assert st.next_review_at is not None
+    # fast=False caps self-reported knowledge below "automatic"
+    assert st.srs_status == "familiar"
+    assert st.avg_score is None  # spoken mastery untouched by swipes
+
+
+def test_swipe_left_lapses_unspoken_phrase(make_user):
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    pid = phrase_ids(admin, bid)[0]
+    free = make_user(plan="free")
+    free.post("/api/training/swipe",
+              json={"session_id": "s", "phrase_id": pid, "swipe_direction": "left"})
+    st = _stat_row(free.user["id"], pid)
+    assert st.srs_status == "shaky" and st.next_review_at is not None
+
+
+def test_swipe_never_reschedules_a_spoken_phrase(make_user):
+    """One scored spoken attempt makes the objective signal the sole scheduler."""
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    pid = phrase_ids(admin, bid)[0]
+    admin.post("/api/training/answer-text",
+               json={"session_id": "s", "phrase_id": pid, "transcript": "whatever"})
+    before = _stat_row(admin.user["id"], pid).next_review_at
+    assert before is not None
+    admin.post("/api/training/swipe",
+               json={"session_id": "s", "phrase_id": pid, "swipe_direction": "right"})
+    assert _stat_row(admin.user["id"], pid).next_review_at == before
+
+
+def test_confirm_fail_override_lapses_high_score(make_user):
+    """AI said pass (9) → schedule extended; learner overrides to fail → due soon."""
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    pid = phrase_ids(admin, bid)[0]
+    r = admin.post("/api/training/answer-text",
+                   json={"session_id": "s", "phrase_id": pid, "transcript": "x"})
+    ev = r.json()
+    assert ev["score"] >= 8  # stubbed scorer passes
+    long_interval = _stat_row(admin.user["id"], pid).interval_days
+    assert long_interval >= 1.0
+    admin.post("/api/training/answer/confirm",
+               json={"event_id": ev["event_id"], "manual_success": False})
+    st = _stat_row(admin.user["id"], pid)
+    assert st.interval_days == 0.0 and st.srs_status == "shaky"

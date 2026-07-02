@@ -197,11 +197,6 @@ export const api = {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify(req),
     }).then(j<SessionResp>).then((r) => ({ ...r, audio_url: mediaUrl(r.audio_url)! })),
-  review: (phrase_id: number, score: string) =>
-    apiFetch("/api/batches/reviews", {
-      method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ phrase_id, score }),
-    }).then(j<{ phrase_id: number; srs_status: string }>),
   scorePhrase: (phraseId: number, audio: Blob, filename: string, latencyMs?: number) => {
     const fd = new FormData();
     fd.append("audio", audio, filename);

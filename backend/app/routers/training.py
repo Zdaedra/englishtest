@@ -460,6 +460,13 @@ def swipe(body: SwipeIn, user_id: int = Depends(current_user_id),
         st.last_success_at = now
     else:
         st.last_failed_at = now
+    # Anki-style: self-report drives the SM-2 schedule — but ONLY while the phrase
+    # has no spoken history. This gives mic-less (free/core) learners a real due
+    # loop; one scored spoken attempt and the objective signal becomes the sole
+    # scheduler. fast=False caps srs_status at "familiar" — "automatic" still
+    # requires spoken proof at speed. avg_score stays untouched (self_ewma only).
+    if (st.attempts or 0) == 0:
+        srs.advance(st, "easy" if knew else "failed", now, fast=False)
     session.add(st)
     n = len(session.exec(select(models.TrainingEvent).where(
         models.TrainingEvent.user_id == user_id,
@@ -588,6 +595,12 @@ def answer_confirm(body: ConfirmIn, user_id: int = Depends(current_user_id),
             st.last_success_at = now
         else:
             st.last_failed_at = now
+            # The AI scored this a pass (>=8) and already extended the schedule as
+            # "easy" — but the learner says it actually failed. Trust the human on
+            # the downside: lapse the schedule so the phrase comes back soon instead
+            # of hiding for days on an unearned interval.
+            if (ev.ai_score or 0) >= 8:
+                srs.advance(st, "failed", now)
         session.add(st)
     session.commit()
     return {"ok": True}
