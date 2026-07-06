@@ -1,0 +1,1445 @@
+{
+ "replacements": {
+  "batch-3/Underneath": {
+   "new_en": "Something's off here — help me figure out what it is.",
+   "new_anchor": "Off"
+  },
+  "charisma-1/Momentum": {
+   "new_en": "Don't stop on my account — I like a room that's already moving.",
+   "new_anchor": "Moving"
+  },
+  "charisma-1/Name": {
+   "new_en": "Can I say the thing we're all dancing around?",
+   "new_anchor": "Dancing"
+  },
+  "charisma-2/Read": {
+   "new_en": "You look like you've already figured this room out.",
+   "new_anchor": "Figured"
+  },
+  "charisma-2/Watching": {
+   "new_en": "You're the only person here who isn't networking — I had to come say hi.",
+   "new_anchor": "Networking"
+  },
+  "charisma-2/Usual": {
+   "new_en": "Forget small talk — what's actually worth talking about tonight?",
+   "new_anchor": "Forget"
+  },
+  "charisma-2/Deal": {
+   "new_en": "Give me ninety seconds — worst case, you get a good story.",
+   "new_anchor": "Story"
+  },
+  "charisma-3/Light": {
+   "new_en": "You lit up just then — tell me more about that.",
+   "new_anchor": "Lit"
+  },
+  "charisma-3/Pattern": {
+   "new_en": "So you saw it coming before anyone else did.",
+   "new_anchor": "Coming"
+  },
+  "charisma-3/Bet": {
+   "new_en": "Which of these actually matters to you ten years from now?",
+   "new_anchor": "Years"
+  },
+  "charisma-4/Corner": {
+   "new_en": "Hey, the quiet end of the table — I want in on whatever you're discussing.",
+   "new_anchor": "Quiet"
+  },
+  "charisma-4/Truth": {
+   "new_en": "Let's drop the charm for a minute and actually talk.",
+   "new_anchor": "Drop"
+  },
+  "charisma-4/Safe": {
+   "new_en": "Come on, that's the safe answer — give me the honest one.",
+   "new_anchor": "Honest"
+  },
+  "charisma-4/Changed": {
+   "new_en": "Quick round: what's something you changed your mind about this year? I'll go first.",
+   "new_anchor": "Quick"
+  },
+  "charisma-6/Proud": {
+   "new_en": "Not bad — did you rehearse that in the car?",
+   "new_anchor": "Rehearse"
+  },
+  "charisma-6/Clap": {
+   "new_en": "If I laugh, you'll just keep going.",
+   "new_anchor": "Laugh"
+  },
+  "charisma-7/Level": {
+   "new_en": "You took the whole conversation up a level.",
+   "new_anchor": "Level"
+  },
+  "charisma-7/Risk": {
+   "new_en": "You spotted the risk before anyone else even saw it coming.",
+   "new_anchor": "Spotted"
+  },
+  "charisma-7/Lightly": {
+   "new_en": "I don't say this often — that was seriously impressive.",
+   "new_anchor": "Often"
+  },
+  "charisma-7/Authority": {
+   "new_en": "People listen when you talk — and you never have to raise your voice.",
+   "new_anchor": "Listen"
+  },
+  "charisma-7/Remember": {
+   "new_en": "Remember this moment — people are going to be quoting you on it.",
+   "new_anchor": "Quoting"
+  },
+  "charisma-8/Selfish": {
+   "new_en": "I could talk to you all night — which is exactly why I should go.",
+   "new_anchor": "Night"
+  },
+  "charisma-8/Mystery": {
+   "new_en": "I'll save the rest for next time — gives you a reason to find me.",
+   "new_anchor": "Save"
+  },
+  "charisma-9/Microphone": {
+   "new_en": "Well, everyone heard that one. Moving on.",
+   "new_anchor": "Heard"
+  },
+  "charisma-9/Reset": {
+   "new_en": "Okay, let's pretend the last ten seconds didn't happen.",
+   "new_anchor": "Pretend"
+  },
+  "charisma-9/Dwell": {
+   "new_en": "I'm not going to overthink that — neither should you.",
+   "new_anchor": "Overthink"
+  },
+  "charisma-10/Casually": {
+   "new_en": "I don't introduce people often — but you two are an exception.",
+   "new_anchor": "Exception"
+  },
+  "charisma-11/Date": {
+   "new_en": "Skip the apologies — when are you free?",
+   "new_anchor": "Free"
+  },
+  "charisma-11/Properly": {
+   "new_en": "It's been too long — let's fix that over dinner.",
+   "new_anchor": "Dinner"
+  },
+  "charisma-11/List": {
+   "new_en": "Some people you just keep — you're one of them.",
+   "new_anchor": "Keep"
+  },
+  "composure-1/Table": {
+   "new_en": "Nice try — I'm letting that one slide.",
+   "new_anchor": "Slide"
+  },
+  "composure-1/Designed": {
+   "new_en": "I know what that was — not biting.",
+   "new_anchor": "Biting"
+  },
+  "composure-1/Role": {
+   "new_en": "You're trying to cast me in something — I'll pass.",
+   "new_anchor": "Cast"
+  },
+  "composure-1/Fishing": {
+   "new_en": "You're fishing — wrong pond.",
+   "new_anchor": "Pond"
+  },
+  "composure-1/Button": {
+   "new_en": "You're welcome to keep trying — it's not going to land.",
+   "new_anchor": "Land"
+  },
+  "composure-1/Strings": {
+   "new_en": "Keep pulling — nothing's connected.",
+   "new_anchor": "Connected"
+  },
+  "composure-1/Lever": {
+   "new_en": "My reactions aren't up for grabs.",
+   "new_anchor": "Grabs"
+  },
+  "composure-2/Beside": {
+   "new_en": "I'm going to let that one go right past me.",
+   "new_anchor": "Past"
+  },
+  "composure-2/Unsaid": {
+   "new_en": "I'll pretend you didn't say that — once.",
+   "new_anchor": "Once"
+  },
+  "composure-2/Dig": {
+   "new_en": "Drop the jab and say what you actually mean.",
+   "new_anchor": "Jab"
+  },
+  "composure-2/Worth": {
+   "new_en": "Say what you want — I know my worth.",
+   "new_anchor": "Worth"
+  },
+  "composure-2/Describes": {
+   "new_en": "That says more about you than it does about me.",
+   "new_anchor": "Says"
+  },
+  "composure-2/Inch": {
+   "new_en": "I know who I am — that didn't rattle me.",
+   "new_anchor": "Rattle"
+  },
+  "composure-3/Volume": {
+   "new_en": "You don't need to shout — I can hear you just fine.",
+   "new_anchor": "Shout"
+  },
+  "composure-3/Concern": {
+   "new_en": "I hear the point — the tone can go.",
+   "new_anchor": "Tone"
+  },
+  "composure-3/Substance": {
+   "new_en": "If there's a real point under all that, I'm listening.",
+   "new_anchor": "Real"
+  },
+  "composure-3/Shrink": {
+   "new_en": "This isn't going to work — I'm not shrinking for anyone.",
+   "new_anchor": "Shrinking"
+  },
+  "composure-3/Ounce": {
+   "new_en": "Raising your voice doesn't win the argument.",
+   "new_anchor": "Argument"
+  },
+  "composure-3/Tall": {
+   "new_en": "Swing and a miss — let's get back to the point.",
+   "new_anchor": "Swing"
+  },
+  "composure-4/Cleanly": {
+   "new_en": "Let me fix that before I make the real point.",
+   "new_anchor": "Fix"
+  },
+  "composure-4/Own": {
+   "new_en": "Small slip — not worth dwelling on. Where were we?",
+   "new_anchor": "Slip"
+  },
+  "composure-4/Flustered": {
+   "new_en": "Takes more than that to throw me off.",
+   "new_anchor": "Throw"
+  },
+  "composure-4/Public": {
+   "new_en": "Everybody fumbles — watch the recovery.",
+   "new_anchor": "Recovery"
+  },
+  "composure-5/Respect": {
+   "new_en": "I'm saying no nicely — but I am saying no.",
+   "new_anchor": "Nicely"
+  },
+  "composure-5/Brief": {
+   "new_en": "I'll keep it short and civil.",
+   "new_anchor": "Civil"
+  },
+  "composure-5/Standing": {
+   "new_en": "That's my decision — I'm comfortable with it.",
+   "new_anchor": "Decision"
+  },
+  "composure-5/Reasons": {
+   "new_en": "More reasons would just muddy it.",
+   "new_anchor": "Muddy"
+  },
+  "composure-5/Argument": {
+   "new_en": "I don't owe a defense for every no.",
+   "new_anchor": "Defense"
+  },
+  "composure-5/Silence": {
+   "new_en": "I'm fine letting that hang there.",
+   "new_anchor": "Hang"
+  },
+  "composure-5/Selling": {
+   "new_en": "It's a boundary, not an opening offer.",
+   "new_anchor": "Offer"
+  },
+  "composure-6/Damage": {
+   "new_en": "Let's stop before this does real damage.",
+   "new_anchor": "Damage"
+  },
+  "composure-6/Kindly": {
+   "new_en": "I'm going to bow out before this gets ugly.",
+   "new_anchor": "Ugly"
+  },
+  "composure-6/Attacks": {
+   "new_en": "Happy to talk about the issue — not to take punches.",
+   "new_anchor": "Punches"
+  },
+  "composure-6/Afraid": {
+   "new_en": "I'm not running from this — I just won't do it this way.",
+   "new_anchor": "Running"
+  },
+  "composure-6/Composure": {
+   "new_en": "This isn't worth losing my cool over — I'm out for now.",
+   "new_anchor": "Cool"
+  },
+  "composure-7/Mull": {
+   "new_en": "Let me chew on that overnight.",
+   "new_anchor": "Chew"
+  },
+  "composure-7/Sloppy": {
+   "new_en": "Give me an hour and you'll get a real answer instead of a guess.",
+   "new_anchor": "Hour"
+  },
+  "composure-7/Speed": {
+   "new_en": "A decision this big doesn't get made in a hallway.",
+   "new_anchor": "Hallway"
+  },
+  "composure-7/Stopwatch": {
+   "new_en": "Rushing this helps nobody.",
+   "new_anchor": "Rushing"
+  },
+  "composure-7/Clock": {
+   "new_en": "The deadline's real, but so is the cost of getting this wrong.",
+   "new_anchor": "Deadline"
+  },
+  "composure-7/Hesitation": {
+   "new_en": "I'm not stalling — I'm making sure we get it right.",
+   "new_anchor": "Stalling"
+  },
+  "composure-8/Again": {
+   "new_en": "Try that again — minus the attitude.",
+   "new_anchor": "Attitude"
+  },
+  "composure-8/Ways": {
+   "new_en": "I give respect and I expect it back — simple.",
+   "new_anchor": "Expect"
+  },
+  "composure-8/Lower": {
+   "new_en": "I'm not going to match that tone.",
+   "new_anchor": "Match"
+  },
+  "composure-8/Level": {
+   "new_en": "When you're ready to talk properly, I'm right here.",
+   "new_anchor": "Ready"
+  },
+  "composure-8/Condition": {
+   "new_en": "We can keep talking — respectfully, or not at all.",
+   "new_anchor": "Respectfully"
+  },
+  "composure-9/Lovely": {
+   "new_en": "That's very kind of you — doesn't change my answer.",
+   "new_anchor": "Kind"
+  },
+  "composure-9/Warmth": {
+   "new_en": "I appreciate the charm offensive — let's get back to the actual question.",
+   "new_anchor": "Charm"
+  },
+  "composure-9/Guilt": {
+   "new_en": "I can see the guilt trip coming — it's not going to work.",
+   "new_anchor": "Trip"
+  },
+  "composure-9/Bought": {
+   "new_en": "Buttering me up won't change the math.",
+   "new_anchor": "Buttering"
+  },
+  "composure-9/Anchor": {
+   "new_en": "You're laying it on thick — the answer's still no.",
+   "new_anchor": "Thick"
+  },
+  "composure-9/Sweet": {
+   "new_en": "This is all very sweet — the decision stands.",
+   "new_anchor": "Stands"
+  },
+  "composure-10/Limited": {
+   "new_en": "Here's what I know so far — I'll have the rest by tomorrow.",
+   "new_anchor": "Tomorrow"
+  },
+  "composure-10/Trouble": {
+   "new_en": "Not knowing is fine — faking it isn't.",
+   "new_anchor": "Faking"
+  },
+  "composure-10/Bluff": {
+   "new_en": "I'm not going to wing an answer to a question this important.",
+   "new_anchor": "Wing"
+  },
+  "composure-11/Sharpen": {
+   "new_en": "Fair enough — what would've tipped it my way?",
+   "new_anchor": "Tipped"
+  },
+  "composure-11/Reduce": {
+   "new_en": "It stings, sure — but I'll take the lesson and move on.",
+   "new_anchor": "Stings"
+  },
+  "flirt-1/Lightly": {
+   "new_en": "You've had my attention all night — that doesn't happen often.",
+   "new_anchor": "Attention"
+  },
+  "flirt-1/Easy": {
+   "new_en": "I've said my piece — no pressure, the ball's yours.",
+   "new_anchor": "Ball"
+  },
+  "flirt-3/Pause": {
+   "new_en": "I don't mind the quiet with you.",
+   "new_anchor": "Quiet"
+  },
+  "flirt-3/Away": {
+   "new_en": "Most people would look away right now. I'm not going to.",
+   "new_anchor": "Away"
+  },
+  "flirt-3/Comfortable": {
+   "new_en": "I'm in no hurry to break this.",
+   "new_anchor": "Hurry"
+  },
+  "flirt-3/Smaller": {
+   "new_en": "I'm not going to explain it — that would ruin it.",
+   "new_anchor": "Ruin"
+  },
+  "flirt-4/Full": {
+   "new_en": "You have all of my attention right now — trust me, that's rare.",
+   "new_anchor": "Rare"
+  },
+  "flirt-5/Tempted": {
+   "new_en": "I don't want this conversation to end yet.",
+   "new_anchor": "End"
+  },
+  "flirt-5/Charge": {
+   "new_en": "I'm not going to pretend this is just small talk.",
+   "new_anchor": "Pretend"
+  },
+  "flirt-6/Coffee": {
+   "new_en": "Let me plan a real night out — not a coffee catch-up.",
+   "new_anchor": "Night"
+  },
+  "flirt-6/Boring": {
+   "new_en": "Boring's not my thing — say yes and see for yourself.",
+   "new_anchor": "Boring"
+  },
+  "flirt-6/Errand": {
+   "new_en": "I'm asking you out properly — a real night, planned around you.",
+   "new_anchor": "Properly"
+  },
+  "flirt-7/Safe": {
+   "new_en": "You can say no — nothing gets weird, I promise.",
+   "new_anchor": "Weird"
+  },
+  "flirt-7/Clarity": {
+   "new_en": "Just tell me straight — I'd rather know.",
+   "new_anchor": "Straight"
+  },
+  "flirt-7/Dent": {
+   "new_en": "It's okay to say no — really, no hard feelings.",
+   "new_anchor": "Feelings"
+  },
+  "flirt-7/Grown-ups": {
+   "new_en": "Well, look at us handling this like adults.",
+   "new_anchor": "Adults"
+  },
+  "flirt-8/Smile": {
+   "new_en": "I saw that smile — I'm just saying I noticed.",
+   "new_anchor": "Noticed"
+  },
+  "flirt-8/Pace": {
+   "new_en": "No rush — your pace works for me.",
+   "new_anchor": "Rush"
+  },
+  "flirt-8/Reading": {
+   "new_en": "I think there's something here — tell me if I'm wrong.",
+   "new_anchor": "Wrong"
+  },
+  "flirt-8/Force": {
+   "new_en": "I'm not going to push anything — this is good as it is.",
+   "new_anchor": "Push"
+  },
+  "flirt-8/Signal": {
+   "new_en": "Just give me a sign and I'll follow it.",
+   "new_anchor": "Sign"
+  },
+  "flirt-8/Space": {
+   "new_en": "And if you'd rather leave it here, that's completely fine too.",
+   "new_anchor": "Fine"
+  },
+  "flirt-9/Explained": {
+   "new_en": "A little mystery never hurt anyone.",
+   "new_anchor": "Mystery"
+  },
+  "flirt-9/Read": {
+   "new_en": "That's all you get tonight — I have to keep some cards.",
+   "new_anchor": "Cards"
+  },
+  "flirt-9/Linger": {
+   "new_en": "Best to leave while it's still this good.",
+   "new_anchor": "Leave"
+  },
+  "flirt-10/Almosts": {
+   "new_en": "Let's not let this fizzle out — pick a day.",
+   "new_anchor": "Fizzle"
+  },
+  "flirt-10/Disappear": {
+   "new_en": "I don't want tonight to be the end of this — let's make a plan.",
+   "new_anchor": "Plan"
+  },
+  "flirt-10/Carry": {
+   "new_en": "Dinner this week — let's do this properly.",
+   "new_anchor": "Dinner"
+  },
+  "flirt-10/Electricity": {
+   "new_en": "Text me — the second round will be even better.",
+   "new_anchor": "Text"
+  },
+  "gravitas-1/Eyes": {
+   "new_en": "Everyone, look at me. Deep breath. Now let's move.",
+   "new_anchor": "Breath"
+  },
+  "gravitas-1/Ground": {
+   "new_en": "Everybody hold steady — I've got this.",
+   "new_anchor": "Hold"
+  },
+  "gravitas-1/Alone": {
+   "new_en": "Stay in pairs, stay in touch — nobody goes solo on this.",
+   "new_anchor": "Solo"
+  },
+  "gravitas-1/Count": {
+   "new_en": "We move together, on my signal.",
+   "new_anchor": "Signal"
+  },
+  "gravitas-2/Breath": {
+   "new_en": "Stay with me — one step, then the next.",
+   "new_anchor": "Step"
+  },
+  "gravitas-2/Frightening": {
+   "new_en": "Yeah, this is scary — we can still think straight.",
+   "new_anchor": "Scary"
+  },
+  "gravitas-2/Slow": {
+   "new_en": "Everyone slow down — we'll do this right.",
+   "new_anchor": "Slow"
+  },
+  "gravitas-2/Clear": {
+   "new_en": "Facts first, calm voices — let's cut the noise.",
+   "new_anchor": "Noise"
+  },
+  "gravitas-2/Deliberate": {
+   "new_en": "I'm choosing my words carefully here — this matters.",
+   "new_anchor": "Words"
+  },
+  "gravitas-2/Voice": {
+   "new_en": "However bad it gets, I'll keep my voice level.",
+   "new_anchor": "Level"
+  },
+  "gravitas-2/Inside": {
+   "new_en": "I'm nervous too — you just won't see it.",
+   "new_anchor": "Nervous"
+  },
+  "gravitas-3/Fog": {
+   "new_en": "We're deciding with half the picture — that's just where we are.",
+   "new_anchor": "Half"
+  },
+  "gravitas-3/Downside": {
+   "new_en": "I'm picking the option we can live with if it goes wrong.",
+   "new_anchor": "Live"
+  },
+  "gravitas-3/Call": {
+   "new_en": "It's my call, and I'll own whatever comes of it.",
+   "new_anchor": "Own"
+  },
+  "gravitas-4/Heat": {
+   "new_en": "The frustration's fair — let's aim it at the problem.",
+   "new_anchor": "Aim"
+  },
+  "gravitas-4/Directly": {
+   "new_en": "Straight answer: yes, that one's on us.",
+   "new_anchor": "Straight"
+  },
+  "gravitas-4/Tone": {
+   "new_en": "I'll answer the question — not the attitude behind it.",
+   "new_anchor": "Attitude"
+  },
+  "gravitas-4/Rushed": {
+   "new_en": "You can push, but I'm not going to blurt out a bad answer.",
+   "new_anchor": "Blurt"
+  },
+  "gravitas-4/Count": {
+   "new_en": "Fire away — I'll get to every single one.",
+   "new_anchor": "Fire"
+  },
+  "gravitas-5/Affected": {
+   "new_en": "To everyone this hit: I see it, and I'm on it.",
+   "new_anchor": "Hit"
+  },
+  "gravitas-5/Theater": {
+   "new_en": "You don't need a performance from me — you need the truth and a plan.",
+   "new_anchor": "Performance"
+  },
+  "gravitas-5/Helm": {
+   "new_en": "This is on me — and I'm staying at the wheel to fix it.",
+   "new_anchor": "Wheel"
+  },
+  "gravitas-5/Serious": {
+   "new_en": "It's serious — which is exactly why I'm not stepping aside.",
+   "new_anchor": "Aside"
+  },
+  "gravitas-5/Recovery": {
+   "new_en": "The damage is real. So is the plan to fix it — starting today.",
+   "new_anchor": "Plan"
+  },
+  "gravitas-6/Diminish": {
+   "new_en": "I'm not here to take anyone down a peg — I'm here to fix the problem.",
+   "new_anchor": "Peg"
+  },
+  "gravitas-6/Rank": {
+   "new_en": "Seniority doesn't decide this — the facts do.",
+   "new_anchor": "Seniority"
+  },
+  "gravitas-6/Threat": {
+   "new_en": "Threats don't change the facts on the table.",
+   "new_anchor": "Threats"
+  },
+  "gravitas-6/Title": {
+   "new_en": "I respect the title — it just doesn't make the argument for you.",
+   "new_anchor": "Title"
+  },
+  "gravitas-6/Fold": {
+   "new_en": "Push all you want — my position hasn't moved.",
+   "new_anchor": "Position"
+  },
+  "gravitas-6/Over": {
+   "new_en": "You outrank me — that doesn't make you right.",
+   "new_anchor": "Outrank"
+  },
+  "gravitas-7/Unknown": {
+   "new_en": "Truth is, I don't know how this ends — but you won't face it alone.",
+   "new_anchor": "Truth"
+  },
+  "gravitas-7/Presence": {
+   "new_en": "I'll be straight with you, and I'll be around — that much I can give.",
+   "new_anchor": "Around"
+  },
+  "gravitas-7/Step": {
+   "new_en": "We can't see the whole road — the next step's clear enough.",
+   "new_anchor": "Road"
+  },
+  "gravitas-7/Measure": {
+   "new_en": "What we can control is how we handle this — so that's our focus.",
+   "new_anchor": "Focus"
+  },
+  "gravitas-7/Promise": {
+   "new_en": "I can't promise the outcome — I can promise the effort.",
+   "new_anchor": "Effort"
+  },
+  "gravitas-7/Become": {
+   "new_en": "However this ends, we'll deal with it the right way.",
+   "new_anchor": "Deal"
+  },
+  "gravitas-7/Upright": {
+   "new_en": "Whatever comes, we face it head on.",
+   "new_anchor": "Face"
+  },
+  "gravitas-8/Hold": {
+   "new_en": "Hold on — let's bring the temperature down first.",
+   "new_anchor": "Temperature"
+  },
+  "gravitas-8/Escalation": {
+   "new_en": "We're winding each other up, not deciding anything.",
+   "new_anchor": "Winding"
+  },
+  "gravitas-8/Adrenaline": {
+   "new_en": "Nobody makes a permanent call on adrenaline — not on my watch.",
+   "new_anchor": "Watch"
+  },
+  "gravitas-8/Unwind": {
+   "new_en": "Whatever we decide, let's not make it something we can't undo.",
+   "new_anchor": "Undo"
+  },
+  "gravitas-8/Wear": {
+   "new_en": "Blame me for the delay later — right now we stop.",
+   "new_anchor": "Blame"
+  },
+  "gravitas-8/Permanent": {
+   "new_en": "Let's not do permanent damage over a temporary fight.",
+   "new_anchor": "Temporary"
+  },
+  "gravitas-9/Down": {
+   "new_en": "Let's take it down a notch — we'll think better.",
+   "new_anchor": "Notch"
+  },
+  "gravitas-9/Quieter": {
+   "new_en": "Bring it down — we'll get more done at half the volume.",
+   "new_anchor": "Volume"
+  },
+  "gravitas-9/Signal": {
+   "new_en": "Cut the chatter — give me facts.",
+   "new_anchor": "Chatter"
+  },
+  "gravitas-9/Point": {
+   "new_en": "One thing at a time — safety first.",
+   "new_anchor": "Safety"
+  },
+  "gravitas-9/Pause": {
+   "new_en": "Let's stop, get the facts, then decide.",
+   "new_anchor": "Decide"
+  },
+  "gravitas-9/Outshout": {
+   "new_en": "I'm not going to yell over anyone — let's just settle down and talk.",
+   "new_anchor": "Yell"
+  },
+  "gravitas-9/Lower": {
+   "new_en": "I'm going to say this quietly, because it matters.",
+   "new_anchor": "Quietly"
+  },
+  "gravitas-9/Calm": {
+   "new_en": "Calm is what's going to get us out of this.",
+   "new_anchor": "Calm"
+  },
+  "gravitas-10/Sharpest": {
+   "new_en": "Breathe — the worst of it is behind us.",
+   "new_anchor": "Worst"
+  },
+  "gravitas-10/Closed": {
+   "new_en": "The fire's out — now we rebuild.",
+   "new_anchor": "Rebuild"
+  },
+  "gravitas-10/Discipline": {
+   "new_en": "Now we put in the guardrails so this doesn't happen twice.",
+   "new_anchor": "Guardrails"
+  },
+  "gravitas-10/Lesson": {
+   "new_en": "What matters now is what we change because of this.",
+   "new_anchor": "Change"
+  },
+  "gravitas-10/Exit": {
+   "new_en": "This won't be the thing people remember about us — the comeback will be.",
+   "new_anchor": "Comeback"
+  },
+  "intimacy-1/Close": {
+   "new_en": "I want to talk about something — not to fight, just to feel close to you again.",
+   "new_anchor": "Close"
+  },
+  "intimacy-1/Softly": {
+   "new_en": "Can we take this gently? It matters to me.",
+   "new_anchor": "Gently"
+  },
+  "intimacy-1/Name": {
+   "new_en": "Something's been sitting between us, and I want to talk about it — no blame.",
+   "new_anchor": "Blame"
+  },
+  "intimacy-1/Survive": {
+   "new_en": "Whatever we say tonight, we're still us tomorrow.",
+   "new_anchor": "Tomorrow"
+  },
+  "intimacy-2/Tender": {
+   "new_en": "That one hit a sore spot — I just want you to know.",
+   "new_anchor": "Sore"
+  },
+  "intimacy-2/Differently": {
+   "new_en": "Can you try that again? It came out pretty harsh.",
+   "new_anchor": "Harsh"
+  },
+  "intimacy-2/Dignity": {
+   "new_en": "I'm hurt, but I'm not going anywhere.",
+   "new_anchor": "Hurt"
+  },
+  "intimacy-2/Gentle": {
+   "new_en": "We're both hurting — let's not make it worse.",
+   "new_anchor": "Worse"
+  },
+  "intimacy-3/Reach": {
+   "new_en": "I don't want to wait each other out — so I'm going first.",
+   "new_anchor": "First"
+  },
+  "intimacy-5/Protecting": {
+   "new_en": "This isn't me pushing you away — I just need this for myself.",
+   "new_anchor": "Need"
+  },
+  "intimacy-5/Limit": {
+   "new_en": "I'm at my limit here — it's not about you.",
+   "new_anchor": "Limit"
+  },
+  "intimacy-5/Explain": {
+   "new_en": "The answer's no, and I'm going to leave it at that.",
+   "new_anchor": "Leave"
+  },
+  "intimacy-5/Line": {
+   "new_en": "I love you, and the answer is still no.",
+   "new_anchor": "Love"
+  },
+  "intimacy-6/Smaller": {
+   "new_en": "You don't have to soften it for me.",
+   "new_anchor": "Soften"
+  },
+  "intimacy-7/Closeness": {
+   "new_en": "I don't need advice right now — I just need you near.",
+   "new_anchor": "Near"
+  },
+  "intimacy-7/Weak": {
+   "new_en": "I'm telling you because it matters — not because I can't handle it.",
+   "new_anchor": "Handle"
+  },
+  "intimacy-7/Collapsing": {
+   "new_en": "It's hard to say out loud — I need you.",
+   "new_anchor": "Loud"
+  },
+  "intimacy-7/Crack": {
+   "new_en": "I'm choosing to tell you this — that's not me breaking down.",
+   "new_anchor": "Choosing"
+  },
+  "intimacy-7/Steady": {
+   "new_en": "I can say the hard thing and still be okay.",
+   "new_anchor": "Okay"
+  },
+  "intimacy-8/Defend": {
+   "new_en": "Part of me wants to argue — but go on, I'm listening.",
+   "new_anchor": "Argue"
+  },
+  "intimacy-8/Truth": {
+   "new_en": "You're right about some of this — don't stop, tell me the rest.",
+   "new_anchor": "Rest"
+  },
+  "intimacy-8/Shatter": {
+   "new_en": "That's hard to hear, but I'd rather hear it from you.",
+   "new_anchor": "Hear"
+  },
+  "intimacy-8/Sift": {
+   "new_en": "Let me sit with that — some of it's true.",
+   "new_anchor": "Sit"
+  },
+  "intimacy-8/Grow": {
+   "new_en": "I'd rather learn from this than win the argument.",
+   "new_anchor": "Learn"
+  },
+  "intimacy-9/Dream": {
+   "new_en": "Where do you see us a few years from now? I think about it.",
+   "new_anchor": "Years"
+  },
+  "intimacy-9/Imagine": {
+   "new_en": "I want us building something — not just running the routine.",
+   "new_anchor": "Building"
+  },
+  "intimacy-9/Desire": {
+   "new_en": "I want a future with you because I want it — not because I'm scared to lose you.",
+   "new_anchor": "Future"
+  },
+  "intimacy-9/Disappear": {
+   "new_en": "I'm all in — but I'm not going to lose myself in it.",
+   "new_anchor": "Lose"
+  },
+  "intimacy-10/Tightened": {
+   "new_en": "I felt it flare up tonight — that's mine to deal with.",
+   "new_anchor": "Flare"
+  },
+  "intimacy-10/Reassurance": {
+   "new_en": "I don't want to check up on you — I just need to hear we're good.",
+   "new_anchor": "Check"
+  },
+  "intimacy-10/Loud": {
+   "new_en": "I'm not accusing you — I'm just telling you how it felt.",
+   "new_anchor": "Felt"
+  },
+  "intimacy-10/Crime": {
+   "new_en": "This is my fear talking — you didn't do anything wrong.",
+   "new_anchor": "Fear"
+  },
+  "intimacy-10/Trust": {
+   "new_en": "Yeah, I get jealous sometimes — I still trust you.",
+   "new_anchor": "Trust"
+  },
+  "intimacy-10/Freedom": {
+   "new_en": "I'm not going to let my insecurity run your life.",
+   "new_anchor": "Insecurity"
+  },
+  "intimacy-11/Concern": {
+   "new_en": "I know you're worried — let's not turn it into an argument.",
+   "new_anchor": "Worried"
+  },
+  "intimacy-11/Court": {
+   "new_en": "I'm not going to argue my life like it's on trial.",
+   "new_anchor": "Trial"
+  },
+  "intimacy-11/Adults": {
+   "new_en": "I'm not twelve anymore — talk to me like the adult I am.",
+   "new_anchor": "Adult"
+  },
+  "intimacy-12/Ordinary": {
+   "new_en": "Somehow even grocery runs are fun with you.",
+   "new_anchor": "Grocery"
+  },
+  "intimacy-12/Want": {
+   "new_en": "I want you — simple as that.",
+   "new_anchor": "Simple"
+  },
+  "intimacy-12/Closer": {
+   "new_en": "Come here — you're too far away.",
+   "new_anchor": "Far"
+  },
+  "intimacy-12/Pull": {
+   "new_en": "That look you just gave me — still gets me, every time.",
+   "new_anchor": "Look"
+  },
+  "intimacy-12/Whole": {
+   "new_en": "I know all of you by now — and I'd still pick you.",
+   "new_anchor": "Pick"
+  },
+  "intimacy-12/Presence": {
+   "new_en": "I don't need you to fix me — I just want you here.",
+   "new_anchor": "Fix"
+  },
+  "intimacy-12/Stay": {
+   "new_en": "Ten years in, you still surprise me.",
+   "new_anchor": "Surprise"
+  },
+  "lead-1/Gather": {
+   "new_en": "Let's get everyone on the same page for a second.",
+   "new_anchor": "Page"
+  },
+  "lead-1/Tie": {
+   "new_en": "Let me pull these threads together.",
+   "new_anchor": "Threads"
+  },
+  "lead-1/Steer": {
+   "new_en": "Someone needs to drive this — I'll do it. Jump in if you disagree.",
+   "new_anchor": "Drive"
+  },
+  "lead-1/Got": {
+   "new_en": "I'll run point on this for now — let's move.",
+   "new_anchor": "Point"
+  },
+  "lead-2/Yours": {
+   "new_en": "The best part of this has your name all over it.",
+   "new_anchor": "Name"
+  },
+  "lead-2/Direction": {
+   "new_en": "Here's where we're headed: smaller, sharper, and actually useful.",
+   "new_anchor": "Headed"
+  },
+  "lead-2/Hope": {
+   "new_en": "This isn't wishful thinking — I can see the whole path.",
+   "new_anchor": "Wishful"
+  },
+  "lead-2/Believe": {
+   "new_en": "I believe in this enough to put my own money on it.",
+   "new_anchor": "Money"
+  },
+  "lead-3/Ground": {
+   "new_en": "Let's find our footing before we make any calls.",
+   "new_anchor": "Footing"
+  },
+  "lead-3/Calm": {
+   "new_en": "Panic won't help us — clear heads will.",
+   "new_anchor": "Panic"
+  },
+  "lead-3/Steady": {
+   "new_en": "Stick with me — we'll take this one step at a time.",
+   "new_anchor": "Step"
+  },
+  "lead-4/Risk": {
+   "new_en": "I see it differently — and here's the risk that worries me.",
+   "new_anchor": "Worries"
+  },
+  "lead-4/Owe": {
+   "new_en": "It's your call — but you deserve the full picture as I see it.",
+   "new_anchor": "Picture"
+  },
+  "lead-4/Expensive": {
+   "new_en": "Better an awkward conversation now than an expensive mistake later.",
+   "new_anchor": "Mistake"
+  },
+  "lead-5/Landed": {
+   "new_en": "You committed to this and it didn't happen — walk me through it.",
+   "new_anchor": "Committed"
+  },
+  "lead-5/Broke": {
+   "new_en": "Where did this fall apart?",
+   "new_anchor": "Apart"
+  },
+  "lead-5/Dignity": {
+   "new_en": "This stays between us — but the standard stays too.",
+   "new_anchor": "Standard"
+  },
+  "lead-6/Guessing": {
+   "new_en": "I'll say it straight so nobody has to guess.",
+   "new_anchor": "Guess"
+  },
+  "lead-6/Missed": {
+   "new_en": "I rushed it and missed the warning signs.",
+   "new_anchor": "Signs"
+  },
+  "lead-6/Hit": {
+   "new_en": "That one's on me — lesson learned, let's move.",
+   "new_anchor": "Lesson"
+  },
+  "lead-7/Alone": {
+   "new_en": "Fair point — but they won't be taking that heat alone.",
+   "new_anchor": "Heat"
+  },
+  "lead-7/Through": {
+   "new_en": "You've got an issue with my people, you bring it to me.",
+   "new_anchor": "People"
+  },
+  "lead-8/Closer": {
+   "new_en": "You two are arguing the same point from different ends.",
+   "new_anchor": "Ends"
+  },
+  "lead-8/Outcome": {
+   "new_en": "You both want the same thing — start from there.",
+   "new_anchor": "Start"
+  },
+  "lead-8/Fact": {
+   "new_en": "Give me the facts first — feelings after.",
+   "new_anchor": "Facts"
+  },
+  "lead-8/Crown": {
+   "new_en": "I'm not the referee here — I just want you two to hear each other.",
+   "new_anchor": "Referee"
+  },
+  "lead-8/Frame": {
+   "new_en": "I'll keep us on track until you two can hear each other.",
+   "new_anchor": "Track"
+  },
+  "lead-9/Heavy": {
+   "new_en": "This is hard news, and I'm going to give it to you straight.",
+   "new_anchor": "Straight"
+  },
+  "lead-9/News": {
+   "new_en": "Here's the situation, no dressing it up: the plan changed, and it affects us.",
+   "new_anchor": "Situation"
+  },
+  "lead-9/Through": {
+   "new_en": "I'm not dropping this on you and walking away.",
+   "new_anchor": "Dropping"
+  },
+  "lead-10/Visible": {
+   "new_en": "Everyone should know what she did on this one — it changed the outcome.",
+   "new_anchor": "Outcome"
+  },
+  "lead-10/Belongs": {
+   "new_en": "That win was hers, not mine — she made the call.",
+   "new_anchor": "Win"
+  },
+  "lead-10/Carried": {
+   "new_en": "Let's give credit where it's due — she carried this.",
+   "new_anchor": "Credit"
+  },
+  "lead-10/Light": {
+   "new_en": "Their win doesn't cost me anything.",
+   "new_anchor": "Cost"
+  },
+  "lead-10/Smaller": {
+   "new_en": "When my people shine, that reflects on all of us.",
+   "new_anchor": "Shine"
+  },
+  "lead-10/Taller": {
+   "new_en": "Recognition done right makes the whole team play harder.",
+   "new_anchor": "Recognition"
+  },
+  "lead-11/Ceiling": {
+   "new_en": "You're capable of way more than this — and you know it.",
+   "new_anchor": "Capable"
+  },
+  "lead-11/Bar": {
+   "new_en": "The bar isn't 'fine' — it's work people remember.",
+   "new_anchor": "Bar"
+  },
+  "lead-11/Costing": {
+   "new_en": "'Good enough' is exactly what's holding us back.",
+   "new_anchor": "Holding"
+  },
+  "lead-11/Up": {
+   "new_en": "I'm pushing you because I've seen your best — this isn't it.",
+   "new_anchor": "Pushing"
+  },
+  "lead-11/Waste": {
+   "new_en": "I'd be wasting you if I let this slide.",
+   "new_anchor": "Slide"
+  },
+  "lead-11/Invitation": {
+   "new_en": "This isn't me piling on — I just know what you can do.",
+   "new_anchor": "Piling"
+  },
+  "negotiation-1/Line": {
+   "new_en": "That's my bottom line — I won't go under it.",
+   "new_anchor": "Bottom"
+  },
+  "pitch-1/Picture": {
+   "new_en": "Picture this: Monday morning, and the whole thing's on fire before your first coffee.",
+   "new_anchor": "Fire"
+  },
+  "pitch-1/Catch": {
+   "new_en": "Most people walk right past this — that's the opportunity.",
+   "new_anchor": "Opportunity"
+  },
+  "pitch-1/Lean": {
+   "new_en": "Here's the part everyone skips — and it's where the money is.",
+   "new_anchor": "Money"
+  },
+  "pitch-1/Knife": {
+   "new_en": "Strip everything else away, and this is what matters.",
+   "new_anchor": "Strip"
+  },
+  "pitch-1/Grab": {
+   "new_en": "If nothing else lands today, this will.",
+   "new_anchor": "Lands"
+  },
+  "pitch-2/Crack": {
+   "new_en": "There's a hole in how everyone does this today.",
+   "new_anchor": "Hole"
+  },
+  "pitch-2/Tide": {
+   "new_en": "The market just flipped — that's why now.",
+   "new_anchor": "Flipped"
+  },
+  "pitch-3/Bridge": {
+   "new_en": "The path from here to there is short — let me walk you through it.",
+   "new_anchor": "Path"
+  },
+  "pitch-3/Door": {
+   "new_en": "The opportunity's on the table — you decide if we pick it up.",
+   "new_anchor": "Table"
+  },
+  "pitch-3/Fit": {
+   "new_en": "I'm bringing this to you because you're the right fit for it.",
+   "new_anchor": "Fit"
+  },
+  "pitch-3/Room": {
+   "new_en": "I want to be the bet you look smart for making.",
+   "new_anchor": "Bet"
+  },
+  "pitch-3/Skin": {
+   "new_en": "I've got skin in the game — I'm taking the same risk I'm asking you to take.",
+   "new_anchor": "Skin"
+  },
+  "pitch-3/Handshake": {
+   "new_en": "If we're aligned, let's shake on it and get moving.",
+   "new_anchor": "Shake"
+  },
+  "pitch-3/Seal": {
+   "new_en": "Say the word and I'll have it signed by Friday.",
+   "new_anchor": "Word"
+  },
+  "repair-1/Better": {
+   "new_en": "I'll do better going forward — you'll see it, not just hear it.",
+   "new_anchor": "Forward"
+  },
+  "stage-1/Singular": {
+   "new_en": "I'm not going to give a speech — I'd rather just talk to you.",
+   "new_anchor": "Speech"
+  },
+  "stage-1/Back": {
+   "new_en": "Hello back row — I see you too.",
+   "new_anchor": "Row"
+  },
+  "stage-1/Settle": {
+   "new_en": "Take a second, get settled — this one's worth your full attention.",
+   "new_anchor": "Attention"
+  },
+  "stage-1/Command": {
+   "new_en": "I'm in no hurry up here — stay with me.",
+   "new_anchor": "Hurry"
+  },
+  "stage-1/Here": {
+   "new_en": "You're here, I'm here — let's make this hour matter.",
+   "new_anchor": "Hour"
+  },
+  "stage-2/Lean": {
+   "new_en": "Here comes the part you'll want to remember.",
+   "new_anchor": "Remember"
+  },
+  "stage-2/Soak": {
+   "new_en": "Let that sink in for a second.",
+   "new_anchor": "Sink"
+  },
+  "stage-2/Slow": {
+   "new_en": "Let me slow down here — this part matters.",
+   "new_anchor": "Slow"
+  },
+  "stage-2/Hang": {
+   "new_en": "I'll give that a moment to land.",
+   "new_anchor": "Moment"
+  },
+  "stage-2/Air": {
+   "new_en": "Silence is fine — I'm not afraid of it up here.",
+   "new_anchor": "Silence"
+  },
+  "stage-2/Wait": {
+   "new_en": "Take a second with that one — I'll wait.",
+   "new_anchor": "Wait"
+  },
+  "stage-3/lens": {
+   "new_en": "Forget the lens — it's just you and me.",
+   "new_anchor": "lens"
+  },
+  "stage-3/glass": {
+   "new_en": "I know this is through a screen — it doesn't have to feel like one.",
+   "new_anchor": "screen"
+  },
+  "stage-3/kitchen": {
+   "new_en": "Imagine we're just talking over coffee.",
+   "new_anchor": "coffee"
+  },
+  "stage-3/crisp": {
+   "new_en": "Three points, ninety seconds, no fluff.",
+   "new_anchor": "fluff"
+  },
+  "stage-3/fillers": {
+   "new_en": "No rambling, no filler — straight through.",
+   "new_anchor": "rambling"
+  },
+  "stage-3/thread": {
+   "new_en": "Stick with me — this all ties together.",
+   "new_anchor": "ties"
+  },
+  "stage-3/performance": {
+   "new_en": "No script, no act — just me talking to you.",
+   "new_anchor": "act"
+  },
+  "stage-3/stiffen": {
+   "new_en": "The camera doesn't rattle me anymore — I just slow down and talk.",
+   "new_anchor": "rattle"
+  },
+  "stage-3/reads": {
+   "new_en": "If I'm at ease, you can feel it on the other end.",
+   "new_anchor": "ease"
+  },
+  "stage-4/heart": {
+   "new_en": "Heart's pounding a bit — that's how much this matters.",
+   "new_anchor": "pounding"
+  },
+  "stage-4/floor": {
+   "new_en": "Plant your feet, one breath, and go.",
+   "new_anchor": "plant"
+  },
+  "stage-4/ready": {
+   "new_en": "You never feel ready — you just start.",
+   "new_anchor": "start"
+  },
+  "stage-4/momentum": {
+   "new_en": "Get the first line out — the rest takes care of itself.",
+   "new_anchor": "line"
+  },
+  "stage-4/fuel": {
+   "new_en": "Nerves are just energy — I'm putting them to work.",
+   "new_anchor": "energy"
+  },
+  "stage-4/run": {
+   "new_en": "The nerves can ride along — they're not driving.",
+   "new_anchor": "driving"
+  },
+  "stage-5/heat": {
+   "new_en": "Fair question under all that heat — let me answer it.",
+   "new_anchor": "fair"
+  },
+  "stage-5/nerve": {
+   "new_en": "Bold question — I like it. Let's dig in.",
+   "new_anchor": "bold"
+  },
+  "stage-5/premise": {
+   "new_en": "I don't buy the setup, but the worry behind it is real — so let's talk about that.",
+   "new_anchor": "setup"
+  },
+  "stage-5/bait": {
+   "new_en": "I'll skip the framing and answer the actual question.",
+   "new_anchor": "framing"
+  },
+  "stage-5/gift": {
+   "new_en": "Honestly, I'm glad you asked — it lets me clear this up.",
+   "new_anchor": "glad"
+  },
+  "stage-5/audience": {
+   "new_en": "I'm not here to spar with you — everyone came for answers.",
+   "new_anchor": "spar"
+  },
+  "stage-5/steady": {
+   "new_en": "Tough question. You'll get a calm answer.",
+   "new_anchor": "calm"
+  },
+  "stage-6/blank": {
+   "new_en": "Mind just went completely blank — give me a second.",
+   "new_anchor": "blank"
+  },
+  "stage-6/resume": {
+   "new_en": "No drama — let's pick it back up.",
+   "new_anchor": "drama"
+  },
+  "stage-6/rails": {
+   "new_en": "Okay, back on track — here's the point.",
+   "new_anchor": "track"
+  },
+  "stage-6/where": {
+   "new_en": "So — where was I before I derailed myself?",
+   "new_anchor": "derailed"
+  },
+  "stage-6/stumble": {
+   "new_en": "Well, that happened. Moving on.",
+   "new_anchor": "happened"
+  },
+  "stage-6/fall": {
+   "new_en": "Everyone trips — watch how fast I get back up.",
+   "new_anchor": "trips"
+  },
+  "stage-6/forgettable": {
+   "new_en": "A perfect talk would've been boring — now it's a story.",
+   "new_anchor": "boring"
+  },
+  "stage-7/stakes": {
+   "new_en": "Get this wrong, and we'd lose everything we'd built — that was the deal.",
+   "new_anchor": "deal"
+  },
+  "stage-7/wait": {
+   "new_en": "And this is where the whole thing flips.",
+   "new_anchor": "flips"
+  },
+  "stage-7/image": {
+   "new_en": "Keep that picture in your head — we'll come back to it.",
+   "new_anchor": "picture"
+  },
+  "stage-7/sit": {
+   "new_en": "[pause] Some things don't need commentary.",
+   "new_anchor": "commentary"
+  },
+  "stage-8/believe": {
+   "new_en": "I believe every person in this room can do this — so go do it.",
+   "new_anchor": "believe"
+  },
+  "stage-8/trail": {
+   "new_en": "And that's the note I want to leave you on.",
+   "new_anchor": "note"
+  },
+  "stage-8/test": {
+   "new_en": "The talk ends here — the real work starts when you leave the room.",
+   "new_anchor": "starts"
+  },
+  "stage-8/pad": {
+   "new_en": "No long goodbye — just go do the thing.",
+   "new_anchor": "goodbye"
+  },
+  "stage-8/sentence": {
+   "new_en": "That's my half of the deal — the rest is yours.",
+   "new_anchor": "half"
+  },
+  "stage-9/armor": {
+   "new_en": "I'm not going to hide behind talking points.",
+   "new_anchor": "hide"
+  },
+  "stage-9/chopped": {
+   "new_en": "Here it is in one sentence you can run as-is.",
+   "new_anchor": "sentence"
+  },
+  "stage-9/spotlight": {
+   "new_en": "Cameras on or off, you'd get the same answer.",
+   "new_anchor": "cameras"
+  },
+  "stage-9/cycle": {
+   "new_en": "I'm not going to let a headline write my answer.",
+   "new_anchor": "headline"
+  },
+  "stage-10/between": {
+   "new_en": "Let me say this part quietly — just for you.",
+   "new_anchor": "quietly"
+  },
+  "stage-10/person": {
+   "new_en": "Think of the one person who needs to hear this — keep them in mind.",
+   "new_anchor": "mind"
+  },
+  "stage-10/tell": {
+   "new_en": "I can see some of you nodding — you know exactly what I mean.",
+   "new_anchor": "nodding"
+  },
+  "stage-10/whisper": {
+   "new_en": "I don't need to shout this — you can hear me just fine.",
+   "new_anchor": "shout"
+  },
+  "stage-10/spectacle": {
+   "new_en": "One honest moment is worth the whole show.",
+   "new_anchor": "show"
+  },
+  "stage-10/seen": {
+   "new_en": "I'm not here to impress you — I'm here to reach you.",
+   "new_anchor": "reach"
+  },
+  "stage-11/prepped": {
+   "new_en": "This isn't the crowd I planned for — even better.",
+   "new_anchor": "crowd"
+  },
+  "stage-11/live": {
+   "new_en": "Great — now we get to do this for real.",
+   "new_anchor": "real"
+  },
+  "stage-11/core": {
+   "new_en": "There's really one idea underneath all of this — let's go straight there.",
+   "new_anchor": "idea"
+  },
+  "stage-11/shape": {
+   "new_en": "New shape: one story, one point, one decision.",
+   "new_anchor": "shape"
+  },
+  "stage-11/net": {
+   "new_en": "No safety net today — that's when it gets good.",
+   "new_anchor": "safety"
+  },
+  "stage-11/raw": {
+   "new_en": "Slick is overrated — you're getting the real thing.",
+   "new_anchor": "slick"
+  },
+  "stage-11/thought": {
+   "new_en": "No script? Fine — I know this stuff cold.",
+   "new_anchor": "cold"
+  }
+ },
+ "mnemos": {
+  "batch-3": "Ты вылезаешь на карниз крыши, где стоит человек, и делаешь осторожный шаг к нему. Ловишь sounds — как звучит его голос сквозь ветер: «похоже, сроки — вот что давит», — возвращаешь ты. Ещё полшага: seems — кажется, что-то здесь давно сидит криво, да? Доверяешь sense — чутью: «по-моему, ты сам не веришь в этот план — я не прав?» Стучишь пальцем по виску: вот где моя head — голова; поправь, где я ошибаюсь. Приседаешь рядом и ведёшь ладонью по карнизу: что-то здесь off — не так, не сходится; помоги понять, что именно. Раскрываешь пустые ладони: думаешь, у меня своя agenda — свой умысел? Смотри: пусто. Машешь рукой вниз: kill — да я бы сам всё это похоронил, отговори меня. Называешь вслух elephant — слона, что топчется между вами: то, о чём оба молчали. И щуришься: наверняка я упускаю что-то obvious — очевидное. Скажи, что.",
+  "charisma-1": "На горизонте встаёт она — there, — и ты гребёшь по уже moving — несущейся — воде, бросая корпус forward. Волна подхватывает, rolling под доской; на дуге ты grab за рейл и count секунды внутри трубы. Мир уходит в slow-motion, ты выныриваешь из пены — доска dancing, приплясывает под ногами, — а океан сам выносит тебя back к берегу.",
+  "charisma-2": "Ты въезжаешь в пыльный городок, где на улице ни soul, но из-за дверей салуна катится чей-то laugh. Распахиваешь створки — с crash падает стакан, и ты вприпрыжку skip через ступени к игровому столу. С порога ты уже figured — раскусил — весь расклад за столом и settle на свободный стул — рядом с единственным, кто не networking, не кружит по залу с рукопожатиями. Бармену машешь: forget — забудь про виски, — снимаешь шляпу и берёшь колоду: худший случай — у стола появится story, которую будут пересказывать.",
+  "charisma-3": "Стартовый запал fired — взрыв вскрывает штольню, лампа на твоей каске lit — вспыхивает, и ты шагаешь в темноту. Копаешь, obsessed, пока кирка не звенит, а на стене проступает выцарапанное кем-то word: «глубже». Тут начинается золотая rush — толпа ломится следом, но только ты заранее видишь, куда жила coming — выходит. Скупщик называет cost самородка, а ты прикидываешь, что он будет стоить через years — десять лет, — и на рассвете выезжаешь из городка ahead всех.",
+  "charisma-4": "В quiet — тихом — конце переулка вспыхивают огни, и smiling клоун у входа надрывает твой билет. Ты вскакиваешь на карусельного hog, и он несёт тебя around — ночной park аттракционов распахивается во всю ширь. Американские горки швыряют вагончик в мёртвую loop, а башня свободного падения делает drop — сброс, и вся наигранность слетает с тебя. Вагон тормозит, и в зеркальном лабиринте ты ловишь honest — честное — своё лицо, без грима. Напоследок quick — быстрый — круг на карусели: ты первым вскакиваешь на лошадку, показывая пример.",
+  "charisma-6": "Под куполом ты walked на туго натянутый канат, и шпрехшталмейстер generous жестом объявляет твой номер. Каждый шаг ты успел rehearse — отрепетировать — в гримёрке; идёшь careful, шаг за шагом, пока снизу не взлетает первый laugh — смешок. Сальто — и чистое landing на платформу, где ассистент протягивает тебе hand. Из темноты клоун орёт: «worst номер сезона!» — а ты шлёшь ему большой палец, like, и кланяешься залу.",
+  "charisma-7": "За спиной пристёгнут живой human, и шаг в открытый люк — чистый trust; все три days подготовки сжимаются в одну секунду. В свободном падении рука missed вытяжное кольцо — ты ловишь его со второй попытки и выравниваешь вас level, раскинув руки. Ты первым spotted — заметил — встречный поток, раньше, чем запищал высотомер; купол хлопает, и вы садитесь мягко — так чисто выходит не often, не каждый прыжок. Инструктор говорит негромко, но все listen — слушают; он поднимает твою руку, и его фразу про этот прыжок потом quoting — цитируют — все в клубе.",
+  "charisma-8": "В ночном музее тебе needed только одно — рубин в центральной витрине; вся night — ночь — твоя, но остального ты не тронешь. Спускаешься на тросе с high стеклянного купола, пока охранник внизу делает свои rounds, сверяясь с calendar на стене сторожки. Отмычкой pick замок витрины — и вдруг луч сирены: trouble! Ты растворяешься в темноте, оставив на бархате карточку «save — остальное приберегу» и подпись: «до next раза».",
+  "charisma-9": "Киваешь head барабанщику — отсчёт! — и первый же вопль heard — слышен — до последнего ряда; шлёшь charming улыбку залу. На втором куплете цепляешься за кабель, летишь — но встаёшь с dignity, а зал готов pretend — сделать вид, что ничего не было. Ты не overthink — не пережёвываешь момент: разбег мимо охранника в formal пиджаке — и прыжок спиной в толпу, чистый trust. Сотни рук складываются в shape волны и несут тебя над залом.",
+  "charisma-10": "Приём. Ты видишь в разных углах двух favorite — любимых — людей и пересекаешь толпу к первому. Берёшь его под локоть, подводишь ко второй — и с click — щелчком — сдвигаешь их бокалы. Отступаешь на полшага, разводя руки: каждый из них делает комнату better — лучше. Подталкиваешь их плечом к плечу: compare — сравните заметки, вы решаете одну задачу с двух концов. Шепчешь каждому на ухо по вопросу — ask — спроси — про Лагос и про повышение. Поднимаешь один палец: only — единственный, — кто видит это так же. Пожимаешь плечами: exception — исключение; обычно ты никого не знакомишь. Щёлкаешь их на телефон — record — запись: ты это начал. И, пятясь к дверям, ловишь их кивок: thank — спасибо — дозреет через год.",
+  "charisma-11": "Проводница smiled тебе с подножки — и двери захлопнулись: ты missed поезд. Но ты refuse сдаваться: бежишь по перрону с криком «excuse me!» сквозь толпу, а на билете в кулаке штамп free — открытая дата: впиши любой день. Прыжок — ты в последнем вагоне; отряхиваешься, и проводник зовёт в вагон-ресторан: dinner — ужин — уже накрыт. Кондуктор спрашивает: «where ваше место?» — оглядывает тебя и машет рукой: таких пассажиров поезд keep — оставляет себе, — а за окном уже passed первые огни города.",
+  "composure-1": "Ярмарочный лабиринт; ты идёшь сквозь него. У входа качается bait — наживка; ты ныряешь под неё, не сбив шага. Плита под ногами пытается rise — подняться, — ты перешагиваешь на следующую. Подножка выезжает под ботинок — даёшь ей slide — проскользить — мимо. С крюка свисает приманка пожирнее, но ты не biting — не клюёшь. Тебя пытаются cast — назначить — на роль шута; костюм вешаешь на гвоздь, не примеряя. Рыбак у стены закинул удочку не в тот pond — пруд: здесь не клюёт. Кулачный автомат замахивается — удар не land — не долетает: ты уже в шаге в стороне. С потолка свисают нити с крючками; пусть тянут — к тебе ничего не connected — не пристёгнуто. Твои реакции не лежат на прилавке up for grabs — «бери кто хочет»: ты сам открываешь себе дверь на свет.",
+  "composure-2": "Ты personally вбил каждый межевой колышек, когда сосед-скандалист харкает — плевок летит past — мимо — сапога, и ты даёшь ему пролететь. Делаешь вид, что не слышал, — но ровно once — один раз — и тянешь шнур дальше; его сапог уже crossed линию: с contempt он выбивает крайний кол. На его jab — подколку — отвечаешь одним: «скажи прямо, чего хочешь», — и вгоняешь кол по самую шляпку: земля worth ровно столько, насколько точна её граница. Вся эта сцена says — говорит — больше о нём, чем о тебе: циркуль на планшете спокойно ведёт дугу, и межа ложится на карту — его выходка не rattle — не расшатала — ни тебя, ни черту.",
+  "composure-3": "Ты несёшь через площадь высокий кувшин своей работы, когда с помоста начинают кричать. Не превращаешь путь в scene — в спектакль: держишь шаг. Тебе незачем shout — кричать в ответ: тебя и так слышно, отвечаешь вполголоса. Зерно из крика берёшь, а tone — тон — отбрасываешь, как шелуху. Сворачиваешь и подходишь directly — напрямую: говори мне, а не толпе. Если под всем этим есть real — настоящая суть, ты слушаешь: ставишь кувшин на весы посреди рынка. Жестом приглашаешь к столу: спорим как adults — взрослые, по делу. Распрямляешь плечи: ты ни для кого не shrinking — не сжимаешься. Криком argument — спор — не выигрывают: стрелка весов не дрогнула. Последний выкрик — swing — замах мимо кувшина; ты поднимаешь его и возвращаешься к делу.",
+  "composure-4": "Камешек под колесом устраивает blooper, и тебя несёт не прямо, а в широкий scenic вираж вдоль перил, где мягкий баннер buffered удар плечом. На асфальте остаётся scratch, но ты первым делом fix — поправляешь — руль и только потом продолжаешь. Один нарочно clumsy шаг, улыбка: это был slip — соскок, не стоящий разбора, — где мы были? Такого мало, чтобы throw — выбить — тебя из седла: руки уже не дрожат. Все иногда падают — смотрят на recovery: и ты вкатываешься обратно в поток, будто падение было частью маршрута.",
+  "composure-5": "Сначала со всех сторон летит asking; ты отвечаешь nicely — вежливо, — но это всё равно «нет». Коротко и civil — учтиво — делаешь шаг между прилавками, не сбиваясь с пути. На груди у ларца блестит одна табличка: answer. Это твоё decision — решение, и тебе с ним удобно идти. Торговцы бросают под ноги мешки доводов — лишние только muddy — мутят воду, и ты их не поднимаешь. Кто-то разворачивает свиток, требуя defense — оправданий, но ты не должен их за каждое «нет». Во дворе повисает тишина — hang — и пусть висит: тебе в ней спокойно. За спиной ещё кричат торговцы, но твоё «нет» — граница, а не offer — стартовая цена; ты закрываешь ворота и идёшь дальше с ларцом в руках.",
+  "composure-6": "Сначала с потолка сыплется damage, ты поднимаешь ладонь pause и останавливаешь бегущих актёров у края сцены. Уводишь их за кулисы, пока картина не стала совсем ugly — безобразной: дальше репетиция уже не productive. Из темноты летят punches — тычки — реквизитом: ты пришёл ради дела, а не подставлять лицо. Прожектор крутит на полу circles, но твой уход — не running — не бегство: просто в таком виде ты продолжать не будешь. Ты не теряешь cool — хладнокровие, открываешь боковую дверь и выпускаешь всех в тихий respectful коридор.",
+  "composure-7": "Ты ведёшь обоз на серый лёд реки — к городку на том берегу; сзади кричат: быстрее! Останавливаешься на beat — на один такт — и слушаешь треск под ногами. Приседаешь и chew — пережёвываешь — маршрут, ведя ладонью по льду: за ночь он от тебя не уйдёт. Берёшь себе hour — час — на разведку: через час будет верный путь, а не догадка. Решения такого веса не принимают на бегу, в hallway — в сенях: ты выходишь на лёд сам и обходишь тёмное пятно по дуге. Выбираешь clear — чистую, звонкую полосу и раскидываешь руки, беря себе space — пространство для веса. Проводник щёлкает секундомером за спиной; rushing — гонка — тут не поможет никому. За рекой на ратуше горит deadline — срок: он настоящий, но цена шага в полынью — тоже. Твоя заминка перед каждым шагом — не stalling — не тянучка: это вес, поставленный точно. Последний шаг — и ты на твёрдом берегу.",
+  "composure-8": "Ты идёшь по верхней тропе над ущельем, и снизу прилетает грязный окрик. Останавливаешься и переспрашиваешь ровно: вышло хуже, чем intended — чем задумывал? Складываешь ладони рупором: повтори без attitude — без гонора, и с этим можно будет работать. Стряхиваешь с плаща брызги snark — язвительности: они только тормозят подъём. Отводишь от лица ветку, что бьёт под видом candor — прямоты. Принимаешь challenge — вызов крутого склона, но не летящие камни. Уважение ты даёшь и expect — ждёшь — его обратно: простой обмен. Не станешь match — подхватывать — чужой тон: нога не идёт на осыпь. Когда он будет ready — готов — говорить по-людски, ты здесь, на своём уступе. И выбиваешь на камне одно слово: respectfully — уважительно, — или никак.",
+  "composure-9": "Вечерний базар у пристани; ты идёшь через него к своей лодке. Зазывала накидывает на тебя шёлк flattery — лести; ты снимаешь его с плеча и шагаешь дальше. Ловишь брошенную розу: kind — мило, спасибо, — и не сворачиваешь. Проходишь сквозь charm — обаяние — жаровен и фонариков, грея ладони и не останавливаясь. В лавке trading — обмена — тебе суют весы; ты убираешь руки за спину. На рукав виснет цепочка вины — знакомый trip — заход: ты видишь его издалека и мягко разжимаешь чужие пальцы. Над ухом бьёт гонг urgency — срочности; ты нарочно замедляешь шаг. Торговец мажет лепёшку мёдом — buttering — умасливает: математика не меняется, и ты отводишь ладонь. Стелют так thick — густо, что хоть ножом режь; ответ всё равно «нет». За воротами спускаешься в лодку: решение stands — стоит, как якорь, брошенный там же, где ты решил с утра.",
+  "composure-10": "Пещера. Ты взбираешься на top — верхний — уступ, ставишь ноги в comfortable — удобный — упор и ведёшь лучом: впереди три чёрных хода. Ты stumped — в тупике — и говоришь это вслух, эху, спокойно. Простукиваешь стену костяшками, ищешь solid — твёрдый — камень. Заползаешь в первый лаз на длину верёвки — verify — проверить — своими руками. Дальше фонарь не бьёт: остальное доразведаешь tomorrow — завтра, и об этом говоришь честно. Мелом ставишь precise — точную — метку только там, где прошёл сам. Из второго хода тянет водой: сказать «не знаю» не стыдно, faking — изображать, что знаешь, — стыдно. А у края обрыва не wing — не лезешь наугад: ложишься на живот и ждёшь, пока фонарь достанет дна.",
+  "composure-11": "Финиш марафона. Соперник рвёт ленту первым — earned — заслужил, и ты на бегу вскидываешь ему большой палец. Пробегаешь табло: у его имени нет asterisk — сноски, — и ты не тянешься её дописывать. За чертой genuinely — искренне — обнимаешь его, мокрого и счастливого. У судейского стола accept — принимаешь — протокол, расписываясь без паузы. И спрашиваешь у тренера одно: что бы tipped — перевесило — в мою сторону? Мимо палатки протестов идёшь не сворачивая: не argue — не споришь. Поражение stings — щиплет, конечно, — ты забираешь урок и держишь шаг. Cleanly — чисто — снимаешь номер, не скомкав его. Берёшься за handle — ручку — сумки и уходишь с трассы прямой спиной.",
+  "flirt-1": "У тебя сто reasons доспать, но ты уже в реке на рассвете — заходишь глубже, освобождая room для замаха, и даже distracting мошкара тебя не сбивает. В прозрачной струе plainly виден силуэт форели; твоя мушка dance на воде — и вдруг леска drawn в струну: поклёвка! Всё твоё attention — внимание — теперь на леске, ни на чём больше; usually такие срываются у самого берега — но ты ослабляешь натяжение, отдавая ball — подачу — ей, и форель сама заходит в сачок.",
+  "flirt-3": "Музыка замедляется, и вы застываете в quiet — тишине — посреди шага; тебе в ней спокойно, руки ты не отпускаешь. Этот moment — момент — ведёшь медленным поворотом, не давая оборваться. Ловишь её smile — улыбку — и отвечаешь своей, продолжая вести. Между вами что-то happening — происходит, — и ты подтягиваешь её на полшага ближе. Тут обычно отводят взгляд away — в сторону; ты ведёшь поворот, глаз не отводя. Оркестр ускоряется — ты не rush — не гонишь: держишь свой счёт. И не hurry — не спешишь — разрывать связку: тебе хорошо ровно здесь. Не объясняешь фигуру словами — это бы её ruin — испортило: шаг остаётся широким. И с последним аккордом вы опускаетесь на подоконник — просто sit — посидеть — плечом к плечу.",
+  "flirt-4": "На свежем снегу ты noticed цепочку следов, и track уводит тебя в чащу, где лес стоит quiet — только наст скрипит. На поляне десятки отпечатков, но rest ты отметаешь: твой — один, и он crossed замёрзший ручей. У развилки делаешь choice — левее, и еловые лапы polite расступаются перед тобой. Впереди поляна, залитая лунным светом — rare — редким: такой ясной ночи почти не бывает, — и там, где нет никого else, стоит олень с серебряными рогами.",
+  "flirt-5": "Фронт going прямо на долину, и ветер вдруг делается quieter — то самое затишье. Ты не даёшь погоне end — оборваться — раньше времени: подъезжаешь ближе; в рации — call напарника: «давай!» Воздух гудит так, что уже не pretend — не притворишься, будто это обычный дождик: волосы встают дыбом, и молния kiss шпиль элеватора — начинается chase за уходящей стеной ливня. Небо ambiguous — то ли стихнет, то ли ударит снова, — и ты жмёшь затвор, поймав идеальный timing.",
+  "flirt-6": "Джунгли расступаются: перед тобой ruin затерянного храма, и ты show проводнику карту — входим. Внутри пыль веков, breathe приходится через платок; проводник подмигивает: «Зови меня friday». Единственный light луч из пролома падает на алтарь; вы решаете остаться на всю night — ночь: это не короткая вылазка. За алтарём открывается коридор, с виду совсем boring. Вы идёте по нему, wondering, куда он выведет, — и в нише блестит золотой идол: вы выносите его properly — как положено, с бережной упаковкой, до самого музея.",
+  "flirt-7": "Инструктор обещает fair экзамен и так flattered отзывается о твоём прошлом заезде, что делается почти weird — неловко; ты улыбаешься и щёлкаешь ремнём. Протираешь лобовое: видно straight — прямо до горизонта; зеркала honest показывают даже слепую зону. Ты negotiate змейку между конусами — и всё же цепляешь последний: ничего, конус резиновый, никаких hard feelings — обид. Инструктор кивает с respect — «сдал» — и протягивает права: добро пожаловать к adults — взрослым — за рулём.",
+  "flirt-8": "Перед манёвром ты noticed — заметил — блик станции в иллюминаторе, и тут корабль даёт крен, leaning; выравниваешь его и ведёшь сближение без rush — без спешки: метр в секунду. Сверяешь курс: если что-то wrong — не так, приборы скажут сразу; на узле станции вспыхивает причальный light. Гасишь ход — slow, ещё медленнее, никакого лишнего push — нажима: импульсы по капле. Станция шлёт зелёный sign — знак, мягкое касание; а не случись стыковка — тоже fine: корабли умеют просто лететь рядом.",
+  "flirt-9": "Ты ведёшь её по ночной набережной и на самом интересном обрываешь рассказ — оставляешь cliffhanger — обрыв на краю. Раскрываешь лишь короткую version — версию, сворачивая остальное, как карту. Следишь за её глазами и улыбаешься: нравится, куда убежало её imagination — воображение. Прячешь продолжение в карман пальто: это на second — на второе свидание. Оставляешь узел истории развязанным on purpose — нарочно. Машешь рукой на фонари: немного mystery — загадки — ещё никому не вредило. Пару cards — карт — держишь прижатыми к груди: не всё сегодня. Решаешь leave — уйти, пока вечер на самой высокой ноте. И уходишь ahead — на пике, в темноту, не оглядываясь.",
+  "flirt-10": "Вечер тает, и ты догоняешь её на крыльце, пока такси мигает у обочины. Ловишь момент, не давая ему fizzle — зашипеть и погаснуть, как бенгальский огонь. Придерживаешь дверцу: пусть у вечера будет plan — продолжение, а не точка. Делаешь шаг ближе и предлагаешь next — следующую встречу, прямо сейчас. Протягиваешь телефон ей под пальцы: number — номер. Раскрываешь ладони, как два билета: четверг или суббота — pick — выбирай. Хлопаешь по её ладони, фиксируя вечер, пока никто не успел overthink — передумать. Берёшь её руку: этот заряд доживёт до dinner — ужина, собранного по-настоящему. Наклоняешься к окну такси: consider — считай это свиданием. Машина трогается — и телефон в кармане вздрагивает: text — сообщение уже прилетело.",
+  "gravitas-1": "Ты собираешь команду взглядом: breath — глубокий вдох на всех, и работаем. Командуешь hold — держаться ровно: ты здесь, всё под контролем, — и показываешь, что никто не идёт solo к краю крыши. Быстро раздаёшь jobs, поднимаешь красный флажок priority и командуешь drop лишние ящики, чтобы освободить проход к тросу. Потом хватаешь рацию command и поднимаешь ракетницу: двигаемся все разом, по твоему signal — сигналу, — и только когда все пристёгнуты, говоришь: разбор будет later, сейчас взлетаем.",
+  "gravitas-2": "У двери маяка ты делаешь первый step — шаг по мокрым ступеням: один, потом следующий. Слышишь scary — жуткий — удар волны о камни, но голова остаётся ясной, и ты продолжаешь slow подъём. На стене находишь метку true севера, подстраиваешь pace механизма и отсекаешь noise — шум — ветра, слушая только ход шестерён. Words — слова — в переговорную трубу подбираешь по одному: сейчас они важны. Голос сирены держишь level — ровным, как бы ни ревел шторм за стеклом. А что тебе тоже nervous — не по себе, знает только каменная башня: снаружи этого не видно, пока луч режет туман.",
+  "gravitas-3": "Из ущелья видна лишь half — половина — картины: дальше туман, и решать придётся так. Позади гремит пустой luxury-вагон, где уже нет времени сидеть мягко и ждать. Колёса входят в uneasy дрожь моста, ты хватаешь рычаг decision и выбираешь ветку, с которой можно live — жить, — если всё пойдёт не так: резкий pivot на запасную. В кабине звенит телефон, но ты уже own — принял на себя — всё, что придёт за этим выбором: waiting у семафора опаснее движения. Ты опускаешь металлический lock на стрелке, и поезд всем весом уходит в выбранный поворот.",
+  "gravitas-4": "В горне ревёт angry огонь, на стене манит дверь hide, но ты проходишь мимо: весь жар ты aim — направляешь — в наковальню, на дело. Из всех заготовок берёшь hardest сталь, кладёшь её straight — прямо — на наковальню и начинаешь separate шлак от лезвия. Отвечаешь чистому звону металла, а не attitude — гонору — снопов искр. Не даёшь молоту blurt — ляпнуть — торопливый кривой удар. И командуешь мехам: fire — поддавай! — заготовки разберёшь все до одной, по очереди, пока клинок не выйдет чистым.",
+  "gravitas-5": "Ты не пытаешься minimize огромный разрыв в оболочке, а мелом обводишь секции, куда hit — пришёлся удар: ты видишь их и этим занят. Ветер срывает занавес с пассажирской палубы — и хорошо: никакого performance — представления, людям нужны правда и план. На металлической балке уже горит слово failure, ты бросаешь взгляд на watch, раскрываешь латунный scope и видишь поле для посадки за рекой. Встаёшь за wheel — штурвал: это на тебе, и ты его не отпустишь. Положение серьёзное — именно поэтому ты не отходишь aside — в сторону. И запускаешь тросы по plan — плану спасения: он такой же настоящий, как пробоина, и работает с этой минуты.",
+  "gravitas-6": "Ты поднимаешься по узкой тропе, когда сверху съезжает всадник в золоте и требует уступить в осыпь. Держишь шаг: ты не сбивать его на peg — на колышек ниже — пришёл, тебе нужен outcome — исход, перевал за его спиной. Отводишь хлыст от лица: не надо remind — напоминать, кто ты такой. Проходишь мимо знамени с его seniority — старшинством: решает не оно, решает тропа. Слышишь threats — угрозы — и лишь перекладываешь посох в другую руку. Смотришь ему в глаза снизу вверх, не intimidated — не запуганный. Читаешь title — титул на перстне и киваешь: уважаешь, но спорить за него титул не будет. Сколько ни дави — твоя position — позиция на тропе — не сдвинулась. Он может outrank — стоять выше чином, но правым его это не делает: ты проходишь седловину.",
+  "gravitas-7": "В снежной мгле ты срываешь с карты флажок lie и говоришь truth — правду: как это кончится, ты не знаешь, но в одиночку это не встретит никто. Зажигаешь фонарь: ты around — рядом, — и это единственное, что можно обещать твёрдо, вместе с верёвкой control в ладони. Всей road — дороги — под настом не видно, но следующий шаг ясен, и ты делаешь его первым. Весь focus — на том, что в ваших руках: темп, связка, дыхание. Узел на связке — это effort — усилие, которое ты обещаешь; исход не обещает никто. Как бы ни легла тропа, вы deal — разберётесь — с этим по-людски. И на последнем гребне вся цепочка выходит из тумана face — лицом — вперёд, ещё не зная исхода, но уже держась ровно.",
+  "gravitas-8": "Ты выходишь к стартовой линии и флагом сбиваешь temperature — накал, хотя на табло уже мигает win и все хотят славы прямо сейчас. За огненным кольцом видишь обломки later; моторы winding — накручивают — друг друга, вместо того чтобы решать. На adrenaline такие ставки не делаются — не на твоей watch — вахте. То, что случится за трамплином, уже не undo — не отмотать назад, поэтому ты бьёшь ладонью по кнопке stop. Пусть blame — винят — тебя за задержку потом: сейчас все стоят. Мотоциклы замирают в метре от трамплина — temporary — минутная — горячка не оставила на арене вечного шрама.",
+  "gravitas-9": "Ты спускаешься в гудящий трюм, где все кричат разом. Медленно ведёшь обе ладони вниз: на notch — на одно деление — тише, и головы начинают работать. Сбавляешь volume — громкость — вполовину: так, оказывается, слышно больше. Поднимаешь one — один палец: по одному, я хочу услышать каждого. Взмахом фонаря отсекаешь chatter — трескотню: только факты. Ставишь фонарь на карту: сперва safety — безопасность, одно дело за раз. Замираешь посреди качки: сначала факты, потом decide — решение, — и трюм замирает с тобой. Ты не станешь yell — орать — поверх голосов: вы просто садитесь и говорите. Наклоняешься и говоришь quietly — тихо, потому что это важно. И твоё calm — спокойствие — расходится по трюму, как круги по воде: оно вас отсюда и выведет.",
+  "gravitas-10": "Шторм стихает. Ты последним перелезаешь гребень завала у выхода: worst — худшее — позади, дыши. Упираешься спиной в балку и hold — держишь — её, пока проходят твои люди. Ведёшь колонну through — насквозь — тёмный коридор, касаясь каждого плеча: спасибо, что выстояли. Огонь потушен — теперь rebuild: отстраиваем заново, задраив аварийный люк. Обходишь опоры, толкая каждую ладонью: эта stable — устойчива, — а две помечаешь мелом: следить. У щитка жмёшь reset — сброс — без круга почёта. Вдоль прохода ставишь guardrails — поручни, чтобы такое не повторилось дважды. Поднимаешь с пола погнутый болт и кладёшь в карман: важно то, что вы change — меняете — после этого. И первым толкаешь дверь: запомнят не завал, а comeback — возвращение, — ты придерживаешь её для всех.",
+  "intimacy-1": "Рёв порога всё close, и вы gently — мягко — табаните, заходя в струю, — вёсла бьют together, в один такт. Avoiding клык скалы слева, ты кричишь сквозь брызги: никакого blame — виноватых нет, работаем! Стена воды part перед носом рафта, вы win у бочки решающий метр, гребя against отбойного течения. Рафт вылетает на тихий плёс — и, что бы ни кричали в бочке, tomorrow — завтра — вы снова одна команда: хлопаете вёслами над головой.",
+  "intimacy-2": "Дружеский спарринг на татами. Пропущенный хлопок — ouch — обжигает скулу, но ты остаёшься в круге. Трогаешь щёку: место sore — саднящее, — и киваешь: попало. Тебя stung — ужалило — сильнее, чем он хотел; ты выдыхаешь, а не бьёшь. Стучишь перчаткой о перчатку: вышло harsh — жёстко; покажи ещё раз, помягче. Опускаешь руки чуть ниже, сбивая tone — тон — спарринга со злого на рабочий. Хочется shut — захлопнуться — в глухой блок; вместо этого ты раскрываешь стойку. Кулак сам взводится — fire — ответить огнём; ты разжимаешь пальцы. Больно — hurt, — но ты не выходишь из круга: делаешь шаг обратно в центр. И не даёшь раунду стать worse — хуже: завершаешь его мягким касанием перчатки его плеча.",
+  "intimacy-3": "Ты first — первым — зачерпываешь снег, не дожидаясь чужого броска; до вражеской крепости — distance в двадцать шагов, и бросок уходит в miss — прямо в прохожего: «sorry!» Ныряешь в defensive за бруствер, но instead нового залпа начинаешь катить ком — right по центру поля боя. Ком растёт всё bigger, превращаясь в снеговика, и весь оставшийся ammo уходит ему на глаза и пуговицы.",
+  "intimacy-5": "Манометр показывает: воздуха всё less; тебе need — нужен — собственный запас, и это не про напарника. Дайв-компьютер пищит — limit глубины; осмотр затонувшей рубки complete, и ты показываешь один жест: leave — уходим, и точка, без долгих объяснений. Толща воды держит тебя pressured, ты отталкиваешься от песчаного ground — потревоженный скат, upset, взметает облако песка. На подъёме сжимаешь ладонь напарника: love — вы команда, и это не меняется, — но большой палец всё равно показывает вверх.",
+  "intimacy-6": "Ночной берег, друг сидит, уронив голову. Ты подходишь и кладёшь руку ему на плечо: можно не быть strong — сильным. Перехватываешь его ладони и hold — держишь — в своих: не тащи один. Переставляешь коврик вплотную, beside — рядом, — плечо к плечу. Ловишь себя: рука тянется всё fix — чинить, — и ты её убираешь: сначала понять, где болит. Наклоняешься к его уху: скажи, что need — нужно — слова, тишина или ладонь. Подбрасываешь веток и sit — сидишь — рядом, не заполняя паузу. Накидываешь куртку на его плечи: не надо soften — смягчать — боль ради меня. Смотришь ему в лицо, не отводя глаз: не afraid — не боишься — этой его части. И остаёшься — staying — до рассвета, каким бы тяжёлым он ни был.",
+  "intimacy-7": "Ты уходишь in колодец пещеры по верёвке, и луч фонаря выхватывает бездну — честно, тебе scared. Лаз сжимается, но напарник near — рядом, плечо к плечу: больше ничего и не нужно. Компас даёт certainty: направление верное. За поворотом, hiding в темноте, блестит подземное озеро; ты показываешь напарнику осыпь над ним — не потому, что не handle — не справишься, а потому что это важно. Сказать loud — вслух — «нужна подстраховка» в гулкой темноте трудно, но ты говоришь. Ты сам choosing — выбираешь — сказать, и это не срыв. В стене тянет сквозняком — ты протискиваешься в щель и okay — целым — выходишь на свет.",
+  "intimacy-8": "Ты заходишь по колено в реку с лотком старателя, и близкий человек с берега сыплет в него тяжёлую породу слов. Держишь лоток ровно, listening — слушая по-настоящему, а не готовя ответ. Киваешь: нужны guts — смелость — высыпать такое в лицо. Ловишь в себе желание argue — заспорить — и вместо этого раскрываешь лоток шире. Первый промыв — и на дне блестит крупица; киваешь: не останавливайся, высыпай rest — остальное. Просишь жестом: покажи specific — конкретный камень, где именно. Откладываешь part — часть, с которой не согласен, не выбрасывая блестящее. Порода тяжёлая, и это трудно hear — слышать, — но лучше от неё, чем от чужих. Даёшь мути sit — отстояться: что легло — берёшь, что мутит — сливаешь. И выходишь на берег с крупицами, на которых будешь learn — учиться.",
+  "intimacy-9": "Ты берёшь её за руку и выводишь на рассветную тропу над городом. У поворота накрываешь её ладонь: вот value — то, чем дорожу. Шагая выше, рисуешь рукой дугу над крышами: вот мы через years — годы, я об этом думаю. Подводишь её к пролому в стене: здесь мы building — строим, а не просто латаем. На площадке раскрываешь ладони plainly — прямо: вот чего я хочу. Отбрасываешь ногой камень с тропы: это не ultimatum — не ультиматум, просто моё направление. Протираешь рукавом фонарь до clarity — ясности. Ступаешь на гребень и протягиваешь руку: дальше — together, вместе? Прижимаешь её пальцы к груди: future — будущее — ты выбираешь желанием, а не страхом потери. И оставляешь свои следы рядом с её — не lose — не теряя — себя по дороге.",
+  "intimacy-10": "Ночёвка на стене, вы в одной связке. В груди колет jealous — ревность; ты не прячешь её: подносишь фонарь к своему узлу. Что-то flare — вспыхивает — внутри, как сигнальная ракета над стеной; этот узел твой, тебе и распутывать. Поворачиваешься к ней и admit — признаёшься — вслух, как есть. Ты не check — не проверяешь — её узлы: просто просишь сказать, что вы в порядке. Рассказываешь, как это felt — ощущалось — изнутри, без единого обвинения. Перещёлкиваешь карабин на свой пояс: mine — моё. Убираешь руки от её обвязки: это твой fear — страх — говорит, она не сделала ничего. Отпускаешь перила, повисаешь на её страховке — trust — доверие — всем весом. И травишь верёвку на всю длину: твоя insecurity — неуверенность — не будет держать её на коротком поводке; пусть идёт первой в рассвет.",
+  "intimacy-11": "Тренер кричит: начинаем с love, с нуля, — и вы agree на три сета, хотя трибуны worried — тревожно — поглядывают на тучи. Выходите на центральный корт, как на trial — слушание: каждый спорный мяч здесь судят; ты подаёшь, steering мяч точно в угол. Спорный аут — трибуны vote криками, child-болбой подносит новый мяч, и ты просишь у судьи permission на челлендж. «Ястребиный глаз»: мяч в поле! — и вы дожимаете тай-брейк, пожимая руки через сетку, adult — взрослый со взрослым.",
+  "intimacy-12": "Рассветный пляж, вы идёте босиком у воды. Она поскальзывается — и ты laugh — смеёшься — всем лицом, подхватывая её за талию. Прыжком catch — ловишь — её шляпу, сорванную ветром. По пути заворачиваете в лавку за водой — даже grocery — продуктовый — забег с ней превращается в приключение. Разворачиваешь её к себе и говоришь глаза в глаза, simple — просто: хочу тебя, и всё. Она отбегает к самой воде — слишком far — далеко; ты зовёшь её обратно. Она оборачивается — и этот look — взгляд — до сих пор бьёт тебя под колени. Ты знаешь её уже всю — и всё равно pick — выбираешь — её, вместе с мокрым песком и колючками характера. Ей не нужно тебя fix — чинить, и тебе её — тоже: достаточно быть здесь. И на десятом году она умудряется surprise — удивлять — тебя, как в первый день.",
+  "lead-1": "Шторм рвёт палубу, и ты первым делом сводишь команду к одной page — странице вахтенного журнала: все смотрят в одно; сквозь ветер ловишь перекличку — все voices на месте. Хватаешь хлещущие threads — концы-нити — и стягиваешь их одним узлом, наводишь фонарь в focus на просвет в тучах. Поднимаешь паруса строго по order и, пока не ударила волна, decide курс. Встаёшь к штурвалу — drive: кто-то должен вести, и это ты; не даёшь судну stall в мёртвом дрейфе и кричишь сквозь брызги: беру point — иду головным, полный вперёд!",
+  "lead-2": "Мастер говорит: сперва imagine своего змея в небе, — и ты клеишь рейки with care, расписываешь хвост и выводишь на нём name — имя напарника: лучшая часть подписана его именем. Мокрый палец вверх: вот куда headed — идёт — ветер с моря; first разбег — и змей клюёт носом в песок. Падение не превращает затею в wishful — пустую мечту: ты видишь весь путь и удлиняешь хвост. Выгребаешь из кармана последние money — монеты — на новую леску: настолько веришь. Торговец, selling готовых драконов, машет: «купи!» — но ты rather запустишь своего: рывок — и он взмывает выше всех.",
+  "lead-3": "Шторм рвёт лагерь, люди мечутся между палатками. Ты выходишь в центр и первым делаешь глубокий breathe — вдох — у всех на виду. Киваешь: да, это hard — тяжело, и не притворяешься, что нет. Опускаешься на колено, нащупывая footing — опору под ногами: возвращаемся на неё вместе. Раскладываешь на ящике facts — факты: карта, запасы, что ещё не знаем. Ножом чертишь линию, separate — отделяя случившееся от страха: тент порван, люди целы. Показываешь next — следующий шаг: сперва закрепить, решать потом. Panic — панике — здесь делать нечего: твои движения размеренны, и чужие руки перестают дрожать. Стучишь по шесту со старыми заплатами: мы уже weathered — переживали бури. И ведёшь колонну под скалу — step за шагом, не растягиваясь.",
+  "lead-4": "На капоте джипа проводник чертит route через дюны, и team затемно грузит штативы. На гребне ты ищешь angle пониже; машина вязнет, и все push её из песка — срез по солончаку worries — тревожит — тебя, и ты говоришь об этом прямо. В темноте ставишь длинную exposure на штативе и выкладываешь проводнику полную picture — картину: маршрут, риски, вода — решать ему. Рассвет breaks над дюнами, первый луч режет гребни — вчерашний неловкий разговор уберёг вас от дорогой mistake — ошибки, и кадр того стоил.",
+  "lead-5": "Ты вкатываешься в рампу, assuming, что разогрев будет лёгким, — и доску срывает sideways на мокром стыке. Audience у бортика ахает: ты committed — заявил — этот трюк вслух при всех, и теперь честно разбираешь, где он не сложился. Доска разлетелась apart — на куски — о рейл: вот точка, где всё развалилось. Приятель кидает свою: «follow за мной!» — ты отряхиваешь ладони: standard — планка — остаётся прежней, трюк надо доехать. Разгон, прыжок на чистом trust к чужой доске — приземление! — и страх остаётся где-то behind, под рёв трибун.",
+  "lead-6": "Ты выводишь группу на седловину и видишь: гребень не тот. Разворачиваешься к людям и говоришь в лицо: я свернул wrong — не туда. Показываешь на солнце: это cost — стоило нам двух часов, и это на мне. Расстилаешь карту на камне, чтобы никому не пришлось guess — гадать. Тычешь пальцем в развилку: я не рассчитал timing — время выхода. Ведёшь палец по signs — приметам, которые проглядел: сухое русло, сломанный тур. Тут же вносишь changes — перемены: сверяешься вслух на каждой развилке. Затягиваешь лямки и встаёшь первым: authority — авторитет — не в безошибочности. Говоришь коротко: это на мне, lesson — урок — усвоен, идём. К закату выводишь всех к воде, и верёвка trust — доверия — натягивается крепче прежней.",
+  "lead-7": "Вбрасывание — fair, но шайба влетает в сетку, и гол признан valid: весь heat — жар — трибун валится на молодого вратаря, и одному ему его не вынести. Ты подъезжаешь и встаёшь front него, лицом к залу, потом берёшь call тайм-аута и говоришь с ним privately, шлем к шлему. В следующей атаке падаешь под бросок — живой shield; к вратарю подкатывает провокатор, и ты разворачиваешь его на себя: это мои people — люди, вопросы — через меня. После сирены у микрофона ты говоришь одно: за пропущенный accountable — капитан.",
+  "lead-8": "Двое сцепились во дворе — тянут одно бревно с разных ends — концов, не видя этого. Ты встаёшь между ними и разводишь их руки: здесь нет enemy — врага. Разворачиваешь обоих за плечи к недостроенной стене: оба хотят её достроить — вот start, отсюда и начнём. Шагаешь в crossfire — перекрёстный огонь — реплик и поднимаешь ладонь: по одному. Протягиваешь руку первому: сначала facts — факты, чувства потом. Распахиваешь ворота и сбиваешь temperature — температуру — двора холодным воздухом. Мягко опускаешь вскинутый кулак того, кто уже празднует: ты не referee — не судья, свисток не твой. Держишь разговор на track — на колее, — пока они впервые слышат друг друга. И переводишь обоих на одну side — сторону — черты, которую сам стираешь подошвой.",
+  "lead-9": "Ты спускаешься с мостика на палубу с тяжёлой вестью и решаешь: скажешь straight — прямо. Сам обходишь весь корабль, собирая экипаж: пусть услышат от тебя, а не через grapevine — сарафанное радио. Вглядываешься в лица, следя, как это lands — приземляется: за цифрами люди. Выкладываешь situation — обстановку — без украшательств: курс меняется, и удар настоящий. Мелом делишь доску: что know — знаем, чего не знаем, что будет дальше. Не spin — не крутишь — формулировки покрасивее: пишешь цифры как есть. Худшую строку читаешь первой, не sugarcoat — не подслащивая ради уюта. Глядя экипажу в глаза, не insult — не оскорбляешь людей игрой в «это легко». И ты не dropping — не роняешь весть, уходя в каюту: остаёшься на палубе до конца шторма.",
+  "lead-10": "Перед стартом соперники brag на всю арену, а ваш разгоняющий — quiet, только туже шнурует шиповки. Его рывок решает outcome — исход — уже на первом этапе, и пусть это знают все: когда ты рвёшь ленту, win — победа — его, не твоя. Табло вспыхивает: record! Толпа рвётся качать тебя, но ты отдаёшь credit — признание — по адресу: первым над головами плывёт разгоняющий. Тебе это ничего не cost — не стоит: твоё золото никуда не делось. Когда твои люди shine — сияют, отблеск ложится на всю команду. А recognition — признание, отданное точно, заводит четвёрку бежать следующий финал ещё злее.",
+  "lead-11": "Тренер seen твой разминочный прыжок и молча кивает вверх: ты capable — способен — на большее, и сам это знаешь; можешь more. Он поднимает bar сразу на два деления — на высоту, которую берут только excellent прыгуны. Ты понимаешь: «и так нормально» — вот что holding — держало — тебя ниже планки. Тренер pushing — дожимает, — потому что видел твой лучший прыжок: этот — не он. Ни одной сбитой попытке он не даёт slide — проскочить молча: каждую разбирает. И это не piling — не добивание: он просто знает, на что ты способен, — на трибуне уже встаёт селекционер сборной с белым конвертом.",
+  "negotiation-1": "Рассветный караванный рынок. Ты делаешь start — первым шагаешь в ворота и идёшь вдоль рядов к нужному прилавку. Хлопаешь ладонью по table — столешнице — и выкладываешь монеты. Поверх товара разворачиваешь map — карту — всего пути: вот как выглядит твоя сделка. Торговец хмурится — ты move: переступаешь к соседнему лотку, показывая, что не привязан. Возвращаешься и give — отдаёшь — один мешочек, второй придерживая за спиной. Вы meet — сходитесь — посреди прохода, глаза в глаза. Носком сапога чертишь bottom — нижнюю черту — на песке: ниже не пойдёшь. Стучишь каблуком в каменный floor — пол: вот дно. Цена не двигается — и ты разворачиваешься и walk — уходишь — к воротам, не оглядываясь.",
+  "pitch-1": "Рассвет, ты сбегаешь по трапу на пирс, где зевают рыбаки. Показываешь на дымящий баркас у горизонта: fire — вот что у них полыхает каждый понедельник с самого утра. Вскакиваешь на бочку: quick — быстро, — тридцать секунд. Выхватываешь из ящика hook — крюк — и широкой дугой забрасываешь леску. Первый рывок — и ты подсекаешь opportunity — возможность, мимо которой все проходят. Тычешь пальцем в тёмную воду под сваями: вот здесь money — деньги, в том месте, которое все пропускают. Хлопаешь монетой о бочку: bet — ставка, — что каждый чувствовал этот рывок. Одним движением strip — счищаешь — чешую и всё лишнее: остаётся суть. Поднимаешь one — один — отборный кусок над головой: если унесёте одно — вот это. И бросаешь его ближайшему — кусок lands — ложится точно в подставленные ладони.",
+  "pitch-2": "Ты ведёшь инвестора по гребню старой дамбы. Руками очерчиваешь frame — рамку: смотри на проблему отсюда. Приседаешь и суёшь палец в hole — дыру в бетоне, которая есть у всех. Прижимаешь его ладонь к холодной стене: чувствуешь дрожь? Это real — по-настоящему. Подставляешь ковш под струю: вода bleed — утекает, как клиенты, капля за каплей. Вбиваешь stake — кол — у отметки уровня: вот что на кону. Высыпаешь горсть монет в поток: это tax — налог, который платят молча. Распахиваешь window — смотровое окно шлюза: оно открыто сейчас, не через год. Показываешь рукой вниз: течение flipped — развернулось, момент настал. И под тиканье clock — часов — кладёшь его руку на рубильник: время уже пошло.",
+  "pitch-3": "Ты прокладываешь path — тропу через пропасть, доска за доской, прямо к нему. На том конце — table: стол, на который ты выкладываешь всё, что принёс, и оно ложится точь-в-точь, идеальный fit. Над столом ты произносишь ask — прямо, без обёртки. Он кивает: yes — и ты ставишь на кон себя: bet — ставка, за которую ему не будет стыдно. Закатываешь рукав — на коже шрам, skin, ты в игре наравне. Протягиваешь руку: shake — жмёте крепко. Он говорит одно word — слово, — и капля сургуча запечатывает бумагу. Сделка — твоя.",
+  "repair-1": "Ты толкаешь калитку её двора с ящиком инструментов: ты owe — должен ей извинение и починенный забор. Вдоль грядок — твои вчерашние следы: там ты overstepped — переступил её межу — и повалил секцию забора. Опускаешься на колено у пролома, кладёшь ладонь на сломанную доску: fault — вина, и она твоя. Поднимаешь глаза на её крыльцо и говоришь первым: sorry — прости. Упираешься плечом в накренившийся столб и ставишь его right — ровно. Прибиваешь новую доску и киваешь вдоль штакетника forward — вперёд: дальше она увидит дело, не слова. Осторожно качаешь готовую секцию, проверяя trust — доверие: держит. У крыльца рукавом стираешь вашу старую перепалку со slate — грифельной доски для записок — дочиста. И выкатываешь её велосипед на track — укатанную дорожку у калитки: путь снова общий.",
+  "stage-1": "Тёмный зал. Ты входишь через дальнюю дверь: ты не speech — не речь — сюда принёс, ты идёшь поговорить, и луч фонаря находит одного зрителя. По пути хлопаешь ладонью по креслу в последнем row — ряду: вас я тоже вижу. Подхватываешь useful — полезный — ящик и тащишь его к сцене вместо трибуны. Сдираешь с лица pretending — притворную — маску и бросаешь под ноги. Взбираясь на ящик, оступаешься — вот она, mistake — ошибка — и превращаешь сбой в первый шаг. Закатываешь рукав, показываешь шрам, который нельзя unsee — развидеть. Замираешь, собирая всё attention — внимание — зала: эта минута того стоит. Тебе некуда hurry — спешить: медленно разворачиваешь плечи, зал остаётся с тобой. И ставишь обе ступни в центр света: вы здесь, ты здесь — пусть этот hour — час — что-то значит.",
+  "stage-2": "Ты ступаешь на канат над площадью, и гул внизу обрывается. Начинается отрезок, который стоит remember — запомнить: толпа сама подаётся вперёд. Поднимаешь ладонь: stay — останьтесь со мной, дальше — главное. Балансиром рисуешь в воздухе picture — картину, и все видят её с тобой. Замираешь, давая мысли sink — осесть. Нарочно идёшь slow — медленнее: точность дороже скорости. Носком ноги write — выводишь по канату одну линию, единственную строчку, которую стоит записать. Повисаешь на одной ноге, давая сказанному moment — мгновение — долететь. Не заполняешь паузу лишними жестами: silence — тишина — наверху не пугает тебя, она твоя. И спокойно wait — ждёшь на середине, глядя, как вся площадь ждёт тебя.",
+  "stage-3": "Лампа «запись» горит. Ты протираешь lens — объектив — и шагаешь в кадр, глядя в него как в глаза. Прижимаешь ладонь к screen — экрану: он не обязан быть стеной, — отталкиваешься и идёшь одним дублем через студию. Ставишь на стол декорации две чашки coffee — кофе — и разворачиваешь стул: будто вы просто разговариваете. Отбиваешь счёт: три вещи, девяносто секунд, без fluff — ваты. Вытряхиваешь из карманов rambling — блуждания вокруг да около — прямо в корзину, не сбавляя шага. Тянешь за собой нить по полу: всё это ties — связывается — в одну линию. Стягиваешь пиджак-act — наигрыш — и вешаешь на гвоздь: остаёшься без сценария, собой. Камера больше не rattle — не сбивает — тебя: ты дышишь и замедляешься. Доходишь до монитора: на экране человек в ease — покое, и это чувствуется на том конце.",
+  "stage-4": "В пальцах начинается shaking, над трибунами мигает nervous табло, а в груди pounding — колотит: значит, это важно. Ты plant — врастаешь — ступнями в резину, один вдох. Готовым себя не почувствуешь никогда — просто start — старт. Первый шаг уносит тебя за стартовую line — черту: остальное догоняет само. Мандраж — это просто energy — энергия, и ты пускаешь её в работу. Нервы едут рядом, на пассажирском, но не driving — не за рулём: машину ведёшь ты, — и на финише ты разрываешь ленту с надписью present.",
+  "stage-5": "Из зала на сцену летит дымящийся свёрток-вопрос. Ты сходишь с трибуны, поднимаешь его и окунаешь в бак с водой: под дымом — fair — честный — вопрос, и на него ты ответишь. Разворачиваешь мокрую ткань, заглядываешь underneath — под низ: там bold — дерзкая — начинка, и такое тебе даже нравится. Отдираешь фальшивое дно — setup — подставу — и отбрасываешь в сторону: сам страх под ней настоящий, о нём и поговорим. Блестящую обёртку-framing — рамку — обходишь, не касаясь: отвечать будешь на сам вопрос. Пальцами separate — отделяешь — обёртку-обвинение от сердцевины. Внутри — записка, и ты даже glad — рад, что спросили: шанс всё объяснить. Возвращаешься по проходу: ты не spar — не боксировать — вышел, зал пришёл за ответами. И ровным, calm — спокойным — шагом поднимаешься обратно на сцену.",
+  "stage-6": "На арене лопается balloon, экран за спиной становится blank, и картонные slides съезжают набок. Без drama — драмы: ты нажимаешь медный рычаг и продолжаешь. Ставишь дрезину обратно на track — колею. Мелом отмечаешь место, где ты derailed — сошёл с рельсов: отсюда и поехали. Колесо цепляет песок — ну что ж, happened — случилось, едем дальше. Каждый иногда trips — спотыкается: смотри, как быстро ты вскакиваешь с колена. И вскакиваешь так красиво, что идеальный номер выглядел бы boring — скучным: а так у публики есть история.",
+  "stage-7": "Ты ведёшь группу в старый дом. В прихожей втягиваешь smell — запах — кофе и воска и машешь рукой: сюда. На скрипучей лестнице у тебя обрывается stomach — живот, — и ты жестом передаёшь это всем за спиной. Спотыкаешься о ведро — embarrassing — неловко, — но нарочно оборачиваешься и показываешь. В зале выкладываешь на стол ключи от всего дома: таков deal — уговор: ошибётесь — и он не ваш. Слышишь шаги: что-то coming — приближается, — и прижимаешь всех к стене. И тут всё flips — переворачивается: рывком сдёргиваешь чехол — revealed — открылось: под ним зеркало, и в нём вы сами. Держишь фонарь, пока picture — картинка — впечатывается: вы к ней ещё вернётесь. Медленно опускаешься на пол, и все опускаются следом: некоторым вещам не нужен commentary — комментарий.",
+  "stage-8": "Вершина на рассвете; впереди спуск. Ты обходишь строй и каждому защёлкиваешь карабин: believe — веришь — в каждого лично. Хлопаешь по плечам, rooting — болея — за всех до одного. У прогоревшего ночного костра раздуваешь courage — жар смелости — в углях: пусть каждый увидит, что огонь ещё жив. Переворачиваешь бирку на первом рюкзаке: monday — понедельник, одно дело — вот и вся просьба. Оставляешь им одну note — ноту, на которой расстаёшься: держать строй до самой кромки. Первым ступаешь на верёвку: настоящее starts — начинается — за кромкой, где кончились слова. Сжимаешь кулак: вопрос не «можете», а will — станете ли. Без долгих goodbye — прощаний: скатываешь лагерь и затягиваешь рюкзак. Свою half — половину — уговора ты выполнил, остальное — их: молча отпускаешь их вниз.",
+  "stage-9": "Ты выходишь из машины в белые вспышки и идёшь сквозь коридор репортёров. Отодвигаешь протянутый лист statement — заготовку: говорить будешь как человек. Расстёгиваешь пальто: тебе не за чем hide — прятаться. Сворачиваешь к журналистке с папкой: она сделала homework — домашнюю работу. Наклоняешься к диктофону и медленно даёшь строку под print — в печать. Отводишь ладонью микрофон с провокацией: speculate — гадать — не будешь. Чеканишь одну sentence — фразу — целиком: бери и ставь в эфир как есть, её не порезать. Идёшь через круг света, не меняя шага: cameras — камеры — включены или нет, ответ один. Проходишь мимо бегущего headline — заголовка, не подстраивая темп: не ему писать твой ответ. И у дверей разворачиваешься: quote — цитируйте всё, я за каждым словом.",
+  "stage-10": "Ты обводишь рукой thousand — тысячу — лиц и сходишь со сцены по ступеням вниз. Спускаешься в проход и говоришь quietly — тихо: эта часть только для них. Щёлкаешь тумблером и гасишь свет до nothing — до ничего: остаётся один твой фонарик. Останавливаешься у одного кресла: вот человек, которого ты держал в mind — в мыслях — всю дорогу. Обходишь тянущиеся камеры, avoiding — избегая — их, чтобы кадр не съел разговор. В луче видно, как кто-то в темноте nodding — кивает: узнали себя. Тебе незачем shout — кричать: тебя слышно и в шёпоте. За спиной по таймеру вспыхивает show — шоу, которое шло бы и без тебя, — но ты не оборачиваешься: одна честная минута стоит его целиком. Поднимаешь фонарик — ты пришёл не впечатлить, а reach — дотянуться, и он дотягивается.",
+  "stage-11": "Шквал вырывает из рук plans, и вокруг уже не та crowd — толпа — волн, к которой ты готовился: даже лучше. Парусник входит в волну real — по-настоящему: вот теперь всё взаправду. Ты хватаешься за мачту — за одну idea — стержневую мысль курса — и руками даёшь парусу новую shape. Перебегаешь через мокрый deck к штурвалу. С борта срывается safety — страховочная — сетка: вот теперь начинается интересное. Глянцевый slick — прилизанный — ход переоценён: ветер бьёт в лицо настоящий, и это честнее. Но карта не нужна — ты знаешь этот фарватер cold — наизусть, и новый курс рождается под ногами."
+ }
+}
