@@ -23,6 +23,11 @@ PRESENCE = {
 def main() -> None:
     init_db()
     with Session(engine()) as s:
+        # The audio routes grew an auth dependency; calling them directly needs a
+        # real user id. Any admin works — user_id only gates private imports and
+        # picks the story language (admin = ru base).
+        admin = s.exec(select(models.User).where(models.User.is_admin == True)).first()  # noqa: E712
+        uid = admin.id if admin else 1
         rows = s.exec(
             select(models.Batch).where(models.Batch.deleted_at == None)  # noqa: E711
             .order_by(models.Batch.id)
@@ -33,7 +38,7 @@ def main() -> None:
             ok_layouts = []
             for layout in ("full", "anchors", "shuffle"):
                 try:
-                    B.mnemo_audio(b.id, layout=layout, session=s)
+                    B.mnemo_audio(b.id, layout=layout, user_id=uid, session=s)
                     ok_layouts.append(layout)
                 except Exception as e:  # noqa: BLE001
                     print(f"    mnemo #{b.id} {layout}: {type(e).__name__} {e}")
@@ -43,7 +48,7 @@ def main() -> None:
             ok_ph = 0
             for p in phrases:
                 try:
-                    B.phrase_audio(p.id, session=s)
+                    B.phrase_audio(p.id, user_id=uid, session=s)
                     ok_ph += 1
                 except Exception as e:  # noqa: BLE001
                     print(f"    phrase #{p.id} ({b.slug}): {type(e).__name__} {e}")
