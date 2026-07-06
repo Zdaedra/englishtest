@@ -9,7 +9,7 @@ import { IconSearch, IconPlay } from "../ui/icons";
 import { orderedSections, sectionName } from "../lib/sections";
 import { buildSprint } from "../lib/strategy";
 import { getProgress, isActive } from "../lib/progress";
-import { getStrategy, recordVisit } from "../lib/profile";
+import { addManual, getStrategy, isInManual, recordVisit, removeManual } from "../lib/profile";
 import { useTeach } from "../tutorial/teach";
 import { getAvatar } from "../lib/avatar";
 import { syncReviewReminder } from "../lib/reminders";
@@ -472,6 +472,20 @@ export default function Library() {
                   <BatchTapButton key={b.id} batchId={b.id} title={b.title} className="row-card">
                     <span className="row-card-art">
                       <BatchCover seed={b.slug} coverUrl={b.cover_url} locked={b.locked} />
+                    </span>
+                    <span
+                      className={`row-add${isInManual(b.id) ? " in" : ""}`}
+                      role="button"
+                      aria-label={isInManual(b.id) ? t("plan.removeManual") : t("plan.addManual")}
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onPointerUp={(e) => e.stopPropagation()}
+                      onTouchStart={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        isInManual(b.id) ? removeManual(b.id) : addManual(b.id);
+                      }}
+                    >
+                      {isInManual(b.id) ? "✓" : "+"}
                     </span>
                     <div className="row-card-title">{b.title}</div>
                     {b.preview && <div className="row-card-sub">{b.preview}</div>}

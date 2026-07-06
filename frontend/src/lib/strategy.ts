@@ -325,3 +325,27 @@ export function buildTrajectory(
   for (let i = 0; i < order.length; i += S) sprints.push({ items: order.slice(i, i + S) });
   return { order, sprints, domainOf };
 }
+
+// C1: the manual plan — the learner's hand-picked batches, in pick order,
+// chunked into the same sprints. domainOf still resolves through the focus
+// buckets so "Твои домены" and the per-sprint mix keep working unchanged.
+export function buildManualTrajectory(
+  ids: number[],
+  s: Strategy,
+  batches: BatchListItem[]
+): Trajectory {
+  const S = Math.min(12, Math.max(1, s.sprintSize || 5));
+  const byId = new Map(batches.map((b) => [b.id, b] as const));
+  const order = ids.map((id) => byId.get(id)).filter(Boolean) as BatchListItem[];
+
+  const buckets = focusBuckets(s);
+  const fallbackKey = buckets[buckets.length - 1]?.key ?? "discovery";
+  const secToBucket = new Map<string, string>();
+  for (const bk of buckets) for (const sec of bk.sections) secToBucket.set(sec, bk.key);
+  const domainOf = new Map<number, string>();
+  for (const b of order) domainOf.set(b.id, secToBucket.get(b.section ?? "") ?? fallbackKey);
+
+  const sprints: Sprint[] = [];
+  for (let i = 0; i < order.length; i += S) sprints.push({ items: order.slice(i, i + S) });
+  return { order, sprints, domainOf };
+}

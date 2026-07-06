@@ -11,7 +11,16 @@ export type UserProfile = {
   scenarios?: string[]; // SCENARIOS keys, 1-2 chosen (legacy seed for strategy)
   strategy?: Strategy; // the adaptive focus route (source of truth once tuned)
   onboardedAt?: string; // ISO; presence = onboarding done
+  // C1: who assembles the plan. "auto" = the strategy weaves all batches;
+  // "manual" = the learner's own hand-picked set (manualIds, in pick order).
+  // Switching modes ARCHIVES, never erases: both the strategy and the manual
+  // set stay in the profile, and batch progress lives per-batch on the server,
+  // so it is absolute across any number of switches.
+  planMode?: PlanMode;
+  manualIds?: number[];
 };
+
+export type PlanMode = "auto" | "manual";
 
 // Each goal boosts a set of sections to the front of the path. The 7 presence
 // directions are the core product (each maps to its own section); "Деловая
@@ -100,6 +109,44 @@ export function getStrategy(): Strategy {
 export function paceFromLeague(): boolean {
   const p = getProfile();
   return !p.strategy?.main && !!getLeagueResult();
+}
+
+// ── C1: manual plan mode ─────────────────────────────────────────────────────
+// The same event the batch menu dispatches — every plan surface already
+// re-renders on it (useProgressVersion), so mode/set changes repaint the map.
+function notifyPlanChanged(): void {
+  try { window.dispatchEvent(new Event("ee-progress-changed")); } catch { /* ssr */ }
+}
+
+export function getPlanMode(): PlanMode {
+  return getProfile().planMode === "manual" ? "manual" : "auto";
+}
+
+export function setPlanMode(mode: PlanMode): void {
+  setProfile({ planMode: mode });
+  notifyPlanChanged();
+}
+
+export function manualIds(): number[] {
+  return (getProfile().manualIds ?? []).filter((x) => typeof x === "number");
+}
+
+export function isInManual(id: number): boolean {
+  return manualIds().includes(id);
+}
+
+// Adding a batch by hand IS the intent to drive the plan yourself — the mode
+// flips to manual right away (the auto plan stays archived in the strategy).
+export function addManual(id: number): void {
+  const ids = manualIds();
+  if (!ids.includes(id)) ids.push(id);
+  setProfile({ manualIds: ids, planMode: "manual" });
+  notifyPlanChanged();
+}
+
+export function removeManual(id: number): void {
+  setProfile({ manualIds: manualIds().filter((x) => x !== id) });
+  notifyPlanChanged();
 }
 
 export function setStrategy(s: Strategy): void {

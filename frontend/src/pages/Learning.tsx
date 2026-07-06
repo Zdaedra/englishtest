@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { api, BatchListItem, BatchMastery } from "../api";
 import { orderedSections } from "../lib/sections";
 import { getProgress } from "../lib/progress";
-import { getProfile, getStrategy, isOnboarded, prioritySectionSlugs } from "../lib/profile";
-import { buildTrajectory, focusBuckets } from "../lib/strategy";
+import { getPlanMode, getProfile, getStrategy, isOnboarded, manualIds, prioritySectionSlugs, setPlanMode } from "../lib/profile";
+import { buildManualTrajectory, buildTrajectory, focusBuckets } from "../lib/strategy";
 import { BatchCover } from "../ui/Art";
 import { BatchTapButton } from "../ui/BatchTapButton";
 import { useProgressVersion } from "../ui/BatchMenu";
@@ -238,9 +238,12 @@ export default function Learning() {
     () => prioritySectionSlugs(getProfile(), orderedSections().map((x) => x.slug)),
     [batches]
   );
+  const planMode = getPlanMode();   // re-read every render; pv bumps on change
   const traj = useMemo(
-    () => buildTrajectory(strategy, batches, sectionPriority),
-    [strategy, batches, sectionPriority]
+    () => planMode === "manual"
+      ? buildManualTrajectory(manualIds(), strategy, batches)
+      : buildTrajectory(strategy, batches, sectionPriority),
+    [strategy, batches, sectionPriority, planMode, pv]
   );
   // The computed order, with any manual drag (path_rank) layered on top as a
   // total override. Re-tuning domains clears path_rank, so the mix drives again.
@@ -538,11 +541,28 @@ export default function Learning() {
         )
       )}
 
+      {planMode === "manual" && flat.length === 0 && (
+        <div className="plan-manual-empty">
+          <p className="muted">{t("plan.manualEmpty")}</p>
+          <button className="map-reorder" onClick={() => setPlanMode("auto")}>
+            {t("plan.backToAuto")}
+          </button>
+        </div>
+      )}
       {/* The plan header + a single global reorder toggle (move up/down across the
           whole plan; move-to-start/end live in the long-press menu). */}
       {sprints.length > 0 && (
         <div className="map-head">
-          <p className="section-label atlas-label">{t("learn.plan")}</p>
+          <p className="section-label atlas-label">
+            {planMode === "manual"
+              ? t("plan.manualBadge", { n: flat.length })
+              : t("learn.plan")}
+          </p>
+          {planMode === "manual" && (
+            <button className="map-reorder" onClick={() => setPlanMode("auto")}>
+              {t("plan.backToAuto")}
+            </button>
+          )}
           {flat.length > 1 && (
             reordering ? (
               <button className="map-reorder done" onClick={() => setReordering(false)}>

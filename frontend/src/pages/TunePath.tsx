@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getStrategy, setStrategy, paceFromLeague } from "../lib/profile";
+import { getStrategy, setStrategy, paceFromLeague, getPlanMode, setPlanMode, manualIds } from "../lib/profile";
 import { getLeagueResult } from "../lib/league";
 import { tg } from "../i18n";
 import { clearAllPathRanks } from "../lib/progress";
@@ -60,6 +60,24 @@ export default function TunePath() {
         <h1 className="app-title">{t("tune.title")}</h1>
         <p className="app-sub">{t("tune.sub")}</p>
       </div>
+
+      <p className="section-label">{t("tune.planMode")}</p>
+      <div className="tune-modes">
+        {(["auto", "manual"] as const).map((m) => (
+          <button
+            key={m}
+            className={`tune-size tune-mode${getPlanMode() === m ? " sel" : ""}`}
+            aria-pressed={getPlanMode() === m}
+            onClick={() => setPlanMode(m)}
+          >
+            {t(m === "auto" ? "plan.modeAuto" : "plan.modeManual")}
+            <span className="tune-mode-sub">
+              {m === "auto" ? t("tune.modeAutoDesc") : t("tune.modeManualDesc", { n: manualIds().length })}
+            </span>
+          </button>
+        ))}
+      </div>
+      <p className="tune-league-note">{t("tune.archiveNote")}</p>
 
       <p className="section-label">{t("tune.whatsUp")}</p>
       <div className="quest-opts">
