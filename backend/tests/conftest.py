@@ -113,6 +113,12 @@ def stub_network(monkeypatch):
                                   "task_ru": f"Задача {i + 1}"}
                                  for i in range(len(items))]},
     )
+    monkeypatch.setattr(
+        "app.scoring.league_score",
+        lambda answers: {"via": "llm", "results": [
+            {"id": a["id"], "score": 7 if (a.get("text") or "").strip() else 0,
+             "better": "Native line.", "note_ru": "заметка"} for a in answers]},
+    )
     monkeypatch.setattr("app.cover.generate_cover", lambda *a, **k: "/covers/stub.png")
     monkeypatch.setattr("app.llm.parse_batch", lambda raw: {"phrases": []})
     monkeypatch.setattr("app.llm.chat", lambda system, user, temperature=None: "{}")

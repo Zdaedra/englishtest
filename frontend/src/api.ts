@@ -63,6 +63,7 @@ export type StreakInfo = {
   last_active: string | null;
 };
 export type CallUpgrade = { original: string; native: string; note: string };
+export type LeagueGrade = { id: string; score: number; better: string; note_ru: string };
 export type WeeklyPhrase = {
   phrase_id: number; anchor: string; phrase_en: string; avg_score: number;
 };
@@ -246,6 +247,12 @@ export const api = {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ text }),
     }).then(j<{ upgrades: CallUpgrade[]; via: string }>),
+  // League 2.0: own answers per situation, graded server-side by rubric.
+  leagueScore: (answers: { id: string; situation: string; text: string }[]) =>
+    apiFetch("/api/league/score", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ answers }),
+    }).then(j<{ tier: string; avg: number; results: LeagueGrade[] }>),
   // --- Swipe-deck Training ---
   getDeck: (batchIds: number[], opts?: { maintenanceIds?: number[]; limit?: number; exclude?: number[]; dueOnly?: boolean; gapOnly?: boolean }) => {
     const q = new URLSearchParams({ batch_ids: batchIds.join(",") });

@@ -320,6 +320,59 @@ def weave_scenario(items: list[dict]) -> dict:
         return {"title_ru": "", "beats": [], "via": "fallback"}
 
 
+_LEAGUE_SYSTEM = """You are the examiner of the "English League" placement test in
+Executive English (RU-native professionals, B1+). For each work situation the user
+answered in their OWN English words (typed, or a voice transcript — ignore
+punctuation/casing artifacts of speech recognition).
+
+Score every answer 0-10 as the sum of four explicit criteria:
+- IDIOM (0-3): sounds like a living native executive, not a textbook. 3 = natural
+  native-league phrasing; 2 = fluent but slightly bookish; 1 = correct learner
+  English; 0 = broken or not an answer.
+- REGISTER (0-3): tone fits the situation — direct without rudeness, no
+  bureaucratese, no over-apologising, no servility.
+- ECONOMY (0-2): compact and weighted; no filler chains, hedging or rambling.
+- MOVE (0-2): the line performs the RIGHT conversational move for that moment
+  (pushes back, lands a decision, protects the relationship — what the situation
+  actually needs), not just a grammatical sentence nearby.
+Hard rules: grammar mistakes that obscure meaning cap IDIOM at 1. An empty,
+non-English or off-situation answer scores 0 total. Judge the move, not opinions.
+
+For every answer also return:
+- "better": ONE short native-league line a sharp executive would say there. If the
+  user's answer already IS native-league (9-10), return their line lightly polished.
+- "note_ru": ONE short Russian sentence — what exactly to upgrade (for 9-10: what
+  made the line strong).
+Return STRICT JSON: {"results":[{"id":"...","score":N,"better":"...","note_ru":"..."}]}"""
+
+
+def league_score(answers: list[dict]) -> dict:
+    """League placement, production answers: the user speaks/types their own line
+    for each situation; one LLM call grades ALL answers against the explicit
+    4-criteria rubric above. `answers` = [{id, situation, text}]. Returns
+    {results: [{id, score, better, note_ru}], via} aligned by id; via="fallback"
+    when the LLM is unavailable (the client then offers the legacy choice quiz)."""
+    payload = json.dumps(
+        [{"id": a.get("id", ""), "situation": a.get("situation", ""),
+          "answer": a.get("text", "")} for a in answers], ensure_ascii=False)
+    try:
+        data = _openai_json(_LEAGUE_SYSTEM, payload, max_tokens=1000,
+                            model=get_settings().model_coach)
+        by_id = {str(r.get("id", "")): r for r in (data.get("results") or [])}
+        results = []
+        for a in answers:
+            r = by_id.get(str(a.get("id", ""))) or {}
+            results.append({
+                "id": a.get("id", ""),
+                "score": _clamp(r.get("score", 0)),
+                "better": str(r.get("better", "")).strip(),
+                "note_ru": str(r.get("note_ru", "")).strip(),
+            })
+        return {"results": results, "via": "llm"}
+    except Exception:
+        return {"results": [], "via": "fallback"}
+
+
 def score_sequence(anchors_in_order: list[str], story_ru: str, user_said: str) -> dict:
     """Test A. Returns {score, missed_anchors, order_ok, via}."""
     if len(_tokens(_normalize(user_said))) < _MIN_TOKENS:
