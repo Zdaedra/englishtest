@@ -1,60 +1,60 @@
 {
-  "slug": "lead-9",
-  "title": "Сообщить плохую новость команде",
-  "theme": "Донести тяжёлую новость группе, сохранив доверие — без приукрашивания и спина, держа достоинство и оставаясь рядом",
-  "subtitle": "Ночной заморозок",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Heavy",
-      "zone": "Warm",
-      "en": "This is heavy — and I want to meet it with you honestly."
-    },
-    {
-      "anchor": "Grapevine",
-      "zone": "Warm",
-      "en": "You're hearing this from me — not through the grapevine."
-    },
-    {
-      "anchor": "Lands",
-      "zone": "Warm",
-      "en": "I care about how this lands — there are people behind the numbers."
-    },
-    {
-      "anchor": "News",
-      "zone": "Backbone",
-      "en": "Here's the news, plainly: the plan has changed, and the impact is real."
-    },
-    {
-      "anchor": "Know",
-      "zone": "Backbone",
-      "en": "Here's what we know, what we don't know yet, and what happens next."
-    },
-    {
-      "anchor": "Spin",
-      "zone": "Backbone",
-      "en": "I'm giving you the facts — not spin."
-    },
-    {
-      "anchor": "Sugarcoat",
-      "zone": "Weight",
-      "en": "I'm not going to sugarcoat this to make the room more comfortable."
-    },
-    {
-      "anchor": "Insult",
-      "zone": "Weight",
-      "en": "I won't insult you by pretending this is easy."
-    },
-    {
-      "anchor": "Through",
-      "zone": "Weight",
-      "en": "I'm staying with you through the hard part — not just the announcement."
-    }
-  ],
-  "mnemo": "Небо к ночи heavy, свинцовое, и первый иней ложится на grapevine; мороз lands на долину разом. По деревне летит news: урожай под ударом, — и ты идёшь вдоль рядов, чтобы know точно. Ветряки spin, гоня тёплый воздух, но ягоды уже в sugarcoat инея, как в глазури; старик-сосед грозит небу кулаком — личный insult морозу. К рассвету вы жжёте костры между рядами — и нижние лозы проходят through, живые."
+ "slug": "lead-9",
+ "title": "Сообщить плохую новость команде",
+ "theme": "Донести тяжёлую новость группе, сохранив доверие — без приукрашивания и спина, держа достоинство и оставаясь рядом",
+ "subtitle": "Ночной заморозок",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Heavy",
+   "zone": "Warm",
+   "en": "This is heavy — and I want to meet it with you honestly."
+  },
+  {
+   "anchor": "Grapevine",
+   "zone": "Warm",
+   "en": "You're hearing this from me — not through the grapevine."
+  },
+  {
+   "anchor": "Lands",
+   "zone": "Warm",
+   "en": "I care about how this lands — there are people behind the numbers."
+  },
+  {
+   "anchor": "News",
+   "zone": "Backbone",
+   "en": "Here's the news, plainly: the plan has changed, and the impact is real."
+  },
+  {
+   "anchor": "Know",
+   "zone": "Backbone",
+   "en": "Here's what we know, what we don't know yet, and what happens next."
+  },
+  {
+   "anchor": "Spin",
+   "zone": "Backbone",
+   "en": "I'm giving you the facts — not spin."
+  },
+  {
+   "anchor": "Sugarcoat",
+   "zone": "Weight",
+   "en": "I'm not going to sugarcoat this to make the room more comfortable."
+  },
+  {
+   "anchor": "Insult",
+   "zone": "Weight",
+   "en": "I won't insult you by pretending this is easy."
+  },
+  {
+   "anchor": "Through",
+   "zone": "Weight",
+   "en": "I'm staying with you through the hard part — not just the announcement."
+  }
+ ],
+ "mnemo": "Ты спускаешься с мостика на палубу с heavy — тяжёлой вестью и сам обходишь весь корабль, собирая экипаж: пусть услышат от тебя, а не через grapevine — сарафанное радио. Вглядываешься в лица, следя, как это lands — приземляется: за цифрами люди. Выкладываешь news — новость — прямо: курс меняется, и удар настоящий. Мелом делишь доску: что know — знаем, чего не знаем, что будет дальше. Не spin — не крутишь мел в пальцах, подбирая слова покрасивее: пишешь цифры как есть. Худшую строку читаешь первой, не sugarcoat — не подслащивая ради уюта. Глядя экипажу в глаза, не insult — не оскорбляешь людей игрой в «это легко». И остаёшься на палубе всю ночную вахту — through, до конца шторма, а не до конца объявления."
 }

@@ -1,60 +1,60 @@
 {
-  "slug": "intimacy-12",
-  "title": "Желание и тепло без клише",
-  "theme": "Выразить влечение и нежность свежо и конкретно — дать почувствовать, что видят, хотят и ценят; желание из присутствия, а не из нужды",
-  "subtitle": "Пёс на пляже",
-  "section": "intimacy",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Laugh",
-      "zone": "Warm",
-      "en": "The way you laugh with your whole face — that's my favorite thing in any room."
-    },
-    {
-      "anchor": "Catch",
-      "zone": "Warm",
-      "en": "I catch myself watching how you do small things — they get me every time."
-    },
-    {
-      "anchor": "Ordinary",
-      "zone": "Warm",
-      "en": "You make ordinary moments feel chosen."
-    },
-    {
-      "anchor": "Want",
-      "zone": "Backbone",
-      "en": "I want you — and I like that I can say it without making it cheap."
-    },
-    {
-      "anchor": "Closer",
-      "zone": "Backbone",
-      "en": "Come closer — I've been wanting less room between us."
-    },
-    {
-      "anchor": "Pull",
-      "zone": "Backbone",
-      "en": "There's still a pull in me every time you look at me like that."
-    },
-    {
-      "anchor": "Whole",
-      "zone": "Weight",
-      "en": "I choose you with my eyes open — the tender parts and the difficult ones."
-    },
-    {
-      "anchor": "Presence",
-      "zone": "Weight",
-      "en": "My desire for you comes from presence — not from needing you to complete me."
-    },
-    {
-      "anchor": "Stay",
-      "zone": "Weight",
-      "en": "After all this time, I still want to stay curious about you."
-    }
-  ],
-  "mnemo": "Пёс носится по кромке прибоя так, что ты не сдерживаешь laugh, и в прыжке он catch фрисби из воздуха. Потом приносит самую ordinary палку и смотрит: want ещё! Подползает closer по мокрому песку, вцепляется в канат — pull изо всех сил, отдаваясь игре whole, целиком. Рядом с ним остаётся только чистое presence; ты говоришь «stay» — он замирает, и вы вдвоём смотрите, как солнце падает в океан."
+ "slug": "intimacy-12",
+ "title": "Желание и тепло без клише",
+ "theme": "Выразить влечение и нежность свежо и конкретно — дать почувствовать, что видят, хотят и ценят; желание из присутствия, а не из нужды",
+ "subtitle": "Пёс на пляже",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Laugh",
+   "zone": "Warm",
+   "en": "The way you laugh with your whole face — that's my favorite thing in any room."
+  },
+  {
+   "anchor": "Catch",
+   "zone": "Warm",
+   "en": "I catch myself watching how you do small things — they get me every time."
+  },
+  {
+   "anchor": "Ordinary",
+   "zone": "Warm",
+   "en": "You make ordinary moments feel chosen."
+  },
+  {
+   "anchor": "Want",
+   "zone": "Backbone",
+   "en": "I want you — and I like that I can say it without making it cheap."
+  },
+  {
+   "anchor": "Closer",
+   "zone": "Backbone",
+   "en": "Come closer — I've been wanting less room between us."
+  },
+  {
+   "anchor": "Pull",
+   "zone": "Backbone",
+   "en": "There's still a pull in me every time you look at me like that."
+  },
+  {
+   "anchor": "Whole",
+   "zone": "Weight",
+   "en": "I choose you with my eyes open — the tender parts and the difficult ones."
+  },
+  {
+   "anchor": "Presence",
+   "zone": "Weight",
+   "en": "My desire for you comes from presence — not from needing you to complete me."
+  },
+  {
+   "anchor": "Stay",
+   "zone": "Weight",
+   "en": "After all this time, I still want to stay curious about you."
+  }
+ ],
+ "mnemo": "Рассветный пляж, вы идёте босиком у воды. Она поскальзывается — и ты laugh — смеёшься — всем лицом, подхватывая её за талию. Прыжком catch — ловишь — её шляпу, сорванную ветром. Поднимаешь самый ordinary — обычный — камешек и вручаешь как трофей. Разворачиваешь её к себе и говоришь глаза в глаза: want — хочу — не удешевляя ни шуткой, ни спешкой. Тянешь её на шаг closer — ближе, — пока между вами лишь ветер. Чувствуешь pull — притяжение — и подаёшься вперёд, лоб ко лбу. Обнимаешь whole — целиком, — вместе с мокрым песком и колючками характера. Дышишь с ней в один ритм: presence — присутствие, а не нужда. И делаешь ещё шаг вдоль воды: stay — остаёшься — любопытным к ней, как в первый день."
 }

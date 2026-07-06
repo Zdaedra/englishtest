@@ -1,60 +1,60 @@
 {
-  "slug": "stage-8",
-  "title": "Закрыть мощно, дать унести",
-  "theme": "Последние секунды выступления — не дать финалу слиться в «ну, спасибо», а соединиться напоследок, выдать один ясный призыв и расчётливую последнюю строку; закончить ровно там, где обещал, без благодарностей-наполнителя, и оставить заряд и фразу, которую унесут за дверь",
-  "subtitle": "Факел на тропе",
-  "section": "stage",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "believe",
-      "zone": "Warm",
-      "en": "You walked in as a crowd. You're leaving as people I believe in."
-    },
-    {
-      "anchor": "rooting",
-      "zone": "Warm",
-      "en": "I'm rooting for every one of you — and I mean that."
-    },
-    {
-      "anchor": "courage",
-      "zone": "Warm",
-      "en": "I hope you leave with more courage, not just more information."
-    },
-    {
-      "anchor": "Monday",
-      "zone": "Backbone",
-      "en": "Monday morning, do this one thing. That's the whole ask."
-    },
-    {
-      "anchor": "trail",
-      "zone": "Backbone",
-      "en": "I'm not going to trail off — I'm landing this, right here."
-    },
-    {
-      "anchor": "test",
-      "zone": "Backbone",
-      "en": "This is the end of the talk. It is the start of the test."
-    },
-    {
-      "anchor": "will",
-      "zone": "Weight",
-      "en": "The question was never whether you can. It's whether you will."
-    },
-    {
-      "anchor": "pad",
-      "zone": "Weight",
-      "en": "No thank-yous to pad it. Just the line — and the door."
-    },
-    {
-      "anchor": "sentence",
-      "zone": "Weight",
-      "en": "I'll stop here. The next sentence is yours."
-    }
-  ],
-  "mnemo": "Ты вбиваешь в землю колышек believe, проверяешь, как под ним держатся корни rooting, и поднимаешь факел courage над ещё тёплой золой. На воротах переворачиваешь табличку monday, открываешь узкую trail и ставишь у входа камень test, через который каждый должен шагнуть сам. Потом достаёшь из кармана свёрток will, кладёшь его на каменный pad у тропы и вырезаешь на дереве последнюю sentence, после которой уже не добавляешь ни слова."
+ "slug": "stage-8",
+ "title": "Закрыть мощно, дать унести",
+ "theme": "Последние секунды выступления — не дать финалу слиться в «ну, спасибо», а соединиться напоследок, выдать один ясный призыв и расчётливую последнюю строку; закончить ровно там, где обещал, без благодарностей-наполнителя, и оставить заряд и фразу, которую унесут за дверь",
+ "subtitle": "Факел на тропе",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "believe",
+   "zone": "Warm",
+   "en": "You walked in as a crowd. You're leaving as people I believe in."
+  },
+  {
+   "anchor": "rooting",
+   "zone": "Warm",
+   "en": "I'm rooting for every one of you — and I mean that."
+  },
+  {
+   "anchor": "courage",
+   "zone": "Warm",
+   "en": "I hope you leave with more courage, not just more information."
+  },
+  {
+   "anchor": "Monday",
+   "zone": "Backbone",
+   "en": "Monday morning, do this one thing. That's the whole ask."
+  },
+  {
+   "anchor": "trail",
+   "zone": "Backbone",
+   "en": "I'm not going to trail off — I'm landing this, right here."
+  },
+  {
+   "anchor": "test",
+   "zone": "Backbone",
+   "en": "This is the end of the talk. It is the start of the test."
+  },
+  {
+   "anchor": "will",
+   "zone": "Weight",
+   "en": "The question was never whether you can. It's whether you will."
+  },
+  {
+   "anchor": "pad",
+   "zone": "Weight",
+   "en": "No thank-yous to pad it. Just the line — and the door."
+  },
+  {
+   "anchor": "sentence",
+   "zone": "Weight",
+   "en": "I'll stop here. The next sentence is yours."
+  }
+ ],
+ "mnemo": "Вершина на рассвете; впереди спуск. Ты обходишь строй и каждому защёлкиваешь карабин: believe — веришь — в каждого лично. Хлопаешь по плечам, rooting — болея — за всех до одного. У прогоревшего ночного костра раздуваешь courage — жар смелости — в углях: пусть каждый увидит, что огонь ещё жив. Переворачиваешь бирку на первом рюкзаке: monday — понедельник, одно дело — вот и вся просьба. Выводишь колонну на trail — тропу — и не даёшь шагу рассыпаться до самой кромки. Первым ступаешь на верёвку: test — испытание — начинается там, где кончились слова. Сжимаешь кулак: вопрос не «можете», а will — станете ли. Скатываешь спальный pad — коврик — и затягиваешь в рюкзак: мягкого больше не будет. Произносишь одну последнюю sentence — фразу — и молча отпускаешь их вниз."
 }

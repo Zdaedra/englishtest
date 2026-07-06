@@ -1,60 +1,60 @@
 {
-  "slug": "lead-8",
-  "title": "Разрулить чужой конфликт",
-  "theme": "Двое сцепились при тебе — вступить нейтральным авторитетом: снизить градус, дать структуру и вернуть их на одну сторону, не судя",
-  "subtitle": "Встречный пал",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Closer",
-      "zone": "Warm",
-      "en": "I hear both of you — and we're closer to the same concern than it sounds."
-    },
-    {
-      "anchor": "Enemy",
-      "zone": "Warm",
-      "en": "Neither of you is the enemy here."
-    },
-    {
-      "anchor": "Outcome",
-      "zone": "Warm",
-      "en": "You both want the same outcome — that's the part to stand on."
-    },
-    {
-      "anchor": "Crossfire",
-      "zone": "Backbone",
-      "en": "Let's stop the crossfire — one voice at a time, uninterrupted."
-    },
-    {
-      "anchor": "Fact",
-      "zone": "Backbone",
-      "en": "Give me the fact — then what you need from it."
-    },
-    {
-      "anchor": "Temperature",
-      "zone": "Backbone",
-      "en": "Let's separate the issue from the temperature in the room."
-    },
-    {
-      "anchor": "Crown",
-      "zone": "Weight",
-      "en": "I'm not here to crown a winner — I'm here to get you hearing each other."
-    },
-    {
-      "anchor": "Frame",
-      "zone": "Weight",
-      "en": "I'll just hold the frame until you actually hear each other."
-    },
-    {
-      "anchor": "Side",
-      "zone": "Weight",
-      "en": "I'm not picking a side — I'm getting you back onto the same one."
-    }
-  ],
-  "mnemo": "Гул фронта всё closer, но командир кричит: огонь нам не enemy — пускаем встречный пал, от него зависит весь outcome. Два вала смыкаются, и ты на миг в crossfire дыма; рация подтверждает fact: ветер сменился. У реки temperature падает, но пожар прыгает в crown — идёт по верхушкам! Бульдозер режет frame просеки вокруг очага, и вы выходите на безопасную side: огонь заперт."
+ "slug": "lead-8",
+ "title": "Разрулить чужой конфликт",
+ "theme": "Двое сцепились при тебе — вступить нейтральным авторитетом: снизить градус, дать структуру и вернуть их на одну сторону, не судя",
+ "subtitle": "Встречный пал",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Closer",
+   "zone": "Warm",
+   "en": "I hear both of you — and we're closer to the same concern than it sounds."
+  },
+  {
+   "anchor": "Enemy",
+   "zone": "Warm",
+   "en": "Neither of you is the enemy here."
+  },
+  {
+   "anchor": "Outcome",
+   "zone": "Warm",
+   "en": "You both want the same outcome — that's the part to stand on."
+  },
+  {
+   "anchor": "Crossfire",
+   "zone": "Backbone",
+   "en": "Let's stop the crossfire — one voice at a time, uninterrupted."
+  },
+  {
+   "anchor": "Fact",
+   "zone": "Backbone",
+   "en": "Give me the fact — then what you need from it."
+  },
+  {
+   "anchor": "Temperature",
+   "zone": "Backbone",
+   "en": "Let's separate the issue from the temperature in the room."
+  },
+  {
+   "anchor": "Crown",
+   "zone": "Weight",
+   "en": "I'm not here to crown a winner — I'm here to get you hearing each other."
+  },
+  {
+   "anchor": "Frame",
+   "zone": "Weight",
+   "en": "I'll just hold the frame until you actually hear each other."
+  },
+  {
+   "anchor": "Side",
+   "zone": "Weight",
+   "en": "I'm not picking a side — I'm getting you back onto the same one."
+  }
+ ],
+ "mnemo": "Двое сцепились во дворе. Ты идёшь closer — ближе — и встаёшь между ними. Разводишь их руки в стороны: здесь нет enemy — врага. Разворачиваешь обоих за плечи к недостроенной стене: вот outcome — результат, — ради него оба здесь. Шагаешь в crossfire — перекрёстный огонь — реплик и поднимаешь ладонь: по одному. Протягиваешь руку первому: клади fact — факт, — потом что тебе нужно. Распахиваешь ворота и сбиваешь temperature — температуру — двора холодным воздухом. Мягко опускаешь вскинутый кулак того, кто уже празднует: ты не crown — не короновать победителя пришёл. Разводишь руки и держишь frame — рамку, — пока они впервые слышат друг друга. И переводишь обоих на одну side — сторону — черты, которую сам стираешь подошвой."
 }

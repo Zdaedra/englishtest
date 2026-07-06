@@ -1,60 +1,60 @@
 {
-  "slug": "charisma-10",
-  "title": "Представить людей",
-  "theme": "Свести двоих так, что оба благодарны, а ты — связующий центр, поднявший статус всех",
-  "subtitle": "Фотофиниш",
-  "section": "charisma",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Favorite",
-      "zone": "Warm",
-      "en": "Two of my favorite people, and somehow you'd never met."
-    },
-    {
-      "anchor": "Click",
-      "zone": "Warm",
-      "en": "I had a feeling you two would click — let's find out."
-    },
-    {
-      "anchor": "Better",
-      "zone": "Warm",
-      "en": "You both make a room better — in very different ways."
-    },
-    {
-      "anchor": "Compare",
-      "zone": "Backbone",
-      "en": "You two should compare notes — you're solving the same thing from opposite ends."
-    },
-    {
-      "anchor": "Ask",
-      "zone": "Backbone",
-      "en": "Ask her about Lagos, ask him about the raise — then I'll get out of your way."
-    },
-    {
-      "anchor": "Only",
-      "zone": "Backbone",
-      "en": "He's the only other person I know who sees this the way you do."
-    },
-    {
-      "anchor": "Casually",
-      "zone": "Weight",
-      "en": "I don't make introductions casually — this one has range."
-    },
-    {
-      "anchor": "Record",
-      "zone": "Weight",
-      "en": "When you two build something, I want it on record I started it."
-    },
-    {
-      "anchor": "Thank",
-      "zone": "Weight",
-      "en": "This is the introduction you'll both quietly thank me for in a year."
-    }
-  ],
-  "mnemo": "Конюх выводит на дорожку favorite забега, и с click секундомера ворота распахиваются. По дальней дуге ход всё better — он достаёт лидера грудь в грудь, и судьи compare кадры фотофиниша. Трибуны хором ask: «кто?!» — а на табло горит only один номер: твой. Жокей casually машет перчаткой, секундомер показывает record трека, и он, спрыгнув, обнимает коня за шею: thank you."
+ "slug": "charisma-10",
+ "title": "Представить людей",
+ "theme": "Свести двоих так, что оба благодарны, а ты — связующий центр, поднявший статус всех",
+ "subtitle": "Фотофиниш",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Favorite",
+   "zone": "Warm",
+   "en": "Two of my favorite people, and somehow you'd never met."
+  },
+  {
+   "anchor": "Click",
+   "zone": "Warm",
+   "en": "I had a feeling you two would click — let's find out."
+  },
+  {
+   "anchor": "Better",
+   "zone": "Warm",
+   "en": "You both make a room better — in very different ways."
+  },
+  {
+   "anchor": "Compare",
+   "zone": "Backbone",
+   "en": "You two should compare notes — you're solving the same thing from opposite ends."
+  },
+  {
+   "anchor": "Ask",
+   "zone": "Backbone",
+   "en": "Ask her about Lagos, ask him about the raise — then I'll get out of your way."
+  },
+  {
+   "anchor": "Only",
+   "zone": "Backbone",
+   "en": "He's the only other person I know who sees this the way you do."
+  },
+  {
+   "anchor": "Casually",
+   "zone": "Weight",
+   "en": "I don't make introductions casually — this one has range."
+  },
+  {
+   "anchor": "Record",
+   "zone": "Weight",
+   "en": "When you two build something, I want it on record I started it."
+  },
+  {
+   "anchor": "Thank",
+   "zone": "Weight",
+   "en": "This is the introduction you'll both quietly thank me for in a year."
+  }
+ ],
+ "mnemo": "Приём. Ты видишь в разных углах двух favorite — любимых — людей и пересекаешь толпу к первому. Берёшь его под локоть, подводишь ко второй — и с click — щелчком — сдвигаешь их бокалы. Отступаешь на полшага, разводя руки: каждый из них делает комнату better — лучше. Подталкиваешь их плечом к плечу: compare — сравните заметки, вы решаете одну задачу с двух концов. Шепчешь каждому на ухо по вопросу — ask — спроси — про Лагос и про повышение. Поднимаешь один палец: only — единственный, — кто видит это так же. Casually — небрежно — облокачиваешься на стойку, будто ничего не устроил. Щёлкаешь их на телефон — record — запись: ты это начал. И, пятясь к дверям, ловишь их кивок: thank — спасибо — дозреет через год."
 }

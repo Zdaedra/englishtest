@@ -1,60 +1,60 @@
 {
-  "slug": "gravitas-10",
-  "title": "Завершить кризис, посадить самолёт",
-  "theme": "Острая фаза позади — отметить поворот к восстановлению, признать людей, спокойно вернуть норму; кризис определяет не нас, а наш выход из него",
-  "subtitle": "Посадка после грозы",
-  "section": "gravitas",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Sharpest",
-      "zone": "Warm",
-      "en": "Take a breath — we got through the sharpest part together."
-    },
-    {
-      "anchor": "Hold",
-      "zone": "Warm",
-      "en": "I saw people hold the line under real pressure — and that matters."
-    },
-    {
-      "anchor": "Through",
-      "zone": "Warm",
-      "en": "This took a lot out of everyone — thank you for staying steady through it."
-    },
-    {
-      "anchor": "Closed",
-      "zone": "Backbone",
-      "en": "The emergency phase is closed — we're moving into recovery."
-    },
-    {
-      "anchor": "Stable",
-      "zone": "Backbone",
-      "en": "Here's what's stable, what's still exposed, and what we watch next."
-    },
-    {
-      "anchor": "Reset",
-      "zone": "Backbone",
-      "en": "No victory lap yet — we debrief, repair, and reset."
-    },
-    {
-      "anchor": "Discipline",
-      "zone": "Weight",
-      "en": "We held the line — now we build the discipline that keeps it from breaking again."
-    },
-    {
-      "anchor": "Lesson",
-      "zone": "Weight",
-      "en": "The lesson isn't the pain — the lesson is what we change because of it."
-    },
-    {
-      "anchor": "Exit",
-      "zone": "Weight",
-      "en": "This crisis won't define us — our exit from it will."
-    }
-  ],
-  "mnemo": "Самолёт проходит sharpest край грозовой стены, и ты обеими руками держишь hold на штурвале, протаскивая корпус through последний боковой ветер. Колёса касаются полосы, створки шасси closed, приборы впервые показывают stable, и ты мягко нажимаешь reset на панели аварийного режима. Потом включается discipline рулёжки: медленно к терминалу, без победного круга, только проверка систем. Уже у трапа ты снимаешь с приборной доски lesson и открываешь exit, чтобы все вышли не в панике, а в тишине после посадки."
+ "slug": "gravitas-10",
+ "title": "Завершить кризис, посадить самолёт",
+ "theme": "Острая фаза позади — отметить поворот к восстановлению, признать людей, спокойно вернуть норму; кризис определяет не нас, а наш выход из него",
+ "subtitle": "Посадка после грозы",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Sharpest",
+   "zone": "Warm",
+   "en": "Take a breath — we got through the sharpest part together."
+  },
+  {
+   "anchor": "Hold",
+   "zone": "Warm",
+   "en": "I saw people hold the line under real pressure — and that matters."
+  },
+  {
+   "anchor": "Through",
+   "zone": "Warm",
+   "en": "This took a lot out of everyone — thank you for staying steady through it."
+  },
+  {
+   "anchor": "Closed",
+   "zone": "Backbone",
+   "en": "The emergency phase is closed — we're moving into recovery."
+  },
+  {
+   "anchor": "Stable",
+   "zone": "Backbone",
+   "en": "Here's what's stable, what's still exposed, and what we watch next."
+  },
+  {
+   "anchor": "Reset",
+   "zone": "Backbone",
+   "en": "No victory lap yet — we debrief, repair, and reset."
+  },
+  {
+   "anchor": "Discipline",
+   "zone": "Weight",
+   "en": "We held the line — now we build the discipline that keeps it from breaking again."
+  },
+  {
+   "anchor": "Lesson",
+   "zone": "Weight",
+   "en": "The lesson isn't the pain — the lesson is what we change because of it."
+  },
+  {
+   "anchor": "Exit",
+   "zone": "Weight",
+   "en": "This crisis won't define us — our exit from it will."
+  }
+ ],
+ "mnemo": "Шторм стихает. Ты последним перелезаешь sharpest — самый острый — гребень завала у выхода. Упираешься спиной в балку и hold — держишь — её, пока проходят твои люди. Ведёшь колонну through — насквозь — тёмный коридор, касаясь каждого плеча: спасибо, что выстояли. Задраиваешь аварийный люк: closed — закрыто, острая фаза позади. Обходишь опоры, толкая каждую ладонью: эта stable — устойчива, — а две помечаешь мелом: следить. У щитка жмёшь reset — сброс — без круга почёта. Выравниваешь общий шаг в ровный ритм: discipline — дисциплина, чтобы стена не упала снова. Поднимаешь с пола погнутый болт и кладёшь в карман: lesson — урок. И первым толкаешь дверь exit — выход, — придерживая её для всех."
 }

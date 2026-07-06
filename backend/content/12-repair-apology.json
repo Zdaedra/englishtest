@@ -1,20 +1,60 @@
 {
-  "slug": "repair-1",
-  "title": "Помириться",
-  "theme": "Починка отношений — признать вину, извиниться, восстановить доверие",
-  "subtitle": "",
-  "section": "repair",
-  "zones": ["Admit", "Mend", "Rebuild"],
-  "phrases": [
-    { "anchor": "Owe",         "zone": "Admit",   "en": "I owe you an apology." },
-    { "anchor": "Overstepped", "zone": "Admit",   "en": "I overstepped, and I know it." },
-    { "anchor": "Fault",       "zone": "Admit",   "en": "This is my fault here." },
-    { "anchor": "Sorry",       "zone": "Mend",    "en": "I'm truly sorry about that." },
-    { "anchor": "Right",       "zone": "Mend",    "en": "Let me make this right." },
-    { "anchor": "Better",      "zone": "Mend",    "en": "I'll do better from here." },
-    { "anchor": "Trust",       "zone": "Rebuild", "en": "I want to earn back your trust." },
-    { "anchor": "Slate",       "zone": "Rebuild", "en": "Can we wipe the slate clean?" },
-    { "anchor": "Track",       "zone": "Rebuild", "en": "Let's get back on track." }
-  ],
-  "mnemo": "Ты признаёшь, что owe — должен извинение, как невыплаченный долг. Понимаешь, что overstepped — переступил черту, зашёл на чужую землю. Тычешь пальцем в fault — в свою вину, и она целиком твоя. Говоришь тихо: sorry, виноват. Берёшься make it right — выпрямить погнутое. Обещаешь стать better — лучше, чем был. Хочешь вернуть trust — доверие, как птицу на ладонь. Стираешь slate — грифельную доску дочиста. И возвращаешь всё на track — на рельсы."
+ "slug": "repair-1",
+ "title": "Помириться",
+ "theme": "Починка отношений — признать вину, извиниться, восстановить доверие",
+ "subtitle": "",
+ "section": "repair",
+ "zones": [
+  "Admit",
+  "Mend",
+  "Rebuild"
+ ],
+ "phrases": [
+  {
+   "anchor": "Owe",
+   "zone": "Admit",
+   "en": "I owe you an apology."
+  },
+  {
+   "anchor": "Overstepped",
+   "zone": "Admit",
+   "en": "I overstepped, and I know it."
+  },
+  {
+   "anchor": "Fault",
+   "zone": "Admit",
+   "en": "This is my fault here."
+  },
+  {
+   "anchor": "Sorry",
+   "zone": "Mend",
+   "en": "I'm truly sorry about that."
+  },
+  {
+   "anchor": "Right",
+   "zone": "Mend",
+   "en": "Let me make this right."
+  },
+  {
+   "anchor": "Better",
+   "zone": "Mend",
+   "en": "I'll do better from here."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Rebuild",
+   "en": "I want to earn back your trust."
+  },
+  {
+   "anchor": "Slate",
+   "zone": "Rebuild",
+   "en": "Can we wipe the slate clean?"
+  },
+  {
+   "anchor": "Track",
+   "zone": "Rebuild",
+   "en": "Let's get back on track."
+  }
+ ],
+ "mnemo": "Ты толкаешь калитку её двора с ящиком инструментов: ты owe — должен ей извинение и починенный забор. Вдоль грядок — твои вчерашние следы: там ты overstepped — переступил её межу — и повалил секцию забора. Опускаешься на колено у пролома, кладёшь ладонь на сломанную доску: fault — вина, и она твоя. Поднимаешь глаза на её крыльцо и говоришь первым: sorry — прости. Упираешься плечом в накренившийся столб и ставишь его right — ровно. Прибиваешь новую доску better — крепче прежней. Осторожно качаешь готовую секцию, проверяя trust — доверие: держит. У крыльца рукавом стираешь вашу старую перепалку со slate — грифельной доски для записок — дочиста. И выкатываешь её велосипед на track — укатанную дорожку у калитки: путь снова общий."
 }

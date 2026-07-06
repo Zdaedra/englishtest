@@ -1,60 +1,60 @@
 {
-  "slug": "composure-8",
-  "title": "Ответить на неуважение, не опускаясь",
-  "theme": "С тобой грубы или говорят свысока — ответить, не опускаясь до их уровня: назвать неуважение и стандарт, отвечать вверх, а не вниз",
-  "subtitle": "Лифт выше шума",
-  "section": "composure",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Intended",
-      "zone": "Warm",
-      "en": "I'm guessing that came out worse than you intended."
-    },
-    {
-      "anchor": "Again",
-      "zone": "Warm",
-      "en": "Say that again in a way I can actually work with."
-    },
-    {
-      "anchor": "Snark",
-      "zone": "Warm",
-      "en": "The snark's just slowing us down — let's lose it."
-    },
-    {
-      "anchor": "Candor",
-      "zone": "Backbone",
-      "en": "Don't talk down to me and call it candor."
-    },
-    {
-      "anchor": "Challenge",
-      "zone": "Backbone",
-      "en": "I'm open to challenge — I'm not open to disrespect."
-    },
-    {
-      "anchor": "Ways",
-      "zone": "Backbone",
-      "en": "Here's how it works with me: respect runs both ways."
-    },
-    {
-      "anchor": "Lower",
-      "zone": "Weight",
-      "en": "I won't lower myself to answer that in kind."
-    },
-    {
-      "anchor": "Level",
-      "zone": "Weight",
-      "en": "I'm not coming down to that level — meet me at this one, and we'll talk."
-    },
-    {
-      "anchor": "Condition",
-      "zone": "Weight",
-      "en": "Respect is the condition for this conversation — not the reward."
-    }
-  ],
-  "mnemo": "На панели мигает intended этаж, ты спокойно нажимаешь again закрытие дверей, и в стекло прилетает бумажный самолётик с надписью snark. Ты снимаешь с поручня чистый жетон candor, принимаешь challenge узкой шахты и видишь две ways: вниз к шуму или вверх к свету. Палец проходит мимо кнопки lower, кабина ровно выходит на level, и дверь открывается только при одном condition: говорить на высоте."
+ "slug": "composure-8",
+ "title": "Ответить на неуважение, не опускаясь",
+ "theme": "С тобой грубы или говорят свысока — ответить, не опускаясь до их уровня: назвать неуважение и стандарт, отвечать вверх, а не вниз",
+ "subtitle": "Лифт выше шума",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Intended",
+   "zone": "Warm",
+   "en": "I'm guessing that came out worse than you intended."
+  },
+  {
+   "anchor": "Again",
+   "zone": "Warm",
+   "en": "Say that again in a way I can actually work with."
+  },
+  {
+   "anchor": "Snark",
+   "zone": "Warm",
+   "en": "The snark's just slowing us down — let's lose it."
+  },
+  {
+   "anchor": "Candor",
+   "zone": "Backbone",
+   "en": "Don't talk down to me and call it candor."
+  },
+  {
+   "anchor": "Challenge",
+   "zone": "Backbone",
+   "en": "I'm open to challenge — I'm not open to disrespect."
+  },
+  {
+   "anchor": "Ways",
+   "zone": "Backbone",
+   "en": "Here's how it works with me: respect runs both ways."
+  },
+  {
+   "anchor": "Lower",
+   "zone": "Weight",
+   "en": "I won't lower myself to answer that in kind."
+  },
+  {
+   "anchor": "Level",
+   "zone": "Weight",
+   "en": "I'm not coming down to that level — meet me at this one, and we'll talk."
+  },
+  {
+   "anchor": "Condition",
+   "zone": "Weight",
+   "en": "Respect is the condition for this conversation — not the reward."
+  }
+ ],
+ "mnemo": "Ты идёшь по верхней тропе над ущельем, и снизу прилетает грязный окрик. Останавливаешься и переспрашиваешь ровно: вышло хуже, чем intended — чем задумывал? Складываешь ладони рупором: скажи again — заново, так, чтобы с этим можно было работать. Стряхиваешь с плаща брызги snark — язвительности: они только тормозят подъём. Отводишь от лица ветку, что бьёт под видом candor — прямоты. Принимаешь challenge — вызов крутого склона, но не летящие камни. Видишь две ways — тропы: вниз, в грязь, и вверх, по гребню. Не ставишь ногу lower — ниже, на осыпь. Выходишь на свой level — уступ — и машешь: поднимайся сюда, поговорим. И выбиваешь на камне condition — условие: разговор только на этой высоте."
 }

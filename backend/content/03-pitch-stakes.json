@@ -1,20 +1,60 @@
 {
-  "slug": "pitch-2",
-  "title": "Ставка",
-  "theme": "Питч: боль, цена и «почему сейчас»",
-  "subtitle": "Трещина в стекле",
-  "section": "pitch",
-  "zones": ["Frame", "Cost", "Now"],
-  "phrases": [
-    { "anchor": "Frame",  "zone": "Frame", "en": "Here's how I'd frame the problem." },
-    { "anchor": "Crack",  "zone": "Frame", "en": "There's a crack in how everyone does this today." },
-    { "anchor": "Real",   "zone": "Frame", "en": "Let me make this real for a second." },
-    { "anchor": "Bleed",  "zone": "Cost",  "en": "Every month you wait, you bleed customers you never see." },
-    { "anchor": "Stake",  "zone": "Cost",  "en": "Here's what's actually at stake." },
-    { "anchor": "Tax",    "zone": "Cost",  "en": "The status quo is a tax — you're just paying it quietly." },
-    { "anchor": "Window", "zone": "Now",   "en": "The window for this is open right now, not next year." },
-    { "anchor": "Tide",   "zone": "Now",   "en": "The tide just turned — and here's why now." },
-    { "anchor": "Clock",  "zone": "Now",   "en": "The clock's already running on this one." }
-  ],
-  "mnemo": "Ты вешаешь на стену пустую frame, и в ней проступает трещина, crack, бегущая по стеклу. Проводишь пальцем — кровь, всё real, по-настоящему. Из трещины капля за каплей bleed, и каждая капля — деньги на кону, stake. Невидимый сборщик молча берёт свой tax. За рамкой распахивается window — снаружи прибой, tide поднимается прямо сейчас. А на подоконнике тикает clock — время уже пошло."
+ "slug": "pitch-2",
+ "title": "Ставка",
+ "theme": "Питч: боль, цена и «почему сейчас»",
+ "subtitle": "Трещина в стекле",
+ "section": "pitch",
+ "zones": [
+  "Frame",
+  "Cost",
+  "Now"
+ ],
+ "phrases": [
+  {
+   "anchor": "Frame",
+   "zone": "Frame",
+   "en": "Here's how I'd frame the problem."
+  },
+  {
+   "anchor": "Crack",
+   "zone": "Frame",
+   "en": "There's a crack in how everyone does this today."
+  },
+  {
+   "anchor": "Real",
+   "zone": "Frame",
+   "en": "Let me make this real for a second."
+  },
+  {
+   "anchor": "Bleed",
+   "zone": "Cost",
+   "en": "Every month you wait, you bleed customers you never see."
+  },
+  {
+   "anchor": "Stake",
+   "zone": "Cost",
+   "en": "Here's what's actually at stake."
+  },
+  {
+   "anchor": "Tax",
+   "zone": "Cost",
+   "en": "The status quo is a tax — you're just paying it quietly."
+  },
+  {
+   "anchor": "Window",
+   "zone": "Now",
+   "en": "The window for this is open right now, not next year."
+  },
+  {
+   "anchor": "Tide",
+   "zone": "Now",
+   "en": "The tide just turned — and here's why now."
+  },
+  {
+   "anchor": "Clock",
+   "zone": "Now",
+   "en": "The clock's already running on this one."
+  }
+ ],
+ "mnemo": "Ты ведёшь инвестора по гребню старой дамбы. Руками очерчиваешь frame — рамку: смотри на проблему отсюда. Приседаешь и ведёшь пальцем по crack — трещине в бетоне, которая есть у всех. Прижимаешь его ладонь к холодной стене: чувствуешь дрожь? Это real — по-настоящему. Подставляешь ковш под струю: вода bleed — утекает, как клиенты, капля за каплей. Вбиваешь stake — кол — у отметки уровня: вот что на кону. Высыпаешь горсть монет в поток: это tax — налог, который платят молча. Распахиваешь window — смотровое окно шлюза: оно открыто сейчас, не через год. Показываешь рукой на разворот tide — прилива: момент настал. И под тиканье clock — часов — кладёшь его руку на рубильник: время уже пошло."
 }

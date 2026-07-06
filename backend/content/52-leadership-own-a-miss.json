@@ -1,60 +1,60 @@
 {
-  "slug": "lead-6",
-  "title": "Признать промах, не теряя авторитета",
-  "theme": "Публично взять свою ошибку как лидер — чисто, без самобичевания и оправданий; показать коррекцию и выйти с большим доверием",
-  "subtitle": "Лучник",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Wrong",
-      "zone": "Warm",
-      "en": "I got this one wrong — and it landed on you. I want to say that out loud."
-    },
-    {
-      "anchor": "Cost",
-      "zone": "Warm",
-      "en": "That call cost the team time — and that's on me, no one else."
-    },
-    {
-      "anchor": "Guessing",
-      "zone": "Warm",
-      "en": "Let me name it plainly — so no one's left guessing."
-    },
-    {
-      "anchor": "Timing",
-      "zone": "Backbone",
-      "en": "I misjudged the timing — and that's on me."
-    },
-    {
-      "anchor": "Missed",
-      "zone": "Backbone",
-      "en": "I moved too fast and missed the part that should've slowed me down."
-    },
-    {
-      "anchor": "Changes",
-      "zone": "Backbone",
-      "en": "Here's what changes now: clearer checks, earlier flags, no quiet assumptions."
-    },
-    {
-      "anchor": "Authority",
-      "zone": "Weight",
-      "en": "I don't lose authority by owning the miss — I lose it by pretending there wasn't one."
-    },
-    {
-      "anchor": "Hit",
-      "zone": "Weight",
-      "en": "I'll take the hit — and we'll move with the lesson."
-    },
-    {
-      "anchor": "Trust",
-      "zone": "Weight",
-      "en": "Trust gets built in moments like this — by what we do next."
-    }
-  ],
-  "mnemo": "Ты берёшь wrong поправку на ветер, и первая стрела уходит в край — это cost тебе десятку. Признаёшь: ты guessing, а не читаешь поле, — и начинаешь ловить timing порывов по флажкам; вторая всё же missed на волос. Вносишь changes в прицел — два щелчка, — и старый тренер кивает с authority: теперь верно. Выпуск — hit, десятка! — а последнюю стрелу ты пускаешь с закрытыми глазами, на чистом trust."
+ "slug": "lead-6",
+ "title": "Признать промах, не теряя авторитета",
+ "theme": "Публично взять свою ошибку как лидер — чисто, без самобичевания и оправданий; показать коррекцию и выйти с большим доверием",
+ "subtitle": "Лучник",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Wrong",
+   "zone": "Warm",
+   "en": "I got this one wrong — and it landed on you. I want to say that out loud."
+  },
+  {
+   "anchor": "Cost",
+   "zone": "Warm",
+   "en": "That call cost the team time — and that's on me, no one else."
+  },
+  {
+   "anchor": "Guessing",
+   "zone": "Warm",
+   "en": "Let me name it plainly — so no one's left guessing."
+  },
+  {
+   "anchor": "Timing",
+   "zone": "Backbone",
+   "en": "I misjudged the timing — and that's on me."
+  },
+  {
+   "anchor": "Missed",
+   "zone": "Backbone",
+   "en": "I moved too fast and missed the part that should've slowed me down."
+  },
+  {
+   "anchor": "Changes",
+   "zone": "Backbone",
+   "en": "Here's what changes now: clearer checks, earlier flags, no quiet assumptions."
+  },
+  {
+   "anchor": "Authority",
+   "zone": "Weight",
+   "en": "I don't lose authority by owning the miss — I lose it by pretending there wasn't one."
+  },
+  {
+   "anchor": "Hit",
+   "zone": "Weight",
+   "en": "I'll take the hit — and we'll move with the lesson."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Weight",
+   "en": "Trust gets built in moments like this — by what we do next."
+  }
+ ],
+ "mnemo": "Ты выводишь группу на седловину и видишь: гребень не тот. Разворачиваешься к людям и говоришь в лицо: я свернул wrong — не туда. Показываешь на солнце: это cost — стоило нам двух часов, и это на мне. Расстилаешь карту на камне, чтобы никто не остался guessing — гадать. Тычешь пальцем в развилку: я не рассчитал timing — время выхода. Ведёшь палец по руслу, которое missed — проглядел. Тут же вносишь changes — перемены: сверяешься вслух на каждой развилке. Затягиваешь лямки и встаёшь первым: authority — авторитет — не в безошибочности. Принимаешь hit — удар усталых взглядов — и разворачиваешь колонну. К закату выводишь всех к воде, и верёвка trust — доверия — натягивается крепче прежней."
 }

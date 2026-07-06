@@ -1,20 +1,60 @@
 {
-  "slug": "pressure-1",
-  "title": "Под давлением",
-  "theme": "Под давлением — поглотить вопрос, удержать позицию, развернуть в суть",
-  "subtitle": "",
-  "section": "pressure",
-  "zones": ["Absorb", "Hold", "Turn"],
-  "phrases": [
-    { "anchor": "Fair",      "zone": "Absorb", "en": "That's a fair question." },
-    { "anchor": "Feet",      "zone": "Absorb", "en": "I'm thinking on my feet here." },
-    { "anchor": "Spot",      "zone": "Absorb", "en": "You've really put me on the spot." },
-    { "anchor": "Loaded",    "zone": "Hold",   "en": "That's a bit of a loaded question." },
-    { "anchor": "Ground",    "zone": "Hold",   "en": "I'm going to hold my ground on this." },
-    { "anchor": "Budging",   "zone": "Hold",   "en": "I hear you, but I'm not budging." },
-    { "anchor": "Tackle",    "zone": "Turn",   "en": "Let me tackle that one head-on." },
-    { "anchor": "Heart",     "zone": "Turn",   "en": "Let me get to the heart of it." },
-    { "anchor": "Down",      "zone": "Turn",   "en": "Here's what it really comes down to." }
-  ],
-  "mnemo": "Тебя вызвали на сцену, и вопрос звучит fair — резонно, по делу, но бьёт в упор. Ты твёрдо стоишь на feet, на ногах, и луч прожектора ловит тебя в spot — в пятно света. Вопрос оказывается loaded, заряженный, как пружина. Ты врастаешь в ground, в пол, и не budging — ни на миллиметр. Потом сам идёшь в атаку: tackle, в подкат, сбиваешь подачу. Добираешься до heart — до самой сердцевины. И кладёшь всё down — на стол, до сути."
+ "slug": "pressure-1",
+ "title": "Под давлением",
+ "theme": "Под давлением — поглотить вопрос, удержать позицию, развернуть в суть",
+ "subtitle": "",
+ "section": "pressure",
+ "zones": [
+  "Absorb",
+  "Hold",
+  "Turn"
+ ],
+ "phrases": [
+  {
+   "anchor": "Fair",
+   "zone": "Absorb",
+   "en": "That's a fair question."
+  },
+  {
+   "anchor": "Feet",
+   "zone": "Absorb",
+   "en": "I'm thinking on my feet here."
+  },
+  {
+   "anchor": "Spot",
+   "zone": "Absorb",
+   "en": "You've really put me on the spot."
+  },
+  {
+   "anchor": "Loaded",
+   "zone": "Hold",
+   "en": "That's a bit of a loaded question."
+  },
+  {
+   "anchor": "Ground",
+   "zone": "Hold",
+   "en": "I'm going to hold my ground on this."
+  },
+  {
+   "anchor": "Budging",
+   "zone": "Hold",
+   "en": "I hear you, but I'm not budging."
+  },
+  {
+   "anchor": "Tackle",
+   "zone": "Turn",
+   "en": "Let me tackle that one head-on."
+  },
+  {
+   "anchor": "Heart",
+   "zone": "Turn",
+   "en": "Let me get to the heart of it."
+  },
+  {
+   "anchor": "Down",
+   "zone": "Turn",
+   "en": "Here's what it really comes down to."
+  }
+ ],
+ "mnemo": "Высокий мяч летит на тебя под рёв трибун. Ловишь его чисто и киваешь: подача fair — честная, хоть и бьёт в упор. Пружинишь на feet — на ногах, соображая на бегу. Прожектор выхватывает тебя в spot — в пятно света: все смотрят. Принимаешь на корпус loaded — заряженный, как таран, удар. Врезаешься шипами в ground — в землю — и держишь её. Тебя толкают втроём, но ты не budging — не сдвигаешься ни на шаг. Сам идёшь в tackle — в подкат, встречая давление лоб в лоб. Прорываешься в heart — в самое сердце схватки. И кладёшь мяч down — за линию: вот к чему всё сводится."
 }

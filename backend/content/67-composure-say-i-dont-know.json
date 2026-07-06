@@ -1,60 +1,60 @@
 {
-  "slug": "composure-10",
-  "title": "Сказать «не знаю» без потери лица",
-  "theme": "Тебя спрашивают, а ты не знаешь — признать спокойно и с авторитетом, без блефа; честное «не знаю» весомее блефа",
-  "subtitle": "Мост в тумане",
-  "section": "composure",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Top",
-      "zone": "Warm",
-      "en": "Great question — not one I'll answer off the top of my head."
-    },
-    {
-      "anchor": "Comfortable",
-      "zone": "Warm",
-      "en": "I'm not sure — and I'm comfortable saying that out loud."
-    },
-    {
-      "anchor": "Stumped",
-      "zone": "Warm",
-      "en": "You've genuinely stumped me there."
-    },
-    {
-      "anchor": "Solid",
-      "zone": "Backbone",
-      "en": "I don't know yet — I'll find out and come back with something solid."
-    },
-    {
-      "anchor": "Verify",
-      "zone": "Backbone",
-      "en": "I'm not going to guess on that — I'll verify it first."
-    },
-    {
-      "anchor": "Limited",
-      "zone": "Backbone",
-      "en": "What I can say now is limited — what I'll bring back is clear."
-    },
-    {
-      "anchor": "Precise",
-      "zone": "Weight",
-      "en": "I'd rather be precise later than confident and wrong now."
-    },
-    {
-      "anchor": "Trouble",
-      "zone": "Weight",
-      "en": "Not knowing that doesn't trouble me — pretending to would."
-    },
-    {
-      "anchor": "Bluff",
-      "zone": "Weight",
-      "en": "I won't bluff my way through an answer just to fill the room."
-    }
-  ],
-  "mnemo": "Ты поднимаешься на top сторожевой вышки, ставишь ноги в comfortable стойку и вдруг замираешь stumped перед разорванной картой. Вместо прыжка вслепую ты находишь solid доску, начинаешь verify каждый узел, хотя свет фонаря limited. Потом проводишь precise линию мелом, замечаешь trouble внизу между скалами и не делаешь вид, что знаешь путь через bluff, пока не увидел его сам."
+ "slug": "composure-10",
+ "title": "Сказать «не знаю» без потери лица",
+ "theme": "Тебя спрашивают, а ты не знаешь — признать спокойно и с авторитетом, без блефа; честное «не знаю» весомее блефа",
+ "subtitle": "Мост в тумане",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Top",
+   "zone": "Warm",
+   "en": "Great question — not one I'll answer off the top of my head."
+  },
+  {
+   "anchor": "Comfortable",
+   "zone": "Warm",
+   "en": "I'm not sure — and I'm comfortable saying that out loud."
+  },
+  {
+   "anchor": "Stumped",
+   "zone": "Warm",
+   "en": "You've genuinely stumped me there."
+  },
+  {
+   "anchor": "Solid",
+   "zone": "Backbone",
+   "en": "I don't know yet — I'll find out and come back with something solid."
+  },
+  {
+   "anchor": "Verify",
+   "zone": "Backbone",
+   "en": "I'm not going to guess on that — I'll verify it first."
+  },
+  {
+   "anchor": "Limited",
+   "zone": "Backbone",
+   "en": "What I can say now is limited — what I'll bring back is clear."
+  },
+  {
+   "anchor": "Precise",
+   "zone": "Weight",
+   "en": "I'd rather be precise later than confident and wrong now."
+  },
+  {
+   "anchor": "Trouble",
+   "zone": "Weight",
+   "en": "Not knowing that doesn't trouble me — pretending to would."
+  },
+  {
+   "anchor": "Bluff",
+   "zone": "Weight",
+   "en": "I won't bluff my way through an answer just to fill the room."
+  }
+ ],
+ "mnemo": "Пещера. Ты взбираешься на top — верхний — уступ, ставишь ноги в comfortable — удобный — упор и ведёшь лучом: впереди три чёрных хода. Ты stumped — в тупике — и говоришь это вслух, эху, спокойно. Простукиваешь стену костяшками, ищешь solid — твёрдый — камень. Заползаешь в первый лаз на длину верёвки — verify — проверить — своими руками. Свет фонаря limited — ограничен — десятью шагами, и ты возвращаешься, не выдумывая остального. Мелом ставишь precise — точную — метку только там, где прошёл сам. Из второго хода тянет водой — trouble — беда; ты отступаешь без стыда. А у края bluff — обрыва — ложишься на живот и не делаешь шаг, пока фонарь не достанет дна."
 }

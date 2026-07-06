@@ -1,60 +1,60 @@
 {
-  "slug": "intimacy-2",
-  "title": "Не сорваться, когда задели",
-  "theme": "Партнёр сказал что-то, что уязвило — не ответить ударом и не захлопнуться, а назвать попадание и остаться в контакте",
-  "subtitle": "Пасечник",
-  "section": "intimacy",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Ouch",
-      "zone": "Warm",
-      "en": "Ouch. I want to stay in this with you — but that one got me."
-    },
-    {
-      "anchor": "Tender",
-      "zone": "Warm",
-      "en": "That landed somewhere tender. I'm not angry — I just want you to know."
-    },
-    {
-      "anchor": "Stung",
-      "zone": "Warm",
-      "en": "I know you may not have meant it that way — but it stung."
-    },
-    {
-      "anchor": "Differently",
-      "zone": "Backbone",
-      "en": "Can you say that again differently? That version I can't quite hear."
-    },
-    {
-      "anchor": "Tone",
-      "zone": "Backbone",
-      "en": "I'm not okay with that tone — but I'm still here."
-    },
-    {
-      "anchor": "Shut",
-      "zone": "Backbone",
-      "en": "When it lands like that, I start to shut down — and I'd rather stay open."
-    },
-    {
-      "anchor": "Fire",
-      "zone": "Weight",
-      "en": "I'm not going to fire back — even though part of me wants to."
-    },
-    {
-      "anchor": "Dignity",
-      "zone": "Weight",
-      "en": "I can hold my dignity and still stay close to you."
-    },
-    {
-      "anchor": "Gentle",
-      "zone": "Weight",
-      "en": "We can be hurt and still be gentle. And I'm choosing gentle."
-    }
-  ],
-  "mnemo": "Сквозь сетку прорывается пчела — ouch! — запястье наливается, tender: тебя stung впервые за сезон. Ты перехватываешь рамку differently, медленнее, и слышишь, как гул роя меняет tone. Соблазн — shut крышку и бежать, но вместо этого ты раздуваешь fire в дымаре. Белый дым стелется, рой отступает, и ты с dignity доводишь осмотр, последним gentle движением вернув рамку с мёдом на место."
+ "slug": "intimacy-2",
+ "title": "Не сорваться, когда задели",
+ "theme": "Партнёр сказал что-то, что уязвило — не ответить ударом и не захлопнуться, а назвать попадание и остаться в контакте",
+ "subtitle": "Пасечник",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Ouch",
+   "zone": "Warm",
+   "en": "Ouch. I want to stay in this with you — but that one got me."
+  },
+  {
+   "anchor": "Tender",
+   "zone": "Warm",
+   "en": "That landed somewhere tender. I'm not angry — I just want you to know."
+  },
+  {
+   "anchor": "Stung",
+   "zone": "Warm",
+   "en": "I know you may not have meant it that way — but it stung."
+  },
+  {
+   "anchor": "Differently",
+   "zone": "Backbone",
+   "en": "Can you say that again differently? That version I can't quite hear."
+  },
+  {
+   "anchor": "Tone",
+   "zone": "Backbone",
+   "en": "I'm not okay with that tone — but I'm still here."
+  },
+  {
+   "anchor": "Shut",
+   "zone": "Backbone",
+   "en": "When it lands like that, I start to shut down — and I'd rather stay open."
+  },
+  {
+   "anchor": "Fire",
+   "zone": "Weight",
+   "en": "I'm not going to fire back — even though part of me wants to."
+  },
+  {
+   "anchor": "Dignity",
+   "zone": "Weight",
+   "en": "I can hold my dignity and still stay close to you."
+  },
+  {
+   "anchor": "Gentle",
+   "zone": "Weight",
+   "en": "We can be hurt and still be gentle. And I'm choosing gentle."
+  }
+ ],
+ "mnemo": "Дружеский спарринг на татами. Пропущенный хлопок — ouch — обжигает скулу, но ты остаёшься в круге. Трогаешь щёку: место tender — саднящее, — и киваешь: попало. Тебя stung — ужалило — сильнее, чем он хотел; ты выдыхаешь, а не бьёшь. Стучишь перчаткой о перчатку: покажи это differently — иначе, — и сам задаёшь темп помедленнее. Опускаешь руки чуть ниже, сбивая tone — тон — спарринга со злого на рабочий. Хочется shut — захлопнуться — в глухой блок; вместо этого ты раскрываешь стойку. Кулак сам взводится — fire — ответить огнём; ты разжимаешь пальцы. Выпрямляешь спину — dignity — достоинство — и делаешь шаг обратно в центр. И завершаешь раунд gentle — мягким — касанием перчатки его плеча."
 }

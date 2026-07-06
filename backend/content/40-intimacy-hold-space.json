@@ -1,60 +1,60 @@
 {
-  "slug": "intimacy-6",
-  "title": "Быть рядом в чужой боли",
-  "theme": "Близкому плохо — держать пространство, не чинить и не обесценивать, выдержать боль и не уйти",
-  "subtitle": "Палатка в бурю",
-  "section": "intimacy",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Strong",
-      "zone": "Warm",
-      "en": "I'm here with you. You don't have to be strong right now."
-    },
-    {
-      "anchor": "Hold",
-      "zone": "Warm",
-      "en": "Come here — you don't have to hold this by yourself."
-    },
-    {
-      "anchor": "Beside",
-      "zone": "Warm",
-      "en": "I hate that you're going through this — and I'm right beside you."
-    },
-    {
-      "anchor": "Fix",
-      "zone": "Backbone",
-      "en": "I'm not going to rush in and fix this — I just want to understand where it hurts."
-    },
-    {
-      "anchor": "Need",
-      "zone": "Backbone",
-      "en": "Tell me what you need — words, quiet, or just my hand."
-    },
-    {
-      "anchor": "Sit",
-      "zone": "Backbone",
-      "en": "I can sit with this without trying to explain it away."
-    },
-    {
-      "anchor": "Smaller",
-      "zone": "Weight",
-      "en": "You don't have to make your pain smaller so I can handle it."
-    },
-    {
-      "anchor": "Afraid",
-      "zone": "Weight",
-      "en": "I'm not afraid of this part of you."
-    },
-    {
-      "anchor": "Staying",
-      "zone": "Weight",
-      "en": "I'm staying. We can let this be as heavy as it is."
-    }
-  ],
-  "mnemo": "Налетает strong шквал, и ты изнутри hold дуги палатки, а пёс жмётся beside. Выскакиваешь под ливень — fix оттяжки колышками; юбке палатки need ещё пара камней. Возвращаешься, sit спиной к наветренной стенке и складываешься smaller, сберегая тепло. Пёс afraid грома и кладёт морду тебе на колени — но вы staying до рассвета, и палатка выстаивает."
+ "slug": "intimacy-6",
+ "title": "Быть рядом в чужой боли",
+ "theme": "Близкому плохо — держать пространство, не чинить и не обесценивать, выдержать боль и не уйти",
+ "subtitle": "Палатка в бурю",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Strong",
+   "zone": "Warm",
+   "en": "I'm here with you. You don't have to be strong right now."
+  },
+  {
+   "anchor": "Hold",
+   "zone": "Warm",
+   "en": "Come here — you don't have to hold this by yourself."
+  },
+  {
+   "anchor": "Beside",
+   "zone": "Warm",
+   "en": "I hate that you're going through this — and I'm right beside you."
+  },
+  {
+   "anchor": "Fix",
+   "zone": "Backbone",
+   "en": "I'm not going to rush in and fix this — I just want to understand where it hurts."
+  },
+  {
+   "anchor": "Need",
+   "zone": "Backbone",
+   "en": "Tell me what you need — words, quiet, or just my hand."
+  },
+  {
+   "anchor": "Sit",
+   "zone": "Backbone",
+   "en": "I can sit with this without trying to explain it away."
+  },
+  {
+   "anchor": "Smaller",
+   "zone": "Weight",
+   "en": "You don't have to make your pain smaller so I can handle it."
+  },
+  {
+   "anchor": "Afraid",
+   "zone": "Weight",
+   "en": "I'm not afraid of this part of you."
+  },
+  {
+   "anchor": "Staying",
+   "zone": "Weight",
+   "en": "I'm staying. We can let this be as heavy as it is."
+  }
+ ],
+ "mnemo": "Ночной берег, друг сидит, уронив голову. Ты подходишь и кладёшь руку ему на плечо: можно не быть strong — сильным. Перехватываешь его ладони и hold — держишь — в своих: не тащи один. Переставляешь коврик вплотную, beside — рядом, — плечо к плечу. Ловишь себя: рука тянется всё fix — чинить, — и ты её убираешь: сначала понять, где болит. Наклоняешься к его уху: скажи, что need — нужно — слова, тишина или ладонь. Подбрасываешь веток и sit — сидишь — рядом, не заполняя паузу. Накидываешь куртку на его плечи: не сжимай боль smaller — меньше — ради меня. Смотришь ему в лицо, не отводя глаз: не afraid — не боишься — этой его части. И остаёшься — staying — до рассвета, каким бы тяжёлым он ни был."
 }

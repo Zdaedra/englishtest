@@ -1,60 +1,60 @@
 {
-  "slug": "composure-3",
-  "title": "Держаться, когда унижают публично",
-  "theme": "Тебя пытаются принизить при людях — не съёжиться и не взорваться, назвать происходящее и стоять ровно; унижение не прилипает",
-  "subtitle": "Испытание клинка",
-  "section": "composure",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Scene",
-      "zone": "Warm",
-      "en": "I'm not going to turn this into a scene."
-    },
-    {
-      "anchor": "Volume",
-      "zone": "Warm",
-      "en": "No need to raise the volume — I hear you fine."
-    },
-    {
-      "anchor": "Concern",
-      "zone": "Warm",
-      "en": "I can hear the concern without accepting the tone."
-    },
-    {
-      "anchor": "Directly",
-      "zone": "Backbone",
-      "en": "If there's feedback, give it to me directly — not theatrically."
-    },
-    {
-      "anchor": "Substance",
-      "zone": "Backbone",
-      "en": "Give me the substance — and I'll stand right here and take it."
-    },
-    {
-      "anchor": "Adults",
-      "zone": "Backbone",
-      "en": "Let's bring this back to the work and speak like adults."
-    },
-    {
-      "anchor": "Shrink",
-      "zone": "Weight",
-      "en": "You can't shrink me by trying to — that's just not how I work."
-    },
-    {
-      "anchor": "Ounce",
-      "zone": "Weight",
-      "en": "I don't lose an ounce of standing because you raised your voice."
-    },
-    {
-      "anchor": "Tall",
-      "zone": "Weight",
-      "en": "This isn't landing the way you hoped — I'm still standing exactly as tall."
-    }
-  ],
-  "mnemo": "Горн освещает scene: вся гильдия обступила твою плавку, и завистник качает мехи на полную volume, чтобы пламя сорвалось. «Треснет!» — тянет он с фальшивой concern, но ты смотришь directly в тигель, где светится substance будущего клинка. «Плавку судят adults — по металлу», — говоришь ты и опускаешь клинок в масло: сталь не дала shrink, ни единой трещины. Весы сходятся до последней ounce, и ты ставишь клинок остриём вверх — он стоит tall, звенящий."
+ "slug": "composure-3",
+ "title": "Держаться, когда унижают публично",
+ "theme": "Тебя пытаются принизить при людях — не съёжиться и не взорваться, назвать происходящее и стоять ровно; унижение не прилипает",
+ "subtitle": "Испытание клинка",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Scene",
+   "zone": "Warm",
+   "en": "I'm not going to turn this into a scene."
+  },
+  {
+   "anchor": "Volume",
+   "zone": "Warm",
+   "en": "No need to raise the volume — I hear you fine."
+  },
+  {
+   "anchor": "Concern",
+   "zone": "Warm",
+   "en": "I can hear the concern without accepting the tone."
+  },
+  {
+   "anchor": "Directly",
+   "zone": "Backbone",
+   "en": "If there's feedback, give it to me directly — not theatrically."
+  },
+  {
+   "anchor": "Substance",
+   "zone": "Backbone",
+   "en": "Give me the substance — and I'll stand right here and take it."
+  },
+  {
+   "anchor": "Adults",
+   "zone": "Backbone",
+   "en": "Let's bring this back to the work and speak like adults."
+  },
+  {
+   "anchor": "Shrink",
+   "zone": "Weight",
+   "en": "You can't shrink me by trying to — that's just not how I work."
+  },
+  {
+   "anchor": "Ounce",
+   "zone": "Weight",
+   "en": "I don't lose an ounce of standing because you raised your voice."
+  },
+  {
+   "anchor": "Tall",
+   "zone": "Weight",
+   "en": "This isn't landing the way you hoped — I'm still standing exactly as tall."
+  }
+ ],
+ "mnemo": "Ты несёшь через площадь высокий кувшин своей работы, когда с помоста начинают кричать. Не превращаешь путь в scene — в спектакль: держишь шаг. Не прибавляешь volume — громкости, отвечаешь вполголоса. Выуживаешь из крика зерно concern — беспокойства — и киваешь ему, отбрасывая тон. Сворачиваешь и подходишь directly — напрямую: говори мне, а не толпе. Ставишь кувшин на весы посреди рынка: вот substance — суть, судите по ней. Жестом приглашаешь к столу: спорим как adults — взрослые, по делу. Распрямляешь плечи: тебя не shrink — не сжать чужим криком. Стрелка весов не уходит ни на ounce — ни на унцию. И ты поднимаешь кувшин и идёшь дальше tall — во весь рост, не согнувшись."
 }

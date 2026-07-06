@@ -1,60 +1,60 @@
 {
-  "slug": "composure-9",
-  "title": "Остаться собой под лестью/манипуляцией",
-  "theme": "Тебя обрабатывают лестью, виной, срочностью — принять тёплое не покупаясь, назвать рычаг и держать решение; нельзя купить настроением",
-  "subtitle": "Пристань сирен",
-  "section": "composure",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Flattery",
-      "zone": "Warm",
-      "en": "Flattery gets you a sincere thank-you — not much past that."
-    },
-    {
-      "anchor": "Lovely",
-      "zone": "Warm",
-      "en": "Lovely words — I'm keeping them and my position both."
-    },
-    {
-      "anchor": "Warmth",
-      "zone": "Warm",
-      "en": "I appreciate the warmth — and I'd like to keep the question clean."
-    },
-    {
-      "anchor": "Trading",
-      "zone": "Backbone",
-      "en": "I'll take the compliment — but I'm not trading it for a yes."
-    },
-    {
-      "anchor": "Guilt",
-      "zone": "Backbone",
-      "en": "That's the guilt angle — I see it, and it doesn't change the question."
-    },
-    {
-      "anchor": "Urgency",
-      "zone": "Backbone",
-      "en": "The urgency may be real — but it doesn't change what I need to weigh."
-    },
-    {
-      "anchor": "Bought",
-      "zone": "Weight",
-      "en": "Good feeling isn't how my judgment gets bought."
-    },
-    {
-      "anchor": "Anchor",
-      "zone": "Weight",
-      "en": "I can enjoy the charm and still keep my anchor."
-    },
-    {
-      "anchor": "Sweet",
-      "zone": "Weight",
-      "en": "My choice stays mine — even when the room gets sweet."
-    }
-  ],
-  "mnemo": "Сначала сирены бросают в лодку блестящую сеть flattery, потом протягивают lovely ленту и раздувают у борта тёплый warmth костёр. На причале открывается лавка trading, за ней звенит цепь guilt, и красный колокол urgency начинает бить всё быстрее. Купцы швыряют монеты bought, но ты опускаешь в воду anchor, проходишь сквозь sweet туман и выводишь лодку в открытое море."
+ "slug": "composure-9",
+ "title": "Остаться собой под лестью/манипуляцией",
+ "theme": "Тебя обрабатывают лестью, виной, срочностью — принять тёплое не покупаясь, назвать рычаг и держать решение; нельзя купить настроением",
+ "subtitle": "Пристань сирен",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Flattery",
+   "zone": "Warm",
+   "en": "Flattery gets you a sincere thank-you — not much past that."
+  },
+  {
+   "anchor": "Lovely",
+   "zone": "Warm",
+   "en": "Lovely words — I'm keeping them and my position both."
+  },
+  {
+   "anchor": "Warmth",
+   "zone": "Warm",
+   "en": "I appreciate the warmth — and I'd like to keep the question clean."
+  },
+  {
+   "anchor": "Trading",
+   "zone": "Backbone",
+   "en": "I'll take the compliment — but I'm not trading it for a yes."
+  },
+  {
+   "anchor": "Guilt",
+   "zone": "Backbone",
+   "en": "That's the guilt angle — I see it, and it doesn't change the question."
+  },
+  {
+   "anchor": "Urgency",
+   "zone": "Backbone",
+   "en": "The urgency may be real — but it doesn't change what I need to weigh."
+  },
+  {
+   "anchor": "Bought",
+   "zone": "Weight",
+   "en": "Good feeling isn't how my judgment gets bought."
+  },
+  {
+   "anchor": "Anchor",
+   "zone": "Weight",
+   "en": "I can enjoy the charm and still keep my anchor."
+  },
+  {
+   "anchor": "Sweet",
+   "zone": "Weight",
+   "en": "My choice stays mine — even when the room gets sweet."
+  }
+ ],
+ "mnemo": "Вечерний базар у пристани; ты идёшь через него к своей лодке. Зазывала накидывает на тебя шёлк flattery — лести; ты снимаешь его с плеча и шагаешь дальше. Ловишь lovely — прелестную — розу, нюхаешь на ходу — и не сворачиваешь. Проходишь сквозь warmth — тепло — жаровен, грея ладони и не останавливаясь. В лавке trading — обмена — тебе суют весы; ты убираешь руки за спину. На рукав виснет цепочка guilt — вины; ты мягко разжимаешь чужие пальцы. Над ухом бьёт гонг urgency — срочности; ты нарочно замедляешь шаг. Пригоршню монет — bought — купить тебя — отводишь ладонью. За воротами спускаешься в лодку и бросаешь anchor — якорь — там же, где и решил с утра. И смотришь, как sweet — сладкий — дым базара тает за спиной."
 }

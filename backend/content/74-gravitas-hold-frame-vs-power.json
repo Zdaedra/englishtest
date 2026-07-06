@@ -1,60 +1,60 @@
 {
-  "slug": "gravitas-6",
-  "title": "Держать рамку против ранга/угрозы/силы",
-  "theme": "Тяжеловес давит рангом, угрозой, статусом — не сложиться и не сорваться в агрессию; держать рамку спокойным весом, как равный",
-  "subtitle": "Мост с великаном",
-  "section": "gravitas",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Diminish",
-      "zone": "Warm",
-      "en": "I'm not here to diminish anyone's position — I'm here to solve the problem."
-    },
-    {
-      "anchor": "Outcome",
-      "zone": "Warm",
-      "en": "We both want the same thing here: a clean outcome."
-    },
-    {
-      "anchor": "Remind",
-      "zone": "Warm",
-      "en": "No need to remind me who you are — let's stay on the issue."
-    },
-    {
-      "anchor": "Rank",
-      "zone": "Backbone",
-      "en": "Rank won't settle this — facts and consequences will."
-    },
-    {
-      "anchor": "Threat",
-      "zone": "Backbone",
-      "en": "A threat may change the temperature — it won't change my read."
-    },
-    {
-      "anchor": "Intimidated",
-      "zone": "Backbone",
-      "en": "I'm willing to be pressed — I'm not willing to be intimidated."
-    },
-    {
-      "anchor": "Title",
-      "zone": "Weight",
-      "en": "Your title doesn't make you right — and it doesn't make me small."
-    },
-    {
-      "anchor": "Fold",
-      "zone": "Weight",
-      "en": "I don't fold for power, and I don't fight it — I just hold."
-    },
-    {
-      "anchor": "Over",
-      "zone": "Weight",
-      "en": "Bigger than me doesn't mean over me — not in this room."
-    }
-  ],
-  "mnemo": "Он пытается diminish тебя тенью доспехов, но ты ставишь факел на край моста и указываешь на outcome — открытые ворота за спиной. Ударяешь в колокол remind, чтобы все вспомнили правило переправы, затем видишь его rank на знамени и слышишь threat железной цепи по камню. Конь фыркает, но ты не intimidated, читаешь title на его щите и не делаешь fold перед поднятым копьём. Ты просто проводишь линию мелом over середину моста и стоишь там, пока он сам не сбавляет ход."
+ "slug": "gravitas-6",
+ "title": "Держать рамку против ранга/угрозы/силы",
+ "theme": "Тяжеловес давит рангом, угрозой, статусом — не сложиться и не сорваться в агрессию; держать рамку спокойным весом, как равный",
+ "subtitle": "Мост с великаном",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Diminish",
+   "zone": "Warm",
+   "en": "I'm not here to diminish anyone's position — I'm here to solve the problem."
+  },
+  {
+   "anchor": "Outcome",
+   "zone": "Warm",
+   "en": "We both want the same thing here: a clean outcome."
+  },
+  {
+   "anchor": "Remind",
+   "zone": "Warm",
+   "en": "No need to remind me who you are — let's stay on the issue."
+  },
+  {
+   "anchor": "Rank",
+   "zone": "Backbone",
+   "en": "Rank won't settle this — facts and consequences will."
+  },
+  {
+   "anchor": "Threat",
+   "zone": "Backbone",
+   "en": "A threat may change the temperature — it won't change my read."
+  },
+  {
+   "anchor": "Intimidated",
+   "zone": "Backbone",
+   "en": "I'm willing to be pressed — I'm not willing to be intimidated."
+  },
+  {
+   "anchor": "Title",
+   "zone": "Weight",
+   "en": "Your title doesn't make you right — and it doesn't make me small."
+  },
+  {
+   "anchor": "Fold",
+   "zone": "Weight",
+   "en": "I don't fold for power, and I don't fight it — I just hold."
+  },
+  {
+   "anchor": "Over",
+   "zone": "Weight",
+   "en": "Bigger than me doesn't mean over me — not in this room."
+  }
+ ],
+ "mnemo": "Ты поднимаешься по узкой тропе, когда сверху съезжает всадник в золоте и требует уступить в осыпь. Держишь шаг, не пытаясь diminish — принизить его: тебе нужен outcome — исход, перевал за его спиной. Отводишь хлыст от лица: не надо remind — напоминать, кто ты такой. Проходишь мимо знамени с его rank — рангом, не сбавляя темпа. Слышишь threat — угрозу — и лишь перекладываешь посох в другую руку. Смотришь ему в глаза снизу вверх, не intimidated — не запуганный. Читаешь title — титул на перстне и киваешь: он не делает тебя меньше. Не fold — не складываешься в поклоне и не хватаешься за нож — просто идёшь. И проходишь over — поверх седловины: больше — не значит выше тебя."
 }

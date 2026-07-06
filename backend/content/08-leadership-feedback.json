@@ -1,20 +1,60 @@
 {
-  "slug": "leadership-1",
-  "title": "Обратная связь",
-  "theme": "Прямая обратная связь — от мягкого захода к высокой планке",
-  "subtitle": "",
-  "section": "leadership",
-  "zones": ["Gentle", "Honest", "Pointed"],
-  "phrases": [
-    { "anchor": "Candid",   "zone": "Gentle",  "en": "Can I be candid with you for a minute?" },
-    { "anchor": "Place",    "zone": "Gentle",  "en": "This is coming from a good place." },
-    { "anchor": "Wrong",    "zone": "Gentle",  "en": "Don't take this the wrong way." },
-    { "anchor": "Short",    "zone": "Honest",  "en": "I think this is falling short here." },
-    { "anchor": "Tripped",  "zone": "Honest",  "en": "Here's where I think you tripped up." },
-    { "anchor": "Pattern",  "zone": "Honest",  "en": "There's a pattern I need to call out." },
-    { "anchor": "Mark",     "zone": "Pointed", "en": "Honestly, this isn't hitting the mark yet." },
-    { "anchor": "Tighten",  "zone": "Pointed", "en": "I need you to tighten this up." },
-    { "anchor": "Bar",      "zone": "Pointed", "en": "You need to raise the bar here." }
-  ],
-  "mnemo": "Ты выбираешь быть candid — честным, и находишь тихое place для разговора. Дверь скрипит wrong, не вовремя, и ты прикрываешь её. Времени мало, разговор будет short. Твой коллега недавно tripped — споткнулся на проекте, и ты замечаешь pattern, который тянется не первый раз. Ставишь mark, метку, на главную ошибку. Просишь tighten — подтянуть, как ослабшую гайку. И поднимаешь bar — планку — чтобы в следующий раз он прыгнул выше."
+ "slug": "leadership-1",
+ "title": "Обратная связь",
+ "theme": "Прямая обратная связь — от мягкого захода к высокой планке",
+ "subtitle": "",
+ "section": "leadership",
+ "zones": [
+  "Gentle",
+  "Honest",
+  "Pointed"
+ ],
+ "phrases": [
+  {
+   "anchor": "Candid",
+   "zone": "Gentle",
+   "en": "Can I be candid with you for a minute?"
+  },
+  {
+   "anchor": "Place",
+   "zone": "Gentle",
+   "en": "This is coming from a good place."
+  },
+  {
+   "anchor": "Wrong",
+   "zone": "Gentle",
+   "en": "Don't take this the wrong way."
+  },
+  {
+   "anchor": "Short",
+   "zone": "Honest",
+   "en": "I think this is falling short here."
+  },
+  {
+   "anchor": "Tripped",
+   "zone": "Honest",
+   "en": "Here's where I think you tripped up."
+  },
+  {
+   "anchor": "Pattern",
+   "zone": "Honest",
+   "en": "There's a pattern I need to call out."
+  },
+  {
+   "anchor": "Mark",
+   "zone": "Pointed",
+   "en": "Honestly, this isn't hitting the mark yet."
+  },
+  {
+   "anchor": "Tighten",
+   "zone": "Pointed",
+   "en": "I need you to tighten this up."
+  },
+  {
+   "anchor": "Bar",
+   "zone": "Pointed",
+   "en": "You need to raise the bar here."
+  }
+ ],
+ "mnemo": "Ты выбегаешь на дорожку и пристраиваешься плечом к своему бегуну. На бегу говоришь candid — начистоту — и уводишь его в тихое place — место у трибуны: разговор из добрых побуждений. Поднимаешь ладони: не пойми wrong — превратно. Тычешь пальцем в секундомер: вот где short — недобор, недотягиваешь. Подводишь его к барьеру, где он tripped — споткнулся, и ставишь ногу на след. Мелом чертишь на дорожке pattern — повторяющийся узор ошибки, круг за кругом. Ставишь яркую фишку на mark — отметку, куда должен лететь шаг. Затягиваешь ему шнуровку: tighten — подтяни. И сам вскидываешь bar — планку — на два деления выше, отходишь: разбегайся."
 }

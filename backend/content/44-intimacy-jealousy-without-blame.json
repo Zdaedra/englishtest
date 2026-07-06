@@ -1,60 +1,60 @@
 {
-  "slug": "intimacy-10",
-  "title": "Ревность без обвинения",
-  "theme": "Назвать ревность как своё чувство — не обвиняя, не контролируя и не делая партнёра виноватым; трюст вместо страха",
-  "subtitle": "Сокольник",
-  "section": "intimacy",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Jealous",
-      "zone": "Warm",
-      "en": "I felt a little jealous earlier — and I'd rather name it than hide it."
-    },
-    {
-      "anchor": "Tightened",
-      "zone": "Warm",
-      "en": "Something tightened in me tonight — and that one's mine to look at."
-    },
-    {
-      "anchor": "Admit",
-      "zone": "Warm",
-      "en": "Can I admit something a little unflattering — without it turning into a fight?"
-    },
-    {
-      "anchor": "Reassurance",
-      "zone": "Backbone",
-      "en": "I don't need to police you — I need reassurance, and I can just ask for it."
-    },
-    {
-      "anchor": "Loud",
-      "zone": "Backbone",
-      "en": "I'm not accusing you — I'm naming the part of me that got loud."
-    },
-    {
-      "anchor": "Mine",
-      "zone": "Backbone",
-      "en": "This is mine to work through — not yours to fix."
-    },
-    {
-      "anchor": "Crime",
-      "zone": "Weight",
-      "en": "This is my fear to hold — not your crime to answer for."
-    },
-    {
-      "anchor": "Trust",
-      "zone": "Weight",
-      "en": "I can feel jealous and still choose trust."
-    },
-    {
-      "anchor": "Freedom",
-      "zone": "Weight",
-      "en": "I won't make my fear the manager of your freedom."
-    }
-  ],
-  "mnemo": "На слёте сокольники jealous косятся на твоего кречета; за ночь опутенки tightened, и ты ослабляешь ремешки, открываешь вольер — admit птицу на перчатку. Тихий свист — твоя reassurance, и перья укладываются; над полем поднимается loud грай ворон. Сорока хватает вабило — «mine!» — наглый crime среди бела дня. Ты снимаешь клобук — секунда чистого trust — и подбрасываешь кречета в небо: freedom, и он взмывает, возвращая добычу."
+ "slug": "intimacy-10",
+ "title": "Ревность без обвинения",
+ "theme": "Назвать ревность как своё чувство — не обвиняя, не контролируя и не делая партнёра виноватым; трюст вместо страха",
+ "subtitle": "Сокольник",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Jealous",
+   "zone": "Warm",
+   "en": "I felt a little jealous earlier — and I'd rather name it than hide it."
+  },
+  {
+   "anchor": "Tightened",
+   "zone": "Warm",
+   "en": "Something tightened in me tonight — and that one's mine to look at."
+  },
+  {
+   "anchor": "Admit",
+   "zone": "Warm",
+   "en": "Can I admit something a little unflattering — without it turning into a fight?"
+  },
+  {
+   "anchor": "Reassurance",
+   "zone": "Backbone",
+   "en": "I don't need to police you — I need reassurance, and I can just ask for it."
+  },
+  {
+   "anchor": "Loud",
+   "zone": "Backbone",
+   "en": "I'm not accusing you — I'm naming the part of me that got loud."
+  },
+  {
+   "anchor": "Mine",
+   "zone": "Backbone",
+   "en": "This is mine to work through — not yours to fix."
+  },
+  {
+   "anchor": "Crime",
+   "zone": "Weight",
+   "en": "This is my fear to hold — not your crime to answer for."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Weight",
+   "en": "I can feel jealous and still choose trust."
+  },
+  {
+   "anchor": "Freedom",
+   "zone": "Weight",
+   "en": "I won't make my fear the manager of your freedom."
+  }
+ ],
+ "mnemo": "Ночёвка на стене, вы в одной связке. В груди колет jealous — ревность; ты не прячешь её: подносишь фонарь к своему узлу. Верёвка за день tightened — стянулась; трогаешь узел: он твой. Поворачиваешься к ней и admit — признаёшься — вслух, как есть. Протягиваешь ладонь: нужна reassurance — поддержка, — и её можно просто попросить. Прижимаешь руку к груди, где стучит loud — громко: это во мне, не в тебе. Перещёлкиваешь карабин на свой пояс: mine — моё, мне и распутывать. От её обвязки убираешь руки: здесь нет crime — преступления. Отпускаешь перила, повисаешь на её страховке — trust — доверие — всем весом. И травишь верёвку на всю длину: freedom — свобода — пусть идёт первой в рассвет."
 }

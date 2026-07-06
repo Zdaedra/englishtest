@@ -1,60 +1,60 @@
 {
-  "slug": "stage-1",
-  "title": "Открыть выступление, схватить зал",
-  "theme": "Первые секунды на сцене — взять внимание с первой фразы, без разогрева и извинений; крючок, обещание и спокойное владение сценой",
-  "subtitle": "Прожектор в цирке",
-  "section": "stage",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Singular",
-      "zone": "Warm",
-      "en": "Let me talk to you — singular — not to a room."
-    },
-    {
-      "anchor": "Back",
-      "zone": "Warm",
-      "en": "I can see the back row — hi, you count too."
-    },
-    {
-      "anchor": "Useful",
-      "zone": "Warm",
-      "en": "Let's make this useful, not polished."
-    },
-    {
-      "anchor": "Pretending",
-      "zone": "Backbone",
-      "en": "Here's the question under all of this: what are we pretending not to know?"
-    },
-    {
-      "anchor": "Mistake",
-      "zone": "Backbone",
-      "en": "I'll open with the mistake that changed everything for me."
-    },
-    {
-      "anchor": "Unsee",
-      "zone": "Backbone",
-      "en": "If I do my job, you'll leave with one thing you can't unsee."
-    },
-    {
-      "anchor": "Settle",
-      "zone": "Weight",
-      "en": "Let the room settle — I'm not rushing the first sentence."
-    },
-    {
-      "anchor": "Command",
-      "zone": "Weight",
-      "en": "I'll speak slowly — because speed isn't the same as command."
-    },
-    {
-      "anchor": "Here",
-      "zone": "Weight",
-      "en": "The room is mine — not because I took it, but because I'm already here."
-    }
-  ],
-  "mnemo": "Ты ставишь на песок singular прожектор, отводишь красный занавес back и кладёшь на тумбу полезный крюк useful, которым цепляешь первый взгляд зала. Из ящика выскакивает клоун pretending, но ты снимаешь с него маску и показываешь спрятанный под ней mistake, который уже нельзя unsee. Потом даёшь пыли settle, берёшь в руку чёрную палочку command и ставишь её концом в центр арены: here."
+ "slug": "stage-1",
+ "title": "Открыть выступление, схватить зал",
+ "theme": "Первые секунды на сцене — взять внимание с первой фразы, без разогрева и извинений; крючок, обещание и спокойное владение сценой",
+ "subtitle": "Прожектор в цирке",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Singular",
+   "zone": "Warm",
+   "en": "Let me talk to you — singular — not to a room."
+  },
+  {
+   "anchor": "Back",
+   "zone": "Warm",
+   "en": "I can see the back row — hi, you count too."
+  },
+  {
+   "anchor": "Useful",
+   "zone": "Warm",
+   "en": "Let's make this useful, not polished."
+  },
+  {
+   "anchor": "Pretending",
+   "zone": "Backbone",
+   "en": "Here's the question under all of this: what are we pretending not to know?"
+  },
+  {
+   "anchor": "Mistake",
+   "zone": "Backbone",
+   "en": "I'll open with the mistake that changed everything for me."
+  },
+  {
+   "anchor": "Unsee",
+   "zone": "Backbone",
+   "en": "If I do my job, you'll leave with one thing you can't unsee."
+  },
+  {
+   "anchor": "Settle",
+   "zone": "Weight",
+   "en": "Let the room settle — I'm not rushing the first sentence."
+  },
+  {
+   "anchor": "Command",
+   "zone": "Weight",
+   "en": "I'll speak slowly — because speed isn't the same as command."
+  },
+  {
+   "anchor": "Here",
+   "zone": "Weight",
+   "en": "The room is mine — not because I took it, but because I'm already here."
+  }
+ ],
+ "mnemo": "Тёмный зал. Ты входишь через дальнюю дверь и наводишь луч фонаря на singular — одного-единственного — зрителя: к нему и идёшь. По пути хлопаешь ладонью по креслу в back — заднем — ряду: вы тоже в игре. Подхватываешь useful — полезный — ящик и тащишь его к сцене вместо трибуны. Сдираешь с лица pretending — притворную — маску и бросаешь под ноги. Взбираясь на ящик, оступаешься — вот она, mistake — ошибка — и превращаешь сбой в первый шаг. Закатываешь рукав, показываешь шрам, который нельзя unsee — развидеть. Замираешь, давая залу settle — осесть — в тишину. Медленно разворачиваешь плечи — command — власть без спешки. И ставишь обе ступни в центр света: here — ты уже здесь."
 }
