@@ -29,7 +29,7 @@ export default function TunePath() {
   const toggleSecondary = (key: string) =>
     setSecondary((prev) => {
       if (prev.includes(key)) return prev.filter((k) => k !== key);
-      if (prev.length >= 2) return prev; // cap at 2
+      if (prev.length >= 3) return prev; // cap at 3 (main + 3 = 4 goals)
       return [...prev, key];
     });
   const pickNeed = (n: { key: string; focus: string }) => {

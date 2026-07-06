@@ -449,7 +449,7 @@ const es: Dict = {
   "tune.sub": "Sobre qué armar el sprint — cámbialo cuando quieras y el camino se reconstruirá.",
   "tune.whatsUp": "¿Qué se viene?",
   "tune.mainFocus": "Foco principal",
-  "tune.secondary": "Adicional (0–2)",
+  "tune.secondary": "Adicional (0–3)",
   "tune.intensity": "Intensidad",
   "tune.sprintSize": "Tamaño del sprint",
   "tune.rebuild": "Reconstruir el camino",
@@ -489,7 +489,7 @@ const es: Dict = {
   // ── Onboarding question page (/onboarding) ─────────────────────────
   "ob1.later": "Más tarde",
   "ob1.q": "¿Qué quieres mejorar primero?",
-  "ob1.sub": "Elige 1–2 áreas — empezamos la trayectoria por ahí. El resto vendrá después.",
+  "ob1.sub": "Elige hasta 4 áreas — la primera será tu foco principal, las demás entran en el plan. Puedes cambiarlo luego.",
   "ob1.cta": "Construir la trayectoria",
   "ob2.kicker": "Cómo funciona",
   "ob2.title": "Pruébalo ahora",

@@ -449,7 +449,7 @@ const fr: Dict = {
   "tune.sub": "Pour quoi composer le sprint — change quand tu veux, le parcours se reconstruit.",
   "tune.whatsUp": "Qu'est-ce qui t'attend ?",
   "tune.mainFocus": "Focus principal",
-  "tune.secondary": "En plus (0–2)",
+  "tune.secondary": "En plus (0–3)",
   "tune.intensity": "Intensité",
   "tune.sprintSize": "Taille du sprint",
   "tune.rebuild": "Reconstruire le parcours",
@@ -489,7 +489,7 @@ const fr: Dict = {
   // ── Onboarding question page (/onboarding) ─────────────────────────
   "ob1.later": "Plus tard",
   "ob1.q": "Qu'est-ce que tu veux travailler en premier ?",
-  "ob1.sub": "Choisis 1–2 directions — on démarre la trajectoire avec. Le reste suivra.",
+  "ob1.sub": "Choisis jusqu'à 4 directions — la première devient ton focus principal, les autres entrent dans le plan. Modifiable plus tard.",
   "ob1.cta": "Construire ma trajectoire",
   "ob2.kicker": "Comment ça marche",
   "ob2.title": "Essaie maintenant",

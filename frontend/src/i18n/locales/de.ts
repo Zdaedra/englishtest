@@ -449,7 +449,7 @@ const de: Dict = {
   "tune.sub": "Worauf der Sprint zugeschnitten ist — ändere es jederzeit, der Weg baut sich neu auf.",
   "tune.whatsUp": "Was steht an?",
   "tune.mainFocus": "Hauptfokus",
-  "tune.secondary": "Zusätzlich (0–2)",
+  "tune.secondary": "Zusätzlich (0–3)",
   "tune.intensity": "Intensität",
   "tune.sprintSize": "Sprint-Größe",
   "tune.rebuild": "Weg neu aufbauen",
@@ -489,7 +489,7 @@ const de: Dict = {
   // ── Onboarding question page (/onboarding) ─────────────────────────
   "ob1.later": "Später",
   "ob1.q": "Was willst du zuerst stärken?",
-  "ob1.sub": "Wähl 1–2 Richtungen — damit starten wir die Trajektorie. Der Rest folgt.",
+  "ob1.sub": "Wähl bis zu 4 Richtungen — die erste wird dein Hauptfokus, die übrigen fließen in den Plan ein. Später änderbar.",
   "ob1.cta": "Trajektorie aufbauen",
   "ob2.kicker": "So funktioniert's",
   "ob2.title": "Probier es gleich aus",

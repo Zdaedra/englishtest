@@ -100,7 +100,7 @@ export function getStrategy(): Strategy {
   const pace = league ? leagueAdjust(league.tier) : {};
   const picks = (p.scenarios ?? []).filter(Boolean);
   if (picks.length)
-    return { ...DEFAULT_STRATEGY, ...pace, main: picks[0], secondary: picks.slice(1, 3) };
+    return { ...DEFAULT_STRATEGY, ...pace, main: picks[0], secondary: picks.slice(1, 4) };
   return { ...DEFAULT_STRATEGY, ...pace };
 }
 

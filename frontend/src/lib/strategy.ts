@@ -129,18 +129,28 @@ export function focusBuckets(s: Strategy): FocusBucket[] {
   const biz: FocusBucket = { key: "business", label: tg("focus.business"), pct: 0, sections: BUSINESS_SECTIONS };
   const disc: FocusBucket = { key: "discovery", label: tg("mix.discovery"), pct: 0, sections: others };
   const at = (b: FocusBucket, pct: number) => ({ ...b, pct });
+  // C2: three secondary goals share ONE bucket — without a boost each extra goal
+  // only dilutes the others' share. Move 10 pts from discovery to secondary so
+  // breadth chosen on purpose gets real room (discovery keeps a floor).
+  const boost = (rows: FocusBucket[]): FocusBucket[] => {
+    if (s.secondary.length < 3) return rows;
+    const secRow = rows.find((r) => r.key === "secondary");
+    const discRow = rows.find((r) => r.key === "discovery");
+    if (secRow && discRow && discRow.pct >= 15) { secRow.pct += 10; discRow.pct -= 10; }
+    return rows;
+  };
   if (s.intensity === "narrow")
-    return hasSec
+    return boost(hasSec
       ? [at(main, 75), at(sec, 15), at(disc, 10)]
-      : [at(main, 75), at(biz, 15), at(disc, 10)];
+      : [at(main, 75), at(biz, 15), at(disc, 10)]);
   if (s.intensity === "explore")
-    return hasSec
+    return boost(hasSec
       ? [at(main, 40), at(sec, 20), at(biz, 20), at(disc, 20)]
-      : [at(main, 40), at(biz, 20), at(disc, 40)];
+      : [at(main, 40), at(biz, 20), at(disc, 40)]);
   // balanced
-  return hasSec
+  return boost(hasSec
     ? [at(main, 50), at(sec, 25), at(biz, 15), at(disc, 10)]
-    : [at(main, 60), at(biz, 15), at(disc, 25)];
+    : [at(main, 60), at(biz, 15), at(disc, 25)]);
 }
 
 type Alloc = { main: number; sec: number; bridge: number; disc: number };
@@ -293,6 +303,28 @@ export function buildTrajectory(
         (secRank.get(a.section!) ?? 1e9) - (secRank.get(b.section!) ?? 1e9) ||
         numOf(a.slug) - numOf(b.slug)
     );
+
+  // C2: with 2-3 secondary GOALS sharing one bucket, plain concatenation would
+  // exhaust goal #2's whole section before goal #3 ever surfaced. Round-robin
+  // the secondary queue across its sections so every chosen goal shows up from
+  // the first sprints, not after a hundred batches.
+  const secQ = queues.get("secondary");
+  if (secQ && secQ.length > 1) {
+    const bySec = new Map<string, BatchListItem[]>();
+    for (const b of secQ) {
+      const k = b.section ?? "";
+      const arr = bySec.get(k) ?? [];
+      arr.push(b);
+      bySec.set(k, arr);
+    }
+    if (bySec.size > 1) {
+      const lists = [...bySec.values()];
+      const rr: BatchListItem[] = [];
+      for (let i = 0; rr.length < secQ.length; i++)
+        for (const l of lists) if (i < l.length) rr.push(l[i]);
+      queues.set("secondary", rr);
+    }
+  }
 
   const domainOf = new Map<number, string>();
   for (const [key, arr] of queues) for (const b of arr) domainOf.set(b.id, key);

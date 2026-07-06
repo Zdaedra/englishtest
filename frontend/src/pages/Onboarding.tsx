@@ -24,7 +24,7 @@ export default function Onboarding() {
   const toggle = (key: string) =>
     setScenarios((prev) => {
       if (prev.includes(key)) return prev.filter((k) => k !== key);
-      if (prev.length >= 2) return prev; // cap at 2 — keep the start focused
+      if (prev.length >= 4) return prev; // cap at 4 — enough breadth, still a focus
       return [...prev, key];
     });
 
