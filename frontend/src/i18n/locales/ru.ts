@@ -557,6 +557,7 @@ const ru: Dict = {
   "analyzer.unavailable": "AI сейчас недоступен — попробуй позже.",
   "analyzer.train": "Тренировать эти фразы",
   "analyzer.batchTitle": "Мой митинг — апгрейды",
+  "league.skip": "Скрыть тест",
   "league.entryTitle": "Проверь свою лигу английского",
   "league.entrySub": "3 минуты · 7 рабочих ситуаций",
   "league.title": "Какая у тебя лига английского?",

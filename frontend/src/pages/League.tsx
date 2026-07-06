@@ -52,7 +52,7 @@ export default function League() {
 
   return (
     <div className="screen league-screen">
-      <button className="back-link" onClick={() => nav(-1)}>
+      <button className="back-link" onClick={() => nav("/")}>
         <IconBack size={18} /> {t("common.back")}
       </button>
 

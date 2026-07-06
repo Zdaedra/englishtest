@@ -45,7 +45,7 @@ export default function Analyzer() {
 
   return (
     <div className="screen">
-      <button className="back-link" onClick={() => nav(-1)}>
+      <button className="back-link" onClick={() => nav("/profile")}>
         <IconBack size={18} /> {t("common.back")}
       </button>
       <div className="screen-head">

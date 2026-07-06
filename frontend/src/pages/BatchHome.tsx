@@ -91,7 +91,7 @@ export default function BatchHome() {
   if (batch.locked) {
     return (
       <div className="screen bh-screen">
-        <button className="bh-back" onClick={() => nav(-1)}><IconBack size={18} /> {t("common.back")}</button>
+        <button className="bh-back" onClick={() => nav("/")}><IconBack size={18} /> {t("common.back")}</button>
         <span className="bh-cover bh-cover-locked">
           <BatchCover seed={batch.slug} coverUrl={batch.cover_url} />
           <span className="bh-lock-badge"><IconLock size={22} /></span>
@@ -127,7 +127,7 @@ export default function BatchHome() {
 
   return (
     <div className="screen bh-screen">
-      <button className="bh-back" onClick={() => nav(-1)}>
+      <button className="bh-back" onClick={() => nav("/")}>
         <IconBack size={18} /> {t("common.back")}
       </button>
 

@@ -543,6 +543,7 @@ const de: Dict = {
   "analyzer.unavailable": "KI ist gerade nicht verfügbar — versuch es später.",
   "analyzer.train": "Diese Phrasen trainieren",
   "analyzer.batchTitle": "Mein Meeting — Upgrades",
+  "league.skip": "Test ausblenden",
   "league.entryTitle": "Prüf deine Englisch-Liga",
   "league.entrySub": "3 Minuten · 7 Arbeitssituationen",
   "league.title": "In welcher Englisch-Liga spielst du?",

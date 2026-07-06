@@ -103,7 +103,7 @@ export default function Arena() {
 
   return (
     <div className="screen arena-screen">
-      <button className="back-link" onClick={() => nav(-1)}>
+      <button className="back-link" onClick={() => nav("/learn")}>
         <IconBack size={18} /> {t("common.back")}
       </button>
 

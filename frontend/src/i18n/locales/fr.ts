@@ -543,6 +543,7 @@ const fr: Dict = {
   "analyzer.unavailable": "L'IA est indisponible pour le moment — réessaie plus tard.",
   "analyzer.train": "Entraîner ces phrases",
   "analyzer.batchTitle": "Ma réunion — améliorations",
+  "league.skip": "Masquer le test",
   "league.entryTitle": "Teste ta ligue d'anglais",
   "league.entrySub": "3 minutes · 7 situations de travail",
   "league.title": "Dans quelle ligue d'anglais joues-tu ?",

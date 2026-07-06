@@ -97,6 +97,7 @@ export type LeagueResult = {
 };
 
 const KEY = "ee-league";
+const DISMISS_KEY = "ee-league-skip";
 
 export function getLeagueResult(): LeagueResult | null {
   try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch { return null; }
@@ -104,4 +105,15 @@ export function getLeagueResult(): LeagueResult | null {
 
 export function saveLeagueResult(r: LeagueResult): void {
   try { localStorage.setItem(KEY, JSON.stringify(r)); } catch { /* private mode */ }
+}
+
+// The home entry card retires when the test is DONE or explicitly skipped —
+// it must never be a permanent fixture on the home screen.
+export function dismissLeagueCard(): void {
+  try { localStorage.setItem(DISMISS_KEY, "1"); } catch { /* private mode */ }
+}
+
+export function leagueCardHidden(): boolean {
+  try { return !!getLeagueResult() || localStorage.getItem(DISMISS_KEY) === "1"; }
+  catch { return true; }
 }

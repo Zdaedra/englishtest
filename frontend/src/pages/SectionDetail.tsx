@@ -33,7 +33,7 @@ export default function SectionDetail() {
 
   return (
     <div className="screen">
-      <button className="back-link" onClick={() => nav(-1)}>
+      <button className="back-link" onClick={() => nav("/")}>
         <IconBack size={18} /> {t("nav.library")}
       </button>
 

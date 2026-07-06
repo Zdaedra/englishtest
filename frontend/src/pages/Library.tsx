@@ -13,7 +13,7 @@ import { getStrategy, recordVisit } from "../lib/profile";
 import { useTeach } from "../tutorial/teach";
 import { getAvatar } from "../lib/avatar";
 import { syncReviewReminder } from "../lib/reminders";
-import { getLeagueResult } from "../lib/league";
+import { leagueCardHidden, dismissLeagueCard } from "../lib/league";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 
@@ -42,8 +42,9 @@ export default function Library() {
   const [mastery, setMastery] = useState<BatchMastery[]>([]);
   // "Your week" rollup — shown once there's a meaningful amount of work in it.
   const [weekly, setWeekly] = useState<WeeklySummary | null>(null);
-  // League placement test — the entry card retires after the first run.
-  const [leagueTaken] = useState(() => !!getLeagueResult());
+  // League placement test — the entry card retires after the first run or an
+  // explicit skip; it must never squat on the home screen.
+  const [leagueHidden, setLeagueHidden] = useState(() => leagueCardHidden());
   const { tip } = useTeach();
   useEffect(() => { if (dueCount > 0) tip("refresh"); }, [dueCount, tip]);
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -348,8 +349,8 @@ export default function Library() {
             </button>
           )}
 
-          {/* League test — the conversion hook, shown until taken once. */}
-          {!leagueTaken && (
+          {/* League test — the conversion hook, shown until taken or skipped. */}
+          {!leagueHidden && (
             <button className="review-due league-entry" onClick={() => nav("/league")}>
               <span className="review-due-ico">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -360,8 +361,13 @@ export default function Library() {
                 <span className="review-due-title">{t("league.entryTitle")}</span>
                 <span className="review-due-sub">{t("league.entrySub")}</span>
               </span>
-              <span className="review-due-go">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              <span
+                className="league-skip"
+                role="button"
+                aria-label={t("league.skip")}
+                onClick={(e) => { e.stopPropagation(); dismissLeagueCard(); setLeagueHidden(true); }}
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
               </span>
             </button>
           )}

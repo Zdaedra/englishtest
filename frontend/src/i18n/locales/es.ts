@@ -543,6 +543,7 @@ const es: Dict = {
   "analyzer.unavailable": "La IA no está disponible ahora, inténtalo más tarde.",
   "analyzer.train": "Entrenar estas frases",
   "analyzer.batchTitle": "Mi reunión — mejoras",
+  "league.skip": "Ocultar el test",
   "league.entryTitle": "Comprueba tu liga de inglés",
   "league.entrySub": "3 minutos · 7 situaciones de trabajo",
   "league.title": "¿En qué liga de inglés estás?",

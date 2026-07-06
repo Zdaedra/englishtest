@@ -70,6 +70,13 @@
 
 html, body { margin: 0; padding: 0; }
 
+/* The app NEVER scrolls sideways by design. `clip` (not `hidden`) forbids the
+   horizontal scroll region without creating a new scroll container — kills the
+   WKWebView-only bug where a transformed/full-bleed element (card fly-out,
+   onboarding hero) widened the page and the whole app could be dragged right.
+   Chrome never showed it; real iPhones did. */
+html, body { overflow-x: clip; }
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -661,6 +668,14 @@ a { color: inherit; text-decoration: none; }
 .league-missed { margin: 6px 0 26px; }
 .league-missed-lbl { font-size: 0.8125rem; color: var(--faint); margin: 0 0 8px; }
 .league-missed-phrase { font-size: 1rem; font-weight: 600; color: var(--accent); margin: 0 0 6px; }
+
+/* League entry: an explicit skip so the pitch never squats on the home. */
+.league-skip {
+  flex: none; display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 999px;
+  color: var(--faint); cursor: pointer;
+}
+.league-skip:active { background: var(--border); }
 
 /* "Your week" rollup — same calm card language as .review-due, read-only. */
 .week-card {
@@ -3413,6 +3428,10 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 /* ===== Practice — карточка коммуникационной ситуации ===================== */
 /* Practice is a FIXED viewport — header + deck fit one screen, no vertical scroll
    (the deck flexes to fill; the card auto-fits its text). No up/down dragging. */
+/* While the trainer is mounted the page itself must be inert — any stray pixel
+   of body scroll shows up as vertical jitter on iOS. :has() is iOS 16+ (our floor). */
+body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
+
 .tr-screen {
   background: var(--card);
   height: 100dvh;
@@ -3446,7 +3465,10 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   min-height: 0;
   perspective: 1500px;
 }
-.tr-card { position: absolute; inset: 0; will-change: transform; touch-action: pan-y; }
+/* touch-action: none — card gestures are horizontal-only and the trainer screen
+   has nothing to scroll; pan-y let vertical drags rubber-band the whole page on
+   iOS (the "screen rides up and down" bug). */
+.tr-card { position: absolute; inset: 0; will-change: transform; touch-action: none; }
 .tr-card.ghost {
   transform: translateY(calc(var(--gi) * 10px)) scale(calc(1 - var(--gi) * 0.035));
   opacity: .5; filter: saturate(.9); pointer-events: none;

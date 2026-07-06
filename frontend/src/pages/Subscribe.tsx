@@ -67,7 +67,7 @@ export default function Subscribe() {
 
   return (
     <div className="screen sub-screen">
-      <button className="bh-back" onClick={() => nav(-1)}>
+      <button className="bh-back" onClick={() => nav("/profile")}>
         <IconBack size={18} /> {t("common.back")}
       </button>
 
