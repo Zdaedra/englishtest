@@ -581,6 +581,8 @@ const ru: Dict = {
   "league.retry": "Попробовать ещё раз",
   "league.fallbackQuiz": "Пройти тест с вариантами ответов",
   "league.avgLine": "Средний балл: {{a}} из 10",
+  "league.applyPlan": "Подстроить программу под лигу",
+  "tune.leagueNote": "Темп по умолчанию подобран по твоей лиге: {{tier}}",
   "league.name.functional": "Функциональная лига",
   "league.desc.functional": "Тебя понимают, задачи решаются. Но каждая фраза выдаёт неносителя — и в переговорке это стоит веса.",
   "league.name.confident": "Уверенная лига",

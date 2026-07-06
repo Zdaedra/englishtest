@@ -567,6 +567,8 @@ const de: Dict = {
   "league.retry": "Erneut versuchen",
   "league.fallbackQuiz": "Test mit Antwortoptionen machen",
   "league.avgLine": "Durchschnitt: {{a}} von 10",
+  "league.applyPlan": "Programm an meine Liga anpassen",
+  "tune.leagueNote": "Das Standard-Tempo richtet sich nach deiner Liga: {{tier}}",
   "league.name.functional": "Funktionale Liga",
   "league.desc.functional": "Man versteht dich, die Arbeit läuft. Aber jeder Satz verrät den Nicht-Muttersprachler — und im Meeting kostet das Gewicht.",
   "league.name.confident": "Sichere Liga",

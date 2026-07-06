@@ -567,6 +567,8 @@ const fr: Dict = {
   "league.retry": "Réessayer",
   "league.fallbackQuiz": "Passer le test à choix multiples",
   "league.avgLine": "Score moyen : {{a}} sur 10",
+  "league.applyPlan": "Adapter le programme à ma ligue",
+  "tune.leagueNote": "Le rythme par défaut est réglé sur ta ligue : {{tier}}",
   "league.name.functional": "Ligue fonctionnelle",
   "league.desc.functional": "On te comprend, le travail avance. Mais chaque phrase trahit le non-natif — et en réunion, cela coûte du poids.",
   "league.name.confident": "Ligue assurée",

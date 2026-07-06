@@ -4,7 +4,8 @@
 // (which sections lead the path). No level test: difficulty adapts on its own.
 
 import type { Strategy } from "./strategy";
-import { DEFAULT_STRATEGY } from "./strategy";
+import { DEFAULT_STRATEGY, leagueAdjust } from "./strategy";
+import { getLeagueResult } from "./league";
 
 export type UserProfile = {
   scenarios?: string[]; // SCENARIOS keys, 1-2 chosen (legacy seed for strategy)
@@ -80,14 +81,25 @@ export function recordVisit(): number {
 }
 
 // The active strategy: an explicitly tuned one wins; otherwise derive it from the
-// onboarding picks (SCENARIOS keys are focus keys); otherwise the default.
+// onboarding picks (SCENARIOS keys are focus keys); otherwise the default. Until
+// the learner tunes the path themselves, the league placement (if taken) sets the
+// starting intensity + sprint size — the test result shapes the programme (B2).
 export function getStrategy(): Strategy {
   const p = getProfile();
   if (p.strategy?.main) return { ...DEFAULT_STRATEGY, ...p.strategy };
+  const league = getLeagueResult();
+  const pace = league ? leagueAdjust(league.tier) : {};
   const picks = (p.scenarios ?? []).filter(Boolean);
   if (picks.length)
-    return { ...DEFAULT_STRATEGY, main: picks[0], secondary: picks.slice(1, 3) };
-  return DEFAULT_STRATEGY;
+    return { ...DEFAULT_STRATEGY, ...pace, main: picks[0], secondary: picks.slice(1, 3) };
+  return { ...DEFAULT_STRATEGY, ...pace };
+}
+
+// True while the sprint pace comes from the league result (nothing hand-tuned yet)
+// — lets Tune-your-path label WHY the defaults look the way they do.
+export function paceFromLeague(): boolean {
+  const p = getProfile();
+  return !p.strategy?.main && !!getLeagueResult();
 }
 
 export function setStrategy(s: Strategy): void {

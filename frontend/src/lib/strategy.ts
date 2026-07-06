@@ -51,6 +51,21 @@ export const DEFAULT_STRATEGY: Strategy = {
   main: "charisma", secondary: [], intensity: "balanced", sprintSize: 5,
 };
 
+// League → programme intensity (B2: the placement result must DO something).
+// functional = narrow focus + short sprints (denser repetition of fewer batches);
+// native = wider field + longer sprints (repertoire growth, not survival drills).
+// Applied as the DEFAULT until the learner explicitly tunes their path, and
+// offered as a one-tap re-tune on the league result screen.
+export function leagueAdjust(tier: string): Pick<Strategy, "intensity" | "sprintSize"> {
+  switch (tier) {
+    case "functional": return { intensity: "narrow", sprintSize: 3 };
+    case "confident": return { intensity: "balanced", sprintSize: 5 };
+    case "sharp": return { intensity: "balanced", sprintSize: 7 };
+    case "native": return { intensity: "explore", sprintSize: 7 };
+    default: return { intensity: "balanced", sprintSize: 5 };
+  }
+}
+
 const numOf = (slug: string) => {
   const m = slug.match(/(\d+)\s*$/);
   return m ? parseInt(m[1], 10) : 0;

@@ -567,6 +567,8 @@ const es: Dict = {
   "league.retry": "Intentar de nuevo",
   "league.fallbackQuiz": "Hacer el test con opciones",
   "league.avgLine": "Puntuación media: {{a}} de 10",
+  "league.applyPlan": "Ajustar el programa a mi liga",
+  "tune.leagueNote": "El ritmo por defecto se ajustó a tu liga: {{tier}}",
   "league.name.functional": "Liga funcional",
   "league.desc.functional": "Te entienden y el trabajo sale. Pero cada frase delata al no nativo — y en la sala de reuniones eso cuesta peso.",
   "league.name.confident": "Liga segura",

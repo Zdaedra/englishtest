@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getStrategy, setStrategy } from "../lib/profile";
+import { getStrategy, setStrategy, paceFromLeague } from "../lib/profile";
+import { getLeagueResult } from "../lib/league";
+import { tg } from "../i18n";
 import { clearAllPathRanks } from "../lib/progress";
 import { FOCUSES, NEEDS, Intensity } from "../lib/strategy";
 import { IconBack, IconCheck } from "../ui/icons";
@@ -115,6 +117,11 @@ export default function TunePath() {
       </div>
 
       <p className="section-label" style={{ marginTop: 22 }}>{t("tune.sprintSize")}</p>
+      {paceFromLeague() && (
+        <p className="tune-league-note">
+          {t("tune.leagueNote", { tier: tg(`league.name.${getLeagueResult()!.tier}`) })}
+        </p>
+      )}
       <div className="tune-sizes">
         {[3, 5, 7].map((n) => (
           <button

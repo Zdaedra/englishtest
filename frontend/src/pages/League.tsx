@@ -10,6 +10,8 @@ import { nativeRecognize } from "../audio/nativeStt";
 import {
   LEAGUE_QS, LeagueOption, LeagueTier, leagueOf, saveLeagueResult,
 } from "../lib/league";
+import { leagueAdjust } from "../lib/strategy";
+import { getStrategy, setStrategy } from "../lib/profile";
 
 // "Check your English league" — the placement test. League 2.0: the learner
 // answers every situation in their OWN English (voice or text) and the server
@@ -239,6 +241,17 @@ export default function League() {
           )}
           <button
             className="btn-primary league-start"
+            onClick={() => {
+              // B2: the league SHAPES the programme — apply its pace (sprint
+              // size + intensity) over the current strategy, keep the focus.
+              setStrategy({ ...getStrategy(), ...leagueAdjust(tier) });
+              nav("/learn");
+            }}
+          >
+            {t("league.applyPlan")}
+          </button>
+          <button
+            className="lg-quiz-link"
             onClick={() => nav(user?.plan === "free" ? "/subscribe" : "/")}
           >
             {t(weakCount > 0 ? "league.ctaUp" : "league.ctaKeep")}
