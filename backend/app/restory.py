@@ -24,7 +24,7 @@ from .schemas import PhraseIn
 def resync(session: Session, slugs: list[str] | None = None) -> None:
     wanted = set(slugs) if slugs else None
     for path in sorted(content_dir().glob("*.json")):
-        data = json.loads(path.read_text())
+        data = json.loads(path.read_text(encoding="utf-8"))
         slug = data.get("slug", "")
         story = (data.get("mnemo") or "").strip()
         if not slug or not story or (wanted and slug not in wanted):
