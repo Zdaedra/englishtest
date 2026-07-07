@@ -24,6 +24,8 @@ from .schemas import PhraseIn
 def resync(session: Session, slugs: list[str] | None = None) -> None:
     wanted = set(slugs) if slugs else None
     for path in sorted(content_dir().glob("*.json")):
+        if path.name.startswith("."):
+            continue  # skip macOS AppleDouble (._*) and other dotfiles
         data = json.loads(path.read_text(encoding="utf-8"))
         slug = data.get("slug", "")
         story = (data.get("mnemo") or "").strip()

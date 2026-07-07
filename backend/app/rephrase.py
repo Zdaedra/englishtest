@@ -39,6 +39,8 @@ def resync_phrases(session: Session, slugs: list[str] | None = None,
     stats = {"batches_changed": 0, "phrases_changed": 0, "anchors_changed": 0,
              "batches_skipped": 0}
     for path in sorted(content_dir().glob("*.json")):
+        if path.name.startswith("."):
+            continue  # skip macOS AppleDouble (._*) and other dotfiles
         data = json.loads(path.read_text(encoding="utf-8"))
         slug = data.get("slug", "")
         cphrases = data.get("phrases") or []
