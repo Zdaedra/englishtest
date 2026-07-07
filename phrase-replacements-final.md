@@ -1,10 +1,10 @@
-# Финальные замены фраз — варианты Fable, редакция v5 (финал)
+# Финальные замены фраз — варианты Fable, редакция v6 (утверждённый финал)
 
-Решение 2026-07-06: **везде варианты Fable**. Три круга внешней критики: ③ v3 (33 фразы),
-④ v4 (36 фраз, адверсариальная проверка 2 линзами), 🆕 v5 (13 фраз, тоже верифицированы —
-12/13 чисто, 1 доработана верификатором). Секции «обычные рабочие», «сценические» и часть
-«line-like» оставлены сознательно: частотный разговорный язык — ядро продукта, speaker-lines
-живут в сценических батчах. Мнемо — `mnemo-rewrites-final.md`; машинный файл — `phrase-replacements-final.json`.
+Решение 2026-07-06: **везде варианты Fable**. Четыре круга внешней критики: ③ v3 (33), ④ v4 (36),
+⑤ v5 (13), 🆕 v6 (8 — снятие taunt/keynote/slogan-остатков + грамматическая чистка Build).
+Круги v4–v6 прошли адверсариальную проверку двумя линзами (native-spoken + slot-fit); v6 — 8/8 чисто.
+Секции «обычные рабочие», «сценические» и line-like-жанровые оставлены сознательно.
+Мнемо — `mnemo-rewrites-final.md`; машинный файл — `phrase-replacements-final.json`.
 
 **Итого:** 340 замен в 79 батчах; якорь меняется в 320, остаётся прежним в 20.
 
@@ -104,7 +104,7 @@
 | Fishing | I won't perform the reaction you're fishing for. | ④ **If you're that curious, just ask.** | Ask |
 | Button | My calm isn't a button you get to press. | **You're welcome to keep trying — it's not going to land.** | Land |
 | Strings | Pull all the strings you want — they're not attached to anything. | ③ **You're wasting your time with this.** | Time |
-| Lever | My reaction is my choice — never your lever. | 🆕 **You'll have to try harder than that.** | Harder |
+| Lever | My reaction is my choice — never your lever. | 🆕 **Anyway — I've got work to do.** | Work |
 
 ## composure-2 — Принять оскорбление с достоинством
 
@@ -113,7 +113,7 @@
 | Beside | I'll let that land beside me — not on me. | **I'm going to let that one go right past me.** | Past |
 | Unsaid | I'll give you the chance to leave that one unsaid. | **I'll pretend you didn't say that — once.** | Once |
 | Dig | Say the real thing, not the dig — I'll happily take the real thing. | **Drop the jab and say what you actually mean.** | Jab |
-| Worth | Your words don't get to define my worth. | 🆕 **Think what you want — I'm good.** | Good |
+| Worth | Your words don't get to define my worth. | ⑤ **Think what you want — I'm good.** | Good |
 | Describes | What you just said describes you, not me. | **That says more about you than it does about me.** | Says |
 | Inch | I know exactly who I am — that didn't move it an inch. | **I know who I am — that didn't rattle me.** | Rattle |
 
@@ -126,7 +126,7 @@
 | Substance | Give me the substance — and I'll stand right here and take it. | **If there's a real point under all that, I'm listening.** | Real |
 | Shrink | You can't shrink me by trying to — that's just not how I work. | ③ **We're not doing this here.** | Doing |
 | Ounce | I don't lose an ounce of standing because you raised your voice. | **Raising your voice doesn't win the argument.** | Argument |
-| Tall | This isn't landing the way you hoped — I'm still standing exactly as tall. | **Swing and a miss — let's get back to the point.** | Swing |
+| Tall | This isn't landing the way you hoped — I'm still standing exactly as tall. | 🆕 **All right — back to the point.** | Point |
 
 ## composure-4 — Сохранить лицо после ошибки
 
@@ -147,7 +147,7 @@
 | Reasons | Adding more reasons would only make this less clear. | **More reasons would just muddy it.** | Muddy |
 | Argument | My 'no' doesn't need a closing argument. | **I don't owe a defense for every no.** | Defense |
 | Silence | I can let the silence sit — I don't need to fill it. | **I'm fine letting that hang there.** | Hang |
-| Selling | I'm not selling you my boundaries — I'm stating them. | 🆕 **I'm not negotiating this.** | Negotiating |
+| Selling | I'm not selling you my boundaries — I'm stating them. | ⑤ **I'm not negotiating this.** | Negotiating |
 
 ## composure-6 — Уйти из токсичного разговора с достоинством
 
@@ -196,7 +196,7 @@
 | Старый якорь | Было | Стало (Fable) | Новый якорь |
 |---|---|---|---|
 | Limited | What I can say now is limited — what I'll bring back is clear. | **Here's what I know so far — I'll have the rest by tomorrow.** | Tomorrow |
-| Trouble | Not knowing that doesn't trouble me — pretending to would. | 🆕 **I don't know — and I'm not going to pretend I do.** | Pretend |
+| Trouble | Not knowing that doesn't trouble me — pretending to would. | ⑤ **I don't know — and I'm not going to pretend I do.** | Pretend |
 | Bluff | I won't bluff my way through an answer just to fill the room. | **I'm not going to wing an answer to a question this important.** | Wing |
 
 ## composure-11 — Держать достоинство в проигрыше/отказе
@@ -350,7 +350,7 @@
 | Measure | We measure ourselves by how we show up — not by what we can't control. | **What we can control is how we handle this — so that's our focus.** | Focus |
 | Promise | I won't promise the result — I promise the way we meet it. | **I can't promise the outcome — I can promise the effort.** | Effort |
 | Become | We can't choose how this ends — only who we become getting there. | **However this ends, we'll deal with it the right way.** | Deal |
-| Upright | Whatever comes, we meet it upright. That part I guarantee. | 🆕 **We're not going to flinch now.** | Flinch |
+| Upright | Whatever comes, we meet it upright. That part I guarantee. | 🆕 **We'll know soon enough — and we'll be ready.** | Ready |
 
 ## gravitas-8 — Остановить опасную эскалацию словом
 
@@ -384,7 +384,7 @@
 | Closed | The emergency phase is closed — we're moving into recovery. | **The fire's out — now we rebuild.** | Rebuild |
 | Discipline | We held the line — now we build the discipline that keeps it from breaking again. | **Now we put in the guardrails so this doesn't happen twice.** | Guardrails |
 | Lesson | The lesson isn't the pain — the lesson is what we change because of it. | **What matters now is what we change because of this.** | Change |
-| Exit | This crisis won't define us — our exit from it will. | 🆕 **Nobody's going to remember the mess — they'll remember the comeback.** | Comeback |
+| Exit | This crisis won't define us — our exit from it will. | 🆕 **Rough week — the comeback starts Monday.** | Comeback |
 
 ## intimacy-1 — Поднять трудную тему
 
@@ -450,7 +450,7 @@
 | Старый якорь | Было | Стало (Fable) | Новый якорь |
 |---|---|---|---|
 | Dream | Can we dream out loud together for a bit? No pressure — just us. | ③ **Where do you see us a few years from now? I've been thinking about that.** | Years |
-| Imagine | I'd love space to imagine what we're building — not just what we're managing. | 🆕 **I don't want us running on autopilot — I want us building something.** | Building |
+| Imagine | I'd love space to imagine what we're building — not just what we're managing. | 🆕 **I don't want us running on autopilot — I want us to build something.** | Build |
 | Desire | I want you in my future from desire — not from fear. | ④ **I'm not here out of fear or habit — I want this.** | Want |
 | Disappear | I'm willing to build something real — but I won't disappear from myself to keep it. | **I'm all in — but I'm not going to lose myself in it.** | Lose |
 
@@ -471,7 +471,7 @@
 |---|---|---|---|
 | Concern | I hear the concern underneath it — let's not fight over the form. | **I know you're worried — let's not turn it into an argument.** | Worried |
 | Court | I'm not going to defend my life like a case in court. | **I'm not going to argue my life like it's on trial.** | Trial |
-| Adults | I want us to meet as adults — not as old roles. | 🆕 **You raised an adult — trust that.** | Adult |
+| Adults | I want us to meet as adults — not as old roles. | ⑤ **You raised an adult — trust that.** | Adult |
 
 ## intimacy-12 — Желание и тепло без клише
 
@@ -548,7 +548,7 @@
 |---|---|---|---|
 | Closer | I hear both of you — and we're closer to the same concern than it sounds. | **You two are arguing the same point from different ends.** | Ends |
 | Outcome | You both want the same outcome — that's the part to stand on. | **You both want the same thing — start from there.** | Start |
-| Fact | Give me the fact — then what you need from it. | 🆕 **First, tell me what happened — we'll get to the rest.** | Happened |
+| Fact | Give me the fact — then what you need from it. | ⑤ **First, tell me what happened — we'll get to the rest.** | Happened |
 | Crown | I'm not here to crown a winner — I'm here to get you hearing each other. | **I'm not the referee here — I just want you two to hear each other.** | Referee |
 | Frame | I'll just hold the frame until you actually hear each other. | **I'll keep us on track until you two can hear each other.** | Track |
 
@@ -656,7 +656,7 @@
 | thread | Here's the thread I want you to follow. | **Stick with me — this all ties together.** | ties |
 | performance | The camera doesn't need a performance. It needs presence. | ④ **I ditched the script — it kept getting in the way.** | script |
 | stiffen | A lens doesn't make me stiffen. I breathe, I slow, I stay me. | ③ **It's just a camera — we can take our time.** | camera |
-| reads | I'm not acting for you — and that's exactly what reads. | 🆕 **I'm comfortable if you are.** | comfortable |
+| reads | I'm not acting for you — and that's exactly what reads. | ⑤ **I'm comfortable if you are.** | comfortable |
 
 ## stage-4 — Совладать со сценическим страхом вживую
 
@@ -706,10 +706,10 @@
 
 | Старый якорь | Было | Стало (Fable) | Новый якорь |
 |---|---|---|---|
-| believe | You walked in as a crowd. You're leaving as people I believe in. | 🆕 **Every person in this room can do this — I really believe that. So go.** | believe *(тот же)* |
+| believe | You walked in as a crowd. You're leaving as people I believe in. | ⑤ **Every person in this room can do this — I really believe that. So go.** | believe *(тот же)* |
 | trail | I'm not going to trail off — I'm landing this, right here. | **And that's the note I want to leave you on.** | note |
-| test | This is the end of the talk. It is the start of the test. | ④ **Talk's over — go make something happen.** | happen |
-| pad | No thank-yous to pad it. Just the line — and the door. | **No long goodbye — just go do the thing.** | goodbye |
+| test | This is the end of the talk. It is the start of the test. | 🆕 **The easy part was talking about it.** | talking |
+| pad | No thank-yous to pad it. Just the line — and the door. | 🆕 **I'm not big on long goodbyes — see you out there.** | goodbye |
 | sentence | I'll stop here. The next sentence is yours. | ③ **My part's done — the rest is on you.** | part |
 
 ## stage-9 — Под софитами / вниманием прессы
@@ -729,7 +729,7 @@
 | person | Bring to mind one person this is really about. Hold them there. | **Think of the one person who needs to hear this — keep them in mind.** | mind |
 | tell | Some of you are feeling it right now — I can tell. That's exactly the point. | **I can see some of you nodding — you know exactly what I mean.** | nodding |
 | whisper | I could shout this — but a whisper in a room this size hits harder. | **I don't need to shout this — you can hear me just fine.** | shout |
-| spectacle | One real moment beats any amount of spectacle. | 🆕 **The show can wait — finish what you were saying.** | show |
+| spectacle | One real moment beats any amount of spectacle. | 🆕 **Don't tell the crew, but the show isn't the point.** | show |
 | seen | My job is not to fill the room. It's to make each of you feel seen. | ③ **I'm not trying to impress you — I just want this to land.** | land |
 
 ## stage-11 — Импровизировать, когда план рухнул
@@ -741,5 +741,5 @@
 | core | Let me cut to the core — there's really just one idea here. | **There's really one idea underneath all of this — let's go straight there.** | idea |
 | shape | Here's the new shape: one story, one lesson, one decision. | ③ **Okay, simpler: one story, one point, one decision.** | simpler |
 | net | No net today — and that's when I'm actually at my best. | **No safety net today — that's when it gets good.** | safety |
-| raw | Unscripted and raw beats polished and dead. Lucky you. | 🆕 **No rehearsal for this one — wish me luck.** | luck |
+| raw | Unscripted and raw beats polished and dead. Lucky you. | ⑤ **No rehearsal for this one — wish me luck.** | luck |
 | thought | I don't need a plan. I've got a thought — and that's plenty. | **No script? Fine — I know this stuff cold.** | cold |
