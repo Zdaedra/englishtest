@@ -1,60 +1,60 @@
 {
-  "slug": "composure-6",
-  "title": "Уйти из токсичного разговора с достоинством",
-  "theme": "Разговор стал токсичным или пошёл по кругу — завершить чисто, не хлопая дверью и не капитулируя; вернёмся, когда будет уважительно",
-  "subtitle": "Выход из театра",
-  "section": "composure",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Damage",
-      "zone": "Warm",
-      "en": "I don't want this to do more damage than it solves."
-    },
-    {
-      "anchor": "Pause",
-      "zone": "Warm",
-      "en": "I care about this enough to pause before we say things we can't take back."
-    },
-    {
-      "anchor": "Kindly",
-      "zone": "Warm",
-      "en": "I'm going to step away kindly — not angrily."
-    },
-    {
-      "anchor": "Productive",
-      "zone": "Backbone",
-      "en": "This has stopped being productive — so I'm ending it here for now."
-    },
-    {
-      "anchor": "Attacks",
-      "zone": "Backbone",
-      "en": "I'm open to the issue — not the attacks around it."
-    },
-    {
-      "anchor": "Circles",
-      "zone": "Backbone",
-      "en": "We're going in circles — and I'm not going to keep feeding it."
-    },
-    {
-      "anchor": "Afraid",
-      "zone": "Weight",
-      "en": "I'm not leaving because I'm afraid — I'm leaving because this deserves better."
-    },
-    {
-      "anchor": "Composure",
-      "zone": "Weight",
-      "en": "I won't spend my composure on a conversation that's lost its center."
-    },
-    {
-      "anchor": "Respectful",
-      "zone": "Weight",
-      "en": "When we can speak respectfully again — I'll be right here."
-    }
-  ],
-  "mnemo": "Сначала с потолка сыплется damage, ты поднимаешь ладонь pause и останавливаешь бегущих актёров у края сцены. Потом softly и kindly отводишь их за кулисы, потому что дальше репетиция уже не productive. Из темноты летят attacks реквизита, прожектор крутит на полу circles, но ты не afraid и не бросаешься назад. Ты сохраняешь composure, открываешь боковую дверь и выпускаешь всех в тихий respectful коридор."
+ "slug": "composure-6",
+ "title": "Уйти из токсичного разговора с достоинством",
+ "theme": "Разговор стал токсичным или пошёл по кругу — завершить чисто, не хлопая дверью и не капитулируя; вернёмся, когда будет уважительно",
+ "subtitle": "Выход из театра",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Damage",
+   "zone": "Warm",
+   "en": "Let's stop before this does real damage."
+  },
+  {
+   "anchor": "Pause",
+   "zone": "Warm",
+   "en": "I care about this enough to pause before we say things we can't take back."
+  },
+  {
+   "anchor": "Ugly",
+   "zone": "Warm",
+   "en": "I'm going to bow out before this gets ugly."
+  },
+  {
+   "anchor": "Productive",
+   "zone": "Backbone",
+   "en": "This has stopped being productive — so I'm ending it here for now."
+  },
+  {
+   "anchor": "Punches",
+   "zone": "Backbone",
+   "en": "Happy to talk about the issue — not to take punches."
+  },
+  {
+   "anchor": "Circles",
+   "zone": "Backbone",
+   "en": "We're going in circles — and I'm not going to keep feeding it."
+  },
+  {
+   "anchor": "Running",
+   "zone": "Weight",
+   "en": "I'm not running from this — I just won't do it this way."
+  },
+  {
+   "anchor": "Cool",
+   "zone": "Weight",
+   "en": "This isn't worth losing my cool over — I'm out for now."
+  },
+  {
+   "anchor": "Respectful",
+   "zone": "Weight",
+   "en": "When we can speak respectfully again — I'll be right here."
+  }
+ ],
+ "mnemo": "С потолка сыплется damage; поднимаешь ладонь pause и останавливаешь актёров. Уводишь их за кулисы, пока не стало ugly — безобразно: дальше не productive. Из темноты летят punches — тычки; лицо ты не подставляешь. Прожектор крутит на полу circles, но твой уход — не running — не бегство: в таком виде ты продолжать не будешь. Не теряешь cool — хладнокровие, открываешь боковую дверь в коридор, где всё respectful — уважительно."
 }

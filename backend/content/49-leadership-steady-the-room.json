@@ -21,9 +21,9 @@
    "en": "This is a lot — and nobody has to pretend it isn't."
   },
   {
-   "anchor": "Ground",
+   "anchor": "Footing",
    "zone": "Warm",
-   "en": "Let's get our feet back on the ground — together."
+   "en": "Let's find our footing before we make any calls."
   },
   {
    "anchor": "Facts",
@@ -41,9 +41,9 @@
    "en": "The next move is simple: stabilize first, then make the call."
   },
   {
-   "anchor": "Calm",
+   "anchor": "Panic",
    "zone": "Weight",
-   "en": "I'm going to stay calm enough for all of us to think."
+   "en": "Panic won't help us — clear heads will."
   },
   {
    "anchor": "Weathered",
@@ -51,10 +51,10 @@
    "en": "We've weathered hard things before — we're not starting from zero."
   },
   {
-   "anchor": "Steady",
+   "anchor": "Step",
    "zone": "Weight",
-   "en": "Stay with me. We move steady from here."
+   "en": "Stick with me — we'll take this one step at a time."
   }
  ],
- "mnemo": "Шторм рвёт лагерь, люди мечутся между палатками. Ты выходишь в центр и первым делаешь глубокий breathe — вдох — у всех на виду. Киваешь: да, это hard — тяжело, и не притворяешься, что нет. Опускаешься на колено и прижимаешь ладонь к ground — к земле: возвращаемся на неё вместе. Раскладываешь на ящике facts — факты: карта, запасы, что ещё не знаем. Ножом чертишь линию, separate — отделяя случившееся от страха: тент порван, люди целы. Показываешь next — следующий шаг: сперва закрепить, решать потом. Двигаешься нарочито calm — спокойно, и чужие руки перестают дрожать. Стучишь по шесту со старыми заплатами: мы уже weathered — переживали бури. И ведёшь колонну steady — ровным шагом — под скалу."
+ "mnemo": "Шторм рвёт лагерь, люди мечутся между палатками. Выходишь в центр и первым breathe — дышишь — на виду. Киваешь: да, это hard — тяжело. Опускаешься на колено, нащупывая footing — опору под ногами. Раскладываешь на ящике facts — факты: карта, запасы, что ещё не знаем. Ножом чертишь линию, separate — отделяя случившееся от страха. Показываешь next — следующий шаг: сперва закрепить, решать потом. Panic — панике — здесь делать нечего. Стучишь по шесту со старыми заплатами: мы уже weathered — переживали бури. И ведёшь колонну под скалу — step за шагом."
 }

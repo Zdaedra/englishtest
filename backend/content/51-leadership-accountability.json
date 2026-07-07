@@ -1,60 +1,60 @@
 {
-  "slug": "lead-5",
-  "title": "Призвать к ответственности без молотка",
-  "theme": "Человек подвёл — назвать разрыв и восстановить стандарт без злости и стыда, сохранив достоинство и получив реальное переобязательство",
-  "subtitle": "Скейт-рампа",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Assuming",
-      "zone": "Warm",
-      "en": "This isn't like you — which is why I'm asking, not assuming."
-    },
-    {
-      "anchor": "Sideways",
-      "zone": "Warm",
-      "en": "I'm not here to pile on — I want to understand where it went sideways."
-    },
-    {
-      "anchor": "Audience",
-      "zone": "Warm",
-      "en": "Let's keep this just us — no audience, no drama."
-    },
-    {
-      "anchor": "Landed",
-      "zone": "Backbone",
-      "en": "Here's the fact: you committed to this, and it didn't land. What happened?"
-    },
-    {
-      "anchor": "Broke",
-      "zone": "Backbone",
-      "en": "Help me see where the chain broke."
-    },
-    {
-      "anchor": "Follow",
-      "zone": "Backbone",
-      "en": "Good intent doesn't replace follow-through here."
-    },
-    {
-      "anchor": "Dignity",
-      "zone": "Weight",
-      "en": "I'm going to protect the standard without taking away your dignity."
-    },
-    {
-      "anchor": "Trust",
-      "zone": "Weight",
-      "en": "I trust you to make this right — and I need a clear commitment."
-    },
-    {
-      "anchor": "Behind",
-      "zone": "Weight",
-      "en": "Tell me what you can stand behind — and I'll hold you to it."
-    }
-  ],
-  "mnemo": "Ты вкатываешься в рампу, assuming, что разогрев будет лёгким, — и доску срывает sideways на мокром стыке. Audience у бортика ахает, но ты спрыгиваешь и landed на ноги, а вот доска broke пополам о рейл. Приятель кидает свою: «follow за мной!» — и ты с dignity отряхиваешь ладони и поднимаешься обратно. Разгон, трюк на чистом trust к чужой доске — приземление! — и страх остаётся где-то behind, под рёв трибун."
+ "slug": "lead-5",
+ "title": "Призвать к ответственности без молотка",
+ "theme": "Человек подвёл — назвать разрыв и восстановить стандарт без злости и стыда, сохранив достоинство и получив реальное переобязательство",
+ "subtitle": "Скейт-рампа",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Assuming",
+   "zone": "Warm",
+   "en": "This isn't like you — which is why I'm asking, not assuming."
+  },
+  {
+   "anchor": "Sideways",
+   "zone": "Warm",
+   "en": "I'm not here to pile on — I want to understand where it went sideways."
+  },
+  {
+   "anchor": "Audience",
+   "zone": "Warm",
+   "en": "Let's keep this just us — no audience, no drama."
+  },
+  {
+   "anchor": "Committed",
+   "zone": "Backbone",
+   "en": "You committed to this and it didn't happen — walk me through it."
+  },
+  {
+   "anchor": "Apart",
+   "zone": "Backbone",
+   "en": "Where did this fall apart?"
+  },
+  {
+   "anchor": "Follow",
+   "zone": "Backbone",
+   "en": "Good intent doesn't replace follow-through here."
+  },
+  {
+   "anchor": "Again",
+   "zone": "Weight",
+   "en": "This stays between us — but it can't happen again."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Weight",
+   "en": "I trust you to make this right — and I need a clear commitment."
+  },
+  {
+   "anchor": "Behind",
+   "zone": "Weight",
+   "en": "Tell me what you can stand behind — and I'll hold you to it."
+  }
+ ],
+ "mnemo": "Вкатываешься в рампу, assuming лёгкий разогрев, — и доску срывает sideways на мокром стыке. Audience ахает: ты committed — заявил — этот трюк, и теперь честно разбираешь, где он не сложился. Доска разлетелась apart — на куски — о рейл: вот точка, где всё развалилось. Приятель кидает свою доску: намерения мало — нужен follow — доведённый до конца. Ты киваешь: разбор останется между вами, но again — снова — этот срыв не повторится. Разгон, прыжок на чистом trust к чужой доске — приземление! — и страх остаётся где-то behind."
 }

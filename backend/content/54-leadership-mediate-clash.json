@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Closer",
+   "anchor": "Ends",
    "zone": "Warm",
-   "en": "I hear both of you — and we're closer to the same concern than it sounds."
+   "en": "You two are arguing the same point from different ends."
   },
   {
    "anchor": "Enemy",
@@ -21,9 +21,9 @@
    "en": "Neither of you is the enemy here."
   },
   {
-   "anchor": "Outcome",
+   "anchor": "Start",
    "zone": "Warm",
-   "en": "You both want the same outcome — that's the part to stand on."
+   "en": "You both want the same thing — start from there."
   },
   {
    "anchor": "Crossfire",
@@ -31,9 +31,9 @@
    "en": "Let's stop the crossfire — one voice at a time, uninterrupted."
   },
   {
-   "anchor": "Fact",
+   "anchor": "Happened",
    "zone": "Backbone",
-   "en": "Give me the fact — then what you need from it."
+   "en": "First, tell me what happened — we'll get to the rest."
   },
   {
    "anchor": "Temperature",
@@ -41,14 +41,14 @@
    "en": "Let's separate the issue from the temperature in the room."
   },
   {
-   "anchor": "Crown",
+   "anchor": "Referee",
    "zone": "Weight",
-   "en": "I'm not here to crown a winner — I'm here to get you hearing each other."
+   "en": "I'm not the referee here — I just want you two to hear each other."
   },
   {
-   "anchor": "Frame",
+   "anchor": "Track",
    "zone": "Weight",
-   "en": "I'll just hold the frame until you actually hear each other."
+   "en": "I'll keep us on track until you two can hear each other."
   },
   {
    "anchor": "Side",
@@ -56,5 +56,5 @@
    "en": "I'm not picking a side — I'm getting you back onto the same one."
   }
  ],
- "mnemo": "Двое сцепились во дворе. Ты идёшь closer — ближе — и встаёшь между ними. Разводишь их руки в стороны: здесь нет enemy — врага. Разворачиваешь обоих за плечи к недостроенной стене: вот outcome — результат, — ради него оба здесь. Шагаешь в crossfire — перекрёстный огонь — реплик и поднимаешь ладонь: по одному. Протягиваешь руку первому: клади fact — факт, — потом что тебе нужно. Распахиваешь ворота и сбиваешь temperature — температуру — двора холодным воздухом. Мягко опускаешь вскинутый кулак того, кто уже празднует: ты не crown — не короновать победителя пришёл. Разводишь руки и держишь frame — рамку, — пока они впервые слышат друг друга. И переводишь обоих на одну side — сторону — черты, которую сам стираешь подошвой."
+ "mnemo": "Двое сцепились во дворе — тянут одно бревно с разных ends — концов, не видя этого. Встаёшь между ними, разводишь руки: здесь нет enemy — врага. Разворачиваешь обоих к недостроенной стене: оба хотят её достроить — вот start, отсюда и начнём. Шагаешь в crossfire — перекрёстный огонь — реплик и поднимаешь ладонь: по одному. Протягиваешь руку первому: расскажи, что happened — что случилось; остальное — следом. Распахиваешь ворота и сбиваешь temperature — температуру — двора. Мягко опускаешь вскинутый кулак того, кто уже празднует: ты не referee — не судья. Держишь разговор на track — на колее. И переводишь обоих на одну side — сторону — бревна: поднимают вместе."
 }

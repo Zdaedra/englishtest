@@ -16,19 +16,19 @@
    "en": "Give me a beat — I want to answer that well, not fast."
   },
   {
-   "anchor": "Mull",
+   "anchor": "Chew",
    "zone": "Warm",
-   "en": "Let me mull this for a moment."
+   "en": "Let me chew on that overnight."
   },
   {
-   "anchor": "Sloppy",
+   "anchor": "Hour",
    "zone": "Warm",
-   "en": "I hear the urgency — a moment now saves you a sloppy answer."
+   "en": "Give me an hour and you'll get a real answer instead of a guess."
   },
   {
-   "anchor": "Speed",
+   "anchor": "Hallway",
    "zone": "Backbone",
-   "en": "I'm not making a call this size on speed alone."
+   "en": "A decision this big doesn't get made in a hallway."
   },
   {
    "anchor": "Clear",
@@ -41,20 +41,20 @@
    "en": "Pressure won't make the decision better — a little space will."
   },
   {
-   "anchor": "Stopwatch",
+   "anchor": "Rushing",
    "zone": "Weight",
-   "en": "Good decisions don't get made on a stopwatch."
+   "en": "Rushing this helps nobody."
   },
   {
-   "anchor": "Clock",
+   "anchor": "Deadline",
    "zone": "Weight",
-   "en": "I'm not letting the clock outrank my judgment."
+   "en": "The deadline's real, but so is the cost of getting this wrong."
   },
   {
-   "anchor": "Hesitation",
+   "anchor": "Stalling",
    "zone": "Weight",
-   "en": "My pause isn't hesitation — it's the weight of doing this right."
+   "en": "I'm not stalling — I'm making sure we get it right."
   }
  ],
- "mnemo": "Ты ведёшь обоз на серый лёд реки — к городку на том берегу; сзади кричат: быстрее! Останавливаешься на beat — на один такт — и слушаешь треск под ногами. Приседаешь и mull — взвешиваешь маршрут, ведя ладонью по льду. Не делаешь sloppy — небрежный шаг ради speed — скорости: обходишь тёмное пятно по дуге. Выбираешь clear — чистую, звонкую полосу и раскидываешь руки, беря себе space — пространство для веса. Проводник обоза щёлкает stopwatch — секундомером — у тебя за спиной; ты отмахиваешься, не оборачиваясь. За рекой светятся clock — часы городской ратуши, но ты не поднимаешь глаз и не ускоряешь шаг. Твоя hesitation — заминка перед каждым шагом — не слабость: это вес, поставленный точно. Последний шаг — и ты на твёрдом берегу."
+ "mnemo": "Ты ведёшь обоз на лёд реки; сзади кричат: быстрее! Останавливаешься на beat — на один такт — и слушаешь треск под ногами. Приседаешь и chew — пережёвываешь — маршрут. Берёшь себе hour — час — на разведку. Решения такого веса не принимают в hallway — в сенях. Выбираешь clear — чистую полосу и раскидываешь руки, беря себе space — пространство. Проводник щёлкает секундомером за спиной; rushing — гонка — не поможет никому. За рекой горит deadline — срок: настоящий, но цена полыньи — тоже. Твоя заминка — не stalling — не тянучка. Последний шаг — и ты на твёрдом берегу."
 }

@@ -13,48 +13,48 @@
   {
    "anchor": "lens",
    "zone": "Warm",
-   "en": "I'm looking right at you — one person — not a lens."
+   "en": "Forget the lens — it's just you and me."
   },
   {
-   "anchor": "glass",
+   "anchor": "screen",
    "zone": "Warm",
-   "en": "There's glass between us, but I don't want this to feel distant."
+   "en": "Yeah, we're on a screen — let's talk like we're not."
   },
   {
-   "anchor": "kitchen",
+   "anchor": "coffee",
    "zone": "Warm",
-   "en": "Picture us in your kitchen, not on a screen."
+   "en": "Imagine we're just talking over coffee."
   },
   {
-   "anchor": "crisp",
+   "anchor": "fluff",
    "zone": "Backbone",
-   "en": "Three things. Crisp. Then I'm done."
+   "en": "Three points, ninety seconds, no fluff."
   },
   {
-   "anchor": "fillers",
+   "anchor": "rambling",
    "zone": "Backbone",
-   "en": "I'll land each sentence — no fillers, no drift."
+   "en": "No rambling, no filler — straight through."
   },
   {
-   "anchor": "thread",
+   "anchor": "ties",
    "zone": "Backbone",
-   "en": "Here's the thread I want you to follow."
+   "en": "Stick with me — this all ties together."
   },
   {
-   "anchor": "performance",
+   "anchor": "script",
    "zone": "Weight",
-   "en": "The camera doesn't need a performance. It needs presence."
+   "en": "I ditched the script — it kept getting in the way."
   },
   {
-   "anchor": "stiffen",
+   "anchor": "camera",
    "zone": "Weight",
-   "en": "A lens doesn't make me stiffen. I breathe, I slow, I stay me."
+   "en": "It's just a camera — we can take our time."
   },
   {
-   "anchor": "reads",
+   "anchor": "comfortable",
    "zone": "Weight",
-   "en": "I'm not acting for you — and that's exactly what reads."
+   "en": "I'm comfortable if you are."
   }
  ],
- "mnemo": "Лампа «запись» горит. Ты протираешь lens — объектив — и шагаешь в кадр, глядя в него как в глаза. Прижимаешь ладонь к glass — стеклу, — отталкиваешься и идёшь одним дублем через студию. Проходишь декорацию kitchen — кухни — и разворачиваешь стул: будто вы за одним столом. Отбиваешь crisp — чёткий — счёт: три вещи, и всё. Вытряхиваешь из карманов бумажки-fillers — слова-заполнители — в корзину, не сбавляя шага. Тянешь за собой thread — нить — по полу: линия, за которой идти. Стягиваешь пиджак performance — представления — и вешаешь на гвоздь. Разводишь плечи, не давая телу stiffen — одеревенеть: дышишь, замедляешься. Доходишь до монитора: на экране просто ты — и именно это reads — читается."
+ "mnemo": "Лампа «запись» горит. Ты протираешь lens — объектив — и глядишь в него как в глаза. Прижимаешь ладонь к screen — экрану: не стена. Ставишь на стол две чашки coffee — кофе: будто вы просто разговариваете. Отбиваешь счёт: три вещи, девяносто секунд, без fluff — ваты. Вытряхиваешь из карманов rambling — блуждания вокруг да около — в корзину. Тянешь нить: всё это ties — связывается — в одну линию. Бумажный script — сценарий — летит в ту же корзину: он мешал. Подмигиваешь красному огоньку: это просто camera — камера, можно не спешить. Доходишь до монитора: тебе comfortable — спокойно."
 }

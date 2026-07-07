@@ -1,60 +1,60 @@
 {
-  "slug": "gravitas-5",
-  "title": "Признать катастрофу, не теряя командования",
-  "theme": "Масштабный провал на твоей зоне — честно назвать масштаб и взять на себя, но руль в руках; именно поэтому я не отпускаю штурвал",
-  "subtitle": "Дирижабль в огне",
-  "section": "gravitas",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Minimize",
-      "zone": "Warm",
-      "en": "I'm not going to stand here and minimize what this did to people."
-    },
-    {
-      "anchor": "Affected",
-      "zone": "Warm",
-      "en": "To everyone affected: I see what this did, and I'm not looking away."
-    },
-    {
-      "anchor": "Theater",
-      "zone": "Warm",
-      "en": "No one here needs theater — we need steadiness and truth."
-    },
-    {
-      "anchor": "Failure",
-      "zone": "Backbone",
-      "en": "This is a failure — not a 'setback.' And it's mine to answer for."
-    },
-    {
-      "anchor": "Watch",
-      "zone": "Backbone",
-      "en": "No softening it: it's the worst we've had — and it happened on my watch."
-    },
-    {
-      "anchor": "Scope",
-      "zone": "Backbone",
-      "en": "Here's the full scope, unvarnished — then what I'm doing about it."
-    },
-    {
-      "anchor": "Helm",
-      "zone": "Weight",
-      "en": "I take the hit and I keep the helm. Both. Here's where we start."
-    },
-    {
-      "anchor": "Serious",
-      "zone": "Weight",
-      "en": "Yes, it's serious — that's exactly why I'm not letting go of the wheel."
-    },
-    {
-      "anchor": "Recovery",
-      "zone": "Weight",
-      "en": "The damage is real — and so is the recovery. It begins right now."
-    }
-  ],
-  "mnemo": "Ты не пытаешься minimize огромный разрыв в оболочке, а мелом обводишь affected секции, пока ветер срывает декоративный theater занавес с пассажирской палубы. На металлической балке уже горит слово failure, ты бросаешь взгляд на watch, раскрываешь латунный scope и видишь поле для посадки за рекой. Потом хватаешь helm, переводишь рычаг в serious режим и запускаешь recovery тросы, чтобы посадить дирижабль до того, как пламя дойдёт до хвоста."
+ "slug": "gravitas-5",
+ "title": "Признать катастрофу, не теряя командования",
+ "theme": "Масштабный провал на твоей зоне — честно назвать масштаб и взять на себя, но руль в руках; именно поэтому я не отпускаю штурвал",
+ "subtitle": "Дирижабль в огне",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Minimize",
+   "zone": "Warm",
+   "en": "I'm not going to stand here and minimize what this did to people."
+  },
+  {
+   "anchor": "Affected",
+   "zone": "Warm",
+   "en": "To everyone affected: I'm sorry — and here's what we're doing about it."
+  },
+  {
+   "anchor": "Performance",
+   "zone": "Warm",
+   "en": "You don't need a performance from me — you need the truth and a plan."
+  },
+  {
+   "anchor": "Failure",
+   "zone": "Backbone",
+   "en": "This is a failure — not a 'setback.' And it's mine to answer for."
+  },
+  {
+   "anchor": "Watch",
+   "zone": "Backbone",
+   "en": "No softening it: it's the worst we've had — and it happened on my watch."
+  },
+  {
+   "anchor": "Scope",
+   "zone": "Backbone",
+   "en": "Here's the full scope, unvarnished — then what I'm doing about it."
+  },
+  {
+   "anchor": "Fix",
+   "zone": "Weight",
+   "en": "This one's on me — and I'm going to fix it."
+  },
+  {
+   "anchor": "Staying",
+   "zone": "Weight",
+   "en": "It's bad — and I'm staying right here until it isn't."
+  },
+  {
+   "anchor": "Plan",
+   "zone": "Weight",
+   "en": "The damage is real. So is the plan to fix it — starting today."
+  }
+ ],
+ "mnemo": "Ты не пытаешься minimize огромный разрыв в оболочке, а мелом обводишь affected — задетые — секции. Ветер срывает занавес — и хорошо: никакого performance — представления, людям нужны правда и план. На балке мелом выведено failure — провал, — и ты его не стираешь; признаёшь: это твоя watch — твоя вахта; раскрываешь scope — видишь поле для посадки. Это на тебе — и ты будешь fix — чинить — сам. Положение скверное — именно поэтому ты staying — остаёшься — на мостике, пока не выправишь. И запускаешь тросы по plan — плану спасения: настоящему, как пробоина."
 }

@@ -11,14 +11,14 @@
  ],
  "phrases": [
   {
-   "anchor": "Almosts",
+   "anchor": "Fizzle",
    "zone": "Warm",
-   "en": "Before this becomes one of those great almosts — let's put a plan on it."
+   "en": "Let's not let this fizzle out — pick a day."
   },
   {
-   "anchor": "Disappear",
+   "anchor": "Plan",
    "zone": "Warm",
-   "en": "I don't want this to disappear into the night — give me a way to continue it."
+   "en": "I don't want tonight to be the end of this — let's make a plan."
   },
   {
    "anchor": "Next",
@@ -41,9 +41,9 @@
    "en": "Let's lock a night before either of us overthinks it."
   },
   {
-   "anchor": "Carry",
+   "anchor": "Dinner",
    "zone": "Weight",
-   "en": "Let's carry this into a night that can hold it."
+   "en": "Dinner this week — let's do this properly."
   },
   {
    "anchor": "Consider",
@@ -51,10 +51,10 @@
    "en": "Consider it a date — I'll make sure you're glad you said yes."
   },
   {
-   "anchor": "Electricity",
+   "anchor": "Text",
    "zone": "Weight",
-   "en": "Give me your number — I'll make sure the next time has the same electricity."
+   "en": "Text me — the second round will be even better."
   }
  ],
- "mnemo": "Вечер тает, и ты догоняешь её на крыльце, пока такси мигает у обочины. Ловишь момент, не давая ему упасть в копилку almosts — «почти». Придерживаешь дверцу: не дай вечеру disappear — раствориться в ночи. Делаешь шаг ближе и предлагаешь next — следующую встречу, прямо сейчас. Протягиваешь телефон ей под пальцы: number — номер. Раскрываешь ладони, как два билета: четверг или суббота — pick — выбирай. Хлопаешь по её ладони, фиксируя вечер, пока никто не успел overthink — передумать. Берёшь её руку: этот заряд ты carry — перенесёшь в вечер, который его выдержит. Наклоняешься к окну такси: consider — считай это свиданием. Машина трогается, а в пальцах ещё гудит electricity — электричество."
+ "mnemo": "Вечер тает, и ты догоняешь её на крыльце, пока такси мигает у обочины. Ловишь момент, не давая ему fizzle — зашипеть и погаснуть. Придерживаешь дверцу: пусть у вечера будет plan — продолжение, а не точка. Делаешь шаг ближе и предлагаешь next — следующую встречу. Протягиваешь телефон ей под пальцы: number — номер. Раскрываешь ладони: четверг или суббота — pick — выбирай. Хлопаешь по её ладони, фиксируя вечер, пока никто не успел overthink — надумать лишнего. Берёшь её руку: заряд доживёт до dinner — ужина. Наклоняешься к окну такси: consider — считай это свиданием. Машина трогается — и телефон в кармане вздрагивает: text — сообщение уже прилетело."
 }

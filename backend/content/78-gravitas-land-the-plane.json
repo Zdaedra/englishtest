@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Sharpest",
+   "anchor": "Worst",
    "zone": "Warm",
-   "en": "Take a breath — we got through the sharpest part together."
+   "en": "Breathe — the worst of it is behind us."
   },
   {
    "anchor": "Hold",
@@ -26,9 +26,9 @@
    "en": "This took a lot out of everyone — thank you for staying steady through it."
   },
   {
-   "anchor": "Closed",
+   "anchor": "Rebuild",
    "zone": "Backbone",
-   "en": "The emergency phase is closed — we're moving into recovery."
+   "en": "The fire's out — now we rebuild."
   },
   {
    "anchor": "Stable",
@@ -41,20 +41,20 @@
    "en": "No victory lap yet — we debrief, repair, and reset."
   },
   {
-   "anchor": "Discipline",
+   "anchor": "Guardrails",
    "zone": "Weight",
-   "en": "We held the line — now we build the discipline that keeps it from breaking again."
+   "en": "Now we put in the guardrails so this doesn't happen twice."
   },
   {
-   "anchor": "Lesson",
+   "anchor": "Change",
    "zone": "Weight",
-   "en": "The lesson isn't the pain — the lesson is what we change because of it."
+   "en": "What matters now is what we change because of this."
   },
   {
-   "anchor": "Exit",
+   "anchor": "Comeback",
    "zone": "Weight",
-   "en": "This crisis won't define us — our exit from it will."
+   "en": "Rough week — the comeback starts Monday."
   }
  ],
- "mnemo": "Шторм стихает. Ты последним перелезаешь sharpest — самый острый — гребень завала у выхода. Упираешься спиной в балку и hold — держишь — её, пока проходят твои люди. Ведёшь колонну through — насквозь — тёмный коридор, касаясь каждого плеча: спасибо, что выстояли. Задраиваешь аварийный люк: closed — закрыто, острая фаза позади. Обходишь опоры, толкая каждую ладонью: эта stable — устойчива, — а две помечаешь мелом: следить. У щитка жмёшь reset — сброс — без круга почёта. Выравниваешь общий шаг в ровный ритм: discipline — дисциплина, чтобы стена не упала снова. Поднимаешь с пола погнутый болт и кладёшь в карман: lesson — урок. И первым толкаешь дверь exit — выход, — придерживая её для всех."
+ "mnemo": "Шторм стихает. Ты последним перелезаешь гребень завала: worst — худшее — позади, дыши. Упираешься спиной в балку и hold — держишь — её, пока проходят твои люди. Ведёшь колонну through — насквозь — коридор. Последний очаг сбиваешь курткой: огонь потушен, теперь rebuild — отстраиваем заново. Толкаешь опоры ладонью: эта stable — устойчива, — две помечаешь мелом. У щитка жмёшь reset — сброс. Вдоль прохода ставишь guardrails — поручни, чтобы такое не повторилось дважды. Поднимаешь погнутый болт: важно то, что вы change — меняете — после этого. И первым толкаешь дверь: comeback — возвращение — начинается с понедельника."
 }

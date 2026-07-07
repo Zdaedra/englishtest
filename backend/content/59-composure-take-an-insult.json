@@ -1,60 +1,60 @@
 {
-  "slug": "composure-2",
-  "title": "Принять оскорбление с достоинством",
-  "theme": "Тебя уязвили на людях — не рассыпаться и не лезть в драку, спокойно провести черту; выпад говорит о нём, не о тебе",
-  "subtitle": "Землемер",
-  "section": "composure",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Personally",
-      "zone": "Warm",
-      "en": "I'm not going to take that personally — even if it was meant that way."
-    },
-    {
-      "anchor": "Beside",
-      "zone": "Warm",
-      "en": "I'll let that land beside me — not on me."
-    },
-    {
-      "anchor": "Unsaid",
-      "zone": "Warm",
-      "en": "I'll give you the chance to leave that one unsaid."
-    },
-    {
-      "anchor": "Crossed",
-      "zone": "Backbone",
-      "en": "That crossed a line — and I'm not going to pretend it didn't."
-    },
-    {
-      "anchor": "Contempt",
-      "zone": "Backbone",
-      "en": "I'm fine with disagreement — I'm not fine with contempt."
-    },
-    {
-      "anchor": "Dig",
-      "zone": "Backbone",
-      "en": "Say the real thing, not the dig — I'll happily take the real thing."
-    },
-    {
-      "anchor": "Worth",
-      "zone": "Weight",
-      "en": "Your words don't get to define my worth."
-    },
-    {
-      "anchor": "Describes",
-      "zone": "Weight",
-      "en": "What you just said describes you, not me."
-    },
-    {
-      "anchor": "Inch",
-      "zone": "Weight",
-      "en": "I know exactly who I am — that didn't move it an inch."
-    }
-  ],
-  "mnemo": "Ты personally вбил каждый межевой колышек, когда сосед-скандалист харкает — плевок шлёпается beside сапога, мимо. Ответ оставляешь unsaid и тянешь шнур дальше, но его сапог уже crossed линию: с contempt он выбивает крайний кол. Ты молча dig лунку глубже и вгоняешь кол по самую шляпку — земля worth ровно столько, насколько точна её граница. Циркуль на планшете спокойно describes дугу, межа ложится на карту, не сдвинувшись ни на inch."
+ "slug": "composure-2",
+ "title": "Принять оскорбление с достоинством",
+ "theme": "Тебя уязвили на людях — не рассыпаться и не лезть в драку, спокойно провести черту; выпад говорит о нём, не о тебе",
+ "subtitle": "Землемер",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Personally",
+   "zone": "Warm",
+   "en": "I'm not going to take that personally — even if it was meant that way."
+  },
+  {
+   "anchor": "Past",
+   "zone": "Warm",
+   "en": "I'm going to let that one go right past me."
+  },
+  {
+   "anchor": "Once",
+   "zone": "Warm",
+   "en": "I'll pretend you didn't say that — once."
+  },
+  {
+   "anchor": "Crossed",
+   "zone": "Backbone",
+   "en": "That crossed a line — and I'm not going to pretend it didn't."
+  },
+  {
+   "anchor": "Contempt",
+   "zone": "Backbone",
+   "en": "I'm fine with disagreement — I'm not fine with contempt."
+  },
+  {
+   "anchor": "Jab",
+   "zone": "Backbone",
+   "en": "Drop the jab and say what you actually mean."
+  },
+  {
+   "anchor": "Good",
+   "zone": "Weight",
+   "en": "Think what you want — I'm good."
+  },
+  {
+   "anchor": "Says",
+   "zone": "Weight",
+   "en": "That says more about you than it does about me."
+  },
+  {
+   "anchor": "Rattle",
+   "zone": "Weight",
+   "en": "I know who I am — that didn't rattle me."
+  }
+ ],
+ "mnemo": "Ты вбиваешь очередной межевой колышек personally — сам. Сосед-скандалист харкает — плевок летит past — мимо — сапога, и ты даёшь ему пролететь. Делаешь вид, что не слышал, — но ровно once — один раз; его сапог уже crossed линию — с contempt выбивает крайний кол. На его jab — подколку — отвечаешь: «скажи прямо, чего хочешь», — и вгоняешь кол: тебе и так good — спокойно. Вся сцена says — говорит — больше о нём: его выходка не rattle — не расшатала — ни тебя, ни черту."
 }

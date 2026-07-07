@@ -1,20 +1,60 @@
 {
-  "slug": "pitch-3",
-  "title": "Замок",
-  "theme": "Питч: просьба, что замыкает сделку",
-  "subtitle": "Мост через пропасть",
-  "section": "pitch",
-  "zones": ["Bridge", "Ask", "Seal"],
-  "phrases": [
-    { "anchor": "Bridge",    "zone": "Bridge", "en": "So here's the bridge from where we are to where this goes." },
-    { "anchor": "Door",      "zone": "Bridge", "en": "I'm opening one door — you decide if you walk through it." },
-    { "anchor": "Fit",       "zone": "Bridge", "en": "The reason I'm bringing this to you specifically — it's a fit." },
-    { "anchor": "Ask",       "zone": "Ask",    "en": "So here's the ask, plainly." },
-    { "anchor": "Yes",       "zone": "Ask",    "en": "All I need from you today is a yes to the next step." },
-    { "anchor": "Room",      "zone": "Ask",    "en": "I want to be the obvious person you back in this room." },
-    { "anchor": "Skin",      "zone": "Seal",   "en": "I've got skin in this — I'm not asking you to go where I won't." },
-    { "anchor": "Handshake", "zone": "Seal",   "en": "Let's not overthink it — handshake and we're moving." },
-    { "anchor": "Seal",      "zone": "Seal",   "en": "Give me the green light and I'll seal it by Friday." }
-  ],
-  "mnemo": "Ты строишь bridge через пропасть, доска за доской, прямо к нему. На том конце — одна door, ты толкаешь её, и она входит в проём точь-в-точь, идеальный fit. На пороге ты произносишь ask — прямо, без обёртки. Он кивает: yes — и вы вдвоём входите в room, где решается всё. Закатываешь рукав — на коже шрам, skin, ты в игре наравне. Протягиваешь руку — крепкий handshake. И капля сургуча падает вниз: seal. Дверь заперта, сделка — твоя."
+ "slug": "pitch-3",
+ "title": "Замок",
+ "theme": "Питч: просьба, что замыкает сделку",
+ "subtitle": "Мост через пропасть",
+ "section": "pitch",
+ "zones": [
+  "Bridge",
+  "Ask",
+  "Seal"
+ ],
+ "phrases": [
+  {
+   "anchor": "Path",
+   "zone": "Bridge",
+   "en": "The path from here to there is short — let me walk you through it."
+  },
+  {
+   "anchor": "Table",
+   "zone": "Bridge",
+   "en": "It's on the table — your call."
+  },
+  {
+   "anchor": "Fit",
+   "zone": "Bridge",
+   "en": "I'm bringing this to you because you're the right fit for it."
+  },
+  {
+   "anchor": "Ask",
+   "zone": "Ask",
+   "en": "So here's the ask, plainly."
+  },
+  {
+   "anchor": "Yes",
+   "zone": "Ask",
+   "en": "All I need from you today is a yes to the next step."
+  },
+  {
+   "anchor": "Obvious",
+   "zone": "Ask",
+   "en": "Give it a year — this is going to look obvious."
+  },
+  {
+   "anchor": "Skin",
+   "zone": "Seal",
+   "en": "I've got skin in the game — I'm taking the same risk I'm asking you to take."
+  },
+  {
+   "anchor": "Shake",
+   "zone": "Seal",
+   "en": "If we're aligned, let's shake on it and get moving."
+  },
+  {
+   "anchor": "Word",
+   "zone": "Seal",
+   "en": "Say the word and I'll have it signed by Friday."
+  }
+ ],
+ "mnemo": "Ты прокладываешь path — тропу через пропасть, доска за доской, прямо к нему. На том конце — table: стол, на который ты выкладываешь всё, что принёс, и оно ложится fit — идеально. Над столом ты произносишь ask — прямо. Он кивает: yes — а ты улыбаешься: через год эта тропа будет казаться obvious — очевидным решением. Закатываешь рукав — на skin — коже — шрам, ты в игре наравне. Протягиваешь руку: shake — жмёте крепко. Он говорит одно word — слово: «подписываю», — и ты кладёшь последнюю доску. Сделка — твоя."
 }

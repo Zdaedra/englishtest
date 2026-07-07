@@ -1,60 +1,60 @@
 {
-  "slug": "flirt-8",
-  "title": "Читать и отвечать на сигналы",
-  "theme": "Считывать её сигналы и калиброваться — отзеркалить, проверить, идти за её темпом, без эго",
-  "subtitle": "Стыковка",
-  "section": "flirt",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Smile",
-      "zone": "Warm",
-      "en": "I caught that smile — I'm going to take it gently."
-    },
-    {
-      "anchor": "Leaning",
-      "zone": "Warm",
-      "en": "You were leaning in for a second there — I noticed."
-    },
-    {
-      "anchor": "Pace",
-      "zone": "Warm",
-      "en": "I like your pace — it makes me want to match it."
-    },
-    {
-      "anchor": "Reading",
-      "zone": "Backbone",
-      "en": "I'm reading interest — but I'd rather check than assume."
-    },
-    {
-      "anchor": "Light",
-      "zone": "Backbone",
-      "en": "That felt like a green light — am I reading it right?"
-    },
-    {
-      "anchor": "Slow",
-      "zone": "Backbone",
-      "en": "If I'm moving too fast, tell me — I can slow down."
-    },
-    {
-      "anchor": "Force",
-      "zone": "Weight",
-      "en": "I don't need to force the moment — I'd rather follow what's actually here."
-    },
-    {
-      "anchor": "Signal",
-      "zone": "Weight",
-      "en": "I'll follow the signal you give me — not the one I want."
-    },
-    {
-      "anchor": "Space",
-      "zone": "Weight",
-      "en": "No ego in it — if you want space, it's yours, no story attached."
-    }
-  ],
-  "mnemo": "Перед манёвром ты smile в бортовую камеру — и тут корабль даёт крен, leaning; выравниваешь его и держишь pace сближения: метр в секунду. Идёт reading дальномера, на узле станции вспыхивает причальный light. Гасишь ход — slow, ещё медленнее, никакой лишней force: импульсы по капле. Станция шлёт зелёный signal, мягкое касание — и за стеклом плывёт бесконечный space."
+ "slug": "flirt-8",
+ "title": "Читать и отвечать на сигналы",
+ "theme": "Считывать её сигналы и калиброваться — отзеркалить, проверить, идти за её темпом, без эго",
+ "subtitle": "Стыковка",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Noticed",
+   "zone": "Warm",
+   "en": "I saw that smile — I'm just saying I noticed."
+  },
+  {
+   "anchor": "Leaning",
+   "zone": "Warm",
+   "en": "You were leaning in for a second there — I noticed."
+  },
+  {
+   "anchor": "Rush",
+   "zone": "Warm",
+   "en": "No rush — your pace works for me."
+  },
+  {
+   "anchor": "Wrong",
+   "zone": "Backbone",
+   "en": "I think there's something here — tell me if I'm wrong."
+  },
+  {
+   "anchor": "Light",
+   "zone": "Backbone",
+   "en": "That felt like a green light — am I reading it right?"
+  },
+  {
+   "anchor": "Slow",
+   "zone": "Backbone",
+   "en": "If I'm moving too fast, tell me — I can slow down."
+  },
+  {
+   "anchor": "Push",
+   "zone": "Weight",
+   "en": "I'm not going to push anything — this is good as it is."
+  },
+  {
+   "anchor": "Cue",
+   "zone": "Weight",
+   "en": "I'll take my cue from you."
+  },
+  {
+   "anchor": "Fine",
+   "zone": "Weight",
+   "en": "And if you'd rather leave it here, that's completely fine too."
+  }
+ ],
+ "mnemo": "Перед манёвром ты noticed — заметил — блик станции в иллюминаторе, и тут корабль даёт крен, leaning; выравниваешь его и ведёшь сближение без rush — без спешки. Сверяешь курс: если что-то wrong — не так, приборы скажут сразу; на узле станции вспыхивает причальный light. Гасишь ход — slow, ещё медленнее, никакого лишнего push — нажима. Ты ждёшь cue — отмашку — от станции: её темп, её решение; мягкое касание — а не выйдет, тоже fine."
 }

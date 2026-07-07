@@ -1,60 +1,60 @@
 {
-  "slug": "charisma-11",
-  "title": "Возобновить связь после молчания",
-  "theme": "Вернуться после долгой паузы без неловкости и оправданий — тепло возвращается мгновенно",
-  "subtitle": "Прыжок в поезд",
-  "section": "charisma",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Smiled",
-      "zone": "Warm",
-      "en": "Your name came up last night and I smiled like an idiot."
-    },
-    {
-      "anchor": "Missed",
-      "zone": "Warm",
-      "en": "I've missed the way you see things."
-    },
-    {
-      "anchor": "Refuse",
-      "zone": "Warm",
-      "en": "I refuse to let another year go by without this."
-    },
-    {
-      "anchor": "Excuse",
-      "zone": "Backbone",
-      "en": "I won't insult us both with an excuse — coffee Thursday?"
-    },
-    {
-      "anchor": "Date",
-      "zone": "Backbone",
-      "en": "No backlog, no apologies — just give me a date."
-    },
-    {
-      "anchor": "Properly",
-      "zone": "Backbone",
-      "en": "No long preface — I'd like to reconnect properly."
-    },
-    {
-      "anchor": "Where",
-      "zone": "Weight",
-      "en": "Anyway — where were we?"
-    },
-    {
-      "anchor": "List",
-      "zone": "Weight",
-      "en": "I keep a very short list of people worth keeping — you never came off it."
-    },
-    {
-      "anchor": "Passed",
-      "zone": "Weight",
-      "en": "Funny how with the right people, no time's actually passed."
-    }
-  ],
-  "mnemo": "Проводница smiled тебе с подножки — и двери захлопнулись: ты missed поезд. Но ты refuse сдаваться: бежишь по перрону с криком «excuse me!» сквозь толпу, а на билете в кулаке — сегодняшняя date. Прыжок — ты в последнем вагоне, отряхиваешься и properly поправляешь пальто. Кондуктор спрашивает: «where ваше место?» — ведёт пальцем по list пассажиров, а за окном уже passed первые огни города."
+ "slug": "charisma-11",
+ "title": "Возобновить связь после молчания",
+ "theme": "Вернуться после долгой паузы без неловкости и оправданий — тепло возвращается мгновенно",
+ "subtitle": "Прыжок в поезд",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Smiled",
+   "zone": "Warm",
+   "en": "Your name came up last night and I smiled like an idiot."
+  },
+  {
+   "anchor": "Missed",
+   "zone": "Warm",
+   "en": "I've missed the way you see things."
+  },
+  {
+   "anchor": "Refuse",
+   "zone": "Warm",
+   "en": "I refuse to let another year go by without this."
+  },
+  {
+   "anchor": "Excuse",
+   "zone": "Backbone",
+   "en": "I won't insult us both with an excuse — coffee Thursday?"
+  },
+  {
+   "anchor": "Free",
+   "zone": "Backbone",
+   "en": "Skip the apologies — when are you free?"
+  },
+  {
+   "anchor": "Dinner",
+   "zone": "Backbone",
+   "en": "It's been too long — let's fix that over dinner."
+  },
+  {
+   "anchor": "Where",
+   "zone": "Weight",
+   "en": "Anyway — where were we?"
+  },
+  {
+   "anchor": "Year",
+   "zone": "Weight",
+   "en": "Let's not wait another year to do this."
+  },
+  {
+   "anchor": "Passed",
+   "zone": "Weight",
+   "en": "Funny how with the right people, no time's actually passed."
+  }
+ ],
+ "mnemo": "Проводница smiled — улыбнулась — тебе с подножки — и двери захлопнулись: ты missed поезд. Но ты refuse сдаваться: бежишь по перрону с криком «excuse me!», а на билете в кулаке штамп free — свободен: впиши любой день. Прыжок — ты в последнем вагоне, где dinner — ужин — уже накрыт. Тебя спрашивают: «where ваше место?» — а ты смеёшься: ждать ещё year — год — ты не собирался, — за окном уже passed первые огни."
 }

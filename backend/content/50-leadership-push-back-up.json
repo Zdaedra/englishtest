@@ -1,60 +1,60 @@
 {
-  "slug": "lead-4",
-  "title": "Возразить старшему без бунта",
-  "theme": "Несогласие наверх — назвать риск данными и удержать позицию, не теряя уважения; верность и правда одновременно",
-  "subtitle": "Фотоэкспедиция",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Route",
-      "zone": "Warm",
-      "en": "I'm with you on the goal — it's the route I want to flag."
-    },
-    {
-      "anchor": "Team",
-      "zone": "Warm",
-      "en": "Same team here — I'd be doing you a disservice if I stayed quiet."
-    },
-    {
-      "anchor": "Angle",
-      "zone": "Warm",
-      "en": "I respect the call you're making — let me add the angle I think we're missing."
-    },
-    {
-      "anchor": "Push",
-      "zone": "Backbone",
-      "en": "Can I push back on one thing? The numbers point the other way."
-    },
-    {
-      "anchor": "Risk",
-      "zone": "Backbone",
-      "en": "I don't see it the same way — and here's the risk I'm carrying."
-    },
-    {
-      "anchor": "Exposure",
-      "zone": "Backbone",
-      "en": "My concern isn't the decision itself — it's the exposure it creates."
-    },
-    {
-      "anchor": "Owe",
-      "zone": "Weight",
-      "en": "You own the call — I owe you the cleanest version of what I see."
-    },
-    {
-      "anchor": "Breaks",
-      "zone": "Weight",
-      "en": "I can back the decision and still be honest about where I think it breaks."
-    },
-    {
-      "anchor": "Expensive",
-      "zone": "Weight",
-      "en": "I'd rather be uncomfortable now than quiet and expensive later."
-    }
-  ],
-  "mnemo": "На капоте джипа проводник чертит route через дюны, и team затемно грузит штативы. На гребне ты ищешь angle пониже; машина вязнет, и все push её из песка — срезать по солончаку было бы лишний risk. В темноте ставишь длинную exposure на штативе; проводник делится последним чаем — теперь ты ему owe. Рассвет breaks над дюнами, первый луч режет гребни, и ты ловишь кадр на самый expensive объектив — он того стоил."
+ "slug": "lead-4",
+ "title": "Возразить старшему без бунта",
+ "theme": "Несогласие наверх — назвать риск данными и удержать позицию, не теряя уважения; верность и правда одновременно",
+ "subtitle": "Фотоэкспедиция",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Route",
+   "zone": "Warm",
+   "en": "I'm with you on the goal — it's the route I want to flag."
+  },
+  {
+   "anchor": "Team",
+   "zone": "Warm",
+   "en": "Same team here — I'd be doing you a disservice if I stayed quiet."
+  },
+  {
+   "anchor": "Angle",
+   "zone": "Warm",
+   "en": "I respect the call you're making — let me add the angle I think we're missing."
+  },
+  {
+   "anchor": "Push",
+   "zone": "Backbone",
+   "en": "Can I push back on one thing? The numbers point the other way."
+  },
+  {
+   "anchor": "Worries",
+   "zone": "Backbone",
+   "en": "I see it differently — and here's the risk that worries me."
+  },
+  {
+   "anchor": "Exposure",
+   "zone": "Backbone",
+   "en": "My concern isn't the decision itself — it's the exposure it creates."
+  },
+  {
+   "anchor": "Picture",
+   "zone": "Weight",
+   "en": "It's your call — but you deserve the full picture as I see it."
+  },
+  {
+   "anchor": "Breaks",
+   "zone": "Weight",
+   "en": "I can back the decision and still be honest about where I think it breaks."
+  },
+  {
+   "anchor": "Mistake",
+   "zone": "Weight",
+   "en": "Better an awkward conversation now than an expensive mistake later."
+  }
+ ],
+ "mnemo": "На капоте джипа проводник чертит route через дюны, и team затемно грузит машину. На гребне ищешь angle пониже; машина вязнет, все push её из песка — срез по солончаку worries — тревожит — тебя, и ты говоришь прямо. Ставишь длинную exposure и выкладываешь полную picture — картину: маршрут, риски, вода — решать ему. Рассвет breaks над дюнами — вчерашний неловкий разговор уберёг вас от дорогой mistake — ошибки."
 }

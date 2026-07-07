@@ -1,60 +1,60 @@
 {
-  "slug": "lead-10",
-  "title": "Отдать признание, поднять других",
-  "theme": "Щедро отдать заслугу и публично поднять человека — щедрость из уверенного статуса, чужой свет не гасит твой, растём вместе",
-  "subtitle": "Эстафета",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Brag",
-      "zone": "Warm",
-      "en": "Let me brag about my team for a second."
-    },
-    {
-      "anchor": "Quiet",
-      "zone": "Warm",
-      "en": "I want to call out the quiet work behind this — it made the whole thing better."
-    },
-    {
-      "anchor": "Visible",
-      "zone": "Warm",
-      "en": "I want to make that contribution visible — it changed the outcome."
-    },
-    {
-      "anchor": "Belongs",
-      "zone": "Backbone",
-      "en": "Credit belongs there — that was her judgment call, not mine."
-    },
-    {
-      "anchor": "Record",
-      "zone": "Backbone",
-      "en": "Let me correct the record — I didn't move this forward, she did."
-    },
-    {
-      "anchor": "Carried",
-      "zone": "Backbone",
-      "en": "If we're naming the win, let's name who carried it."
-    },
-    {
-      "anchor": "Light",
-      "zone": "Weight",
-      "en": "I don't need to stand in someone else's light to be seen."
-    },
-    {
-      "anchor": "Smaller",
-      "zone": "Weight",
-      "en": "Lifting them doesn't make me smaller."
-    },
-    {
-      "anchor": "Taller",
-      "zone": "Weight",
-      "en": "When we name excellence accurately, everyone stands taller."
-    }
-  ],
-  "mnemo": "Перед стартом соперники brag на всю арену, а ваш разгоняющий — quiet, только туже шнурует шиповки. Его рывок делает отрыв visible уже на первом этапе, и когда ты рвёшь ленту, всем ясно: победа belongs всей четвёрке. Табло вспыхивает: record! Толпа рвётся качать тебя, но первым carried над головами — разгоняющий: ты сам разворачиваешь луч light на него. Твоя тень от этого не стала smaller — на плечах трибун вы оба taller."
+ "slug": "lead-10",
+ "title": "Отдать признание, поднять других",
+ "theme": "Щедро отдать заслугу и публично поднять человека — щедрость из уверенного статуса, чужой свет не гасит твой, растём вместе",
+ "subtitle": "Эстафета",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Brag",
+   "zone": "Warm",
+   "en": "Let me brag about my team for a second."
+  },
+  {
+   "anchor": "Quiet",
+   "zone": "Warm",
+   "en": "I want to call out the quiet work behind this — it made the whole thing better."
+  },
+  {
+   "anchor": "Outcome",
+   "zone": "Warm",
+   "en": "Everyone should know what she did on this one — it changed the outcome."
+  },
+  {
+   "anchor": "Win",
+   "zone": "Backbone",
+   "en": "That win was hers, not mine — she made the call."
+  },
+  {
+   "anchor": "Record",
+   "zone": "Backbone",
+   "en": "Let me correct the record — I didn't move this forward, she did."
+  },
+  {
+   "anchor": "Credit",
+   "zone": "Backbone",
+   "en": "Let's give credit where it's due — she carried this."
+  },
+  {
+   "anchor": "Cost",
+   "zone": "Weight",
+   "en": "Their win doesn't cost me anything."
+  },
+  {
+   "anchor": "Better",
+   "zone": "Weight",
+   "en": "The better she looks, the better we all look."
+  },
+  {
+   "anchor": "Notices",
+   "zone": "Weight",
+   "en": "People do their best work when somebody actually notices."
+  }
+ ],
+ "mnemo": "Перед стартом соперники brag, а ваш разгоняющий — quiet, только туже шнурует шиповки. Его рывок решает outcome — исход, и пусть это знают все: когда сани режут финишный створ, win — победа — его, не твоя. Табло вспыхивает: record! Но ты отдаёшь credit — признание — по адресу: первым над головами плывёт разгоняющий. Подсаживаешь его на верхнюю ступень — тебе это ничего не cost — не стоит. Ты выталкиваешь его в центр кадра: чем better — лучше — он виден, тем выше стоит вся четвёрка. И трибуна notices — замечает — каждого из четырёх."
 }

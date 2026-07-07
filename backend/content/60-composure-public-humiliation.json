@@ -16,14 +16,14 @@
    "en": "I'm not going to turn this into a scene."
   },
   {
-   "anchor": "Volume",
+   "anchor": "Shout",
    "zone": "Warm",
-   "en": "No need to raise the volume — I hear you fine."
+   "en": "You don't need to shout — I can hear you just fine."
   },
   {
-   "anchor": "Concern",
+   "anchor": "Tone",
    "zone": "Warm",
-   "en": "I can hear the concern without accepting the tone."
+   "en": "Point taken — the tone, not so much."
   },
   {
    "anchor": "Directly",
@@ -31,9 +31,9 @@
    "en": "If there's feedback, give it to me directly — not theatrically."
   },
   {
-   "anchor": "Substance",
+   "anchor": "Real",
    "zone": "Backbone",
-   "en": "Give me the substance — and I'll stand right here and take it."
+   "en": "If there's a real point under all that, I'm listening."
   },
   {
    "anchor": "Adults",
@@ -41,20 +41,20 @@
    "en": "Let's bring this back to the work and speak like adults."
   },
   {
-   "anchor": "Shrink",
+   "anchor": "Doing",
    "zone": "Weight",
-   "en": "You can't shrink me by trying to — that's just not how I work."
+   "en": "We're not doing this here."
   },
   {
-   "anchor": "Ounce",
+   "anchor": "Argument",
    "zone": "Weight",
-   "en": "I don't lose an ounce of standing because you raised your voice."
+   "en": "Raising your voice doesn't win the argument."
   },
   {
-   "anchor": "Tall",
+   "anchor": "Point",
    "zone": "Weight",
-   "en": "This isn't landing the way you hoped — I'm still standing exactly as tall."
+   "en": "All right — back to the point."
   }
  ],
- "mnemo": "Ты несёшь через площадь высокий кувшин своей работы, когда с помоста начинают кричать. Не превращаешь путь в scene — в спектакль: держишь шаг. Не прибавляешь volume — громкости, отвечаешь вполголоса. Выуживаешь из крика зерно concern — беспокойства — и киваешь ему, отбрасывая тон. Сворачиваешь и подходишь directly — напрямую: говори мне, а не толпе. Ставишь кувшин на весы посреди рынка: вот substance — суть, судите по ней. Жестом приглашаешь к столу: спорим как adults — взрослые, по делу. Распрямляешь плечи: тебя не shrink — не сжать чужим криком. Стрелка весов не уходит ни на ounce — ни на унцию. И ты поднимаешь кувшин и идёшь дальше tall — во весь рост, не согнувшись."
+ "mnemo": "Ты несёшь через площадь кувшин своей работы, когда с помоста начинают кричать. Не превращаешь путь в scene — в спектакль: держишь шаг. Тебе незачем shout — кричать в ответ: тебя и так слышно, отвечаешь вполголоса. А tone — тон — отбрасываешь, как шелуху. Сворачиваешь и подходишь directly — напрямую: говори мне, а не толпе. Если под криком есть real — суть, — ты слушаешь: ставишь кувшин на весы. Жестом приглашаешь к весам: как adults — взрослые. Качаешь головой: мы это здесь не doing — не устраиваем. Криком argument — спор — не выигрывают: стрелка весов не дрогнула. Последний выкрик глохнет сам; ты поднимаешь кувшин и возвращаешься к point — к сути."
 }

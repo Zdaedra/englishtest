@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Diminish",
+   "anchor": "Peg",
    "zone": "Warm",
-   "en": "I'm not here to diminish anyone's position — I'm here to solve the problem."
+   "en": "I'm not here to take anyone down a peg — I'm here to fix the problem."
   },
   {
    "anchor": "Outcome",
@@ -26,14 +26,14 @@
    "en": "No need to remind me who you are — let's stay on the issue."
   },
   {
-   "anchor": "Rank",
+   "anchor": "Seniority",
    "zone": "Backbone",
-   "en": "Rank won't settle this — facts and consequences will."
+   "en": "Seniority doesn't decide this — the facts do."
   },
   {
-   "anchor": "Threat",
+   "anchor": "Threats",
    "zone": "Backbone",
-   "en": "A threat may change the temperature — it won't change my read."
+   "en": "Threats don't change the facts on the table."
   },
   {
    "anchor": "Intimidated",
@@ -43,18 +43,18 @@
   {
    "anchor": "Title",
    "zone": "Weight",
-   "en": "Your title doesn't make you right — and it doesn't make me small."
+   "en": "I respect the title — it just doesn't make the argument for you."
   },
   {
-   "anchor": "Fold",
+   "anchor": "Position",
    "zone": "Weight",
-   "en": "I don't fold for power, and I don't fight it — I just hold."
+   "en": "Push all you want — my position hasn't moved."
   },
   {
-   "anchor": "Over",
+   "anchor": "Outrank",
    "zone": "Weight",
-   "en": "Bigger than me doesn't mean over me — not in this room."
+   "en": "You outrank me — that doesn't make you right."
   }
  ],
- "mnemo": "Ты поднимаешься по узкой тропе, когда сверху съезжает всадник в золоте и требует уступить в осыпь. Держишь шаг, не пытаясь diminish — принизить его: тебе нужен outcome — исход, перевал за его спиной. Отводишь хлыст от лица: не надо remind — напоминать, кто ты такой. Проходишь мимо знамени с его rank — рангом, не сбавляя темпа. Слышишь threat — угрозу — и лишь перекладываешь посох в другую руку. Смотришь ему в глаза снизу вверх, не intimidated — не запуганный. Читаешь title — титул на перстне и киваешь: он не делает тебя меньше. Не fold — не складываешься в поклоне и не хватаешься за нож — просто идёшь. И проходишь over — поверх седловины: больше — не значит выше тебя."
+ "mnemo": "Ты поднимаешься по узкой тропе — сверху съезжает всадник в золоте и требует уступить. Держишь шаг: ты пришёл не сбивать его на peg — на колышек ниже, — тебе нужен outcome — исход за его спиной. Отводишь хлыст от лица: не надо remind — напоминать, кто ты. Проходишь мимо знамени с его seniority — старшинством: решает тропа. Слышишь threats — угрозы — и лишь перекладываешь посох в другую руку. Смотришь снизу вверх, не intimidated — не запуганный. Читаешь на перстне title — титул: уважаешь, но за всадника он не заступится. Сколько ни дави — твоя position — позиция — не сдвинулась. Он может outrank — стоять выше чином, но правым его это не делает: ты проходишь седловину."
 }

@@ -18,7 +18,7 @@
   {
    "anchor": "between",
    "zone": "Warm",
-   "en": "Let me drop my voice. This next part's just between us."
+   "en": "Lean in for a second — this one's just between us."
   },
   {
    "anchor": "nothing",
@@ -26,9 +26,9 @@
    "en": "If you remember nothing else tonight, remember this."
   },
   {
-   "anchor": "person",
+   "anchor": "mind",
    "zone": "Backbone",
-   "en": "Bring to mind one person this is really about. Hold them there."
+   "en": "Think of the one person who needs to hear this — keep them in mind."
   },
   {
    "anchor": "avoiding",
@@ -36,25 +36,25 @@
    "en": "Ask yourself the question you've been avoiding. [pause] You know the one."
   },
   {
-   "anchor": "tell",
+   "anchor": "nodding",
    "zone": "Backbone",
-   "en": "Some of you are feeling it right now — I can tell. That's exactly the point."
+   "en": "I can see some of you nodding — you know exactly what I mean."
   },
   {
-   "anchor": "whisper",
+   "anchor": "shout",
    "zone": "Weight",
-   "en": "I could shout this — but a whisper in a room this size hits harder."
+   "en": "I don't need to shout this — you can hear me just fine."
   },
   {
-   "anchor": "spectacle",
+   "anchor": "show",
    "zone": "Weight",
-   "en": "One real moment beats any amount of spectacle."
+   "en": "Don't tell the crew, but the show isn't the point."
   },
   {
-   "anchor": "seen",
+   "anchor": "land",
    "zone": "Weight",
-   "en": "My job is not to fill the room. It's to make each of you feel seen."
+   "en": "I'm not trying to impress you — I just want this to land."
   }
  ],
- "mnemo": "Ты обводишь рукой thousand — тысячу — лиц и сходишь со сцены по ступеням вниз. Идёшь по проходу between — между — рядами, ведя пальцами по спинкам кресел. Щёлкаешь тумблером и гасишь свет до nothing — до ничего: остаётся один твой фонарик. Останавливаешься возле одного person — человека — и опускаешься на корточки рядом. Обходишь тянущиеся камеры, avoiding — избегая — их, чтобы кадр не съел разговор. Наклоняешься и tell — говоришь — ему одному, глядя в глаза. Переходишь на whisper — шёпот — у самого уха, и зал затихает, вслушиваясь. За спиной по таймеру вспыхивает spectacle — светошоу, которое шло бы и без тебя, — но ты не оборачиваешься. Поднимаешь фонарик к его лицу — и человек впервые seen — увиден."
+ "mnemo": "Обводишь рукой thousand — тысячу — лиц и сходишь со сцены. Спускаешься в проход и наклоняешься ближе: это — between — между вами. Гасишь свет до nothing — до ничего: один твой фонарик. Останавливаешься у одного кресла: вот человек, которого ты держал в mind — в мыслях. Обходишь тянущиеся камеры, avoiding — избегая — их. В луче видно, как кто-то nodding — кивает: узнали себя. Тебе незачем shout — кричать: тебя слышно и в шёпоте. За спиной вспыхивает show — шоу; ты подмигиваешь. Поднимаешь фонарик, чтобы сказанное land — долетело."
 }

@@ -1,60 +1,60 @@
 {
-  "slug": "composure-5",
-  "title": "Не оправдываться под давлением",
-  "theme": "На тебя давят за объяснениями — дать один чистый ответ и остановиться; уверенность не нуждается в защите, «нет» — полное предложение",
-  "subtitle": "Ларец через базар",
-  "section": "composure",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Asking",
-      "zone": "Warm",
-      "en": "I hear why you're asking — and my answer's still the same."
-    },
-    {
-      "anchor": "Respect",
-      "zone": "Warm",
-      "en": "I can give you respect without giving you more reasons."
-    },
-    {
-      "anchor": "Brief",
-      "zone": "Warm",
-      "en": "I'm going to keep this kind and brief."
-    },
-    {
-      "anchor": "Answer",
-      "zone": "Backbone",
-      "en": "The answer is no — and I'm not going to dress it up."
-    },
-    {
-      "anchor": "Standing",
-      "zone": "Backbone",
-      "en": "I've given you the decision I'm comfortable standing behind."
-    },
-    {
-      "anchor": "Reasons",
-      "zone": "Backbone",
-      "en": "Adding more reasons would only make this less clear."
-    },
-    {
-      "anchor": "Argument",
-      "zone": "Weight",
-      "en": "My 'no' doesn't need a closing argument."
-    },
-    {
-      "anchor": "Silence",
-      "zone": "Weight",
-      "en": "I can let the silence sit — I don't need to fill it."
-    },
-    {
-      "anchor": "Selling",
-      "zone": "Weight",
-      "en": "I'm not selling you my boundaries — I'm stating them."
-    }
-  ],
-  "mnemo": "Сначала со всех сторон летит asking, ты слегка киваешь с respect и делаешь brief шаг между прилавками, не сбиваясь с пути. На груди у ларца блестит одна табличка answer, ты проходишь standing через узкий проход, пока торговцы бросают под ноги мешки reasons. Кто-то разворачивает перед тобой свиток argument, но ты входишь в прохладный двор, где стоит silence. За спиной ещё кричит selling, а ты просто закрываешь ворота и идёшь дальше с ларцом в руках."
+ "slug": "composure-5",
+ "title": "Не оправдываться под давлением",
+ "theme": "На тебя давят за объяснениями — дать один чистый ответ и остановиться; уверенность не нуждается в защите, «нет» — полное предложение",
+ "subtitle": "Ларец через базар",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Asking",
+   "zone": "Warm",
+   "en": "I hear why you're asking — and my answer's still the same."
+  },
+  {
+   "anchor": "Polite",
+   "zone": "Warm",
+   "en": "It's a no — a polite one, but a no."
+  },
+  {
+   "anchor": "Civil",
+   "zone": "Warm",
+   "en": "I'll keep it short and civil."
+  },
+  {
+   "anchor": "Answer",
+   "zone": "Backbone",
+   "en": "The answer is no — and I'm not going to dress it up."
+  },
+  {
+   "anchor": "Decision",
+   "zone": "Backbone",
+   "en": "That's my decision — I'm comfortable with it."
+  },
+  {
+   "anchor": "Muddy",
+   "zone": "Backbone",
+   "en": "More reasons would just muddy it."
+  },
+  {
+   "anchor": "Defense",
+   "zone": "Weight",
+   "en": "I don't owe a defense for every no."
+  },
+  {
+   "anchor": "Hang",
+   "zone": "Weight",
+   "en": "I'm fine letting that hang there."
+  },
+  {
+   "anchor": "Negotiating",
+   "zone": "Weight",
+   "en": "I'm not negotiating this."
+  }
+ ],
+ "mnemo": "Со всех сторон летит asking; ты отвечаешь polite — вежливым — поклоном, но это всё равно «нет». Коротко и civil — учтиво — делаешь шаг между прилавками. На крышке ларца блестит одна табличка: answer. Кладёшь на неё ладонь: это твоё decision — решение. Торговцы бросают мешки доводов — лишние только muddy — мутят воду, и ты их не поднимаешь. Кто-то требует defense — оправданий, но ты не обязан давать их за каждое «нет». Во дворе повисает тишина — hang — и пусть висит. За спиной кричат, но ты не negotiating — не торгуешься: закрываешь ворота."
 }

@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Picture",
+   "anchor": "Fire",
    "zone": "Spark",
-   "en": "Picture this — it's Monday morning and the whole thing already broke."
+   "en": "Picture this: Monday morning, and the whole thing's on fire before your first coffee."
   },
   {
    "anchor": "Quick",
@@ -26,14 +26,14 @@
    "en": "Here's the hook — we make X feel like Y."
   },
   {
-   "anchor": "Catch",
+   "anchor": "Opportunity",
    "zone": "Pull",
-   "en": "Most people miss this, and that's the whole catch."
+   "en": "Most people walk right past this — that's the opportunity."
   },
   {
-   "anchor": "Lean",
+   "anchor": "Money",
    "zone": "Pull",
-   "en": "Lean in — this is the part nobody talks about."
+   "en": "Here's the part everyone skips — and it's where the money is."
   },
   {
    "anchor": "Bet",
@@ -41,9 +41,9 @@
    "en": "I'd bet money you've felt this exact thing."
   },
   {
-   "anchor": "Knife",
+   "anchor": "Strip",
    "zone": "Lock",
-   "en": "Here's where the knife comes down — what actually matters."
+   "en": "Strip everything else away, and this is what matters."
   },
   {
    "anchor": "One",
@@ -51,10 +51,10 @@
    "en": "If you take one thing away, take this."
   },
   {
-   "anchor": "Grab",
+   "anchor": "Remember",
    "zone": "Lock",
-   "en": "This is the line that should grab you."
+   "en": "If you remember one thing today, make it this."
   }
  ],
- "mnemo": "Рассвет, ты сбегаешь по трапу на пирс, где зевают рыбаки. Разворачиваешь над головой picture — картину: карту косяка, идущего прямо сюда. Вскакиваешь на бочку: quick — быстро, — тридцать секунд. Выхватываешь из ящика hook — крюк — и широкой дугой забрасываешь леску. Первый рывок — и ты подсекаешь catch — улов, который все проглядели. Сам lean — подаёшься — корпусом к воде, и толпа наклоняется за тобой. Хлопаешь монетой о бочку: bet — ставка, — что каждый чувствовал этот рывок. Выхватываешь knife — нож — и одним движением вскрываешь рыбину до сути. Поднимаешь one — один — отборный кусок над головой: если унесёте одно — вот это. И бросаешь его в руки ближайшему: grab — лови."
+ "mnemo": "Ты сбегаешь на пирс к рыбакам. Показываешь на дымящий баркас: fire — вот что у них полыхает каждый понедельник с утра. Вскидываешь руку: quick — быстро, тридцать секунд. Выхватываешь hook — крюк — и забрасываешь леску. Подсекаешь opportunity — возможность, мимо которой все проходят. Тычешь пальцем в воду: вот здесь money — деньги, у них под ногами. Бьёшь кулаком о ладонь: bet — ставка, — каждый это чувствовал. Ножом strip — счищаешь — чешую и всё лишнее: остаётся суть. Поднимаешь one — один — кусок над головой: вот это. И бросаешь его ближайшему: remember — запомни именно этот."
 }

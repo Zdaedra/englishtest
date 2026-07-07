@@ -1,60 +1,60 @@
 {
-  "slug": "lead-7",
-  "title": "Заступиться за своего, принять удар",
-  "theme": "Твоего человека атакуют при тебе — заслонить собой, перевести удар на себя как на лидера, не сдавая их и не оправдываясь",
-  "subtitle": "Капитан на льду",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Fair",
-      "zone": "Warm",
-      "en": "That frustration is fair — let's keep it aimed at the work, not the person."
-    },
-    {
-      "anchor": "Valid",
-      "zone": "Warm",
-      "en": "Valid concern — and it's mine to answer, not theirs."
-    },
-    {
-      "anchor": "Alone",
-      "zone": "Warm",
-      "en": "You're right to expect better — and I'm not leaving them alone with that."
-    },
-    {
-      "anchor": "Front",
-      "zone": "Backbone",
-      "en": "I hear you — let me step in front of this."
-    },
-    {
-      "anchor": "Call",
-      "zone": "Backbone",
-      "en": "If we're assigning blame, it's mine — I made the call."
-    },
-    {
-      "anchor": "Privately",
-      "zone": "Backbone",
-      "en": "We'll handle the individual piece privately — in this room, we fix the system."
-    },
-    {
-      "anchor": "Shield",
-      "zone": "Weight",
-      "en": "My team is not my shield — I'm theirs."
-    },
-    {
-      "anchor": "Through",
-      "zone": "Weight",
-      "en": "My team, my responsibility — you come through me."
-    },
-    {
-      "anchor": "Accountable",
-      "zone": "Weight",
-      "en": "If you're looking for who's accountable — you're looking at me."
-    }
-  ],
-  "mnemo": "Вбрасывание — fair, но шайба влетает в сетку, и гол признан valid: молодой вратарь стоит совсем alone под свист трибун. Ты подъезжаешь и встаёшь front него, лицом к залу, потом берёшь call тайм-аута и говоришь с ним privately, шлем к шлему. В следующей атаке падаешь под бросок — живой shield, и шайба не проходит through. После сирены у микрофона ты говоришь одно: за пропущенный accountable — капитан."
+ "slug": "lead-7",
+ "title": "Заступиться за своего, принять удар",
+ "theme": "Твоего человека атакуют при тебе — заслонить собой, перевести удар на себя как на лидера, не сдавая их и не оправдываясь",
+ "subtitle": "Капитан на льду",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Fair",
+   "zone": "Warm",
+   "en": "That frustration is fair — let's keep it aimed at the work, not the person."
+  },
+  {
+   "anchor": "Valid",
+   "zone": "Warm",
+   "en": "Valid concern — and it's mine to answer, not theirs."
+  },
+  {
+   "anchor": "Heat",
+   "zone": "Warm",
+   "en": "Fair point — but they won't be taking that heat alone."
+  },
+  {
+   "anchor": "Front",
+   "zone": "Backbone",
+   "en": "I hear you — let me step in front of this."
+  },
+  {
+   "anchor": "Call",
+   "zone": "Backbone",
+   "en": "If we're assigning blame, it's mine — I made the call."
+  },
+  {
+   "anchor": "Privately",
+   "zone": "Backbone",
+   "en": "We'll handle the individual piece privately — in this room, we fix the system."
+  },
+  {
+   "anchor": "Shield",
+   "zone": "Weight",
+   "en": "My team is not my shield — I'm theirs."
+  },
+  {
+   "anchor": "People",
+   "zone": "Weight",
+   "en": "You've got an issue with my people, you bring it to me."
+  },
+  {
+   "anchor": "Accountable",
+   "zone": "Weight",
+   "en": "If you're looking for who's accountable — you're looking at me."
+  }
+ ],
+ "mnemo": "Вбрасывание — fair, но шайба в сетке, гол valid: весь heat — жар — трибун валится на молодого вратаря, одному не вынести. Встаёшь front, заслоняя его, лицом к залу, берёшь call тайм-аута и говоришь privately, шлем к шлему. В следующей атаке падаешь под бросок — живой shield; к вратарю подкатывает провокатор, и ты разворачиваешь его на себя: это мои people — люди, вопросы — через меня. После сирены у микрофона ты говоришь одно: за пропущенный гол accountable — отвечать — капитан."
 }

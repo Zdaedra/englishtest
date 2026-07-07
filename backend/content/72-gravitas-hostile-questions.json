@@ -1,60 +1,60 @@
 {
-  "slug": "gravitas-4",
-  "title": "Не дрогнуть под шквалом враждебных вопросов",
-  "theme": "Горячее кресло — не дрожать, контролировать темп, брать самый трудный в лоб, отвечать на суть, а не на тон",
-  "subtitle": "Клинок в кузнице",
-  "section": "gravitas",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Angry",
-      "zone": "Warm",
-      "en": "You're right to be angry — I'd be asking the same things."
-    },
-    {
-      "anchor": "Hide",
-      "zone": "Warm",
-      "en": "I'm not going to hide from any of this — ask away."
-    },
-    {
-      "anchor": "Heat",
-      "zone": "Warm",
-      "en": "I understand the heat in the room — let's make it useful."
-    },
-    {
-      "anchor": "Hardest",
-      "zone": "Backbone",
-      "en": "I'll take these one at a time — starting with the hardest."
-    },
-    {
-      "anchor": "Directly",
-      "zone": "Backbone",
-      "en": "I'll answer that directly: yes, that one sits with us."
-    },
-    {
-      "anchor": "Separate",
-      "zone": "Backbone",
-      "en": "Let's separate the allegation from the facts we can verify."
-    },
-    {
-      "anchor": "Tone",
-      "zone": "Weight",
-      "en": "I'm not answering the tone — I'm answering the substance."
-    },
-    {
-      "anchor": "Rushed",
-      "zone": "Weight",
-      "en": "I won't be rushed into a weaker answer because the room is loud."
-    },
-    {
-      "anchor": "Count",
-      "zone": "Weight",
-      "en": "Ask in any order — I'll answer in the order that makes this count."
-    }
-  ],
-  "mnemo": "В горне ревёт angry огонь, на стене манит дверь hide, но ты проходишь мимо и входишь прямо в heat. Из всех заготовок берёшь hardest сталь, кладёшь её directly на наковальню и начинаешь separate шлак от лезвия. По звону металла ловишь tone, не делаешь rushed ударов и ведёшь молот под ровный count, пока клинок не выходит чистым."
+ "slug": "gravitas-4",
+ "title": "Не дрогнуть под шквалом враждебных вопросов",
+ "theme": "Горячее кресло — не дрожать, контролировать темп, брать самый трудный в лоб, отвечать на суть, а не на тон",
+ "subtitle": "Клинок в кузнице",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Angry",
+   "zone": "Warm",
+   "en": "You're right to be angry — I'd be asking the same things."
+  },
+  {
+   "anchor": "Hide",
+   "zone": "Warm",
+   "en": "I'm not going to hide from any of this — ask away."
+  },
+  {
+   "anchor": "Aim",
+   "zone": "Warm",
+   "en": "The frustration's fair — let's aim it at the problem."
+  },
+  {
+   "anchor": "Hardest",
+   "zone": "Backbone",
+   "en": "I'll take these one at a time — starting with the hardest."
+  },
+  {
+   "anchor": "Straight",
+   "zone": "Backbone",
+   "en": "Straight answer: yes, that one's on us."
+  },
+  {
+   "anchor": "Separate",
+   "zone": "Backbone",
+   "en": "Let's separate the allegation from the facts we can verify."
+  },
+  {
+   "anchor": "Attitude",
+   "zone": "Weight",
+   "en": "I'll answer the question — not the attitude behind it."
+  },
+  {
+   "anchor": "Blurt",
+   "zone": "Weight",
+   "en": "You can push, but I'm not going to blurt out a bad answer."
+  },
+  {
+   "anchor": "Fire",
+   "zone": "Weight",
+   "en": "Fire away — I'll get to every single one."
+  }
+ ],
+ "mnemo": "В горне ревёт angry огонь; за дверью hide прохладно, но ты весь жар aim — направляешь — в наковальню. Из всех заготовок берёшь hardest сталь, кладёшь её straight — прямо — и начинаешь separate шлак от лезвия. Отвечаешь чистому звону металла, а не attitude — гонору — искр. Не даёшь молоту blurt — ляпнуть — торопливый кривой удар. И командуешь мехам: fire — поддавай! — заготовки разберёшь все до одной."
 }

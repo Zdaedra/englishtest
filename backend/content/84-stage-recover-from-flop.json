@@ -1,60 +1,60 @@
 {
-  "slug": "stage-6",
-  "title": "Восстановиться после провала на сцене",
-  "theme": "Посреди выступления виден сбой — шутка упала, провал в памяти, отказали слайды, запнулся — и зал это видел; восстановиться изящно, не сорваться в штопор и не рассыпаться в извинениях; самообладание в ступоре и есть сигнал, а изящное восстановление запоминается сильнее безупречности",
-  "subtitle": "Дрезина на арене",
-  "section": "stage",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "balloon",
-      "zone": "Warm",
-      "en": "That one landed like a lead balloon — moving swiftly on."
-    },
-    {
-      "anchor": "blank",
-      "zone": "Warm",
-      "en": "Total blank just now. Happens to the best of me."
-    },
-    {
-      "anchor": "slides",
-      "zone": "Warm",
-      "en": "And the slides have decided to take a little break. Bold of them."
-    },
-    {
-      "anchor": "resume",
-      "zone": "Backbone",
-      "en": "No big apology — let's just resume."
-    },
-    {
-      "anchor": "rails",
-      "zone": "Backbone",
-      "en": "Let me get back on the rails — here's the real point."
-    },
-    {
-      "anchor": "where",
-      "zone": "Backbone",
-      "en": "Here's where we were before the room took that little detour."
-    },
-    {
-      "anchor": "stumble",
-      "zone": "Weight",
-      "en": "One stumble does not get to own the room."
-    },
-    {
-      "anchor": "fall",
-      "zone": "Weight",
-      "en": "It's not the fall — it's how I get up. Watch."
-    },
-    {
-      "anchor": "forgettable",
-      "zone": "Weight",
-      "en": "Flawless would've been forgettable. This, you'll remember."
-    }
-  ],
-  "mnemo": "На арене лопается balloon, экран за спиной становится blank, и картонные slides съезжают набок. Ты нажимаешь на медный рычаг resume, ставишь дрезину обратно на rails и мелом отмечаешь where начинается следующий круг. Колесо цепляет песок, выходит смешной stumble, ты переводишь его в мягкий fall на колено и тут же вскакиваешь так красиво, что сам сбой становится не forgettable."
+ "slug": "stage-6",
+ "title": "Восстановиться после провала на сцене",
+ "theme": "Посреди выступления виден сбой — шутка упала, провал в памяти, отказали слайды, запнулся — и зал это видел; восстановиться изящно, не сорваться в штопор и не рассыпаться в извинениях; самообладание в ступоре и есть сигнал, а изящное восстановление запоминается сильнее безупречности",
+ "subtitle": "Дрезина на арене",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "balloon",
+   "zone": "Warm",
+   "en": "That one landed like a lead balloon — moving swiftly on."
+  },
+  {
+   "anchor": "blank",
+   "zone": "Warm",
+   "en": "Mind just went completely blank — give me a second."
+  },
+  {
+   "anchor": "slides",
+   "zone": "Warm",
+   "en": "And the slides have decided to take a little break. Bold of them."
+  },
+  {
+   "anchor": "drama",
+   "zone": "Backbone",
+   "en": "No drama — let's pick it back up."
+  },
+  {
+   "anchor": "track",
+   "zone": "Backbone",
+   "en": "Okay, back on track — here's the point."
+  },
+  {
+   "anchor": "derailed",
+   "zone": "Backbone",
+   "en": "So — where was I before I derailed myself?"
+  },
+  {
+   "anchor": "happened",
+   "zone": "Weight",
+   "en": "Well, that happened. Moving on."
+  },
+  {
+   "anchor": "trips",
+   "zone": "Weight",
+   "en": "Everyone trips — you just keep going."
+  },
+  {
+   "anchor": "boring",
+   "zone": "Weight",
+   "en": "Well — at least it wasn't boring."
+  }
+ ],
+ "mnemo": "Лопается balloon, экран становится blank, slides съезжают набок. Без drama — драмы: ты подбегаешь к своей дрезине — продолжаем. Ставишь её обратно на track — колею. Мелом отмечаешь место, где ты derailed — сошёл с рельсов, — жмёшь рычаг: отсюда и поехали. Колесо в песке — happened — случилось, едем. Дрезина trips — спотыкается; каждый спотыкается — ты просто качаешь дальше. И под поклон усмехаешься: boring — скучно — сегодня не было."
 }

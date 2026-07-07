@@ -1,60 +1,60 @@
 {
-  "slug": "stage-11",
-  "title": "Импровизировать, когда план рухнул",
-  "theme": "Весь подготовленный план обрушился — срезали время, не тот зал, отказало демо — играть с листа; подать поворот как подарок залу, быстро найти стержень и собрать новую структуру на лету; импровизация и есть мастерство — мне не нужен план, у меня есть мысль",
-  "subtitle": "Регата без карты",
-  "section": "stage",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "plans",
-      "zone": "Warm",
-      "en": "Change of plans — and honestly the better kind. Let's just talk."
-    },
-    {
-      "anchor": "prepped",
-      "zone": "Warm",
-      "en": "You're not quite the room I prepped for — so let's make this about you."
-    },
-    {
-      "anchor": "live",
-      "zone": "Warm",
-      "en": "Good. We get to make this live instead of polished."
-    },
-    {
-      "anchor": "core",
-      "zone": "Backbone",
-      "en": "Let me cut to the core — there's really just one idea here."
-    },
-    {
-      "anchor": "shape",
-      "zone": "Backbone",
-      "en": "Here's the new shape: one story, one lesson, one decision."
-    },
-    {
-      "anchor": "deck",
-      "zone": "Backbone",
-      "en": "I don't need the deck — the argument lives in my head."
-    },
-    {
-      "anchor": "net",
-      "zone": "Weight",
-      "en": "No net today — and that's when I'm actually at my best."
-    },
-    {
-      "anchor": "raw",
-      "zone": "Weight",
-      "en": "Unscripted and raw beats polished and dead. Lucky you."
-    },
-    {
-      "anchor": "thought",
-      "zone": "Weight",
-      "en": "I don't need a plan. I've got a thought — and that's plenty."
-    }
-  ],
-  "mnemo": "Шквал вырывает из рук plans, сметает заранее prepped узлы, и парусник резко входит в live волну. Ты хватаешься за core мачты, руками даёшь парусу новую shape и перебегаешь через мокрый deck к штурвалу. С борта срывается страховочная net, в лицо бьёт raw ветер, но ты ведёшь лодку по одной чистой thought, пока новый курс не рождается под ногами."
+ "slug": "stage-11",
+ "title": "Импровизировать, когда план рухнул",
+ "theme": "Весь подготовленный план обрушился — срезали время, не тот зал, отказало демо — играть с листа; подать поворот как подарок залу, быстро найти стержень и собрать новую структуру на лету; импровизация и есть мастерство — мне не нужен план, у меня есть мысль",
+ "subtitle": "Регата без карты",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "plans",
+   "zone": "Warm",
+   "en": "Change of plans — and honestly the better kind. Let's just talk."
+  },
+  {
+   "anchor": "crowd",
+   "zone": "Warm",
+   "en": "This isn't the crowd I planned for — even better."
+  },
+  {
+   "anchor": "real",
+   "zone": "Warm",
+   "en": "Great — now we get to do this for real."
+  },
+  {
+   "anchor": "idea",
+   "zone": "Backbone",
+   "en": "There's really one idea underneath all of this — let's go straight there."
+  },
+  {
+   "anchor": "simpler",
+   "zone": "Backbone",
+   "en": "Okay, simpler: one story, one point, one decision."
+  },
+  {
+   "anchor": "deck",
+   "zone": "Backbone",
+   "en": "I don't need the deck — the argument lives in my head."
+  },
+  {
+   "anchor": "safety",
+   "zone": "Weight",
+   "en": "No safety net today — that's when it gets good."
+  },
+  {
+   "anchor": "luck",
+   "zone": "Weight",
+   "en": "No rehearsal for this one — wish me luck."
+  },
+  {
+   "anchor": "cold",
+   "zone": "Weight",
+   "en": "No script? Fine — I know this stuff cold."
+  }
+ ],
+ "mnemo": "Шквал вырывает plans, и вокруг не та crowd — толпа — волн, к которой ты готовился. Парусник входит в волну real — по-настоящему. Ты хватаешься за мачту — за одну idea — стержневую мысль курса — и режешь оснастку до simpler — простого: один парус, один галс. Перебегаешь через мокрый deck к штурвалу. С борта срывается safety — страховочная — сетка. Стучишь костяшками по мачте — на luck — удачу: сегодня идёшь без репетиций. Но карта не нужна — ты знаешь этот фарватер cold — наизусть."
 }

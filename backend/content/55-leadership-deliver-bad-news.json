@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Heavy",
+   "anchor": "Straight",
    "zone": "Warm",
-   "en": "This is heavy — and I want to meet it with you honestly."
+   "en": "This is hard news, and I'm going to give it to you straight."
   },
   {
    "anchor": "Grapevine",
@@ -26,9 +26,9 @@
    "en": "I care about how this lands — there are people behind the numbers."
   },
   {
-   "anchor": "News",
+   "anchor": "Situation",
    "zone": "Backbone",
-   "en": "Here's the news, plainly: the plan has changed, and the impact is real."
+   "en": "Here's the situation, no dressing it up: the plan changed, and it affects us."
   },
   {
    "anchor": "Know",
@@ -51,10 +51,10 @@
    "en": "I won't insult you by pretending this is easy."
   },
   {
-   "anchor": "Through",
+   "anchor": "Dropping",
    "zone": "Weight",
-   "en": "I'm staying with you through the hard part — not just the announcement."
+   "en": "I'm not dropping this on you and walking away."
   }
  ],
- "mnemo": "Ты спускаешься с мостика на палубу с heavy — тяжёлой вестью и сам обходишь весь корабль, собирая экипаж: пусть услышат от тебя, а не через grapevine — сарафанное радио. Вглядываешься в лица, следя, как это lands — приземляется: за цифрами люди. Выкладываешь news — новость — прямо: курс меняется, и удар настоящий. Мелом делишь доску: что know — знаем, чего не знаем, что будет дальше. Не spin — не крутишь мел в пальцах, подбирая слова покрасивее: пишешь цифры как есть. Худшую строку читаешь первой, не sugarcoat — не подслащивая ради уюта. Глядя экипажу в глаза, не insult — не оскорбляешь людей игрой в «это легко». И остаёшься на палубе всю ночную вахту — through, до конца шторма, а не до конца объявления."
+ "mnemo": "Спускаешься на палубу с тяжёлой вестью: скажешь straight — прямо. Сам обходишь весь корабль, собирая экипаж: пусть услышат от тебя, а не через grapevine — сарафанное радио. Вглядываешься в лица, как это lands — приземляется: за цифрами люди. Выкладываешь situation — обстановку — без украшательств: курс меняется, и удар настоящий. Мелом делишь доску: что know — знаем, чего не знаем, что будет дальше. Не spin — не крутишь — формулировки покрасивее: пишешь цифры как есть. Худшую строку читаешь первой, не sugarcoat — не подслащивая ради уюта. Глядя в глаза, не insult — не оскорбляешь игрой в «это легко». И ты не dropping — не роняешь весть, уходя в каюту: остаёшься на палубе."
 }

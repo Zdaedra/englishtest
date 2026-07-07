@@ -1,60 +1,60 @@
 {
-  "slug": "gravitas-1",
-  "title": "Взять командование, когда всё горит",
-  "theme": "Кризис разворачивается сейчас, паника — решительно взять руль: заземлить, раздать приказы, дать единый центр; разберёмся потом",
-  "subtitle": "Крыша в шторм",
-  "section": "gravitas",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Eyes",
-      "zone": "Warm",
-      "en": "Eyes on me. We breathe — then we move."
-    },
-    {
-      "anchor": "Ground",
-      "zone": "Warm",
-      "en": "Get your feet on the ground — I've got the room."
-    },
-    {
-      "anchor": "Alone",
-      "zone": "Warm",
-      "en": "Nobody handles this alone — stay visible."
-    },
-    {
-      "anchor": "Jobs",
-      "zone": "Backbone",
-      "en": "Names and jobs: you on comms, you on the floor, me on the call."
-    },
-    {
-      "anchor": "Priority",
-      "zone": "Backbone",
-      "en": "Priority one is safety, two is containment — everything else waits."
-    },
-    {
-      "anchor": "Drop",
-      "zone": "Backbone",
-      "en": "Drop everything else — this is the only thing that exists right now."
-    },
-    {
-      "anchor": "Command",
-      "zone": "Weight",
-      "en": "I'm taking command until this is stable — so we don't trip over each other."
-    },
-    {
-      "anchor": "Count",
-      "zone": "Weight",
-      "en": "Move on my count — not on panic."
-    },
-    {
-      "anchor": "Later",
-      "zone": "Weight",
-      "en": "We sort the why later — right now, you execute."
-    }
-  ],
-  "mnemo": "Ты ловишь прожектором eyes команды, ставишь ботинок на мокрый ground и показываешь, что никто не пойдёт alone к краю крыши. Быстро раздаёшь jobs, поднимаешь красный флажок priority и командуешь drop лишние ящики, чтобы освободить проход к тросу. Потом хватаешь рацию command, начинаешь громкий count перед посадкой вертолёта, и только когда все пристёгнуты, говоришь: разбор будет later, сейчас взлетаем."
+ "slug": "gravitas-1",
+ "title": "Взять командование, когда всё горит",
+ "theme": "Кризис разворачивается сейчас, паника — решительно взять руль: заземлить, раздать приказы, дать единый центр; разберёмся потом",
+ "subtitle": "Крыша в шторм",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Breath",
+   "zone": "Warm",
+   "en": "Everyone, look at me. Deep breath. Now let's move."
+  },
+  {
+   "anchor": "Hold",
+   "zone": "Warm",
+   "en": "Everybody hold steady — I've got this."
+  },
+  {
+   "anchor": "Solo",
+   "zone": "Warm",
+   "en": "Stay in pairs, stay in touch — nobody goes solo on this."
+  },
+  {
+   "anchor": "Jobs",
+   "zone": "Backbone",
+   "en": "Names and jobs: you on comms, you on the floor, me on the call."
+  },
+  {
+   "anchor": "Priority",
+   "zone": "Backbone",
+   "en": "Priority one is safety, two is containment — everything else waits."
+  },
+  {
+   "anchor": "Drop",
+   "zone": "Backbone",
+   "en": "Drop everything else — this is the only thing that exists right now."
+  },
+  {
+   "anchor": "Command",
+   "zone": "Weight",
+   "en": "I'm taking command until this is stable — so we don't trip over each other."
+  },
+  {
+   "anchor": "Signal",
+   "zone": "Weight",
+   "en": "We move together, on my signal."
+  },
+  {
+   "anchor": "Later",
+   "zone": "Weight",
+   "en": "We sort the why later — right now, you execute."
+  }
+ ],
+ "mnemo": "Ты собираешь команду взглядом: breath — глубокий вдох на всех, и работаем. Командуешь hold — держаться ровно — и показываешь: никто не идёт solo к краю крыши. Быстро раздаёшь jobs, поднимаешь красный флажок priority и командуешь drop лишние ящики. Потом берёшь command — командование — на себя и поднимаешь ракетницу: двигаемся все разом, по твоему signal — сигналу, — и когда все пристёгнуты: разбор будет later, сейчас взлетаем."
 }

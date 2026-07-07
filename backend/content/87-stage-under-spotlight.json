@@ -16,9 +16,9 @@
    "en": "Let's talk like people — I'm not going to read you a statement."
   },
   {
-   "anchor": "armor",
+   "anchor": "hide",
    "zone": "Warm",
-   "en": "I don't want to put on armor and call it transparency."
+   "en": "I'm not going to hide behind talking points."
   },
   {
    "anchor": "homework",
@@ -36,19 +36,19 @@
    "en": "I won't speculate on that. What I can tell you is this."
   },
   {
-   "anchor": "chopped",
+   "anchor": "sentence",
    "zone": "Backbone",
-   "en": "Let me give you that in one line they can't chop up."
+   "en": "Here it is in one sentence you can run as-is."
   },
   {
-   "anchor": "spotlight",
+   "anchor": "cameras",
    "zone": "Weight",
-   "en": "The spotlight doesn't change my answer. It only raises the standard for it."
+   "en": "Cameras on or off, you'd get the same answer."
   },
   {
-   "anchor": "cycle",
+   "anchor": "headline",
    "zone": "Weight",
-   "en": "I set the tone of this conversation, not the news cycle."
+   "en": "I'm not going to let a headline write my answer."
   },
   {
    "anchor": "quote",
@@ -56,5 +56,5 @@
    "en": "Quote me on all of it. I stand behind every word."
   }
  ],
- "mnemo": "Ты выходишь из машины в белые вспышки и идёшь сквозь коридор репортёров. Отодвигаешь протянутый лист statement — заготовку: говорить будешь как человек. Расстёгиваешь пальто — снимаешь armor — броню. Сворачиваешь к журналистке с папкой: она сделала homework — домашнюю работу. Наклоняешься к диктофону и медленно даёшь строку под print — в печать. Отводишь ладонью микрофон с провокацией: speculate — гадать — не будешь. Чеканишь фразу одним куском — её не chopped — не порезать на монтаже. Входишь в круг spotlight — софита, не меняя шага. Проходишь мимо бегущей строки новостного cycle — цикла, не подстраивая темп. И у дверей разворачиваешься: quote — цитируйте всё, я за каждым словом."
+ "mnemo": "Ты выходишь в белые вспышки, сквозь коридор репортёров. Отодвигаешь протянутый лист statement — заготовку: говорить будешь как человек. Расстёгиваешь пальто: тебе не за чем hide — прятаться. Сворачиваешь к тому, кто сделал homework — домашнюю работу. Наклоняешься к диктофону и медленно даёшь строку под print — в печать. Отводишь ладонью микрофон с провокацией: speculate — гадать — не будешь. Чеканишь одну sentence — фразу: бери в эфир как есть. Идёшь через круг света, не меняя шага: cameras — камеры — включены или нет, ответ один. Проходишь мимо бегущего headline — заголовка: не ему писать твой ответ. И у дверей разворачиваешься: quote — цитируйте всё, я за каждым словом."
 }

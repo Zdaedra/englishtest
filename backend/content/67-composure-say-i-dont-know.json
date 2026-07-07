@@ -36,9 +36,9 @@
    "en": "I'm not going to guess on that — I'll verify it first."
   },
   {
-   "anchor": "Limited",
+   "anchor": "Tomorrow",
    "zone": "Backbone",
-   "en": "What I can say now is limited — what I'll bring back is clear."
+   "en": "Here's what I know so far — I'll have the rest by tomorrow."
   },
   {
    "anchor": "Precise",
@@ -46,15 +46,15 @@
    "en": "I'd rather be precise later than confident and wrong now."
   },
   {
-   "anchor": "Trouble",
+   "anchor": "Pretend",
    "zone": "Weight",
-   "en": "Not knowing that doesn't trouble me — pretending to would."
+   "en": "I don't know — and I'm not going to pretend I do."
   },
   {
-   "anchor": "Bluff",
+   "anchor": "Wing",
    "zone": "Weight",
-   "en": "I won't bluff my way through an answer just to fill the room."
+   "en": "I'm not going to wing an answer to a question this important."
   }
  ],
- "mnemo": "Пещера. Ты взбираешься на top — верхний — уступ, ставишь ноги в comfortable — удобный — упор и ведёшь лучом: впереди три чёрных хода. Ты stumped — в тупике — и говоришь это вслух, эху, спокойно. Простукиваешь стену костяшками, ищешь solid — твёрдый — камень. Заползаешь в первый лаз на длину верёвки — verify — проверить — своими руками. Свет фонаря limited — ограничен — десятью шагами, и ты возвращаешься, не выдумывая остального. Мелом ставишь precise — точную — метку только там, где прошёл сам. Из второго хода тянет водой — trouble — беда; ты отступаешь без стыда. А у края bluff — обрыва — ложишься на живот и не делаешь шаг, пока фонарь не достанет дна."
+ "mnemo": "Пещера. Взбираешься на top — верхний — уступ в comfortable — удобный — упор и ведёшь лучом: три чёрных хода. Ты stumped — в тупике — и говоришь это вслух. Простукиваешь стену костяшками, ищешь solid — твёрдый — камень. Заползаешь в первый лаз — verify — проверить — своими руками. Дальше фонарь не бьёт: остальное доразведаешь tomorrow — завтра. Мелом ставишь precise — точную — метку только там, где прошёл сам. Из второго хода тянет водой: не pretend — не изображаешь, что видел дно. А у края обрыва не wing — не лезешь наугад: спускаешь фонарь на шнуре."
 }

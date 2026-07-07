@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "heat",
+   "anchor": "fair",
    "zone": "Warm",
-   "en": "Let me take the heat out of the question and keep the concern."
+   "en": "That's a fair question — angry, but fair."
   },
   {
    "anchor": "underneath",
@@ -21,19 +21,19 @@
    "en": "That's a sharp one — and there's a real worry underneath it."
   },
   {
-   "anchor": "nerve",
+   "anchor": "bold",
    "zone": "Warm",
-   "en": "Thank you for the question with some nerve in it. Let's take it seriously."
+   "en": "Bold question — I like it. Let's dig in."
   },
   {
-   "anchor": "premise",
+   "anchor": "setup",
    "zone": "Backbone",
-   "en": "I'd challenge the premise — but the question under it is fair, so here it is."
+   "en": "I don't buy the setup, but the worry behind it is real — so let's talk about that."
   },
   {
-   "anchor": "bait",
+   "anchor": "framing",
    "zone": "Backbone",
-   "en": "I'm not taking the bait on the framing — but the substance, I'll answer."
+   "en": "I'll skip the framing and answer the actual question."
   },
   {
    "anchor": "separate",
@@ -41,20 +41,20 @@
    "en": "Let me separate the accusation from the real question, and answer the second."
   },
   {
-   "anchor": "gift",
+   "anchor": "glad",
    "zone": "Weight",
-   "en": "A tough question is a gift — it lets me clear this up for everyone."
+   "en": "Honestly, I'm glad you asked — it lets me clear this up."
   },
   {
-   "anchor": "audience",
+   "anchor": "spar",
    "zone": "Weight",
-   "en": "I'm not here to fight the questioner. I'm here to serve the audience."
+   "en": "I'm not here to spar with you — everyone came for answers."
   },
   {
-   "anchor": "steady",
+   "anchor": "second",
    "zone": "Weight",
-   "en": "The question was sharp. The answer will be steady."
+   "en": "Tough one — give me a second to get it right."
   }
  ],
- "mnemo": "Из зала на сцену летит дымящийся свёрток-вопрос. Ты сходишь с трибуны, поднимаешь его и выносишь heat — жар — к открытому окну, окунув свёрток в бак с водой. Разворачиваешь мокрую ткань, заглядываешь underneath — под низ: там бьётся живой nerve — нерв — настоящая тревога. Отдираешь фальшивое дно — premise — посылку — и отбрасываешь в сторону. Блестящую bait — наживку — на крючке обходишь, не касаясь. Пальцами separate — отделяешь — обёртку-обвинение от сердцевины-вопроса. Внутри — маленький gift — подарок: шанс всё объяснить. Ты возвращаешься по проходу, поднимая его над audience — залом, — и ровным, steady — твёрдым — шагом поднимаешься обратно на сцену."
+ "mnemo": "На сцену летит дымящийся вопрос. Ты окунаешь его в бак: под дымом — fair — честный — вопрос. Заглядываешь underneath — под низ: там bold — дерзкая — начинка, и тебе даже нравится. Отдираешь фальшивое дно — setup — подставу: сам страх под ней настоящий, о нём и поговорим. Блестящей framing — рамке — не даёшь поймать взгляд: отвечаешь на сам вопрос. Пальцами separate — отделяешь — обёртку-обвинение от сердцевины. Внутри — записка, и ты даже glad — рад, что спросили. Ты вышел сюда не spar — не препираться: зал пришёл за ответами. У ступеней берёшь second — секунду, — чтобы ответить точно."
 }

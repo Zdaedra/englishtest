@@ -16,9 +16,9 @@
    "en": "Ouch. I want to stay in this with you — but that one got me."
   },
   {
-   "anchor": "Tender",
+   "anchor": "Sore",
    "zone": "Warm",
-   "en": "That landed somewhere tender. I'm not angry — I just want you to know."
+   "en": "That one hit a sore spot — I just want you to know."
   },
   {
    "anchor": "Stung",
@@ -26,9 +26,9 @@
    "en": "I know you may not have meant it that way — but it stung."
   },
   {
-   "anchor": "Differently",
+   "anchor": "Harsh",
    "zone": "Backbone",
-   "en": "Can you say that again differently? That version I can't quite hear."
+   "en": "Can you try that again? It came out pretty harsh."
   },
   {
    "anchor": "Tone",
@@ -46,15 +46,15 @@
    "en": "I'm not going to fire back — even though part of me wants to."
   },
   {
-   "anchor": "Dignity",
+   "anchor": "Hurt",
    "zone": "Weight",
-   "en": "I can hold my dignity and still stay close to you."
+   "en": "I'm hurt, but I'm not going anywhere."
   },
   {
-   "anchor": "Gentle",
+   "anchor": "Worse",
    "zone": "Weight",
-   "en": "We can be hurt and still be gentle. And I'm choosing gentle."
+   "en": "We're both hurting — let's not make it worse."
   }
  ],
- "mnemo": "Дружеский спарринг на татами. Пропущенный хлопок — ouch — обжигает скулу, но ты остаёшься в круге. Трогаешь щёку: место tender — саднящее, — и киваешь: попало. Тебя stung — ужалило — сильнее, чем он хотел; ты выдыхаешь, а не бьёшь. Стучишь перчаткой о перчатку: покажи это differently — иначе, — и сам задаёшь темп помедленнее. Опускаешь руки чуть ниже, сбивая tone — тон — спарринга со злого на рабочий. Хочется shut — захлопнуться — в глухой блок; вместо этого ты раскрываешь стойку. Кулак сам взводится — fire — ответить огнём; ты разжимаешь пальцы. Выпрямляешь спину — dignity — достоинство — и делаешь шаг обратно в центр. И завершаешь раунд gentle — мягким — касанием перчатки его плеча."
+ "mnemo": "Дружеский спарринг на татами. Пропущенный хлопок — ouch — обжигает скулу, но ты остаёшься в круге. Трогаешь щёку: место sore — саднящее, — и киваешь: попало. Тебя stung — ужалило — сильнее, чем он хотел; ты выдыхаешь. Стучишь перчаткой о перчатку: вышло harsh — жёстко; ещё раз, помягче. Опускаешь руки чуть ниже, сбивая tone — тон — спарринга. Хочется shut — захлопнуться — в глухой блок; вместо этого ты раскрываешь стойку. Кулак сам взводится — fire — ответить огнём; ты разжимаешь пальцы. Больно — hurt, — но ты в круге. И не даёшь раунду стать worse — хуже: завершаешь его мягким касанием перчатки его плеча."
 }

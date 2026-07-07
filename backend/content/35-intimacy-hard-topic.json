@@ -1,60 +1,60 @@
 {
-  "slug": "intimacy-1",
-  "title": "Поднять трудную тему",
-  "theme": "Начать с партнёром тяжёлый разговор без атаки и без оправданий — держа рамку любви",
-  "subtitle": "Рафтинг вдвоём",
-  "section": "intimacy",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Close",
-      "zone": "Warm",
-      "en": "I want to talk about something — because I want us close, not because I want us hurt."
-    },
-    {
-      "anchor": "Softly",
-      "zone": "Warm",
-      "en": "Can we go into this softly? It matters to me — and so do you."
-    },
-    {
-      "anchor": "Together",
-      "zone": "Warm",
-      "en": "I don't want to carry this alone — and I don't want to put it on you. Let's look at it together."
-    },
-    {
-      "anchor": "Avoiding",
-      "zone": "Backbone",
-      "en": "I've been avoiding this — and I don't want that to become our pattern."
-    },
-    {
-      "anchor": "Name",
-      "zone": "Backbone",
-      "en": "I need to name something between us without turning it into blame."
-    },
-    {
-      "anchor": "Part",
-      "zone": "Backbone",
-      "en": "My part is that I've been quiet when I should've been honest."
-    },
-    {
-      "anchor": "Win",
-      "zone": "Weight",
-      "en": "This may be hard — but I'm not here to win. I'm here to understand what's true."
-    },
-    {
-      "anchor": "Against",
-      "zone": "Weight",
-      "en": "It's not me against you — it's us against the problem."
-    },
-    {
-      "anchor": "Survive",
-      "zone": "Weight",
-      "en": "Whatever gets said, we're still us when it's over. We survive this."
-    }
-  ],
-  "mnemo": "Рёв порога всё close, и вы softly табаните, заходя в струю, — вёсла бьют together, в один такт. Avoiding клык скалы слева, ты вспоминаешь, что у порога есть name — «Мясорубка». Стена воды part перед носом рафта, вы win у бочки решающий метр, гребя against отбойного течения. Рафт вылетает на тихий плёс — survive! — и вы хлопаете вёслами над головой."
+ "slug": "intimacy-1",
+ "title": "Поднять трудную тему",
+ "theme": "Начать с партнёром тяжёлый разговор без атаки и без оправданий — держа рамку любви",
+ "subtitle": "Рафтинг вдвоём",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Close",
+   "zone": "Warm",
+   "en": "I want to talk about something — not to fight, just to feel close to you again."
+  },
+  {
+   "anchor": "Gently",
+   "zone": "Warm",
+   "en": "Can we take this gently? It matters to me."
+  },
+  {
+   "anchor": "Together",
+   "zone": "Warm",
+   "en": "I don't want to carry this alone — and I don't want to put it on you. Let's look at it together."
+  },
+  {
+   "anchor": "Avoiding",
+   "zone": "Backbone",
+   "en": "I've been avoiding this — and I don't want that to become our pattern."
+  },
+  {
+   "anchor": "Blame",
+   "zone": "Backbone",
+   "en": "Something's been sitting between us, and I want to talk about it — no blame."
+  },
+  {
+   "anchor": "Part",
+   "zone": "Backbone",
+   "en": "My part is that I've been quiet when I should've been honest."
+  },
+  {
+   "anchor": "Win",
+   "zone": "Weight",
+   "en": "This may be hard — but I'm not here to win. I'm here to understand what's true."
+  },
+  {
+   "anchor": "Against",
+   "zone": "Weight",
+   "en": "It's not me against you — it's us against the problem."
+  },
+  {
+   "anchor": "Tomorrow",
+   "zone": "Weight",
+   "en": "We can argue tonight and still be good tomorrow."
+  }
+ ],
+ "mnemo": "Рёв порога close — всё ближе, — и вы gently — мягко — табаните; вёсла бьют together, в один такт. Avoiding клык скалы, ты кричишь: никакого blame — виноватых нет, работаем! Стена воды part перед носом, вы win у бочки метр, гребя against отбойного течения. Рафт вылетает на плёс — и, что бы ни кричали в бочке, tomorrow — завтра — вы снова одна команда: хлопаете вёслами над головой."
 }

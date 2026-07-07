@@ -11,14 +11,14 @@
  ],
  "phrases": [
   {
-   "anchor": "Singular",
+   "anchor": "Speech",
    "zone": "Warm",
-   "en": "Let me talk to you — singular — not to a room."
+   "en": "I'm not going to give a speech — I'd rather just talk to you."
   },
   {
-   "anchor": "Back",
+   "anchor": "Row",
    "zone": "Warm",
-   "en": "I can see the back row — hi, you count too."
+   "en": "Hello back row — I see you too."
   },
   {
    "anchor": "Useful",
@@ -41,20 +41,20 @@
    "en": "If I do my job, you'll leave with one thing you can't unsee."
   },
   {
-   "anchor": "Settle",
+   "anchor": "Ground",
    "zone": "Weight",
-   "en": "Let the room settle — I'm not rushing the first sentence."
+   "en": "Settle in — we've got some ground to cover."
   },
   {
-   "anchor": "Command",
+   "anchor": "Hurry",
    "zone": "Weight",
-   "en": "I'll speak slowly — because speed isn't the same as command."
+   "en": "I'm in no hurry up here — stay with me."
   },
   {
-   "anchor": "Here",
+   "anchor": "Hour",
    "zone": "Weight",
-   "en": "The room is mine — not because I took it, but because I'm already here."
+   "en": "You're here, I'm here — let's make this hour matter."
   }
  ],
- "mnemo": "Тёмный зал. Ты входишь через дальнюю дверь и наводишь луч фонаря на singular — одного-единственного — зрителя: к нему и идёшь. По пути хлопаешь ладонью по креслу в back — заднем — ряду: вы тоже в игре. Подхватываешь useful — полезный — ящик и тащишь его к сцене вместо трибуны. Сдираешь с лица pretending — притворную — маску и бросаешь под ноги. Взбираясь на ящик, оступаешься — вот она, mistake — ошибка — и превращаешь сбой в первый шаг. Закатываешь рукав, показываешь шрам, который нельзя unsee — развидеть. Замираешь, давая залу settle — осесть — в тишину. Медленно разворачиваешь плечи — command — власть без спешки. И ставишь обе ступни в центр света: here — ты уже здесь."
+ "mnemo": "Ты входишь через дальнюю дверь: ты не speech — не речь — принёс, ты идёшь поговорить. По пути хлопаешь ладонью по креслу в последнем row — ряду: вас я тоже вижу. Подхватываешь useful — полезный — ящик и тащишь к сцене вместо трибуны. Сдираешь с лица pretending — притворную — маску. Взбираясь, оступаешься — вот она, mistake — ошибка — и делаешь её первым шагом. Закатываешь рукав, показываешь шрам, который нельзя unsee — развидеть. Обводишь рукой зал: впереди ground — целое поле. Тебе некуда hurry — спешить: медленно разворачиваешь плечи, зал остаётся с тобой. Ставишь обе ступни в центр света: пусть этот hour — час — что-то значит."
 }

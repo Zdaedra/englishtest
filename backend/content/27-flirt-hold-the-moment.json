@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Pause",
+   "anchor": "Quiet",
    "zone": "Warm",
-   "en": "I like this little pause between us."
+   "en": "I don't mind the quiet with you."
   },
   {
    "anchor": "Moment",
@@ -31,9 +31,9 @@
    "en": "There's something happening here, and we both know it."
   },
   {
-   "anchor": "Away",
+   "anchor": "Look",
    "zone": "Backbone",
-   "en": "This is the part where someone usually looks away — I won't."
+   "en": "What? I'm allowed to look."
   },
   {
    "anchor": "Rush",
@@ -41,14 +41,14 @@
    "en": "Let's not rush past whatever just happened."
   },
   {
-   "anchor": "Comfortable",
+   "anchor": "Hurry",
    "zone": "Weight",
-   "en": "I'm comfortable right here — the question is whether you are."
+   "en": "I'm in no hurry — this is nice."
   },
   {
-   "anchor": "Smaller",
+   "anchor": "Ruin",
    "zone": "Weight",
-   "en": "I'm not going to make this smaller by explaining it."
+   "en": "Explaining it would just ruin it."
   },
   {
    "anchor": "Sit",
@@ -56,5 +56,5 @@
    "en": "We don't have to do anything with this — we can just let it sit."
   }
  ],
- "mnemo": "Музыка замедляется, и ты делаешь pause — паузу — прямо посреди шага, не отпуская её руки. Этот moment — момент — ведёшь медленным поворотом, не давая оборваться. Ловишь её smile — улыбку — и отвечаешь своей, продолжая вести. Между вами что-то happening — происходит, — и ты подтягиваешь её на полшага ближе. Тут обычно отводят взгляд away — в сторону; ты ведёшь поворот, глаз не отводя. Оркестр ускоряется — ты не rush — не гонишь: держишь свой счёт. Переносишь вес и встаёшь comfortable — устойчиво: тебе хорошо ровно здесь. Не делаешь рисунок smaller — мельче, — объясняя его: шаг остаётся широким. И с последним аккордом вы опускаетесь на подоконник — просто sit — посидеть — плечом к плечу."
+ "mnemo": "Музыка замедляется, и вы застываете в quiet — тишине — посреди шага. Этот moment — момент — ведёшь медленным поворотом, не давая оборваться. Ловишь её smile — улыбку — и отвечаешь своей, продолжая вести. Между вами что-то happening — происходит, — и ты подтягиваешь её ближе. Она ловит твой look — взгляд; ты пожимаешь плечами. Оркестр ускоряется — ты не rush — не гонишь: держишь свой счёт. И не hurry — не спешишь — разрывать связку. Не объясняешь фигуру словами — это бы её ruin — испортило. И с последним аккордом вы опускаетесь на подоконник — просто sit — посидеть."
 }

@@ -1,60 +1,60 @@
 {
-  "slug": "flirt-5",
-  "title": "Поднять накал, не форсируя",
-  "theme": "Калиброванно усилить заряд, приглашая, а не давя — выбор и выход всегда остаются за ней",
-  "subtitle": "Охота за грозой",
-  "section": "flirt",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Going",
-      "zone": "Warm",
-      "en": "I like where this is going — if you do."
-    },
-    {
-      "anchor": "Quieter",
-      "zone": "Warm",
-      "en": "I'd like to keep this going somewhere quieter — if you're into that."
-    },
-    {
-      "anchor": "Tempted",
-      "zone": "Warm",
-      "en": "I'm tempted to give this conversation a little more room."
-    },
-    {
-      "anchor": "Call",
-      "zone": "Backbone",
-      "en": "This is where I'd ask you to get out of here with me — entirely your call."
-    },
-    {
-      "anchor": "Charge",
-      "zone": "Backbone",
-      "en": "I'm enjoying the charge here — I don't want to pretend it's casual."
-    },
-    {
-      "anchor": "Kiss",
-      "zone": "Backbone",
-      "en": "I'd kiss you right now — but only if it's something you'd want too."
-    },
-    {
-      "anchor": "Chase",
-      "zone": "Weight",
-      "en": "I'm not going to chase this — but I'd love to see where it goes."
-    },
-    {
-      "anchor": "Ambiguous",
-      "zone": "Weight",
-      "en": "The next move is yours — but my interest is not ambiguous."
-    },
-    {
-      "anchor": "Timing",
-      "zone": "Weight",
-      "en": "I know what I'd like here — the timing's entirely yours."
-    }
-  ],
-  "mnemo": "Фронт going прямо на долину, и ветер вдруг делается quieter — то самое затишье. Ты tempted подъехать ближе; в рации — call напарника: «давай!» Воздух наполняется charge так, что волосы встают дыбом, и молния kiss шпиль элеватора — начинается chase за уходящей стеной ливня. Небо ambiguous — то ли стихнет, то ли ударит снова, — и ты жмёшь затвор, поймав идеальный timing."
+ "slug": "flirt-5",
+ "title": "Поднять накал, не форсируя",
+ "theme": "Калиброванно усилить заряд, приглашая, а не давя — выбор и выход всегда остаются за ней",
+ "subtitle": "Охота за грозой",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Going",
+   "zone": "Warm",
+   "en": "I like where this is going — if you do."
+  },
+  {
+   "anchor": "Quieter",
+   "zone": "Warm",
+   "en": "I'd like to keep this going somewhere quieter — if you're into that."
+  },
+  {
+   "anchor": "End",
+   "zone": "Warm",
+   "en": "I don't want this conversation to end yet."
+  },
+  {
+   "anchor": "Call",
+   "zone": "Backbone",
+   "en": "This is where I'd ask you to get out of here with me — entirely your call."
+  },
+  {
+   "anchor": "Pretend",
+   "zone": "Backbone",
+   "en": "I'm not going to pretend this is just small talk."
+  },
+  {
+   "anchor": "Kiss",
+   "zone": "Backbone",
+   "en": "I'd kiss you right now — but only if it's something you'd want too."
+  },
+  {
+   "anchor": "Chase",
+   "zone": "Weight",
+   "en": "I'm not going to chase this — but I'd love to see where it goes."
+  },
+  {
+   "anchor": "Ambiguous",
+   "zone": "Weight",
+   "en": "The next move is yours — but my interest is not ambiguous."
+  },
+  {
+   "anchor": "Timing",
+   "zone": "Weight",
+   "en": "I know what I'd like here — the timing's entirely yours."
+  }
+ ],
+ "mnemo": "Фронт going — идёт — прямо на долину, и ветер вдруг делается quieter — то самое затишье. Ты не даёшь моменту end — оборваться: подъезжаешь ближе; в рации — call напарника: «давай!» Воздух гудит так, что уже не pretend — не притворишься, будто это обычный дождик: молния kiss шпиль — начинается chase за уходящей стеной ливня. Небо ambiguous — то ли стихнет, то ли ударит снова, — и ты жмёшь затвор, поймав идеальный timing."
 }

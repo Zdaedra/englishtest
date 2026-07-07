@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Lean",
+   "anchor": "Remember",
    "zone": "Warm",
-   "en": "Lean in with me for this next part."
+   "en": "Here comes the part you'll want to remember."
   },
   {
    "anchor": "Stay",
@@ -26,14 +26,14 @@
    "en": "Picture this with me for a second."
   },
   {
-   "anchor": "Soak",
+   "anchor": "Sink",
    "zone": "Backbone",
-   "en": "Let that soak for a second before we move on."
+   "en": "Let that sink in for a second."
   },
   {
    "anchor": "Slow",
    "zone": "Backbone",
-   "en": "I'm going to slow this down — it deserves precision."
+   "en": "Let me slow down here — this part matters."
   },
   {
    "anchor": "Write",
@@ -41,20 +41,20 @@
    "en": "If you write down one line, write this one."
   },
   {
-   "anchor": "Hang",
+   "anchor": "Moment",
    "zone": "Weight",
-   "en": "I'll let that line hang. The silence is on my side."
+   "en": "I'll give that a moment to land."
   },
   {
-   "anchor": "Air",
+   "anchor": "Laugh",
    "zone": "Weight",
-   "en": "I don't fill the air to feel in control — the space is already mine."
+   "en": "You can laugh — it's allowed."
   },
   {
    "anchor": "Wait",
    "zone": "Weight",
-   "en": "I'm in no rush to fill it — watch the room wait for me."
+   "en": "Take a second with that one — I'll wait."
   }
  ],
- "mnemo": "Ты ступаешь на канат над площадью, и гул внизу обрывается. Слегка lean — подаёшься вперёд, и толпа наклоняется с тобой. Поднимаешь ладонь: stay — останьтесь со мной, дальше — главное. Балансиром рисуешь в воздухе picture — картину, и все видят её с тобой. Замираешь, давая моменту soak — впитаться. Нарочно идёшь slow — медленнее: точность дороже скорости. Носком ноги write — выводишь по канату одну линию, единственную строчку, которую стоит записать. Повисаешь на одной ноге и даёшь паузе hang — висеть: тишина работает на тебя. Не заполняешь air — воздух — лишними жестами: пространство уже твоё. И спокойно wait — ждёшь на середине, глядя, как вся площадь ждёт тебя."
+ "mnemo": "Ты ступаешь на канат над площадью, и гул внизу обрывается. Начинается отрезок, который стоит remember — запомнить. Поднимаешь ладонь: stay — останьтесь со мной, дальше — главное. Балансиром рисуешь в воздухе picture — картину. Замираешь, давая мысли sink — осесть. Нарочно идёшь slow — медленнее: точность дороже скорости. Носком ноги write — выводишь по канату единственную строчку. Повисаешь на одной ноге, давая сказанному moment — мгновение — долететь. Снизу смешок — ты киваешь: laugh — смеяться можно. И спокойно wait — ждёшь на середине."
 }

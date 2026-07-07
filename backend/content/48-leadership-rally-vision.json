@@ -1,60 +1,60 @@
 {
-  "slug": "lead-2",
-  "title": "Повести за идеей",
-  "theme": "Зажечь людей направлением так, чтобы они захотели пойти — показать «зачем», дать веру и импульс, а не приказать",
-  "subtitle": "Воздушный змей",
-  "section": "lead-presence",
-  "zones": [
-    "Warm",
-    "Backbone",
-    "Weight"
-  ],
-  "phrases": [
-    {
-      "anchor": "Imagine",
-      "zone": "Warm",
-      "en": "Imagine what changes if we actually get this right."
-    },
-    {
-      "anchor": "Care",
-      "zone": "Warm",
-      "en": "This only works if it connects to what we actually care about."
-    },
-    {
-      "anchor": "Yours",
-      "zone": "Warm",
-      "en": "The part that excites me most is the piece that's so clearly yours."
-    },
-    {
-      "anchor": "Direction",
-      "zone": "Backbone",
-      "en": "The direction is clear: smaller, sharper, and useful enough to matter."
-    },
-    {
-      "anchor": "First",
-      "zone": "Backbone",
-      "en": "The first move is simple — we prove it with one real example."
-    },
-    {
-      "anchor": "Hope",
-      "zone": "Backbone",
-      "en": "I've thought this through — it's not a hope, it's a path."
-    },
-    {
-      "anchor": "Believe",
-      "zone": "Weight",
-      "en": "I believe in this enough to put my name on the first step."
-    },
-    {
-      "anchor": "Selling",
-      "zone": "Weight",
-      "en": "I'm not selling you anything — I'm telling you where I'm already headed."
-    },
-    {
-      "anchor": "Rather",
-      "zone": "Weight",
-      "en": "I'd do this alone if I had to — I'd just much rather do it with you."
-    }
-  ],
-  "mnemo": "Мастер говорит: сперва imagine своего змея в небе, — и ты клеишь рейки with care, расписываешь хвост: теперь он yours. Мокрый палец вверх — direction ветра с моря; first разбег — и змей клюёт носом в песок. Ты не теряешь hope: удлиняешь хвост, believe в него и бежишь снова. Торговец, selling готовых драконов, машет: «купи!» — но ты rather запустишь своего: рывок — и он взмывает выше всех."
+ "slug": "lead-2",
+ "title": "Повести за идеей",
+ "theme": "Зажечь людей направлением так, чтобы они захотели пойти — показать «зачем», дать веру и импульс, а не приказать",
+ "subtitle": "Воздушный змей",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Imagine",
+   "zone": "Warm",
+   "en": "Imagine what changes if we actually get this right."
+  },
+  {
+   "anchor": "Care",
+   "zone": "Warm",
+   "en": "This only works if it connects to what we actually care about."
+  },
+  {
+   "anchor": "Name",
+   "zone": "Warm",
+   "en": "The best part of this has your name all over it."
+  },
+  {
+   "anchor": "Headed",
+   "zone": "Backbone",
+   "en": "Here's where we're headed: smaller, sharper, and actually useful."
+  },
+  {
+   "anchor": "First",
+   "zone": "Backbone",
+   "en": "The first move is simple — we prove it with one real example."
+  },
+  {
+   "anchor": "Wishful",
+   "zone": "Backbone",
+   "en": "This isn't wishful thinking — I can see the whole path."
+  },
+  {
+   "anchor": "Money",
+   "zone": "Weight",
+   "en": "I believe in this enough to put my own money on it."
+  },
+  {
+   "anchor": "Selling",
+   "zone": "Weight",
+   "en": "I'm not selling you anything — I'm telling you where I'm already headed."
+  },
+  {
+   "anchor": "Rather",
+   "zone": "Weight",
+   "en": "I'd do this alone if I had to — I'd just much rather do it with you."
+  }
+ ],
+ "mnemo": "Сперва imagine своего змея в небе — и ты клеишь рейки with care, расписываешь хвост и выводишь на нём name — имя напарника. Мокрый палец вверх: вот куда headed — идёт — ветер; first разбег — змей клюёт носом. Падение не превращает затею в wishful — пустую мечту: ты видишь весь путь и удлиняешь хвост. Выгребаешь из кармана последние money — монеты — на новую леску: настолько веришь. Рядом selling готовых драконов, но ты rather запустишь своего: рывок — и он взмывает."
 }

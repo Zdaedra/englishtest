@@ -13,7 +13,7 @@
   {
    "anchor": "believe",
    "zone": "Warm",
-   "en": "You walked in as a crowd. You're leaving as people I believe in."
+   "en": "Every person in this room can do this — I really believe that. So go."
   },
   {
    "anchor": "rooting",
@@ -31,14 +31,14 @@
    "en": "Monday morning, do this one thing. That's the whole ask."
   },
   {
-   "anchor": "trail",
+   "anchor": "note",
    "zone": "Backbone",
-   "en": "I'm not going to trail off — I'm landing this, right here."
+   "en": "And that's the note I want to leave you on."
   },
   {
-   "anchor": "test",
+   "anchor": "talking",
    "zone": "Backbone",
-   "en": "This is the end of the talk. It is the start of the test."
+   "en": "The easy part was talking about it."
   },
   {
    "anchor": "will",
@@ -46,15 +46,15 @@
    "en": "The question was never whether you can. It's whether you will."
   },
   {
-   "anchor": "pad",
+   "anchor": "goodbye",
    "zone": "Weight",
-   "en": "No thank-yous to pad it. Just the line — and the door."
+   "en": "I'm not big on long goodbyes — see you out there."
   },
   {
-   "anchor": "sentence",
+   "anchor": "part",
    "zone": "Weight",
-   "en": "I'll stop here. The next sentence is yours."
+   "en": "My part's done — the rest is on you."
   }
  ],
- "mnemo": "Вершина на рассвете; впереди спуск. Ты обходишь строй и каждому защёлкиваешь карабин: believe — веришь — в каждого лично. Хлопаешь по плечам, rooting — болея — за всех до одного. У прогоревшего ночного костра раздуваешь courage — жар смелости — в углях: пусть каждый увидит, что огонь ещё жив. Переворачиваешь бирку на первом рюкзаке: monday — понедельник, одно дело — вот и вся просьба. Выводишь колонну на trail — тропу — и не даёшь шагу рассыпаться до самой кромки. Первым ступаешь на верёвку: test — испытание — начинается там, где кончились слова. Сжимаешь кулак: вопрос не «можете», а will — станете ли. Скатываешь спальный pad — коврик — и затягиваешь в рюкзак: мягкого больше не будет. Произносишь одну последнюю sentence — фразу — и молча отпускаешь их вниз."
+ "mnemo": "Вершина на рассвете; впереди спуск. Ты обходишь строй и каждому защёлкиваешь карабин: believe — веришь — в каждого лично. Подталкиваешь каждого к тропе: rooting — болея — за всех. У костра раздуваешь courage — жар смелости — в углях. Переворачиваешь бирку на рюкзаке: monday — понедельник, одно дело — вот и вся просьба. Подносишь к губам свисток и выдуваешь одну чистую note — ноту — им на дорогу. Дёргаешь верёвку спуска и усмехаешься: talking — разговоры — были лёгкой половиной. Сжимаешь кулак: вопрос не «можете», а will — станете ли. Без долгих goodbye — прощаний: скатываешь лагерь и затягиваешь рюкзак. Свою part — часть — пути ты прошёл; молча отпускаешь их вниз."
 }

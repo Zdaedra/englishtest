@@ -21,40 +21,40 @@
    "en": "Nice try getting a rise out of me."
   },
   {
-   "anchor": "Table",
+   "anchor": "Slide",
    "zone": "Warm",
-   "en": "I'm going to leave that one on the table."
+   "en": "Nice try — I'm letting that one slide."
   },
   {
-   "anchor": "Designed",
+   "anchor": "Biting",
    "zone": "Backbone",
-   "en": "That was designed to get a reaction — I noticed, and I'll pass."
+   "en": "I know what that was — not biting."
   },
   {
-   "anchor": "Role",
+   "anchor": "Part",
    "zone": "Backbone",
-   "en": "I'm not going to take the role you're offering me."
+   "en": "I'm not playing that part."
   },
   {
-   "anchor": "Fishing",
+   "anchor": "Ask",
    "zone": "Backbone",
-   "en": "I won't perform the reaction you're fishing for."
+   "en": "If you're that curious, just ask."
   },
   {
-   "anchor": "Button",
+   "anchor": "Land",
    "zone": "Weight",
-   "en": "My calm isn't a button you get to press."
+   "en": "You're welcome to keep trying — it's not going to land."
   },
   {
-   "anchor": "Strings",
+   "anchor": "Time",
    "zone": "Weight",
-   "en": "Pull all the strings you want — they're not attached to anything."
+   "en": "You're wasting your time with this."
   },
   {
-   "anchor": "Lever",
+   "anchor": "Work",
    "zone": "Weight",
-   "en": "My reaction is my choice — never your lever."
+   "en": "Anyway — I've got work to do."
   }
  ],
- "mnemo": "Ярмарочный лабиринт; ты идёшь сквозь него. У входа качается bait — наживка; ты ныряешь под неё, не сбив шага. Плита под ногами пытается rise — подняться, — ты перешагиваешь на следующую. Огибаешь накрытый table — стол — с одним стулом «для тебя»: не садишься. Ведёшь ладонью по стене и чувствуешь: каждый скрип designed — подстроен. Тебе суют костюм шута — role — роль; ты вешаешь его на крюк на ходу. Над головой свистит fishing — удочка — с крючком: пригибаешься и идёшь дальше. У ладони мигает button — кнопка; ты убираешь руку в карман. С потолка падают strings — нити — с крючками; ты раздвигаешь их, как занавес. И в конце сам берёшься за lever — рычаг — и открываешь себе дверь на свет."
+ "mnemo": "Ярмарочный лабиринт. У входа качается bait — наживка; ныряешь под неё. Плита пытается rise — подняться, — ты перешагиваешь. Подножка выезжает под ботинок — даёшь ей slide — проскользить — мимо. С крюка свисает приманка пожирнее, но ты не biting — не клюёшь. Суют костюм шута: эту part — роль — играть не будешь; вешаешь на гвоздь. Кто-то водит удочкой; ты пожимаешь плечами: хочешь узнать — ask — спроси. Кулачный автомат замахивается — удар не land — не долетает. Дёргать нити с крючками — пустая трата time — времени. Лабиринт выдыхается; выходишь в дверь: ждёт work — работа."
 }
