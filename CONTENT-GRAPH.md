@@ -23,6 +23,7 @@
 | Phrase | 811 (~9/батч) | БД | `phrases[]` в content-файле | upsert / `app.rephrase` |
 | **CheckPhrase** (проверочные) | **3191** (~4/фразу, `kind=stimulus, lang=en`) | **ТОЛЬКО БД** — content-файла НЕТ | БД = источник; human-readable снапшот `_prod_check_phrases.md` (2026-06-06, устаревает) | Курировались LLM-ом разово; **автогенератора нет** |
 | MnemoStory (история + spans) | 90 | БД | `mnemo` в content-файле; spans вычисляются | upsert / `app.restory` |
+| **BatchIntent** (ходы Live, 2026-07-09) | 1–4/curated батч | **ТОЛЬКО БД** | derived из `Batch.section` (карта `SECTION_INTENTS` в `app/intents.py`); словарь ходов фиксирован (8 ключей: pushback/hold/ask/warm/buy_time/clarify/close/smooth) | `python -m app.intents` — идемпотентный ресид (`--llm` классифицирует батчи без секции по их фразам; `source=manual` руками — сидер их НЕ трогает). Батч без строк = универсальный (служит любому ходу). Поменял section батча или карту → перегони сидер |
 | ContextExample | 0 | БД | — | **спящая таблица**, нигде не используется |
 | situation_ru / task_ru | на каждой Phrase | колонки Phrase | derived (LLM) | `app.gen_context` |
 | gloss_ru | колонка Phrase | БД (+опц. в файле) | куратор; файл пустой = «оставить БД» | rephrase / upsert |

@@ -38,6 +38,23 @@ class Batch(SQLModel, table=True):
     deleted_at: Optional[datetime] = None
 
 
+class BatchIntent(SQLModel, table=True):
+    """Conversational-move tag on a batch — the linked-entity system behind Live
+    relevance (единая система ходов: осадить, попросить, уточнить, расположить…).
+    Vocabulary = the fixed key set intents.INTENTS; a batch with NO rows serves
+    every move (universal — e.g. private imports). Rows are derived from OUR
+    content by `python -m app.intents` and re-syncable at any time.
+
+    source: "section" = derived from Batch.section (resynced on re-seed);
+            "llm"     = content-grounded classification (seed --llm);
+            "manual"  = curator's hand tag — the seeder NEVER touches these."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    batch_id: int = Field(foreign_key="batch.id", index=True)
+    intent: str = Field(index=True)
+    source: str = Field(default="section")
+    created_at: datetime = Field(default_factory=_now)
+
+
 class Zone(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)

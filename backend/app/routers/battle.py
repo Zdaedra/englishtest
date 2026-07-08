@@ -213,8 +213,10 @@ def _run_pick(session: Session, user_id: int, scope: str, situation: str,
     (NOT committed — caller owns the txn)."""
     rows = _rows_for_scope(session, user_id, scope)
     if intent:
-        # The batch "answer type": sections that serve the chosen move first.
-        rows = intents_mod.filter_rows(rows, intent)
+        # The batch "answer type" — BatchIntent tags in the DB (untagged =
+        # universal); batches tagged with the chosen move first.
+        imap = intents_mod.intent_map(session, {b.id for _p, _st, b in rows})
+        rows = intents_mod.filter_rows(rows, intent, imap)
     if scope == "all":
         pool = _keyword_pool(rows, situation, _ALL_CAP)      # bounded prompt
     else:

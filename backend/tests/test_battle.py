@@ -248,19 +248,41 @@ def test_suggest_forced_intent_echoes_and_bad_intent_400(make_user):
     assert bad.status_code == 400
 
 
-def test_intent_filter_narrows_by_section_with_fallback():
-    from app.intents import filter_rows
+def test_intent_tags_are_db_entities_seeded_from_our_content(make_user):
+    """The linked-entity system: BatchIntent rows derive from Batch.section,
+    re-seed is idempotent, manual tags survive, untagged batches = universal."""
+    make_user(plan="ai", is_admin=True)      # forces app/db init
+    from app.intents import SECTION_INTENTS, filter_rows, intent_map, seed
+    with Session(engine()) as s:
+        b_req = models.Batch(title="R", slug="it-req", status="approved", section="requests")
+        b_rep = models.Batch(title="P", slug="it-rep", status="approved", section="repair")
+        b_uni = models.Batch(title="U", slug="it-uni", status="approved")   # sectionless
+        s.add(b_req); s.add(b_rep); s.add(b_uni)
+        s.commit(); s.refresh(b_req); s.refresh(b_rep); s.refresh(b_uni)
 
-    class _B:
-        def __init__(self, section): self.section = section
-    mk = lambda sec, n: [(object(), None, _B(sec)) for _ in range(n)]  # noqa: E731
+        r1 = seed(s)
+        assert r1["rows_added"] > 0
+        assert seed(s)["rows_added"] == 0     # idempotent resync
+        imap = intent_map(s, {b_req.id, b_rep.id, b_uni.id})
+        assert imap[b_req.id] == set(SECTION_INTENTS["requests"])
+        assert b_uni.id not in imap           # no rows = universal
 
-    rows = mk("requests", 6) + mk("repair", 6) + mk("", 4)
-    asks = filter_rows(rows, "ask")          # requests + sectionless = 10 ≥ 8
-    assert len(asks) == 10
-    assert all((r[2].section or "") in ("requests", "") for r in asks)
-    # too few servers for the move → falls back to the full pool
-    assert len(filter_rows(mk("repair", 6), "ask")) == 6
+        # a curator's manual tag joins the system and survives re-seed
+        s.add(models.BatchIntent(batch_id=b_rep.id, intent="ask", source="manual"))
+        s.commit()
+        seed(s)
+        imap = intent_map(s, {b_rep.id})
+        assert {"ask", "smooth"} <= imap[b_rep.id]
+
+        # pool filter honours the DB tags: smooth = repair + universal, not requests
+        rows = ([(object(), None, b_req)] * 6 + [(object(), None, b_rep)] * 6
+                + [(object(), None, b_uni)] * 4)
+        imap = intent_map(s, {b_req.id, b_rep.id, b_uni.id})
+        smooth = filter_rows(rows, "smooth", imap)
+        assert len(smooth) == 10 and all(r[2].id != b_req.id for r in smooth)
+        # too few tagged for the move → falls back to the full pool
+        only_req = [(object(), None, b_req)] * 6
+        assert len(filter_rows(only_req, "smooth", imap)) == 6
 
 
 # ---- suggest-voice: audio in, STT + pick in one round trip -------------------

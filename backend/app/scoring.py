@@ -342,6 +342,28 @@ def battle_pick(situation: str, items: list[dict], intent: str | None = None) ->
         return {"picks": [], "intents": [], "via": "fallback"}
 
 
+_CLASSIFY_INTENTS = """Ты — методист Executive English. Дана тема батча и его английские
+фразы. Ходы (фиксированные ключи): pushback=осадить/не согласиться; hold=удержать
+позицию; ask=попросить/добиться; warm=расположить; buy_time=выиграть время;
+clarify=уточнить/переспросить; close=зафиксировать/закрыть; smooth=сгладить/извиниться.
+Выбери 1–3 хода, которым эти фразы реально служат в живом разговоре.
+Верни СТРОГО JSON без markdown: {"intents":["<ключ>",…]}"""
+
+
+def classify_intents(title: str, phrases: list[str]) -> list[str]:
+    """Content-grounded move tags for a batch with no section mapping
+    (app.intents seed --llm). One tiny call per batch, one-off curation cost."""
+    from .intents import INTENTS
+    payload = f"Тема: {title}\nФразы:\n" + "\n".join(f"- {p}" for p in phrases[:12])
+    try:
+        data = _openai_json(_CLASSIFY_INTENTS, payload, max_tokens=60,
+                            model=get_settings().model_coach)
+        return [k for k in (data.get("intents") or [])
+                if isinstance(k, str) and k in INTENTS][:3]
+    except Exception:
+        return []
+
+
 _SCENARIO_SYSTEM = """Ты — методист приложения Executive English (деловой/светский
 английский для носителей русского). Даны 3 целевые английские фразы с их смыслом.
 Напиши СВЯЗНУЮ мини-сцену на русском — одна локация, один собеседник, деловой или
