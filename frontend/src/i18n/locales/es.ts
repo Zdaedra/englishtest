@@ -81,11 +81,11 @@ const es: Dict = {
   "nav.library": "Biblioteca",
   "nav.learn": "Aprender",
   "nav.practice": "Práctica",
-  "nav.battle": "Combate",
+  "nav.battle": "Live",
   "nav.profile": "Perfil",
   "nav.search": "Buscar",
 
-  "battle.title": "Modo combate",
+  "battle.title": "Live",
   "battle.sub": "Estás en plena conversación. Encuentra tu frase en un segundo.",
   "battle.placeholder": "Palabra, idea o situación…",
   "battle.listening": "Escuchando…",

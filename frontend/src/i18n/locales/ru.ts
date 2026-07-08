@@ -90,12 +90,12 @@ const ru: Dict = {
   "nav.library": "Библиотека",
   "nav.learn": "Обучение",
   "nav.practice": "Практика",
-  "nav.battle": "Бой",
+  "nav.battle": "Live",
   "nav.profile": "Профиль",
   "nav.search": "Поиск",
 
   // ── Battle mode («Боевой режим») ───────────────────────────────────
-  "battle.title": "Боевой режим",
+  "battle.title": "Live",
   "battle.sub": "Ты в живом разговоре. Найди свою фразу за секунду.",
   "battle.placeholder": "Слово, смысл или ситуация…",
   "battle.listening": "Слушаю…",
