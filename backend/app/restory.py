@@ -119,6 +119,8 @@ def main() -> None:
     init_db()
     with Session(engine()) as s:
         resync(s, sys.argv[1:] or None)
+    from .doctor import verdict
+    verdict("after restory")
     print("DONE")
 
 

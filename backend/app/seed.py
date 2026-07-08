@@ -59,6 +59,8 @@ def main() -> None:
           + (f" — {unchanged_n} unchanged (skipped)" if unchanged_n else "")
           + (f" — {blocked} BLOCKED (live user progress; see app.rephrase, "
              f"or --force-progress-loss)" if blocked else ""))
+    from .doctor import verdict
+    verdict("after seed")
 
 
 if __name__ == "__main__":

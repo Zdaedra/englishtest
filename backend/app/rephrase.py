@@ -181,6 +181,9 @@ def main() -> None:
                   f"CheckPhrase cue(s) for the changed phrases and show them to "
                   f"the user for review (see CONTENT-GRAPH.md) — app.doctor "
                   f"stays red until the holes are refilled")
+    if not args.dry_run:
+        from .doctor import verdict
+        verdict("after rephrase")
     print("DONE")
 
 

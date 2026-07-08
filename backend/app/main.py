@@ -131,6 +131,10 @@ async def _startup():
     import asyncio
     from .retention import retention_loop
     asyncio.create_task(retention_loop())
+    # Daily content↔progress integrity report into the app log (report-only;
+    # see app/doctor.py and CONTENT-GRAPH.md).
+    from .doctor import doctor_loop
+    asyncio.create_task(doctor_loop())
 
 
 @app.get("/api/health")

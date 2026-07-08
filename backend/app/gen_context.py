@@ -134,3 +134,5 @@ if __name__ == "__main__":
     ap.add_argument("--limit", type=int, default=None)
     args = ap.parse_args()
     run(batch_id=args.batch, force=args.force, limit=args.limit)
+    from .doctor import verdict
+    verdict("after gen_context")

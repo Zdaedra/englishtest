@@ -346,3 +346,6 @@ if __name__ == "__main__":
     args = ap.parse_args()
     run(batch_id=args.batch, only_lang=args.lang, force=args.force,
         refill=args.refill, shards=args.shards, shard=args.shard)
+    if args.shards == 1:  # parallel shards would print N duplicate reports
+        from .doctor import verdict
+        verdict("after i18n_content")

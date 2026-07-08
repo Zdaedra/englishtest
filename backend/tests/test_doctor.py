@@ -209,3 +209,14 @@ def test_missing_anchor_reported_separately_from_stale_spans(tmp_path, monkeypat
     problems = doctor.run(fix=False)
     assert "stale_spans" not in problems
     assert problems["missing_anchors"] == 1
+
+
+def test_verdict_never_raises_and_returns_problems(tmp_path, monkeypatch):
+    """verdict() is the auto-check chain tools END with (rephrase/restory/seed/
+    gen_context/i18n_content) and the daily in-process monitor uses — it must
+    never raise and must mirror run()'s problems dict."""
+    _isolate_content(tmp_path, monkeypatch)
+    _seed_batch_with_phrase("dr-9")
+    assert doctor.verdict("test") == {}
+    monkeypatch.setattr(doctor, "run", lambda fix=False: 1 / 0)
+    assert doctor.verdict("test") == {}  # broken check → {}, not an exception

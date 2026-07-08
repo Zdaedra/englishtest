@@ -47,6 +47,16 @@ Checks:
 
 The full asset dependency map (what derives from what, which chain to run after
 which edit) lives in CONTENT-GRAPH.md at the repo root.
+
+Nobody has to remember to run this — it runs itself (report-only everywhere;
+--fix stays a conscious human action):
+  - in-process: shortly after app startup, then daily → docker logs
+    (`doctor_loop`, wired in app/main.py startup);
+  - after every catalog mutation over HTTP: /api/imports/upsert and /seed
+    include the fresh report as a "doctor" key in their response — after a
+    replace it doubles as the list of regeneration steps that remain;
+  - at the end of every content chain tool (rephrase / restory / seed /
+    seed_presence / gen_context / i18n_content) via `verdict()`.
 """
 import argparse
 import json
@@ -291,6 +301,35 @@ def run(fix: bool = False) -> dict:
                       f"(see CONTENT-GRAPH.md): {', '.join(sorted(uncued))}")
 
     return problems
+
+
+def verdict(label: str = "integrity") -> dict:
+    """Report-only check for chain tools to END with, so 'run the doctor' is
+    not a step anyone can forget. Never raises (a broken check must not kill
+    the tool that just did real work); returns the problems dict."""
+    print(f"\n-- doctor ({label}) " + "-" * 40)
+    try:
+        problems = run(fix=False)
+    except Exception as e:  # noqa: BLE001
+        print(f"DOCTOR ERROR: {e}")
+        return {}
+    print("DOCTOR: " + (", ".join(f"{k}={v}" for k, v in sorted(problems.items()))
+                        if problems else "CLEAN"))
+    return problems
+
+
+async def doctor_loop() -> None:
+    """In-process integrity monitor: report shortly after startup, then once a
+    day, into the app log (`docker logs english_app`). Mirrors retention_loop.
+    Report-only — fixes stay a conscious human action (--fix)."""
+    import asyncio
+    await asyncio.sleep(120)  # let startup/migrations settle first
+    while True:
+        try:
+            await asyncio.to_thread(verdict, "daily monitor")
+        except Exception:  # noqa: BLE001 — never let the monitor crash the app
+            pass
+        await asyncio.sleep(24 * 3600)
 
 
 def main() -> None:

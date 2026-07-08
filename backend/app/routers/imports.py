@@ -3,7 +3,7 @@ import re
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlmodel import Session, select
 
-from .. import content, cover, importer, models
+from .. import content, cover, doctor, importer, models
 from ..auth import current_user_id, is_admin, require_admin
 from ..config import get_settings
 from ..content import BatchAuthor
@@ -116,8 +116,10 @@ def upsert_authored(author: BatchAuthor, force: bool = False,
                     "destroy their progress and replace anyway (also deletes "
                     "their training-event history for these phrases, which can "
                     "retroactively shrink day-streaks)."})
+    # Fresh integrity report in the response: after a replace it doubles as
+    # the list of regeneration steps that remain (cues/gen_context/i18n holes).
     return {"id": batch.id, "slug": batch.slug, "created": created,
-            "warnings": warnings}
+            "warnings": warnings, "doctor": doctor.run(fix=False)}
 
 
 @router.post("/seed")
@@ -133,4 +135,4 @@ def seed(force: bool = False, user_id: int = Depends(require_admin),
          "created": r["created"], "warnings": r["warnings"],
          "blocked": r["blocked"], "unchanged": r["unchanged"]}
         for r in results
-    ]}
+    ], "doctor": doctor.run(fix=False)}

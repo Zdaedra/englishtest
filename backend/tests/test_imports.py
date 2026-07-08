@@ -50,3 +50,35 @@ def test_seed_requires_admin(make_user):
     r = c.post("/api/imports/seed")
     assert r.status_code == 403
     assert r.json()["detail"] == "admin_required"
+
+
+def test_upsert_response_includes_doctor_report(make_user):
+    """Catalog mutations must return a fresh integrity report: after a
+    create/replace it doubles as the list of regeneration steps remaining
+    (here: the fresh phrase has no situation/task yet → gen_context)."""
+    admin = make_user(plan="ai", is_admin=True)
+    author = {"slug": "im-doc", "title": "T", "zones": ["z"],
+              "phrases": [{"anchor": "A", "en": "Alpha line.", "zone": "z"}],
+              "mnemo": ""}
+    r = admin.post("/api/imports/upsert", json=author)
+    assert r.status_code == 200, r.text
+    assert r.json()["doctor"].get("missing_situation_task") == 1
+
+
+def test_seed_response_includes_doctor_report(make_user, tmp_path, monkeypatch):
+    import json as _json
+
+    from app import content as content_mod
+    from app import doctor as doctor_mod
+    (tmp_path / "01-sd.json").write_text(_json.dumps({
+        "slug": "sd-doc", "title": "T", "zones": ["z"],
+        "phrases": [{"anchor": "A", "en": "Alpha line.", "zone": "z"}],
+        "mnemo": ""}), encoding="utf-8")
+    monkeypatch.setattr(content_mod, "content_dir", lambda: tmp_path)
+    monkeypatch.setattr(doctor_mod, "content_dir", lambda: tmp_path)
+    admin = make_user(plan="ai", is_admin=True)
+    r = admin.post("/api/imports/seed")
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["loaded"][0]["slug"] == "sd-doc"
+    assert body["doctor"].get("missing_situation_task") == 1
