@@ -239,6 +239,9 @@ export const api = {
     apiFetch(`/api/battle/suggest?scope=${scope}`, {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ situation }),
+      // Live mode is real-time: a wedged network must surface as an error the
+      // card can react to, never freeze «Подбираю…» forever.
+      signal: AbortSignal.timeout(20_000),
     }).then(j<{ via: string; picks: BattlePick[] }>),
   // Arena: weave 3 due/learned phrases into one fresh scene (AI plan).
   getScenario: () =>

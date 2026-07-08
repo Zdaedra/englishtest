@@ -124,13 +124,16 @@ export default function Battle() {
   const runSuggest = async (text: string) => {
     setMoment(text);
     setMic("thinking");
+    console.log("[LV] suggest →", scope, JSON.stringify(text));
     try {
       const r = await api.battleSuggest(text, scope);
+      console.log("[LV] suggest ←", r.via, r.picks.length);
       if (r.via === "llm" && r.picks.length) setAi(r.picks);
       else if (r.via === "llm") setNote(t("battle.noResults"));
       else if (r.via === "fallback") setNote(t("battle.aiUnavailable"));
       else setNote(scope === "all" ? t("battle.aiUnavailable") : t("battle.empty"));
     } catch (e) {
+      console.log("[LV] suggest error:", String(e));
       setNote(String(e).includes("429") ? t("practice.limitReached")
         : t("battle.aiUnavailable"));
     } finally { setMic("idle"); setHeard(""); }
@@ -142,9 +145,15 @@ export default function Battle() {
     if (mic !== "idle") return;
     setAi(null); setNote(""); setHeard(""); heardRef.current = ""; setMoment(""); setExpanded(false);
     setMic("listening");
+    // Armed BEFORE any await: the stop-tap watchdog must always have a resolver,
+    // even if the very first native call wedges (the exact freeze we chased —
+    // previously this sat after an await, so a wedged call left it null and the
+    // watchdog fired into nothing).
+    const stopped = new Promise<string>((res) => { stopWait.current = res; });
     let text = "";
     try {
       nativeStt.current = await nativeSttAvailable();
+      console.log("[LV] startVoice: native =", nativeStt.current);
       let rec: Promise<string>;
       if (nativeStt.current) rec = nativeRecognize("ru-RU", onHeard);
       // Web Speech ONLY in a real browser: inside the native WKWebView the
@@ -152,14 +161,12 @@ export default function Battle() {
       // — exactly the frozen-mic bug. Native uses the plugin path or nothing.
       else if (!isNative() && speech.supported) rec = speech.start("ru-RU");
       else { setMic("idle"); setNote(t("battle.micUnsupported")); return; }
-      // The stop tap arms a watchdog (see micTap): if the recognizer doesn't
-      // finalize shortly after stop, we proceed with the captured partials —
-      // the UI can NEVER hang on a wedged native layer.
-      const stopped = new Promise<string>((res) => { stopWait.current = res; });
       rec.catch(() => { /* late reject after the watchdog settled the race */ });
       text = await Promise.race([rec, stopped]);
+      console.log("[LV] recognized:", JSON.stringify(text));
     } catch (e) {
-      // native-stt-unavailable/denied → honest "unsupported"; web no-speech → recEmpty
+      // native-stt-unavailable/denied/timeout → honest "unsupported"; web no-speech → recEmpty
+      console.log("[LV] recognize error:", String(e));
       setMic("idle"); setHeard("");
       setNote(String(e).includes("native-stt") ? t("battle.micUnsupported") : t("battle.recEmpty"));
       return;
@@ -173,6 +180,7 @@ export default function Battle() {
   // The stop tap reacts INSTANTLY (state flips to "thinking"), asks the
   // recognizer to finalize, and arms the watchdog fallback.
   const micTap = () => {
+    console.log("[LV] micTap in state:", mic);
     if (mic === "listening") {
       setMic("thinking");
       if (nativeStt.current) nativeSttStop().catch(() => { /* noop */ });
