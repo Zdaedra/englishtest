@@ -1363,3 +1363,31 @@
 - Git: bf4a839 (F2) + 4a52d3d (F1 виджет) + 3a0fd7d (ad-скрипты v2 + docx мнемо-ревью) запушены в
   origin/redesign/green-ui-design-system (pre-push suite ✓). Дерево чистое.
 - iPhone-хвост: один ⌘R в Xcode (профили+App Group) привезёт и 4-й таб, и виджет.
+
+## 2026-07-08 — F1 виджет ВСТАЛ НА ТЕЛЕФОН + сага подписи (root cause: WWDR G3)
+
+- **EEWidget собран, подписан и запущен на iPhone (Zdaedra).** App.app/PlugIns/EEWidget.appex —
+  Identifier net.executiveenglish.app.widget, Team X4LCN2359F, App Group group.net.executiveenglish.app
+  в entitlements. Xcode «Running App on Zdaedra». Виджет F2-таб «Бой» приехали в этой же сборке.
+- **ГЛАВНЫЙ УРОК (root cause всех падений подписи):** после того как Xcode «Revoke Certificate»
+  пересоздал сертификат, codesign падал (Command CodeSign failed / errSecInternalComponent). Причина
+  НЕ в keychain-ACL как казалось, а в **разорванной цепочке доверия**: все Apple Development серты
+  подписаны посредником **WWDR G3**, а в связке лежал только старый generic-WWDR (истёк 02.2023).
+  Без G3 серт «невалиден» → `security find-identity -v -p codesigning` = 0 → codesign не может собрать
+  цепочку. ЛЕЧИТСЯ импортом G3 из бандла Xcode (без скачивания):
+  `security import "/Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/AppleWWDRCA-2030.cer" -k ~/Library/Keychains/login.keychain-db`
+  (файл AppleWWDRCA-2030.cer = именно G3, OU=G3, годен до 2030). После импорта → 2 валидные личности.
+- **Каскад проблем по пути (для будущих сессий):** (1) App Group + новый виджет-таргет требуют
+  перевыпуск профиля — только через GUI Xcode (у CLI `xcodebuild` «No Accounts», аккаунт живёт в
+  GUI-сессии). (2) Повторные keychain-промпты загнали login.keychain в нерабочее состояние → юзер
+  сбросил связку до дефолта → стёрло ВСЕ серты+ключи И посредника G3. (3) После создания нового серта
+  через Xcode → Settings → Accounts → Manage Certificates → ＋ Apple Development профили на диске всё
+  ещё ссылались на старый серт («profile doesn't include signing certificate») → перевыпуск профиля =
+  просто ещё раз Run в Xcode (automatic signing). (4) На первой подписи новым ключом — разовое окно
+  «codesign wants to use key» → «Always Allow» (secure-диалог, кликает ТОЛЬКО юзер; computer-use его
+  не снимает и не кликает). (5) Xcode = click-tier для computer-use: только левый клик, без ⌘-комбо и
+  right-click (Revoke через контекстное меню недоступно — но ＋ и кнопка-Revoke-в-диалоге левым кликом ок).
+- **Осталось юзеру:** открыть приложение (уже запущено) под своим логином, зайти в «Бой» — тогда
+  study-set уедет в App Group; затем long-press локскрина → «Настроить» → добавить виджет Executive
+  English. До первого фида виджет показывает sample-фразу.
+- Прод-веб (таб «Бой») по-прежнему НЕ задеплоен — ждёт команды.
