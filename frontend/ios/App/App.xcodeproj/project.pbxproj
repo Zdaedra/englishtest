@@ -219,7 +219,12 @@
 				TargetAttributes = {
 					504EC3031FED79650016851F = {
 						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = X4LCN2359F;
 						LastSwiftMigration = 1100;
+						ProvisioningStyle = Automatic;
+					};
+					D2681E68C638551CF5154962 = {
+						DevelopmentTeam = X4LCN2359F;
 						ProvisioningStyle = Automatic;
 					};
 				};
