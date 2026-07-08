@@ -5,6 +5,7 @@ import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 import { useSpeech } from "../audio/useSpeech";
 import { nativeRecognize, nativeSttAvailable, nativeSttStop } from "../audio/nativeStt";
+import { isNative } from "../lib/session";
 import { syncWidget } from "../lib/widget";
 import { IconMic, IconPlay } from "../ui/icons";
 
@@ -149,9 +150,17 @@ export default function Battle() {
     try {
       nativeStt.current = await nativeSttAvailable();
       if (nativeStt.current) text = await nativeRecognize("ru-RU", setHeard);
-      else if (speech.supported) text = await speech.start("ru-RU");
+      // Web Speech ONLY in a real browser: inside the native WKWebView the
+      // webkit recognizer is a zombie (never fires results, stop() is a no-op)
+      // — exactly the frozen-mic bug. Native uses the plugin path or nothing.
+      else if (!isNative() && speech.supported) text = await speech.start("ru-RU");
       else { setMic("idle"); setNote(t("battle.micUnsupported")); return; }
-    } catch { /* denied / no-speech → user can browse the arsenal */ }
+    } catch (e) {
+      // native-stt-unavailable/denied → honest "unsupported"; web no-speech → recEmpty
+      setMic("idle"); setHeard("");
+      setNote(String(e).includes("native-stt") ? t("battle.micUnsupported") : t("battle.recEmpty"));
+      return;
+    }
     text = (text || "").trim();
     if (!text) { setMic("idle"); setHeard(""); setNote(t("battle.recEmpty")); return; }
     await runSuggest(text);
