@@ -13,6 +13,10 @@ type SR = {
     language?: string; maxResults?: number; partialResults?: boolean; popup?: boolean;
   }): Promise<{ matches?: string[] }>;
   stop(): Promise<void>;
+  addListener?(
+    event: "partialResults",
+    cb: (data: { matches?: string[] }) => void,
+  ): Promise<{ remove: () => Promise<void> }>;
 };
 
 let _sr: SR | null | undefined;
@@ -37,15 +41,40 @@ export async function nativeSttAvailable(): Promise<boolean> {
 /** One-shot recognition. Resolves with the transcript (may be ""). Throws if the
  *  recognizer is unavailable or permission is denied — the caller then uses the
  *  server STT path. */
-export async function nativeRecognize(language = "en-US"): Promise<string> {
+export async function nativeRecognize(
+  language = "en-US",
+  onPartial?: (t: string) => void,
+): Promise<string> {
   const sr = await plugin();
   if (!sr) throw new Error("native-stt-unavailable");
   if (!(await sr.available()).available) throw new Error("native-stt-unavailable");
   let perm = await sr.checkPermissions();
   if (perm.speechRecognition !== "granted") perm = await sr.requestPermissions();
   if (perm.speechRecognition !== "granted") throw new Error("native-stt-denied");
-  const res = await sr.start({ language, maxResults: 1, partialResults: false, popup: false });
-  return (res?.matches?.[0] || "").trim();
+
+  // Live transcript: stream partial results to the caller so the recording UI can
+  // show words as they're spoken. Best-effort — if the plugin build lacks the
+  // listener we fall back to a plain one-shot, and the final transcript falls back
+  // to the last partial if start() resolves without matches. Recognition ends on
+  // nativeSttStop() (tap "Done") or on the recognizer's own silence timeout.
+  let last = "";
+  let handle: { remove: () => Promise<void> } | undefined;
+  if (onPartial && sr.addListener) {
+    try {
+      handle = await sr.addListener("partialResults", (d) => {
+        const m = (d?.matches?.[0] || "").trim();
+        if (m) { last = m; onPartial(m); }
+      });
+    } catch { /* no partial-results support on this build */ }
+  }
+  try {
+    const res = await sr.start({
+      language, maxResults: 1, partialResults: !!handle, popup: false,
+    });
+    return (res?.matches?.[0] || last || "").trim();
+  } finally {
+    try { await handle?.remove?.(); } catch { /* noop */ }
+  }
 }
 
 /** Finalize an in-flight recognition (tap-to-stop) — resolves the pending start(). */

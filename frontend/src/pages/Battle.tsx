@@ -8,12 +8,13 @@ import { nativeRecognize, nativeSttAvailable, nativeSttStop } from "../audio/nat
 import { syncWidget } from "../lib/widget";
 import { IconMic, IconPlay, IconLock } from "../ui/icons";
 
-// Battle mode («Боевой режим»): the user is IN a live conversation and needs
-// the right trained line NOW. Everything is built for speed:
+// Live mode («Live»): the user is IN a live conversation and needs the right
+// trained line NOW. Everything is built for speed:
 // - the corpus (their study set) is cached in localStorage → typing gives
 //   instant, fully-OFFLINE keyword results (also the degradation path);
-// - AI plan: dictate the moment → the transcript instantly runs the local
-//   search, and one fast LLM call picks the best line on top of it.
+// - AI plan: dictate the moment in a glass recording panel with explicit
+//   states (Listening → Thinking → results), and one fast LLM call picks the
+//   best line on top of the local search.
 const CACHE_KEY = (uid: number) => `ee-battle-corpus:${uid}`;
 const TOP_N = 6;
 
@@ -47,6 +48,9 @@ function loadCache(uid: number): BattleItem[] {
   } catch { return []; }
 }
 
+// idle → listening (recording panel up) → thinking (AI picking) → idle.
+type MicState = "idle" | "listening" | "thinking";
+
 export default function Battle() {
   const nav = useNavigate();
   const { t } = useI18n();
@@ -59,11 +63,12 @@ export default function Battle() {
   const [loaded, setLoaded] = useState(false);     // fresh server copy arrived
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<number | null>(null);   // expanded phrase_id
-  const [listening, setListening] = useState(false);
-  const [aiBusy, setAiBusy] = useState(false);
+  const [mic, setMic] = useState<MicState>("idle");
+  const [heard, setHeard] = useState("");          // native partial/final transcript
   const [ai, setAi] = useState<BattlePick[] | null>(null);
-  const [aiNote, setAiNote] = useState("");        // fallback/limit note
+  const [aiNote, setAiNote] = useState("");        // fallback/limit/empty note
   const nativeStt = useRef(false);
+  const cancelled = useRef(false);
 
   // Cache-first, then refresh: the screen must be usable the instant it opens
   // (and fully offline — the refresh just quietly fails).
@@ -81,10 +86,8 @@ export default function Battle() {
     return () => { on = false; };
   }, [uid]);
 
-  // While dictating, the live interim transcript drives the search in real time.
-  const query = listening && speech.interim ? speech.interim : q;
   const results = useMemo(() => {
-    const tt = toks(query);
+    const tt = toks(q);
     if (!tt.length) {
       // Idle screen = your strongest lines, ready to fire.
       return corpus.filter((it) => LEARNED.has(it.srs_status)).slice(0, TOP_N);
@@ -95,8 +98,8 @@ export default function Battle() {
       .sort((a, b) => b[0] - a[0])
       .slice(0, TOP_N)
       .map(([, it]) => it);
-  }, [corpus, query]);
-  const idle = toks(query).length === 0;
+  }, [corpus, q]);
+  const idle = toks(q).length === 0;
 
   const play = (pid: number, e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -105,27 +108,16 @@ export default function Battle() {
       .catch(() => { /* offline — text is already on screen */ });
   };
 
-  const stopVoice = () => {
+  // Stop the recognizer — this resolves the pending nativeRecognize/speech.start
+  // promise in startVoice, which then flows on to the AI step (or cancel).
+  const stopRecognition = () => {
     if (nativeStt.current) nativeSttStop().catch(() => { /* noop */ });
     else speech.stop();
   };
 
-  const startVoice = async () => {
-    if (!isAI) { nav("/subscribe"); return; }
-    if (listening) { stopVoice(); return; }
-    setAi(null); setAiNote("");
-    let text = "";
-    try {
-      setListening(true);
-      nativeStt.current = await nativeSttAvailable();
-      if (nativeStt.current) text = await nativeRecognize("ru-RU");
-      else if (speech.supported) text = await speech.start("ru-RU");
-    } catch { /* no speech / denied → they can just type */ }
-    setListening(false);
-    text = (text || "").trim();
-    if (!text) return;
-    setQ(text);                                   // instant local results
-    setAiBusy(true);
+  const runSuggest = async (text: string) => {
+    setQ(text);
+    setMic("thinking");
     try {
       const r = await api.battleSuggest(text);
       if (r.via === "llm") setAi(r.picks);
@@ -134,8 +126,38 @@ export default function Battle() {
     } catch (e) {
       setAiNote(String(e).includes("429") ? t("practice.limitReached")
         : t("battle.aiUnavailable"));
-    } finally { setAiBusy(false); }
+    } finally { setMic("idle"); setHeard(""); }
   };
+
+  const startVoice = async () => {
+    if (!isAI) { nav("/subscribe"); return; }
+    if (mic !== "idle") return;
+    cancelled.current = false;
+    setAi(null); setAiNote(""); setHeard("");
+    setMic("listening");
+    let text = "";
+    try {
+      nativeStt.current = await nativeSttAvailable();
+      if (nativeStt.current) text = await nativeRecognize("ru-RU", setHeard);
+      else if (speech.supported) text = await speech.start("ru-RU");
+      else { setMic("idle"); setAiNote(t("battle.micUnsupported")); return; }
+    } catch { /* denied / no-speech → user can just type */ }
+    if (cancelled.current) { setMic("idle"); setHeard(""); return; }
+    text = (text || "").trim();
+    if (!text) { setMic("idle"); setHeard(""); setAiNote(t("battle.recEmpty")); return; }
+    await runSuggest(text);
+  };
+
+  const finishVoice = () => stopRecognition();   // "Done": stop → transcript → AI
+  const cancelVoice = () => {                     // discard: close panel, no AI call
+    cancelled.current = true;
+    stopRecognition();
+    setMic("idle");
+    setHeard("");
+  };
+
+  // Live words while recording: Web Speech feeds `interim`, native feeds `heard`.
+  const liveText = speech.interim || heard;
 
   const card = (it: { phrase_id: number; batch_id: number; anchor: string;
                       phrase_en: string; gloss_ru: string; srs_status: string },
@@ -181,12 +203,12 @@ export default function Battle() {
           className="bm-input"
           type="search"
           enterKeyHint="search"
-          placeholder={listening ? t("battle.listening") : t("battle.placeholder")}
-          value={query}
+          placeholder={t("battle.placeholder")}
+          value={q}
           onChange={(e) => { setQ(e.target.value); setAi(null); setAiNote(""); }}
         />
         <button
-          className={`bm-mic${listening ? " on" : ""}${isAI ? "" : " locked"}`}
+          className={`bm-mic${mic !== "idle" ? " on" : ""}${isAI ? "" : " locked"}`}
           aria-label={isAI ? t("battle.micHint") : t("battle.micLocked")}
           onClick={startVoice}
         >
@@ -194,8 +216,7 @@ export default function Battle() {
         </button>
       </div>
       {!isAI && <p className="bm-hint" onClick={() => nav("/subscribe")}>{t("battle.micLocked")}</p>}
-      {isAI && !listening && !aiBusy && !ai && <p className="bm-hint">{t("battle.micHint")}</p>}
-      {aiBusy && <p className="bm-hint">{t("battle.aiThinking")}</p>}
+      {isAI && mic === "idle" && !ai && !aiNote && <p className="bm-hint">{t("battle.micHint")}</p>}
       {aiNote && <p className="bm-hint warn">{aiNote}</p>}
 
       {empty ? (
@@ -221,6 +242,32 @@ export default function Battle() {
           )}
           {results.map((it) => card(it, { situation: it.situation_ru }))}
         </>
+      )}
+
+      {/* Recording panel — the same card glass, centered, with explicit states.
+          Tap the backdrop or "Cancel" to discard; "Done" stops and sends. */}
+      {mic !== "idle" && (
+        <div className="bm-rec-overlay" onClick={cancelVoice}>
+          <div className="bm-rec-panel" onClick={(e) => e.stopPropagation()}>
+            {mic === "listening" ? (
+              <>
+                <div className="bm-rec-orb" aria-hidden="true"><IconMic size={34} /></div>
+                <div className="bm-rec-title">{t("battle.listening")}</div>
+                <div className={`bm-rec-transcript${liveText ? "" : " placeholder"}`}>
+                  {liveText || t("battle.recHint")}
+                </div>
+                <button className="bm-rec-done" onClick={finishVoice}>{t("battle.recDone")}</button>
+                <button className="bm-rec-cancel" onClick={cancelVoice}>{t("battle.recCancel")}</button>
+              </>
+            ) : (
+              <>
+                <div className="bm-rec-spinner" aria-hidden="true" />
+                <div className="bm-rec-title">{t("battle.aiThinking")}</div>
+                {(q || heard) && <div className="bm-rec-transcript quiet">«{q || heard}»</div>}
+              </>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
