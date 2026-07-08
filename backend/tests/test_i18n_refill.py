@@ -95,3 +95,61 @@ def test_plain_run_still_skips_translated_batches(monkeypatch):
         b = s.get(models.Batch, bid)
         rep = i18n_content.translate_batch(s, b, "es")
     assert rep["skipped"] == "exists"
+
+
+def test_tokenized_fallback_rescues_cognate_absorbed_anchor(monkeypatch):
+    """personally→personalmente-class failure: the main call AND the focused
+    repair keep absorbing the anchor into the target language's natural word;
+    the tokenized pass must rescue the story."""
+    with Session(engine()) as s:
+        b = models.Batch(title="T", slug="i18n-4", status="approved")
+        s.add(b)
+        s.commit()
+        s.refresh(b)
+        p = models.Phrase(batch_id=b.id, order_index=1, anchor="personally",
+                          phrase_en="Personally.")
+        s.add(p)
+        s.commit()
+        s.refresh(p)
+        story = "ты вбиваешь кол personally сам"
+        s.add(models.MnemoStory(batch_id=b.id, story_ru=story,
+                                spans=[{"anchor_id": "a1", "phrase_id": p.id,
+                                        "start": 16, "end": 26}]))
+        s.commit()
+        bid = b.id
+    assert story[16:26] == "personally"
+
+    monkeypatch.setattr(i18n_content, "_translate_call",
+                        lambda *a: {"title": "T", "subtitle": "", "theme": "",
+                                    "story": "clavas la estaca personalmente"})
+    monkeypatch.setattr(i18n_content, "_translate_story",
+                        lambda *a, **k: "sigue personalmente sin ancla")
+
+    def fake_chat(system, user, temperature=0.0):
+        assert "[[A1]]" in user            # anchors left as opaque tokens…
+        assert "personally" not in user    # …not as absorbable English words
+        return "clavas la estaca [[A1]] tú mismo"
+
+    monkeypatch.setattr(i18n_content.llm, "chat", fake_chat)
+
+    with Session(engine()) as s:
+        b = s.get(models.Batch, bid)
+        rep = i18n_content.translate_batch(s, b, "es")
+    assert rep["story"] is True
+    with Session(engine()) as s:
+        m = s.exec(select(models.MnemoStory)
+                   .where(models.MnemoStory.batch_id == bid)).first()
+        assert m.story_i18n["es"] == "clavas la estaca personally tú mismo"
+        sp = m.spans_i18n["es"][0]
+        assert m.story_i18n["es"][sp["start"]:sp["end"]] == "personally"
+
+
+def test_tokenized_fallback_rejects_lost_token(monkeypatch):
+    """A model that drops or duplicates a token yields None (ru fallback), never
+    a half-substituted story."""
+    spans = [{"anchor_id": "a1", "phrase_id": 1, "start": 3, "end": 7},
+             {"anchor_id": "a2", "phrase_id": 2, "start": 10, "end": 14}]
+    story = "ты beta и gamm тут"
+    monkeypatch.setattr(i18n_content.llm, "chat",
+                        lambda *a, **k: "solo [[A1]] aquí")  # [[A2]] lost
+    assert i18n_content._translate_story_tokenized(story, spans, "es", 0.3) is None

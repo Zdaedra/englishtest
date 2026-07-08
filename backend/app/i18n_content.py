@@ -187,6 +187,42 @@ def _translate_story(story_ru: str, anchors: list[str], lang: str,
     return llm.chat(system, user, temperature=temperature).strip()
 
 
+def _translate_story_tokenized(story_ru: str, spans: list[dict], lang: str,
+                               temperature: float) -> Optional[str]:
+    """Cognate-proof repair: anchors are swapped for opaque [[A1]]..[[An]]
+    tokens BEFORE translation, then swapped back verbatim after. The plain
+    repair prompt can't win when the target language has the anchor as a
+    natural word (personally→personalmente in Spanish): the model keeps
+    'helpfully' absorbing it. A numbered token has no translation to absorb
+    into. Returns None if the model lost or duplicated a token."""
+    ordered = sorted((s for s in spans if "start" in s and "end" in s),
+                     key=lambda s: s["start"])
+    if not ordered:
+        return None
+    surfaces: list[str] = []
+    tok_story = story_ru
+    for i, sp in reversed(list(enumerate(ordered))):
+        surfaces.insert(0, story_ru[sp["start"]:sp["end"]])
+        tok_story = tok_story[:sp["start"]] + f"[[A{i + 1}]]" + tok_story[sp["end"]:]
+    name = _LANG_NAME[lang]
+    system = (
+        f"You translate one short mnemonic story from Russian into {name}. The "
+        "story contains placeholder tokens like [[A1]], [[A2]] — they stand for "
+        "English words the learner is studying. Copy every token through "
+        "EXACTLY as written, each exactly once, at the natural place in your "
+        "translation. Never translate, renumber, merge or drop a token. "
+        "Output ONLY the translated story text — no quotes, labels or commentary."
+    )
+    cand = llm.chat(system, f"Russian story:\n{tok_story}",
+                    temperature=temperature).strip()
+    for i, surf in enumerate(surfaces, start=1):
+        tok = f"[[A{i}]]"
+        if cand.count(tok) != 1:
+            return None
+        cand = cand.replace(tok, surf)
+    return cand
+
+
 def translate_batch(session: Session, batch: models.Batch, lang: str,
                     force: bool = False, refill: bool = False) -> dict:
     """Translate one batch into `lang`, write the *_i18n columns, return a report.
@@ -285,21 +321,32 @@ def translate_batch(session: Session, batch: models.Batch, lang: str,
 
     story_ok = False
     if mnemo and anchors and payload.get("story"):
+        def _persist(c: Optional[str]) -> bool:
+            if not c:
+                return False
+            ns = recompute_spans(mnemo.story_ru, mnemo.spans, c)
+            if ns is None:
+                return False
+            mnemo.story_i18n = _set(mnemo.story_i18n, lang, c)
+            mnemo.spans_i18n = dict(mnemo.spans_i18n or {})
+            mnemo.spans_i18n[lang] = ns
+            session.add(mnemo)
+            return True
+
+        # 1) the main call's story → 2) one focused repair naming the offending
+        # anchors → 3) two tokenized attempts (cognate-class failures never
+        # pass the plain repair, however loudly the prompt insists).
         cand = tr.get("story")
-        # Up to 3 focused repair attempts when the model dropped/translated an
-        # anchor (so a few stubborn anchors don't leave the story on the ru fallback).
-        for attempt in range(3):
-            if cand:
-                new_spans = recompute_spans(mnemo.story_ru, mnemo.spans, cand)
-                if new_spans is not None:
-                    mnemo.story_i18n = _set(mnemo.story_i18n, lang, cand)
-                    mnemo.spans_i18n = dict(mnemo.spans_i18n or {})
-                    mnemo.spans_i18n[lang] = new_spans
-                    session.add(mnemo)
-                    story_ok = True
-                    break
-            cand = _translate_story(mnemo.story_ru, anchors, lang,
-                                    _missing(anchors, cand), temperature=0.4 + 0.1 * attempt)
+        story_ok = _persist(cand)
+        if not story_ok:
+            story_ok = _persist(_translate_story(
+                mnemo.story_ru, anchors, lang, _missing(anchors, cand),
+                temperature=0.4))
+        for t in (0.3, 0.6):
+            if story_ok:
+                break
+            story_ok = _persist(_translate_story_tokenized(
+                mnemo.story_ru, mnemo.spans, lang, temperature=t))
     session.commit()
     return {"batch": batch.id, "lang": lang, "zones": len(tr_zones),
             "glosses": len(tr_gloss), "story": story_ok,
