@@ -106,3 +106,115 @@ def test_dry_run_touches_nothing(tmp_path, monkeypatch):
     with Session(engine()) as s:
         p0 = s.get(models.Phrase, pids[0])
         assert p0.anchor == "X" and p0.phrase_en == "Ex phrase."  # but NOT written
+
+
+def test_reorder_is_skipped_not_swapped(tmp_path, monkeypatch):
+    """Positional matching means applying a reordered file would rewrite texts in
+    place under existing UserPhraseStat rows — every user's mastery would silently
+    re-attach to a different phrase. Must be detected and skipped."""
+    bid, pids = _seed_batch("rp-4", [("Alpha", "Phrase A."), ("Beta", "Phrase B.")])
+    _write_content(tmp_path, monkeypatch, {"rp-4.json": {
+        "slug": "rp-4",
+        "phrases": [
+            {"anchor": "Beta", "zone": "z", "en": "Phrase B."},   # swapped
+            {"anchor": "Alpha", "zone": "z", "en": "Phrase A."},
+        ],
+    }})
+    with Session(engine()) as s:
+        stats = rephrase.resync_phrases(s)
+    assert stats["batches_skipped"] == 1
+    assert stats["phrases_changed"] == 0
+    with Session(engine()) as s:
+        p0 = s.get(models.Phrase, pids[0])
+        assert p0.anchor == "Alpha" and p0.phrase_en == "Phrase A."  # untouched
+
+
+def test_chain_rename_is_not_a_reorder(tmp_path, monkeypatch):
+    """A bulk replacement may legitimately reuse a vacated anchor: slot 1 renames
+    Alpha→Gamma while slot 2 renames Beta→Alpha, each with its own NEW text (the
+    v7.5.1 rollout shape). That is not a move — it must be applied, not skipped."""
+    bid, pids = _seed_batch("rp-8", [("Alpha", "A text."), ("Beta", "B text.")])
+    _write_content(tmp_path, monkeypatch, {"rp-8.json": {
+        "slug": "rp-8",
+        "phrases": [
+            {"anchor": "Gamma", "zone": "z", "en": "G new text."},
+            {"anchor": "Alpha", "zone": "z", "en": "A new text."},
+        ],
+    }})
+    with Session(engine()) as s:
+        stats = rephrase.resync_phrases(s)
+    assert stats["batches_skipped"] == 0
+    assert stats["phrases_changed"] == 2
+    with Session(engine()) as s:
+        p0, p1 = (s.get(models.Phrase, pid) for pid in pids)
+        assert (p0.anchor, p0.phrase_en) == ("Gamma", "G new text.")
+        assert (p1.anchor, p1.phrase_en) == ("Alpha", "A new text.")
+
+
+def test_gloss_sync_and_empty_gloss_keeps_db_value(tmp_path, monkeypatch):
+    bid, pids = _seed_batch("rp-5", [("A", "Phrase A."), ("B", "Phrase B.")])
+    with Session(engine()) as s:
+        for pid, g in zip(pids, ["старый А", "старый Б"]):
+            p = s.get(models.Phrase, pid)
+            p.gloss_ru = g
+            s.add(p)
+        s.commit()
+    _write_content(tmp_path, monkeypatch, {"rp-5.json": {
+        "slug": "rp-5",
+        "phrases": [
+            {"anchor": "A", "zone": "z", "en": "Phrase A.", "gloss_ru": "новый А"},
+            {"anchor": "B", "zone": "z", "en": "Phrase B."},  # no gloss in file
+        ],
+    }})
+    with Session(engine()) as s:
+        stats = rephrase.resync_phrases(s)
+    assert stats["phrases_changed"] == 1
+    assert stats["glosses_changed"] == 1
+    assert stats["anchors_changed"] == 0
+    with Session(engine()) as s:
+        p0 = s.get(models.Phrase, pids[0])
+        assert p0.gloss_ru == "новый А"
+        # gloss feeds situation/task + gloss_i18n → caches invalidated
+        assert p0.situation_ru == "" and p0.gloss_i18n == {}
+        # file without gloss means "keep the DB value" — and caches stay
+        p1 = s.get(models.Phrase, pids[1])
+        assert p1.gloss_ru == "старый Б" and p1.situation_ru == "OLD sit"
+
+
+def test_checkphrase_dropped_only_for_changed_text(tmp_path, monkeypatch):
+    """Curated cues are authored against a specific phrase_en; after a text change
+    a stale cue sets up the OLD line while scoring compares against the NEW one."""
+    bid, pids = _seed_batch("rp-6", [("A", "Phrase A."), ("B", "Phrase B.")])
+    with Session(engine()) as s:
+        s.add(models.CheckPhrase(phrase_id=pids[0], batch_id=bid, text="cue A"))
+        s.add(models.CheckPhrase(phrase_id=pids[1], batch_id=bid, text="cue B"))
+        s.commit()
+    _write_content(tmp_path, monkeypatch, {"rp-6.json": {
+        "slug": "rp-6",
+        "phrases": [
+            {"anchor": "A", "zone": "z", "en": "Phrase A rewritten."},  # changed
+            {"anchor": "B", "zone": "z", "en": "Phrase B."},            # unchanged
+        ],
+    }})
+    with Session(engine()) as s:
+        stats = rephrase.resync_phrases(s)
+    assert stats["checkphrases_dropped"] == 1
+    with Session(engine()) as s:
+        cues = s.exec(select(models.CheckPhrase)).all()
+        assert [c.phrase_id for c in cues] == [pids[1]]  # only the stale one died
+
+
+def test_dry_run_counts_but_keeps_checkphrases(tmp_path, monkeypatch):
+    bid, pids = _seed_batch("rp-7", [("A", "Phrase A.")])
+    with Session(engine()) as s:
+        s.add(models.CheckPhrase(phrase_id=pids[0], batch_id=bid, text="cue"))
+        s.commit()
+    _write_content(tmp_path, monkeypatch, {"rp-7.json": {
+        "slug": "rp-7",
+        "phrases": [{"anchor": "A", "zone": "z", "en": "Phrase A rewritten."}],
+    }})
+    with Session(engine()) as s:
+        stats = rephrase.resync_phrases(s, dry_run=True)
+    assert stats["checkphrases_dropped"] == 1  # reported
+    with Session(engine()) as s:
+        assert len(s.exec(select(models.CheckPhrase)).all()) == 1  # but kept

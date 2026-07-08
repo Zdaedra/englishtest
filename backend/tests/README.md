@@ -42,6 +42,11 @@ every `git push`.
 | Global settings (admin-only write) | `test_settings.py` |
 | Apple billing (verify 401/501/applied, public notifications) | `test_billing.py` |
 | SRS engine units (bands, transition ladder, lapse) | `test_srs.py` |
+| **Progress-preservation contract**: upsert blocked on live progress (409/`LiveProgressError`), force path wipes dependents cleanly (no orphans, PlaybackSession survives), seed continues past blocked batches | `test_content_guard.py` |
+| SRS-safe in-place phrase edits: id+stat survival, structural/reorder skip, gloss sync, CheckPhrase invalidation, dry-run | `test_rephrase.py` |
+| Story resync: spans recomputed even for anchor-only changes, i18n kept/dropped per language | `test_restory.py` |
+| Integrity doctor: orphan detection+fix, duplicate-stat dedup, cross-attach report, streak history preserved | `test_doctor.py` |
+| Legacy prod-DDL migration (drops NOT-NULL phrase.srs_status/avg_score) | `test_migration.py` |
 
 ## CI
 

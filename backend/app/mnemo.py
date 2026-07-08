@@ -127,6 +127,10 @@ def regenerate(session: Session, batch_id: int) -> tuple[str, list[dict], list[s
         mnemo = models.MnemoStory(batch_id=batch_id, story_ru=story, spans=[])
     mnemo.story_ru = story
     mnemo.spans = [s.model_dump() for s in spans]
+    # stale translations would keep showing the OLD story to es/de/fr users
+    # (same invalidation rule as app.restory)
+    mnemo.story_i18n = None
+    mnemo.spans_i18n = None
     session.add(mnemo)
     session.commit()
     return story, [s.model_dump() for s in spans], warnings

@@ -188,8 +188,14 @@ def _translate_story(story_ru: str, anchors: list[str], lang: str,
 
 
 def translate_batch(session: Session, batch: models.Batch, lang: str,
-                    force: bool = False) -> dict:
-    """Translate one batch into `lang`, write the *_i18n columns, return a report."""
+                    force: bool = False, refill: bool = False) -> dict:
+    """Translate one batch into `lang`, write the *_i18n columns, return a report.
+
+    refill=True translates ONLY the missing pieces (e.g. gloss_i18n/story_i18n
+    cleared by app.rephrase/app.restory) instead of skipping the whole batch
+    because title_i18n already exists — the plain-run guard is whole-batch, so
+    without this mode cleared caches would never refill short of --force (which
+    retranslates everything at full LLM cost)."""
     zones = session.exec(select(models.Zone).where(models.Zone.batch_id == batch.id)
                          .order_by(models.Zone.order_index)).all()
     phrases = session.exec(select(models.Phrase).where(models.Phrase.batch_id == batch.id)
@@ -198,18 +204,52 @@ def translate_batch(session: Session, batch: models.Batch, lang: str,
                          .where(models.MnemoStory.batch_id == batch.id)).first()
 
     already = (batch.title_i18n or {}).get(lang)
-    if already and not force:
+    if already and not force and not refill:
         return {"batch": batch.id, "lang": lang, "skipped": "exists"}
 
     anchors = _anchor_surfaces(mnemo.story_ru, mnemo.spans) if mnemo else []
-    payload = {
-        "title": batch.title,
-        "subtitle": batch.subtitle,
-        "theme": batch.theme,
-        "zones": {str(z.id): z.title for z in zones},
-        "glosses": {str(p.id): p.gloss_ru for p in phrases if (p.gloss_ru or "").strip()},
-        "story": mnemo.story_ru if mnemo else "",
-    }
+
+    def _missing_gloss(p: models.Phrase) -> bool:
+        return not (p.gloss_i18n or {}).get(lang)
+
+    def _missing_story() -> bool:
+        # Mirror the write-guard preconditions: a story that could never be
+        # persisted (empty story_ru, or no locatable anchors) must not be
+        # requested — else --refill re-pays the LLM call on every run, forever.
+        if not mnemo or not (mnemo.story_ru or "").strip() or not anchors:
+            return False
+        return not ((mnemo.story_i18n or {}).get(lang)
+                    and (mnemo.spans_i18n or {}).get(lang))
+
+    if refill and not force:
+        payload = {}
+        if not (batch.title_i18n or {}).get(lang):
+            payload["title"] = batch.title
+        if batch.subtitle and not (batch.subtitle_i18n or {}).get(lang):
+            payload["subtitle"] = batch.subtitle
+        if batch.theme and not (batch.theme_i18n or {}).get(lang):
+            payload["theme"] = batch.theme
+        zmiss = {str(z.id): z.title for z in zones
+                 if not (z.title_i18n or {}).get(lang)}
+        if zmiss:
+            payload["zones"] = zmiss
+        gmiss = {str(p.id): p.gloss_ru for p in phrases
+                 if (p.gloss_ru or "").strip() and _missing_gloss(p)}
+        if gmiss:
+            payload["glosses"] = gmiss
+        if _missing_story():
+            payload["story"] = mnemo.story_ru
+        if not payload:
+            return {"batch": batch.id, "lang": lang, "skipped": "complete"}
+    else:
+        payload = {
+            "title": batch.title,
+            "subtitle": batch.subtitle,
+            "theme": batch.theme,
+            "zones": {str(z.id): z.title for z in zones},
+            "glosses": {str(p.id): p.gloss_ru for p in phrases if (p.gloss_ru or "").strip()},
+            "story": mnemo.story_ru if mnemo else "",
+        }
     tr = _translate_call(payload, anchors, lang)
 
     def _set(d: Optional[dict], key: str, val: str) -> dict:
@@ -217,22 +257,26 @@ def translate_batch(session: Session, batch: models.Batch, lang: str,
         d[key] = val
         return d
 
-    if tr.get("title"):
+    # Write back ONLY fields that were actually requested in the payload: the
+    # model sometimes emits empty/hallucinated markers for fields it wasn't
+    # given (esp. in refill mode), and an unguarded write would clobber an
+    # existing good translation with "".
+    if "title" in payload and tr.get("title"):
         batch.title_i18n = _set(batch.title_i18n, lang, tr["title"])
-    if tr.get("subtitle") is not None:
+    if "subtitle" in payload and tr.get("subtitle") is not None:
         batch.subtitle_i18n = _set(batch.subtitle_i18n, lang, tr.get("subtitle", ""))
-    if tr.get("theme") is not None:
+    if "theme" in payload and tr.get("theme") is not None:
         batch.theme_i18n = _set(batch.theme_i18n, lang, tr.get("theme", ""))
     session.add(batch)
 
-    tr_zones = tr.get("zones") or {}
+    tr_zones = (tr.get("zones") or {}) if "zones" in payload else {}
     for z in zones:
         v = tr_zones.get(str(z.id))
         if v:
             z.title_i18n = _set(z.title_i18n, lang, v)
             session.add(z)
 
-    tr_gloss = tr.get("glosses") or {}
+    tr_gloss = (tr.get("glosses") or {}) if "glosses" in payload else {}
     for p in phrases:
         v = tr_gloss.get(str(p.id))
         if v:
@@ -240,7 +284,7 @@ def translate_batch(session: Session, batch: models.Batch, lang: str,
             session.add(p)
 
     story_ok = False
-    if mnemo and anchors:
+    if mnemo and anchors and payload.get("story"):
         cand = tr.get("story")
         # Up to 3 focused repair attempts when the model dropped/translated an
         # anchor (so a few stubborn anchors don't leave the story on the ru fallback).
@@ -263,7 +307,8 @@ def translate_batch(session: Session, batch: models.Batch, lang: str,
 
 
 def run(batch_id: Optional[int] = None, only_lang: Optional[str] = None,
-        force: bool = False, shards: int = 1, shard: int = 0) -> None:
+        force: bool = False, refill: bool = False,
+        shards: int = 1, shard: int = 0) -> None:
     init_db()
     langs = (only_lang,) if only_lang else LANGS
     with Session(engine()) as session:
@@ -279,7 +324,8 @@ def run(batch_id: Optional[int] = None, only_lang: Optional[str] = None,
         for b in batches:
             for lang in langs:
                 try:
-                    rep = translate_batch(session, b, lang, force=force)
+                    rep = translate_batch(session, b, lang, force=force,
+                                          refill=refill)
                     print(json.dumps(rep, ensure_ascii=False))
                 except Exception as e:  # keep going; one bad batch shouldn't stop the run
                     print(json.dumps({"batch": b.id, "lang": lang, "error": str(e)},
@@ -291,8 +337,12 @@ if __name__ == "__main__":
     ap.add_argument("--batch", type=int, default=None)
     ap.add_argument("--lang", choices=LANGS, default=None)
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--refill", action="store_true",
+                    help="translate only the MISSING pieces (refills gloss_i18n/"
+                         "story_i18n cleared by app.rephrase/app.restory) instead "
+                         "of skipping batches that already have title_i18n")
     ap.add_argument("--shards", type=int, default=1)
     ap.add_argument("--shard", type=int, default=0)
     args = ap.parse_args()
     run(batch_id=args.batch, only_lang=args.lang, force=args.force,
-        shards=args.shards, shard=args.shard)
+        refill=args.refill, shards=args.shards, shard=args.shard)

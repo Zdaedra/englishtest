@@ -88,29 +88,49 @@ def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
 
 
 @router.post("/upsert")
-def upsert_authored(author: BatchAuthor, user_id: int = Depends(require_admin),
+def upsert_authored(author: BatchAuthor, force: bool = False,
+                    user_id: int = Depends(require_admin),
                     session: Session = Depends(get_session)):
     """Create-or-replace a batch from the authoring format, keyed by its slug.
 
     This is the corrections path: POST the same slug with edited content and the
     batch is rewritten in place (id + cover preserved). Admin-only — it edits the
     shared curated catalog by slug, so clients must not reach it.
+
+    Replacing wipes+recreates the batch's phrases (new ids), so a batch with live
+    user progress answers 409 — text-only edits belong in app.rephrase/app.restory.
+    Pass ?force=true to consciously destroy that progress and replace anyway.
     """
     if not author.phrases:
         raise HTTPException(status_code=400, detail="Batch has no phrases")
     batch_in, warnings = content.to_batch_in(author)
-    batch, created = content.upsert(session, batch_in, slug=author.slug,
-                                    auto_title=True, auto_subtitle=True)
+    try:
+        batch, created = content.upsert(
+            session, batch_in, slug=author.slug, auto_title=True,
+            auto_subtitle=True, on_live_progress="wipe" if force else "block")
+    except content.LiveProgressError as e:
+        raise HTTPException(status_code=409, detail={
+            "error": "live_progress", "slug": e.slug, "counts": e.counts,
+            "hint": "Users have SRS progress on this batch; text edits should go "
+                    "through app.rephrase/app.restory. Retry with ?force=true to "
+                    "destroy their progress and replace anyway (also deletes "
+                    "their training-event history for these phrases, which can "
+                    "retroactively shrink day-streaks)."})
     return {"id": batch.id, "slug": batch.slug, "created": created,
             "warnings": warnings}
 
 
 @router.post("/seed")
-def seed(user_id: int = Depends(require_admin), session: Session = Depends(get_session)):
+def seed(force: bool = False, user_id: int = Depends(require_admin),
+         session: Session = Depends(get_session)):
     """Load every backend/content/*.json file (idempotent upsert by slug).
-    Admin-only — it populates the shared curated catalog."""
-    results = content.load_all(session)
+    Admin-only — it populates the shared curated catalog. Batches with live user
+    progress are reported as blocked (not replaced) unless ?force=true."""
+    results = content.load_all(
+        session, on_live_progress="wipe" if force else "block")
     return {"loaded": [
-        {"id": b.id, "slug": b.slug, "created": created, "warnings": warnings}
-        for b, created, warnings in results
+        {"id": r["batch"].id if r["batch"] else None, "slug": r["slug"],
+         "created": r["created"], "warnings": r["warnings"],
+         "blocked": r["blocked"], "unchanged": r["unchanged"]}
+        for r in results
     ]}
