@@ -13,5 +13,6 @@ export interface NavBarPlugin {
 
 export const NavBar = registerPlugin<NavBarPlugin>("NavBar");
 
-// SF Symbol per tab, index-aligned with the web TABS order (Library/Learn/Practice).
-export const NAV_SF = ["books.vertical", "waveform", "target"];
+// SF Symbol per tab, index-aligned with the web TABS order
+// (Library/Learn/Practice/Battle).
+export const NAV_SF = ["books.vertical", "waveform", "target", "bolt"];

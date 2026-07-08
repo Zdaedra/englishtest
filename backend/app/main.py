@@ -10,7 +10,7 @@ from . import models
 from .config import get_settings
 from .db import engine, init_db
 from .auth import parse_session
-from .routers import admin_stats, analyzer, auth, batches, billing, imports, league, practice, progress, sessions, settings, training, tutorial
+from .routers import admin_stats, analyzer, auth, batches, battle, billing, imports, league, practice, progress, sessions, settings, training, tutorial
 
 app = FastAPI(title="English Executive")
 
@@ -116,6 +116,7 @@ app.include_router(training.router)
 app.include_router(practice.router)
 app.include_router(progress.router)
 app.include_router(analyzer.router)
+app.include_router(battle.router)
 app.include_router(league.router)
 app.include_router(tutorial.router)
 # Stats cabinet — under /admin (NOT /api, so it bypasses the per-user auth gate)

@@ -29,6 +29,13 @@ export default function RouteTour({ uid }: { uid: string | number }) {
     return () => window.clearTimeout(id);
   }, [pathname, uid, active]);
 
+  // Leaving the screen mid-tour cancels it (NOT marked seen — it refires on the
+  // next visit). Otherwise the dimmed coach-mark follows the user onto a route
+  // where its target elements don't exist and just sits there as a stuck modal.
+  useEffect(() => {
+    if (active && !active.match(pathname)) setActive(null);
+  }, [pathname, active]);
+
   if (!active) return null;
   return (
     <Coachmarks

@@ -39,6 +39,7 @@ every `git push`.
 | Training loop: scoring, rate limits, AI-plan gates, swipe/confirm/coach, reads | `test_training.py` |
 | Practice questions/prompt-audio/score | `test_practice.py` |
 | Per-user progress, activation lock + max-active cap | `test_progress.py` |
+| Battle mode: corpus = own study set only (isolation), free·core·ai gate on `/suggest`, monthly-budget 429, learned-first pool order, hallucinated pick numbers dropped | `test_battle.py` |
 | Global settings (admin-only write) | `test_settings.py` |
 | Apple billing (verify 401/501/applied, public notifications) | `test_billing.py` |
 | SRS engine units (bands, transition ladder, lapse) | `test_srs.py` |

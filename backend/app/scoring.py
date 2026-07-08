@@ -285,6 +285,40 @@ def analyze_call(text: str) -> dict:
         return {"upgrades": [], "via": "fallback"}
 
 
+_BATTLE_SYSTEM = """Ты — суфлёр Executive English. Пользователь ПРЯМО СЕЙЧАС в живом
+разговоре и коротко описал момент: с кем говорит и что хочет сделать репликой. Дан
+нумерованный список английских фраз, которые он реально тренировал. Выбери до 3 фраз,
+которые лучше всего сработают именно в этот момент, лучшая — первой. Смотри на
+конверсационный ход (осадить, попросить, удержать позицию, расположить), а не на
+совпадение слов. Если ничего по-настоящему не подходит — верни пустой список, не
+притягивай за уши. Верни СТРОГО JSON без markdown:
+{"picks":[{"n":<номер фразы>,"note":"<до 8 русских слов — как/когда подать>"}]}"""
+
+
+def battle_pick(situation: str, items: list[dict]) -> dict:
+    """Battle mode (AI plan): a live-conversation moment → the best line from the
+    user's own trained corpus. `items` = [{n, anchor, phrase_en, gloss_ru}] (n is
+    the 1-based number the model answers with). One fast call, small output —
+    this runs while the user is mid-conversation. Returns {picks: [{n, note}],
+    via}; via="fallback" lets the client degrade to its local keyword search."""
+    listing = "\n".join(
+        f"{i['n']}. {i['phrase_en']} — {i.get('gloss_ru') or i.get('anchor', '')}"
+        for i in items)
+    payload = f"Момент: {situation}\n\nФразы:\n{listing}"
+    try:
+        data = _openai_json(_BATTLE_SYSTEM, payload, max_tokens=180,
+                            model=get_settings().model_coach)
+        picks = []
+        for p in (data.get("picks") or [])[:3]:
+            n = p.get("n")
+            if isinstance(n, bool) or not isinstance(n, int):
+                continue
+            picks.append({"n": n, "note": str(p.get("note", "")).strip()})
+        return {"picks": picks, "via": "llm"}
+    except Exception:
+        return {"picks": [], "via": "fallback"}
+
+
 _SCENARIO_SYSTEM = """Ты — методист приложения Executive English (деловой/светский
 английский для носителей русского). Даны 3 целевые английские фразы с их смыслом.
 Напиши СВЯЗНУЮ мини-сцену на русском — одна локация, один собеседник, деловой или

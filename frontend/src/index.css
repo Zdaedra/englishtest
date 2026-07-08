@@ -641,6 +641,81 @@ a { color: inherit; text-decoration: none; }
 .an-native { font-size: 1.0625rem; font-weight: 650; color: var(--accent); margin: 0; }
 .an-note { font-size: 0.8125rem; color: var(--text-2); margin: 6px 0 0; }
 
+/* Battle mode («Боевой режим») — a live-conversation prompter. Built for one
+   glance: big input, one thumb-sized mic, result cards with the English line
+   dominant. Same calm card language, signature green for the AI pick. */
+.bm-screen { display: flex; flex-direction: column; }
+.bm-row { display: flex; gap: 10px; align-items: center; margin: 4px 0 6px; }
+.bm-input {
+  flex: 1; min-width: 0; height: 54px; padding: 0 18px;
+  border: 1px solid var(--hairline); border-radius: 18px;
+  background: var(--card); color: var(--text);
+  font: inherit; font-size: 1.0625rem; /* ≥16px — iOS must not zoom on focus */
+  outline: none; -webkit-appearance: none; appearance: none;
+  box-shadow: 0 2px 10px rgba(17, 17, 17, .04);
+}
+.bm-input:focus { border-color: var(--map-green); }
+.bm-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.bm-mic {
+  flex: none; width: 54px; height: 54px; border-radius: 50%; border: 0;
+  display: grid; place-items: center; color: #fff;
+  background: linear-gradient(160deg, #22A374 0%, var(--map-green) 70%);
+  box-shadow: 0 8px 20px rgba(28, 140, 99, .35);
+  -webkit-tap-highlight-color: transparent;
+}
+.bm-mic.locked { background: var(--card); color: var(--faint);
+  border: 1px solid var(--hairline); box-shadow: none; }
+.bm-mic.on { animation: bm-pulse 1.15s ease-out infinite; }
+@keyframes bm-pulse {
+  0% { box-shadow: 0 8px 20px rgba(28, 140, 99, .35), 0 0 0 0 rgba(28, 140, 99, .35); }
+  100% { box-shadow: 0 8px 20px rgba(28, 140, 99, .35), 0 0 0 18px rgba(28, 140, 99, 0); }
+}
+.bm-hint { font-size: 0.8125rem; color: var(--faint); margin: 2px 4px 8px; }
+.bm-hint.warn { color: #A05A00; }
+.bm-sect {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--faint); margin: 14px 4px 8px;
+}
+.bm-card {
+  padding: 13px 15px; border: 1px solid var(--hairline); border-radius: 18px;
+  background: var(--card); margin-bottom: 10px;
+  box-shadow: 0 2px 10px rgba(17, 17, 17, .04); cursor: pointer;
+}
+.bm-card.best {
+  border: 1.5px solid var(--map-green);
+  box-shadow: 0 10px 26px rgba(28, 140, 99, .16);
+}
+.bm-top { display: flex; align-items: center; gap: 8px; }
+.bm-anchor {
+  font-size: 0.6875rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--map-green);
+}
+.bm-badge {
+  font-size: 0.625rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--map-green); background: rgba(28, 140, 99, .10);
+  padding: 2px 7px; border-radius: 999px;
+}
+.bm-play {
+  margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 50%;
+  border: 0; display: grid; place-items: center;
+  background: rgba(28, 140, 99, .10); color: var(--map-green);
+  -webkit-tap-highlight-color: transparent;
+}
+.bm-phrase { font-size: 1.0625rem; font-weight: 650; color: var(--accent); margin-top: 6px; }
+.bm-gloss { font-size: 0.8125rem; color: var(--text-2); margin-top: 3px; }
+.bm-note {
+  font-size: 0.8125rem; color: var(--map-green); background: rgba(28, 140, 99, .08);
+  border-radius: 10px; padding: 6px 10px; margin-top: 8px; width: fit-content;
+}
+.bm-more { margin-top: 10px; border-top: 1px solid var(--hairline); padding-top: 10px; }
+.bm-situ { font-size: 0.875rem; line-height: 1.45; color: var(--text-2); margin: 0 0 10px; }
+.bm-open {
+  border: 1px solid var(--hairline); border-radius: 999px; background: transparent;
+  color: var(--text); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px;
+}
+.bm-empty { text-align: center; padding-top: 8vh; }
+.bm-empty p { color: var(--text-2); line-height: 1.5; max-width: 30em; margin: 0 auto 18px; }
+
 /* League placement test — intro / quiz / result. Same calm card language. */
 .league-screen { display: flex; flex-direction: column; }
 .league-intro, .league-result { text-align: center; padding-top: 8vh; }
@@ -1743,15 +1818,15 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 .nav-capsule.dragging .nav-pill { transition: transform .09s linear; }
 
 /* The single sliding selector. Outer layer = positioning only: width is one
-   third, so translateX by 100% of its own width lands it exactly over the next
-   tab. The visible glass lives in ::before, inset 6px, so the inset never
-   breaks that alignment. */
+   tab column (--ntab set by FloatingNav), so translateX by 100% of its own
+   width lands it exactly over the next tab. The visible glass lives in
+   ::before, inset 6px, so the inset never breaks that alignment. */
 .nav-pill {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  width: calc(100% / 3);
+  width: calc(100% / var(--ntab, 3));
   transform: translateX(calc(var(--active, 0) * 100%));
   /* Slower, calmer travel between tabs (was .42s). */
   transition: transform .6s var(--spring), opacity .25s ease;
@@ -1815,6 +1890,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   position: relative;
   z-index: 1;
   flex: 1;
+  min-width: 0; /* equal columns even when a label (Библиотека) outgrows one — keeps the pill aligned at 4 tabs */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1823,7 +1899,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   background: transparent;
   border: 0;
   color: #8E8E93;
-  font-size: 0.6875rem;
+  font-size: 0.625rem; /* 10px — the iOS tab-bar label size; Библиотека fits a 4-tab column */
   font-weight: 600;
   letter-spacing: -.01em;
   transition: color .25s var(--spring), transform .3s var(--spring);
@@ -1833,6 +1909,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 /* Active = the app's signature emerald (same accent as the path/badges), heavier
    weight to read as selected through the glass. */
 .nav-tab.active { color: var(--bronze); font-weight: 680; }
+.nav-tab span { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nav-tab svg { width: 19px; height: 19px; transition: transform .3s var(--spring); }
 /* The lens sits on the selected tab → its icon rests clearly magnified. The tap
    itself fires a one-shot pop (Web Animations API, see App.tsx::lensPop). */

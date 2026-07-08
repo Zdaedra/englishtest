@@ -114,6 +114,11 @@ def stub_network(monkeypatch):
                                  for i in range(len(items))]},
     )
     monkeypatch.setattr(
+        "app.scoring.battle_pick",
+        lambda situation, items: {"via": "llm", "picks": (
+            [{"n": 1, "note": "коротко и сразу"}] if items else [])},
+    )
+    monkeypatch.setattr(
         "app.scoring.league_score",
         lambda answers: {"via": "llm", "results": [
             {"id": a["id"], "score": 7 if (a.get("text") or "").strip() else 0,

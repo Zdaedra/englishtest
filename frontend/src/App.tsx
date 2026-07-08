@@ -14,7 +14,7 @@ import { BatchMenuProvider } from "./ui/BatchMenu";
 import RouteTour from "./tutorial/RouteTour";
 import { TeachProvider } from "./tutorial/teach";
 import {
-  IconLibrary, IconWave, IconFocus, IconSearch, IconPlay, IconPause,
+  IconLibrary, IconWave, IconFocus, IconBolt, IconSearch, IconPlay, IconPause,
 } from "./ui/icons";
 
 function MiniPlayer() {
@@ -59,6 +59,7 @@ const TABS = [
   { to: "/", labelKey: "nav.library", Icon: IconLibrary },
   { to: "/learn", labelKey: "nav.learn", Icon: IconWave },
   { to: "/practice", labelKey: "nav.practice", Icon: IconFocus },
+  { to: "/battle", labelKey: "nav.battle", Icon: IconBolt },
 ];
 const NTAB = TABS.length;
 
@@ -88,10 +89,12 @@ function FloatingNav() {
 
   const learnActive = pathname.startsWith("/learn");
   const practiceActive = pathname.startsWith("/practice");
+  const battleActive = pathname.startsWith("/battle");
   const profileActive = pathname.startsWith("/profile");
   const libActive =
     !learnActive &&
     !practiceActive &&
+    !battleActive &&
     !profileActive &&
     (pathname === "/" ||
       pathname.startsWith("/batch") ||
@@ -99,7 +102,8 @@ function FloatingNav() {
       pathname.startsWith("/import") ||
       pathname.startsWith("/play"));
   // Profile lives in the top-right account button, not the bar — on /profile no tab lights.
-  const activeIndex = libActive ? 0 : learnActive ? 1 : practiceActive ? 2 : -1;
+  const activeIndex =
+    libActive ? 0 : learnActive ? 1 : practiceActive ? 2 : battleActive ? 3 : -1;
 
   // Replay a one-shot "gel" stretch on the pill whenever the active tab changes.
   // Alternate two identical keyframes so the animation restarts each move.
@@ -117,7 +121,7 @@ function FloatingNav() {
   useEffect(() => {
     if (!native) return;
     let subs: Array<{ remove: () => void }> = [];
-    const labels = [t("nav.library"), t("nav.learn"), t("nav.practice")];
+    const labels = TABS.map((tab) => t(tab.labelKey));
     NavBar.present({ labels, sf: NAV_SF, active: Math.max(0, activeIndex) }).catch(() => {});
     NavBar.addListener("tabSelected", ({ index }) => nav(TABS[index]?.to ?? "/"))
       .then((h) => subs.push(h)).catch(() => {});
@@ -192,7 +196,7 @@ function FloatingNav() {
         data-tour="nav"
         className={`nav-capsule${dragging ? " dragging" : ""}`}
         data-noactive={!dragging && activeIndex < 0}
-        style={{ "--active": pillPos } as CSSProperties}
+        style={{ "--active": pillPos, "--ntab": NTAB } as CSSProperties}
         onPointerDown={onDown}
         onPointerMove={onMove}
         onPointerUp={endDrag}

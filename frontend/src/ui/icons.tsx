@@ -76,6 +76,13 @@ export const IconFocus = ({ size = 24 }: P) => (
     <circle cx="12" cy="12" r="2" fill="currentColor" />
   </svg>
 );
+// Battle mode = the right line NOW, mid-conversation. A lightning bolt: instant.
+export const IconBolt = ({ size = 24 }: P) => (
+  <svg {...s(size)}><g {...stroke}>
+    <path d="M13.2 3 5.6 13.4h5l-1 7.6L17.9 10h-5.2z" />
+  </g></svg>
+);
+
 export const IconSearch = ({ size = 24 }: P) => (
   <svg {...s(size)}><g {...stroke}>
     <circle cx="11" cy="11" r="6.5" />

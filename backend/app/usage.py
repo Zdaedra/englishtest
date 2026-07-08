@@ -27,6 +27,7 @@ EST_USD: dict[str, float] = {
     "analyze": 0.002000,          # call-analyzer pass (~2k in / 500 out @ gpt-4.1-mini)
     "scenario": 0.001000,         # arena scene weave (~600 in / 500 out @ gpt-4.1-mini)
     "league": 0.002000,           # league placement, 7 answers in one call (~1.5k in / 800 out @ mini)
+    "battle": 0.001500,           # battle-mode pick (~2.5k in / 180 out @ mini, pool ≤160 phrases)
 }
 
 

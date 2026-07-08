@@ -75,6 +75,18 @@ export type PhraseSearchItem = {
   phrase_id: number; batch_id: number; batch_title: string;
   anchor: string; phrase_en: string; gloss_ru: string; order_index: number;
 };
+// Battle mode: the user's own study corpus (cached client-side for offline
+// keyword search) + the AI pick for a dictated live-conversation moment.
+export type BattleItem = {
+  phrase_id: number; batch_id: number; batch_title: string;
+  anchor: string; phrase_en: string; gloss_ru: string; situation_ru: string;
+  srs_status: string; attempts: number;
+};
+export type BattlePick = {
+  phrase_id: number; batch_id: number; batch_title: string;
+  anchor: string; phrase_en: string; gloss_ru: string; note: string;
+  srs_status: string;
+};
 // Arena: one LLM-woven scene, 3 beats, each targeting a learned phrase.
 export type ScenarioBeat = {
   phrase_id: number; anchor: string; phrase_en: string; gloss_ru: string;
@@ -219,6 +231,13 @@ export const api = {
     return apiFetch("/api/training/score-anchor", { method: "POST", body: fd }).then(j<AnchorScore>);
   },
   listPhrases: () => apiFetch(`/api/batches/phrases?lang=${clang()}`).then(j<PhraseSearchItem[]>),
+  // Battle mode: study-set corpus (all plans) + the AI situation pick (AI plan).
+  battleCorpus: () => apiFetch(`/api/battle/corpus?lang=${clang()}`).then(j<BattleItem[]>),
+  battleSuggest: (situation: string) =>
+    apiFetch("/api/battle/suggest", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ situation }),
+    }).then(j<{ via: string; picks: BattlePick[] }>),
   // Arena: weave 3 due/learned phrases into one fresh scene (AI plan).
   getScenario: () =>
     apiFetch("/api/practice/scenario", { method: "POST" }).then(j<Scenario>),
