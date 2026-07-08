@@ -1484,3 +1484,22 @@
   как замена keyword-префильтра (offline-эмбеддинги фраз + эмбеддинг момента → cosine топ-40 →
   тот же один LLM-вызов; sqlite/in-process, без инфры).
 - Деплой: index-Ctx2bZWb.js на телефон (install+launch OK) и на прод (публично отдаётся).
+
+## 2026-07-09 (ночь-4) — Live-микрофон переведён на серверное STT (Apple-диктовка не вывезла)
+
+- Watchdog-билд заработал («Работает»), но качество Apple SFSpeech для живого RU — мусор,
+  доказано консолью устройства (--console attach): из 4 попыток 2× пусто, «Сибири»,
+  «Да кофе я не на». Прод-логи параллельно показали: suggest доходит (llm, 3 picks) — т.е.
+  цепочка жива, проблема только в транскрипте.
+- Решение: голос Live = MediaRecorder → POST /api/battle/suggest-voice (server STT
+  gpt-4o-mini-transcribe language=ru + подбор в один round-trip, heard в ответе для
+  «Твоего момента»). Тот же рекордер, что в тренировочном server-STT фолбэке (на телефоне
+  Лёши доказанно работал). nativeStt.ts живёт для тренировки (EN one-shot ок).
+- Compliance: аудио теперь уходит провайдеру → голосовой consent voice_ai как в тренировке
+  (общий флаг ee-voice-consent-<uid> — принятый в практике не переспрашивается).
+- Деньги: тап = stt+battle ≈ $0.002; короткий/пустой транскрипт = только stt (via=empty_stt);
+  общий месячный cap. Тесты +3, суита 229 passed.
+- Прод: rsync backend/app + dist → rebuild english_app; бандл index-BHv2n59M.js на телефоне
+  (install+launch, консоль снова подключена) и публично. suggest-voice отвечает 401 без auth.
+- Отладочный канал устройства: xcrun devicectl device process launch --console → лог-файл,
+  [LV]-крошки в Battle/nativeStt — оставлены, сильно ускоряют полевую диагностику.
