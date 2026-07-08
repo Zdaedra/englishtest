@@ -1454,3 +1454,16 @@
   Battle: Web Speech только при !isNative(); throw native-stt-* → нота micUnsupported.
 - Деплой: бандл index-DmLkrejr.js на телефон (cap copy → xcodebuild → devicectl install+launch)
   и на веб (rsync + rebuild english_app, публично отдаётся). БД не трогалась, бэкенд не менялся.
+
+## 2026-07-08 (ночь-2) — Live: убран арсенал, экран = одна карточка
+
+- По фидбеку убран весь блок под карточкой («Твой арсенал» + поиск + список фраз). Экран Live
+  теперь: заголовок → тумблер «Выученные | Весь курс» → карточка. Всё.
+- Non-AI путь не пострадал: поле ввода на карточке ищет по локальному кэшу корпуса
+  (best + до 3 альтернатив на той же карточке). Корпус по-прежнему кэшируется per-scope
+  (и питает локскрин-виджет с learned-набора).
+- CSS: вычищены мёртвые .bm-* правила (card/sect/hint/anchor/badge/phrase/gloss/more/situ/
+  open/empty); живы bm-screen/bm-input/bm-play/bm-note. Экшн-щит .bm-backdrop/.bm-sheet
+  (long-press батча в библиотеке) — ДРУГОЙ блок, не тронут.
+- Деплой: index-DhsK7iuU.js на телефон (install+launch OK) и на прод (rsync + rebuild
+  english_app, публично отдаётся). Бэкенд/БД не тронуты. Коммит f/refactor(live).
