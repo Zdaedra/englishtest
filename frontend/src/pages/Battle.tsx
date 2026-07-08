@@ -82,6 +82,8 @@ export default function Battle() {
   const [moment, setMoment] = useState("");   // the dictated moment (server `heard`)
   const [ai, setAi] = useState<BattlePick[] | null>(null);
   const [note, setNote] = useState("");       // fallback / limit / no-hear
+  const [intents, setIntents] = useState<string[]>([]);   // ranked moves, best first
+  const [intentSel, setIntentSel] = useState("");          // the move the picks answer
 
   // Voice→AI consent (Apple §5.1.2(i) + GDPR): the clip goes to the STT
   // provider, so the first mic tap shows the same one-time gate as the trainer
@@ -144,8 +146,10 @@ export default function Battle() {
     console.log("[LV] suggest-voice →", scope, clip.ms, "ms,", clip.blob.size, "b");
     try {
       const r = await api.battleSuggestVoice(clip.blob, clip.filename, scope);
-      console.log("[LV] suggest-voice ←", r.via, r.picks.length, JSON.stringify(r.heard));
+      console.log("[LV] suggest-voice ←", r.via, r.picks.length, r.intents, JSON.stringify(r.heard));
       setMoment(r.heard || "");
+      setIntents(r.intents ?? []);
+      setIntentSel((r.intents ?? [])[0] || "");
       if (r.via === "llm" && r.picks.length) setAi(r.picks);
       else if (r.via === "empty_stt") setNote(t("battle.recEmpty"));
       else if (r.via === "llm") setNote(t("battle.noResults"));
@@ -180,10 +184,32 @@ export default function Battle() {
     if (mic !== "idle") return;
     if (!hasVoiceConsent()) { setShowVoiceConsent(true); return; }
     setAi(null); setNote(""); setMoment(""); setExpanded(false);
+    setIntents([]); setIntentSel("");
     const ok = await rec.start();               // user gesture → mic permission
     if (!ok) { console.log("[LV] rec.start failed:", rec.error); setNote(t("battle.micUnsupported")); return; }
     console.log("[LV] recording");
     setMic("listening");
+  };
+
+  // One-tap move override: re-pick the SAME dictated moment under a different
+  // conversational intent (text endpoint — no re-recording, one battle call).
+  const pickIntent = async (k: string) => {
+    if (mic !== "idle" || !moment || k === intentSel) return;
+    setIntentSel(k); setNote(""); setExpanded(false); setMic("thinking");
+    console.log("[LV] re-pick intent:", k);
+    try {
+      const r = await api.battleSuggest(moment, scope, k);
+      console.log("[LV] re-pick ←", r.via, r.picks.length);
+      if (r.via === "llm" && r.picks.length) setAi(r.picks);
+      else {
+        setAi(null);
+        setNote(r.via === "fallback" ? t("battle.aiUnavailable") : t("battle.noResults"));
+      }
+    } catch (e) {
+      console.log("[LV] re-pick error:", String(e));
+      setAi(null);
+      setNote(String(e).includes("429") ? t("practice.limitReached") : t("battle.aiUnavailable"));
+    } finally { setMic("idle"); }
   };
 
   // What the card unfolds: the AI pick (voice) or the top local match (typed).
@@ -204,11 +230,11 @@ export default function Battle() {
       {/* Scope: advise from what you trained, or from the whole course. */}
       <div className="seg seg-wide lv-scope" role="tablist" aria-label={t("battle.title")}>
         <button role="tab" aria-selected={scope === "learned"} className={scope === "learned" ? "on" : ""}
-          onClick={() => { setScope("learned"); setAi(null); setNote(""); setExpanded(false); }}>
+          onClick={() => { setScope("learned"); setAi(null); setNote(""); setExpanded(false); setIntents([]); setIntentSel(""); }}>
           {t("battle.scopeLearned")}
         </button>
         <button role="tab" aria-selected={scope === "all"} className={scope === "all" ? "on" : ""}
-          onClick={() => { setScope("all"); setAi(null); setNote(""); setExpanded(false); }}>
+          onClick={() => { setScope("all"); setAi(null); setNote(""); setExpanded(false); setIntents([]); setIntentSel(""); }}>
           {t("battle.scopeAll")}
         </button>
       </div>
@@ -225,6 +251,17 @@ export default function Battle() {
               {/* The dictated moment stays on the card after transcription —
                   ALWAYS (with or without picks): "show me what you heard". */}
               {moment && <p className="lv-momentq">«{moment}»</p>}
+              {/* Ranked moves — tap another to re-pick for that intent. */}
+              {intents.length > 0 && (
+                <div className="lv-intents" onClick={(e) => e.stopPropagation()}>
+                  {intents.map((k) => (
+                    <button key={k} className={`lv-chip${k === intentSel ? " on" : ""}`}
+                      onClick={() => void pickIntent(k)}>
+                      {t(`intent.${k}`)}
+                    </button>
+                  ))}
+                </div>
+              )}
               {best ? (
                 <>
                   <p className="lv-best">{best.phrase_en}</p>

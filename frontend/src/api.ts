@@ -235,14 +235,16 @@ export const api = {
   // scope="learned" = the study set; scope="all" = the whole visible catalog.
   battleCorpus: (scope: "learned" | "all" = "learned") =>
     apiFetch(`/api/battle/corpus?lang=${clang()}&scope=${scope}`).then(j<BattleItem[]>),
-  battleSuggest: (situation: string, scope: "learned" | "all" = "learned") =>
-    apiFetch(`/api/battle/suggest?scope=${scope}`, {
+  // `intent` forces a conversational move (the one-tap chip override); empty =
+  // let the model rank the moves itself (returned in `intents`, best first).
+  battleSuggest: (situation: string, scope: "learned" | "all" = "learned", intent = "") =>
+    apiFetch(`/api/battle/suggest?scope=${scope}${intent ? `&intent=${intent}` : ""}`, {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ situation }),
       // Live mode is real-time: a wedged network must surface as an error the
       // card can react to, never freeze «Подбираю…» forever.
       signal: AbortSignal.timeout(20_000),
-    }).then(j<{ via: string; picks: BattlePick[] }>),
+    }).then(j<{ via: string; picks: BattlePick[]; intents: string[] }>),
   // Voice-in variant: the dictated moment as AUDIO → server STT (Whisper-class;
   // on-device Apple dictation proved too lossy for live RU) → pick, one trip.
   battleSuggestVoice: (blob: Blob, filename: string, scope: "learned" | "all" = "learned") => {
@@ -250,7 +252,7 @@ export const api = {
     fd.append("audio", blob, filename);
     return apiFetch(`/api/battle/suggest-voice?scope=${scope}`, {
       method: "POST", body: fd, signal: AbortSignal.timeout(30_000),
-    }).then(j<{ via: string; heard: string; picks: BattlePick[] }>);
+    }).then(j<{ via: string; heard: string; picks: BattlePick[]; intents: string[] }>);
   },
   // Arena: weave 3 due/learned phrases into one fresh scene (AI plan).
   getScenario: () =>

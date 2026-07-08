@@ -30,6 +30,7 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
+from .. import intents as intents_mod
 from .. import localize, models, scoring, stt, usage
 from ..auth import current_user_id
 from ..db import get_session
@@ -195,20 +196,35 @@ def _gate_ai(session: Session, user_id: int) -> None:
         raise HTTPException(429, "Monthly AI limit reached.")
 
 
-def _run_pick(session: Session, user_id: int, scope: str, situation: str) -> dict:
-    """Corpus → bounded pool → one LLM call → up to 3 mapped picks. Accrues the
-    battle cost on a real LLM call (NOT committed — caller owns the txn)."""
+def _norm_intent(intent: str) -> str | None:
+    """Validate the ?intent= override; unknown keys are a client bug → 400."""
+    intent = (intent or "").strip()
+    if not intent:
+        return None
+    if intent not in intents_mod.INTENTS:
+        raise HTTPException(400, "bad_intent")
+    return intent
+
+
+def _run_pick(session: Session, user_id: int, scope: str, situation: str,
+              intent: str | None = None) -> dict:
+    """Corpus → (intent prefilter) → bounded pool → one LLM call → ranked
+    intents + up to 3 mapped picks. Accrues the battle cost on a real LLM call
+    (NOT committed — caller owns the txn)."""
     rows = _rows_for_scope(session, user_id, scope)
+    if intent:
+        # The batch "answer type": sections that serve the chosen move first.
+        rows = intents_mod.filter_rows(rows, intent)
     if scope == "all":
         pool = _keyword_pool(rows, situation, _ALL_CAP)      # bounded prompt
     else:
         pool = _sort_learned_first(rows)[:_POOL_CAP]
     if not pool:
-        return {"via": "empty", "picks": []}
+        return {"via": "empty", "picks": [], "intents": []}
 
     items = [{"n": i + 1, "anchor": p.anchor, "phrase_en": p.phrase_en,
               "gloss_ru": p.gloss_ru or ""} for i, (p, _st, _b) in enumerate(pool)]
-    res = scoring.battle_pick(situation[:_MAX_CHARS], items)
+    res = scoring.battle_pick(situation[:_MAX_CHARS], items, intent)
 
     picks, seen = [], set()
     for pick in res.get("picks", []):
@@ -230,14 +246,16 @@ def _run_pick(session: Session, user_id: int, scope: str, situation: str) -> dic
 
     if res["via"] == "llm":
         usage.accrue(session, user_id, "battle")
-    return {"via": res["via"], "picks": picks}
+    return {"via": res["via"], "picks": picks, "intents": res.get("intents", [])}
 
 
 @router.post("/suggest")
-def suggest(body: SuggestIn, scope: str = "learned",
+def suggest(body: SuggestIn, scope: str = "learned", intent: str = "",
             user_id: int = Depends(current_user_id),
             session: Session = Depends(get_session)):
-    """AI tier, text-in: typed/predictated moment → up to 3 picks, best first.
+    """AI tier, text-in: typed/re-picked moment → ranked intents + up to 3
+    picks, best first. ?intent= forces a user-chosen move (the one-tap chip
+    override; the pool prefilters to batch sections serving that move).
     scope="learned" picks from the study set; scope="all" from the whole catalog
     (keyword-prefiltered so the prompt stays bounded). via="empty" = nothing to
     pick from; via="fallback" = LLM unavailable (client keeps local results)."""
@@ -245,13 +263,14 @@ def suggest(body: SuggestIn, scope: str = "learned",
     situation = (body.situation or "").strip()
     if len(situation) < _MIN_CHARS:
         raise HTTPException(400, "too_short")
-    out = _run_pick(session, user_id, scope, situation)
+    out = _run_pick(session, user_id, scope, situation, _norm_intent(intent))
     session.commit()
     return out
 
 
 @router.post("/suggest-voice")
-async def suggest_voice(scope: str = "learned", audio: UploadFile = File(...),
+async def suggest_voice(scope: str = "learned", intent: str = "",
+                        audio: UploadFile = File(...),
                         user_id: int = Depends(current_user_id),
                         session: Session = Depends(get_session)):
     """AI tier, voice-in: the dictated moment as AUDIO → server STT → the same
@@ -274,8 +293,8 @@ async def suggest_voice(scope: str = "learned", audio: UploadFile = File(...),
     heard = heard.strip()
     if len(heard) < _MIN_CHARS:
         session.commit()
-        return {"via": "empty_stt", "heard": heard, "picks": []}
-    out = _run_pick(session, user_id, scope, heard)
+        return {"via": "empty_stt", "heard": heard, "picks": [], "intents": []}
+    out = _run_pick(session, user_id, scope, heard, _norm_intent(intent))
     out["heard"] = heard
     session.commit()                             # stt (+battle if llm) in one txn
     return out

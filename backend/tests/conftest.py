@@ -115,8 +115,11 @@ def stub_network(monkeypatch):
     )
     monkeypatch.setattr(
         "app.scoring.battle_pick",
-        lambda situation, items: {"via": "llm", "picks": (
-            [{"n": 1, "note": "коротко и сразу"}] if items else [])},
+        lambda situation, items, intent=None: {
+            "via": "llm",
+            "intents": [intent] if intent else
+                       ["pushback", "hold", "ask", "warm", "clarify"],
+            "picks": [{"n": 1, "note": "коротко и сразу"}] if items else []},
     )
     monkeypatch.setattr(
         "app.scoring.league_score",

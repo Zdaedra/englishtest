@@ -199,7 +199,7 @@ def test_suggest_empty_corpus_is_via_empty_and_free(make_user):
     uid = c.user["id"]  # type: ignore[attr-defined]
     r = c.post("/api/battle/suggest", json={"situation": "что сказать инвестору"})
     assert r.status_code == 200
-    assert r.json() == {"via": "empty", "picks": []}
+    assert r.json() == {"via": "empty", "picks": [], "intents": []}
     from app.usage import _period
     with Session(engine()) as s:      # no LLM call → no ledger row
         row = s.exec(models.UsageLedger.__table__.select().where(
@@ -211,8 +211,9 @@ def test_suggest_empty_corpus_is_via_empty_and_free(make_user):
 def test_suggest_drops_out_of_range_pick(make_user, monkeypatch):
     monkeypatch.setattr(
         "app.scoring.battle_pick",
-        lambda situation, items: {"via": "llm",
-                                  "picks": [{"n": 99, "note": "x"}, {"n": 0, "note": "y"}]})
+        lambda situation, items, intent=None: {
+            "via": "llm", "intents": [],
+            "picks": [{"n": 99, "note": "x"}, {"n": 0, "note": "y"}]})
     c = make_user(plan="ai", is_admin=True)
     uid = c.user["id"]  # type: ignore[attr-defined]
     bid, _pids = _seed_batch("bt-oor")
@@ -220,6 +221,46 @@ def test_suggest_drops_out_of_range_pick(make_user, monkeypatch):
     r = c.post("/api/battle/suggest", json={"situation": "осадить оппонента"})
     assert r.status_code == 200
     assert r.json()["picks"] == []     # hallucinated numbers never 500
+
+
+# ---- intents: the ranked-move axis --------------------------------------------
+
+def test_suggest_returns_ranked_intents(make_user):
+    c = make_user(plan="ai", is_admin=True)
+    uid = c.user["id"]  # type: ignore[attr-defined]
+    bid, _ = _seed_batch("bt-int")
+    _activate(uid, bid)
+    body = c.post("/api/battle/suggest",
+                  json={"situation": "хочу мягко осадить коллегу"}).json()
+    assert body["intents"] == ["pushback", "hold", "ask", "warm", "clarify"]  # stub ranking
+
+
+def test_suggest_forced_intent_echoes_and_bad_intent_400(make_user):
+    c = make_user(plan="ai", is_admin=True)
+    uid = c.user["id"]  # type: ignore[attr-defined]
+    bid, _ = _seed_batch("bt-int2")
+    _activate(uid, bid)
+    ok = c.post("/api/battle/suggest?intent=warm",
+                json={"situation": "надо расположить собеседника"}).json()
+    assert ok["intents"] == ["warm"] and ok["via"] == "llm"
+    bad = c.post("/api/battle/suggest?intent=nonsense",
+                 json={"situation": "надо расположить собеседника"})
+    assert bad.status_code == 400
+
+
+def test_intent_filter_narrows_by_section_with_fallback():
+    from app.intents import filter_rows
+
+    class _B:
+        def __init__(self, section): self.section = section
+    mk = lambda sec, n: [(object(), None, _B(sec)) for _ in range(n)]  # noqa: E731
+
+    rows = mk("requests", 6) + mk("repair", 6) + mk("", 4)
+    asks = filter_rows(rows, "ask")          # requests + sectionless = 10 ≥ 8
+    assert len(asks) == 10
+    assert all((r[2].section or "") in ("requests", "") for r in asks)
+    # too few servers for the move → falls back to the full pool
+    assert len(filter_rows(mk("repair", 6), "ask")) == 6
 
 
 # ---- suggest-voice: audio in, STT + pick in one round trip -------------------
@@ -262,7 +303,7 @@ def test_suggest_voice_short_transcript_charges_stt_only(make_user, monkeypatch)
     r = c.post("/api/battle/suggest-voice",
                files={"audio": ("clip.webm", b"quiet", "audio/webm")})
     assert r.status_code == 200
-    assert r.json() == {"via": "empty_stt", "heard": "ну", "picks": []}
+    assert r.json() == {"via": "empty_stt", "heard": "ну", "picks": [], "intents": []}
     from app.usage import EST_USD, _period
     with Session(engine()) as s:
         row = s.exec(models.UsageLedger.__table__.select().where(

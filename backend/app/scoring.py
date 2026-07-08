@@ -286,27 +286,45 @@ def analyze_call(text: str) -> dict:
 
 
 _BATTLE_SYSTEM = """Ты — суфлёр Executive English. Пользователь ПРЯМО СЕЙЧАС в живом
-разговоре и коротко описал момент: с кем говорит и что хочет сделать репликой. Дан
-нумерованный список английских фраз, которые он реально тренировал. Выбери до 3 фраз,
-которые лучше всего сработают именно в этот момент, лучшая — первой. Смотри на
-конверсационный ход (осадить, попросить, удержать позицию, расположить), а не на
-совпадение слов. Если ничего по-настоящему не подходит — верни пустой список, не
-притягивай за уши. Верни СТРОГО JSON без markdown:
-{"picks":[{"n":<номер фразы>,"note":"<до 8 русских слов — как/когда подать>"}]}"""
+разговоре и коротко описал момент: с кем говорит и что происходит. Дан нумерованный
+список английских фраз, которые он реально тренировал.
+
+Ходы (фиксированные ключи): pushback=осадить/не согласиться; hold=удержать позицию;
+ask=попросить/добиться; warm=расположить; buy_time=выиграть время;
+clarify=уточнить/переспросить; close=зафиксировать/закрыть; smooth=сгладить/извиниться.
+
+1) intents: до 5 ходов, уместных в этот момент, лучший — первым.
+2) picks: до 3 фраз под ПЕРВЫЙ ход, лучшая — первой. Суди по конверсационному ходу,
+а не по совпадению слов. Ничего по-настоящему не подходит — верни пустой picks, не
+притягивай за уши.
+
+Верни СТРОГО JSON без markdown:
+{"intents":["<ключ>",…],"picks":[{"n":<номер>,"note":"<до 8 русских слов — как подать>"}]}"""
+
+_BATTLE_FORCED = """
+
+Пользователь УЖЕ выбрал ход: {key} ({label}). Верни intents=["{key}"] и подбери
+picks именно под этот ход."""
 
 
-def battle_pick(situation: str, items: list[dict]) -> dict:
-    """Battle mode (AI plan): a live-conversation moment → the best line from the
-    user's own trained corpus. `items` = [{n, anchor, phrase_en, gloss_ru}] (n is
-    the 1-based number the model answers with). One fast call, small output —
-    this runs while the user is mid-conversation. Returns {picks: [{n, note}],
-    via}; via="fallback" lets the client degrade to its local keyword search."""
+def battle_pick(situation: str, items: list[dict], intent: str | None = None) -> dict:
+    """Battle/Live (AI plan): a live-conversation moment → ranked conversational
+    MOVES (intents, the relevance axis) + the best lines for the top move.
+    `items` = [{n, anchor, phrase_en, gloss_ru}] (n is the 1-based number the
+    model answers with); `intent` forces a user-chosen move (one-tap override).
+    One fast call, small output — this runs mid-conversation. Returns
+    {picks: [{n, note}], intents: [key,…], via}; via="fallback" lets the client
+    degrade to its local keyword search."""
+    from .intents import INTENTS
+    system = _BATTLE_SYSTEM
+    if intent and intent in INTENTS:
+        system += _BATTLE_FORCED.format(key=intent, label=INTENTS[intent])
     listing = "\n".join(
         f"{i['n']}. {i['phrase_en']} — {i.get('gloss_ru') or i.get('anchor', '')}"
         for i in items)
     payload = f"Момент: {situation}\n\nФразы:\n{listing}"
     try:
-        data = _openai_json(_BATTLE_SYSTEM, payload, max_tokens=180,
+        data = _openai_json(system, payload, max_tokens=220,
                             model=get_settings().model_coach)
         picks = []
         for p in (data.get("picks") or [])[:3]:
@@ -314,9 +332,14 @@ def battle_pick(situation: str, items: list[dict]) -> dict:
             if isinstance(n, bool) or not isinstance(n, int):
                 continue
             picks.append({"n": n, "note": str(p.get("note", "")).strip()})
-        return {"picks": picks, "via": "llm"}
+        if intent and intent in INTENTS:
+            ranked = [intent]
+        else:
+            ranked = [k for k in (data.get("intents") or [])
+                      if isinstance(k, str) and k in INTENTS][:5]
+        return {"picks": picks, "intents": ranked, "via": "llm"}
     except Exception:
-        return {"picks": [], "via": "fallback"}
+        return {"picks": [], "intents": [], "via": "fallback"}
 
 
 _SCENARIO_SYSTEM = """Ты — методист приложения Executive English (деловой/светский
