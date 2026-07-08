@@ -641,9 +641,9 @@ a { color: inherit; text-decoration: none; }
 .an-native { font-size: 1.0625rem; font-weight: 650; color: var(--accent); margin: 0; }
 .an-note { font-size: 0.8125rem; color: var(--text-2); margin: 6px 0 0; }
 
-/* Battle mode («Боевой режим») — a live-conversation prompter. Built for one
-   glance: big input, one thumb-sized mic, result cards with the English line
-   dominant. Same calm card language, signature green for the AI pick. */
+/* Battle/Live — a live-conversation prompter. The screen is ONE card (see the
+   .lv-* block below); these are its shared bits: the non-AI input, the round
+   play chip and the "how to deliver" note pill. */
 .bm-screen { display: flex; flex-direction: column; }
 .bm-input {
   flex: 1; min-width: 0; height: 54px; padding: 0 18px;
@@ -655,51 +655,16 @@ a { color: inherit; text-decoration: none; }
 }
 .bm-input:focus { border-color: var(--map-green); }
 .bm-input::-webkit-search-cancel-button { -webkit-appearance: none; }
-.bm-hint { font-size: 0.8125rem; color: var(--faint); margin: 2px 4px 8px; }
-.bm-hint.warn { color: #A05A00; }
-.bm-sect {
-  font-size: 0.75rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
-  color: var(--faint); margin: 14px 4px 8px;
-}
-.bm-card {
-  padding: 13px 15px; border: 1px solid var(--hairline); border-radius: 18px;
-  background: var(--card); margin-bottom: 10px;
-  box-shadow: 0 2px 10px rgba(17, 17, 17, .04); cursor: pointer;
-}
-.bm-card.best {
-  border: 1.5px solid var(--map-green);
-  box-shadow: 0 10px 26px rgba(28, 140, 99, .16);
-}
-.bm-top { display: flex; align-items: center; gap: 8px; }
-.bm-anchor {
-  font-size: 0.6875rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--map-green);
-}
-.bm-badge {
-  font-size: 0.625rem; font-weight: 700; letter-spacing: .04em;
-  color: var(--map-green); background: rgba(28, 140, 99, .10);
-  padding: 2px 7px; border-radius: 999px;
-}
 .bm-play {
   margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 50%;
   border: 0; display: grid; place-items: center;
   background: rgba(28, 140, 99, .10); color: var(--map-green);
   -webkit-tap-highlight-color: transparent;
 }
-.bm-phrase { font-size: 1.0625rem; font-weight: 650; color: var(--accent); margin-top: 6px; }
-.bm-gloss { font-size: 0.8125rem; color: var(--text-2); margin-top: 3px; }
 .bm-note {
   font-size: 0.8125rem; color: var(--map-green); background: rgba(28, 140, 99, .08);
   border-radius: 10px; padding: 6px 10px; margin-top: 8px; width: fit-content;
 }
-.bm-more { margin-top: 10px; border-top: 1px solid var(--hairline); padding-top: 10px; }
-.bm-situ { font-size: 0.875rem; line-height: 1.45; color: var(--text-2); margin: 0 0 10px; }
-.bm-open {
-  border: 1px solid var(--hairline); border-radius: 999px; background: transparent;
-  color: var(--text); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px;
-}
-.bm-empty { text-align: center; padding-top: 8vh; }
-.bm-empty p { color: var(--text-2); line-height: 1.5; max-width: 30em; margin: 0 auto 18px; }
 
 /* Live card — ONE card, the practice-card idiom verbatim: the same 38px glass
    face and the same 76px liquid-glass mic. No labels, no action rows. The live
@@ -768,9 +733,6 @@ a { color: inherit; text-decoration: none; }
 .lv-input-zone { width: 100%; display: flex; flex-direction: column; gap: 8px; padding-top: 12px; }
 .lv-input-zone .bm-input { width: 100%; box-sizing: border-box; }
 .lv-lock { margin: 0; text-align: center; font-size: 0.8125rem; color: var(--faint); }
-
-.lv-arsenal-h { margin-top: 22px; }
-.lv-search { width: 100%; margin: 0 0 10px; box-sizing: border-box; }
 
 /* League placement test — intro / quiz / result. Same calm card language. */
 .league-screen { display: flex; flex-direction: column; }

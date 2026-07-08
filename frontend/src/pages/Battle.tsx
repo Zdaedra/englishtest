@@ -10,11 +10,12 @@ import { syncWidget } from "../lib/widget";
 import { IconMic, IconPlay } from "../ui/icons";
 
 // Live mode: the user is IN a live conversation and needs the right line NOW.
-// ONE card, the practice-card idiom verbatim: the liquid-glass mic ON the card,
-// you dictate the moment, and the best line UNFOLDS ON THE SAME CARD; tapping
-// the card expands it with the other picks. No popup, no extra chrome.
-// Non-AI plan: the mic's place holds a text input instead — the same card
-// unfolds the best local keyword match for free.
+// The screen is ONE card (the practice-card idiom verbatim) and nothing else:
+// the liquid-glass mic ON the card, you dictate the moment, and the best line
+// UNFOLDS ON THE SAME CARD; tapping the card expands it with the other picks.
+// No popup, no browse list, no extra chrome. Non-AI plan: the mic's place
+// holds a text input instead — the same card unfolds the best local keyword
+// match for free.
 //
 // Two scopes (segmented toggle): "learned" = advise from what you trained;
 // "all" = the whole catalog. Cost is bounded either way (routers/battle.py):
@@ -22,7 +23,6 @@ import { IconMic, IconPlay } from "../ui/icons";
 // is keyword-prefiltered server-side to a flat prompt size.
 const CACHE_KEY = (uid: number, scope: string) => `ee-battle-corpus:${uid}:${scope}`;
 const SCOPE_KEY = (uid: number) => `ee-battle-scope:${uid}`;
-const TOP_N = 8;
 
 type Scope = "learned" | "all";
 
@@ -31,7 +31,6 @@ const toks = (q: string) =>
   norm(q).split(/[^a-zа-я0-9']+/i).filter((t) => t.length >= 2);
 
 const SRS_BOOST: Record<string, number> = { automatic: 1.5, familiar: 1.2, shaky: 0.8 };
-const LEARNED = new Set(["familiar", "automatic"]);
 
 function rank(it: BattleItem, tt: string[]): number {
   let s = 0;
@@ -73,9 +72,7 @@ export default function Battle() {
     catch { return "learned"; }
   });
   const [corpus, setCorpus] = useState<BattleItem[]>(() => loadCache(uid, scope));
-  const [loaded, setLoaded] = useState(false);
-  const [search, setSearch] = useState("");   // ONE query: non-AI card input + arsenal
-  const [open, setOpen] = useState<number | null>(null);   // expanded arsenal row
+  const [search, setSearch] = useState("");   // non-AI card input (free local match)
   const [expanded, setExpanded] = useState(false);          // card unfolded to alts
   const [mic, setMic] = useState<MicState>("idle");
   const [heard, setHeard] = useState("");     // native partial/final transcript
@@ -95,30 +92,25 @@ export default function Battle() {
       .then((items) => {
         if (!on) return;
         setCorpus(items);
-        setLoaded(true);
         try { localStorage.setItem(CACHE_KEY(uid, scope), JSON.stringify(items)); } catch { /* full */ }
         if (scope === "learned") void syncWidget(items);
       })
-      .catch(() => { if (on) setLoaded(true); });
+      .catch(() => { /* offline — the cached copy already renders */ });
     return () => { on = false; };
   }, [uid, scope]);
 
+  // Local matches for the typed (non-AI) path: best + up to 3 alternatives.
   const searchToks = toks(search);
   const results = useMemo(() => {
-    if (!searchToks.length) {
-      const base = scope === "learned"
-        ? corpus.filter((it) => LEARNED.has(it.srs_status))
-        : corpus;
-      return base.slice(0, TOP_N);
-    }
+    if (!searchToks.length) return [] as BattleItem[];
     return corpus
       .map((it) => [rank(it, searchToks), it] as const)
       .filter(([s]) => s > 0)
       .sort((a, b) => b[0] - a[0])
-      .slice(0, 12)
+      .slice(0, 4)
       .map(([, it]) => it);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [corpus, search, scope]);
+  }, [corpus, search]);
 
   const play = (pid: number, e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -135,7 +127,7 @@ export default function Battle() {
       if (r.via === "llm" && r.picks.length) setAi(r.picks);
       else if (r.via === "llm") setNote(t("battle.noResults"));
       else if (r.via === "fallback") setNote(t("battle.aiUnavailable"));
-      else setNote(scope === "all" ? t("battle.aiUnavailable") : t("battle.readyEmpty"));
+      else setNote(scope === "all" ? t("battle.aiUnavailable") : t("battle.empty"));
     } catch (e) {
       setNote(String(e).includes("429") ? t("practice.limitReached")
         : t("battle.aiUnavailable"));
@@ -181,7 +173,7 @@ export default function Battle() {
   const typedBest = !isAI && searchToks.length > 0 ? results[0] : undefined;
   const best: (BattlePick | BattleItem) | undefined = showAi ? ai![0] : typedBest;
   const alts: (BattlePick | BattleItem)[] =
-    showAi ? ai!.slice(1) : typedBest ? results.slice(1, 4) : [];
+    showAi ? ai!.slice(1) : typedBest ? results.slice(1) : [];
   const cardTap = () => { if (best && alts.length) setExpanded((x) => !x); };
 
   return (
@@ -192,7 +184,7 @@ export default function Battle() {
       </div>
 
       {/* Scope: advise from what you trained, or from the whole course. */}
-      <div className="seg seg-wide lv-scope" role="tablist" aria-label={t("battle.ready")}>
+      <div className="seg seg-wide lv-scope" role="tablist" aria-label={t("battle.title")}>
         <button role="tab" aria-selected={scope === "learned"} className={scope === "learned" ? "on" : ""}
           onClick={() => { setScope("learned"); setAi(null); setNote(""); setExpanded(false); }}>
           {t("battle.scopeLearned")}
@@ -203,7 +195,7 @@ export default function Battle() {
         </button>
       </div>
 
-      {/* THE card — one surface, the practice-card idiom. */}
+      {/* THE card — one surface, the practice-card idiom. Nothing below it. */}
       <div className={`lv-card${mic !== "idle" ? " live" : ""}`} onClick={cardTap}>
         <div className="lv-body">
           {mic === "listening" ? (
@@ -274,50 +266,6 @@ export default function Battle() {
           </div>
         )}
       </div>
-
-      {/* Arsenal — the browsable phrases (scope-dependent), free local search. */}
-      <div className="bm-sect lv-arsenal-h">{t("battle.ready")}</div>
-      {isAI && (
-        <input
-          className="bm-input lv-search"
-          type="search"
-          enterKeyHint="search"
-          placeholder={t("battle.placeholder")}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      )}
-      {results.length === 0 ? (
-        <p className="bm-hint">
-          {searchToks.length ? t("battle.noResults")
-            : !loaded && !corpus.length ? t("battle.loadingCorpus")
-              : scope === "learned" ? t("battle.readyEmpty") : t("battle.noResults")}
-        </p>
-      ) : results.map((it) => (
-        <div
-          key={it.phrase_id}
-          className="bm-card"
-          onClick={() => setOpen(open === it.phrase_id ? null : it.phrase_id)}
-        >
-          <div className="bm-top">
-            <span className="bm-anchor">{it.anchor}</span>
-            {LEARNED.has(it.srs_status) && <span className="bm-badge">{t("battle.learned")}</span>}
-            <button className="bm-play" aria-label="Play" onClick={(e) => play(it.phrase_id, e)}>
-              <IconPlay size={16} />
-            </button>
-          </div>
-          <div className="bm-phrase">{it.phrase_en}</div>
-          {it.gloss_ru && <div className="bm-gloss">{it.gloss_ru}</div>}
-          {open === it.phrase_id && (
-            <div className="bm-more" onClick={(e) => e.stopPropagation()}>
-              {it.situation_ru && <p className="bm-situ">{it.situation_ru}</p>}
-              <button className="bm-open" onClick={() => nav(`/batch/${it.batch_id}`)}>
-                {t("battle.openBatch")}
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
     </div>
   );
 }
