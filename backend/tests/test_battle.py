@@ -6,7 +6,9 @@ from sqlmodel import Session
 
 from app import models
 from app.db import engine
-from app.routers.battle import _sort_learned_first, _user_rows
+from app.routers.battle import (
+    _ALL_CAP, _catalog_rows, _keyword_pool, _sort_learned_first, _user_rows,
+)
 
 
 def _seed_batch(slug: str, n: int = 3, owner_id: int | None = None) -> tuple[int, list[int]]:
@@ -86,6 +88,57 @@ def test_corpus_includes_stat_only_batches_and_skips_deleted(make_user):
         s.commit()
     got = c.get("/api/battle/corpus").json()
     assert {x["batch_id"] for x in got} == {bid1}
+
+
+# ---- scope="all": the whole catalog, cost-bounded ----------------------------
+
+def test_corpus_all_scope_spans_whole_catalog_even_untouched(make_user):
+    a = make_user(plan="ai", is_admin=True)
+    _seed_batch("bt-all-1")          # never activated / no stats
+    _seed_batch("bt-all-2")
+    learned = a.get("/api/battle/corpus").json()               # study set = empty
+    everything = a.get("/api/battle/corpus?scope=all").json()  # catalog = 6 phrases
+    assert learned == []
+    assert len(everything) == 6
+    assert {x["srs_status"] for x in everything} == {"new"}
+
+
+def test_corpus_all_scope_excludes_other_users_private_imports(make_user):
+    a = make_user(plan="ai", is_admin=True)
+    b = make_user(plan="ai")
+    _seed_batch("bt-shared")                       # owner_id NULL → everyone
+    _seed_batch("bt-b-private", owner_id=b.user["id"])  # type: ignore[attr-defined]
+    ids_seen = {x["batch_id"] for x in a.get("/api/battle/corpus?scope=all").json()}
+    with Session(engine()) as s:
+        priv = s.exec(models.Batch.__table__.select().where(
+            models.Batch.slug == "bt-b-private")).first()
+    assert priv.id not in ids_seen        # a can't see b's private import
+
+
+def test_all_scope_suggest_pool_is_keyword_bounded():
+    """The whole point of the cost guard: a huge catalog is prefiltered to
+    ≤ _ALL_CAP candidates before the LLM ever sees it."""
+    class _P:
+        def __init__(self, i):
+            self.id = i; self.batch_id = 1; self.order_index = i
+            self.anchor = f"a{i}"; self.phrase_en = f"line {i}"
+            self.gloss_ru = "перебить и удержать слово" if i == 3 else f"смысл {i}"
+            self.situation_ru = ""
+    rows = [(_P(i), None, object()) for i in range(500)]
+    pool = _keyword_pool(rows, "хочу удержать слово на встрече", _ALL_CAP)
+    assert len(pool) == _ALL_CAP
+    assert pool[0][0].id == 3          # the keyword hit floats to the front
+
+
+def test_all_scope_suggest_can_pick_an_unlearned_catalog_phrase(make_user):
+    c = make_user(plan="ai", is_admin=True)
+    _seed_batch("bt-cat")             # exists in catalog, user studied nothing
+    # learned scope has no pool → empty; all scope picks from the catalog
+    assert c.post("/api/battle/suggest",
+                  json={"situation": "надо мягко осадить"}).json()["via"] == "empty"
+    r = c.post("/api/battle/suggest?scope=all",
+               json={"situation": "надо мягко осадить"}).json()
+    assert r["via"] == "llm" and len(r["picks"]) == 1
 
 
 # ---- suggest: the entitlements matrix ----------------------------------------

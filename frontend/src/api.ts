@@ -231,10 +231,12 @@ export const api = {
     return apiFetch("/api/training/score-anchor", { method: "POST", body: fd }).then(j<AnchorScore>);
   },
   listPhrases: () => apiFetch(`/api/batches/phrases?lang=${clang()}`).then(j<PhraseSearchItem[]>),
-  // Battle mode: study-set corpus (all plans) + the AI situation pick (AI plan).
-  battleCorpus: () => apiFetch(`/api/battle/corpus?lang=${clang()}`).then(j<BattleItem[]>),
-  battleSuggest: (situation: string) =>
-    apiFetch("/api/battle/suggest", {
+  // Battle/Live: the arsenal corpus (all plans) + the AI situation pick (AI plan).
+  // scope="learned" = the study set; scope="all" = the whole visible catalog.
+  battleCorpus: (scope: "learned" | "all" = "learned") =>
+    apiFetch(`/api/battle/corpus?lang=${clang()}&scope=${scope}`).then(j<BattleItem[]>),
+  battleSuggest: (situation: string, scope: "learned" | "all" = "learned") =>
+    apiFetch(`/api/battle/suggest?scope=${scope}`, {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ situation }),
     }).then(j<{ via: string; picks: BattlePick[] }>),
