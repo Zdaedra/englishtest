@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api, BattleItem, BattlePick } from "../api";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
-import { useSpeech } from "../audio/useSpeech";
-import { nativeRecognize, nativeSttAvailable, nativeSttStop } from "../audio/nativeStt";
-import { isNative } from "../lib/session";
+import { useRecorder, Recording } from "../audio/useRecorder";
 import { syncWidget } from "../lib/widget";
 import { IconMic, IconPlay } from "../ui/icons";
 
@@ -13,14 +11,20 @@ import { IconMic, IconPlay } from "../ui/icons";
 // The screen is ONE card (the practice-card idiom verbatim) and nothing else:
 // the liquid-glass mic ON the card, you dictate the moment, and the best line
 // UNFOLDS ON THE SAME CARD; tapping the card expands it with the other picks.
-// No popup, no browse list, no extra chrome. Non-AI plan: the mic's place
-// holds a text input instead — the same card unfolds the best local keyword
-// match for free.
+// Non-AI plan: the mic's place holds a text input instead — the same card
+// unfolds the best local keyword match for free.
+//
+// Voice path = MediaRecorder → /api/battle/suggest-voice (server STT + pick in
+// one round trip). Field logs buried the on-device recognizer for live RU
+// («Сибири», «Да кофе я не на», 2× empty) — the Whisper-class server model is
+// the quality path, and the same recorder already works in the practice mic.
+// Audio goes to the AI provider → gated behind the same voice_ai consent as
+// the trainer.
 //
 // Two scopes (segmented toggle): "learned" = advise from what you trained;
-// "all" = the whole catalog. Cost is bounded either way (routers/battle.py):
-// only the mic spends an LLM call, typing is a free offline filter, and "all"
-// is keyword-prefiltered server-side to a flat prompt size.
+// "all" = the whole catalog. Cost stays bounded (routers/battle.py): typing is
+// a free offline filter; a mic tap costs stt+battle (~$0.002); "all" is
+// keyword-prefiltered server-side; the monthly plan cap 429s past the ceiling.
 const CACHE_KEY = (uid: number, scope: string) => `ee-battle-corpus:${uid}:${scope}`;
 const SCOPE_KEY = (uid: number) => `ee-battle-scope:${uid}`;
 
@@ -55,7 +59,7 @@ function loadCache(uid: number, scope: string): BattleItem[] {
   } catch { return []; }
 }
 
-// idle → listening (mic ON, live transcript fills the card) → thinking → idle
+// idle → listening (recording) → thinking (STT + pick, one trip) → idle
 // (with the result unfolded on the card).
 type MicState = "idle" | "listening" | "thinking";
 
@@ -65,7 +69,7 @@ export default function Battle() {
   const { user } = useAuth();
   const uid = user?.id ?? 0;
   const isAI = user?.plan === "ai";
-  const speech = useSpeech();
+  const rec = useRecorder();
 
   const [scope, setScope] = useState<Scope>(() => {
     try { return localStorage.getItem(SCOPE_KEY(uid)) === "all" ? "all" : "learned"; }
@@ -75,13 +79,24 @@ export default function Battle() {
   const [search, setSearch] = useState("");   // non-AI card input (free local match)
   const [expanded, setExpanded] = useState(false);          // card unfolded to alts
   const [mic, setMic] = useState<MicState>("idle");
-  const [heard, setHeard] = useState("");     // native partial/final transcript
-  const [moment, setMoment] = useState("");   // the dictated moment
+  const [moment, setMoment] = useState("");   // the dictated moment (server `heard`)
   const [ai, setAi] = useState<BattlePick[] | null>(null);
   const [note, setNote] = useState("");       // fallback / limit / no-hear
-  const nativeStt = useRef(false);
-  const heardRef = useRef("");                // partials, readable from the stop watchdog
-  const stopWait = useRef<((v: string) => void) | null>(null);
+
+  // Voice→AI consent (Apple §5.1.2(i) + GDPR): the clip goes to the STT
+  // provider, so the first mic tap shows the same one-time gate as the trainer
+  // (shared per-user flag — accepted in practice ⇒ no re-ask here).
+  const [showVoiceConsent, setShowVoiceConsent] = useState(false);
+  const voiceConsentKey = uid ? `ee-voice-consent-${uid}` : null;
+  const hasVoiceConsent = () => {
+    try { return !!voiceConsentKey && localStorage.getItem(voiceConsentKey) === "1"; }
+    catch { return false; }
+  };
+  const acceptVoiceConsent = () => {
+    try { if (voiceConsentKey) localStorage.setItem(voiceConsentKey, "1"); } catch { /* private */ }
+    api.recordConsent("voice_ai").catch(() => {});   // server audit (best-effort)
+    setShowVoiceConsent(false);
+  };
 
   useEffect(() => { try { localStorage.setItem(SCOPE_KEY(uid), scope); } catch { /* private */ } }, [scope, uid]);
 
@@ -100,6 +115,10 @@ export default function Battle() {
       .catch(() => { /* offline — the cached copy already renders */ });
     return () => { on = false; };
   }, [uid, scope]);
+
+  // Release the mic stream when leaving the screen mid-recording.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => { if (rec.recording) void rec.stop(); }, []);
 
   // Local matches for the typed (non-AI) path: best + up to 3 alternatives.
   const searchToks = toks(search);
@@ -121,75 +140,51 @@ export default function Battle() {
       .catch(() => { /* offline — text is already on screen */ });
   };
 
-  const runSuggest = async (text: string) => {
-    setMoment(text);
-    setMic("thinking");
-    console.log("[LV] suggest →", scope, JSON.stringify(text));
+  const runSuggestVoice = async (clip: Recording) => {
+    console.log("[LV] suggest-voice →", scope, clip.ms, "ms,", clip.blob.size, "b");
     try {
-      const r = await api.battleSuggest(text, scope);
-      console.log("[LV] suggest ←", r.via, r.picks.length);
+      const r = await api.battleSuggestVoice(clip.blob, clip.filename, scope);
+      console.log("[LV] suggest-voice ←", r.via, r.picks.length, JSON.stringify(r.heard));
+      setMoment(r.heard || "");
       if (r.via === "llm" && r.picks.length) setAi(r.picks);
+      else if (r.via === "empty_stt") setNote(t("battle.recEmpty"));
       else if (r.via === "llm") setNote(t("battle.noResults"));
       else if (r.via === "fallback") setNote(t("battle.aiUnavailable"));
       else setNote(scope === "all" ? t("battle.aiUnavailable") : t("battle.empty"));
     } catch (e) {
-      console.log("[LV] suggest error:", String(e));
+      console.log("[LV] suggest-voice error:", String(e));
       setNote(String(e).includes("429") ? t("practice.limitReached")
         : t("battle.aiUnavailable"));
-    } finally { setMic("idle"); setHeard(""); }
+    } finally { setMic("idle"); }
   };
 
-  const onHeard = (tr: string) => { heardRef.current = tr; setHeard(tr); };
-
-  const startVoice = async () => {
-    if (mic !== "idle") return;
-    setAi(null); setNote(""); setHeard(""); heardRef.current = ""; setMoment(""); setExpanded(false);
-    setMic("listening");
-    // Armed BEFORE any await: the stop-tap watchdog must always have a resolver,
-    // even if the very first native call wedges (the exact freeze we chased —
-    // previously this sat after an await, so a wedged call left it null and the
-    // watchdog fired into nothing).
-    const stopped = new Promise<string>((res) => { stopWait.current = res; });
-    let text = "";
-    try {
-      nativeStt.current = await nativeSttAvailable();
-      console.log("[LV] startVoice: native =", nativeStt.current);
-      let rec: Promise<string>;
-      if (nativeStt.current) rec = nativeRecognize("ru-RU", onHeard);
-      // Web Speech ONLY in a real browser: inside the native WKWebView the
-      // webkit recognizer is a zombie (never fires results, stop() is a no-op)
-      // — exactly the frozen-mic bug. Native uses the plugin path or nothing.
-      else if (!isNative() && speech.supported) rec = speech.start("ru-RU");
-      else { setMic("idle"); setNote(t("battle.micUnsupported")); return; }
-      rec.catch(() => { /* late reject after the watchdog settled the race */ });
-      text = await Promise.race([rec, stopped]);
-      console.log("[LV] recognized:", JSON.stringify(text));
-    } catch (e) {
-      // native-stt-unavailable/denied/timeout → honest "unsupported"; web no-speech → recEmpty
-      console.log("[LV] recognize error:", String(e));
-      setMic("idle"); setHeard("");
-      setNote(String(e).includes("native-stt") ? t("battle.micUnsupported") : t("battle.recEmpty"));
-      return;
-    } finally { stopWait.current = null; }
-    text = (text || "").trim();
-    if (!text) { setMic("idle"); setHeard(""); setNote(t("battle.recEmpty")); return; }
-    await runSuggest(text);
-  };
-
-  // Same gesture as the practice card: tap to talk, tap again to finish.
-  // The stop tap reacts INSTANTLY (state flips to "thinking"), asks the
-  // recognizer to finalize, and arms the watchdog fallback.
-  const micTap = () => {
-    console.log("[LV] micTap in state:", mic);
+  // Same gesture as the practice card: tap to record, tap again to finish.
+  // Every step reacts instantly and every wait is bounded — the card can
+  // never freeze (the lesson of the on-device-recognizer saga).
+  const micTap = async () => {
+    console.log("[LV] micTap in state:", mic, "rec:", rec.recording);
     if (mic === "listening") {
       setMic("thinking");
-      if (nativeStt.current) nativeSttStop().catch(() => { /* noop */ });
-      else speech.stop();
-      window.setTimeout(() => stopWait.current?.(heardRef.current), 1200);
-    } else if (mic === "idle") void startVoice();
+      let clip: Recording | null = null;
+      try {
+        clip = await Promise.race([
+          rec.stop(),
+          new Promise<null>((res) => window.setTimeout(() => res(null), 4000)),
+        ]);
+      } catch { clip = null; }
+      console.log("[LV] clip:", clip ? `${clip.ms}ms/${clip.blob.size}b` : "null");
+      if (!clip || clip.ms < 400) { setMic("idle"); setNote(t("battle.recEmpty")); return; }
+      await runSuggestVoice(clip);
+      return;
+    }
+    if (mic !== "idle") return;
+    if (!hasVoiceConsent()) { setShowVoiceConsent(true); return; }
+    setAi(null); setNote(""); setMoment(""); setExpanded(false);
+    const ok = await rec.start();               // user gesture → mic permission
+    if (!ok) { console.log("[LV] rec.start failed:", rec.error); setNote(t("battle.micUnsupported")); return; }
+    console.log("[LV] recording");
+    setMic("listening");
   };
-
-  const liveText = speech.interim || heard;
 
   // What the card unfolds: the AI pick (voice) or the top local match (typed).
   const showAi = mic === "idle" && !!ai && ai.length > 0;
@@ -222,9 +217,9 @@ export default function Battle() {
       <div className={`lv-card${mic !== "idle" ? " live" : ""}`} onClick={cardTap}>
         <div className="lv-body">
           {mic === "listening" ? (
-            <p className={`lv-live${liveText ? "" : " ph"}`}>{liveText || t("battle.recHint")}</p>
+            <p className="lv-live ph">{t("battle.recHint")}</p>
           ) : mic === "thinking" ? (
-            (moment || heard) ? <p className="lv-momentq">«{moment || heard}»</p> : null
+            moment ? <p className="lv-momentq">«{moment}»</p> : null
           ) : best ? (
             <>
               {showAi && moment && <p className="lv-momentq">«{moment}»</p>}
@@ -262,7 +257,7 @@ export default function Battle() {
           <div className="lv-mic-zone" onClick={(e) => e.stopPropagation()}>
             <button
               className={`tr-mic-glass lv-mic${mic === "listening" ? " on" : ""}`}
-              onClick={micTap}
+              onClick={() => { void micTap(); }}
               disabled={mic === "thinking"}
               aria-label={t("battle.micHint")}
             >
@@ -289,6 +284,19 @@ export default function Battle() {
           </div>
         )}
       </div>
+
+      {showVoiceConsent && (
+        <div className="ava-modal" role="dialog" aria-modal="true">
+          <div className="ava-sheet">
+            <p className="ava-title">{t("voice.consentTitle")}</p>
+            <p className="muted small" style={{ textAlign: "center", margin: 0, lineHeight: 1.5 }}>{t("voice.consentText")}</p>
+            <div className="ava-actions">
+              <button className="btn-ghost" onClick={() => setShowVoiceConsent(false)}>{t("common.cancel")}</button>
+              <button className="btn" onClick={acceptVoiceConsent}>{t("voice.consentAccept")}</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

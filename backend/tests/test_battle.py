@@ -222,6 +222,55 @@ def test_suggest_drops_out_of_range_pick(make_user, monkeypatch):
     assert r.json()["picks"] == []     # hallucinated numbers never 500
 
 
+# ---- suggest-voice: audio in, STT + pick in one round trip -------------------
+
+def test_suggest_voice_locked_for_free_and_core(make_user):
+    make_user(plan="ai", is_admin=True)   # burn the first-user auto-admin slot
+    for plan in ("free", "core"):
+        c = make_user(plan=plan)
+        r = c.post("/api/battle/suggest-voice",
+                   files={"audio": ("clip.webm", b"xx", "audio/webm")})
+        assert r.status_code == 403, f"{plan}: {r.text}"
+
+
+def test_suggest_voice_happy_accrues_stt_plus_battle(make_user):
+    c = make_user(plan="ai", is_admin=True)
+    uid = c.user["id"]  # type: ignore[attr-defined]
+    bid, pids = _seed_batch("bt-voice")
+    _activate(uid, bid)
+    r = c.post("/api/battle/suggest-voice?scope=learned",
+               files={"audio": ("clip.webm", b"fake-bytes", "audio/webm")})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["heard"] == "stub transcript"        # conftest stt stub
+    assert body["via"] == "llm" and body["picks"][0]["phrase_id"] == pids[0]
+
+    from app.usage import EST_USD, _period
+    with Session(engine()) as s:
+        row = s.exec(models.UsageLedger.__table__.select().where(
+            models.UsageLedger.user_id == uid,
+            models.UsageLedger.period == _period())).first()
+    want = int(round((EST_USD["stt"] + EST_USD["battle"]) * 1_000_000))
+    assert row is not None and row.micros == want
+
+
+def test_suggest_voice_short_transcript_charges_stt_only(make_user, monkeypatch):
+    monkeypatch.setattr("app.stt.transcribe",
+                        lambda raw, filename="c.webm", language=None: "ну")
+    c = make_user(plan="ai", is_admin=True)
+    uid = c.user["id"]  # type: ignore[attr-defined]
+    r = c.post("/api/battle/suggest-voice",
+               files={"audio": ("clip.webm", b"quiet", "audio/webm")})
+    assert r.status_code == 200
+    assert r.json() == {"via": "empty_stt", "heard": "ну", "picks": []}
+    from app.usage import EST_USD, _period
+    with Session(engine()) as s:
+        row = s.exec(models.UsageLedger.__table__.select().where(
+            models.UsageLedger.user_id == uid,
+            models.UsageLedger.period == _period())).first()
+    assert row is not None and row.micros == int(round(EST_USD["stt"] * 1_000_000))
+
+
 # ---- the learned-first pool order --------------------------------------------
 
 def test_pool_orders_learned_before_touched_before_new(make_user):

@@ -243,6 +243,15 @@ export const api = {
       // card can react to, never freeze «Подбираю…» forever.
       signal: AbortSignal.timeout(20_000),
     }).then(j<{ via: string; picks: BattlePick[] }>),
+  // Voice-in variant: the dictated moment as AUDIO → server STT (Whisper-class;
+  // on-device Apple dictation proved too lossy for live RU) → pick, one trip.
+  battleSuggestVoice: (blob: Blob, filename: string, scope: "learned" | "all" = "learned") => {
+    const fd = new FormData();
+    fd.append("audio", blob, filename);
+    return apiFetch(`/api/battle/suggest-voice?scope=${scope}`, {
+      method: "POST", body: fd, signal: AbortSignal.timeout(30_000),
+    }).then(j<{ via: string; heard: string; picks: BattlePick[] }>);
+  },
   // Arena: weave 3 due/learned phrases into one fresh scene (AI plan).
   getScenario: () =>
     apiFetch("/api/practice/scenario", { method: "POST" }).then(j<Scenario>),

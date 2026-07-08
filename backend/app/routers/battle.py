@@ -26,16 +26,18 @@ Cost control (why scope="all" is not a money hole):
 """
 import re
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from .. import localize, models, scoring, usage
+from .. import localize, models, scoring, stt, usage
 from ..auth import current_user_id
 from ..db import get_session
 from ..entitlements import user_entitlements
 
 router = APIRouter(prefix="/api/battle", tags=["battle"])
+
+_MAX_AUDIO_BYTES = 8 * 1024 * 1024   # mirrors the training STT cap
 
 _POOL_CAP = 160          # learned scope: max phrases shown to the LLM (already small)
 _ALL_CAP = 60            # "all" scope: keyword-prefiltered top-N → bounds prompt/cost
@@ -183,24 +185,19 @@ class SuggestIn(BaseModel):
     situation: str
 
 
-@router.post("/suggest")
-def suggest(body: SuggestIn, scope: str = "learned",
-            user_id: int = Depends(current_user_id),
-            session: Session = Depends(get_session)):
-    """AI tier: dictated moment → up to 3 picks, best first. scope="learned"
-    picks from the study set; scope="all" from the whole catalog (keyword-
-    prefiltered so the prompt stays bounded). via="empty" = nothing to pick from;
-    via="fallback" = LLM unavailable (client keeps its local keyword results)."""
+def _gate_ai(session: Session, user_id: int) -> None:
+    """AI-plan + monthly-budget gate shared by both suggest endpoints."""
     ents = user_entitlements(session, user_id)
     if not ents.get("ai_coach"):
         raise HTTPException(403, "locked")
-    situation = (body.situation or "").strip()
-    if len(situation) < _MIN_CHARS:
-        raise HTTPException(400, "too_short")
     budget = ents.get("monthly_ai_cost_cap_usd")
     if budget is not None and usage.month_cost_usd(session, user_id) >= budget:
         raise HTTPException(429, "Monthly AI limit reached.")
 
+
+def _run_pick(session: Session, user_id: int, scope: str, situation: str) -> dict:
+    """Corpus → bounded pool → one LLM call → up to 3 mapped picks. Accrues the
+    battle cost on a real LLM call (NOT committed — caller owns the txn)."""
     rows = _rows_for_scope(session, user_id, scope)
     if scope == "all":
         pool = _keyword_pool(rows, situation, _ALL_CAP)      # bounded prompt
@@ -233,5 +230,51 @@ def suggest(body: SuggestIn, scope: str = "learned",
 
     if res["via"] == "llm":
         usage.accrue(session, user_id, "battle")
-        session.commit()
     return {"via": res["via"], "picks": picks}
+
+
+@router.post("/suggest")
+def suggest(body: SuggestIn, scope: str = "learned",
+            user_id: int = Depends(current_user_id),
+            session: Session = Depends(get_session)):
+    """AI tier, text-in: typed/predictated moment → up to 3 picks, best first.
+    scope="learned" picks from the study set; scope="all" from the whole catalog
+    (keyword-prefiltered so the prompt stays bounded). via="empty" = nothing to
+    pick from; via="fallback" = LLM unavailable (client keeps local results)."""
+    _gate_ai(session, user_id)
+    situation = (body.situation or "").strip()
+    if len(situation) < _MIN_CHARS:
+        raise HTTPException(400, "too_short")
+    out = _run_pick(session, user_id, scope, situation)
+    session.commit()
+    return out
+
+
+@router.post("/suggest-voice")
+async def suggest_voice(scope: str = "learned", audio: UploadFile = File(...),
+                        user_id: int = Depends(current_user_id),
+                        session: Session = Depends(get_session)):
+    """AI tier, voice-in: the dictated moment as AUDIO → server STT → the same
+    pick, one round trip. Exists because on-device Apple dictation garbled live
+    RU speech in the field («Сибири», truncated clips) — the Whisper-class
+    server model is the quality path, same as the training mic. `heard` echoes
+    the transcript so the card can show the moment. Audio is processed
+    in-flight only (never persisted) behind the same voice_ai consent."""
+    _gate_ai(session, user_id)
+    raw = await audio.read()
+    if len(raw) > _MAX_AUDIO_BYTES:
+        raise HTTPException(413, "Audio clip too large.")
+    try:
+        heard = stt.transcribe(raw, filename=audio.filename or "clip.webm",
+                               language="ru")
+    except Exception:
+        raise HTTPException(502, "stt_failed")
+    usage.accrue(session, user_id, "stt")        # the STT attempt is spent either way
+    heard = heard.strip()
+    if len(heard) < _MIN_CHARS:
+        session.commit()
+        return {"via": "empty_stt", "heard": heard, "picks": []}
+    out = _run_pick(session, user_id, scope, heard)
+    out["heard"] = heard
+    session.commit()                             # stt (+battle if llm) in one txn
+    return out
