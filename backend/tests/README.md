@@ -45,7 +45,8 @@ every `git push`.
 | **Progress-preservation contract**: upsert blocked on live progress (409/`LiveProgressError`), force path wipes dependents cleanly (no orphans, PlaybackSession survives), seed continues past blocked batches | `test_content_guard.py` |
 | SRS-safe in-place phrase edits: id+stat survival, structural/reorder skip, gloss sync, CheckPhrase invalidation, dry-run | `test_rephrase.py` |
 | Story resync: spans recomputed even for anchor-only changes, i18n kept/dropped per language | `test_restory.py` |
-| Integrity doctor: orphan detection+fix, duplicate-stat dedup, cross-attach report, streak history preserved | `test_doctor.py` |
+| Integrity doctor: orphan detection+fix, duplicate-stat dedup, cross-attach report, streak history preserved, checkphrase-hole + catalog-union i18n-hole detection | `test_doctor.py` |
+| Title tools invalidate stale i18n on change (settitle/retitle/resubtitle), no-op keeps translations | `test_title_tools.py` |
 | Legacy prod-DDL migration (drops NOT-NULL phrase.srs_status/avg_score) | `test_migration.py` |
 
 ## CI

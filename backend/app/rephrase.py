@@ -176,6 +176,11 @@ def main() -> None:
         print("NEXT: python -m app.restory   (recompute spans against new anchors)")
         print("      python -m app.gen_context   (rebuild cleared situation/task prompts)")
         print("      python -m app.i18n_content --refill   (refill cleared translations)")
+        if stats["checkphrases_dropped"]:
+            print(f"      re-author {stats['checkphrases_dropped']} dropped "
+                  f"CheckPhrase cue(s) for the changed phrases and show them to "
+                  f"the user for review (see CONTENT-GRAPH.md) — app.doctor "
+                  f"stays red until the holes are refilled")
     print("DONE")
 
 

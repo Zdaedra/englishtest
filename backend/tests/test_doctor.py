@@ -134,6 +134,59 @@ def test_private_imports_are_not_flagged(tmp_path, monkeypatch):
     assert doctor.run(fix=False) == {}
 
 
+def test_checkphrase_holes_flag_rephrase_dropped_cues(tmp_path, monkeypatch):
+    """app.rephrase deletes a changed phrase's cues; this check is the enforcement
+    that they get re-authored — a cueless phrase inside an otherwise-cued batch
+    must go red (and a wholly uncued batch in a cued catalog too)."""
+    _isolate_content(tmp_path, monkeypatch)
+    with Session(engine()) as s:
+        b = models.Batch(title="T", slug="dr-7", status="approved")
+        s.add(b)
+        s.commit()
+        s.refresh(b)
+        p1 = models.Phrase(batch_id=b.id, order_index=1, anchor="A",
+                           phrase_en="Alpha.", situation_ru="s", task_ru="t")
+        p2 = models.Phrase(batch_id=b.id, order_index=2, anchor="B",
+                           phrase_en="Beta.", situation_ru="s", task_ru="t")
+        s.add(p1)
+        s.add(p2)
+        s.commit()
+        s.refresh(p1)
+        s.add(models.CheckPhrase(phrase_id=p1.id, batch_id=b.id, text="cue"))
+        # a second batch with phrases but ZERO cues — flagged as a whole
+        b2 = models.Batch(title="T2", slug="dr-7b", status="approved")
+        s.add(b2)
+        s.commit()
+        s.refresh(b2)
+        s.add(models.Phrase(batch_id=b2.id, order_index=1, anchor="C",
+                            phrase_en="Gamma.", situation_ru="s", task_ru="t"))
+        s.commit()
+    problems = doctor.run(fix=False)
+    assert problems["checkphrase_holes"] == 1   # dr-7 #2 lost its cue
+    assert problems["uncued_batches"] == 1      # dr-7b never had any
+    # report-only: --fix must not delete or invent anything
+    doctor.run(fix=True)
+    with Session(engine()) as s:
+        assert len(s.exec(select(models.CheckPhrase)).all()) == 1
+    # NB: a catalog with no cues anywhere stays silent —
+    # covered by test_clean_db_reports_no_problems.
+
+
+def test_i18n_hole_visible_when_batch_translations_were_invalidated(
+        tmp_path, monkeypatch):
+    """Expected languages come from the CATALOG union, not the batch's own
+    title_i18n keys — a batch whose translations were cleared (retitle) or never
+    filled must still be flagged."""
+    _isolate_content(tmp_path, monkeypatch)
+    with Session(engine()) as s:
+        s.add(models.Batch(title="T", slug="dr-8", status="approved",
+                           title_i18n={"es": "Título"}))
+        s.add(models.Batch(title="T2", slug="dr-8b", status="approved"))
+        s.commit()
+    problems = doctor.run(fix=False)
+    assert problems["i18n_holes"] == 1  # dr-8b[es], despite empty title_i18n
+
+
 def test_missing_anchor_reported_separately_from_stale_spans(tmp_path, monkeypatch):
     """A story that legitimately lacks an anchor must not be reported as 'stale
     spans' (restory would be a no-op) — it needs a content fix, not a resync."""

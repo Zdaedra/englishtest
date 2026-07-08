@@ -30,8 +30,23 @@ Checks:
                         (fix: run `python -m app.rephrase`), or phrase count
                         differs (needs re-author).
   6. cache holes      — phrases missing situation_ru/task_ru (fix: gen_context);
-                        languages present in title_i18n but missing from
-                        gloss_i18n/story_i18n (fix: i18n_content --refill).
+                        i18n holes: for every language the catalog is translated
+                        into (union over ALL curated batches — not per-batch
+                        title_i18n keys, which go blind the moment a re-title
+                        invalidates them), any missing title/subtitle/theme/
+                        gloss/story translation (fix: i18n_content --refill).
+  7. checkphrase gaps — cues (проверочные) live ONLY in the DB — no content
+                        file to drift against — and app.rephrase DROPS a
+                        phrase's cues when its text changes. This check is what
+                        makes forgetting to re-author them impossible:
+                        phrases without cues inside an otherwise-cued batch
+                        (the rephrase signature), and whole uncued batches in
+                        an otherwise-cued catalog. Report-only; the fix is
+                        re-authoring cues (see CONTENT-GRAPH.md). Silent on
+                        dev DBs that use no cues at all.
+
+The full asset dependency map (what derives from what, which chain to run after
+which edit) lives in CONTENT-GRAPH.md at the repo root.
 """
 import argparse
 import json
@@ -199,27 +214,81 @@ def run(fix: bool = False) -> dict:
             problems["missing_situation_task"] = len(no_ctx)
             print(f"  CACHE HOLES situation_ru/task_ru: {len(no_ctx)} phrase(s) — "
                   f"run `python -m app.gen_context`")
-        i18n_holes = set()
+        # Expected languages = union of every i18n dict across the curated
+        # catalog. Per-batch title_i18n keys alone are a blind spot: a batch
+        # whose translations were invalidated (retitle/re-author) or never
+        # filled has no keys and would silently pass. Empty on dev DBs → the
+        # whole i18n check stays silent there.
         mnemo_by_batch = {m.batch_id: m for m in
                           s.exec(select(models.MnemoStory)).all()}
+        langs = set()
         for b in batches.values():
-            for lang in (b.title_i18n or {}):
-                m = mnemo_by_batch.get(b.id)
-                if m and (m.story_ru or "").strip() and not (
+            for d in (b.title_i18n, b.subtitle_i18n, b.theme_i18n):
+                langs |= set(d or {})
+            m = mnemo_by_batch.get(b.id)
+            if m:
+                langs |= set(m.story_i18n or {})
+        for p in phrase_by_id.values():
+            if p.batch_id in batches:
+                langs |= set(p.gloss_i18n or {})
+        i18n_holes = set()
+        for b in batches.values():
+            m = mnemo_by_batch.get(b.id)
+            for lang in langs:
+                base_fields = (
+                    (b.title, b.title_i18n), (b.subtitle, b.subtitle_i18n),
+                    (b.theme, b.theme_i18n))
+                hole = any((base or "").strip() and not (d or {}).get(lang)
+                           for base, d in base_fields)
+                if not hole and m and (m.story_ru or "").strip() and not (
                         (m.story_i18n or {}).get(lang)
                         and (m.spans_i18n or {}).get(lang)):
+                    hole = True
+                if not hole:
+                    hole = any(
+                        p.batch_id == b.id and (p.gloss_ru or "").strip()
+                        and not (p.gloss_i18n or {}).get(lang)
+                        for p in phrase_by_id.values())
+                if hole:
                     i18n_holes.add(f"{b.slug}[{lang}]")
-                    continue
-                for p in phrase_by_id.values():
-                    if (p.batch_id == b.id and (p.gloss_ru or "").strip()
-                            and not (p.gloss_i18n or {}).get(lang)):
-                        i18n_holes.add(f"{b.slug}[{lang}]")
-                        break
         if i18n_holes:
             problems["i18n_holes"] = len(i18n_holes)
             print(f"  CACHE HOLES i18n: {len(i18n_holes)} batch-lang(s) — run "
                   f"`python -m app.i18n_content --refill`: "
                   f"{', '.join(sorted(i18n_holes))}")
+
+        # -- 7. checkphrase coverage -------------------------------------------
+        cued = {cp.phrase_id for cp in s.exec(select(models.CheckPhrase)).all()}
+        if cued:  # a catalog that uses cues at all (dev DBs stay silent)
+            partial: dict = {}
+            uncued = []
+            for b in batches.values():
+                phrases = [p for p in phrase_by_id.values()
+                           if p.batch_id == b.id]
+                if not phrases:
+                    continue
+                missing = sorted(p.order_index for p in phrases
+                                 if p.id not in cued)
+                if not missing:
+                    continue
+                if len(missing) == len(phrases):
+                    uncued.append(b.slug)
+                else:
+                    partial[b.slug] = missing
+            if partial:
+                problems["checkphrase_holes"] = sum(
+                    len(v) for v in partial.values())
+                print(f"  CHECKPHRASE HOLES: "
+                      f"{problems['checkphrase_holes']} phrase(s) without cues "
+                      f"in otherwise-cued batch(es) — rephrase dropped them; "
+                      f"re-author cues (see CONTENT-GRAPH.md): "
+                      + ", ".join(f"{slug} #{','.join(map(str, v))}"
+                                  for slug, v in sorted(partial.items())))
+            if uncued:
+                problems["uncued_batches"] = len(uncued)
+                print(f"  UNCUED BATCHES: {len(uncued)} batch(es) with no cues "
+                      f"at all in a cued catalog — author cues "
+                      f"(see CONTENT-GRAPH.md): {', '.join(sorted(uncued))}")
 
     return problems
 
