@@ -1351,3 +1351,15 @@
   iPhone (⌘R) — Xcode сам зарегистрирует App Group и профили для обоих таргетов (headless нельзя:
   «No Accounts»); на локскрине добавить виджет Executive English. Тап-проверка deep link + что
   ротация тикает после первого запуска приложения (оно кормит виджет при старте/foreground).
+
+## 2026-07-08 (утро) — F2 задеплоен на прод + всё запушено
+
+- Веб-деплой F2 «Боевой режим»: бэкап БД (app.db.bak-preF2-20260708-0745.db в volume), rsync
+  backend/app + frontend/dist → /root/english, канонический rebuild (`-p english -f
+  docker-compose.deploy.yml up -d --build english_app`). Проверено: health ok, роуты
+  /api/battle/corpus|suggest в приложении, index.html отдаёт бандл index-Z3I5rLBV.js (таб «Бой» +
+  фикс тура + виджет-фид), /api без токена 401, caddy не тронут. Миграций нет (battle без новых
+  таблиц). NB: серверного /login больше нет (auth живёт в SPA) — /=200 SPA это норма.
+- Git: bf4a839 (F2) + 4a52d3d (F1 виджет) + 3a0fd7d (ad-скрипты v2 + docx мнемо-ревью) запушены в
+  origin/redesign/green-ui-design-system (pre-push suite ✓). Дерево чистое.
+- iPhone-хвост: один ⌘R в Xcode (профили+App Group) привезёт и 4-й таб, и виджет.
