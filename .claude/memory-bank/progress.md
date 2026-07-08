@@ -1437,3 +1437,20 @@
   index-Cn1ZUoss.js публично, corpus/suggest 401 без auth, caddy Up 5 weeks не тронут.
 - **Телефон**: cap copy → xcodebuild (CLI, подпись живая, без keychain-промптов) → devicectl
   install → launch OK. В .app вшит index-Cn1ZUoss.js + EEWidget.appex на месте.
+
+## 2026-07-08 (ночь) — фикс замёрзшего микрофона Live на iOS (тап-стоп не работал)
+
+- Симптом: второй тап по микрофону Live ничего не делал — вечный пульс + «говори и нажми ещё раз».
+- Корень 1: @capacitor-community/speech-recognition 6.0.1 при partialResults=true резолвит start()
+  СРАЗУ после старта движка (Plugin.swift:128-130) — резолв ≠ конец сессии; финал сигналится
+  событием listeningState:"stopped". Мы ждали резолв start() как финал.
+- Корень 2: nativeSttAvailable() ходил в plugin.available(), а тот проверяет SFSpeechRecognizer()
+  ДЕФОЛТНОЙ локали устройства → false-negative → Battle падал в webkitSpeechRecognition внутри
+  WKWebView — «зомби» (не фейлится, результатов нет, stop() no-op) → зависшее «Слушаю…».
+  (Тренировка не страдала: у неё one-shot режим без партиалов + свой server-STT фолбэк.)
+- Фикс (nativeStt.ts, коммит 93ef05f): live-режим = партиалы в last → ждать stopped/_finish
+  (nativeSttStop)/кап 45с → grace 400мс → вернуть последний партиал; finally добивает sr.stop().
+  nativeSttAvailable() = наличие плагина (native+import), без локального available()-пробника.
+  Battle: Web Speech только при !isNative(); throw native-stt-* → нота micUnsupported.
+- Деплой: бандл index-DmLkrejr.js на телефон (cap copy → xcodebuild → devicectl install+launch)
+  и на веб (rsync + rebuild english_app, публично отдаётся). БД не трогалась, бэкенд не менялся.
