@@ -97,7 +97,7 @@ const ru: Dict = {
   // ── Battle mode («Боевой режим») ───────────────────────────────────
   "battle.title": "Live",
   "battle.sub": "Ты в живом разговоре. Найди свою фразу за секунду.",
-  "battle.scopeLearned": "Выученные",
+  "battle.scopeLearned": "Мои фразы",
   "battle.scopeAll": "Весь курс",
   "battle.cardPrompt": "Опиши момент — подскажу лучшую фразу.",
   "battle.cardMicHint": "Нажми и скажи, что за момент.",

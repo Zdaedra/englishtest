@@ -87,7 +87,7 @@ const es: Dict = {
 
   "battle.title": "Live",
   "battle.sub": "Estás en plena conversación. Encuentra tu frase en un segundo.",
-  "battle.scopeLearned": "Aprendidas",
+  "battle.scopeLearned": "Mis frases",
   "battle.scopeAll": "Todo el curso",
   "battle.cardPrompt": "Describe el momento y te doy la mejor frase.",
   "battle.cardMicHint": "Toca y di de qué va el momento.",

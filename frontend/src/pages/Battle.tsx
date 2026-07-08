@@ -220,37 +220,43 @@ export default function Battle() {
             <p className="lv-live ph">{t("battle.recHint")}</p>
           ) : mic === "thinking" ? (
             moment ? <p className="lv-momentq">«{moment}»</p> : null
-          ) : best ? (
-            <>
-              {showAi && moment && <p className="lv-momentq">«{moment}»</p>}
-              <p className="lv-best">{best.phrase_en}</p>
-              <div className="lv-meta">
-                <button className="bm-play" aria-label="Play" onClick={(e) => play(best.phrase_id, e)}>
-                  <IconPlay size={16} />
-                </button>
-                {best.gloss_ru && <span className="lv-gloss">{best.gloss_ru}</span>}
-              </div>
-              {"note" in best && best.note && <div className="bm-note">{best.note}</div>}
-              {alts.length > 0 && !expanded && <p className="lv-more">{t("battle.moreAlts")} ⌄</p>}
-              {expanded && (
-                <div className="lv-alts">
-                  {alts.map((p) => (
-                    <button key={p.phrase_id} className="lv-pick alt"
-                      onClick={(e) => play(p.phrase_id, e)}>
-                      <span className="lv-alt-phrase">{p.phrase_en}</span>
-                      {p.gloss_ru && <span className="lv-alt-gloss">{p.gloss_ru}</span>}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </>
           ) : (
-            <p className="lv-prompt">
-              {isAI ? t("battle.cardPrompt")
-                : searchToks.length ? t("battle.noResults") : t("battle.typePrompt")}
-            </p>
+            <>
+              {/* The dictated moment stays on the card after transcription —
+                  ALWAYS (with or without picks): "show me what you heard". */}
+              {moment && <p className="lv-momentq">«{moment}»</p>}
+              {best ? (
+                <>
+                  <p className="lv-best">{best.phrase_en}</p>
+                  <div className="lv-meta">
+                    <button className="bm-play" aria-label="Play" onClick={(e) => play(best.phrase_id, e)}>
+                      <IconPlay size={16} />
+                    </button>
+                    {best.gloss_ru && <span className="lv-gloss">{best.gloss_ru}</span>}
+                  </div>
+                  {"note" in best && best.note && <div className="bm-note">{best.note}</div>}
+                  {alts.length > 0 && !expanded && <p className="lv-more">{t("battle.moreAlts")} ⌄</p>}
+                  {expanded && (
+                    <div className="lv-alts">
+                      {alts.map((p) => (
+                        <button key={p.phrase_id} className="lv-pick alt"
+                          onClick={(e) => play(p.phrase_id, e)}>
+                          <span className="lv-alt-phrase">{p.phrase_en}</span>
+                          {p.gloss_ru && <span className="lv-alt-gloss">{p.gloss_ru}</span>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : !moment ? (
+                <p className="lv-prompt">
+                  {isAI ? t("battle.cardPrompt")
+                    : searchToks.length ? t("battle.noResults") : t("battle.typePrompt")}
+                </p>
+              ) : null}
+              {note && <p className="lv-warn">{note}</p>}
+            </>
           )}
-          {note && mic === "idle" && <p className="lv-warn">{note}</p>}
         </div>
 
         {isAI ? (

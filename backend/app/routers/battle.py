@@ -265,8 +265,9 @@ async def suggest_voice(scope: str = "learned", audio: UploadFile = File(...),
     if len(raw) > _MAX_AUDIO_BYTES:
         raise HTTPException(413, "Audio clip too large.")
     try:
-        heard = stt.transcribe(raw, filename=audio.filename or "clip.webm",
-                               language="ru")
+        # No language hint: moments arrive in RU, EN and mixed (field logs show
+        # both) — the model auto-detects better than a forced 'ru'.
+        heard = stt.transcribe(raw, filename=audio.filename or "clip.webm")
     except Exception:
         raise HTTPException(502, "stt_failed")
     usage.accrue(session, user_id, "stt")        # the STT attempt is spent either way
