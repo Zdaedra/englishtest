@@ -296,6 +296,7 @@ public class MainViewController: CAPBridgeViewController {
     public override func capacitorDidLoad() {
         bridge?.registerPluginInstance(NavBarPlugin())
         bridge?.registerPluginInstance(IAPPlugin())
+        bridge?.registerPluginInstance(WidgetBridgePlugin())
     }
 }
 

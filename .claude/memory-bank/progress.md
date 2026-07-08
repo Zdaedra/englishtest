@@ -1225,3 +1225,129 @@
 - В ФОНЕ: gen_context регенерит 340 очищенных проверочных фраз (~5-12с/шт, ETA ~30-50 мин, идемпотентно —
   доганяет только пустые). i18n (es/de/fr) очищен, но не-ru юзеров нет → неурочно, ленивый реген. TTS ленивый по тексту.
 - Инструменты в контейнере через docker cp (эфемерно); на хосте /root/english и в git-репе — постоянно, запекутся при rebuild.
+
+## 2026-07-07 (вечер) — F3: контракт сохранения прогресса при изменении контента (коммит 889edc4)
+
+- КОНТРАКТ (формализован + реализован + тесты): личность фразы = слот (batch, order_index).
+  Текстовые правки — только rephrase/restory in place (phrase_id стабилен, SRS живёт);
+  структурные — только upsert, и он теперь ОТКАЗЫВАЕТСЯ сносить батч с живым прогрессом
+  (LiveProgressError / HTTP 409) без явного force.
+- content.upsert: guard ДО любой записи; force-путь сначала удаляет зависимые user-строки
+  (нет ни сирот, ни IntegrityError посреди записи); ВСЯ замена — одна транзакция (было 4+ коммитов —
+  частичная запись при сбое); неизменённые файлы скипаются как no-op (catalog-wide seed --force
+  больше не выжигает прогресс нетронутых батчей); _wipe_children сносит CheckPhrase/ContextExample
+  (раньше сиротели), но СОХРАНЯЕТ PlaybackSession (история прослушиваний + дневной кап);
+  gloss_ru переживает re-author (backfill по якорю); batch-level *_i18n чистятся пофилдово.
+- app.rephrase: reorder-guard (позиционный матчинг не имеет права перецепить статы на чужой текст;
+  chain rename проходит), синк gloss_ru из файлов, инвалидация CheckPhrase при смене текста.
+- app.restory: спаны пересчитываются даже при неизменном тексте истории (anchor-only правка
+  раньше оставляла подсветку/аудио-дриллы на старых словах); переводы либо сохраняются
+  (механический пересчёт спанов, word-boundary проверка), либо дропаются как stale.
+- app.i18n_content --refill: доливает только НЕДОСТАЮЩЕЕ (очищенные кэши раньше не перезаполнялись
+  без --force); запись гейтится по запрошенному payload (пустые/галлюцинированные маркеры не
+  затирают хорошие переводы); пустые истории сходятся (не жгут LLM бесконечно).
+- app.doctor (НОВЫЙ): python -m app.doctor [--fix] — сироты (fix), rowid cross-attach (репорт),
+  дубли статов (fix), stale spans vs missing anchors, дрейф контента vs файлов, дыры кэшей.
+  Скоуп контент-чеков — только курируемый каталог; TrainingEvent-сирот не трогает (стрик).
+- Роуты: POST /api/imports/upsert|seed → 409 live_progress + ?force=true; CLI --force-progress-loss.
+- Процесс: 4-агентная разведка (Workflow) → имплементация → 20-агентное адверсариальное ревью
+  (13 подтверждённых находок, включая critical: catalog-wide force и non-atomic replace) → всё исправлено.
+- Тесты: 173 → 202 passed (~5.5s). Новые: test_content_guard, test_restory, test_doctor, test_i18n_refill.
+- ОСТАЁТСЯ по F3: (1) деплой кода на прод (rebuild образа — код запечён); (2) python -m app.doctor
+  на проде read-only — проверить сирот из до-rephrase эпохи и stale CheckPhrase после v7.5.1;
+  (3) боевой прогон грядущих правок историй из docx-ревью через rephrase→restory→gen_context→refill.
+
+## 2026-07-08 (ночь) — F3 ВЫКАЧЕН НА ПРОД + doctor-аудит живой БД
+
+- Деплой прод-механика УТОЧНЕНА: прод поднят через `docker compose -p english -f docker-compose.deploy.yml up -d --build`
+  (Dockerfile.deploy — пред-собранный frontend/dist, без node-стейджа; english_app `expose:8000` без публикации,
+  доступ только через english_caddy на :8090). Дефолтный docker-compose.yml (ports 8000:8000) НЕЛЬЗЯ — порт 8000
+  занят чужим mme_backend на хосте. Урок: всегда deploy-compose с `-p english`.
+- Инцидент+recovery: сначала ошибочно дёрнул дефолтный compose → recreate упал на bind :8000 → app down ~40с →
+  восстановил канонической deploy-командой. БД в volume english_data — вне зоны риска, 0 потерь.
+- Бэкап перед деплоем: app.db.bak-preF3-*.db (sqlite backup API, консистентно).
+- doctor на живой БД (item 2): ЧИСТО кроме i18n — 0 сирот, 0 stale-спанов, 0 дрейфа контента, 0 дыр situation/task
+  (фоновый gen_context v7.5.1 ДОГНАЛ). Единственная находка: 255 i18n-дыр (85 батчей × es/de/fr) — след v7.5.1
+  (rephrase/restory очистили gloss_i18n/story_i18n, refill не гоняли). НЕ видно юзерам (не-ru нет).
+- CheckPhrase: 3191 шт, все en/stimulus — функциональные реплики-затравки, 0/3191 содержат phrase_en дословно;
+  привязаны к сохранённым phrase_id, функция слотов v7.5.1 сохранена → МАССОВОЙ устарелости НЕТ (ложная тревога).
+  Дроп CheckPhrase в новом rephrase сработает только на будущих правках (сейчас diff=0).
+- Мини-прогон новой цепочки (item 3, валидация): i18n --refill на batch-3/es → story_i18n[es] заполнен,
+  RU-база нетронута, 9/9 спанов на английских якорях дословно. Пайплайн подтверждён на живом проде.
+- Запущен ФОНОВЫЙ i18n --refill на все 255 дыр (docker exec -d, лог /srv/backend/data/_i18n_refill.log,
+  бесплатно через Meridian, идемпотентно). На момент записи 255→252, идёт.
+- ОСТАЁТСЯ по F3-хвосту: боевые правки историй из docx-ревью — ЖДУТ, пока Алексей дозаполнит docx-комментарии;
+  цепочка готова: rephrase → restory → gen_context → i18n_content --refill → app.doctor.
+
+## 2026-07-07 (позже) — CONTENT-GRAPH.md + doctor-enforcement (коммит 477efa1)
+
+- CONTENT-GRAPH.md в корне репо: перепись всех ассетов (прод-цифры), граф derived-сущностей,
+  матрица «что меняю → какую цепочку гнать → что юзеру на проверку», протокол регенерации
+  CheckPhrase-cues (3191 шт, живут ТОЛЬКО в БД, автогенератора нет), токен-дисциплина для сессий.
+- doctor: новая проверка 7 (checkphrase_holes — фразы без cues после rephrase; uncued_batches —
+  на проде это close-meeting) + проверка 6 переведена на юнион-языки каталога (ловит обнулённые
+  переводы) и покрывает subtitle/theme.
+- settitle/retitle/resubtitle теперь сбрасывают title_i18n/subtitle_i18n при смене текста
+  (раньше переводы старого названия жили вечно и были невидимы для doctor).
+- rephrase печатает NEXT про re-author дропнутых cues. Тесты: +5, всего 207 passed.
+- ⚠️ Новые doctor-проверки на прод НЕ деплоились (нужен rebuild; фоновый refill ещё дольёт дыры).
+
+## 2026-07-07 (ещё позже) — doctor-автоматика на проде + i18n добит до нуля (d8cf821, ed67f8f)
+
+- Doctor теперь запускается сам: (1) startup + раз в сутки → docker logs; (2) ключ "doctor" в ответах
+  /api/imports/upsert|seed; (3) авто-вердикт в конце rephrase/restory/seed/seed_presence/gen_context/
+  i18n_content. Report-only везде, --fix остаётся ручным.
+- Задеплоено на прод (rsync backend/app + канонический deploy-compose rebuild, health ok, БД в volume).
+- 5 «вечных» i18n-дыр диагностированы: cognate-поглощение якоря (personally→personalmente и т.п.).
+  Фикс: токенизированный repair ([[A1]]..[[An]] вместо якорей на время перевода). Все 5 долиты с
+  первой попытки, i18n_holes=0. Тесты: 212 passed.
+- Прод-doctor теперь честно красный одним пунктом: uncued_batches=1 (close-meeting — cues никогда
+  не авторились; протокол авторинга — CONTENT-GRAPH.md §4).
+
+## 2026-07-07 (ночь) — F2 «Боевой режим»: фраза за секунду из нижнего меню (bf4a839)
+
+- 4-й таб «Бой» (web + native NavBar, SF "bolt"): юзер в живом разговоре мгновенно получает свою
+  тренированную фразу. Два уровня по entitlements: все планы — оффлайн keyword-поиск по СВОЕМУ
+  study-set (корпус кэшируется в localStorage, ранжирование EN+RU с srs-бустом, пустой запрос =
+  «Твой арсенал» из выученного); план AI — надиктовать момент (native SFSpeechRecognizer → Web
+  Speech ru-RU) → POST /api/battle/suggest → scoring.battle_pick, один быстрый вызов (пул ≤160
+  learned-first, max_tokens 180) → до 3 фраз с note «как подать». Деградация: LLM недоступен →
+  via=fallback → остаются локальные результаты; пустой study-set → via=empty (0 трат).
+- Backend: routers/battle.py (GET /corpus — только свои батчи/статы, изоляция, платный каталог
+  free не течёт; POST /suggest — 403 locked / 400 too_short / 429 бюджет, ledger "battle"
+  $0.0015), scoring._BATTLE_SYSTEM+battle_pick, main.py include.
+- Нав-механика: .nav-pill на var(--ntab) (было хардкод /3), .nav-tab min-width:0 + 10px лейблы
+  (иначе «Библиотека» ломала равенство колонок / обрезалась). NavBar.swift менять не пришлось —
+  строит табы из labels[] динамически (но айфону нужен cap sync + Xcode rebuild).
+- Попутный фикс RouteTour: уход с экрана посреди коуч-марка гасит тур (не помечая seen) — раньше
+  затемнение переезжало на чужой роут и висело стуком-модалкой (вылезло при проверке «Боя»).
+- Тесты: test_battle.py (10 шт) — изоляция корпуса, матрица free·core·ai, 429, learned-first,
+  дроп галлюцинированных номеров пика. Suite 222 passed. Превью: логин → 4 таба → поиск
+  «number»/«несогласие» → карточка → «Открыть батч» → тур гаснет. Скриншоты сняты.
+- НЕ деплоилось (по паттерну «деплой по команде»). iPhone-проверка мика/native-STT — на девайсе.
+
+## 2026-07-08 — F1 виджет на локскрин: код готов, ждёт одного клика подписи в Xcode
+
+- **EEWidget** — новый WidgetKit-таргет в frontend/ios/App (accessoryRectangular/accessoryInline на
+  локскрин + systemSmall на хоумскрин в фирменном зелёном). TimelineProvider читает JSON из App Group
+  `group.net.executiveenglish.app` (ключ ee.widget.phrases) и крутит ротацию: shuffle study-set'а,
+  фраза каждые 20 мин, 24 entry, policy .atEnd (следующий проход — новый shuffle). Без сети и без
+  auth. Тап = deep link executiveenglish://batch/N (или //battle).
+- **Мост**: WidgetBridge.swift (регистрация в MainViewController.capacitorDidLoad, как NavBar/IAP) —
+  update({phrases}) пишет JSON в App Group + WidgetCenter.reloadAllTimelines(). JS-фид:
+  src/lib/widget.ts (учит корпус /api/battle/corpus, learned-first, кап 40, dedupe по сигнатуре);
+  вызовы: NativeWidgetSync в App.tsx (launch + appStateChange:active) и Battle.tsx (свежий корпус).
+  Deep link ловится appUrlOpen (@capacitor/app добавлен, pod CapacitorApp 6.0.3, packageClassList
+  дополнен AppPlugin через cap sync) → hash-роут. URL-схема executiveenglish в Info.plist.
+- **Проект**: таргет вшит скриптом add_widget_target.rb (gem xcodeproj; идемпотентен): target
+  app_extension iOS 16.0, PRODUCT_NAME=$(TARGET_NAME) (без него продукт был ".appex" — Multiple
+  commands produce), embed в App (dstSubfolderSpec 13), entitlements App Group на ОБА таргета,
+  DEVELOPMENT_TEAM=X4LCN2359F (вытащен из mobileprovision), bundle net.executiveenglish.app.widget.
+- **Валидация**: sim-сборка App+EEWidget — BUILD SUCCEEDED, EEWidget.appex лежит в App.app/PlugIns.
+  Грабли по пути: (1) grep|head убил xcodebuild SIGPIPE'ом — логи только в файл; (2) pod install
+  падал Encoding::CompatibilityError — нужен LANG=en_US.UTF-8; (3) cap sync не находит Podfile
+  (ruby 4.0.5/cocoapods 1.16.2) — pod install руками.
+- **Осталось (только руки Лёши)**: открыть frontend/ios/App/App.xcworkspace в Xcode → build на
+  iPhone (⌘R) — Xcode сам зарегистрирует App Group и профили для обоих таргетов (headless нельзя:
+  «No Accounts»); на локскрине добавить виджет Executive English. Тап-проверка deep link + что
+  ротация тикает после первого запуска приложения (оно кормит виджет при старте/foreground).

@@ -5,6 +5,7 @@ import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 import { useSpeech } from "../audio/useSpeech";
 import { nativeRecognize, nativeSttAvailable, nativeSttStop } from "../audio/nativeStt";
+import { syncWidget } from "../lib/widget";
 import { IconMic, IconPlay, IconLock } from "../ui/icons";
 
 // Battle mode («Боевой режим»): the user is IN a live conversation and needs
@@ -74,6 +75,7 @@ export default function Battle() {
         setCorpus(items);
         setLoaded(true);
         try { localStorage.setItem(CACHE_KEY(uid), JSON.stringify(items)); } catch { /* full */ }
+        void syncWidget(items);   // fresh corpus in hand → refresh the lock-screen widget
       })
       .catch(() => { if (on) setLoaded(true); });
     return () => { on = false; };

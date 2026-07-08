@@ -7,6 +7,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import OnboardingFlow from "./pages/OnboardingFlow";
 import { isOnboarded, setOnboarded } from "./lib/onboarding";
 import { isNative } from "./lib/session";
+import { syncWidget } from "./lib/widget";
 import { NavBar, NAV_SF } from "./lib/navbar";
 import { useI18n } from "./i18n";
 import { BatchCover } from "./ui/Art";
@@ -246,6 +247,31 @@ function FloatingNav() {
   );
 }
 
+// Native-only glue for the lock-screen widget: feed it the study set on
+// launch/foreground, and route its deep links (executiveenglish://batch/N |
+// //battle) into the hash router. Mounted only once the user is authenticated —
+// the widget data comes from an authorized API call the widget itself can't make.
+function NativeWidgetSync({ uid }: { uid: number }) {
+  useEffect(() => {
+    if (!isNative()) return;
+    void syncWidget();
+    const subs: Array<{ remove: () => void }> = [];
+    import("@capacitor/app")
+      .then(({ App: CapApp }) => {
+        CapApp.addListener("appStateChange", ({ isActive }) => {
+          if (isActive) void syncWidget();
+        }).then((h) => subs.push(h)).catch(() => {});
+        CapApp.addListener("appUrlOpen", ({ url }) => {
+          const m = /^executiveenglish:\/\/(batch\/\d+|battle)/.exec(url || "");
+          if (m) window.location.hash = `#/${m[1]}`;
+        }).then((h) => subs.push(h)).catch(() => {});
+      })
+      .catch(() => { /* plugin absent (web build) — widget sync stays launch-only */ });
+    return () => { subs.forEach((s) => s.remove()); };
+  }, [uid]);
+  return null;
+}
+
 function Shell() {
   const { user, loading } = useAuth();
   const [obDone, setObDone] = useState(false);
@@ -272,6 +298,7 @@ function Shell() {
             <MiniPlayer />
             <FloatingNav />
             <RouteTour uid={user.id} />
+            <NativeWidgetSync uid={user.id} />
           </div>
         </TeachProvider>
       </BatchMenuProvider>
