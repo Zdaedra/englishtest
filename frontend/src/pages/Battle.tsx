@@ -80,6 +80,8 @@ export default function Battle() {
   const [ai, setAi] = useState<BattlePick[] | null>(null);
   const [note, setNote] = useState("");       // fallback / limit / no-hear
   const nativeStt = useRef(false);
+  const heardRef = useRef("");                // partials, readable from the stop watchdog
+  const stopWait = useRef<((v: string) => void) | null>(null);
 
   useEffect(() => { try { localStorage.setItem(SCOPE_KEY(uid), scope); } catch { /* private */ } }, [scope, uid]);
 
@@ -134,35 +136,48 @@ export default function Battle() {
     } finally { setMic("idle"); setHeard(""); }
   };
 
+  const onHeard = (tr: string) => { heardRef.current = tr; setHeard(tr); };
+
   const startVoice = async () => {
     if (mic !== "idle") return;
-    setAi(null); setNote(""); setHeard(""); setMoment(""); setExpanded(false);
+    setAi(null); setNote(""); setHeard(""); heardRef.current = ""; setMoment(""); setExpanded(false);
     setMic("listening");
     let text = "";
     try {
       nativeStt.current = await nativeSttAvailable();
-      if (nativeStt.current) text = await nativeRecognize("ru-RU", setHeard);
+      let rec: Promise<string>;
+      if (nativeStt.current) rec = nativeRecognize("ru-RU", onHeard);
       // Web Speech ONLY in a real browser: inside the native WKWebView the
       // webkit recognizer is a zombie (never fires results, stop() is a no-op)
       // — exactly the frozen-mic bug. Native uses the plugin path or nothing.
-      else if (!isNative() && speech.supported) text = await speech.start("ru-RU");
+      else if (!isNative() && speech.supported) rec = speech.start("ru-RU");
       else { setMic("idle"); setNote(t("battle.micUnsupported")); return; }
+      // The stop tap arms a watchdog (see micTap): if the recognizer doesn't
+      // finalize shortly after stop, we proceed with the captured partials —
+      // the UI can NEVER hang on a wedged native layer.
+      const stopped = new Promise<string>((res) => { stopWait.current = res; });
+      rec.catch(() => { /* late reject after the watchdog settled the race */ });
+      text = await Promise.race([rec, stopped]);
     } catch (e) {
       // native-stt-unavailable/denied → honest "unsupported"; web no-speech → recEmpty
       setMic("idle"); setHeard("");
       setNote(String(e).includes("native-stt") ? t("battle.micUnsupported") : t("battle.recEmpty"));
       return;
-    }
+    } finally { stopWait.current = null; }
     text = (text || "").trim();
     if (!text) { setMic("idle"); setHeard(""); setNote(t("battle.recEmpty")); return; }
     await runSuggest(text);
   };
 
   // Same gesture as the practice card: tap to talk, tap again to finish.
+  // The stop tap reacts INSTANTLY (state flips to "thinking"), asks the
+  // recognizer to finalize, and arms the watchdog fallback.
   const micTap = () => {
     if (mic === "listening") {
+      setMic("thinking");
       if (nativeStt.current) nativeSttStop().catch(() => { /* noop */ });
       else speech.stop();
+      window.setTimeout(() => stopWait.current?.(heardRef.current), 1200);
     } else if (mic === "idle") void startVoice();
   };
 
@@ -201,7 +216,7 @@ export default function Battle() {
           {mic === "listening" ? (
             <p className={`lv-live${liveText ? "" : " ph"}`}>{liveText || t("battle.recHint")}</p>
           ) : mic === "thinking" ? (
-            <p className="lv-momentq">«{moment}»</p>
+            (moment || heard) ? <p className="lv-momentq">«{moment || heard}»</p> : null
           ) : best ? (
             <>
               {showAi && moment && <p className="lv-momentq">«{moment}»</p>}
