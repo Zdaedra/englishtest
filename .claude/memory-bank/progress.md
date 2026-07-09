@@ -1562,3 +1562,21 @@
   Drive: «Разметка ходов — все фразы каталога (811).docx», id 1rrpJlg5GVotk33VTLJOaM9-kkTLfijQU.
 - Обратный ход разметки: ID фраз/батчей в документе → BatchIntent source="manual"
   (сидер ручные не трогает); фразовый уровень при необходимости — новая сущность.
+
+## 2026-07-08 — Мнемо-истории v7.5.1: внедрение 40 переписок (spatial-rewrites)
+
+- Вход: mnemo-stories-v7.5.1-below-7-rewrites-spatial.docx (Лёша). Таблица 89 батчей,
+  новая история в правой колонке «КОММЕНТ GPT» (Было: X/10 · Новая история…);
+  где просто балл (7–9/10) — старая остаётся. Разобрал: **40 переписок, 49 keep**.
+- Сопоставление по slug (в документе «NN. slug» + theme) — 40/40 в реальные батчи;
+  проверил: каждый якорь присутствует в новом тексте (spans соберутся) — 0 промахов.
+- Внедрение (не-destructive, контракт F3): правка поля `mnemo` в 40 backend/content/*.json
+  → rsync content на хост → docker cp в контейнер → `python -m app.restory <40 slugs>`.
+  restory обновил story_ru + spans in-place, **9/9 spans на всех 40**, фразы/зоны/SRS
+  не тронуты. Бэкап БÐ до правки: /srv/backend/data/app.db.bak-mnemo-20260708-1816.consistent.db
+  (online .backup, WAL-consistent; 90 mnemo / 811 phrase).
+- Переводы: смена story_ru обнулила story_i18n/spans_i18n у 40 (120 дыр). Регенерил
+  `python -m app.i18n_content --refill` (OpenAI на проде, санкц. продуктовый вызов):
+  **40/40 снова full de/es/fr**, spans_i18n по 9 на язык. Финальный doctor: i18n_holes=0
+  (остался только прежний uncued close-meeting, не наш).
+- Телефон не пересобирался: истории отдаются с бэкенда, приложение подтянет вживую.
