@@ -1,0 +1,8936 @@
+{
+ "version": 1,
+ "taxonomy": [
+  "warm",
+  "clarify",
+  "pushback",
+  "hold",
+  "buy_time",
+  "lead",
+  "ask",
+  "close",
+  "repair",
+  "support"
+ ],
+ "batches": {
+  "charisma-11": [
+   "warm",
+   "close"
+  ],
+  "charisma-1": [
+   "warm",
+   "lead"
+  ],
+  "charisma-4": [
+   "lead",
+   "warm"
+  ],
+  "charisma-7": [
+   "warm"
+  ],
+  "charisma-8": [
+   "close",
+   "warm"
+  ],
+  "charisma-6": [
+   "warm",
+   "pushback"
+  ],
+  "charisma-2": [
+   "warm",
+   "clarify"
+  ],
+  "charisma-10": [
+   "warm",
+   "lead"
+  ],
+  "charisma-5": [
+   "lead",
+   "warm"
+  ],
+  "charisma-3": [
+   "clarify",
+   "warm"
+  ],
+  "charisma-9": [
+   "repair",
+   "warm"
+  ],
+  "flirt-9": [
+   "warm",
+   "hold"
+  ],
+  "flirt-2": [
+   "warm",
+   "pushback"
+  ],
+  "flirt-1": [
+   "warm",
+   "support"
+  ],
+  "flirt-10": [
+   "ask",
+   "close",
+   "warm"
+  ],
+  "flirt-5": [
+   "ask",
+   "warm",
+   "hold"
+  ],
+  "flirt-6": [
+   "ask",
+   "warm",
+   "close"
+  ],
+  "flirt-7": [
+   "hold",
+   "repair",
+   "warm"
+  ],
+  "flirt-4": [
+   "warm",
+   "support"
+  ],
+  "flirt-3": [
+   "warm",
+   "support"
+  ],
+  "flirt-8": [
+   "clarify",
+   "warm",
+   "hold"
+  ],
+  "intimacy-6": [
+   "support"
+  ],
+  "intimacy-12": [
+   "support",
+   "warm"
+  ],
+  "intimacy-11": [
+   "hold",
+   "support",
+   "repair"
+  ],
+  "intimacy-4": [
+   "repair"
+  ],
+  "intimacy-7": [
+   "support"
+  ],
+  "intimacy-2": [
+   "repair",
+   "support",
+   "hold"
+  ],
+  "intimacy-1": [
+   "repair",
+   "support",
+   "clarify"
+  ],
+  "repair-1": [
+   "repair",
+   "close"
+  ],
+  "intimacy-5": [
+   "hold",
+   "support"
+  ],
+  "intimacy-3": [
+   "repair"
+  ],
+  "intimacy-8": [
+   "clarify",
+   "support",
+   "hold"
+  ],
+  "intimacy-9": [
+   "clarify",
+   "support",
+   "ask"
+  ],
+  "intimacy-10": [
+   "support",
+   "repair"
+  ],
+  "lead-1": [
+   "lead"
+  ],
+  "lead-4": [
+   "pushback",
+   "hold"
+  ],
+  "leadership-2": [
+   "lead",
+   "ask"
+  ],
+  "lead-11": [
+   "lead",
+   "pushback",
+   "support"
+  ],
+  "lead-7": [
+   "lead",
+   "hold",
+   "support"
+  ],
+  "leadership-1": [
+   "pushback",
+   "support",
+   "lead"
+  ],
+  "lead-10": [
+   "warm",
+   "lead"
+  ],
+  "lead-2": [
+   "lead",
+   "ask",
+   "warm"
+  ],
+  "lead-5": [
+   "lead",
+   "hold",
+   "clarify"
+  ],
+  "lead-6": [
+   "repair",
+   "lead",
+   "hold"
+  ],
+  "lead-8": [
+   "lead",
+   "clarify",
+   "repair"
+  ],
+  "lead-9": [
+   "lead",
+   "repair",
+   "support"
+  ],
+  "lead-3": [
+   "lead",
+   "support"
+  ],
+  "close-meeting": [
+   "close",
+   "lead"
+  ],
+  "composure-11": [
+   "hold",
+   "support"
+  ],
+  "composure-7": [
+   "buy_time",
+   "hold"
+  ],
+  "composure-3": [
+   "hold",
+   "pushback"
+  ],
+  "composure-1": [
+   "hold",
+   "pushback"
+  ],
+  "composure-5": [
+   "hold"
+  ],
+  "composure-9": [
+   "hold",
+   "pushback"
+  ],
+  "composure-8": [
+   "hold",
+   "pushback"
+  ],
+  "pressure-1": [
+   "hold",
+   "clarify",
+   "pushback"
+  ],
+  "composure-2": [
+   "hold",
+   "pushback"
+  ],
+  "composure-10": [
+   "buy_time",
+   "clarify",
+   "hold"
+  ],
+  "composure-4": [
+   "repair",
+   "hold"
+  ],
+  "composure-6": [
+   "hold",
+   "repair"
+  ],
+  "gravitas-1": [
+   "lead",
+   "hold"
+  ],
+  "gravitas-2": [
+   "lead",
+   "support"
+  ],
+  "gravitas-7": [
+   "support",
+   "lead"
+  ],
+  "gravitas-6": [
+   "hold",
+   "pushback"
+  ],
+  "gravitas-10": [
+   "lead",
+   "close",
+   "support"
+  ],
+  "gravitas-9": [
+   "lead",
+   "hold"
+  ],
+  "gravitas-4": [
+   "hold",
+   "clarify",
+   "pushback"
+  ],
+  "gravitas-8": [
+   "lead",
+   "hold",
+   "repair"
+  ],
+  "requests-1": [
+   "lead",
+   "repair",
+   "hold"
+  ],
+  "gravitas-5": [
+   "repair",
+   "lead",
+   "hold"
+  ],
+  "gravitas-3": [
+   "lead",
+   "hold",
+   "close"
+  ],
+  "stage-6": [
+   "repair",
+   "lead"
+  ],
+  "stage-5": [
+   "clarify",
+   "pushback",
+   "hold"
+  ],
+  "stage-3": [
+   "warm",
+   "lead"
+  ],
+  "stage-8": [
+   "close",
+   "lead",
+   "warm"
+  ],
+  "stage-11": [
+   "lead",
+   "hold"
+  ],
+  "stage-7": [
+   "lead",
+   "warm"
+  ],
+  "stage-2": [
+   "lead"
+  ],
+  "stage-1": [
+   "lead",
+   "warm"
+  ],
+  "stage-9": [
+   "hold",
+   "pushback",
+   "clarify"
+  ],
+  "stage-10": [
+   "warm",
+   "support",
+   "lead"
+  ],
+  "stage-4": [
+   "support",
+   "hold"
+  ],
+  "batch": [
+   "clarify",
+   "pushback",
+   "hold"
+  ],
+  "batch-2": [
+   "clarify",
+   "warm"
+  ],
+  "batch-3": [
+   "clarify",
+   "support"
+  ],
+  "pitch-2": [
+   "lead",
+   "pushback"
+  ],
+  "pitch-1": [
+   "lead",
+   "warm"
+  ],
+  "pitch-3": [
+   "ask",
+   "close"
+  ],
+  "negotiation-2": [
+   "close",
+   "clarify",
+   "hold"
+  ],
+  "negotiation-1": [
+   "ask",
+   "hold",
+   "close"
+  ]
+ },
+ "phrases": [
+  {
+   "slug": "batch",
+   "oi": 1,
+   "anchor": "Understand",
+   "en": "Help me understand the thinking there.",
+   "intents": [
+    "ask",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 2,
+   "anchor": "Run",
+   "en": "Run me through how you got to that number.",
+   "intents": [
+    "ask",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 3,
+   "anchor": "Angle",
+   "en": "Can I offer a different angle?",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 4,
+   "anchor": "Far",
+   "en": "I'm not sure I'd go that far.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 5,
+   "anchor": "Hesitation",
+   "en": "My one hesitation here is…",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 6,
+   "anchor": "Pause",
+   "en": "What gives me pause is…",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 7,
+   "anchor": "Land",
+   "en": "I hear you, but here's where I'd land differently…",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 8,
+   "anchor": "Push",
+   "en": "Let me push back on that a little.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch",
+   "oi": 9,
+   "anchor": "Straight",
+   "en": "Let me be straight with you — I don't think that works.",
+   "intents": [
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 1,
+   "anchor": "Read",
+   "en": "What's your read on this?",
+   "intents": [
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 2,
+   "anchor": "Thinking",
+   "en": "How are you thinking about this?",
+   "intents": [
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 3,
+   "anchor": "Take",
+   "en": "I'd love to get your take.",
+   "intents": [
+    "ask",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 4,
+   "anchor": "Seeing",
+   "en": "What are you seeing that I'm not?",
+   "intents": [
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 5,
+   "anchor": "Shoes",
+   "en": "What would you do in my shoes?",
+   "intents": [
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 6,
+   "anchor": "Gut",
+   "en": "What's your gut telling you?",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 7,
+   "anchor": "Missing",
+   "en": "Be honest — what am I missing here?",
+   "intents": [
+    "ask",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 8,
+   "anchor": "True",
+   "en": "What would have to be true for you to get behind this?",
+   "intents": [
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "batch-2",
+   "oi": 9,
+   "anchor": "Stand",
+   "en": "Where do you actually stand on this?",
+   "intents": [
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 1,
+   "anchor": "Sounds",
+   "en": "It sounds like the timeline's the real worry.",
+   "intents": [
+    "clarify",
+    "support",
+    "buy_time"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 2,
+   "anchor": "Seems",
+   "en": "Seems like something here isn't sitting right.",
+   "intents": [
+    "clarify",
+    "support",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 3,
+   "anchor": "Sense",
+   "en": "My sense is you're not fully sold — am I off?",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "support"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 4,
+   "anchor": "Head",
+   "en": "Here's where my head's at — tell me where I'm wrong.",
+   "intents": [
+    "ask",
+    "buy_time",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 5,
+   "anchor": "Off",
+   "en": "Something's off here — help me figure out what it is.",
+   "intents": [
+    "ask",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 6,
+   "anchor": "Agenda",
+   "en": "You probably think I've got my own agenda here.",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 7,
+   "anchor": "Kill",
+   "en": "Honestly, I'd kill the whole thing myself — talk me out of i",
+   "intents": [
+    "ask",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 8,
+   "anchor": "Elephant",
+   "en": "Feels like there's an elephant in the room nobody's naming —",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "batch-3",
+   "oi": 9,
+   "anchor": "Obvious",
+   "en": "I'm probably missing something obvious — what is it?",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 1,
+   "anchor": "There",
+   "en": "There they are.",
+   "intents": [
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 2,
+   "anchor": "Going",
+   "en": "Don't stop on my account — keep it going.",
+   "intents": [
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 3,
+   "anchor": "Forward",
+   "en": "I've been looking forward to this one.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 4,
+   "anchor": "Rolling",
+   "en": "Let's get this rolling.",
+   "intents": [
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 5,
+   "anchor": "Grab",
+   "en": "Grab a seat — you'll want to be in on this.",
+   "intents": [
+    "warm",
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 6,
+   "anchor": "Count",
+   "en": "We've got till the top of the hour — let's make it count.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 7,
+   "anchor": "Slow",
+   "en": "Let's slow this down for a second.",
+   "intents": [
+    "lead",
+    "buy_time"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 8,
+   "anchor": "Dancing",
+   "en": "Can I say the thing we're all dancing around?",
+   "intents": [
+    "clarify",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-1",
+   "oi": 9,
+   "anchor": "Back",
+   "en": "Here's what I keep coming back to.",
+   "intents": [
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 1,
+   "anchor": "Favorite",
+   "en": "Two of my favorite people, and somehow you'd never met.",
+   "intents": [
+    "warm",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 2,
+   "anchor": "Click",
+   "en": "I had a feeling you two would click — let's find out.",
+   "intents": [
+    "warm",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 3,
+   "anchor": "Better",
+   "en": "You both make a room better — in very different ways.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 4,
+   "anchor": "Compare",
+   "en": "You two should compare notes — you're solving the same thing",
+   "intents": [
+    "ask",
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 5,
+   "anchor": "Ask",
+   "en": "Ask her about Lagos, ask him about the raise — then I'll get",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 6,
+   "anchor": "Only",
+   "en": "He's the only other person I know who sees this the way you ",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 7,
+   "anchor": "Meet",
+   "en": "You two need to meet — trust me on this.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 8,
+   "anchor": "Record",
+   "en": "When you two build something, I want it on record I started ",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-10",
+   "oi": 9,
+   "anchor": "Thank",
+   "en": "This is the introduction you'll both quietly thank me for in",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 1,
+   "anchor": "Smiled",
+   "en": "Your name came up last night and I smiled like an idiot.",
+   "intents": [
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 2,
+   "anchor": "Missed",
+   "en": "I've missed the way you see things.",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 3,
+   "anchor": "Refuse",
+   "en": "I refuse to let another year go by without this.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 4,
+   "anchor": "Excuse",
+   "en": "I won't insult us both with an excuse — coffee Thursday?",
+   "intents": [
+    "repair",
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 5,
+   "anchor": "Free",
+   "en": "Skip the apologies — when are you free?",
+   "intents": [
+    "repair",
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 6,
+   "anchor": "Dinner",
+   "en": "It's been too long — let's fix that over dinner.",
+   "intents": [
+    "repair",
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 7,
+   "anchor": "Where",
+   "en": "Anyway — where were we?",
+   "intents": [
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 8,
+   "anchor": "Year",
+   "en": "Let's not wait another year to do this.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-11",
+   "oi": 9,
+   "anchor": "Passed",
+   "en": "Funny how with the right people, no time's actually passed.",
+   "intents": [
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 1,
+   "anchor": "Soul",
+   "en": "I don't know a soul here, so I'm starting with you.",
+   "intents": [
+    "warm",
+    "clarify",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 2,
+   "anchor": "Laugh",
+   "en": "That laugh sounded like it had a story behind it.",
+   "intents": [
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 3,
+   "anchor": "Crash",
+   "en": "You looked like the most fun in the room — mind if I crash?",
+   "intents": [
+    "warm",
+    "clarify",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 4,
+   "anchor": "Skip",
+   "en": "Tell me what you actually do — and skip the elevator pitch.",
+   "intents": [
+    "ask",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 5,
+   "anchor": "Figured",
+   "en": "You look like you've already figured this room out.",
+   "intents": [
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 6,
+   "anchor": "Settle",
+   "en": "Settle a debate for me — you look like you'd have an opinion",
+   "intents": [
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 7,
+   "anchor": "Networking",
+   "en": "You're the only person here who isn't networking — I had to ",
+   "intents": [
+    "warm",
+    "clarify",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 8,
+   "anchor": "Forget",
+   "en": "Forget small talk — what's actually worth talking about toni",
+   "intents": [
+    "ask",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-2",
+   "oi": 9,
+   "anchor": "Story",
+   "en": "Give me ninety seconds — worst case, you get a good story.",
+   "intents": [
+    "warm",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 1,
+   "anchor": "Fired",
+   "en": "What's got you genuinely fired up lately?",
+   "intents": [
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 2,
+   "anchor": "Lit",
+   "en": "You lit up just then — tell me more about that.",
+   "intents": [
+    "ask",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 3,
+   "anchor": "Obsessed",
+   "en": "What are you a little obsessed with right now?",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 4,
+   "anchor": "Word",
+   "en": "You keep coming back to one word — say more about that.",
+   "intents": [
+    "ask",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 5,
+   "anchor": "Rush",
+   "en": "That's the part I don't want to rush past.",
+   "intents": [
+    "clarify",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 6,
+   "anchor": "Coming",
+   "en": "So you saw it coming before anyone else did.",
+   "intents": [
+    "clarify",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 7,
+   "anchor": "Cost",
+   "en": "What did that cost you to learn?",
+   "intents": [
+    "clarify",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 8,
+   "anchor": "Years",
+   "en": "Which of these actually matters to you ten years from now?",
+   "intents": [
+    "clarify",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-3",
+   "oi": 9,
+   "anchor": "Ahead",
+   "en": "What are you seeing that the rest of us are still catching u",
+   "intents": [
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 1,
+   "anchor": "Quiet",
+   "en": "Hey, the quiet end of the table — I want in on whatever you'",
+   "intents": [
+    "lead",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 2,
+   "anchor": "Smiling",
+   "en": "You've been smiling like you know something we don't.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 3,
+   "anchor": "Hog",
+   "en": "Okay, I've been hogging this — someone take it from me.",
+   "intents": [
+    "lead",
+    "repair"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 4,
+   "anchor": "Around",
+   "en": "Let's go around — I want everyone's one-liner on this.",
+   "intents": [
+    "ask",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 5,
+   "anchor": "Park",
+   "en": "Let's park that — it deserves its own conversation.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 6,
+   "anchor": "Loop",
+   "en": "Hang on — we never looped back to what Dave started.",
+   "intents": [
+    "lead",
+    "repair"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 7,
+   "anchor": "Drop",
+   "en": "Let's drop the charm for a minute and actually talk.",
+   "intents": [
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 8,
+   "anchor": "Honest",
+   "en": "Come on, that's the safe answer — give me the honest one.",
+   "intents": [
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-4",
+   "oi": 9,
+   "anchor": "Quick",
+   "en": "Quick round: what's something you changed your mind about th",
+   "intents": [
+    "lead",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 1,
+   "anchor": "Stop",
+   "en": "Stop me if I've told you this one — actually, don't, it's to",
+   "intents": [
+    "lead",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 2,
+   "anchor": "Badly",
+   "en": "You'll like this — it starts badly.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 3,
+   "anchor": "Picture",
+   "en": "Picture me at 2 a.m., completely lost — that's where this st",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 4,
+   "anchor": "Mind",
+   "en": "Keep that one detail in mind — it matters in a minute.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 5,
+   "anchor": "Worse",
+   "en": "And here's where it gets worse.",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 6,
+   "anchor": "Quiet",
+   "en": "And then the room went very quiet.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 7,
+   "anchor": "Hang",
+   "en": "…and I'm going to let that just hang there for a second.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 8,
+   "anchor": "Turns",
+   "en": "Turns out it'd been him the whole time.",
+   "intents": [
+    "lead",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "charisma-5",
+   "oi": 9,
+   "anchor": "Anyway",
+   "en": "Anyway. Pass the wine.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 1,
+   "anchor": "Walked",
+   "en": "I walked right into that one — nicely done.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 2,
+   "anchor": "Generous",
+   "en": "That's generous — most people wait ten minutes before diagno",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 3,
+   "anchor": "Rehearse",
+   "en": "Not bad — did you rehearse that in the car?",
+   "intents": [
+    "warm",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 4,
+   "anchor": "Careful",
+   "en": "Careful — you're dangerously close to being funny.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 5,
+   "anchor": "Laugh",
+   "en": "If I laugh, you'll just keep going.",
+   "intents": [
+    "warm",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 6,
+   "anchor": "Landing",
+   "en": "Bold opening — let's see if you can stick the landing.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 7,
+   "anchor": "Hand",
+   "en": "Give him a hand, folks — he's been saving that one all night",
+   "intents": [
+    "ask",
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 8,
+   "anchor": "Worst",
+   "en": "If that's the worst thing they say about me, I'm having a go",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-6",
+   "oi": 9,
+   "anchor": "Like",
+   "en": "[a beat, to the room] …I like this guy.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 1,
+   "anchor": "Human",
+   "en": "You have a way of making sharp things feel human.",
+   "intents": [
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 2,
+   "anchor": "Trust",
+   "en": "I can see why people trust your judgment.",
+   "intents": [
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 3,
+   "anchor": "Days",
+   "en": "I'm still thinking about something you said days ago.",
+   "intents": [
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 4,
+   "anchor": "Missed",
+   "en": "You saw what the whole room missed.",
+   "intents": [
+    "warm",
+    "hold",
+    "lead"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 5,
+   "anchor": "Level",
+   "en": "You took the whole conversation up a level.",
+   "intents": [
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 6,
+   "anchor": "Spotted",
+   "en": "You spotted the risk before anyone else even saw it coming.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 7,
+   "anchor": "Often",
+   "en": "I don't say this often — that was seriously impressive.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 8,
+   "anchor": "Listen",
+   "en": "People listen when you talk — and you never have to raise yo",
+   "intents": [
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-7",
+   "oi": 9,
+   "anchor": "Stealing",
+   "en": "I'm stealing that line — just so you know.",
+   "intents": [
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 1,
+   "anchor": "Needed",
+   "en": "This was exactly the conversation I needed tonight.",
+   "intents": [
+    "close",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 2,
+   "anchor": "Night",
+   "en": "I could talk to you all night — which is exactly why I shoul",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 3,
+   "anchor": "High",
+   "en": "I'm going to leave this on a high note.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 4,
+   "anchor": "Rounds",
+   "en": "I've got to make my rounds — but find me before you leave.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 5,
+   "anchor": "Calendar",
+   "en": "Let's get something on the calendar before we both pretend w",
+   "intents": [
+    "close",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 6,
+   "anchor": "Pick",
+   "en": "Let me step away one second — but I want to pick this back u",
+   "intents": [
+    "buy_time",
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 7,
+   "anchor": "Trouble",
+   "en": "You and I are going to be trouble together — I can already t",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 8,
+   "anchor": "Save",
+   "en": "I'll save the rest for next time.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-8",
+   "oi": 9,
+   "anchor": "Next",
+   "en": "Next time, I want the question you were too polite to ask me",
+   "intents": [
+    "close",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 1,
+   "anchor": "Head",
+   "en": "Well — that landed better in my head.",
+   "intents": [
+    "buy_time",
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 2,
+   "anchor": "Heard",
+   "en": "Well, everyone heard that one. Moving on.",
+   "intents": [
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 3,
+   "anchor": "Charming",
+   "en": "We're all just going to agree that was charming, right?",
+   "intents": [
+    "repair",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 4,
+   "anchor": "Dignity",
+   "en": "We'll circle back to my dignity later — you were saying?",
+   "intents": [
+    "repair",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 5,
+   "anchor": "Pretend",
+   "en": "Okay, let's pretend the last ten seconds didn't happen.",
+   "intents": [
+    "ask",
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 6,
+   "anchor": "Overthink",
+   "en": "I'm not going to overthink that — neither should you.",
+   "intents": [
+    "ask",
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 7,
+   "anchor": "Formal",
+   "en": "Good — the formal part's officially over. Now we can actuall",
+   "intents": [
+    "buy_time",
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 8,
+   "anchor": "Trust",
+   "en": "See, now you trust me — nobody this awkward is hiding anythi",
+   "intents": [
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "charisma-9",
+   "oi": 9,
+   "anchor": "Shape",
+   "en": "If that's our awkward moment tonight, we're in excellent sha",
+   "intents": [
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 1,
+   "anchor": "mindful",
+   "en": "I want to be mindful of everyone's time, so let's start wrap",
+   "intents": [
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 2,
+   "anchor": "wrap",
+   "en": "Anything else before we wrap?",
+   "intents": [
+    "clarify",
+    "close"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 3,
+   "anchor": "recap",
+   "en": "Quick recap of what we landed on.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 4,
+   "anchor": "own",
+   "en": "[Name], you're owning the proposal, and [Name]'s got the dat",
+   "intents": [
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 5,
+   "anchor": "offline",
+   "en": "That's a great point — let's take it offline so we can close",
+   "intents": [
+    "warm",
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 6,
+   "anchor": "notes",
+   "en": "I'll send out notes and next steps right after this.",
+   "intents": [
+    "buy_time",
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 7,
+   "anchor": "call",
+   "en": "We won't solve this today — let me make the call and follow ",
+   "intents": [
+    "lead",
+    "buy_time",
+    "close"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 8,
+   "anchor": "stop",
+   "en": "I've got a hard stop, so let me close us out.",
+   "intents": [
+    "close",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 9,
+   "anchor": "go",
+   "en": "Alright, I'll let you go — talk soon.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "close-meeting",
+   "oi": 10,
+   "anchor": "day",
+   "en": "Great work, everyone — have a good rest of your day.",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 1,
+   "anchor": "Bait",
+   "en": "I see the bait — and I admire the presentation.",
+   "intents": [
+    "hold",
+    "pushback",
+    "warm"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 2,
+   "anchor": "Rise",
+   "en": "Nice try getting a rise out of me.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 3,
+   "anchor": "Slide",
+   "en": "Nice try — I'm letting that one slide.",
+   "intents": [
+    "hold",
+    "pushback",
+    "warm"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 4,
+   "anchor": "Biting",
+   "en": "I know what that was — not biting.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 5,
+   "anchor": "Part",
+   "en": "I'm not playing that part.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 6,
+   "anchor": "Ask",
+   "en": "If you're that curious, just ask.",
+   "intents": [
+    "ask",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 7,
+   "anchor": "Land",
+   "en": "You're welcome to keep trying — it's not going to land.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 8,
+   "anchor": "Time",
+   "en": "You're wasting your time with this.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-1",
+   "oi": 9,
+   "anchor": "Work",
+   "en": "Anyway — I've got work to do.",
+   "intents": [
+    "hold",
+    "pushback",
+    "close"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 1,
+   "anchor": "Top",
+   "en": "Great question — not one I'll answer off the top of my head.",
+   "intents": [
+    "buy_time",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 2,
+   "anchor": "Comfortable",
+   "en": "I'm not sure — and I'm comfortable saying that out loud.",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 3,
+   "anchor": "Stumped",
+   "en": "You've genuinely stumped me there.",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 4,
+   "anchor": "Solid",
+   "en": "I don't know yet — I'll find out and come back with somethin",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 5,
+   "anchor": "Verify",
+   "en": "I'm not going to guess on that — I'll verify it first.",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 6,
+   "anchor": "Tomorrow",
+   "en": "Here's what I know so far — I'll have the rest by tomorrow.",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "close"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 7,
+   "anchor": "Precise",
+   "en": "I'd rather be precise later than confident and wrong now.",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 8,
+   "anchor": "Pretend",
+   "en": "I don't know — and I'm not going to pretend I do.",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-10",
+   "oi": 9,
+   "anchor": "Wing",
+   "en": "I'm not going to wing an answer to a question this important",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 1,
+   "anchor": "Earned",
+   "en": "Congratulations — you earned that, and I mean it.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 2,
+   "anchor": "Asterisk",
+   "en": "She earned it, and I'm glad for her. No asterisk.",
+   "intents": [
+    "hold",
+    "support",
+    "close"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 3,
+   "anchor": "Genuinely",
+   "en": "I'm disappointed — and I'm genuinely happy for you.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 4,
+   "anchor": "Accept",
+   "en": "I accept the decision — I'd value a clear read on where I fe",
+   "intents": [
+    "ask",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 5,
+   "anchor": "Tipped",
+   "en": "Fair enough — what would've tipped it my way?",
+   "intents": [
+    "clarify",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 6,
+   "anchor": "Argue",
+   "en": "I'm not going to argue the outcome — I want to learn from it",
+   "intents": [
+    "hold",
+    "support",
+    "close"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 7,
+   "anchor": "Stings",
+   "en": "It stings, sure — but I'll take the lesson and move on.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 8,
+   "anchor": "Cleanly",
+   "en": "I'll take the loss cleanly — and come back better.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-11",
+   "oi": 9,
+   "anchor": "Handle",
+   "en": "How I handle this will say more about me than the loss itsel",
+   "intents": [
+    "buy_time",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 1,
+   "anchor": "Personally",
+   "en": "I'm not going to take that personally — even if it was meant",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 2,
+   "anchor": "Past",
+   "en": "I'm going to let that one go right past me.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 3,
+   "anchor": "Once",
+   "en": "I'll pretend you didn't say that — once.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 4,
+   "anchor": "Crossed",
+   "en": "That crossed a line — and I'm not going to pretend it didn't",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 5,
+   "anchor": "Contempt",
+   "en": "I'm fine with disagreement — I'm not fine with contempt.",
+   "intents": [
+    "hold",
+    "pushback",
+    "lead"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 6,
+   "anchor": "Jab",
+   "en": "Drop the jab and say what you actually mean.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 7,
+   "anchor": "Good",
+   "en": "Think what you want — I'm good.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 8,
+   "anchor": "Says",
+   "en": "That says more about you than it does about me.",
+   "intents": [
+    "hold",
+    "pushback",
+    "close"
+   ]
+  },
+  {
+   "slug": "composure-2",
+   "oi": 9,
+   "anchor": "Rattle",
+   "en": "I know who I am — that didn't rattle me.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 1,
+   "anchor": "Scene",
+   "en": "I'm not going to turn this into a scene.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 2,
+   "anchor": "Shout",
+   "en": "You don't need to shout — I can hear you just fine.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 3,
+   "anchor": "Tone",
+   "en": "Point taken — the tone, not so much.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 4,
+   "anchor": "Directly",
+   "en": "If there's feedback, give it to me directly — not theatrical",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 5,
+   "anchor": "Real",
+   "en": "If there's a real point under all that, I'm listening.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 6,
+   "anchor": "Adults",
+   "en": "Let's bring this back to the work and speak like adults.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 7,
+   "anchor": "Doing",
+   "en": "We're not doing this here.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 8,
+   "anchor": "Argument",
+   "en": "Raising your voice doesn't win the argument.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-3",
+   "oi": 9,
+   "anchor": "Point",
+   "en": "All right — back to the point.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 1,
+   "anchor": "Blooper",
+   "en": "Well — that one's going in the blooper reel.",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 2,
+   "anchor": "Scenic",
+   "en": "Apparently my brain took the scenic route to that sentence.",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 3,
+   "anchor": "Buffered",
+   "en": "Brain buffered for a second there — okay, we're back.",
+   "intents": [
+    "buy_time",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 4,
+   "anchor": "Scratch",
+   "en": "Scratch that — here's what I actually meant.",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 5,
+   "anchor": "Fix",
+   "en": "Let me fix that before I make the real point.",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 6,
+   "anchor": "Clumsy",
+   "en": "The point stands — I just took the clumsy route to get there",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 7,
+   "anchor": "Slip",
+   "en": "Small slip — not worth dwelling on. Where were we?",
+   "intents": [
+    "repair",
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 8,
+   "anchor": "Throw",
+   "en": "Takes more than that to throw me off.",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-4",
+   "oi": 9,
+   "anchor": "Smooth",
+   "en": "Well, that was smooth. Anyway.",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 1,
+   "anchor": "Asking",
+   "en": "I hear why you're asking — and my answer's still the same.",
+   "intents": [
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 2,
+   "anchor": "Polite",
+   "en": "It's a no — a polite one, but a no.",
+   "intents": [
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 3,
+   "anchor": "Civil",
+   "en": "I'll keep it short and civil.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 4,
+   "anchor": "Answer",
+   "en": "The answer is no — and I'm not going to dress it up.",
+   "intents": [
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 5,
+   "anchor": "Decision",
+   "en": "That's my decision — I'm comfortable with it.",
+   "intents": [
+    "close",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 6,
+   "anchor": "Muddy",
+   "en": "More reasons would just muddy it.",
+   "intents": [
+    "close",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 7,
+   "anchor": "Defense",
+   "en": "I don't owe a defense for every no.",
+   "intents": [
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 8,
+   "anchor": "Hang",
+   "en": "I'm fine letting that hang there.",
+   "intents": [
+    "buy_time",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-5",
+   "oi": 9,
+   "anchor": "Negotiating",
+   "en": "I'm not negotiating this.",
+   "intents": [
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 1,
+   "anchor": "Damage",
+   "en": "Let's stop before this does real damage.",
+   "intents": [
+    "ask",
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 2,
+   "anchor": "Pause",
+   "en": "I care about this enough to pause before we say things we ca",
+   "intents": [
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 3,
+   "anchor": "Ugly",
+   "en": "I'm going to bow out before this gets ugly.",
+   "intents": [
+    "hold",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 4,
+   "anchor": "Productive",
+   "en": "This has stopped being productive — so I'm ending it here fo",
+   "intents": [
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 5,
+   "anchor": "Punches",
+   "en": "Happy to talk about the issue — not to take punches.",
+   "intents": [
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 6,
+   "anchor": "Circles",
+   "en": "We're going in circles — and I'm not going to keep feeding i",
+   "intents": [
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 7,
+   "anchor": "Running",
+   "en": "I'm not running from this — I just won't do it this way.",
+   "intents": [
+    "buy_time",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 8,
+   "anchor": "Cool",
+   "en": "This isn't worth losing my cool over — I'm out for now.",
+   "intents": [
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "composure-6",
+   "oi": 9,
+   "anchor": "Respectful",
+   "en": "When we can speak respectfully again — I'll be right here.",
+   "intents": [
+    "hold",
+    "repair",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 1,
+   "anchor": "Beat",
+   "en": "Give me a beat — I want to answer that well, not fast.",
+   "intents": [
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 2,
+   "anchor": "Chew",
+   "en": "Let me chew on that overnight.",
+   "intents": [
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 3,
+   "anchor": "Hour",
+   "en": "Give me an hour and you'll get a real answer instead of a gu",
+   "intents": [
+    "buy_time",
+    "hold",
+    "lead"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 4,
+   "anchor": "Hallway",
+   "en": "A decision this big doesn't get made in a hallway.",
+   "intents": [
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 5,
+   "anchor": "Clear",
+   "en": "I'll give you a clear answer by end of day — not a minute so",
+   "intents": [
+    "buy_time",
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 6,
+   "anchor": "Space",
+   "en": "Pressure won't make the decision better — a little space wil",
+   "intents": [
+    "buy_time",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 7,
+   "anchor": "Rushing",
+   "en": "Rushing this helps nobody.",
+   "intents": [
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 8,
+   "anchor": "Deadline",
+   "en": "The deadline's real, but so is the cost of getting this wron",
+   "intents": [
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "composure-7",
+   "oi": 9,
+   "anchor": "Stalling",
+   "en": "I'm not stalling — I'm making sure we get it right.",
+   "intents": [
+    "buy_time",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 1,
+   "anchor": "Intended",
+   "en": "I'm guessing that came out worse than you intended.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 2,
+   "anchor": "Attitude",
+   "en": "Try that again — minus the attitude.",
+   "intents": [
+    "ask",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 3,
+   "anchor": "Snark",
+   "en": "The snark's just slowing us down — let's lose it.",
+   "intents": [
+    "ask",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 4,
+   "anchor": "Candor",
+   "en": "Don't talk down to me and call it candor.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 5,
+   "anchor": "Challenge",
+   "en": "I'm open to challenge — I'm not open to disrespect.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 6,
+   "anchor": "Ways",
+   "en": "Respect goes both ways.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 7,
+   "anchor": "Match",
+   "en": "I'm not going to match that tone.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 8,
+   "anchor": "Ready",
+   "en": "When you're ready to talk properly, I'm right here.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-8",
+   "oi": 9,
+   "anchor": "Talking",
+   "en": "We can keep talking — just not like this.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 1,
+   "anchor": "Flattery",
+   "en": "Flattery gets you a sincere thank-you — not much past that.",
+   "intents": [
+    "hold",
+    "pushback",
+    "warm"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 2,
+   "anchor": "Kind",
+   "en": "That's very kind of you — doesn't change my answer.",
+   "intents": [
+    "hold",
+    "pushback",
+    "warm"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 3,
+   "anchor": "Charm",
+   "en": "I appreciate the charm offensive — let's get back to the act",
+   "intents": [
+    "clarify",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 4,
+   "anchor": "Trading",
+   "en": "I'll take the compliment — but I'm not trading it for a yes.",
+   "intents": [
+    "hold",
+    "pushback",
+    "warm"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 5,
+   "anchor": "Trip",
+   "en": "I can see the guilt trip coming — it's not going to work.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 6,
+   "anchor": "Urgency",
+   "en": "The urgency may be real — but it doesn't change what I need ",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 7,
+   "anchor": "Buttering",
+   "en": "Buttering me up won't change the math.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 8,
+   "anchor": "Thick",
+   "en": "You're laying it on thick — the answer's still no.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "composure-9",
+   "oi": 9,
+   "anchor": "Stop",
+   "en": "You can stop now — it's still a no.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 1,
+   "anchor": "Reasons",
+   "en": "I keep finding reasons to end up back over here.",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 2,
+   "anchor": "Room",
+   "en": "You're making it very easy to forget the rest of the room.",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 3,
+   "anchor": "Distracting",
+   "en": "You're a little distracting — and I'm choosing not to fight ",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 4,
+   "anchor": "Plainly",
+   "en": "I find you really attractive — and I'd rather just say it pl",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 5,
+   "anchor": "Dance",
+   "en": "I'm interested — I'd rather tell you than dance around it.",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 6,
+   "anchor": "Drawn",
+   "en": "No pressure — but I'm not going to pretend I'm not drawn to ",
+   "intents": [
+    "warm",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 7,
+   "anchor": "Attention",
+   "en": "You've had my attention all night — that doesn't happen ofte",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 8,
+   "anchor": "Usually",
+   "en": "I don't usually say this kind of thing — which should tell y",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-1",
+   "oi": 9,
+   "anchor": "Find",
+   "en": "You know where to find me.",
+   "intents": [
+    "close",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 1,
+   "anchor": "Fizzle",
+   "en": "Let's not let this fizzle out — pick a day.",
+   "intents": [
+    "ask",
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 2,
+   "anchor": "Plan",
+   "en": "I don't want tonight to be the end of this — let's make a pl",
+   "intents": [
+    "close",
+    "ask",
+    "buy_time"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 3,
+   "anchor": "Next",
+   "en": "Let's not leave this as a nice moment — I'd like the next on",
+   "intents": [
+    "close",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 4,
+   "anchor": "Number",
+   "en": "Put your number in my phone — I'll text you tomorrow with a ",
+   "intents": [
+    "ask",
+    "buy_time",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 5,
+   "anchor": "Pick",
+   "en": "Thursday or Saturday — you pick, I'll handle the rest.",
+   "intents": [
+    "ask",
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 6,
+   "anchor": "Overthink",
+   "en": "Let's lock a night before either of us overthinks it.",
+   "intents": [
+    "close",
+    "buy_time",
+    "ask"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 7,
+   "anchor": "Dinner",
+   "en": "Dinner this week — let's do this properly.",
+   "intents": [
+    "close",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 8,
+   "anchor": "Consider",
+   "en": "Consider it a date — I'll make sure you're glad you said yes",
+   "intents": [
+    "ask",
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-10",
+   "oi": 9,
+   "anchor": "Text",
+   "en": "Text me — the second round will be even better.",
+   "intents": [
+    "close",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 1,
+   "anchor": "Working",
+   "en": "You think you're charming — it's almost working.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 2,
+   "anchor": "Innocent",
+   "en": "That sounded innocent — I'm not sure I believe you.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 3,
+   "anchor": "Show",
+   "en": "Oh, you're putting on a whole show for me — keep going.",
+   "intents": [
+    "ask",
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 4,
+   "anchor": "Smooth",
+   "en": "That was smooth. Suspiciously smooth. I'm watching you.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 5,
+   "anchor": "Allow",
+   "en": "You're flirting with me — badly — but I'll allow it.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 6,
+   "anchor": "Spar",
+   "en": "You picked the wrong person to spar with — I do this for fun",
+   "intents": [
+    "warm",
+    "pushback",
+    "lead"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 7,
+   "anchor": "Exactly",
+   "en": "[a beat] …you know exactly what you're doing.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 8,
+   "anchor": "Trying",
+   "en": "Careful — keep that up and I might actually start trying.",
+   "intents": [
+    "warm",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "flirt-2",
+   "oi": 9,
+   "anchor": "Spark",
+   "en": "There it is — that's the spark I was waiting for.",
+   "intents": [
+    "warm",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 1,
+   "anchor": "Quiet",
+   "en": "I don't mind the quiet with you.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 2,
+   "anchor": "Moment",
+   "en": "Let's not talk this moment to death.",
+   "intents": [
+    "warm",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 3,
+   "anchor": "Smile",
+   "en": "That smile said more than the sentence did.",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 4,
+   "anchor": "Happening",
+   "en": "There's something happening here, and we both know it.",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 5,
+   "anchor": "Look",
+   "en": "What? I'm allowed to look.",
+   "intents": [
+    "warm",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 6,
+   "anchor": "Rush",
+   "en": "Let's not rush past whatever just happened.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 7,
+   "anchor": "Hurry",
+   "en": "I'm in no hurry — this is nice.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 8,
+   "anchor": "Ruin",
+   "en": "Explaining it would just ruin it.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-3",
+   "oi": 9,
+   "anchor": "Sit",
+   "en": "We don't have to do anything with this — we can just let it ",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 1,
+   "anchor": "Noticed",
+   "en": "I noticed you before I knew why.",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 2,
+   "anchor": "Track",
+   "en": "You're making me lose track of the whole party — and it's a ",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 3,
+   "anchor": "Quiet",
+   "en": "You have a quiet way of pulling focus.",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 4,
+   "anchor": "Rest",
+   "en": "You're not like the rest of this room — and I think you alre",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 5,
+   "anchor": "Crossed",
+   "en": "Out of everyone here, you're the one I crossed the room for.",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 6,
+   "anchor": "Choice",
+   "en": "If I had to choose one conversation tonight, it'd be this on",
+   "intents": [
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 7,
+   "anchor": "Polite",
+   "en": "There's you — and then there's everyone I'm just being polit",
+   "intents": [
+    "warm",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 8,
+   "anchor": "Wait",
+   "en": "Everything else can wait.",
+   "intents": [
+    "warm",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-4",
+   "oi": 9,
+   "anchor": "Else",
+   "en": "I'm aware there's a whole room here — I'm just not very inte",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 1,
+   "anchor": "Going",
+   "en": "I like where this is going — if you do.",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 2,
+   "anchor": "Quieter",
+   "en": "I'd like to keep this going somewhere quieter — if you're in",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 3,
+   "anchor": "End",
+   "en": "I don't want this conversation to end yet.",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 4,
+   "anchor": "Call",
+   "en": "This is where I'd ask you to get out of here with me — entir",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 5,
+   "anchor": "Pretend",
+   "en": "I'm not going to pretend this is just small talk.",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 6,
+   "anchor": "Kiss",
+   "en": "I'd kiss you right now — but only if it's something you'd wa",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 7,
+   "anchor": "Chase",
+   "en": "I'm not going to chase this — but I'd love to see where it g",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 8,
+   "anchor": "Ambiguous",
+   "en": "The next move is yours — but my interest is not ambiguous.",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-5",
+   "oi": 9,
+   "anchor": "Timing",
+   "en": "I know what I'd like here — the timing's entirely yours.",
+   "intents": [
+    "ask",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 1,
+   "anchor": "Ruin",
+   "en": "Let me take you out and ruin all your other Tuesdays.",
+   "intents": [
+    "ask",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 2,
+   "anchor": "Show",
+   "en": "There's a place I've been wanting to show someone — you're s",
+   "intents": [
+    "ask",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 3,
+   "anchor": "Breathe",
+   "en": "I want to take you somewhere this conversation can breathe.",
+   "intents": [
+    "ask",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 4,
+   "anchor": "Friday",
+   "en": "Friday. Dinner. I'm planning the whole thing — you just show",
+   "intents": [
+    "ask",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 5,
+   "anchor": "Light",
+   "en": "Thursday evening — somewhere with good light and no rush.",
+   "intents": [
+    "ask",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 6,
+   "anchor": "Night",
+   "en": "Let me plan a real night out — not a coffee catch-up.",
+   "intents": [
+    "close",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 7,
+   "anchor": "Boring",
+   "en": "I promise it won't be boring.",
+   "intents": [
+    "ask",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 8,
+   "anchor": "Wondering",
+   "en": "Say yes now, then spend all week wondering what I've got pla",
+   "intents": [
+    "ask",
+    "buy_time",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-6",
+   "oi": 9,
+   "anchor": "Somewhere",
+   "en": "I'm taking you somewhere good.",
+   "intents": [
+    "ask",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 1,
+   "anchor": "Fair",
+   "en": "That's fair — and I'm glad I said it.",
+   "intents": [
+    "support",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 2,
+   "anchor": "Flattered",
+   "en": "I'm genuinely flattered — it's just not where I am right now",
+   "intents": [
+    "hold",
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 3,
+   "anchor": "Weird",
+   "en": "You can say no — nothing gets weird, I promise.",
+   "intents": [
+    "ask",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 4,
+   "anchor": "Straight",
+   "en": "Just tell me straight — I'd rather know.",
+   "intents": [
+    "hold",
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 5,
+   "anchor": "Honest",
+   "en": "I'd rather be honest — not in that way for me, but I really ",
+   "intents": [
+    "hold",
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 6,
+   "anchor": "Negotiate",
+   "en": "I respect that — I won't try to negotiate your answer.",
+   "intents": [
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 7,
+   "anchor": "Feelings",
+   "en": "It's okay to say no — really, no hard feelings.",
+   "intents": [
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 8,
+   "anchor": "Respect",
+   "en": "Nothing changes — same respect, same ease.",
+   "intents": [
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-7",
+   "oi": 9,
+   "anchor": "Adults",
+   "en": "Well, look at us handling this like adults.",
+   "intents": [
+    "repair",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 1,
+   "anchor": "Noticed",
+   "en": "I saw that smile — I'm just saying I noticed.",
+   "intents": [
+    "clarify",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 2,
+   "anchor": "Leaning",
+   "en": "You were leaning in for a second there — I noticed.",
+   "intents": [
+    "clarify",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 3,
+   "anchor": "Rush",
+   "en": "No rush — your pace works for me.",
+   "intents": [
+    "clarify",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 4,
+   "anchor": "Wrong",
+   "en": "I think there's something here — tell me if I'm wrong.",
+   "intents": [
+    "clarify",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 5,
+   "anchor": "Light",
+   "en": "That felt like a green light — am I reading it right?",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 6,
+   "anchor": "Slow",
+   "en": "If I'm moving too fast, tell me — I can slow down.",
+   "intents": [
+    "ask",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 7,
+   "anchor": "Push",
+   "en": "I'm not going to push anything — this is good as it is.",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 8,
+   "anchor": "Cue",
+   "en": "I'll take my cue from you.",
+   "intents": [
+    "clarify",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-8",
+   "oi": 9,
+   "anchor": "Fine",
+   "en": "And if you'd rather leave it here, that's completely fine to",
+   "intents": [
+    "ask",
+    "clarify",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 1,
+   "anchor": "Cliffhanger",
+   "en": "Some things are better left as a cliffhanger.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 2,
+   "anchor": "Version",
+   "en": "You get the charming version tonight — the full version take",
+   "intents": [
+    "warm",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 3,
+   "anchor": "Imagination",
+   "en": "There's more to that story — but I like where your imaginati",
+   "intents": [
+    "warm",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 4,
+   "anchor": "Second",
+   "en": "That one's a story for the second date.",
+   "intents": [
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 5,
+   "anchor": "Purpose",
+   "en": "I'm leaving that one open on purpose — you'll live.",
+   "intents": [
+    "clarify",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 6,
+   "anchor": "Mystery",
+   "en": "A little mystery never hurt anyone.",
+   "intents": [
+    "close",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 7,
+   "anchor": "Know",
+   "en": "Wouldn't you like to know.",
+   "intents": [
+    "hold",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 8,
+   "anchor": "Leave",
+   "en": "Best to leave while it's still this good.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "flirt-9",
+   "oi": 9,
+   "anchor": "Ahead",
+   "en": "I'll quit while I'm ahead. Goodnight.",
+   "intents": [
+    "close",
+    "warm"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 1,
+   "anchor": "Breath",
+   "en": "Everyone, look at me. Deep breath. Now let's move.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 2,
+   "anchor": "Hold",
+   "en": "Everybody hold steady — I've got this.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 3,
+   "anchor": "Solo",
+   "en": "Stay in pairs, stay in touch — nobody goes solo on this.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 4,
+   "anchor": "Jobs",
+   "en": "Names and jobs: you on comms, you on the floor, me on the ca",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 5,
+   "anchor": "Priority",
+   "en": "Priority one is safety, two is containment — everything else",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 6,
+   "anchor": "Drop",
+   "en": "Drop everything else — this is the only thing that exists ri",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 7,
+   "anchor": "Command",
+   "en": "I'm taking command until this is stable — so we don't trip o",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 8,
+   "anchor": "Signal",
+   "en": "We move together, on my signal.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-1",
+   "oi": 9,
+   "anchor": "Later",
+   "en": "We sort the why later — right now, you execute.",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "lead"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 1,
+   "anchor": "Worst",
+   "en": "Breathe — the worst of it is behind us.",
+   "intents": [
+    "lead",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 2,
+   "anchor": "Hold",
+   "en": "I saw people hold the line under real pressure — and that ma",
+   "intents": [
+    "lead",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 3,
+   "anchor": "Through",
+   "en": "This took a lot out of everyone — thank you for staying stea",
+   "intents": [
+    "lead",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 4,
+   "anchor": "Rebuild",
+   "en": "The fire's out — now we rebuild.",
+   "intents": [
+    "close",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 5,
+   "anchor": "Stable",
+   "en": "Here's what's stable, what's still exposed, and what we watc",
+   "intents": [
+    "lead",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 6,
+   "anchor": "Reset",
+   "en": "No victory lap yet — we debrief, repair, and reset.",
+   "intents": [
+    "lead",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 7,
+   "anchor": "Guardrails",
+   "en": "Now we put in the guardrails so this doesn't happen twice.",
+   "intents": [
+    "lead",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 8,
+   "anchor": "Change",
+   "en": "What matters now is what we change because of this.",
+   "intents": [
+    "lead",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-10",
+   "oi": 9,
+   "anchor": "Comeback",
+   "en": "Rough week — the comeback starts Monday.",
+   "intents": [
+    "close",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 1,
+   "anchor": "Step",
+   "en": "Stay with me — one step, then the next.",
+   "intents": [
+    "close",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 2,
+   "anchor": "Scary",
+   "en": "Yeah, this is scary — we can still think straight.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 3,
+   "anchor": "Slow",
+   "en": "Everyone slow down — we'll do this right.",
+   "intents": [
+    "lead",
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 4,
+   "anchor": "True",
+   "en": "Here is what's true right now.",
+   "intents": [
+    "lead",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 5,
+   "anchor": "Pace",
+   "en": "We're not letting fear set the pace.",
+   "intents": [
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 6,
+   "anchor": "Noise",
+   "en": "Facts first, calm voices — let's cut the noise.",
+   "intents": [
+    "lead",
+    "support",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 7,
+   "anchor": "Matters",
+   "en": "Listen up — this next part matters.",
+   "intents": [
+    "close",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 8,
+   "anchor": "Easy",
+   "en": "Nice and easy — we'll talk it through.",
+   "intents": [
+    "lead",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-2",
+   "oi": 9,
+   "anchor": "Nervous",
+   "en": "Of course I'm nervous — doesn't change the job.",
+   "intents": [
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 1,
+   "anchor": "Half",
+   "en": "We're deciding with half the picture — that's just where we ",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 2,
+   "anchor": "Luxury",
+   "en": "We'd all love more data — we don't have that luxury today.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 3,
+   "anchor": "Uneasy",
+   "en": "Everyone's uneasy about this — me too. We move anyway.",
+   "intents": [
+    "lead",
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 4,
+   "anchor": "Decision",
+   "en": "My decision is this: we stop the spread and protect the core",
+   "intents": [
+    "lead",
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 5,
+   "anchor": "Live",
+   "en": "I'm picking the option we can live with if it goes wrong.",
+   "intents": [
+    "lead",
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 6,
+   "anchor": "Pivot",
+   "en": "If new facts change the picture, we pivot fast — and I'll sa",
+   "intents": [
+    "lead",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 7,
+   "anchor": "Own",
+   "en": "It's my call, and I'll own whatever comes of it.",
+   "intents": [
+    "lead",
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 8,
+   "anchor": "Waiting",
+   "en": "Waiting is also a decision — and right now it's the riskier ",
+   "intents": [
+    "pushback",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-3",
+   "oi": 9,
+   "anchor": "Lock",
+   "en": "Lock it in — we move, and we learn on the way.",
+   "intents": [
+    "close",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 1,
+   "anchor": "Angry",
+   "en": "You're right to be angry — I'd be asking the same things.",
+   "intents": [
+    "clarify",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 2,
+   "anchor": "Hide",
+   "en": "I'm not going to hide from any of this — ask away.",
+   "intents": [
+    "clarify",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 3,
+   "anchor": "Aim",
+   "en": "The frustration's fair — let's aim it at the problem.",
+   "intents": [
+    "hold",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 4,
+   "anchor": "Hardest",
+   "en": "I'll take these one at a time — starting with the hardest.",
+   "intents": [
+    "clarify",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 5,
+   "anchor": "Straight",
+   "en": "Straight answer: yes, that one's on us.",
+   "intents": [
+    "hold",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 6,
+   "anchor": "Separate",
+   "en": "Let's separate the allegation from the facts we can verify.",
+   "intents": [
+    "buy_time",
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 7,
+   "anchor": "Attitude",
+   "en": "I'll answer the question — not the attitude behind it.",
+   "intents": [
+    "hold",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 8,
+   "anchor": "Blurt",
+   "en": "You can push, but I'm not going to blurt out a bad answer.",
+   "intents": [
+    "hold",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-4",
+   "oi": 9,
+   "anchor": "Fire",
+   "en": "Fire away — I'll get to every single one.",
+   "intents": [
+    "ask",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 1,
+   "anchor": "Minimize",
+   "en": "I'm not going to stand here and minimize what this did to pe",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 2,
+   "anchor": "Affected",
+   "en": "To everyone affected: I'm sorry — and here's what we're doin",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 3,
+   "anchor": "Performance",
+   "en": "You don't need a performance from me — you need the truth an",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 4,
+   "anchor": "Failure",
+   "en": "This is a failure — not a 'setback.' And it's mine to answer",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 5,
+   "anchor": "Watch",
+   "en": "No softening it: it's the worst we've had — and it happened ",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 6,
+   "anchor": "Scope",
+   "en": "Here's the full scope, unvarnished — then what I'm doing abo",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 7,
+   "anchor": "Fix",
+   "en": "This one's on me — and I'm going to fix it.",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 8,
+   "anchor": "Staying",
+   "en": "It's bad — and I'm staying right here until it isn't.",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-5",
+   "oi": 9,
+   "anchor": "Plan",
+   "en": "The damage is real. So is the plan to fix it — starting toda",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 1,
+   "anchor": "Peg",
+   "en": "I'm not here to take anyone down a peg — I'm here to fix the",
+   "intents": [
+    "hold",
+    "pushback",
+    "lead"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 2,
+   "anchor": "Outcome",
+   "en": "We both want the same thing here: a clean outcome.",
+   "intents": [
+    "hold",
+    "pushback",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 3,
+   "anchor": "Remind",
+   "en": "No need to remind me who you are — let's stay on the issue.",
+   "intents": [
+    "clarify",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 4,
+   "anchor": "Seniority",
+   "en": "Seniority doesn't decide this — the facts do.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 5,
+   "anchor": "Threats",
+   "en": "Threats don't change the facts on the table.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 6,
+   "anchor": "Intimidated",
+   "en": "I'm willing to be pressed — I'm not willing to be intimidate",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 7,
+   "anchor": "Title",
+   "en": "I respect the title — it just doesn't make the argument for ",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 8,
+   "anchor": "Position",
+   "en": "Push all you want — my position hasn't moved.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-6",
+   "oi": 9,
+   "anchor": "Outrank",
+   "en": "You outrank me — that doesn't make you right.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 1,
+   "anchor": "Lie",
+   "en": "I won't lie to you to make this easier — I'll just be here.",
+   "intents": [
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 2,
+   "anchor": "Truth",
+   "en": "Truth is, I don't know how this ends — but you won't face it",
+   "intents": [
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 3,
+   "anchor": "Around",
+   "en": "I'll be straight with you, and I'll be around — that much I ",
+   "intents": [
+    "support",
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 4,
+   "anchor": "Control",
+   "en": "Here's what we control: the next move, the standard, and how",
+   "intents": [
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 5,
+   "anchor": "Road",
+   "en": "We can't see the whole road — the next step's clear enough.",
+   "intents": [
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 6,
+   "anchor": "Focus",
+   "en": "What we can control is how we handle this — so that's our fo",
+   "intents": [
+    "support",
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 7,
+   "anchor": "Effort",
+   "en": "I can't promise the outcome — I can promise the effort.",
+   "intents": [
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 8,
+   "anchor": "Deal",
+   "en": "However this ends, we'll deal with it the right way.",
+   "intents": [
+    "support",
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-7",
+   "oi": 9,
+   "anchor": "Ready",
+   "en": "We'll know soon enough — and we'll be ready.",
+   "intents": [
+    "support",
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 1,
+   "anchor": "Temperature",
+   "en": "Hold on — let's bring the temperature down first.",
+   "intents": [
+    "lead",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 2,
+   "anchor": "Win",
+   "en": "Take a breath — nobody needs to win the next ten seconds.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 3,
+   "anchor": "Later",
+   "en": "I'm stepping in because I don't want anyone paying for this ",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 4,
+   "anchor": "Winding",
+   "en": "We're winding each other up, not deciding anything.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 5,
+   "anchor": "Watch",
+   "en": "Nobody makes a permanent call on adrenaline — not on my watc",
+   "intents": [
+    "lead",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 6,
+   "anchor": "Undo",
+   "en": "Whatever we decide, let's not make it something we can't und",
+   "intents": [
+    "lead",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 7,
+   "anchor": "Stop",
+   "en": "Stop. Not under these conditions.",
+   "intents": [
+    "lead",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 8,
+   "anchor": "Blame",
+   "en": "Blame me for the delay later — right now we stop.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-8",
+   "oi": 9,
+   "anchor": "Temporary",
+   "en": "Let's not do permanent damage over a temporary fight.",
+   "intents": [
+    "lead",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 1,
+   "anchor": "Notch",
+   "en": "Let's take it down a notch — we'll think better.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 2,
+   "anchor": "Volume",
+   "en": "Bring it down — we'll get more done at half the volume.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 3,
+   "anchor": "One",
+   "en": "One voice at a time — I actually want to hear it.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 4,
+   "anchor": "Chatter",
+   "en": "Cut the chatter — give me facts.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 5,
+   "anchor": "Safety",
+   "en": "One thing at a time — safety first.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 6,
+   "anchor": "Decide",
+   "en": "Let's stop, get the facts, then decide.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 7,
+   "anchor": "Yell",
+   "en": "I'm not going to yell over anyone — let's just settle down a",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 8,
+   "anchor": "Quietly",
+   "en": "I'm going to say this quietly, because it matters.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "gravitas-9",
+   "oi": 9,
+   "anchor": "Calm",
+   "en": "We stay calm, we get through it.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 1,
+   "anchor": "Close",
+   "en": "I want to talk about something — not to fight, just to feel ",
+   "intents": [
+    "repair",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 2,
+   "anchor": "Gently",
+   "en": "Can we take this gently? It matters to me.",
+   "intents": [
+    "ask",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 3,
+   "anchor": "Together",
+   "en": "I don't want to carry this alone — and I don't want to put i",
+   "intents": [
+    "ask",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 4,
+   "anchor": "Avoiding",
+   "en": "I've been avoiding this — and I don't want that to become ou",
+   "intents": [
+    "repair",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 5,
+   "anchor": "Blame",
+   "en": "Something's been sitting between us, and I want to talk abou",
+   "intents": [
+    "repair",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 6,
+   "anchor": "Part",
+   "en": "My part is that I've been quiet when I should've been honest",
+   "intents": [
+    "repair",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 7,
+   "anchor": "Win",
+   "en": "This may be hard — but I'm not here to win. I'm here to unde",
+   "intents": [
+    "repair",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 8,
+   "anchor": "Against",
+   "en": "It's not me against you — it's us against the problem.",
+   "intents": [
+    "repair",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-1",
+   "oi": 9,
+   "anchor": "Tomorrow",
+   "en": "We can argue tonight and still be good tomorrow.",
+   "intents": [
+    "repair",
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 1,
+   "anchor": "Jealous",
+   "en": "I felt a little jealous earlier — and I'd rather name it tha",
+   "intents": [
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 2,
+   "anchor": "Flare",
+   "en": "I felt it flare up tonight — that's mine to deal with.",
+   "intents": [
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 3,
+   "anchor": "Admit",
+   "en": "Can I admit something a little unflattering — without it tur",
+   "intents": [
+    "ask",
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 4,
+   "anchor": "Check",
+   "en": "I don't want to check up on you — I just need to hear we're ",
+   "intents": [
+    "support",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 5,
+   "anchor": "Felt",
+   "en": "I'm not accusing you — I'm just telling you how it felt.",
+   "intents": [
+    "support",
+    "repair",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 6,
+   "anchor": "Mine",
+   "en": "This is mine to work through — not yours to fix.",
+   "intents": [
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 7,
+   "anchor": "Fear",
+   "en": "This is my fear talking — you didn't do anything wrong.",
+   "intents": [
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 8,
+   "anchor": "Trust",
+   "en": "Yeah, I get jealous sometimes — I still trust you.",
+   "intents": [
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-10",
+   "oi": 9,
+   "anchor": "Problem",
+   "en": "This one's my problem — I'm not going to make it yours.",
+   "intents": [
+    "support",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 1,
+   "anchor": "Love",
+   "en": "I know this comes from love — I really do.",
+   "intents": [
+    "support",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 2,
+   "anchor": "Agree",
+   "en": "We don't have to agree to be close — I'm not going anywhere.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 3,
+   "anchor": "Worried",
+   "en": "I know you're worried — let's not turn it into an argument.",
+   "intents": [
+    "support",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 4,
+   "anchor": "Trial",
+   "en": "I'm not going to argue my life like it's on trial.",
+   "intents": [
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 5,
+   "anchor": "Steering",
+   "en": "I can listen to you without handing you the steering wheel.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 6,
+   "anchor": "Vote",
+   "en": "That part of my life isn't open for a family vote.",
+   "intents": [
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 7,
+   "anchor": "Child",
+   "en": "I'm your child — but I'm not a child in this conversation.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 8,
+   "anchor": "Permission",
+   "en": "I'm not asking for permission — I'm offering you honesty.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-11",
+   "oi": 9,
+   "anchor": "Adult",
+   "en": "You raised an adult — trust that.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 1,
+   "anchor": "Laugh",
+   "en": "The way you laugh with your whole face — that's my favorite ",
+   "intents": [
+    "support",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 2,
+   "anchor": "Catch",
+   "en": "I catch myself watching how you do small things — they get m",
+   "intents": [
+    "support",
+    "warm"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 3,
+   "anchor": "Grocery",
+   "en": "Somehow even grocery runs are fun with you.",
+   "intents": [
+    "support",
+    "warm"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 4,
+   "anchor": "Simple",
+   "en": "I want you — simple as that.",
+   "intents": [
+    "support",
+    "warm"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 5,
+   "anchor": "Far",
+   "en": "Come here — you're too far away.",
+   "intents": [
+    "ask",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 6,
+   "anchor": "Look",
+   "en": "That look you just gave me — still gets me, every time.",
+   "intents": [
+    "support",
+    "warm"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 7,
+   "anchor": "Pick",
+   "en": "I know all of you by now — and I'd still pick you.",
+   "intents": [
+    "support",
+    "warm"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 8,
+   "anchor": "Fix",
+   "en": "I don't need you to fix me — I just want you here.",
+   "intents": [
+    "support",
+    "warm"
+   ]
+  },
+  {
+   "slug": "intimacy-12",
+   "oi": 9,
+   "anchor": "Surprise",
+   "en": "Ten years in, you still surprise me.",
+   "intents": [
+    "support",
+    "warm"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 1,
+   "anchor": "Ouch",
+   "en": "Ouch. I want to stay in this with you — but that one got me.",
+   "intents": [
+    "repair",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 2,
+   "anchor": "Sore",
+   "en": "That one hit a sore spot — I just want you to know.",
+   "intents": [
+    "repair",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 3,
+   "anchor": "Stung",
+   "en": "I know you may not have meant it that way — but it stung.",
+   "intents": [
+    "repair",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 4,
+   "anchor": "Harsh",
+   "en": "Can you try that again? It came out pretty harsh.",
+   "intents": [
+    "repair",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 5,
+   "anchor": "Tone",
+   "en": "I'm not okay with that tone — but I'm still here.",
+   "intents": [
+    "repair",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 6,
+   "anchor": "Shut",
+   "en": "When it lands like that, I start to shut down — and I'd rath",
+   "intents": [
+    "buy_time",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 7,
+   "anchor": "Fire",
+   "en": "I'm not going to fire back — even though part of me wants to",
+   "intents": [
+    "repair",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 8,
+   "anchor": "Hurt",
+   "en": "I'm hurt, but I'm not going anywhere.",
+   "intents": [
+    "repair",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-2",
+   "oi": 9,
+   "anchor": "Worse",
+   "en": "We're both hurting — let's not make it worse.",
+   "intents": [
+    "ask",
+    "buy_time",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 1,
+   "anchor": "First",
+   "en": "I don't want to wait each other out — so I'm going first.",
+   "intents": [
+    "buy_time",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 2,
+   "anchor": "Distance",
+   "en": "I don't like this distance between us — can we close it?",
+   "intents": [
+    "ask",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 3,
+   "anchor": "Miss",
+   "en": "I miss us — even in the middle of this.",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 4,
+   "anchor": "Sorry",
+   "en": "I'm sorry. Full stop — that's the whole sentence.",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 5,
+   "anchor": "Defensive",
+   "en": "I got defensive — and I made it harder for you to reach me.",
+   "intents": [
+    "repair",
+    "clarify",
+    "lead"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 6,
+   "anchor": "Instead",
+   "en": "Next time I'll slow down instead of going for the throat.",
+   "intents": [
+    "close",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 7,
+   "anchor": "Right",
+   "en": "I'd rather be close to you than be right.",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 8,
+   "anchor": "Bigger",
+   "en": "We're bigger than one bad night — and I'm choosing us.",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-3",
+   "oi": 9,
+   "anchor": "Ammo",
+   "en": "Let's not save this as ammo for later. Let's just put it dow",
+   "intents": [
+    "close",
+    "ask",
+    "buy_time"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 1,
+   "anchor": "Hurt",
+   "en": "I'm sorry I hurt you. I can see it landed deeper than I mean",
+   "intents": [
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 2,
+   "anchor": "Alone",
+   "en": "You didn't deserve to feel alone in that moment.",
+   "intents": [
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 3,
+   "anchor": "Matters",
+   "en": "How it landed on you matters more than what I meant.",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 4,
+   "anchor": "Dismissed",
+   "en": "I dismissed what mattered to you — and that made you feel sm",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 5,
+   "anchor": "Spoke",
+   "en": "I spoke over you when I should have slowed down and listened",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 6,
+   "anchor": "Excuses",
+   "en": "No excuses — what I did was mine to own.",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 7,
+   "anchor": "Cheap",
+   "en": "Words are cheap right now — let me show you with what I do n",
+   "intents": [
+    "buy_time",
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 8,
+   "anchor": "Repeat",
+   "en": "The real apology is making sure I don't repeat it.",
+   "intents": [
+    "repair"
+   ]
+  },
+  {
+   "slug": "intimacy-4",
+   "oi": 9,
+   "anchor": "Forgive",
+   "en": "Take all the time you need — my responsibility doesn't depen",
+   "intents": [
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 1,
+   "anchor": "Less",
+   "en": "My 'no' here doesn't mean I love you any less.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 2,
+   "anchor": "Need",
+   "en": "This isn't me pushing you away — I just need this for myself",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 3,
+   "anchor": "Limit",
+   "en": "I'm at my limit here — it's not about you.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 4,
+   "anchor": "Complete",
+   "en": "The answer is no — and 'no' is a complete sentence.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 5,
+   "anchor": "Leave",
+   "en": "The answer's no, and I'm going to leave it at that.",
+   "intents": [
+    "close",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 6,
+   "anchor": "Pressured",
+   "en": "I'm willing to talk — but I'm not willing to be pressured.",
+   "intents": [
+    "hold",
+    "support",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 7,
+   "anchor": "Ground",
+   "en": "I don't need to raise my voice to hold my ground.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 8,
+   "anchor": "Upset",
+   "en": "You're allowed to be upset with me. The answer is still no.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-5",
+   "oi": 9,
+   "anchor": "Love",
+   "en": "I love you, and the answer is still no.",
+   "intents": [
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 1,
+   "anchor": "Strong",
+   "en": "I'm here with you. You don't have to be strong right now.",
+   "intents": [
+    "buy_time",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 2,
+   "anchor": "Hold",
+   "en": "Come here — you don't have to hold this by yourself.",
+   "intents": [
+    "support",
+    "ask"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 3,
+   "anchor": "Beside",
+   "en": "I hate that you're going through this — and I'm right beside",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 4,
+   "anchor": "Fix",
+   "en": "I'm not going to rush in and fix this — I just want to under",
+   "intents": [
+    "support",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 5,
+   "anchor": "Need",
+   "en": "Tell me what you need — words, quiet, or just my hand.",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 6,
+   "anchor": "Sit",
+   "en": "I can sit with this without trying to explain it away.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 7,
+   "anchor": "Soften",
+   "en": "You don't have to soften it for me.",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 8,
+   "anchor": "Afraid",
+   "en": "I'm not afraid of this part of you.",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-6",
+   "oi": 9,
+   "anchor": "Staying",
+   "en": "I'm staying. We can let this be as heavy as it is.",
+   "intents": [
+    "support",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 1,
+   "anchor": "In",
+   "en": "I want to let you in — instead of pretending I'm fine.",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 2,
+   "anchor": "Scared",
+   "en": "I'm scared — and I still want to stay open with you.",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 3,
+   "anchor": "Near",
+   "en": "I don't need advice right now — I just need you near.",
+   "intents": [
+    "buy_time",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 4,
+   "anchor": "Certainty",
+   "en": "I don't know the answer yet — and I'm not going to fake cert",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 5,
+   "anchor": "Hiding",
+   "en": "This is hard to say — but hiding it would cost us more.",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 6,
+   "anchor": "Handle",
+   "en": "I'm telling you because it matters — not because I can't han",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 7,
+   "anchor": "Loud",
+   "en": "It's hard to say out loud — I need you.",
+   "intents": [
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 8,
+   "anchor": "Often",
+   "en": "I don't say this stuff often, so bear with me.",
+   "intents": [
+    "ask",
+    "buy_time",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-7",
+   "oi": 9,
+   "anchor": "Glad",
+   "en": "That was hard to say — but I'm glad I said it.",
+   "intents": [
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 1,
+   "anchor": "Listening",
+   "en": "Okay. I'm listening — really listening, not waiting to argue",
+   "intents": [
+    "clarify",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 2,
+   "anchor": "Guts",
+   "en": "Thank you — that took guts to say to my face.",
+   "intents": [
+    "clarify",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 3,
+   "anchor": "Argue",
+   "en": "Part of me wants to argue — but go on, I'm listening.",
+   "intents": [
+    "clarify",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 4,
+   "anchor": "Rest",
+   "en": "You're right about some of this — don't stop, tell me the re",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 5,
+   "anchor": "Specific",
+   "en": "Can you give me a specific example? I'd rather get this exac",
+   "intents": [
+    "ask",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 6,
+   "anchor": "Part",
+   "en": "I may not agree with every part — but I won't dismiss the pa",
+   "intents": [
+    "clarify",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 7,
+   "anchor": "Hear",
+   "en": "That's hard to hear, but I'd rather hear it from you.",
+   "intents": [
+    "clarify",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 8,
+   "anchor": "Sit",
+   "en": "Let me sit with that — some of it's true.",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-8",
+   "oi": 9,
+   "anchor": "Learn",
+   "en": "I'd rather learn from this than win the argument.",
+   "intents": [
+    "clarify",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 1,
+   "anchor": "Value",
+   "en": "I love what we have — and I'd like to talk about where it's ",
+   "intents": [
+    "ask",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 2,
+   "anchor": "Years",
+   "en": "Where do you see us a few years from now? I've been thinking",
+   "intents": [
+    "clarify",
+    "support",
+    "ask"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 3,
+   "anchor": "Build",
+   "en": "I don't want us running on autopilot — I want us to build so",
+   "intents": [
+    "ask",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 4,
+   "anchor": "Plainly",
+   "en": "Here's what I want, plainly: a real partnership — and I want",
+   "intents": [
+    "ask",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 5,
+   "anchor": "Ultimatum",
+   "en": "This isn't an ultimatum — it's me telling you my direction h",
+   "intents": [
+    "clarify",
+    "support",
+    "ask"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 6,
+   "anchor": "Clarity",
+   "en": "I'm not asking for a promise tonight — I'm asking for clarit",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 7,
+   "anchor": "Together",
+   "en": "I know where I'm going — the real question is whether we go ",
+   "intents": [
+    "clarify",
+    "support",
+    "ask"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 8,
+   "anchor": "Want",
+   "en": "I'm not here out of fear or habit — I want this.",
+   "intents": [
+    "clarify",
+    "support",
+    "ask"
+   ]
+  },
+  {
+   "slug": "intimacy-9",
+   "oi": 9,
+   "anchor": "Lose",
+   "en": "I'm all in — but I'm not going to lose myself in it.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 1,
+   "anchor": "Page",
+   "en": "Let's get everyone on the same page for a second.",
+   "intents": [
+    "ask",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 2,
+   "anchor": "Voices",
+   "en": "I want to make sure the right voices are in before we move.",
+   "intents": [
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 3,
+   "anchor": "Threads",
+   "en": "Let me pull these threads together.",
+   "intents": [
+    "ask",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 4,
+   "anchor": "Focus",
+   "en": "Here's the focus: what matters, what's unclear, and what we ",
+   "intents": [
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 5,
+   "anchor": "Order",
+   "en": "There are three things in front of us — let's take them in o",
+   "intents": [
+    "clarify",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 6,
+   "anchor": "Decide",
+   "en": "Let's get one real decision made before anyone leaves.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 7,
+   "anchor": "Drive",
+   "en": "Someone needs to drive this — I'll do it. Jump in if you dis",
+   "intents": [
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 8,
+   "anchor": "Stall",
+   "en": "I'm not in charge — I'm just not willing to watch us stall.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-1",
+   "oi": 9,
+   "anchor": "Point",
+   "en": "I'll run point on this for now — let's move.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 1,
+   "anchor": "Brag",
+   "en": "Let me brag about my team for a second.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 2,
+   "anchor": "Quiet",
+   "en": "I want to call out the quiet work behind this — it made the ",
+   "intents": [
+    "warm",
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 3,
+   "anchor": "Outcome",
+   "en": "Everyone should know what she did on this one — it changed t",
+   "intents": [
+    "warm",
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 4,
+   "anchor": "Win",
+   "en": "That win was hers, not mine — she made the call.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 5,
+   "anchor": "Record",
+   "en": "Let me correct the record — I didn't move this forward, she ",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 6,
+   "anchor": "Credit",
+   "en": "Let's give credit where it's due — she carried this.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 7,
+   "anchor": "Cost",
+   "en": "Their win doesn't cost me anything.",
+   "intents": [
+    "clarify",
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 8,
+   "anchor": "Better",
+   "en": "The better she looks, the better we all look.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-10",
+   "oi": 9,
+   "anchor": "Notices",
+   "en": "People do their best work when somebody actually notices.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 1,
+   "anchor": "Seen",
+   "en": "I'm asking more of you because I've seen what you can actual",
+   "intents": [
+    "lead",
+    "pushback",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 2,
+   "anchor": "Capable",
+   "en": "You're capable of way more than this — and you know it.",
+   "intents": [
+    "lead",
+    "pushback",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 3,
+   "anchor": "More",
+   "en": "I see more in you than the work is currently showing.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 4,
+   "anchor": "Bar",
+   "en": "'Fine' isn't the bar here — you know that.",
+   "intents": [
+    "lead",
+    "pushback",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 5,
+   "anchor": "Excellent",
+   "en": "Let's define what 'excellent' actually means here — concrete",
+   "intents": [
+    "ask",
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 6,
+   "anchor": "Holding",
+   "en": "'Good enough' is exactly what's holding us back.",
+   "intents": [
+    "lead",
+    "pushback",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 7,
+   "anchor": "Pushing",
+   "en": "I'm pushing you because I've seen your best — this isn't it.",
+   "intents": [
+    "lead",
+    "pushback",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 8,
+   "anchor": "Slide",
+   "en": "I'd be wasting you if I let this slide.",
+   "intents": [
+    "lead",
+    "pushback",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-11",
+   "oi": 9,
+   "anchor": "Piling",
+   "en": "This isn't me piling on — I just know what you can do.",
+   "intents": [
+    "lead",
+    "pushback",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 1,
+   "anchor": "Imagine",
+   "en": "Imagine what changes if we actually get this right.",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 2,
+   "anchor": "Care",
+   "en": "This only works if it connects to what we actually care abou",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 3,
+   "anchor": "Name",
+   "en": "The best part of this has your name all over it.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 4,
+   "anchor": "Headed",
+   "en": "Here's where we're headed: smaller, sharper, and actually us",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 5,
+   "anchor": "First",
+   "en": "The first move is simple — we prove it with one real example",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 6,
+   "anchor": "Wishful",
+   "en": "This isn't wishful thinking — I can see the whole path.",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 7,
+   "anchor": "Money",
+   "en": "I believe in this enough to put my own money on it.",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 8,
+   "anchor": "Selling",
+   "en": "I'm not selling you anything — I'm telling you where I'm alr",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-2",
+   "oi": 9,
+   "anchor": "Rather",
+   "en": "I'd do this alone if I had to — I'd just much rather do it w",
+   "intents": [
+    "lead",
+    "ask",
+    "warm"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 1,
+   "anchor": "Breathe",
+   "en": "Okay — everybody breathe for one second. Me included.",
+   "intents": [
+    "lead",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 2,
+   "anchor": "Hard",
+   "en": "This is a lot — and nobody has to pretend it isn't.",
+   "intents": [
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 3,
+   "anchor": "Footing",
+   "en": "Let's find our footing before we make any calls.",
+   "intents": [
+    "lead",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 4,
+   "anchor": "Facts",
+   "en": "Here are the facts we actually have — and here's what we don",
+   "intents": [
+    "lead",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 5,
+   "anchor": "Separate",
+   "en": "Let's separate what happened from what we're afraid it means",
+   "intents": [
+    "ask",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 6,
+   "anchor": "Next",
+   "en": "The next move is simple: stabilize first, then make the call",
+   "intents": [
+    "buy_time",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 7,
+   "anchor": "Panic",
+   "en": "Panic won't help us — clear heads will.",
+   "intents": [
+    "lead",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 8,
+   "anchor": "Weathered",
+   "en": "We've weathered hard things before — we're not starting from",
+   "intents": [
+    "lead",
+    "support",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "lead-3",
+   "oi": 9,
+   "anchor": "Step",
+   "en": "Stick with me — we'll take this one step at a time.",
+   "intents": [
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 1,
+   "anchor": "Route",
+   "en": "I'm with you on the goal — it's the route I want to flag.",
+   "intents": [
+    "pushback",
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 2,
+   "anchor": "Team",
+   "en": "Same team here — I'd be doing you a disservice if I stayed q",
+   "intents": [
+    "buy_time",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 3,
+   "anchor": "Angle",
+   "en": "I respect the call you're making — let me add the angle I th",
+   "intents": [
+    "pushback",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 4,
+   "anchor": "Push",
+   "en": "Can I push back on one thing? The numbers point the other wa",
+   "intents": [
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 5,
+   "anchor": "Worries",
+   "en": "I see it differently — and here's the risk that worries me.",
+   "intents": [
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 6,
+   "anchor": "Exposure",
+   "en": "My concern isn't the decision itself — it's the exposure it ",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 7,
+   "anchor": "Picture",
+   "en": "It's your call — but you deserve the full picture as I see i",
+   "intents": [
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 8,
+   "anchor": "Breaks",
+   "en": "I can back the decision and still be honest about where I th",
+   "intents": [
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-4",
+   "oi": 9,
+   "anchor": "Mistake",
+   "en": "Better an awkward conversation now than an expensive mistake",
+   "intents": [
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 1,
+   "anchor": "Assuming",
+   "en": "This isn't like you — which is why I'm asking, not assuming.",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 2,
+   "anchor": "Sideways",
+   "en": "I'm not here to pile on — I want to understand where it went",
+   "intents": [
+    "lead",
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 3,
+   "anchor": "Audience",
+   "en": "Let's keep this just us — no audience, no drama.",
+   "intents": [
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 4,
+   "anchor": "Committed",
+   "en": "You committed to this and it didn't happen — walk me through",
+   "intents": [
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 5,
+   "anchor": "Apart",
+   "en": "Where did this fall apart?",
+   "intents": [
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 6,
+   "anchor": "Follow",
+   "en": "Good intent doesn't replace follow-through here.",
+   "intents": [
+    "lead",
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 7,
+   "anchor": "Again",
+   "en": "This stays between us — but it can't happen again.",
+   "intents": [
+    "close",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 8,
+   "anchor": "Trust",
+   "en": "I trust you to make this right — and I need a clear commitme",
+   "intents": [
+    "support",
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "lead-5",
+   "oi": 9,
+   "anchor": "Behind",
+   "en": "Tell me what you can stand behind — and I'll hold you to it.",
+   "intents": [
+    "ask",
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 1,
+   "anchor": "Wrong",
+   "en": "I got this one wrong — and it landed on you. I want to say t",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 2,
+   "anchor": "Cost",
+   "en": "That call cost the team time — and that's on me, no one else",
+   "intents": [
+    "buy_time",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 3,
+   "anchor": "Guess",
+   "en": "I'll say it straight so nobody has to guess.",
+   "intents": [
+    "buy_time",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 4,
+   "anchor": "Timing",
+   "en": "I misjudged the timing — and that's on me.",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 5,
+   "anchor": "Signs",
+   "en": "I rushed it and missed the warning signs.",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 6,
+   "anchor": "Changes",
+   "en": "Here's what changes now: clearer checks, earlier flags, no q",
+   "intents": [
+    "buy_time",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 7,
+   "anchor": "Authority",
+   "en": "I don't lose authority by owning the miss — I lose it by pre",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 8,
+   "anchor": "Lesson",
+   "en": "That one's on me — lesson learned, let's move.",
+   "intents": [
+    "repair",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "lead-6",
+   "oi": 9,
+   "anchor": "Trust",
+   "en": "Trust gets built in moments like this — by what we do next.",
+   "intents": [
+    "close",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 1,
+   "anchor": "Fair",
+   "en": "That frustration is fair — let's keep it aimed at the work, ",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 2,
+   "anchor": "Valid",
+   "en": "Valid concern — and it's mine to answer, not theirs.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 3,
+   "anchor": "Heat",
+   "en": "Fair point — but they won't be taking that heat alone.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 4,
+   "anchor": "Front",
+   "en": "I hear you — let me step in front of this.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 5,
+   "anchor": "Call",
+   "en": "If we're assigning blame, it's mine — I made the call.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 6,
+   "anchor": "Privately",
+   "en": "We'll handle the individual piece privately — in this room, ",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 7,
+   "anchor": "Shield",
+   "en": "My team is not my shield — I'm theirs.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 8,
+   "anchor": "People",
+   "en": "You've got an issue with my people, you bring it to me.",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-7",
+   "oi": 9,
+   "anchor": "Accountable",
+   "en": "If you're looking for who's accountable — you're looking at ",
+   "intents": [
+    "lead",
+    "hold",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 1,
+   "anchor": "Ends",
+   "en": "You two are arguing the same point from different ends.",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 2,
+   "anchor": "Enemy",
+   "en": "Neither of you is the enemy here.",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 3,
+   "anchor": "Start",
+   "en": "You both want the same thing — start from there.",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 4,
+   "anchor": "Crossfire",
+   "en": "Let's stop the crossfire — one voice at a time, uninterrupte",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 5,
+   "anchor": "Happened",
+   "en": "First, tell me what happened — we'll get to the rest.",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 6,
+   "anchor": "Temperature",
+   "en": "Let's separate the issue from the temperature in the room.",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 7,
+   "anchor": "Referee",
+   "en": "I'm not the referee here — I just want you two to hear each ",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 8,
+   "anchor": "Track",
+   "en": "I'll keep us on track until you two can hear each other.",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-8",
+   "oi": 9,
+   "anchor": "Side",
+   "en": "I'm not picking a side — I'm getting you back onto the same ",
+   "intents": [
+    "lead",
+    "clarify",
+    "repair"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 1,
+   "anchor": "Straight",
+   "en": "This is hard news, and I'm going to give it to you straight.",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 2,
+   "anchor": "Grapevine",
+   "en": "You're hearing this from me — not through the grapevine.",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 3,
+   "anchor": "Lands",
+   "en": "I care about how this lands — there are people behind the nu",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 4,
+   "anchor": "Situation",
+   "en": "Here's the situation, no dressing it up: the plan changed, a",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 5,
+   "anchor": "Know",
+   "en": "Here's what we know, what we don't know yet, and what happen",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 6,
+   "anchor": "Spin",
+   "en": "I'm giving you the facts — not spin.",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 7,
+   "anchor": "Sugarcoat",
+   "en": "I'm not going to sugarcoat this to make the room more comfor",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 8,
+   "anchor": "Insult",
+   "en": "I won't insult you by pretending this is easy.",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "lead-9",
+   "oi": 9,
+   "anchor": "Dropping",
+   "en": "I'm not dropping this on you and walking away.",
+   "intents": [
+    "lead",
+    "repair",
+    "support"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 1,
+   "anchor": "Candid",
+   "en": "Can I be candid with you for a minute?",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 2,
+   "anchor": "Place",
+   "en": "This is coming from a good place.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 3,
+   "anchor": "Wrong",
+   "en": "Don't take this the wrong way.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 4,
+   "anchor": "Short",
+   "en": "I think this is falling short here.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 5,
+   "anchor": "Tripped",
+   "en": "Here's where I think you tripped up.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 6,
+   "anchor": "Pattern",
+   "en": "There's a pattern I need to call out.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 7,
+   "anchor": "Mark",
+   "en": "Honestly, this isn't hitting the mark yet.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 8,
+   "anchor": "Tighten",
+   "en": "I need you to tighten this up.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-1",
+   "oi": 9,
+   "anchor": "Bar",
+   "en": "You need to raise the bar here.",
+   "intents": [
+    "pushback",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 1,
+   "anchor": "Reins",
+   "en": "I'm handing you the reins.",
+   "intents": [
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 2,
+   "anchor": "Charge",
+   "en": "You're in charge of this now.",
+   "intents": [
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 3,
+   "anchor": "Lead",
+   "en": "I need you to lead on this.",
+   "intents": [
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 4,
+   "anchor": "Call",
+   "en": "It's your call from here.",
+   "intents": [
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 5,
+   "anchor": "Back",
+   "en": "I've got your back on this.",
+   "intents": [
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 6,
+   "anchor": "Green",
+   "en": "You've got the green light.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 7,
+   "anchor": "Own",
+   "en": "I need you to own the outcome.",
+   "intents": [
+    "lead",
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 8,
+   "anchor": "Accountable",
+   "en": "I'll hold you accountable for it.",
+   "intents": [
+    "hold",
+    "lead"
+   ]
+  },
+  {
+   "slug": "leadership-2",
+   "oi": 9,
+   "anchor": "Deliver",
+   "en": "I'm counting on you to deliver.",
+   "intents": [
+    "ask",
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 1,
+   "anchor": "Start",
+   "en": "Here's where I'd start.",
+   "intents": [
+    "lead",
+    "ask"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 2,
+   "anchor": "Table",
+   "en": "Let me put my number on the table.",
+   "intents": [
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 3,
+   "anchor": "Map",
+   "en": "Let me map out what a good deal looks like for me.",
+   "intents": [
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 4,
+   "anchor": "Move",
+   "en": "If you can move on price, I can move on timing.",
+   "intents": [
+    "ask",
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 5,
+   "anchor": "Give",
+   "en": "I can give you that — but I'll need something back.",
+   "intents": [
+    "ask",
+    "hold"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 6,
+   "anchor": "Meet",
+   "en": "Let's meet in the middle on this one.",
+   "intents": [
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 7,
+   "anchor": "Bottom",
+   "en": "That's my bottom line — I won't go under it.",
+   "intents": [
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 8,
+   "anchor": "Floor",
+   "en": "We're already at the floor here.",
+   "intents": [
+    "hold"
+   ]
+  },
+  {
+   "slug": "negotiation-1",
+   "oi": 9,
+   "anchor": "Walk",
+   "en": "At that number, I'd honestly rather walk.",
+   "intents": [
+    "hold",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 1,
+   "anchor": "Page",
+   "en": "Are we on the same page?",
+   "intents": [
+    "clarify",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 2,
+   "anchor": "Holdup",
+   "en": "So what's the holdup here?",
+   "intents": [
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 3,
+   "anchor": "Sticking",
+   "en": "Let's name the sticking point.",
+   "intents": [
+    "clarify",
+    "lead"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 4,
+   "anchor": "Fence",
+   "en": "Don't sit on the fence here.",
+   "intents": [
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 5,
+   "anchor": "Pull",
+   "en": "Let's pull the trigger on this.",
+   "intents": [
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 6,
+   "anchor": "Board",
+   "en": "I'd love to have you on board.",
+   "intents": [
+    "warm",
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 7,
+   "anchor": "Dotted",
+   "en": "Ready to sign on the dotted line?",
+   "intents": [
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 8,
+   "anchor": "Shake",
+   "en": "Let's shake on it.",
+   "intents": [
+    "close"
+   ]
+  },
+  {
+   "slug": "negotiation-2",
+   "oi": 9,
+   "anchor": "Done",
+   "en": "Then it's a done deal.",
+   "intents": [
+    "close"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 1,
+   "anchor": "Fire",
+   "en": "Picture this: Monday morning, and the whole thing's on fire ",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 2,
+   "anchor": "Quick",
+   "en": "Give me thirty seconds — quick one.",
+   "intents": [
+    "ask",
+    "buy_time"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 3,
+   "anchor": "Hook",
+   "en": "Here's the hook — we make X feel like Y.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 4,
+   "anchor": "Opportunity",
+   "en": "Most people walk right past this — that's the opportunity.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 5,
+   "anchor": "Money",
+   "en": "Here's the part everyone skips — and it's where the money is",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 6,
+   "anchor": "Bet",
+   "en": "I'd bet money you've felt this exact thing.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 7,
+   "anchor": "Strip",
+   "en": "Strip everything else away, and this is what matters.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 8,
+   "anchor": "One",
+   "en": "If you take one thing away, take this.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "pitch-1",
+   "oi": 9,
+   "anchor": "Remember",
+   "en": "If you remember one thing today, make it this.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 1,
+   "anchor": "Frame",
+   "en": "Here's how I'd frame the problem.",
+   "intents": [
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 2,
+   "anchor": "Hole",
+   "en": "There's a hole in how everyone does this today.",
+   "intents": [
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 3,
+   "anchor": "Real",
+   "en": "Let me make this real for a second.",
+   "intents": [
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 4,
+   "anchor": "Bleed",
+   "en": "Every month you wait, you bleed customers you never see.",
+   "intents": [
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 5,
+   "anchor": "Stake",
+   "en": "Here's what's actually at stake.",
+   "intents": [
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 6,
+   "anchor": "Tax",
+   "en": "The status quo is a tax — you're just paying it quietly.",
+   "intents": [
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 7,
+   "anchor": "Window",
+   "en": "The window for this is open right now, not next year.",
+   "intents": [
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 8,
+   "anchor": "Flipped",
+   "en": "The market just flipped — that's why now.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pitch-2",
+   "oi": 9,
+   "anchor": "Clock",
+   "en": "The clock's already running on this one.",
+   "intents": [
+    "close",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 1,
+   "anchor": "Path",
+   "en": "The path from here to there is short — let me walk you throu",
+   "intents": [
+    "ask",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 2,
+   "anchor": "Table",
+   "en": "It's on the table — your call.",
+   "intents": [
+    "buy_time",
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 3,
+   "anchor": "Fit",
+   "en": "I'm bringing this to you because you're the right fit for it",
+   "intents": [
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 4,
+   "anchor": "Ask",
+   "en": "So here's the ask, plainly.",
+   "intents": [
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 5,
+   "anchor": "Yes",
+   "en": "All I need from you today is a yes to the next step.",
+   "intents": [
+    "close",
+    "ask",
+    "lead"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 6,
+   "anchor": "Obvious",
+   "en": "Give it a year — this is going to look obvious.",
+   "intents": [
+    "ask",
+    "close",
+    "buy_time"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 7,
+   "anchor": "Skin",
+   "en": "I've got skin in the game — I'm taking the same risk I'm ask",
+   "intents": [
+    "close",
+    "ask",
+    "support"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 8,
+   "anchor": "Shake",
+   "en": "If we're aligned, let's shake on it and get moving.",
+   "intents": [
+    "ask",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "pitch-3",
+   "oi": 9,
+   "anchor": "Word",
+   "en": "Say the word and I'll have it signed by Friday.",
+   "intents": [
+    "ask",
+    "close"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 1,
+   "anchor": "Fair",
+   "en": "That's a fair question.",
+   "intents": [
+    "clarify",
+    "support"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 2,
+   "anchor": "Feet",
+   "en": "I'm thinking on my feet here.",
+   "intents": [
+    "buy_time",
+    "hold"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 3,
+   "anchor": "Spot",
+   "en": "You've really put me on the spot.",
+   "intents": [
+    "buy_time",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 4,
+   "anchor": "Loaded",
+   "en": "That's a bit of a loaded question.",
+   "intents": [
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 5,
+   "anchor": "Ground",
+   "en": "I'm going to hold my ground on this.",
+   "intents": [
+    "hold",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 6,
+   "anchor": "Budging",
+   "en": "I hear you, but I'm not budging.",
+   "intents": [
+    "hold",
+    "clarify",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 7,
+   "anchor": "Tackle",
+   "en": "Let me tackle that one head-on.",
+   "intents": [
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 8,
+   "anchor": "Heart",
+   "en": "Let me get to the heart of it.",
+   "intents": [
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "pressure-1",
+   "oi": 9,
+   "anchor": "Down",
+   "en": "Here's what it really comes down to.",
+   "intents": [
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 1,
+   "anchor": "Owe",
+   "en": "I owe you an apology.",
+   "intents": [
+    "repair",
+    "close"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 2,
+   "anchor": "Overstepped",
+   "en": "I overstepped, and I know it.",
+   "intents": [
+    "repair",
+    "close"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 3,
+   "anchor": "Fault",
+   "en": "This is my fault here.",
+   "intents": [
+    "repair",
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 4,
+   "anchor": "Sorry",
+   "en": "I'm truly sorry about that.",
+   "intents": [
+    "repair",
+    "close"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 5,
+   "anchor": "Right",
+   "en": "Let me make this right.",
+   "intents": [
+    "repair",
+    "close",
+    "support"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 6,
+   "anchor": "Watch",
+   "en": "Don't take my word for it — just watch.",
+   "intents": [
+    "ask",
+    "repair",
+    "close"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 7,
+   "anchor": "Trust",
+   "en": "I want to earn back your trust.",
+   "intents": [
+    "repair",
+    "close"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 8,
+   "anchor": "Slate",
+   "en": "Can we wipe the slate clean?",
+   "intents": [
+    "ask",
+    "repair",
+    "close"
+   ]
+  },
+  {
+   "slug": "repair-1",
+   "oi": 9,
+   "anchor": "Track",
+   "en": "Let's get back on track.",
+   "intents": [
+    "ask",
+    "repair",
+    "close"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 1,
+   "anchor": "Heads",
+   "en": "Heads up — we've got a problem.",
+   "intents": [
+    "lead",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 2,
+   "anchor": "Ahead",
+   "en": "I want to get ahead of this.",
+   "intents": [
+    "lead",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 3,
+   "anchor": "Snag",
+   "en": "We hit a snag on the timeline.",
+   "intents": [
+    "lead",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 4,
+   "anchor": "Sugarcoat",
+   "en": "I'm not going to sugarcoat this.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "repair"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 5,
+   "anchor": "Ball",
+   "en": "We took our eye off the ball here.",
+   "intents": [
+    "lead",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 6,
+   "anchor": "Buck",
+   "en": "The buck stops with me on this.",
+   "intents": [
+    "lead",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 7,
+   "anchor": "Woods",
+   "en": "We're not out of the woods yet.",
+   "intents": [
+    "lead",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 8,
+   "anchor": "Escalate",
+   "en": "We may need to escalate this.",
+   "intents": [
+    "ask",
+    "lead",
+    "repair"
+   ]
+  },
+  {
+   "slug": "requests-1",
+   "oi": 9,
+   "anchor": "Claw",
+   "en": "Here's how we claw this back.",
+   "intents": [
+    "lead",
+    "repair",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 1,
+   "anchor": "Speech",
+   "en": "I'm not going to give a speech — I'd rather just talk to you",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 2,
+   "anchor": "Row",
+   "en": "Hello back row — I see you too.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 3,
+   "anchor": "Useful",
+   "en": "Let's make this useful, not polished.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 4,
+   "anchor": "Pretending",
+   "en": "Here's the question under all of this: what are we pretendin",
+   "intents": [
+    "clarify",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 5,
+   "anchor": "Mistake",
+   "en": "I'll open with the mistake that changed everything for me.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 6,
+   "anchor": "Unsee",
+   "en": "If I do my job, you'll leave with one thing you can't unsee.",
+   "intents": [
+    "lead",
+    "close"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 7,
+   "anchor": "Ground",
+   "en": "Settle in — we've got some ground to cover.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 8,
+   "anchor": "Hurry",
+   "en": "I'm in no hurry up here — stay with me.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-1",
+   "oi": 9,
+   "anchor": "Hour",
+   "en": "You're here, I'm here — let's make this hour matter.",
+   "intents": [
+    "lead",
+    "warm",
+    "close"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 1,
+   "anchor": "thousand",
+   "en": "I know there are a thousand of you — but right now I'm talki",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 2,
+   "anchor": "between",
+   "en": "Lean in for a second — this one's just between us.",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 3,
+   "anchor": "nothing",
+   "en": "If you remember nothing else tonight, remember this.",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 4,
+   "anchor": "mind",
+   "en": "Think of the one person who needs to hear this — keep them i",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 5,
+   "anchor": "avoiding",
+   "en": "Ask yourself the question you've been avoiding. [pause] You ",
+   "intents": [
+    "clarify",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 6,
+   "anchor": "nodding",
+   "en": "I can see some of you nodding — you know exactly what I mean",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 7,
+   "anchor": "shout",
+   "en": "I don't need to shout this — you can hear me just fine.",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 8,
+   "anchor": "show",
+   "en": "Don't tell the crew, but the show isn't the point.",
+   "intents": [
+    "warm",
+    "support",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-10",
+   "oi": 9,
+   "anchor": "land",
+   "en": "I'm not trying to impress you — I just want this to land.",
+   "intents": [
+    "buy_time",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 1,
+   "anchor": "plans",
+   "en": "Change of plans — and honestly the better kind. Let's just t",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 2,
+   "anchor": "crowd",
+   "en": "This isn't the crowd I planned for — even better.",
+   "intents": [
+    "lead",
+    "hold",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 3,
+   "anchor": "real",
+   "en": "Great — now we get to do this for real.",
+   "intents": [
+    "lead",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 4,
+   "anchor": "idea",
+   "en": "There's really one idea underneath all of this — let's go st",
+   "intents": [
+    "lead",
+    "hold",
+    "repair"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 5,
+   "anchor": "simpler",
+   "en": "Okay, simpler: one story, one point, one decision.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 6,
+   "anchor": "deck",
+   "en": "I don't need the deck — the argument lives in my head.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 7,
+   "anchor": "safety",
+   "en": "No safety net today — that's when it gets good.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 8,
+   "anchor": "luck",
+   "en": "No rehearsal for this one — wish me luck.",
+   "intents": [
+    "ask",
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-11",
+   "oi": 9,
+   "anchor": "cold",
+   "en": "No script? Fine — I know this stuff cold.",
+   "intents": [
+    "lead",
+    "hold",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 1,
+   "anchor": "Remember",
+   "en": "Here comes the part you'll want to remember.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 2,
+   "anchor": "Stay",
+   "en": "Stay with me here — this is where it starts to matter.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 3,
+   "anchor": "Picture",
+   "en": "Picture this with me for a second.",
+   "intents": [
+    "ask",
+    "buy_time",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 4,
+   "anchor": "Sink",
+   "en": "Let that sink in for a second.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 5,
+   "anchor": "Slow",
+   "en": "Let me slow down here — this part matters.",
+   "intents": [
+    "close",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 6,
+   "anchor": "Write",
+   "en": "If you write down one line, write this one.",
+   "intents": [
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 7,
+   "anchor": "Moment",
+   "en": "I'll give that a moment to land.",
+   "intents": [
+    "buy_time",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 8,
+   "anchor": "Laugh",
+   "en": "You can laugh — it's allowed.",
+   "intents": [
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-2",
+   "oi": 9,
+   "anchor": "Wait",
+   "en": "Take a second with that one — I'll wait.",
+   "intents": [
+    "lead",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 1,
+   "anchor": "lens",
+   "en": "Forget the lens — it's just you and me.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 2,
+   "anchor": "screen",
+   "en": "Yeah, we're on a screen — let's talk like we're not.",
+   "intents": [
+    "ask",
+    "buy_time",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 3,
+   "anchor": "coffee",
+   "en": "Imagine we're just talking over coffee.",
+   "intents": [
+    "warm",
+    "lead",
+    "support"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 4,
+   "anchor": "fluff",
+   "en": "Three points, ninety seconds, no fluff.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 5,
+   "anchor": "rambling",
+   "en": "No rambling, no filler — straight through.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 6,
+   "anchor": "ties",
+   "en": "Stick with me — this all ties together.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 7,
+   "anchor": "script",
+   "en": "I ditched the script — it kept getting in the way.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 8,
+   "anchor": "camera",
+   "en": "It's just a camera — we can take our time.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-3",
+   "oi": 9,
+   "anchor": "comfortable",
+   "en": "I'm comfortable if you are.",
+   "intents": [
+    "warm",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 1,
+   "anchor": "shaking",
+   "en": "Hands are shaking a little — that just means it matters to m",
+   "intents": [
+    "support",
+    "hold",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 2,
+   "anchor": "nervous",
+   "en": "Yeah, I'm a little nervous. You'd worry if I weren't.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 3,
+   "anchor": "pounding",
+   "en": "Heart's pounding a bit — that's how much this matters.",
+   "intents": [
+    "support",
+    "hold",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 4,
+   "anchor": "plant",
+   "en": "Plant your feet, one breath, and go.",
+   "intents": [
+    "support",
+    "hold",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 5,
+   "anchor": "start",
+   "en": "You never feel ready — you just start.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 6,
+   "anchor": "line",
+   "en": "Get the first line out — the rest takes care of itself.",
+   "intents": [
+    "buy_time",
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 7,
+   "anchor": "worried",
+   "en": "If I wasn't nervous, I'd be worried.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 8,
+   "anchor": "vote",
+   "en": "The nerves come along — they just don't get a vote.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-4",
+   "oi": 9,
+   "anchor": "present",
+   "en": "I don't have to be perfect up here. I have to be present.",
+   "intents": [
+    "support",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 1,
+   "anchor": "fair",
+   "en": "That's a fair question — angry, but fair.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 2,
+   "anchor": "underneath",
+   "en": "That's a sharp one — and there's a real worry underneath it.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 3,
+   "anchor": "bold",
+   "en": "Bold question — I like it. Let's dig in.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 4,
+   "anchor": "setup",
+   "en": "I don't buy the setup, but the worry behind it is real — so ",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 5,
+   "anchor": "framing",
+   "en": "I'll skip the framing and answer the actual question.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 6,
+   "anchor": "separate",
+   "en": "Let me separate the accusation from the real question, and a",
+   "intents": [
+    "clarify",
+    "buy_time",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 7,
+   "anchor": "glad",
+   "en": "Honestly, I'm glad you asked — it lets me clear this up.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 8,
+   "anchor": "spar",
+   "en": "I'm not here to spar with you — everyone came for answers.",
+   "intents": [
+    "clarify",
+    "pushback",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-5",
+   "oi": 9,
+   "anchor": "second",
+   "en": "Tough one — give me a second to get it right.",
+   "intents": [
+    "buy_time",
+    "clarify",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 1,
+   "anchor": "balloon",
+   "en": "That one landed like a lead balloon — moving swiftly on.",
+   "intents": [
+    "buy_time",
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 2,
+   "anchor": "blank",
+   "en": "Mind just went completely blank — give me a second.",
+   "intents": [
+    "buy_time",
+    "repair"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 3,
+   "anchor": "slides",
+   "en": "And the slides have decided to take a little break. Bold of ",
+   "intents": [
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 4,
+   "anchor": "drama",
+   "en": "No drama — let's pick it back up.",
+   "intents": [
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 5,
+   "anchor": "track",
+   "en": "Okay, back on track — here's the point.",
+   "intents": [
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 6,
+   "anchor": "derailed",
+   "en": "So — where was I before I derailed myself?",
+   "intents": [
+    "repair",
+    "lead",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 7,
+   "anchor": "happened",
+   "en": "Well, that happened. Moving on.",
+   "intents": [
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 8,
+   "anchor": "trips",
+   "en": "Everyone trips — you just keep going.",
+   "intents": [
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-6",
+   "oi": 9,
+   "anchor": "boring",
+   "en": "Well — at least it wasn't boring.",
+   "intents": [
+    "repair",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 1,
+   "anchor": "smell",
+   "en": "Let me put you in the room: smell the coffee, hear the clock",
+   "intents": [
+    "lead",
+    "warm",
+    "support"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 2,
+   "anchor": "stomach",
+   "en": "You know that feeling when your stomach drops? Hold onto it.",
+   "intents": [
+    "lead",
+    "warm",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 3,
+   "anchor": "embarrassing",
+   "en": "This next part's embarrassing — which is exactly why I'm tel",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 4,
+   "anchor": "deal",
+   "en": "Get this wrong, and we'd lose everything we'd built — that w",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 5,
+   "anchor": "coming",
+   "en": "Now hold that — because what happened next, I never saw comi",
+   "intents": [
+    "lead",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 6,
+   "anchor": "flips",
+   "en": "And this is where the whole thing flips.",
+   "intents": [
+    "buy_time",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 7,
+   "anchor": "revealed",
+   "en": "The point is not what happened. The point is what it reveale",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 8,
+   "anchor": "picture",
+   "en": "Keep that picture in your head — we'll come back to it.",
+   "intents": [
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-7",
+   "oi": 9,
+   "anchor": "commentary",
+   "en": "[pause] Some things don't need commentary.",
+   "intents": [
+    "lead",
+    "warm",
+    "hold"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 1,
+   "anchor": "believe",
+   "en": "Every person in this room can do this — I really believe tha",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 2,
+   "anchor": "rooting",
+   "en": "I'm rooting for every one of you — and I mean that.",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 3,
+   "anchor": "courage",
+   "en": "I hope you leave with more courage, not just more informatio",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 4,
+   "anchor": "Monday",
+   "en": "Monday morning, do this one thing. That's the whole ask.",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 5,
+   "anchor": "note",
+   "en": "And that's the note I want to leave you on.",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 6,
+   "anchor": "talking",
+   "en": "The easy part was talking about it.",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 7,
+   "anchor": "will",
+   "en": "The question was never whether you can. It's whether you wil",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 8,
+   "anchor": "goodbye",
+   "en": "I'm not big on long goodbyes — see you out there.",
+   "intents": [
+    "close",
+    "lead",
+    "warm"
+   ]
+  },
+  {
+   "slug": "stage-8",
+   "oi": 9,
+   "anchor": "part",
+   "en": "My part's done — the rest is on you.",
+   "intents": [
+    "close",
+    "buy_time",
+    "lead"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 1,
+   "anchor": "statement",
+   "en": "Let's talk like people — I'm not going to read you a stateme",
+   "intents": [
+    "ask",
+    "hold",
+    "pushback"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 2,
+   "anchor": "hide",
+   "en": "I'm not going to hide behind talking points.",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 3,
+   "anchor": "homework",
+   "en": "You've clearly done your homework. I respect that — let's ge",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 4,
+   "anchor": "print",
+   "en": "Here's the line I actually want you to print:",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 5,
+   "anchor": "speculate",
+   "en": "I won't speculate on that. What I can tell you is this.",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 6,
+   "anchor": "sentence",
+   "en": "Here it is in one sentence you can run as-is.",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 7,
+   "anchor": "cameras",
+   "en": "Cameras on or off, you'd get the same answer.",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 8,
+   "anchor": "headline",
+   "en": "I'm not going to let a headline write my answer.",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  },
+  {
+   "slug": "stage-9",
+   "oi": 9,
+   "anchor": "quote",
+   "en": "Quote me on all of it. I stand behind every word.",
+   "intents": [
+    "hold",
+    "pushback",
+    "clarify"
+   ]
+  }
+ ]
+}

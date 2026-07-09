@@ -248,41 +248,62 @@ def test_suggest_forced_intent_echoes_and_bad_intent_400(make_user):
     assert bad.status_code == 400
 
 
-def test_intent_tags_are_db_entities_seeded_from_our_content(make_user):
-    """The linked-entity system: BatchIntent rows derive from Batch.section,
-    re-seed is idempotent, manual tags survive, untagged batches = universal."""
+def test_intent_tags_are_phrase_level_db_entities_seeded_from_curated(make_user, monkeypatch):
+    """The linked-entity system for Live mode: PhraseIntent (authoritative) +
+    BatchIntent (fallback) are seeded from the curated map, re-seed is idempotent,
+    manual tags survive, and filter_rows resolves phrase → batch → universal."""
+    import app.intents as intents_mod
+    from app.intents import (batch_intent_map, filter_rows, phrase_intent_map,
+                             seed)
     make_user(plan="ai", is_admin=True)      # forces app/db init
-    from app.intents import SECTION_INTENTS, filter_rows, intent_map, seed
+
     with Session(engine()) as s:
-        b_req = models.Batch(title="R", slug="it-req", status="approved", section="requests")
-        b_rep = models.Batch(title="P", slug="it-rep", status="approved", section="repair")
-        b_uni = models.Batch(title="U", slug="it-uni", status="approved")   # sectionless
-        s.add(b_req); s.add(b_rep); s.add(b_uni)
-        s.commit(); s.refresh(b_req); s.refresh(b_rep); s.refresh(b_uni)
+        # b_tag: a phrase carries its own move ("hold"); the batch is tagged "warm".
+        # b_uni: no curated entry at all → universal (serves every move).
+        b_tag = models.Batch(title="T", slug="it-tag", status="approved")
+        b_uni = models.Batch(title="U", slug="it-uni", status="approved")
+        s.add(b_tag); s.add(b_uni); s.commit()
+        s.refresh(b_tag); s.refresh(b_uni)
+        p_hold = models.Phrase(batch_id=b_tag.id, order_index=0, anchor="A", phrase_en="a")
+        p_none = models.Phrase(batch_id=b_tag.id, order_index=1, anchor="B", phrase_en="b")
+        s.add(p_hold); s.add(p_none); s.commit()
+        s.refresh(p_hold); s.refresh(p_none)
+
+        curated = {
+            "batches": {"it-tag": ["warm"]},               # batch-level fallback
+            "phrases": [{"slug": "it-tag", "oi": 0, "intents": ["hold"]}],
+        }
+        monkeypatch.setattr(intents_mod, "_curated", lambda: curated)
 
         r1 = seed(s)
-        assert r1["rows_added"] > 0
-        assert seed(s)["rows_added"] == 0     # idempotent resync
-        imap = intent_map(s, {b_req.id, b_rep.id, b_uni.id})
-        assert imap[b_req.id] == set(SECTION_INTENTS["requests"])
-        assert b_uni.id not in imap           # no rows = universal
+        assert r1["phrase_rows_added"] == 1 and r1["batch_rows_added"] == 1
+        assert seed(s)["phrase_rows_added"] == 0            # idempotent resync
 
-        # a curator's manual tag joins the system and survives re-seed
-        s.add(models.BatchIntent(batch_id=b_rep.id, intent="ask", source="manual"))
+        pmap = phrase_intent_map(s, {p_hold.id, p_none.id})
+        bmap = batch_intent_map(s, {b_tag.id, b_uni.id})
+        assert pmap[p_hold.id] == {"hold"}
+        assert p_none.id not in pmap                        # phrase has no own tag
+        assert bmap[b_tag.id] == {"warm"} and b_uni.id not in bmap
+
+        # filter_rows: phrase tag is authoritative; untagged phrase falls back to
+        # its batch; a batch with no rows is universal. Enough rows to beat _MIN_POOL.
+        rows = ([(p_hold, None, b_tag)] * 5              # own tag "hold"
+                + [(p_none, None, b_tag)] * 5            # falls back to batch "warm"
+                + [(models.Phrase(batch_id=b_uni.id, order_index=0), None, b_uni)] * 5)
+        hold = filter_rows(rows, "hold", pmap, bmap)      # p_hold rows + universal
+        assert all(r[0] is not p_none for r in hold)      # p_none is "warm", excluded
+        assert any(r[2].id == b_uni.id for r in hold)     # universal always in
+        warm = filter_rows(rows, "warm", pmap, bmap)      # p_none (via batch) + universal
+        assert all(r[0] is not p_hold for r in warm)      # p_hold is "hold", excluded
+
+        # a curator's manual phrase tag joins the system and survives re-seed
+        s.add(models.PhraseIntent(phrase_id=p_hold.id, intent="lead", source="manual"))
+        # a stale auto row from the OLD taxonomy is migrated away on re-seed
+        s.add(models.PhraseIntent(phrase_id=p_hold.id, intent="smooth", source="curated"))
         s.commit()
         seed(s)
-        imap = intent_map(s, {b_rep.id})
-        assert {"ask", "smooth"} <= imap[b_rep.id]
-
-        # pool filter honours the DB tags: smooth = repair + universal, not requests
-        rows = ([(object(), None, b_req)] * 6 + [(object(), None, b_rep)] * 6
-                + [(object(), None, b_uni)] * 4)
-        imap = intent_map(s, {b_req.id, b_rep.id, b_uni.id})
-        smooth = filter_rows(rows, "smooth", imap)
-        assert len(smooth) == 10 and all(r[2].id != b_req.id for r in smooth)
-        # too few tagged for the move → falls back to the full pool
-        only_req = [(object(), None, b_req)] * 6
-        assert len(filter_rows(only_req, "smooth", imap)) == 6
+        got = phrase_intent_map(s, {p_hold.id})[p_hold.id]
+        assert got == {"hold", "lead"}                     # manual kept, smooth dropped
 
 
 # ---- suggest-voice: audio in, STT + pick in one round trip -------------------

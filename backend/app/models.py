@@ -55,6 +55,28 @@ class BatchIntent(SQLModel, table=True):
     created_at: datetime = Field(default_factory=_now)
 
 
+class PhraseIntent(SQLModel, table=True):
+    """Conversational-move tag on a single PHRASE — the phrase-level relevance
+    axis behind Live mode (боевой режим). This is the authoritative signal: the
+    move a given line makes (расположить, повести, поддержать…), 1–3 per phrase.
+    Vocabulary = the fixed key set intents.INTENTS.
+
+    Battle picks by THIS, not the batch: filter_rows keeps phrases tagged with the
+    chosen move; a phrase with NO rows falls back to its batch's BatchIntent, then
+    to universal. Rows are seeded from the curated map (app/intents_curated.json,
+    keyed by slug+order_index) via `python -m app.intents` — re-syncable, and
+    (per CONTENT-GRAPH.md) MUST be re-authored whenever a phrase or its anchor is
+    replaced, since the move can shift with the wording.
+
+    source: "curated" = from the authored intents_curated.json (resynced on seed);
+            "manual"   = curator's hand tag — the seeder NEVER touches these."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    phrase_id: int = Field(foreign_key="phrase.id", index=True)
+    intent: str = Field(index=True)
+    source: str = Field(default="curated")
+    created_at: datetime = Field(default_factory=_now)
+
+
 class Zone(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)

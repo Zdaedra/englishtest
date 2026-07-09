@@ -23,7 +23,8 @@
 | Phrase | 811 (~9/батч) | БД | `phrases[]` в content-файле | upsert / `app.rephrase` |
 | **CheckPhrase** (проверочные) | **3191** (~4/фразу, `kind=stimulus, lang=en`) | **ТОЛЬКО БД** — content-файла НЕТ | БД = источник; human-readable снапшот `_prod_check_phrases.md` (2026-06-06, устаревает) | Курировались LLM-ом разово; **автогенератора нет** |
 | MnemoStory (история + spans) | 90 | БД | `mnemo` в content-файле; spans вычисляются | upsert / `app.restory` |
-| **BatchIntent** (ходы Live, 2026-07-09) | 1–4/curated батч | **ТОЛЬКО БД** | derived из `Batch.section` (карта `SECTION_INTENTS` в `app/intents.py`); словарь ходов фиксирован (8 ключей: pushback/hold/ask/warm/buy_time/clarify/close/smooth) | `python -m app.intents` — идемпотентный ресид (`--llm` классифицирует батчи без секции по их фразам; `source=manual` руками — сидер их НЕ трогает). Батч без строк = универсальный (служит любому ходу). Поменял section батча или карту → перегони сидер |
+| **PhraseIntent** (ходы Live, пофразово, 2026-07-09 v2) | 1–3/фразу (2044 связи) | **ТОЛЬКО БД** | `backend/app/intents_curated.json` (курировано вручную, ключ `slug`+`order_index`); словарь фиксирован — **10 ключей**: warm/clarify/pushback/hold/buy_time/lead/ask/close/repair/support | `python -m app.intents` — идемпотентный ресид (`source=manual` руками — сидер их НЕ трогает). **Авторитетный сигнал для боя.** Фраза без строк → фолбэк на BatchIntent → универсально |
+| **BatchIntent** (ходы Live, грубый фолбэк) | 1–4/curated батч | **ТОЛЬКО БД** | `intents_curated.json` (батч-уровень); для батчей вне карты — фолбэк `SECTION_INTENTS` в `app/intents.py`; те же 10 ключей | `python -m app.intents` (тот же сид). Используется, только когда у фразы нет своих PhraseIntent (напр. приватный импорт). Батч без строк = универсальный |
 | ContextExample | 0 | БД | — | **спящая таблица**, нигде не используется |
 | situation_ru / task_ru | на каждой Phrase | колонки Phrase | derived (LLM) | `app.gen_context` |
 | gloss_ru | колонка Phrase | БД (+опц. в файле) | куратор; файл пустой = «оставить БД» | rephrase / upsert |
@@ -55,6 +56,9 @@ content/NN-*.json ──upsert/rephrase──▶ Batch / Zone / Phrase(anchor, e
         │
         ▼
    phrase_en ──on demand──▶ AudioAsset (TTS)      title/theme ──gencovers──▶ cover
+
+app/intents_curated.json ──app.intents──▶ PhraseIntent (пофразово, авторитет) + BatchIntent (фолбэк)
+        (ключ slug+order_index)                        │ ход фразы = ось релевантности боевого режима
 ```
 
 Прогресс (UserPhraseStat, TrainingEvent, PhraseAttempt, ReviewEvent) висит на
@@ -71,7 +75,8 @@ guard-ованный `content.upsert` (блок при живом прогрес
 
 | Меняю | Инвалидируется автоматически | Цепочка (по порядку) | Юзеру на проверку |
 |---|---|---|---|
-| **phrase_en / anchor** (текст фразы, слот тот же) | rephrase сам чистит: situation/task, gloss_i18n; **УДАЛЯЕТ cues этой фразы**; spans устаревают | 1) правка в content/*.json → `app.rephrase` 2) `app.restory` 3) **re-author cues** (см. §4) 4) `app.gen_context` 5) `app.i18n_content --refill` | новые cues (обязательно), новые situation/task |
+| **phrase_en / anchor** (текст фразы, слот тот же) | rephrase сам чистит: situation/task, gloss_i18n; **УДАЛЯЕТ cues этой фразы**; spans устаревают. ⚠️ **PhraseIntent НЕ инвалидируется** — теги сидятся по `(slug, order_index)`, а слот тот же, поэтому СТАРЫЙ ход прилипнет к новой фразе, если не переразметить | 1) правка в content/*.json → `app.rephrase` 2) `app.restory` 3) **re-author cues** (см. §4) 4) **re-author тегов хода**: обнови эту фразу в `app/intents_curated.json` → `app.intents` 5) `app.gen_context` 6) `app.i18n_content --refill` | новые cues (обязательно), **новый ход/тег**, новые situation/task |
+| **ход фразы (PhraseIntent)** | — (не влияет на другой контент) | правка записи фразы в `app/intents_curated.json` (ключ `slug`+`order_index`) → `python -m app.intents` (идемпотентный ресид; `source=manual` руками сидер не трогает) | какие ходы делает фраза (1–3 из 10 ключей) |
 | **gloss_ru** | rephrase чистит situation/task + gloss_i18n; cues НЕ трогаются | `app.rephrase` → `app.gen_context` → `i18n --refill` | новый gloss + situation/task |
 | **мнемо-история** | — | правка `mnemo` в файле → `app.restory` (сам дропнет устаревшие story_i18n) → `i18n --refill` | история + подсветка якорей |
 | **title** батча | `app.settitle`/`app.retitle` сами чистят title_i18n | settitle/retitle → `i18n --refill` | заголовок |

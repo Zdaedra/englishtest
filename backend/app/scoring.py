@@ -289,9 +289,8 @@ _BATTLE_SYSTEM = """Ты — суфлёр Executive English. Пользоват�
 разговоре и коротко описал момент: с кем говорит и что происходит. Дан нумерованный
 список английских фраз, которые он реально тренировал.
 
-Ходы (фиксированные ключи): pushback=осадить/не согласиться; hold=удержать позицию;
-ask=попросить/добиться; warm=расположить; buy_time=выиграть время;
-clarify=уточнить/переспросить; close=зафиксировать/закрыть; smooth=сгладить/извиниться.
+Ходы (фиксированные ключи — верни ТОЛЬКО их):
+__MOVES__
 
 1) intents: до 5 ходов, уместных в этот момент, лучший — первым.
 2) picks: до 3 фраз под ПЕРВЫЙ ход, лучшая — первой. Суди по конверсационному ходу,
@@ -316,7 +315,8 @@ def battle_pick(situation: str, items: list[dict], intent: str | None = None) ->
     {picks: [{n, note}], intents: [key,…], via}; via="fallback" lets the client
     degrade to its local keyword search."""
     from .intents import INTENTS
-    system = _BATTLE_SYSTEM
+    moves = "\n".join(f"- {k} = {gloss}" for k, gloss in INTENTS.items())
+    system = _BATTLE_SYSTEM.replace("__MOVES__", moves)
     if intent and intent in INTENTS:
         system += _BATTLE_FORCED.format(key=intent, label=INTENTS[intent])
     listing = "\n".join(
@@ -340,28 +340,6 @@ def battle_pick(situation: str, items: list[dict], intent: str | None = None) ->
         return {"picks": picks, "intents": ranked, "via": "llm"}
     except Exception:
         return {"picks": [], "intents": [], "via": "fallback"}
-
-
-_CLASSIFY_INTENTS = """Ты — методист Executive English. Дана тема батча и его английские
-фразы. Ходы (фиксированные ключи): pushback=осадить/не согласиться; hold=удержать
-позицию; ask=попросить/добиться; warm=расположить; buy_time=выиграть время;
-clarify=уточнить/переспросить; close=зафиксировать/закрыть; smooth=сгладить/извиниться.
-Выбери 1–3 хода, которым эти фразы реально служат в живом разговоре.
-Верни СТРОГО JSON без markdown: {"intents":["<ключ>",…]}"""
-
-
-def classify_intents(title: str, phrases: list[str]) -> list[str]:
-    """Content-grounded move tags for a batch with no section mapping
-    (app.intents seed --llm). One tiny call per batch, one-off curation cost."""
-    from .intents import INTENTS
-    payload = f"Тема: {title}\nФразы:\n" + "\n".join(f"- {p}" for p in phrases[:12])
-    try:
-        data = _openai_json(_CLASSIFY_INTENTS, payload, max_tokens=60,
-                            model=get_settings().model_coach)
-        return [k for k in (data.get("intents") or [])
-                if isinstance(k, str) and k in INTENTS][:3]
-    except Exception:
-        return []
 
 
 _SCENARIO_SYSTEM = """Ты — методист приложения Executive English (деловой/светский

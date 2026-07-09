@@ -213,10 +213,12 @@ def _run_pick(session: Session, user_id: int, scope: str, situation: str,
     (NOT committed — caller owns the txn)."""
     rows = _rows_for_scope(session, user_id, scope)
     if intent:
-        # The batch "answer type" — BatchIntent tags in the DB (untagged =
-        # universal); batches tagged with the chosen move first.
-        imap = intents_mod.intent_map(session, {b.id for _p, _st, b in rows})
-        rows = intents_mod.filter_rows(rows, intent, imap)
+        # Keep phrases that make the chosen move: phrase-level PhraseIntent is
+        # authoritative; a phrase with no phrase tag falls back to its batch's
+        # BatchIntent; untagged at both levels = universal.
+        pmap = intents_mod.phrase_intent_map(session, {p.id for p, _st, _b in rows})
+        bmap = intents_mod.batch_intent_map(session, {b.id for _p, _st, b in rows})
+        rows = intents_mod.filter_rows(rows, intent, pmap, bmap)
     if scope == "all":
         pool = _keyword_pool(rows, situation, _ALL_CAP)      # bounded prompt
     else:
