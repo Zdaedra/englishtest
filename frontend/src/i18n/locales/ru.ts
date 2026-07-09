@@ -101,6 +101,8 @@ const ru: Dict = {
   "battle.scopeAll": "Весь курс",
   "battle.cardPrompt": "Опиши момент — подскажу лучшую фразу.",
   "battle.cardMicHint": "Нажми и скажи, что за момент.",
+  "battle.momentHint": "Надиктуй или напечатай момент.",
+  "battle.typeMoment": "Напечатай момент…",
   "battle.tapStop": "Говори — нажми ещё раз, когда закончишь",
   "battle.newMoment": "Нажми — новый момент",
   "battle.typePrompt": "Начни печатать — подберу лучшую фразу.",

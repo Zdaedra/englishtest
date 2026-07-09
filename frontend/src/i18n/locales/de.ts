@@ -91,6 +91,8 @@ const de: Dict = {
   "battle.scopeAll": "Ganzer Kurs",
   "battle.cardPrompt": "Beschreib den Moment – ich nenne die beste Zeile.",
   "battle.cardMicHint": "Tippen und sagen, worum es geht.",
+  "battle.momentHint": "Sprich oder tippe den Moment.",
+  "battle.typeMoment": "Moment eintippen…",
   "battle.tapStop": "Sprich — tippe erneut, wenn du fertig bist",
   "battle.newMoment": "Tippen — neuer Moment",
   "battle.typePrompt": "Tipp los — ich finde die beste Zeile.",

@@ -741,10 +741,15 @@ a { color: inherit; text-decoration: none; }
 .lv-alt-phrase { font-size: 1rem; font-weight: 600; color: var(--text); }
 .lv-alt-gloss { font-size: 0.8125rem; color: var(--text-2); }
 
-/* Mic zone — identical to the practice card (76px lens + one quiet label). */
+/* Mic zone — the practice-card lens + one quiet label. For AI, a "speak OR type"
+   row: the field takes most of the width, the mic sits inline at its trailing
+   edge (you can't always talk out loud in a meeting). */
 .lv-mic-zone { flex: none; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 12px; }
 .lv-mic { width: 76px; height: 76px; }
 .lv-mic-label { margin: 0; text-align: center; font-size: 0.875rem; font-weight: 600; color: var(--muted); }
+.lv-ai-entry { width: 100%; display: flex; align-items: center; gap: 10px; }
+.lv-ai-entry .lv-type { flex: 1; min-width: 0; box-sizing: border-box; }
+.lv-mic-sm { width: 48px; height: 48px; flex: none; }
 
 /* Non-AI: the mic's place holds the search input (free local matching). */
 .lv-input-zone { width: 100%; display: flex; flex-direction: column; gap: 8px; padding-top: 12px; }

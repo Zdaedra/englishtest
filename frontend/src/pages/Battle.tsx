@@ -77,6 +77,7 @@ export default function Battle() {
   });
   const [corpus, setCorpus] = useState<BattleItem[]>(() => loadCache(uid, scope));
   const [search, setSearch] = useState("");   // non-AI card input (free local match)
+  const [typed, setTyped] = useState("");     // AI typed-moment input (can't always speak)
   const [expanded, setExpanded] = useState(false);          // card unfolded to alts
   const [mic, setMic] = useState<MicState>("idle");
   const [moment, setMoment] = useState("");   // the dictated moment (server `heard`)
@@ -159,6 +160,31 @@ export default function Battle() {
       console.log("[LV] suggest-voice error:", String(e));
       setNote(String(e).includes("429") ? t("practice.limitReached")
         : t("battle.aiUnavailable"));
+    } finally { setMic("idle"); }
+  };
+
+  // Typed moment (AI plan): you can't always speak in a meeting. Same card, same
+  // AI pick as the mic — just the text /suggest endpoint (no STT, no audio, so no
+  // voice consent needed and it's cheaper). Reuses the whole result rendering.
+  const runSuggestText = async () => {
+    const q = typed.trim();
+    if (!q || mic !== "idle") return;
+    console.log("[LV] suggest-text →", scope, JSON.stringify(q));
+    setAi(null); setNote(""); setExpanded(false); setIntents([]); setIntentSel("");
+    setTyped("");                               // moment now lives on the card
+    setMoment(q); setMic("thinking");
+    try {
+      const r = await api.battleSuggest(q, scope);
+      console.log("[LV] suggest-text ←", r.via, r.picks.length, r.intents);
+      setIntents(r.intents ?? []);
+      setIntentSel((r.intents ?? [])[0] || "");
+      if (r.via === "llm" && r.picks.length) setAi(r.picks);
+      else if (r.via === "llm") setNote(t("battle.noResults"));
+      else if (r.via === "fallback") setNote(t("battle.aiUnavailable"));
+      else setNote(scope === "all" ? t("battle.aiUnavailable") : t("battle.empty"));
+    } catch (e) {
+      console.log("[LV] suggest-text error:", String(e));
+      setNote(String(e).includes("429") ? t("practice.limitReached") : t("battle.aiUnavailable"));
     } finally { setMic("idle"); }
   };
 
@@ -298,19 +324,40 @@ export default function Battle() {
 
         {isAI ? (
           <div className="lv-mic-zone" onClick={(e) => e.stopPropagation()}>
-            <button
-              className={`tr-mic-glass lv-mic${mic === "listening" ? " on" : ""}`}
-              onClick={() => { void micTap(); }}
-              disabled={mic === "thinking"}
-              aria-label={t("battle.micHint")}
-            >
-              {mic === "thinking" ? <span className="tr-mic-dots">…</span> : <IconMic size={28} />}
-            </button>
+            {/* Speak OR type the moment — you can't always talk out loud in a
+                meeting. The mic dictates; the field takes the keyboard. Both feed
+                the same card via the same AI pick (typing skips STT + consent). */}
+            <div className="lv-ai-entry">
+              <input
+                className="bm-input lv-type"
+                type="text"
+                enterKeyHint="send"
+                placeholder={t("battle.typeMoment")}
+                value={typed}
+                onChange={(e) => setTyped(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && typed.trim()) {
+                    e.preventDefault();
+                    e.currentTarget.blur();
+                    void runSuggestText();
+                  }
+                }}
+                disabled={mic !== "idle"}
+              />
+              <button
+                className={`tr-mic-glass lv-mic lv-mic-sm${mic === "listening" ? " on" : ""}`}
+                onClick={() => { void micTap(); }}
+                disabled={mic === "thinking"}
+                aria-label={t("battle.micHint")}
+              >
+                {mic === "thinking" ? <span className="tr-mic-dots">…</span> : <IconMic size={22} />}
+              </button>
+            </div>
             <p className="lv-mic-label">
               {mic === "listening" ? t("battle.tapStop")
                 : mic === "thinking" ? t("battle.aiThinking")
                   : showAi ? t("battle.newMoment")
-                    : t("battle.cardMicHint")}
+                    : t("battle.momentHint")}
             </p>
           </div>
         ) : (

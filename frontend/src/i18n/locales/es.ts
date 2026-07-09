@@ -91,6 +91,8 @@ const es: Dict = {
   "battle.scopeAll": "Todo el curso",
   "battle.cardPrompt": "Describe el momento y te doy la mejor frase.",
   "battle.cardMicHint": "Toca y di de qué va el momento.",
+  "battle.momentHint": "Dicta o escribe el momento.",
+  "battle.typeMoment": "Escribe el momento…",
   "battle.tapStop": "Habla — toca otra vez al terminar",
   "battle.newMoment": "Toca — nuevo momento",
   "battle.typePrompt": "Empieza a escribir y te doy la mejor frase.",
