@@ -1580,3 +1580,32 @@
   **40/40 снова full de/es/fr**, spans_i18n по 9 на язык. Финальный doctor: i18n_holes=0
   (остался только прежний uncued close-meeting, не наш).
 - Телефон не пересобирался: истории отдаются с бэкенда, приложение подтянет вживую.
+
+## 2026-07-09 — Боевой режим: тег-система 8→10 ходов, ПОФРАЗОВО (PhraseIntent)
+
+- Вход: razmetka-hodov-811-tegi-10-intentions.docx (Лёша разметил мой же
+  разметочный docx). Новая таксономия **10 ходов**: warm/clarify/pushback/hold/
+  buy_time/**lead**/ask/close/**repair**/support. smooth→repair (переим.+расшир.),
+  +lead (Повести) +support (Поддержать/открыться); 7 ключей без изменений.
+- Разметка: 811/811 фраз + 90/90 батчей, 0 нераспознанных, 1–3 хода/фразу.
+  ID фраз 1:1 с продом. `ask` теперь 123 фразы (была дыра ask=0).
+- Архитектура: теги ПОФРАЗОВО (models.PhraseIntent, authoritative) + батч-фолбэк
+  (BatchIntent). filter_rows: фраза→батч→универсально. Ключевой сигнал из слов
+  Лёши «при замене фразы/ключевого слова теги проставлять» → пофразовый уровень.
+- Durable-источник: `backend/app/intents_curated.json` (811 фраз + 90 батчей,
+  ключ slug+order_index — переживает rephrase). Сидер `python -m app.intents`
+  идемпотентный, source=manual не трогает. SECTION_INTENTS → фолбэк для нового
+  контента (10-key). scoring промпт строит список ходов из INTENTS (не задрейфует).
+- Клиент: i18n-чипы 10 ходов ×4 языка (ru/es/de/fr), убран smooth. Промпт-скоринг
+  10-key. Мёртвый classify_intents удалён.
+- CONTENT-GRAPH.md: PhraseIntent+BatchIntent в переписи; правило — замена
+  phrase_en/anchor НЕ инвалидирует PhraseIntent (слот тот же!) → переразметить
+  intents_curated.json → app.intents. Отдельная строка «ход фразы».
+- Прод: rebuild english_app (create_all создал phraseintent) → сид: PhraseIntent
+  2044 связи (0 unmatched), BatchIntent 205 (74 старых удалено вкл. smooth, 141
+  новых). Идемпотентный ре-сид: все нули. smooth=0, невалидных ключей 0. Фильтр
+  на проде: support 254 / lead 334 / ask 123 / repair 160 — всё пофразово.
+  doctor чист (только прежний close-meeting uncued). Бэкап app.db.bak-intents10-*.
+- Веб: frontend/dist собран + задеплоен (index-DOhFYTR6.js, HTTP 200, метки видны).
+  iPhone: cap copy + xcodebuild + install (net.executiveenglish.app) — вшитый bundle.
+- Коммит beba70e (код+данные+доки+тесты, 232 passed).
