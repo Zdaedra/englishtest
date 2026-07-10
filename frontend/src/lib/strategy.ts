@@ -153,92 +153,9 @@ export function focusBuckets(s: Strategy): FocusBucket[] {
     : [at(main, 60), at(biz, 15), at(disc, 25)]);
 }
 
-type Alloc = { main: number; sec: number; bridge: number; disc: number };
-function alloc(s: Strategy): Alloc {
-  const N = s.sprintSize;
-  const hasSec = s.secondary.length > 0;
-  if (s.intensity === "narrow") {
-    const main = Math.max(1, N - 1);
-    return { main, sec: 0, bridge: N - main, disc: 0 };
-  }
-  if (s.intensity === "explore") {
-    const main = Math.max(1, Math.round(N * 0.4));
-    const sec = hasSec ? 1 : 0;
-    const bridge = 1;
-    return { main, sec, bridge, disc: Math.max(0, N - main - sec - bridge) };
-  }
-  // balanced
-  const main = Math.max(1, Math.round(N * 0.6));
-  const sec = hasSec ? 1 : 0;
-  const bridge = 1;
-  return { main, sec, bridge, disc: Math.max(0, N - main - sec - bridge) };
-}
-
-// Build the current sprint: an ordered list of batches weighted by the strategy,
-// always preferring not-yet-closed batches. Falls back to filling from the global
-// incomplete priority order so the sprint is always full when material remains.
-export function buildSprint(
-  s: Strategy,
-  batches: BatchListItem[],
-  isClosed: (id: number) => boolean
-): BatchListItem[] {
-  const incompleteBySection = new Map<string, BatchListItem[]>();
-  for (const b of batches) {
-    if (!b.section || isClosed(b.id)) continue;
-    const arr = incompleteBySection.get(b.section) ?? [];
-    arr.push(b);
-    incompleteBySection.set(b.section, arr);
-  }
-  for (const arr of incompleteBySection.values())
-    arr.sort((a, b) => numOf(a.slug) - numOf(b.slug));
-
-  const used = new Set<number>();
-  const out: BatchListItem[] = [];
-  const take = (focusKeys: string[], count: number) => {
-    let n = count;
-    for (const fk of focusKeys) {
-      for (const sec of sectionsFor(fk)) {
-        for (const b of incompleteBySection.get(sec) ?? []) {
-          if (n <= 0) return;
-          if (used.has(b.id)) continue;
-          used.add(b.id);
-          out.push(b);
-          n--;
-        }
-      }
-    }
-  };
-
-  const a = alloc(s);
-  take([s.main], a.main);
-  if (a.sec) take(s.secondary, a.sec);
-  if (a.bridge) take(["business"], a.bridge);
-  if (a.disc) {
-    const others = orderedSections()
-      .map((x) => x.slug)
-      .filter(
-        (slug) =>
-          !sectionsFor(s.main).includes(slug) &&
-          !s.secondary.some((k) => sectionsFor(k).includes(slug)) &&
-          !BUSINESS_SECTIONS.includes(slug)
-      );
-    take(others, a.disc);
-  }
-
-  // Fill any shortfall from the global incomplete list in priority order.
-  if (out.length < s.sprintSize) {
-    const priority = orderedSections().map((x) => x.slug);
-    for (const slug of priority) {
-      for (const b of incompleteBySection.get(slug) ?? []) {
-        if (out.length >= s.sprintSize) break;
-        if (used.has(b.id)) continue;
-        used.add(b.id);
-        out.push(b);
-      }
-    }
-  }
-  return out.slice(0, s.sprintSize);
-}
+// (buildSprint + its alloc() helper removed 2026-07-09 — the home "Current
+//  focus" now reads the ONE canonical plan via lib/plan.ts, the same order as
+//  the map, so a manual reorder / path_rank drag can't make them disagree.)
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Domain-apportioned trajectory (the whole learning plan, not one sprint).

@@ -40,6 +40,7 @@ every `git push`.
 | Practice questions/prompt-audio/score | `test_practice.py` |
 | Per-user progress, activation lock + max-active cap | `test_progress.py` |
 | Battle mode: corpus = own study set only (isolation), free·core·ai gate on `/suggest`, monthly-budget 429, learned-first pool order, hallucinated pick numbers dropped | `test_battle.py` |
+| Live semantic retrieval: embed-text includes triggers, hash-idempotent seed, cosine pool order + unembedded tail, `/suggest` picks by similarity, keyword fallback when index/API absent | `test_embeddings.py` |
 | Global settings (admin-only write) | `test_settings.py` |
 | Apple billing (verify 401/501/applied, public notifications) | `test_billing.py` |
 | SRS engine units (bands, transition ladder, lapse) | `test_srs.py` |

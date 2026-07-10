@@ -106,6 +106,40 @@ def _migrate(s: Session) -> None:
         if "shown_count" not in spcols:
             s.execute(text("ALTER TABLE userphrasestat ADD COLUMN shown_count INTEGER DEFAULT 0"))
             s.commit()
+        # Live/Battle demand signal (phrase asked for in a real conversation).
+        if "live_requested_at" not in spcols:
+            s.execute(text("ALTER TABLE userphrasestat ADD COLUMN live_requested_at DATETIME"))
+            s.commit()
+        if "live_request_count" not in spcols:
+            s.execute(text("ALTER TABLE userphrasestat ADD COLUMN live_request_count INTEGER DEFAULT 0"))
+            s.commit()
+
+    # AUDIT-1 (2026-07-10): per-user rows must be UNIQUE per target — the
+    # get-or-create endpoints raced (two simultaneous first writes both inserted,
+    # doubling cap counts and mastery stats). Dedup anything already twinned
+    # (keep the most-progressed row, mirroring doctor's picker), then enforce
+    # with UNIQUE indexes so the DB itself refuses twins; the racing loser gets
+    # an IntegrityError which the endpoints retry against the winner's row.
+    s.execute(text("""
+        DELETE FROM userphrasestat WHERE id NOT IN (
+          SELECT id FROM (
+            SELECT id, ROW_NUMBER() OVER (
+              PARTITION BY user_id, phrase_id
+              ORDER BY attempts DESC, COALESCE(last_seen_at,'') DESC, id DESC) rn
+            FROM userphrasestat) WHERE rn = 1)"""))
+    s.execute(text("""
+        DELETE FROM batchprogress WHERE id NOT IN (
+          SELECT id FROM (
+            SELECT id, ROW_NUMBER() OVER (
+              PARTITION BY user_id, batch_id
+              ORDER BY l3_passed DESC, activated DESC,
+                       COALESCE(updated_at,'') DESC, id DESC) rn
+            FROM batchprogress) WHERE rn = 1)"""))
+    s.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ux_stat_user_phrase "
+                   "ON userphrasestat(user_id, phrase_id)"))
+    s.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ux_progress_user_batch "
+                   "ON batchprogress(user_id, batch_id)"))
+    s.commit()
 
     # Per-user scoping (commercial multi-user): add user_id to the per-user event
     # tables on existing DBs. The old per-user columns on `phrase` are left in
@@ -127,6 +161,16 @@ def _migrate(s: Session) -> None:
     # UI language preference (NULL = let the client decide / device default).
     if uinfo and "ui_lang" not in ucols:
         s.execute(text("ALTER TABLE user ADD COLUMN ui_lang VARCHAR"))
+        s.commit()
+    # Cover-art protagonist preference (D3, #24). Default 'male' = the current
+    # (v2) covers, so nobody's library changes until they pick female/mixed.
+    if uinfo and "hero_gender" not in ucols:
+        s.execute(text("ALTER TABLE user ADD COLUMN hero_gender VARCHAR DEFAULT 'male'"))
+        s.commit()
+    # Learning profile blob (goals/strategy/plan/league) — account-level, synced
+    # from lib/profile.ts. NULL reads as {} at the API layer.
+    if uinfo and "learn_profile" not in ucols:
+        s.execute(text("ALTER TABLE user ADD COLUMN learn_profile JSON"))
         s.commit()
     # Billing (Apple IAP) columns.
     if uinfo and "plan_source" not in ucols:

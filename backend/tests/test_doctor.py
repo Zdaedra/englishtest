@@ -70,6 +70,9 @@ def test_duplicate_stats_deduped_keeping_most_progressed(tmp_path, monkeypatch):
     _isolate_content(tmp_path, monkeypatch)
     bid, pid, uid = _seed_batch_with_phrase("dr-2")
     with Session(engine()) as s:
+        # The AUDIT-1 unique index refuses twins through the app now — simulate a
+        # pre-index DB (or an FK-off sideways write) by dropping it first.
+        s.connection().exec_driver_sql("DROP INDEX IF EXISTS ux_stat_user_phrase")
         s.add(models.UserPhraseStat(user_id=uid, phrase_id=pid, batch_id=bid,
                                     attempts=5, srs_status="familiar"))
         s.add(models.UserPhraseStat(user_id=uid, phrase_id=pid, batch_id=bid,
@@ -220,3 +223,32 @@ def test_verdict_never_raises_and_returns_problems(tmp_path, monkeypatch):
     assert doctor.verdict("test") == {}
     monkeypatch.setattr(doctor, "run", lambda fix=False: 1 / 0)
     assert doctor.verdict("test") == {}  # broken check → {}, not an exception
+
+
+def test_embedding_index_staleness_and_holes(tmp_path, monkeypatch):
+    """Check 8: an empty index is silent (dev DBs / pre-backfill); a text edit
+    behind the index's back reports stale_embeddings; a phrase added after the
+    backfill reports embedding_holes. Fix for both = `python -m app.embeddings`."""
+    _isolate_content(tmp_path, monkeypatch)
+    bid, pid, _uid = _seed_batch_with_phrase("dr-emb")
+    assert doctor.run(fix=False) == {}          # no index yet → silent
+
+    from app import embeddings
+    with Session(engine()) as s:                # conftest stubs embed_texts
+        embeddings.seed(s)
+    assert doctor.run(fix=False) == {}          # freshly seeded → CLEAN
+
+    with Session(engine()) as s:                # edit the phrase text directly
+        p = s.get(models.Phrase, pid)
+        p.phrase_en = "Rewritten."
+        s.add(p)
+        s.commit()
+    assert doctor.run(fix=False)["stale_embeddings"] == 1
+
+    with Session(engine()) as s:                # reseed heals; new phrase = hole
+        embeddings.seed(s)
+        s.add(models.Phrase(batch_id=bid, order_index=2, anchor="B",
+                            phrase_en="Beta.", situation_ru="s", task_ru="t"))
+        s.commit()
+    problems = doctor.run(fix=False)
+    assert problems["embedding_holes"] == 1 and "stale_embeddings" not in problems

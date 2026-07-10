@@ -33,6 +33,14 @@ export default function Onboarding() {
     setStep("taste"); // one live taste of the method, then into the app
   };
 
+  // "Later" must STICK — without the mark, every /learn visit bounces back to
+  // this picker forever. The map then runs on the default strategy; goals stay
+  // editable any time in Tune-your-path.
+  const later = () => {
+    setProfile({ onboardedAt: new Date().toISOString() });
+    nav("/", { replace: true });
+  };
+
   const done = () => nav("/learn", { replace: true });
 
   // Load the free showcase batch for the taste — guaranteed playable for a brand
@@ -65,7 +73,7 @@ export default function Onboarding() {
   if (step === "pick") {
     return (
       <div className="screen quest">
-        <button className="back-link" onClick={() => nav("/", { replace: true })}>
+        <button className="back-link" onClick={later}>
           <IconBack /> {t("ob1.later")}
         </button>
 

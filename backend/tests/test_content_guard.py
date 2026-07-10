@@ -80,6 +80,9 @@ def test_force_wipe_deletes_dependents_cleanly():
         s.add(models.PlaybackSession(user_id=u.id, batch_id=batch.id))
         s.add(models.CheckPhrase(phrase_id=pid0, batch_id=batch.id, text="cue"))
         s.add(models.ContextExample(phrase_id=pid0))
+        s.add(models.PhraseIntent(phrase_id=pid0, intent="pushback"))
+        s.add(models.PhraseEmbedding(phrase_id=pid0, model="m", dim=2,
+                                     text_hash="h", vector=b"\x00" * 8))
         s.commit()
 
     with Session(engine()) as s:
@@ -95,9 +98,13 @@ def test_force_wipe_deletes_dependents_cleanly():
         assert s.exec(select(models.TrainingEvent)).all() == []
         assert s.exec(select(models.PhraseAttempt)).all() == []
         assert s.exec(select(models.ReviewEvent)).all() == []
-        # content-side children keyed by phrase_id died with their phrases
+        # content-side children keyed by phrase_id died with their phrases —
+        # incl. the Live move tags and semantic vectors (a stale row would
+        # mis-attach when SQLite recycles the phrase id)
         assert s.exec(select(models.CheckPhrase)).all() == []
         assert s.exec(select(models.ContextExample)).all() == []
+        assert s.exec(select(models.PhraseIntent)).all() == []
+        assert s.exec(select(models.PhraseEmbedding)).all() == []
         # listening history SURVIVES: batch_id is stable, plan is never re-read
         assert len(s.exec(select(models.PlaybackSession)).all()) == 1
 

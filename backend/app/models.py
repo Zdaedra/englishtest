@@ -136,6 +136,15 @@ class UserPhraseStat(SQLModel, table=True):
     # How many times this phrase has been drilled (swipe or scored). Rotates the
     # situational-cue variant so the learner cycles all of them, not one repeated.
     shown_count: int = 0
+    # Live/Battle demand signal: the learner asked the suffleur for THIS line in a
+    # real conversation (didn't recall it themselves) — the truest "I need this"
+    # signal there is. Recorded on the top pick; NEVER touches avg_score/srs (no
+    # recall attempt was made). Lifts the phrase in the practice deck (app/routers/
+    # training.py _live_factor) and seeds the "moment of the day" surface. Creating
+    # this row for an "all"-scope phrase the user never studied pulls it into their
+    # arsenal — a real-world need becomes a study target.
+    live_requested_at: Optional[datetime] = None
+    live_request_count: int = 0
 
 
 class MnemoStory(SQLModel, table=True):
@@ -167,11 +176,14 @@ class ContextExample(SQLModel, table=True):
 
 
 class CheckPhrase(SQLModel, table=True):
-    """Проверочные фразы — curated check/test phrases attached to a single phrase.
-    One phrase -> many check phrases. This is just the storage structure: the
-    backend now has a place to hold them per phrase; not populated yet, no UI.
-    `text` holds the check phrase; `lang` marks ru/en; `kind` is a free slot for
-    later (e.g. prompt vs. accepted-answer variant)."""
+    """Проверочные фразы — curated interlocutor cues attached to a single phrase
+    (one phrase -> many). LIVE and central: the training deck shows them as the
+    card stimulus (rotated by shown_count), and Live's semantic index embeds them
+    as the phrase's situational identity (app/embeddings.py). There is NO
+    autogenerator and no in-app writer — rows are authored straight into the prod
+    DB per CONTENT-GRAPH.md §4 (3191 rows as of 2026-07); `app.rephrase` DROPS a
+    phrase's cues when its text changes, and doctor check 7 stays red until they
+    are re-authored. `text` holds the cue; `lang` ru/en; `kind` e.g. stimulus."""
     id: Optional[int] = Field(default=None, primary_key=True)
     phrase_id: int = Field(foreign_key="phrase.id", index=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
@@ -181,6 +193,27 @@ class CheckPhrase(SQLModel, table=True):
     order_index: int = 0
     status: str = Field(default="draft")  # draft | approved
     created_at: datetime = Field(default_factory=_now)
+
+
+class PhraseEmbedding(SQLModel, table=True):
+    """Semantic vector for ONE phrase — the Live-mode retrieval index
+    (app/embeddings.py). The embedded text is the phrase's SITUATIONAL identity:
+    phrase_en + anchor + gloss + situation/task + its approved CheckPhrase
+    triggers (реплики собеседника, вызывающие фразу) — so a dictated moment
+    matches the situations a line answers, not its wording.
+
+    vector = L2-normalized float32 little-endian bytes (cosine == dot product);
+    text_hash detects staleness after any content edit (rephrase/restory/cue
+    changes) and model/dim mismatches after an env model swap — `python -m
+    app.embeddings` re-embeds only what changed. Derived cache: safe to drop and
+    rebuild at any time; battle falls back to keyword retrieval while empty."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    phrase_id: int = Field(foreign_key="phrase.id", index=True)
+    model: str = ""
+    dim: int = 0
+    text_hash: str = ""
+    vector: bytes = b""
+    updated_at: datetime = Field(default_factory=_now)
 
 
 class AudioAsset(SQLModel, table=True):
@@ -260,6 +293,16 @@ class User(SQLModel, table=True):
     # the db migration so they're never locked out. See app/mail.py + the auth gate.
     email_verified: bool = Field(default=False)
     ui_lang: Optional[str] = Field(default=None)  # UI language pref: ru | es | de | fr
+    # Cover-art protagonist preference (D3, #24): male (v2 back-to-camera) |
+    # female (v3 back-to-camera) | mixed (alternate by batch). Default male so
+    # existing accounts keep the covers they already see until they choose.
+    hero_gender: str = Field(default="male")
+    # Learning profile (goals/strategy/plan mode/manual set/league result +
+    # onboarding marks) — the client-authoritative blob lib/profile.ts syncs so
+    # the trajectory is a property of the ACCOUNT, not of one device's
+    # localStorage (shared-device leak + lost-on-reinstall fix). Last write wins;
+    # the server only stores and echoes it in /me.
+    learn_profile: dict = Field(default_factory=dict, sa_column=Column(JSON))
     # Billing (Apple IAP). plan_source: manual | apple. plan_expires_at: when an
     # auto-renew sub lapses (NULL = no expiry / manual). apple_original_tx_id ties
     # the account to its App Store subscription across renewals.

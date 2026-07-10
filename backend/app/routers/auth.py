@@ -1,6 +1,8 @@
 """Account endpoints: register / login / logout / me. Sets a signed session
 cookie (eng_auth). Public: register + login. The rest of the API requires a
 valid session (enforced by the auth-gate middleware in main.py)."""
+import json
+
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
@@ -39,6 +41,7 @@ def _norm(email: str) -> str:
 
 
 SUPPORTED_LANGS = {"ru", "es", "de", "fr"}
+HERO_GENDERS = {"male", "female", "mixed"}
 
 
 def _serialize(u: models.User) -> dict:
@@ -47,7 +50,9 @@ def _serialize(u: models.User) -> dict:
     # the httponly cookie. Safe over HTTPS.
     plan = effective_plan(u)
     return {"id": u.id, "email": u.email, "name": u.name, "plan": plan,
-            "is_admin": u.is_admin, "ui_lang": u.ui_lang, "entitlements": ents(plan),
+            "is_admin": u.is_admin, "ui_lang": u.ui_lang, "hero_gender": u.hero_gender,
+            "learn_profile": u.learn_profile or {},
+            "entitlements": ents(plan),
             "email_verified": u.email_verified, "token": make_session(u.id)}
 
 
@@ -138,6 +143,52 @@ def set_ui_lang(body: UiLang, request: Request, session: Session = Depends(get_s
     return {"ok": True, "ui_lang": u.ui_lang}
 
 
+class HeroGender(BaseModel):
+    gender: str
+
+
+@router.post("/hero-gender")
+def set_hero_gender(body: HeroGender, request: Request, session: Session = Depends(get_session)):
+    """Persist the cover-art protagonist preference (male | female | mixed) so a
+    user's library shows itself back-to-camera in their gender across devices."""
+    uid = getattr(request.state, "user_id", None)
+    u = session.get(models.User, uid) if uid else None
+    if not u:
+        raise HTTPException(401, {"code": "unauthorized", "msg": "Не авторизован."})
+    if body.gender not in HERO_GENDERS:
+        raise HTTPException(400, {"code": "bad_gender", "msg": "Unsupported gender."})
+    u.hero_gender = body.gender
+    session.add(u)
+    session.commit()
+    return {"ok": True, "hero_gender": u.hero_gender}
+
+
+class LearnProfile(BaseModel):
+    profile: dict
+
+
+_MAX_PROFILE_BYTES = 16 * 1024   # goals+strategy+manual ids+league ≈ 1 KB; 16 KB = abuse guard
+
+
+@router.post("/learn-profile")
+def set_learn_profile(body: LearnProfile, request: Request,
+                      session: Session = Depends(get_session)):
+    """Persist the learning profile (goals / strategy / plan mode / manual set /
+    league result) so the trajectory follows the ACCOUNT across devices and
+    reinstalls. Client-authoritative, last write wins — the server stores the
+    blob and echoes it back in /me; lib/profile.ts owns the shape."""
+    uid = getattr(request.state, "user_id", None)
+    u = session.get(models.User, uid) if uid else None
+    if not u:
+        raise HTTPException(401, {"code": "unauthorized", "msg": "Не авторизован."})
+    if len(json.dumps(body.profile, ensure_ascii=False)) > _MAX_PROFILE_BYTES:
+        raise HTTPException(413, {"code": "profile_too_large", "msg": "Profile blob too large."})
+    u.learn_profile = body.profile
+    session.add(u)
+    session.commit()
+    return {"ok": True}
+
+
 @router.delete("/me")
 def delete_account(request: Request, response: Response, session: Session = Depends(get_session)):
     """Delete the account and ALL its data (Apple App Store Guideline 5.1.1(v)):
@@ -162,12 +213,20 @@ def delete_account(request: Request, response: Response, session: Session = Depe
         ph_ids = [p.id for p in session.exec(
             select(models.Phrase).where(models.Phrase.batch_id == b.id)).all()]
         if ph_ids:
-            for ce in session.exec(select(models.ContextExample).where(
-                    models.ContextExample.phrase_id.in_(ph_ids))).all():
-                session.delete(ce)
-        for M in (models.Zone, models.Phrase, models.MnemoStory, models.CheckPhrase):
+            # Phrase-keyed children must die with the phrases — embeddings.seed
+            # deliberately indexes private imports too, and orphaned vectors /
+            # intent tags could mis-attach when SQLite recycles the phrase ids.
+            for M in (models.ContextExample, models.PhraseIntent,
+                      models.PhraseEmbedding):
+                for row in session.exec(select(M).where(M.phrase_id.in_(ph_ids))).all():
+                    session.delete(row)
+        for M in (models.Zone, models.Phrase, models.MnemoStory, models.CheckPhrase,
+                  models.BatchIntent):
             for row in session.exec(select(M).where(M.batch_id == b.id)).all():
                 session.delete(row)
+        # Children first: without ORM relationships the unit-of-work doesn't know
+        # these tables depend on batch, so flush them before deleting the parent.
+        session.flush()
         session.delete(b)
     session.delete(u)
     # Non-PII proof the account was deleted (keeps no personal data).

@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { api, BatchDetail as Batch, BatchListItem, RotationItem } from "../api";
 import { usePlayer } from "../player/PlayerContext";
 import { getProgress, isEngaged, lessonStates, setProgress } from "../lib/progress";
-import { orderedSections } from "../lib/sections";
-import { getProfile, prioritySectionSlugs } from "../lib/profile";
+import { planPosition } from "../lib/plan";
 import { useI18n } from "../i18n";
 import { haptic } from "../lib/session";
 import { BatchCover } from "../ui/Art";
@@ -58,30 +57,12 @@ export default function BatchHome() {
     return { attempted: attempted.length, total: rotation.length, mean, done };
   }, [rotation]);
 
-  // The batch's 1-based position in the learning path (same flatten as the map:
-  // sections by the learner's priority, batches oldest-first within a section).
+  // The batch's 1-based position in the learning path — the SAME canonical order
+  // as the map spine and the home focus (lib/plan.ts), so "Урок N" matches where
+  // the node actually sits (incl. manual mode + path_rank reorders).
   const lessonNum = useMemo(() => {
     if (!batch || !batchList) return 0;
-    const bySection = new Map<string, BatchListItem[]>();
-    batchList.forEach((b) => {
-      const k = b.section || "_";
-      const arr = bySection.get(k);
-      if (arr) arr.push(b);
-      else bySection.set(k, [b]);
-    });
-    const natural = orderedSections().map((s) => s.slug);
-    const order = prioritySectionSlugs(getProfile(), natural);
-    const flat: BatchListItem[] = [];
-    order.forEach((slug) =>
-      flat.push(...(bySection.get(slug) ?? []).sort((a, b) => a.created_at.localeCompare(b.created_at)))
-    );
-    const seen = new Set(flat.map((b) => b.id));
-    batchList
-      .filter((b) => !seen.has(b.id))
-      .sort((a, b) => a.created_at.localeCompare(b.created_at))
-      .forEach((b) => flat.push(b));
-    const idx = flat.findIndex((b) => b.id === batch.id);
-    return idx >= 0 ? idx + 1 : 0;
+    return planPosition(batchList, batch.id);
   }, [batch, batchList]);
 
   if (err) return <div className="screen"><p className="error">{err}</p></div>;
@@ -120,7 +101,9 @@ export default function BatchHome() {
   const activate = () => {
     haptic("medium");
     if (!prog.activated) {
-      setProgress(batch.id, { activated: true, activatedAt: new Date().toISOString() });
+      // Server stamps activated_at authoritatively; the client never read its own
+      // copy, so don't write a local activatedAt (dead write, removed 2026-07-09).
+      setProgress(batch.id, { activated: true });
     }
     nav(`/batch/${batch.id}/lesson/${ctaLesson.n}`);
   };

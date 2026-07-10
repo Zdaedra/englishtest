@@ -64,6 +64,46 @@ _PHRASE_SYSTEM = (
     "Верни СТРОГО JSON без markdown: {\"score\": <int 0..10>}."
 )
 
+# Practice "Answer Check" — the SAME score rubric as _PHRASE_SYSTEM (so the SRS
+# signal doesn't drift), PLUS an honest coaching layer in one call: did the said
+# phrase fit the TASK at all, how natural it sounded, and one plain RU note (incl.
+# "не расслышал" when the transcript is STT garbage). SRS still keys off `score`.
+_ANSWER_SYSTEM = (
+    "Ты — строгий, но справедливый экзаменатор устного recall английских деловых "
+    "фраз и одновременно коуч по executive-присутствию. Учащемуся дана ЗАДАЧА "
+    "(task_ru) в СИТУАЦИИ (situation_ru); он пытается вспомнить и произнести уместную "
+    "фразу. Тебе дают эталон (correct_phrase) и распознанную речь (user_said) — это "
+    "вывод STT, в нём возможны ошибки распознавания.\n"
+    "\n"
+    "score (0..10) — СМЫСЛОВОЕ совпадение user_said с correct_phrase; смысл важнее "
+    "дословности. Сжатая своя формулировка, сохраняющая суть и ключевой глагол/действие, "
+    "— это 9-10, даже если опущены вводные/усилители (right now, actually, just). Снижай "
+    "ТОЛЬКО за потерю смыслонесущего слова, не за краткость.\n"
+    "  10 = семантически эквивалентно (валидный перефраз/синоним/сжатая форма).\n"
+    "  8-9 = суть и ключевое действие верны, опущены лишь второстепенные слова.\n"
+    "  6-7 = основной смысл есть, но пропущено ключевое слово ИЛИ ошибка времени.\n"
+    "  4-5 = частично: тема узнаётся, фраза искажена.\n"
+    "  2-3 = далеко, лишь отдельные общие слова.\n"
+    "  0-1 = пусто / не по теме / мусор распознавания.\n"
+    "\n"
+    "fits_task (bool) — уместна ли САМА сказанная фраза для ЭТОЙ задачи по смыслу и "
+    "интенции, ДАЖЕ если это не дословно эталон: валидный ответ в том же диапазоне "
+    "(верный коммуникативный ход) = true; мимо задачи = false.\n"
+    "natural (0..10) — насколько естественно и идиоматично звучит user_said для "
+    "уверенного носителя-руководителя (калька/грамматически ломано = низко).\n"
+    "note — ОДНА короткая строка по-русски, по делу: попал ли в задачу и что усилить. "
+    "Если user_said похоже на МУСОР РАСПОЗНАВАНИЯ (обрывки, смесь языков, бессмыслица) — "
+    "напиши ровно «Не расслышал — повтори чётче», и тогда fits_task=false, natural=0.\n"
+    "\n"
+    "Примеры (для формата):\n"
+    "  correct='Let me push back on that.' said='let me push back a little' -> "
+    "{\"score\":9,\"fits_task\":true,\"natural\":8,\"note\":\"Возражение уместно и звучит уверенно.\"}\n"
+    "  correct=\"Let's take it down a notch.\" said='летний пушбек литл' -> "
+    "{\"score\":0,\"fits_task\":false,\"natural\":0,\"note\":\"Не расслышал — повтори чётче.\"}\n"
+    "Верни СТРОГО JSON без markdown: {\"score\": <int 0..10>, \"fits_task\": <bool>, "
+    "\"natural\": <int 0..10>, \"note\": \"<str>\"}."
+)
+
 _SEQUENCE_SYSTEM = (
     "Ты — экзаменатор по запоминанию мнемонической истории. Учащийся ПЕРЕСКАЗЫВАЕТ "
     "своими словами суть истории (story_ru) и должен воспроизвести цепочку якорей "
@@ -207,6 +247,69 @@ def score_phrase(anchor: str, correct_phrase: str, user_said: str) -> dict:
     return out
 
 
+def score_answer(anchor: str, correct_phrase: str, user_said: str,
+                 task_ru: str = "", situation_ru: str = "") -> dict:
+    """Practice Answer Check. One LLM call returns the SRS score (meaning-match to the
+    card's phrase — SAME rubric as score_phrase, so the SRS signal doesn't drift) PLUS
+    honest coaching: fits_task, natural, and a short RU note (incl. 'не расслышал' on
+    STT garbage). Returns {score, fits_task, natural, note, correct_phrase, via}."""
+    nu = _normalize(user_said)
+    ck = ("answer", correct_phrase, nu)
+    if ck in _cache:
+        return {**_cache[ck], "via": "cache"}
+
+    # Local gate: obvious verbatim hit or too-few-tokens — no LLM, but still return
+    # the honest-feedback fields so the client shape is stable.
+    gated = local_gate(correct_phrase, user_said)
+    if gated is not None:
+        if gated >= 10:
+            out = {"score": 10, "fits_task": True, "natural": 9, "note": "",
+                   "correct_phrase": correct_phrase}
+        else:  # silence / not caught
+            out = {"score": 0, "fits_task": False, "natural": 0,
+                   "note": "Не расслышал — повтори чётче.", "correct_phrase": correct_phrase}
+        _cache[ck] = out
+        return {**out, "via": "gate"}
+
+    user_payload = json.dumps(
+        {"anchor": anchor, "correct_phrase": correct_phrase, "user_said": user_said,
+         "task_ru": task_ru, "situation_ru": situation_ru},
+        ensure_ascii=False,
+    )
+    s = get_settings()
+    try:
+        data = _openai_json(_ANSWER_SYSTEM, user_payload, max_tokens=160, model=s.model_score)
+        score = _clamp(data.get("score"))
+        via = "llm"
+        # Same cascade as score_phrase: re-score the ambiguous band on the stronger
+        # model (its full JSON wins). Falls back to the cheap verdict on error.
+        if (s.cascade_score_enabled and s.model_sequence != s.model_score
+                and s.cascade_score_low <= score <= s.cascade_score_high):
+            try:
+                data = _openai_json(_ANSWER_SYSTEM, user_payload, max_tokens=160,
+                                    model=s.model_sequence)
+                score = _clamp(data.get("score"))
+                via = "llm:escalated"
+            except Exception:
+                pass
+        out = {
+            "score": score,
+            "fits_task": bool(data.get("fits_task", score >= 6)),
+            "natural": _clamp(data.get("natural")),
+            "note": str(data.get("note", "") or "")[:200],
+            "correct_phrase": correct_phrase,
+        }
+    except Exception:
+        # Graceful fallback: coarse string-similarity score, no coaching claims.
+        ratio = SequenceMatcher(None, _normalize(correct_phrase), nu).ratio()
+        out = {"score": _clamp(round(ratio * 10)), "fits_task": False, "natural": 0,
+               "note": "", "correct_phrase": correct_phrase}
+        via = "fallback"
+    if via in ("llm", "llm:escalated"):
+        _cache[ck] = dict(out)
+    return {**out, "via": via}
+
+
 def score_anchor(anchor: str, user_said: str) -> dict:
     """Test C (anchor recall): the learner hears a phrase and must name its single
     anchor keyword. The target is ONE word, so we score by string similarity (no
@@ -298,7 +401,7 @@ __MOVES__
 притягивай за уши.
 
 Верни СТРОГО JSON без markdown:
-{"intents":["<ключ>",…],"picks":[{"n":<номер>,"note":"<до 8 русских слов — как подать>"}]}"""
+{"intents":["<ключ>",…],"picks":[{"n":<номер>}]}"""
 
 _BATTLE_FORCED = """
 
@@ -313,7 +416,8 @@ def battle_pick(situation: str, items: list[dict], intent: str | None = None) ->
     model answers with); `intent` forces a user-chosen move (one-tap override).
     One fast call, small output — this runs mid-conversation. Returns
     {picks: [{n, note}], intents: [key,…], via}; via="fallback" lets the client
-    degrade to its local keyword search."""
+    degrade to its local keyword search. `note` is tolerated for older stubs but
+    no longer requested — the card shows just the line + gloss."""
     from .intents import INTENTS
     moves = "\n".join(f"- {k} = {gloss}" for k, gloss in INTENTS.items())
     system = _BATTLE_SYSTEM.replace("__MOVES__", moves)
@@ -324,7 +428,7 @@ def battle_pick(situation: str, items: list[dict], intent: str | None = None) ->
         for i in items)
     payload = f"Момент: {situation}\n\nФразы:\n{listing}"
     try:
-        data = _openai_json(system, payload, max_tokens=220,
+        data = _openai_json(system, payload, max_tokens=120,
                             model=get_settings().model_coach)
         picks = []
         for p in (data.get("picks") or [])[:3]:

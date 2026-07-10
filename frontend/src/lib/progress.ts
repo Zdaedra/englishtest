@@ -8,7 +8,6 @@ export type BatchProgress = {
   on_path_at?: string; // ISO timestamp added to the path
   path_rank?: number; // manual queue order across the whole plan (server-synced)
   activated?: boolean; // in the practice-deck rotation (invariant: activated ⊆ on_path)
-  activatedAt?: string; // ISO timestamp of activation (for recency ordering)
   l1_listened?: boolean; // played the full story at least once
   l1_retold?: boolean; // did at least one sequence retell
   l1_best_seq?: number; // best sequence score so far (informational)
@@ -24,10 +23,9 @@ export function isEngaged(p: BatchProgress): boolean {
 }
 
 // Two-axis batch management. on_path = curated learning trajectory (Learning map);
-// active = practice-deck rotation. Invariant: active ⊆ on_path.
-// active ⊆ on_path — enforce the invariant on read so a stale local cache (on_path
-// missing but activated set, e.g. pre-migration) still treats an active batch as on-path.
-export function isOnPath(p: BatchProgress): boolean { return !!(p.on_path || p.activated); }
+// active = practice-deck rotation. Invariant: active ⊆ on_path. The map now reads
+// on_path directly (lib/plan.ts hides on_path===false nodes); the old isOnPath()
+// helper was dead and removed 2026-07-09.
 export function isActive(p: BatchProgress): boolean { return !!p.activated; }
 
 const key = (batchId: number) => `ee-progress-${batchId}`;
@@ -114,7 +112,6 @@ export async function hydrateProgress(): Promise<void> {
         on_path_at: r.on_path_at || undefined,
         path_rank: r.path_rank ?? undefined,
         activated: r.activated,
-        activatedAt: r.activated_at || undefined,
         l1_listened: r.l1_listened,
         l1_retold: r.l1_retold,
         l1_best_seq: r.l1_best_seq ?? undefined,

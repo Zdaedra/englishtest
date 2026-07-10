@@ -19,9 +19,11 @@ public class WidgetBridgePlugin: CAPPlugin, CAPBridgedPlugin {
     static let appGroup = "group.net.executiveenglish.app"
     static let phrasesKey = "ee.widget.phrases"
     static let updatedKey = "ee.widget.updated"
+    static let dueKey = "ee.widget.due"      // total phrases slipping now (badge count)
 
-    // update({ phrases: [{en, ru, b}] }) — replaces the widget's phrase set and
-    // asks WidgetKit to rebuild timelines. Empty array clears it (logout).
+    // update({ phrases: [{en, ru, b, d}], due }) — replaces the widget's phrase
+    // set + the due count, and asks WidgetKit to rebuild timelines. Empty array
+    // clears it (logout).
     @objc func update(_ call: CAPPluginCall) {
         guard let phrases = call.getArray("phrases") else {
             call.reject("phrases required")
@@ -38,6 +40,7 @@ public class WidgetBridgePlugin: CAPPlugin, CAPBridgedPlugin {
             return
         }
         defaults.set(json, forKey: Self.phrasesKey)
+        defaults.set(call.getInt("due") ?? 0, forKey: Self.dueKey)
         defaults.set(Date().timeIntervalSince1970, forKey: Self.updatedKey)
         WidgetCenter.shared.reloadAllTimelines()
         call.resolve(["count": phrases.count])

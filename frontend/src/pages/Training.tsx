@@ -72,12 +72,24 @@ function deckSources(): { active: number[]; maint: number[] } {
   return { active, maint };
 }
 
-// What the hands-free voice reads: the RU situation when generated (the learner
-// hears the scene in Russian, then produces English), else the legacy stimulus.
-function cueOf(c: DeckCard): [string, string] {
-  return c.situation_ru
-    ? [c.situation_ru, "ru"]
-    : [c.stimulus || c.gloss_ru || c.anchor, c.stimulus_lang || "en"];
+// Each card's prompt alternates by its slot in the deck so practice mixes the two
+// cues the learner meets in the wild: the RU *situation* (scene + task) on even
+// slots, the partner's English *trigger* line on odd slots. «Иногда фразы даём,
+// иногда ситуации — совмещаем.» A card missing either half shows the one it has.
+function cueModeAt(c: DeckCard, slot: number): "situation" | "trigger" {
+  const hasSituation = !!c.situation_ru;
+  const hasTrigger = !!(c.stimulus && c.stimulus.trim());
+  if (hasSituation && hasTrigger) return slot % 2 === 0 ? "situation" : "trigger";
+  return hasSituation ? "situation" : "trigger";
+}
+
+// What the hands-free voice reads for the card at `slot`: in situation mode the RU
+// scene (hear it, produce English); in trigger mode the partner's English line
+// (hear it, answer it). Mirrors what the card front shows.
+function cueOf(c: DeckCard, slot: number): [string, string] {
+  if (cueModeAt(c, slot) === "trigger")
+    return [c.stimulus || c.gloss_ru || c.anchor, c.stimulus_lang || "en"];
+  return [c.situation_ru || c.stimulus || c.gloss_ru || c.anchor, c.situation_ru ? "ru" : (c.stimulus_lang || "en")];
 }
 
 function Head({ title }: { title?: string }) {
@@ -100,6 +112,10 @@ export default function Training() {
   // Confidence-check mode (from the Learning "calibration gap" card): drill only
   // phrases swiped "known" but not produced aloud, across every engaged batch.
   const gap = !!(loc.state as { gap?: boolean } | null)?.gap;
+  // Moment-of-the-day mode (from the home "from your live talks" card): drill the
+  // phrases you asked the Live suffleur for recently + their semantic neighbours.
+  // Self-scopes server-side, so it needn't pass any batch ids.
+  const live = !!(loc.state as { live?: boolean } | null)?.live;
   const { user } = useAuth();
   const { t } = useI18n();
   const uid = user?.id;
@@ -163,14 +179,18 @@ export default function Training() {
     const { active, maint } = sources;
     // Review / confidence-check: draw from EVERY engaged batch (active + completed).
     const wide = review || gap;
-    const batchIds = wide ? [...new Set([...active, ...maint])] : (active.length ? active : maint);
-    const maintenanceIds = wide ? [] : (active.length ? maint : []);
-    if (!batchIds.length) { setPhase("empty"); setQueue([]); return; }
+    // Live self-scopes on the server (its phrases may sit in non-engaged batches),
+    // so the batch scope is irrelevant — send the engaged set as a harmless hint.
+    const batchIds = wide || live ? [...new Set([...active, ...maint])] : (active.length ? active : maint);
+    const maintenanceIds = wide || live ? [] : (active.length ? maint : []);
+    // Live is the only mode that can run with no engaged batches (a brand-new user
+    // who only used Live) — the server derives the scope from the asked phrases.
+    if (!batchIds.length && !live) { setPhase("empty"); setQueue([]); return; }
     setPhase("loading");
-    api.getDeck(batchIds, { maintenanceIds, limit: FETCH_LIMIT, dueOnly: review, gapOnly: gap })
+    api.getDeck(batchIds, { maintenanceIds, limit: FETCH_LIMIT, dueOnly: review, gapOnly: gap, liveOnly: live })
       .then((d) => { setQueue(d); setPhase(d.length ? "deck" : "empty"); shownAtRef.current = Date.now(); })
       .catch((e) => { setErr(String(e)); setPhase("error"); });
-  }, [sources, review, gap]);
+  }, [sources, review, gap, live]);
 
   useEffect(() => { loadDeck(); }, [loadDeck]);
   useEffect(() => { shownAtRef.current = Date.now(); }, [pos]);
@@ -275,13 +295,35 @@ export default function Training() {
     advance(known, dir);
   };
 
-  // Swipe-to-advance for the AI result frame (replaces the «Дальше» button).
-  // Either direction advances — the % is already the verdict. Non-AI keeps buttons.
-  const drag = useRef({ x0: 0, active: false, dx: 0 });
-  const canSwipe = () => !!card && canVoice && !!result;
+  // Front-of-card swipe = «I don't know it». Records the phrase unknown (SRS
+  // reschedules it soon) and flies to the next card. Direction is cosmetic — a
+  // skip is always a miss, per the rule «смахнул карточку → не знал её».
+  const skipUnknown = (dir: "left" | "right") => {
+    if (!card) return;
+    haptic("medium");
+    if (rec.recording) { void rec.stop(); }
+    completeRep();
+    api.trainSwipe(sessionId, card.phrase_id, "left", Date.now() - shownAtRef.current).catch(() => {});
+    advance(false, dir);
+  };
+
+  // One horizontal drag, two jobs by context: after an AI score it swipes the
+  // verdict away (either way — the % is the verdict); on the untouched front of any
+  // card it means «не знаю» (skipUnknown). A short drag is a tap → snaps back and
+  // lets onClick handle the non-AI flip.
+  const drag = useRef({ x0: 0, active: false, dx: 0, mode: "" as "advance" | "skip" | "" });
+  const swipedRef = useRef(false);
+  const swipeMode = (): "advance" | "skip" | "" => {
+    if (!card) return "";
+    if (canVoice && !!result) return "advance";
+    if (face === "front" && !result && !handsFree) return "skip";
+    return "";
+  };
   const onCardDown = (e: React.PointerEvent) => {
-    if (!canSwipe()) return;
-    drag.current = { x0: e.clientX, active: true, dx: 0 };
+    const mode = swipeMode();
+    if (!mode) return;
+    swipedRef.current = false;
+    drag.current = { x0: e.clientX, active: true, dx: 0, mode };
     if (cardElRef.current) cardElRef.current.style.transition = "none";
   };
   const onCardMove = (e: React.PointerEvent) => {
@@ -295,11 +337,14 @@ export default function Training() {
     if (!d.active) return;
     d.active = false;
     const el = cardElRef.current;
-    if (Math.abs(d.dx) < 70) {                          // not far enough → snap back
+    if (Math.abs(d.dx) < 70) {                          // a tap, not a swipe → snap back
       if (el) { el.style.transition = "transform .22s cubic-bezier(.22,1,.36,1)"; el.style.transform = ""; }
       return;
     }
-    aiNext(d.dx > 0 ? "right" : "left");
+    swipedRef.current = true;                           // real swipe — suppress the trailing click
+    const dir = d.dx > 0 ? "right" : "left";
+    if (d.mode === "advance") aiNext(dir);
+    else skipUnknown(dir);
   };
 
   const handleScoreErr = (e: unknown) => {
@@ -372,7 +417,7 @@ export default function Training() {
     // iOS unlocks audio + speechSynthesis only inside a user gesture — warm both
     // here, synchronously, before the await breaks out of the tap context.
     unlockAudio();
-    if (card) { const [cu, cl] = cueOf(card); prefetchCueAudio(cu, cl); }
+    if (card) { const [cu, cl] = cueOf(card, pos); prefetchCueAudio(cu, cl); }
     try { window.speechSynthesis?.speak(new SpeechSynthesisUtterance("")); } catch { /* noop */ }
     const ok = await hf.open();                           // gesture → grants the mic
     if (!ok) { setNotice(t("practice.micUnavailable")); return; }
@@ -390,7 +435,7 @@ export default function Training() {
     const run = async () => {
       setResult(null); setNotice(""); setFace("front");
       setHfStage("cue");
-      { const [cu, cl] = cueOf(card); await speakCueAudio(cu, cl); }
+      { const [cu, cl] = cueOf(card, pos); await speakCueAudio(cu, cl); }
       if (cancelled) return;
       flip("back");
       await delay(380);
@@ -448,7 +493,7 @@ export default function Training() {
   useEffect(() => {
     if (!handsFree || !card) return;
     const nxt = queue?.[pos + 1];
-    if (nxt) { const [cu, cl] = cueOf(nxt); prefetchCueAudio(cu, cl); }
+    if (nxt) { const [cu, cl] = cueOf(nxt, pos + 1); prefetchCueAudio(cu, cl); }
   }, [handsFree, card?.phrase_id, pos, queue]);
 
   // Auto-fit the situation/task so a long card never collides with the mic:
@@ -492,14 +537,16 @@ export default function Training() {
   if (phase === "loading") return <div className="screen tr-screen"><p className="muted" style={{ marginTop: 28 }}>{t("practice.loading")}</p></div>;
 
   if (phase === "empty") {
+    // Live "moment of the day" with nothing asked yet points BACK to Live, not
+    // the map — the way to fill it is to have a real conversation.
     return (
       <div className="screen tr-screen">
-        <Head />
+        <Head title={live ? t("live.sessionTitle") : undefined} />
         <div className="pr-empty">
-          <p className="pr-empty-t">{t("practice.emptyTitle")}</p>
-          <p className="pr-empty-s">{t("practice.emptyText")}</p>
-          <button className="l3-cta" style={{ marginTop: 18 }} onClick={() => nav("/learn")}>
-            <IconPlay size={18} /> {t("practice.toLearn")}
+          <p className="pr-empty-t">{live ? t("live.emptyTitle") : t("practice.emptyTitle")}</p>
+          <p className="pr-empty-s">{live ? t("live.emptyText") : t("practice.emptyText")}</p>
+          <button className="l3-cta" style={{ marginTop: 18 }} onClick={() => nav(live ? "/battle" : "/learn")}>
+            <IconPlay size={18} /> {live ? t("live.toBattle") : t("practice.toLearn")}
           </button>
         </div>
       </div>
@@ -533,6 +580,8 @@ export default function Training() {
   const pctClass = pct >= 80 ? "ok" : pct >= 50 ? "mid" : "no";
   const ghosts = queue ? queue.slice(pos + 1, pos + 3) : [];
   const micActive = rec.recording || speech.listening || nativeListening;
+  // Which prompt this card shows — situation scene or partner's trigger line.
+  const cueMode = card ? cueModeAt(card, pos) : "situation";
 
   return (
     <div className="screen tr-screen">
@@ -550,7 +599,10 @@ export default function Training() {
             role={!canVoice && !handsFree && face === "front" ? "button" : undefined}
             tabIndex={!canVoice && !handsFree && face === "front" ? 0 : -1}
             aria-label={!canVoice && face === "front" ? t("practice.hintTapFlip") : undefined}
-            onClick={() => { if (!handsFree && !canVoice && face === "front") flipToBack(); }}
+            onClick={() => {
+              if (swipedRef.current) { swipedRef.current = false; return; }   // a swipe already handled it
+              if (!handsFree && !canVoice && face === "front") flipToBack();
+            }}
             onKeyDown={(e) => {
               if (!handsFree && !canVoice && face === "front" && (e.key === "Enter" || e.key === " ")) {
                 e.preventDefault();
@@ -571,20 +623,28 @@ export default function Training() {
                       <div className="tr-photo-fade" />
                       <div className="tr-pill">{pillLabel(card)}</div>
                     </div>
-                    {/* Stimulus — hidden once the AI result takes over the card. */}
+                    {/* Prompt — rotates per card: the RU situation (scene + task) or
+                        the partner's English trigger line. Hidden once the AI result
+                        takes over the card. */}
                     {!(canVoice && !handsFree && result) && (
                       <div className="tr-body" ref={bodyRef}>
                         <div className="tr-fit" ref={fitRef}>
-                          <span className="tr-stim-label">{t("practice.situationLabel")}</span>
-                          {card.situation_ru ? (
+                          {cueMode === "trigger" ? (
                             <>
+                              <span className="tr-stim-label">{t("practice.triggerLabel")}</span>
+                              <p className="tr-trigger-line">{card.stimulus ? `«${card.stimulus}»` : (card.gloss_ru || card.anchor)}</p>
+                              {card.task_ru && (
+                                <p className="tr-trigger-task"><span className="tr-task-lbl">{t("practice.taskLabel")}</span>{card.task_ru}</p>
+                              )}
+                            </>
+                          ) : (
+                            <>
+                              <span className="tr-stim-label">{t("practice.situationLabel")}</span>
                               <p className="tr-situation">{card.situation_ru}</p>
                               {card.task_ru && (
                                 <p className="tr-task"><span className="tr-task-lbl">{t("practice.taskLabel")}</span>{card.task_ru}</p>
                               )}
                             </>
-                          ) : (
-                            <p className="tr-stim">{card.stimulus || card.gloss_ru || card.anchor}</p>
                           )}
                         </div>
                       </div>
@@ -598,6 +658,10 @@ export default function Training() {
                             {pct}<span style={{ fontSize: 22, fontWeight: 700 }}>%</span>
                           </div>
                           <ModelPhrase label={t("practice.modelLabel")} model={result.correct_phrase} said={result.transcript} />
+                          {result.note && <p className="tr-note">{result.note}</p>}
+                          {result.via !== "gate" && typeof result.natural === "number" && (
+                            <p className="tr-natural">{t("practice.naturalLabel")} · {result.natural}/10</p>
+                          )}
                           {!experienced && <p className="tr-hint tr-hint-swipe">{t("practice.hintSwipeNext")}</p>}
                         </div>
                       ) : (
@@ -615,7 +679,7 @@ export default function Training() {
                               {(speech.listening || nativeListening) ? t("practice.micListening") : rec.recording ? t("practice.micRecording") : t("practice.micChecking")}
                             </p>
                           ) : !experienced ? (
-                            <p className="tr-hint">{t("practice.hintTapMic")}</p>
+                            <p className="tr-hint">{t("practice.hintTapMic")} · {t("practice.hintSwipe")}</p>
                           ) : null}
                         </div>
                       )
@@ -623,7 +687,7 @@ export default function Training() {
 
                     {/* Non-AI: a one-time hint to tap-flip. */}
                     {!canVoice && !handsFree && !experienced && (
-                      <p className="tr-hint front">{t("practice.hintTapFlip")}</p>
+                      <p className="tr-hint front">{t("practice.hintTapFlip")} · {t("practice.hintSwipe")}</p>
                     )}
                   </>
                 ) : (
@@ -641,6 +705,10 @@ export default function Training() {
                               {pct}<span style={{ fontSize: 22, fontWeight: 700 }}>%</span>
                             </div>
                             <ModelPhrase label={t("practice.modelLabel")} model={result.correct_phrase} said={result.transcript} />
+                            {result.note && <p className="tr-note">{result.note}</p>}
+                            {result.via !== "gate" && typeof result.natural === "number" && (
+                              <p className="tr-natural">{t("practice.naturalLabel")} · {result.natural}/10</p>
+                            )}
                             {!experienced && <p className="tr-hint tr-hint-swipe">{t("practice.hintSwipeNext")}</p>}
                           </div>
                         ) : (

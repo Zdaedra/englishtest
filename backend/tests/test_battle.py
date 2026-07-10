@@ -103,6 +103,28 @@ def test_corpus_all_scope_spans_whole_catalog_even_untouched(make_user):
     assert {x["srs_status"] for x in everything} == {"new"}
 
 
+def test_corpus_flags_due_phrases_for_the_widget(make_user):
+    """The lock-screen widget leads with what's slipping — so /corpus marks each
+    phrase due iff its SRS next_review_at has passed. never-scheduled = not due."""
+    from datetime import datetime, timedelta, timezone
+    c = make_user(plan="ai", is_admin=True)
+    uid = c.user["id"]  # type: ignore[attr-defined]
+    bid, pids = _seed_batch("bt-due")
+    _activate(uid, bid)
+    now = datetime.now(timezone.utc)
+    with Session(engine()) as s:
+        # pids[0]: due (next_review in the past); pids[1]: not due (future); pids[2]: unscheduled
+        s.add(models.UserPhraseStat(user_id=uid, phrase_id=pids[0], batch_id=bid,
+                                    next_review_at=now - timedelta(days=1)))
+        s.add(models.UserPhraseStat(user_id=uid, phrase_id=pids[1], batch_id=bid,
+                                    next_review_at=now + timedelta(days=3)))
+        s.commit()
+    by_pid = {x["phrase_id"]: x for x in c.get("/api/battle/corpus").json()}
+    assert by_pid[pids[0]]["due"] is True
+    assert by_pid[pids[1]]["due"] is False
+    assert by_pid[pids[2]]["due"] is False        # no schedule yet → not due
+
+
 def test_corpus_all_scope_excludes_other_users_private_imports(make_user):
     a = make_user(plan="ai", is_admin=True)
     b = make_user(plan="ai")

@@ -2,10 +2,10 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { api, BatchListItem, BatchMastery } from "../api";
-import { orderedSections } from "../lib/sections";
 import { getProgress } from "../lib/progress";
-import { getPlanMode, getProfile, getStrategy, isOnboarded, manualIds, prioritySectionSlugs, setPlanMode } from "../lib/profile";
-import { buildManualTrajectory, buildTrajectory, focusBuckets } from "../lib/strategy";
+import { getPlanMode, getStrategy, isOnboarded, setPlanMode } from "../lib/profile";
+import { focusBuckets } from "../lib/strategy";
+import { buildPlan } from "../lib/plan";
 import { BatchCover } from "../ui/Art";
 import { BatchTapButton } from "../ui/BatchTapButton";
 import { useProgressVersion } from "../ui/BatchMenu";
@@ -230,34 +230,15 @@ export default function Learning() {
   }, [nav]);
 
   // The plan: every batch woven into domain-apportioned SPRINTS (the configured
-  // focus mix made visible), not grouped section-by-section. Strategy + focus
-  // buckets drive the order; the whole field is laid out ahead.
+  // focus mix made visible), not grouped section-by-section. Built by the ONE
+  // shared planner (lib/plan.ts) so the map spine, the home "Current focus" and
+  // a batch's "Урок N" are always the same order. `flat`/`domainOf` come straight
+  // from it; path_rank drag is already layered in.
   const strategy = useMemo(() => getStrategy(), [batches]);
   const buckets = useMemo(() => focusBuckets(strategy), [strategy, lang]);
-  const sectionPriority = useMemo(
-    () => prioritySectionSlugs(getProfile(), orderedSections().map((x) => x.slug)),
-    [batches]
-  );
   const planMode = getPlanMode();   // re-read every render; pv bumps on change
-  const traj = useMemo(
-    () => planMode === "manual"
-      ? buildManualTrajectory(manualIds(), strategy, batches)
-      : buildTrajectory(strategy, batches, sectionPriority),
-    [strategy, batches, sectionPriority, planMode, pv]
-  );
-  // The computed order, with any manual drag (path_rank) layered on top as a
-  // total override. Re-tuning domains clears path_rank, so the mix drives again.
-  const flat = useMemo(() => {
-    const baseIndex = new Map(traj.order.map((b, i) => [b.id, i] as const));
-    return traj.order.slice().sort((a, b) => {
-      const ra = getProgress(a.id).path_rank;
-      const rb = getProgress(b.id).path_rank;
-      const ka = ra == null ? baseIndex.get(a.id)! : ra;
-      const kb = rb == null ? baseIndex.get(b.id)! : rb;
-      if (ka !== kb) return ka - kb;
-      return baseIndex.get(a.id)! - baseIndex.get(b.id)!;
-    });
-  }, [traj, pv]);
+  const plan = useMemo(() => buildPlan(batches), [batches, planMode, pv]);
+  const flat = plan.order;
   const sprintSize = Math.max(1, strategy.sprintSize || 5);
   const sprints = useMemo(() => {
     const out: BatchListItem[][] = [];
@@ -321,11 +302,8 @@ export default function Learning() {
 
   const closed = (id: number) => !!getProgress(id).l3_passed;
 
-  // Exactly one active node: the first not-yet-closed batch on the spine.
-  const activeId = useMemo(() => {
-    for (const b of flat) if (!closed(b.id)) return b.id;
-    return null; // everything closed
-  }, [flat]);
+  // Exactly one active node: the plan's first not-yet-closed batch on the spine.
+  const activeId = plan.activeId;
 
   const stateOf = (id: number): NodeState =>
     closed(id) ? "completed" : id === activeId ? "active" : "locked";
@@ -338,7 +316,7 @@ export default function Learning() {
   const sprintMix = (items: BatchListItem[]) => {
     const counts = new Map<string, number>();
     for (const b of items) {
-      const k = traj.domainOf.get(b.id) ?? "discovery";
+      const k = plan.domainOf.get(b.id) ?? "discovery";
       counts.set(k, (counts.get(k) ?? 0) + 1);
     }
     return [...counts.entries()]
@@ -387,11 +365,15 @@ export default function Learning() {
 
   // Confidence-calibration gap: phrases swiped "known" but not produced aloud.
   const gapCount = useMemo(() => mastery.reduce((s, m) => s + (m.gap || 0), 0), [mastery]);
-  // Arena eligibility: enough learned phrases (familiar/automatic) to weave a scene.
+  // Arena eligibility: enough learned phrases to weave a scene. The backend
+  // (practice.py) counts familiar/automatic OR due — so the card must too, else
+  // a learner whose phrases are all "due to refresh" is eligible server-side but
+  // never sees the card (the feature hides from someone who has earned it).
   const learnedTotal = useMemo(
     () => mastery.reduce((s, m) => { const r = m.srs || {}; return s + (r.familiar || 0) + (r.automatic || 0); }, 0),
     [mastery]
   );
+  const arenaReady = learnedTotal >= 3 || dueTotal >= 3;
   const dueReason = (id: number): "weak" | "stale" | null => {
     if (!closed(id)) return null;
     const m = masteryById.get(id);
@@ -438,7 +420,7 @@ export default function Learning() {
 
       {/* Adaptive action-strip — "what to do now", shown ONLY when there's a real
           task (due review / confidence check). Never a standing notifications panel. */}
-      {(dueTotal > 0 || (canVoice && (gapCount > 0 || learnedTotal >= 3))) && (
+      {(dueTotal > 0 || (canVoice && (gapCount > 0 || arenaReady))) && (
         <div className="act-strip">
           {dueTotal > 0 && (
             <button className="review-due refresh-card" onClick={() => nav("/practice", { state: { review: true } })}>
@@ -455,7 +437,7 @@ export default function Learning() {
           )}
           {/* Arena — learned phrases return "in battle": one fresh LLM scene per
               round. AI plan (LLM spend) + needs ≥3 learned phrases to weave. */}
-          {canVoice && learnedTotal >= 3 && (
+          {canVoice && arenaReady && (
             <button className="review-due arena-card" onClick={() => nav("/arena")}>
               <span className="review-due-ico">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -622,7 +604,7 @@ export default function Learning() {
                   const srs = masteryById.get(b.id)?.srs || {};
                   const learned = (srs.familiar || 0) + (srs.automatic || 0);
                   const tot = b.phrase_count || 0;
-                  const variant = domVariant(traj.domainOf.get(b.id) ?? "discovery");
+                  const variant = domVariant(plan.domainOf.get(b.id) ?? "discovery");
                   const art = (
                     <>
                       <span className="mnode-art">

@@ -1,6 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { api, Me, setOnUnauthorized } from "../api";
 import { clearLocalProgress, hydrateProgress } from "../lib/progress";
+import { adoptLearnProfile, releaseLearnProfile, type UserProfile } from "../lib/profile";
+import { clearWidget } from "../lib/widget";
+import { pauseReminders } from "../lib/reminders";
 import { loadToken, setToken, haptic } from "../lib/session";
 import { useI18n, type Lang } from "../i18n";
 
@@ -32,6 +35,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Adopt the account's saved UI language (cross-device sync). sync:false so we
     // don't immediately POST the value we just received back to the server.
     if (u.ui_lang && SUPPORTED.includes(u.ui_lang)) setLang(u.ui_lang as Lang, { sync: false });
+    // Bind the learning profile (goals/strategy/plan/league) to THIS account:
+    // server copy wins; a not-yet-synced local/legacy profile is pushed up once.
+    adoptLearnProfile(u.id, (u.learn_profile as UserProfile | undefined) ?? null);
     clearLocalProgress();
     await hydrateProgress();
   }, [setLang]);
@@ -69,6 +75,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await api.logout();
     await setToken(null);
     clearLocalProgress();
+    // Account-boundary hygiene: unbind the learning profile, wipe the previous
+    // account's phrases off the lock-screen widget, and silence the daily
+    // reminder until the next login re-schedules it. (Account deletion funnels
+    // through here too.)
+    releaseLearnProfile();
+    void clearWidget();
+    void pauseReminders();
     setUser(null);
   }, []);
 

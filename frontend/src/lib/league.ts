@@ -3,6 +3,7 @@
 // gap the product sells — between correct-but-textbook phrasing and what a
 // native executive would actually say. Content is deliberately English-only
 // (it's a test OF English for B1+ users); chrome strings live in i18n.
+import { getProfile, setProfile } from "./profile";
 
 export type LeagueOption = { text: string; native?: boolean };
 export type LeagueQ = { id: string; situation: string; options: LeagueOption[] };
@@ -96,24 +97,61 @@ export type LeagueResult = {
   at: string;             // ISO
 };
 
-const KEY = "ee-league";
-const DISMISS_KEY = "ee-league-skip";
+// Tier ladder, low → high. Lets the result screen tell the learner whether they
+// GREW since last time (the whole point of retaking a placement).
+export const TIER_RANK: Record<LeagueTier, number> = {
+  functional: 0, confident: 1, sharp: 2, native: 3,
+};
 
+// Retest cadence: a placement is only meaningful to repeat once enough learning
+// has happened. 5 weeks — long enough to move a tier, short enough to stay a habit.
+export const RETEST_DAYS = 35;
+
+// Storage lives INSIDE the learning profile (lib/profile.ts) — account-scoped
+// and server-synced, so the tier follows the user across devices and can never
+// leak to another account on a shared browser. These wrappers keep the old API.
 export function getLeagueResult(): LeagueResult | null {
-  try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch { return null; }
+  return getProfile().league ?? null;
 }
 
+// The result immediately BEFORE the latest — the comparison point for the
+// "you grew" delta on the result screen. Null on the first-ever test.
+export function getLeaguePrev(): LeagueResult | null {
+  return getProfile().leaguePrev ?? null;
+}
+
+// Save a fresh result, shifting the current one into `leaguePrev` so a retake can
+// show the before→after delta. Same test each time (a STABLE placement set is
+// what makes the tiers comparable across attempts).
 export function saveLeagueResult(r: LeagueResult): void {
-  try { localStorage.setItem(KEY, JSON.stringify(r)); } catch { /* private mode */ }
+  const prev = getProfile().league;
+  setProfile({ league: r, leaguePrev: prev ?? undefined });
+}
+
+// Days since the last placement, or null if never taken.
+export function daysSinceLeague(): number | null {
+  const at = getProfile().league?.at;
+  if (!at) return null;
+  const ms = Date.now() - new Date(at).getTime();
+  return ms >= 0 ? Math.floor(ms / 86_400_000) : 0;
+}
+
+// The home "retest your league" nudge fires once a result exists AND it has gone
+// stale (≥ RETEST_DAYS). Distinct from the first-run entry card (which shows only
+// when NO result exists), so the two are never on screen together.
+export function leagueRetestDue(): boolean {
+  const d = daysSinceLeague();
+  return d != null && d >= RETEST_DAYS;
 }
 
 // The home entry card retires when the test is DONE or explicitly skipped —
-// it must never be a permanent fixture on the home screen.
+// it must never be a permanent fixture on the home screen. (Retake stays
+// available from the Profile screen's league row.)
 export function dismissLeagueCard(): void {
-  try { localStorage.setItem(DISMISS_KEY, "1"); } catch { /* private mode */ }
+  setProfile({ leagueSkipped: true });
 }
 
 export function leagueCardHidden(): boolean {
-  try { return !!getLeagueResult() || localStorage.getItem(DISMISS_KEY) === "1"; }
-  catch { return true; }
+  const p = getProfile();
+  return !!p.league || !!p.leagueSkipped;
 }

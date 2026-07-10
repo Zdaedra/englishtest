@@ -108,6 +108,36 @@ def test_delete_account_removes_user(make_user):
     assert c.get("/api/auth/me").status_code == 401
 
 
+def test_delete_account_wipes_private_import_live_children(make_user):
+    """A private import's phrase-keyed Live children (intent tags, semantic
+    vectors, batch tags) must die with the account — orphans could mis-attach
+    when SQLite recycles the phrase ids (audit census, 2026-07-10)."""
+    from sqlmodel import Session, select
+    from app import models
+    from app.db import engine
+    c = make_user(email="bye2@example.com", plan="ai")
+    uid = c.user["id"]  # type: ignore[attr-defined]
+    with Session(engine()) as s:
+        b = models.Batch(title="Private", slug="priv-1", status="approved", owner_id=uid)
+        s.add(b)
+        s.commit()
+        s.refresh(b)
+        p = models.Phrase(batch_id=b.id, order_index=1, anchor="a", phrase_en="X.")
+        s.add(p)
+        s.commit()
+        s.refresh(p)
+        s.add(models.PhraseIntent(phrase_id=p.id, intent="warm"))
+        s.add(models.PhraseEmbedding(phrase_id=p.id, model="m", dim=2,
+                                     text_hash="h", vector=b"\x00" * 8))
+        s.add(models.BatchIntent(batch_id=b.id, intent="warm"))
+        s.commit()
+    assert c.request("DELETE", "/api/auth/me").json() == {"ok": True}
+    with Session(engine()) as s:
+        assert s.exec(select(models.PhraseIntent)).all() == []
+        assert s.exec(select(models.PhraseEmbedding)).all() == []
+        assert s.exec(select(models.BatchIntent)).all() == []
+
+
 def test_gated_endpoint_without_token_is_401(client):
     # /api/batches is not in the public set -> middleware rejects with 401
     assert client.get("/api/batches").status_code == 401

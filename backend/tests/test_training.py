@@ -133,6 +133,22 @@ def test_answer_text_then_confirm(make_user):
     assert conf.status_code == 200, conf.text
 
 
+def test_answer_text_returns_hybrid_feedback(make_user):
+    """F5: the answer endpoint surfaces the honest coaching fields (fits_task /
+    natural / note) alongside the score, from the score_answer result."""
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    pid = phrase_ids(admin, bid)[0]
+    r = admin.post("/api/training/answer-text", json={
+        "session_id": "s1", "phrase_id": pid, "transcript": "hello there"})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["fits_task"] is True     # from the stubbed score_answer
+    assert body["natural"] == 8
+    assert body["note"] == "стаб"
+    assert body["correct_phrase"]
+
+
 def test_confirm_foreign_event_is_404(make_user):
     admin = make_user(plan="ai", is_admin=True)
     bid = commit_sample_batch(admin)

@@ -655,16 +655,6 @@ a { color: inherit; text-decoration: none; }
 }
 .bm-input:focus { border-color: var(--map-green); }
 .bm-input::-webkit-search-cancel-button { -webkit-appearance: none; }
-.bm-play {
-  margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 50%;
-  border: 0; display: grid; place-items: center;
-  background: rgba(28, 140, 99, .10); color: var(--map-green);
-  -webkit-tap-highlight-color: transparent;
-}
-.bm-note {
-  font-size: 0.8125rem; color: var(--map-green); background: rgba(28, 140, 99, .08);
-  border-radius: 10px; padding: 6px 10px; margin-top: 8px; width: fit-content;
-}
 
 /* Live card — ONE card, the practice-card idiom verbatim: the same 38px glass
    face and the same 76px liquid-glass mic. No labels, no action rows. The live
@@ -707,6 +697,25 @@ a { color: inherit; text-decoration: none; }
   color: var(--text-2); overflow-wrap: anywhere;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;
 }
+/* Editable moment — dictation lands here AND you can tap in to type it (you can't
+   always speak out loud in a meeting). A textarea that auto-grows with the text
+   (JS sets height; rests at one 54px line, capped ~240px then scrolls inside) so
+   the WHOLE typed/dictated moment stays visible. Same bordered idiom as .bm-input;
+   font-size is floored at 16px so iOS never zooms on focus (whatever Dynamic Type
+   does to the rem base). */
+.lv-card .lv-moment-field {
+  display: block; width: 100%; box-sizing: border-box; margin: 0;
+  min-height: 54px; max-height: 240px; padding: 14px 16px;
+  resize: none; overflow-y: auto;
+  border: 1px solid var(--hairline); border-radius: 16px;
+  background: var(--card); color: var(--text);
+  font-family: inherit; font-weight: inherit; font-size: max(16px, 1.0625rem);
+  font-style: italic; line-height: 1.4; text-align: center;
+  outline: none; -webkit-appearance: none; appearance: none;
+  box-shadow: 0 2px 10px rgba(17, 17, 17, .04);
+}
+.lv-card .lv-moment-field::placeholder { color: var(--faint); font-style: normal; }
+.lv-card .lv-moment-field:focus { border-color: var(--map-green); }
 /* Intent chips — the ranked conversational moves; tap one to re-pick the same
    moment under that move. The active chip = the move the picks answer. */
 .lv-intents { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 2px 0; }
@@ -724,8 +733,6 @@ a { color: inherit; text-decoration: none; }
   margin: 2px 0 0; font-size: clamp(22px, 6vw, 28px); font-weight: 650; line-height: 1.22;
   letter-spacing: -.01em; color: var(--accent);
 }
-.lv-meta { display: flex; align-items: center; justify-content: center; gap: 8px; }
-.lv-meta .bm-play { margin-left: 0; }
 .lv-gloss { font-size: 0.9375rem; color: var(--text-2); }
 .lv-more { margin: 4px 0 0; font-size: 0.8125rem; font-weight: 600; color: var(--faint); }
 .lv-warn { margin: 6px 0 0; font-size: 0.8125rem; color: #A05A00; }
@@ -741,15 +748,12 @@ a { color: inherit; text-decoration: none; }
 .lv-alt-phrase { font-size: 1rem; font-weight: 600; color: var(--text); }
 .lv-alt-gloss { font-size: 0.8125rem; color: var(--text-2); }
 
-/* Mic zone — the practice-card lens + one quiet label. For AI, a "speak OR type"
-   row: the field takes most of the width, the mic sits inline at its trailing
-   edge (you can't always talk out loud in a meeting). */
+/* Mic zone — the practice-card lens + one quiet label. The mic is centered and
+   big (76px), exactly like the practice card; the moment is typed/dictated into
+   the .lv-moment-field at the top of the card body, not here. */
 .lv-mic-zone { flex: none; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 12px; }
 .lv-mic { width: 76px; height: 76px; }
 .lv-mic-label { margin: 0; text-align: center; font-size: 0.875rem; font-weight: 600; color: var(--muted); }
-.lv-ai-entry { width: 100%; display: flex; align-items: center; gap: 10px; }
-.lv-ai-entry .lv-type { flex: 1; min-width: 0; box-sizing: border-box; }
-.lv-mic-sm { width: 48px; height: 48px; flex: none; }
 
 /* Non-AI: the mic's place holds the search input (free local matching). */
 .lv-input-zone { width: 100%; display: flex; flex-direction: column; gap: 8px; padding-top: 12px; }
@@ -765,6 +769,17 @@ a { color: inherit; text-decoration: none; }
 }
 .league-note, .league-score { font-size: 0.8125rem; color: var(--faint); margin: 0 0 24px; }
 .league-start { min-width: 220px; }
+/* Retake delta — did you grow since last placement? */
+.lg-delta {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 4px;
+  margin: 2px auto 18px; padding: 10px 18px; border-radius: 16px;
+  background: var(--card); border: 1px solid var(--hairline);
+}
+.lg-delta-badge { font-size: 0.9375rem; font-weight: 700; }
+.lg-delta-up .lg-delta-badge { color: var(--map-green); }
+.lg-delta-same .lg-delta-badge { color: var(--bronze-ink); }
+.lg-delta-down .lg-delta-badge { color: var(--text-2); }
+.lg-delta-wasnow { font-size: 0.8125rem; color: var(--faint); }
 .league-count { font-size: 0.75rem; font-weight: 700; letter-spacing: .1em; color: var(--faint); margin: 6px 0 14px; }
 .league-situation { font-size: 1.0625rem; line-height: 1.45; font-weight: 600; margin: 0 0 6px; }
 .league-ask { font-size: 0.8125rem; color: var(--faint); margin: 0 0 14px; }
@@ -843,6 +858,9 @@ a { color: inherit; text-decoration: none; }
 .review-due-go { color: var(--faint); flex: 0 0 auto; }
 /* Confidence-check card reuses .review-due but with the bronze "insight" tint. */
 .calib-card .review-due-ico { background: var(--bronze-soft); color: var(--bronze-ink); }
+/* Moment-of-the-day card reuses .review-due with the Live green accent — it
+   comes from the Live surface, so it carries the map-green mark, not the blue. */
+.live-moment .review-due-ico { background: rgba(28, 140, 99, .10); color: var(--map-green); }
 
 /* ── Liquid Glass (iOS-26 material) for the Learning cards ───────────────────
    "На повторение" / "Калибровка" / collapsed "Твои домены" become translucent
@@ -3666,6 +3684,18 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
   display: block; font-size: 0.6875rem; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 3px;
 }
+/* Trigger prompt — the mirror of situation-mode: the partner's English line is
+   the hero (what you answer), the task is the small goal beneath it. */
+.tr-trigger-line {
+  text-align: left; margin: 0;
+  font-size: calc(clamp(21px, 5vw, 27px) * var(--fit, 1)); font-weight: 650; line-height: 1.26;
+  letter-spacing: -.01em; color: var(--text); font-style: italic;
+}
+.tr-trigger-task {
+  text-align: left; margin: calc(13px * var(--fit, 1)) 0 0;
+  font-size: calc(clamp(14.5px, 3.7vw, 16px) * var(--fit, 1)); font-weight: 500; line-height: 1.4;
+  letter-spacing: 0; color: var(--text-2);
+}
 
 /* Interaction zone — a real control: ← Не знаю | [hand] | Знаю ответ →,
    instruction under the hand, deck dots under that. */
@@ -4349,6 +4379,16 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
   position: absolute; left: 0; right: 0; bottom: calc(30px + env(safe-area-inset-bottom)); z-index: 3;
 }
 .tr-hint-swipe { margin-top: 8px; opacity: .8; }   /* shown first HINT_REPS reps under the verdict */
+/* Hybrid honest feedback (F5) under the verdict: one plain RU note + a small
+   naturalness meter. Calm, secondary — the % and model phrase stay the heroes. */
+.tr-note {
+  margin: 10px 0 0; text-align: center; font-size: 0.9375rem; line-height: 1.42;
+  color: var(--text-2); max-width: 24em; margin-left: auto; margin-right: auto;
+}
+.tr-natural {
+  margin: 5px 0 0; text-align: center; font-size: 0.6875rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--faint);
+}
 
 /* ── Long-press batch context menu (bottom action-sheet) ───────────────────── */
 .bm-backdrop {
@@ -4603,3 +4643,17 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 .tune-mode { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; height: auto; width: auto; }
 .tune-mode-sub { font-size: 12px; font-weight: 400; opacity: 0.65; }
 .plan-manual-empty { margin: 18px 0; display: grid; gap: 10px; justify-items: start; }
+
+/* Onboarding — cover-art protagonist gender step + cabinet row (D3, #24) */
+.ob-gender { display: flex; flex-direction: column; gap: 14px; padding: 12px 4px; text-align: center; }
+.ob-gender-head { font-size: 1.5rem; font-weight: 700; margin: 0; color: var(--text); }
+.ob-gender-sub { font-size: 0.95rem; color: var(--text-2); margin: 0 auto; max-width: 30em; line-height: 1.45; }
+.ob-gender-opts { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+.ob-gender-opt { display: flex; align-items: center; gap: 14px; padding: 15px 16px; border-radius: 16px; border: 1.5px solid var(--border); background: var(--card); text-align: left; cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+.ob-gender-opt.sel { border-color: var(--accent); background: var(--accent-tint); }
+.ob-gender-glyph { font-size: 1.7rem; line-height: 1; width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 13px; background: var(--bg); color: var(--text); flex: 0 0 auto; }
+.ob-gender-opt.sel .ob-gender-glyph { background: var(--accent); color: #fff; }
+.ob-gender-txt { display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; }
+.ob-gender-txt b { font-size: 1.05rem; font-weight: 650; color: var(--text); }
+.ob-gender-txt span { font-size: 0.85rem; color: var(--text-2); }
+.ob-gender-tick { color: var(--accent); font-weight: 700; font-size: 1.15rem; flex: 0 0 auto; }

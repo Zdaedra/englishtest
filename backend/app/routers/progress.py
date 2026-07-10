@@ -6,6 +6,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
 from .. import access, models
@@ -121,6 +122,10 @@ def get_streak(tz_offset: int = Query(0, ge=-14 * 60, le=14 * 60),
 @router.get("/{batch_id}")
 def get_progress(batch_id: int, user_id: int = Depends(current_user_id),
                  session: Session = Depends(get_session)):
+    """Single-row progress with an empty-stub fallback (not 404). No app screen
+    hydrates through this — the client uses GET "" (listProgress) — but it's a
+    reasonable REST read and part of a tested contract (empty stub for an
+    untouched batch), so it stays."""
     bp = session.exec(select(models.BatchProgress).where(
         models.BatchProgress.user_id == user_id,
         models.BatchProgress.batch_id == batch_id)).first()
@@ -131,6 +136,18 @@ def get_progress(batch_id: int, user_id: int = Depends(current_user_id),
 def put_progress(batch_id: int, patch: ProgressPatch,
                  user_id: int = Depends(current_user_id),
                  session: Session = Depends(get_session)):
+    """AUDIT-1: two simultaneous FIRST writes for a (user, batch) both used to
+    insert (get-or-create raced) — the unique index now rejects the loser, and
+    we retry its patch once on a fresh snapshot, landing it on the winner's row."""
+    try:
+        return _put_progress(batch_id, patch, user_id, session)
+    except IntegrityError:
+        session.rollback()
+        return _put_progress(batch_id, patch, user_id, session)
+
+
+def _put_progress(batch_id: int, patch: ProgressPatch, user_id: int,
+                  session: Session):
     batch = session.get(models.Batch, batch_id)
     if not batch:
         raise HTTPException(404, "Batch not found")

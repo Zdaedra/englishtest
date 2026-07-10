@@ -14,22 +14,32 @@ Endpoints:
   client), one fast LLM call picks up to 3 lines. Learned-first: the pool ranks
   automatic > familiar > shaky > touched-new.
 
+Candidate retrieval (what the LLM actually sees), best-first degradation:
+1. SEMANTIC (both scopes): the moment's embedding ranks the scope's rows by
+   cosine similarity (app/embeddings.py — phrase vectors embed the CheckPhrase
+   trigger cues, so a RU/EN moment matches SITUATIONS, not wording; RU
+   morphology broke the keyword filter). Top _SEM_CAP go to the LLM.
+2. Fallback (no key / API error / index not seeded): the original bounded
+   pools — keyword prefilter for "all", learned-first head for "learned".
+
 Cost control (why scope="all" is not a money hole):
-- The LLM prompt is bounded REGARDLESS of scope. For "learned" the pool is small
-  (≤ _POOL_CAP, already learned-first). For "all" we keyword-PREFILTER the whole
-  catalog against the dictated moment and send only the top _ALL_CAP candidates —
-  so a 40-phrase and a 4000-phrase catalog cost the same per call.
+- The LLM prompt is bounded REGARDLESS of scope. Semantic retrieval sends only
+  _SEM_CAP lines; the fallbacks keep their old caps (_POOL_CAP / _ALL_CAP) — so
+  a 40-phrase and a 4000-phrase catalog cost the same per call. The query
+  embedding itself is noise (≈$0.0000004, LRU-cached for chip re-picks).
 - Typing (arsenal search) is a free, fully-local keyword filter — only the mic
   spends an LLM call.
 - The per-plan monthly AI-cost cap (entitlements.monthly_ai_cost_cap_usd) is the
   hard money backstop: /suggest 429s once the month's estimated spend crosses it.
 """
 import re
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
+from .. import embeddings
 from .. import intents as intents_mod
 from .. import localize, models, scoring, stt, usage
 from ..auth import current_user_id
@@ -40,8 +50,13 @@ router = APIRouter(prefix="/api/battle", tags=["battle"])
 
 _MAX_AUDIO_BYTES = 8 * 1024 * 1024   # mirrors the training STT cap
 
-_POOL_CAP = 160          # learned scope: max phrases shown to the LLM (already small)
-_ALL_CAP = 60            # "all" scope: keyword-prefiltered top-N → bounds prompt/cost
+_POOL_CAP = 160          # learned scope FALLBACK: max phrases shown to the LLM
+_ALL_CAP = 60            # "all" scope FALLBACK: keyword-prefiltered top-N
+# Semantic retrieval (both scopes): cosine top-N → LLM. Trigger-based vectors are
+# sharp (the true line is ~top-5), so 20 keeps 2-3× recall slack for STT noise and
+# intent re-picks while halving the prompt; below ~15, a cosine miss becomes
+# unrecoverable — the LLM can't pick a line it never saw.
+_SEM_CAP = 20
 _CORPUS_ALL_CAP = 1500   # "all" corpus payload ceiling (client caches it; text only)
 _MAX_PICKS = 3
 _MIN_CHARS = 4
@@ -154,7 +169,10 @@ def _keyword_pool(rows, situation: str, cap: int):
     return (hits + rest)[:cap]
 
 
-def _row_dict(p, st, b, lng: str) -> dict:
+def _row_dict(p, st, b, lng: str, now=None) -> dict:
+    nr = st.next_review_at if st else None
+    if nr is not None and nr.tzinfo is None:
+        nr = nr.replace(tzinfo=timezone.utc)
     return {
         "phrase_id": p.id,
         "batch_id": p.batch_id,
@@ -165,6 +183,9 @@ def _row_dict(p, st, b, lng: str) -> dict:
         "situation_ru": p.situation_ru or "",
         "srs_status": (st.srs_status if st else "new"),
         "attempts": (st.attempts if st else 0),
+        # SRS due flag — the lock-screen widget shows/leads with what's slipping,
+        # and how many. now is passed in so a whole corpus shares one clock.
+        "due": bool(nr is not None and now is not None and nr <= now),
     }
 
 
@@ -179,7 +200,8 @@ def corpus(lang: str = "", scope: str = "learned",
     rows = _sort_learned_first(_rows_for_scope(session, user_id, scope))
     if scope == "all":
         rows = rows[:_CORPUS_ALL_CAP]
-    return [_row_dict(p, st, b, lng) for p, st, b in rows]
+    now = datetime.now(timezone.utc)
+    return [_row_dict(p, st, b, lng, now) for p, st, b in rows]
 
 
 class SuggestIn(BaseModel):
@@ -219,10 +241,16 @@ def _run_pick(session: Session, user_id: int, scope: str, situation: str,
         pmap = intents_mod.phrase_intent_map(session, {p.id for p, _st, _b in rows})
         bmap = intents_mod.batch_intent_map(session, {b.id for _p, _st, b in rows})
         rows = intents_mod.filter_rows(rows, intent, pmap, bmap)
-    if scope == "all":
-        pool = _keyword_pool(rows, situation, _ALL_CAP)      # bounded prompt
-    else:
-        pool = _sort_learned_first(rows)[:_POOL_CAP]
+    # Semantic retrieval first (both scopes); learned-first order is the
+    # deterministic tail/tiebreak. None → keyword fallbacks (see module doc).
+    pool = None
+    qvec = embeddings.embed_query(situation[:_MAX_CHARS])
+    if qvec is not None:
+        pool = embeddings.semantic_pool(
+            session, _sort_learned_first(rows), qvec, _SEM_CAP)
+    if pool is None:
+        pool = _keyword_pool(rows, situation, _ALL_CAP) if scope == "all" \
+            else _sort_learned_first(rows)[:_POOL_CAP]
     if not pool:
         return {"via": "empty", "picks": [], "intents": []}
 
@@ -250,7 +278,27 @@ def _run_pick(session: Session, user_id: int, scope: str, situation: str,
 
     if res["via"] == "llm":
         usage.accrue(session, user_id, "battle")
+        if picks:
+            _record_live_demand(session, user_id, picks[0])
     return {"via": res["via"], "picks": picks, "intents": res.get("intents", [])}
+
+
+def _record_live_demand(session: Session, user_id: int, best: dict) -> None:
+    """The learner needed the TOP line (best) in a real conversation — they asked
+    the suffleur instead of recalling it, the strongest "I need this" signal
+    there is. Stamp it on that phrase's stat (get-or-create): never touches
+    avg_score/srs (no recall attempt was made), only the demand fields the deck's
+    _live_factor reads. Creating the row for an unstudied "all"-scope phrase pulls
+    a real-world need into the arsenal. Rides the caller's transaction."""
+    pid, bid = best["phrase_id"], best["batch_id"]
+    st = session.exec(select(models.UserPhraseStat).where(
+        models.UserPhraseStat.user_id == user_id,
+        models.UserPhraseStat.phrase_id == pid)).first()
+    if st is None:
+        st = models.UserPhraseStat(user_id=user_id, phrase_id=pid, batch_id=bid)
+    st.live_requested_at = datetime.now(timezone.utc)
+    st.live_request_count = (st.live_request_count or 0) + 1
+    session.add(st)
 
 
 @router.post("/suggest")

@@ -84,6 +84,14 @@ export async function disableReminders(): Promise<void> {
   try { await LocalNotifications.cancel({ notifications: [{ id: NOTIF_ID }] }); } catch { /* none scheduled */ }
 }
 
+/** Logout: cancel the scheduled daily WITHOUT dropping the opt-in — a signed-out
+ *  device must not keep nudging "N phrases are slipping", but the same account's
+ *  next login re-schedules automatically (Library's home-open sync). */
+export async function pauseReminders(): Promise<void> {
+  if (!isNative()) return;
+  try { await LocalNotifications.cancel({ notifications: [{ id: NOTIF_ID }] }); } catch { /* none scheduled */ }
+}
+
 /** Change the daily time and reschedule (only takes effect while enabled). */
 export async function setReminderTime(t: string): Promise<void> {
   try { localStorage.setItem(TIME_KEY, t); } catch { /* private mode */ }

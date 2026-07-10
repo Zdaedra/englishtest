@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { api } from "../api";
-import { setProgress } from "../lib/progress";
+import { runBatchAction } from "../lib/batchActions";
 import heroProblem from "../assets/onboarding-problem.png";
 import heroRoute from "../assets/onboarding-route.png";
 import heroBrain from "../assets/onboarding-brain.png";
@@ -15,6 +15,7 @@ const SLIDES = [
   { kind: "problem" },
   { kind: "why" },
   { kind: "method" },
+  { kind: "gender" },
 ] as const;
 
 // Thin-stroke inline icons (match the app's icon language).
@@ -53,18 +54,23 @@ export default function OnboardingFlow({ onDone }: { onDone: () => void }) {
   const { t, tx } = useI18n();
   const [i, setI] = useState(0);
   const [busy, setBusy] = useState(false);
+  const [gender, setGender] = useState<string | null>(null);
   const last = i === SLIDES.length - 1;
 
   const next = async () => {
     if (!last) { setI(i + 1); return; }
     setBusy(true);
     try {
+      if (gender) await api.setHeroGender(gender).catch(() => {});
       const batches = await api.listBatches().catch(() => []);
-      // Activate a batch the user can actually open: the free showcase batch first,
-      // else any unlocked one. Avoids putting a locked (paid) batch into the
-      // learner's Current Focus / active deck.
-      const pick = batches.find((b) => b.is_free) ?? batches.find((b) => !b.locked) ?? batches[0];
-      if (pick) setProgress(pick.id, { activated: true });
+      // Activate a batch the user can actually open: the free showcase batch
+      // first, else any unlocked one — and NEVER a locked fallback (the server
+      // would 403 it). runBatchAction is the rollback-safe path (AUDIT-2): if
+      // the server refuses or the network drops, the local cache is reverted,
+      // so onboarding can't leave a ghost "active" batch the deck can't serve.
+      const pick = batches.find((b) => b.is_free && !b.locked)
+        ?? batches.find((b) => !b.locked);
+      if (pick) await runBatchAction(pick.id, "addActive").catch(() => {});
     } catch { /* non-critical */ }
     onDone();
   };
@@ -289,10 +295,34 @@ export default function OnboardingFlow({ onDone }: { onDone: () => void }) {
             </div>
           </div>
         </div>
+      ) : s.kind === "gender" ? (
+        <div className="ob-gender">
+          <h1 className="ob-gender-head">{t("ob.gender.head")}</h1>
+          <p className="ob-gender-sub">{t("ob.gender.sub")}</p>
+          <div className="ob-gender-opts">
+            {([
+              ["male", "♂", "ob.gender.maleSub"],
+              ["female", "♀", "ob.gender.femaleSub"],
+              ["mixed", "⚥", "ob.gender.mixedSub"],
+            ] as const).map(([code, glyph, sub]) => (
+              <button key={code} type="button"
+                className={`ob-gender-opt${gender === code ? " sel" : ""}`}
+                aria-pressed={gender === code}
+                onClick={() => setGender(code)}>
+                <span className="ob-gender-glyph" aria-hidden>{glyph}</span>
+                <span className="ob-gender-txt">
+                  <b>{t(`gender.${code}`)}</b>
+                  <span>{t(sub)}</span>
+                </span>
+                {gender === code && <span className="ob-gender-tick" aria-hidden>✓</span>}
+              </button>
+            ))}
+          </div>
+        </div>
       ) : null}
 
       <div className="ob-foot">
-        <button className="ob-cta" onClick={next} disabled={busy}>
+        <button className="ob-cta" onClick={next} disabled={busy || (last && !gender)}>
           {busy ? "…" : last ? t("ob.cta.start") : t("ob.cta.next")}
         </button>
         {!last && <button className="ob-skip" type="button" onClick={onDone}>{t("ob.skip")}</button>}

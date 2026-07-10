@@ -57,6 +57,8 @@ export type BatchMastery = {
   due?: number; next_review_at?: string | null; srs?: Record<string, number>;
   // Confidence-calibration gap: swiped "known" but never produced aloud (or weakly).
   gap?: number;
+  // Moment of the day: phrases asked for in Live recently (real-conversation need).
+  live?: number;
 };
 export type StreakInfo = {
   streak: number; today_done: boolean; freeze_available: boolean;
@@ -81,6 +83,7 @@ export type BattleItem = {
   phrase_id: number; batch_id: number; batch_title: string;
   anchor: string; phrase_en: string; gloss_ru: string; situation_ru: string;
   srs_status: string; attempts: number;
+  due?: boolean;   // SRS says this one is slipping — the widget leads with these
 };
 export type BattlePick = {
   phrase_id: number; batch_id: number; batch_title: string;
@@ -108,6 +111,9 @@ export type AnswerResult = {
   event_id: number; phrase_id: number; anchor: string; transcript: string;
   score: number; correct_phrase: string; feedback: string; via: string;
   avg_score: number | null; attempts: number; auto_success: boolean;
+  // Hybrid honest feedback (F5): did the said phrase fit the task, how natural it
+  // sounded, and a short RU note (incl. "не расслышал" on STT garbage).
+  note?: string; fits_task?: boolean | null; natural?: number | null;
 };
 export type SessionSummary = {
   session_id: string; cards_total: number; cards_known: number; cards_unknown: number;
@@ -131,7 +137,7 @@ export type Entitlements = {
   voice_answer: boolean; server_stt: boolean; ai_coach: boolean; import: boolean;
   max_active_batches: number | null; scored_per_day: number;
 };
-export type Me = { id: number; email: string; name: string; plan: string; is_admin?: boolean; ui_lang?: string | null; entitlements?: Entitlements; email_verified?: boolean; token?: string };
+export type Me = { id: number; email: string; name: string; plan: string; is_admin?: boolean; ui_lang?: string | null; hero_gender?: string | null; learn_profile?: Record<string, unknown> | null; entitlements?: Entitlements; email_verified?: boolean; token?: string };
 
 // Web: same-origin, "" → relative paths, cookie auth. Native (Capacitor): the
 // webview origin is capacitor://localhost, so the API needs an absolute base and
@@ -289,13 +295,14 @@ export const api = {
       body: JSON.stringify({ answers }),
     }).then(j<{ tier: string; avg: number; results: LeagueGrade[] }>),
   // --- Swipe-deck Training ---
-  getDeck: (batchIds: number[], opts?: { maintenanceIds?: number[]; limit?: number; exclude?: number[]; dueOnly?: boolean; gapOnly?: boolean }) => {
+  getDeck: (batchIds: number[], opts?: { maintenanceIds?: number[]; limit?: number; exclude?: number[]; dueOnly?: boolean; gapOnly?: boolean; liveOnly?: boolean }) => {
     const q = new URLSearchParams({ batch_ids: batchIds.join(",") });
     if (opts?.maintenanceIds?.length) q.set("maintenance_ids", opts.maintenanceIds.join(","));
     if (opts?.limit) q.set("limit", String(opts.limit));
     if (opts?.exclude?.length) q.set("exclude", opts.exclude.join(","));
     if (opts?.dueOnly) q.set("due_only", "1");
     if (opts?.gapOnly) q.set("gap_only", "1");
+    if (opts?.liveOnly) q.set("live_only", "1");
     q.set("lang", clang());
     return apiFetch(`/api/training/deck?${q}`).then(j<DeckCard[]>);
   },
@@ -379,5 +386,18 @@ export const api = {
     apiFetch("/api/auth/ui-lang", {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ lang }),
+    }).then((r) => r.ok).catch(() => false),
+  // Cover-art protagonist preference (male | female | mixed). Fire-and-forget.
+  setHeroGender: (gender: string) =>
+    apiFetch("/api/auth/hero-gender", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ gender }),
+    }).then((r) => r.ok).catch(() => false),
+  // Learning-profile blob sync (goals/strategy/plan/league; lib/profile.ts owns
+  // the shape). Fire-and-forget, last write wins.
+  setLearnProfile: (profile: Record<string, unknown>) =>
+    apiFetch("/api/auth/learn-profile", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ profile }),
     }).then((r) => r.ok).catch(() => false),
 };

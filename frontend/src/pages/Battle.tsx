@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, BattleItem, BattlePick } from "../api";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 import { useRecorder, Recording } from "../audio/useRecorder";
 import { syncWidget } from "../lib/widget";
-import { IconMic, IconPlay } from "../ui/icons";
+import { IconMic } from "../ui/icons";
 
 // Live mode: the user is IN a live conversation and needs the right line NOW.
 // The screen is ONE card (the practice-card idiom verbatim) and nothing else:
@@ -77,7 +77,6 @@ export default function Battle() {
   });
   const [corpus, setCorpus] = useState<BattleItem[]>(() => loadCache(uid, scope));
   const [search, setSearch] = useState("");   // non-AI card input (free local match)
-  const [typed, setTyped] = useState("");     // AI typed-moment input (can't always speak)
   const [expanded, setExpanded] = useState(false);          // card unfolded to alts
   const [mic, setMic] = useState<MicState>("idle");
   const [moment, setMoment] = useState("");   // the dictated moment (server `heard`)
@@ -102,6 +101,16 @@ export default function Battle() {
   };
 
   useEffect(() => { try { localStorage.setItem(SCOPE_KEY(uid), scope); } catch { /* private */ } }, [scope, uid]);
+
+  // The moment field grows with its content — the WHOLE typed or dictated moment
+  // must stay readable (it's what the picks answer). ~9 lines, then inner scroll.
+  const momentRef = useRef<HTMLTextAreaElement | null>(null);
+  useLayoutEffect(() => {
+    const el = momentRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight + 2, 240)}px`;
+  }, [moment]);
 
   // Cache-first, then refresh — usable the instant it opens, and fully offline.
   // Refetch when the scope flips; the widget only ever mirrors the LEARNED set.
@@ -167,12 +176,11 @@ export default function Battle() {
   // AI pick as the mic — just the text /suggest endpoint (no STT, no audio, so no
   // voice consent needed and it's cheaper). Reuses the whole result rendering.
   const runSuggestText = async () => {
-    const q = typed.trim();
+    const q = moment.trim();
     if (!q || mic !== "idle") return;
     console.log("[LV] suggest-text →", scope, JSON.stringify(q));
     setAi(null); setNote(""); setExpanded(false); setIntents([]); setIntentSel("");
-    setTyped("");                               // moment now lives on the card
-    setMoment(q); setMic("thinking");
+    setMoment(q); setMic("thinking");           // the moment already lives in the field
     try {
       const r = await api.battleSuggest(q, scope);
       console.log("[LV] suggest-text ←", r.via, r.picks.length, r.intents);
@@ -268,15 +276,42 @@ export default function Battle() {
       {/* THE card — one surface, the practice-card idiom. Nothing below it. */}
       <div className={`lv-card${mic !== "idle" ? " live" : ""}`} onClick={cardTap}>
         <div className="lv-body">
+          {/* AI · the moment lives in an editable field at the top: dictate it with
+              the centered mic below, OR tap here to type it (you can't always speak
+              out loud in a meeting). Dictation lands in this same field. */}
+          {isAI && (
+            <textarea
+              ref={momentRef}
+              className="lv-moment-field"
+              rows={1}
+              enterKeyHint="send"
+              placeholder={t("battle.typeMoment")}
+              value={moment}
+              onChange={(e) => setMoment(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();           // the moment is one message, not multiline prose
+                  if (moment.trim()) {
+                    e.currentTarget.blur();
+                    void runSuggestText();
+                  }
+                }
+              }}
+              onClick={(e) => e.stopPropagation()}
+              // iOS: a tap on a readOnly field focuses it WITHOUT a keyboard and the
+              // field then looks dead once readOnly drops (the keyboard never returns
+              // on the next tap). Never let it sit focused mid-flight — blur, so the
+              // tap after the result is a fresh focus → keyboard opens.
+              onFocus={(e) => { if (mic !== "idle") e.currentTarget.blur(); }}
+              readOnly={mic !== "idle"}
+              aria-label={t("battle.momentHint")}
+            />
+          )}
+
           {mic === "listening" ? (
             <p className="lv-live ph">{t("battle.recHint")}</p>
-          ) : mic === "thinking" ? (
-            moment ? <p className="lv-momentq">«{moment}»</p> : null
-          ) : (
+          ) : mic === "thinking" ? null : (
             <>
-              {/* The dictated moment stays on the card after transcription —
-                  ALWAYS (with or without picks): "show me what you heard". */}
-              {moment && <p className="lv-momentq">«{moment}»</p>}
               {/* Ranked moves — tap another to re-pick for that intent. */}
               {intents.length > 0 && (
                 <div className="lv-intents" onClick={(e) => e.stopPropagation()}>
@@ -290,14 +325,10 @@ export default function Battle() {
               )}
               {best ? (
                 <>
+                  {/* Just the line + its meaning — you're mid-conversation, nothing
+                      to press, nothing to read besides what to say. */}
                   <p className="lv-best">{best.phrase_en}</p>
-                  <div className="lv-meta">
-                    <button className="bm-play" aria-label="Play" onClick={(e) => play(best.phrase_id, e)}>
-                      <IconPlay size={16} />
-                    </button>
-                    {best.gloss_ru && <span className="lv-gloss">{best.gloss_ru}</span>}
-                  </div>
-                  {"note" in best && best.note && <div className="bm-note">{best.note}</div>}
+                  {best.gloss_ru && <span className="lv-gloss">{best.gloss_ru}</span>}
                   {alts.length > 0 && !expanded && <p className="lv-more">{t("battle.moreAlts")} ⌄</p>}
                   {expanded && (
                     <div className="lv-alts">
@@ -311,10 +342,9 @@ export default function Battle() {
                     </div>
                   )}
                 </>
-              ) : !moment ? (
+              ) : (!isAI) ? (
                 <p className="lv-prompt">
-                  {isAI ? t("battle.cardPrompt")
-                    : searchToks.length ? t("battle.noResults") : t("battle.typePrompt")}
+                  {searchToks.length ? t("battle.noResults") : t("battle.typePrompt")}
                 </p>
               ) : null}
               {note && <p className="lv-warn">{note}</p>}
@@ -324,35 +354,16 @@ export default function Battle() {
 
         {isAI ? (
           <div className="lv-mic-zone" onClick={(e) => e.stopPropagation()}>
-            {/* Speak OR type the moment — you can't always talk out loud in a
-                meeting. The mic dictates; the field takes the keyboard. Both feed
-                the same card via the same AI pick (typing skips STT + consent). */}
-            <div className="lv-ai-entry">
-              <input
-                className="bm-input lv-type"
-                type="text"
-                enterKeyHint="send"
-                placeholder={t("battle.typeMoment")}
-                value={typed}
-                onChange={(e) => setTyped(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && typed.trim()) {
-                    e.preventDefault();
-                    e.currentTarget.blur();
-                    void runSuggestText();
-                  }
-                }}
-                disabled={mic !== "idle"}
-              />
-              <button
-                className={`tr-mic-glass lv-mic lv-mic-sm${mic === "listening" ? " on" : ""}`}
-                onClick={() => { void micTap(); }}
-                disabled={mic === "thinking"}
-                aria-label={t("battle.micHint")}
-              >
-                {mic === "thinking" ? <span className="tr-mic-dots">…</span> : <IconMic size={22} />}
-              </button>
-            </div>
+            {/* Mic centered, like the practice card. Tap to dictate the moment; or
+                tap the field above to type it. Both feed the same AI pick. */}
+            <button
+              className={`tr-mic-glass lv-mic${mic === "listening" ? " on" : ""}`}
+              onClick={() => { void micTap(); }}
+              disabled={mic === "thinking"}
+              aria-label={t("battle.micHint")}
+            >
+              {mic === "thinking" ? <span className="tr-mic-dots">…</span> : <IconMic size={28} />}
+            </button>
             <p className="lv-mic-label">
               {mic === "listening" ? t("battle.tapStop")
                 : mic === "thinking" ? t("battle.aiThinking")

@@ -7,13 +7,13 @@ import { BatchTapButton } from "../ui/BatchTapButton";
 import { useProgressVersion } from "../ui/BatchMenu";
 import { IconSearch, IconPlay } from "../ui/icons";
 import { orderedSections, sectionName } from "../lib/sections";
-import { buildSprint } from "../lib/strategy";
+import { planFocus } from "../lib/plan";
 import { getProgress, isActive } from "../lib/progress";
-import { addManual, getStrategy, isInManual, recordVisit, removeManual } from "../lib/profile";
+import { addManual, isInManual, removeManual } from "../lib/profile";
 import { useTeach } from "../tutorial/teach";
 import { getAvatar } from "../lib/avatar";
 import { syncReviewReminder } from "../lib/reminders";
-import { leagueCardHidden, dismissLeagueCard } from "../lib/league";
+import { leagueCardHidden, dismissLeagueCard, leagueRetestDue, daysSinceLeague } from "../lib/league";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 
@@ -34,17 +34,23 @@ export default function Library() {
     .split(/[\s@._-]+/).filter(Boolean).slice(0, 2).map((s) => s[0]?.toUpperCase()).join("")) || "·";
   const [batches, setBatches] = useState<BatchListItem[]>([]);
   const [err, setErr] = useState("");
-  // Work streak: server truth (days actually trained, with a freeze bridge);
-  // the localStorage visit counter is only the instant fallback while it loads.
-  const [streak, setStreak] = useState(() => recordVisit());
+  // Work streak: server truth only (days actually trained, with a freeze
+  // bridge). Starts at 0 for a render tick — better than flashing the retired
+  // local visit-counter's number, which measured opens, not work.
+  const [streak, setStreak] = useState(0);
   // Spaced-repetition: how many practiced phrases are due to refresh right now.
   const [dueCount, setDueCount] = useState(0);
+  // Moment of the day: how many phrases the user asked Live for recently.
+  const [liveCount, setLiveCount] = useState(0);
   const [mastery, setMastery] = useState<BatchMastery[]>([]);
   // "Your week" rollup — shown once there's a meaningful amount of work in it.
   const [weekly, setWeekly] = useState<WeeklySummary | null>(null);
   // League placement test — the entry card retires after the first run or an
   // explicit skip; it must never squat on the home screen.
   const [leagueHidden, setLeagueHidden] = useState(() => leagueCardHidden());
+  // League loop: once a result is ≥5 weeks old, nudge a retake to measure growth.
+  const retestDue = leagueRetestDue();
+  const retestDays = daysSinceLeague();
   const { tip } = useTeach();
   useEffect(() => { if (dueCount > 0) tip("refresh"); }, [dueCount, tip]);
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -62,6 +68,7 @@ export default function Library() {
         setMastery(ms);
         const due = ms.reduce((s, m) => s + (m.due || 0), 0);
         setDueCount(due);
+        setLiveCount(ms.reduce((s, m) => s + (m.live || 0), 0));
         // Re-sync tomorrow's reminder body with the live due-count.
         void syncReviewReminder(due);
       })
@@ -151,12 +158,10 @@ export default function Library() {
 
   // Current Focus = the active batch of the learner's sprint (or, if nothing
   // started, the most recent collection).
-  const focus = useMemo(() => {
-    if (!batches.length) return undefined;
-    const sprint = buildSprint(getStrategy(), batches, isClosed);
-    if (sprint[0]) return sprint[0];
-    return [...batches].sort((a, b) => b.created_at.localeCompare(a.created_at))[0];
-  }, [batches]);
+  // The home hero = the plan's active node (same order as the map), skipping
+  // locked content so it never plays an empty session. pv re-reads on progress
+  // change so a just-completed focus advances. See lib/plan.ts.
+  const focus = useMemo(() => planFocus(batches), [batches, pv]);
 
   const needle = q.trim().toLowerCase();
   const allOrdered = useMemo(
@@ -187,6 +192,9 @@ export default function Library() {
     if (!focus) return;
     try {
       const b = await api.getBatch(focus.id);
+      // Locked batches come back with phrases:[] — never start an empty player;
+      // the batch page carries the unlock CTA instead.
+      if (!b.phrases.length) { nav(`/batch/${focus.id}`); return; }
       player.playBatch(b, { mode: "listening", order: "full_random" });
       nav("/play");
     } catch (e) {
@@ -342,6 +350,46 @@ export default function Library() {
               <span className="review-due-text">
                 <span className="review-due-title">{t("review.dueTitle")}</span>
                 <span className="review-due-sub">{t("review.dueSub", { n: dueCount })}</span>
+              </span>
+              <span className="review-due-go">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              </span>
+            </button>
+          )}
+
+          {/* Moment of the day — the phrases you reached for in a real Live
+              conversation, brought back to drill (Live→SRS loop made visible).
+              Green accent = the Live surface it comes from. */}
+          {liveCount > 0 && (
+            <button className="review-due live-moment" onClick={() => nav("/practice", { state: { live: true } })}>
+              <span className="review-due-ico">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
+                </svg>
+              </span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("live.momentTitle")}</span>
+                <span className="review-due-sub">{t("live.momentSub", { n: liveCount })}</span>
+              </span>
+              <span className="review-due-go">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              </span>
+            </button>
+          )}
+
+          {/* League retest — once a result has gone stale (≥5 weeks), nudge a
+              retake so the learner can SEE they grew. Mutually exclusive with the
+              first-run entry card below (that needs no result; this needs one). */}
+          {retestDue && (
+            <button className="review-due league-entry" onClick={() => nav("/league")}>
+              <span className="review-due-ico">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 21h8M12 17v4M6 3h12v6a6 6 0 01-12 0V3z" /><path d="M6 5H3v2a4 4 0 004 4M18 5h3v2a4 4 0 01-4 4" />
+                </svg>
+              </span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("league.retestTitle")}</span>
+                <span className="review-due-sub">{t("league.retestSub", { n: Math.max(1, Math.round((retestDays ?? 35) / 7)) })}</span>
               </span>
               <span className="review-due-go">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>

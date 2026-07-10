@@ -9,6 +9,7 @@ import { isNative } from "../lib/session";
 import { nativeRecognize } from "../audio/nativeStt";
 import {
   LEAGUE_QS, LeagueOption, LeagueTier, leagueOf, saveLeagueResult,
+  getLeaguePrev, TIER_RANK,
 } from "../lib/league";
 import { leagueAdjust } from "../lib/strategy";
 import { getStrategy, setStrategy } from "../lib/profile";
@@ -124,6 +125,14 @@ export default function League() {
     ? (grade?.results.filter((x) => x.score < 8).length ?? 0)
     : quizMissed.length;
 
+  // Retake delta: the result BEFORE this one (saveLeagueResult shifted it to
+  // leaguePrev), so we can tell the learner whether they grew. Read once the
+  // result is in — null on the first-ever placement (no comparison yet).
+  const prev = useMemo(() => (done ? getLeaguePrev() : null), [done]);
+  const deltaDir = prev
+    ? Math.sign(TIER_RANK[tier] - TIER_RANK[prev.tier]) as -1 | 0 | 1
+    : null;
+
   return (
     <div className="screen league-screen">
       <button className="back-link" onClick={() => nav("/")}>
@@ -211,6 +220,17 @@ export default function League() {
           <p className="league-eyebrow">{t("league.resultEyebrow")}</p>
           <h1 className="league-tier">{t(`league.name.${tier}`)}</h1>
           <p className="league-tier-sub">{t(`league.desc.${tier}`)}</p>
+          {/* Retake delta: did you grow since last time? The whole reason to retest. */}
+          {prev && deltaDir != null && (
+            <div className={`lg-delta lg-delta-${deltaDir > 0 ? "up" : deltaDir < 0 ? "down" : "same"}`}>
+              <span className="lg-delta-badge">
+                {deltaDir > 0 ? t("league.delta.up") : deltaDir < 0 ? t("league.delta.down") : t("league.delta.same")}
+              </span>
+              <span className="lg-delta-wasnow">
+                {t("league.wasNow", { prev: t(`league.name.${prev.tier}`), now: t(`league.name.${tier}`) })}
+              </span>
+            </div>
+          )}
           {mode === "write" && grade ? (
             <>
               <p className="league-score">{t("league.avgLine", { a: grade.avg })}</p>

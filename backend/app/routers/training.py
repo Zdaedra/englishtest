@@ -11,9 +11,10 @@ from datetime import datetime, timedelta, timezone
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from pydantic import BaseModel
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from .. import access, entitlements, localize, models, scoring, srs, stt, usage
+from .. import access, cover, embeddings, entitlements, localize, models, scoring, srs, stt, usage
 from ..auth import current_user_id
 from ..db import get_session
 
@@ -187,26 +188,46 @@ async def score_sequence(audio: UploadFile = File(...), batch_id: int = Form(...
 
 @router.get("/mastery")
 def mastery(user_id: int = Depends(current_user_id), session: Session = Depends(get_session)):
-    """Per-batch mastery rollup for THIS user, from their UserPhraseStat rows."""
+    """Per-batch mastery rollup for THIS user, from their UserPhraseStat rows.
+
+    The ACTIONABLE counts (due / gap / live) are scoped to batches the refresh
+    deck can actually serve — ACTIVATED and freemium-USABLE — so a "N to refresh"
+    card can never open an empty session (the deck draws only from the activated
+    set, minus locked). A batch the learner deactivated ("remove from path") or
+    that a plan-downgrade locked keeps its qualitative `srs` breakdown (the
+    competence map shows everything learned) but stops nagging with due/gap/live."""
     batches = session.exec(
         select(models.Batch).where(models.Batch.deleted_at == None)  # noqa: E711
         .where((models.Batch.owner_id == None) | (models.Batch.owner_id == user_id))  # noqa: E711
     ).all()
     stats = session.exec(select(models.UserPhraseStat).where(
         models.UserPhraseStat.user_id == user_id)).all()
+    activated = {bp.batch_id for bp in session.exec(select(models.BatchProgress).where(
+        models.BatchProgress.user_id == user_id,
+        models.BatchProgress.activated == True)).all()}  # noqa: E712
+    u = session.get(models.User, user_id)
+    plan = u.plan if u else "free"
     now = datetime.now(timezone.utc)
+    live_since = now - timedelta(days=_LIVE_DAYS)
     by_batch: dict[int, list] = {}
     for st in stats:
         by_batch.setdefault(st.batch_id, []).append(st)
     out = []
     for b in batches:
         rows = by_batch.get(b.id, [])
+        # Each count is scoped to the universe the deck that consumes it draws
+        # from, so a card can never open an empty session:
+        #  • due/gap → the review/gap deck draws from ACTIVATED batches → activated+usable.
+        #  • live → the live_only deck SELF-SCOPES over any batch holding a Live
+        #    ask (G5), so only the freemium gate applies → usable.
+        usable = access.batch_usable(plan, b, user_id)
+        refreshable = b.id in activated and usable
         scored = [s.avg_score for s in rows if s.avg_score is not None]
         seen = [s.last_seen_at for s in rows if s.last_seen_at is not None]
         # SRS schedule rollup: how many phrases are due now, when the next one is
         # due, and the qualitative state breakdown (for a competence map later).
         nexts = [nr for s in rows if (nr := _aware(s.next_review_at)) is not None]
-        due = sum(1 for nr in nexts if nr <= now)
+        due = sum(1 for nr in nexts if nr <= now) if refreshable else 0
         upcoming = [nr for nr in nexts if nr > now]
         srs_counts: dict[str, int] = {}
         for s in rows:
@@ -220,7 +241,12 @@ def mastery(user_id: int = Depends(current_user_id), session: Session = Depends(
             "next_review_at": min(upcoming).isoformat() if upcoming else None,
             "srs": srs_counts,
             # Confidence-calibration gap: swiped "known" but not produced aloud.
-            "gap": sum(1 for s in rows if _is_gap(s)),
+            "gap": sum(1 for s in rows if _is_gap(s)) if refreshable else 0,
+            # Moment of the day: phrases asked for in Live within the window — the
+            # home "from your live talks" card sums these across batches.
+            "live": (sum(1 for s in rows
+                         if (a := _aware(s.live_requested_at)) and a >= live_since)
+                     if usable else 0),
         })
     return out
 
@@ -264,6 +290,10 @@ _COOLDOWN = timedelta(seconds=90)
 # objective spoken score is missing or weak — the over-confidence blind spot.
 _SELF_HI = 0.6
 _GAP_AVG = 6.0
+# Moment of the day: how far back a Live ask still counts as a live "need", and
+# how many semantic neighbours to fold in around the asked phrases.
+_LIVE_DAYS = 14
+_LIVE_NEIGHBORS = 12
 
 
 def _is_gap(st: "models.UserPhraseStat | None") -> bool:
@@ -283,19 +313,46 @@ def _aware(dt: datetime | None) -> datetime | None:
     return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
 
 
+def _recent_live_pids(session: Session, user_id: int) -> set[int]:
+    """Phrase ids the learner asked the Live suffleur for within the window — the
+    seed set for the moment-of-the-day session and its home card counter."""
+    since = datetime.now(timezone.utc) - timedelta(days=_LIVE_DAYS)
+    rows = session.exec(select(models.UserPhraseStat).where(
+        models.UserPhraseStat.user_id == user_id,
+        models.UserPhraseStat.live_requested_at != None)).all()  # noqa: E711
+    return {r.phrase_id for r in rows if (a := _aware(r.live_requested_at)) and a >= since}
+
+
 @router.get("/deck")
 def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
-         exclude: str = "", due_only: bool = False, gap_only: bool = False, lang: str = "",
+         exclude: str = "", due_only: bool = False, gap_only: bool = False,
+         live_only: bool = False, lang: str = "",
          user_id: int = Depends(current_user_id),
          session: Session = Depends(get_session)):
     """Cross-batch adaptive deck for the swipe-trainer, scoped to this user's stats.
     Weights toward weak spots (low phrase/batch mastery, recent fails, never-seen)
     and away from completed-strong (maintenance), then weighted-random samples
-    without replacement. Excludes phrases seen in the last 90s or in `exclude`."""
+    without replacement. Excludes phrases seen in the last 90s or in `exclude`.
+
+    live_only ("moment of the day"): ignore the passed batch scope and draw from
+    the phrases the learner asked the Live suffleur for recently PLUS their
+    semantic neighbours — a session built from real-conversation need. It
+    self-scopes by pulling those phrases' batches in, so the client needn't know
+    which batches hold them."""
     active = _parse_ids(batch_ids)
     maint = set(_parse_ids(maintenance_ids))
     excl = set(_parse_ids(exclude))
     all_ids = active + [m for m in maint if m not in active]
+    # Live/moment-of-the-day self-scopes: seed = recent Live asks + neighbours,
+    # and we fold their batches into the scope so the phrases enter the deck.
+    live_seed: set[int] = set()
+    if live_only:
+        live_seed = _recent_live_pids(session, user_id)
+        live_seed |= set(embeddings.neighbors(session, user_id, live_seed, _LIVE_NEIGHBORS))
+        if live_seed:
+            seed_bids = session.exec(select(models.Phrase.batch_id).where(
+                models.Phrase.id.in_(live_seed))).all()
+            all_ids = list({*all_ids, *seed_bids})
     if not all_ids:
         return []
     # Restrict to batches visible to this user (shared catalog or own imports) so
@@ -353,6 +410,19 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
         ahead_days = (nr - now).total_seconds() / 86400.0
         return max(0.15, 1.0 - min(0.85, ahead_days * 0.15))  # sink scheduled-future items
 
+    def _live_factor(st: models.UserPhraseStat | None) -> float:
+        """Battle demand: a phrase the learner asked the Live suffleur for in a
+        real conversation is exactly what they should drill next — the truest
+        need signal. Lift it for a week after the ask, decaying back to neutral,
+        so 'what I couldn't say out loud today' surfaces in tomorrow's practice."""
+        lr = _aware(st.live_requested_at) if st else None
+        if lr is None:
+            return 1.0
+        days = (now - lr).total_seconds() / 86400.0
+        if days < 0 or days > 7:
+            return 1.0
+        return 2.0 - (days / 7.0) * 0.8                    # 2.0 fresh → 1.2 at 7d
+
     def weight(p: models.Phrase) -> float:
         st = stats.get(p.id)
         phrase_weak = 1 - _conf(p)
@@ -368,7 +438,8 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
         # review is exactly when they should resurface — so lift the floor then.
         maint_factor = (0.8 if is_due else 0.12) if is_maint else 1.0
         w = (0.45 * phrase_weak + 0.30 * batch_weak
-             + 0.15 * fail_boost + 0.10 * new_boost) * maint_factor * _due_factor(st)
+             + 0.15 * fail_boost + 0.10 * new_boost) * maint_factor \
+            * _due_factor(st) * _live_factor(st)
         return max(0.01, w)
 
     def _seen_recent(p: models.Phrase) -> bool:
@@ -390,6 +461,9 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
     if gap_only:
         # Confidence check: only phrases swiped "known" but not produced aloud.
         pool = [p for p in pool if _is_gap(stats.get(p.id))]
+    if live_only:
+        # Moment of the day: only the recent Live asks + their neighbours.
+        pool = [p for p in pool if p.id in live_seed]
     keyed = sorted(pool, key=lambda p: random.random() ** (1.0 / weight(p)),
                    reverse=True)[:max(1, limit)]
 
@@ -415,7 +489,8 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
             "phrase_id": p.id, "batch_id": p.batch_id,
             "batch_title": localize.pick(b.title_i18n, lng, b.title) if b else "",
             "section": b.section if b else "",
-            "slug": b.slug if b else "", "cover_url": b.cover_path if b else None,
+            "slug": b.slug if b else "",
+            "cover_url": cover.cover_url_for(b.cover_path, b.id, u.hero_gender if u else "male") if b else None,
             "anchor": p.anchor, "phrase_en": p.phrase_en,
             "stimulus": chosen.text if chosen else "",
             "stimulus_id": chosen.id if chosen else None,
@@ -445,7 +520,19 @@ class SwipeIn(BaseModel):
 def swipe(body: SwipeIn, user_id: int = Depends(current_user_id),
           session: Session = Depends(get_session)):
     """Swipe Practice: record a self-assessed swipe. Updates the SEPARATE self_ewma
-    (never avg_score) so subjective swipes can't corrupt the spoken-recall mastery."""
+    (never avg_score) so subjective swipes can't corrupt the spoken-recall mastery.
+
+    AUDIT-1: two near-simultaneous swipes of a NEVER-SEEN phrase both create its
+    stat (get-or-create raced) — the unique index rejects the loser; retry once on
+    a fresh snapshot so the second swipe lands its EWMA on the winner's row."""
+    try:
+        return _swipe(body, user_id, session)
+    except IntegrityError:
+        session.rollback()
+        return _swipe(body, user_id, session)
+
+
+def _swipe(body: SwipeIn, user_id: int, session: Session):
     p = session.get(models.Phrase, body.phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
@@ -520,10 +607,10 @@ async def answer(audio: UploadFile = File(...), phrase_id: int = Form(...),
     _check_rate(session, user_id)
     raw = await _read_audio(audio)
     transcript = stt.transcribe(raw, filename=audio.filename or "clip.webm", language="en")
-    result = scoring.score_phrase(p.anchor, p.phrase_en, transcript)
+    result = scoring.score_answer(p.anchor, p.phrase_en, transcript, p.task_ru, p.situation_ru)
     score = int(result["score"])
-    feedback = result.get("feedback", "")
-    ev = _record_answer(session, user_id, p, transcript, score, feedback, result["via"], latency_ms)
+    note = result.get("note", "")
+    ev = _record_answer(session, user_id, p, transcript, score, note, result["via"], latency_ms)
     ev.session_id = session_id
     session.add(ev)
     usage.accrue(session, user_id, "stt", usage.score_key(result["via"]))
@@ -532,7 +619,8 @@ async def answer(audio: UploadFile = File(...), phrase_id: int = Form(...),
     session.refresh(ev)
     return {"event_id": ev.id, "phrase_id": phrase_id, "anchor": p.anchor,
             "transcript": transcript, "score": score, "correct_phrase": p.phrase_en,
-            "feedback": feedback, "via": result["via"], "avg_score": st.avg_score,
+            "feedback": note, "note": note, "fits_task": result.get("fits_task"),
+            "natural": result.get("natural"), "via": result["via"], "avg_score": st.avg_score,
             "attempts": st.attempts, "auto_success": score >= 8}
 
 
@@ -557,10 +645,10 @@ def answer_text(body: AnswerTextIn, user_id: int = Depends(current_user_id),
         raise HTTPException(403, "ai_required")  # mic = AI plan (free on the showcase batch)
     _check_rate(session, user_id)
     transcript = (body.transcript or "").strip()
-    result = scoring.score_phrase(p.anchor, p.phrase_en, transcript)
+    result = scoring.score_answer(p.anchor, p.phrase_en, transcript, p.task_ru, p.situation_ru)
     score = int(result["score"])
-    feedback = result.get("feedback", "")
-    ev = _record_answer(session, user_id, p, transcript, score, feedback, result["via"], body.response_time_ms)
+    note = result.get("note", "")
+    ev = _record_answer(session, user_id, p, transcript, score, note, result["via"], body.response_time_ms)
     ev.session_id = body.session_id
     session.add(ev)
     usage.accrue(session, user_id, usage.score_key(result["via"]))  # client STT => no server STT cost
@@ -569,7 +657,8 @@ def answer_text(body: AnswerTextIn, user_id: int = Depends(current_user_id),
     session.refresh(ev)
     return {"event_id": ev.id, "phrase_id": body.phrase_id, "anchor": p.anchor,
             "transcript": transcript, "score": score, "correct_phrase": p.phrase_en,
-            "feedback": feedback, "via": result["via"], "avg_score": st.avg_score,
+            "feedback": note, "note": note, "fits_task": result.get("fits_task"),
+            "natural": result.get("natural"), "via": result["via"], "avg_score": st.avg_score,
             "attempts": st.attempts, "auto_success": score >= 8}
 
 

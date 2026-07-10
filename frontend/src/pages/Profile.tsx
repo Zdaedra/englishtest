@@ -6,9 +6,11 @@ import { resetTours } from "../tutorial/tours";
 import { resetTips } from "../tutorial/teach";
 import { useI18n, LANGS } from "../i18n";
 import LangSwitcher from "../ui/LangSwitcher";
+import HeroGenderSwitcher from "../ui/HeroGenderSwitcher";
 import { IconGear, IconImport, IconInfo, IconChevron, IconWave } from "../ui/icons";
 import { isNative } from "../lib/session";
 import { remindersEnabled, enableReminders, disableReminders, getReminderTime, setReminderTime, notifPermission } from "../lib/reminders";
+import { getLeagueResult } from "../lib/league";
 import { getAvatar, saveAvatar } from "../lib/avatar";
 
 const CROP = 280;   // editor viewport (display px); output is rendered to 256²
@@ -24,6 +26,7 @@ export default function Profile() {
   const nav = useNavigate();
   const { user, logout, refresh } = useAuth();
   const { t, lang } = useI18n();
+  const leagueRes = getLeagueResult();   // league row: current tier or "take the test"
   const [count, setCount] = useState<number | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [editorSrc, setEditorSrc] = useState<string | null>(null);   // crop editor open?
@@ -318,6 +321,27 @@ export default function Profile() {
           </div>
           <LangSwitcher variant="pill" />
         </div>
+        {/* Cover-art protagonist gender (D3) — changeable anytime; covers follow */}
+        <div className="menu-row menu-row-static" data-tour="gender">
+          <span className="menu-ico" aria-hidden>🎭</span>
+          <div className="menu-body">
+            <div className="menu-title">{t("gender.label")}</div>
+            <div className="menu-sub">{t(`gender.${(user?.hero_gender as string) || "male"}`)}</div>
+          </div>
+          <HeroGenderSwitcher />
+        </div>
+        {/* League placement — the home card retires after the first run/skip, so
+            this row is the permanent way back in (see the result, retake later). */}
+        <button className="menu-row" onClick={() => nav("/league")}>
+          <span className="menu-ico" aria-hidden>🏆</span>
+          <div className="menu-body">
+            <div className="menu-title">{t("profile.league")}</div>
+            <div className="menu-sub">
+              {leagueRes ? t(`league.name.${leagueRes.tier}`) : t("profile.leagueTake")}
+            </div>
+          </div>
+          <span className="menu-chevron"><IconChevron /></span>
+        </button>
         {canImport && row(IconImport, t("profile.importTitle"), t("profile.importSub"), "/import")}
         {/* Call Analyzer — AI-plan feature; visible to everyone as the teaser. */}
         {row(IconWave, t("analyzer.title"), t("analyzer.menuSub"), "/analyze")}

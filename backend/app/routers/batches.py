@@ -71,7 +71,8 @@ def list_batches(lang: str = "", user_id: int = Depends(current_user_id),
                     "preview": _preview(subtitle, theme),
                     "status": b.status,
                     "phrase_count": len(phrases), "anchors": anchors,
-                    "cover_url": b.cover_path,
+                    "cover_url": cover.cover_url_for(b.cover_path, b.id,
+                                                     u.hero_gender if u else "male"),
                     "is_free": b.is_free,
                     "locked": not access.batch_usable(plan, b, user_id),
                     "created_at": b.created_at.isoformat()})
@@ -119,7 +120,8 @@ def get_batch(batch_id: int, lang: str = "", user_id: int = Depends(current_user
         "slug": b.slug, "theme": localize.pick(b.theme_i18n, lng, b.theme),
         "subtitle": localize.pick(b.subtitle_i18n, lng, b.subtitle), "section": b.section,
         "difficulty": b.difficulty, "status": b.status,
-        "cover_url": b.cover_path, "is_free": b.is_free, "locked": locked,
+        "cover_url": cover.cover_url_for(b.cover_path, b.id, u.hero_gender if u else "male"),
+        "is_free": b.is_free, "locked": locked,
     }
     if locked:
         # Don't ship the paid content (phrases/mnemo) behind the paywall.

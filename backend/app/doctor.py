@@ -44,6 +44,13 @@ Checks:
                         an otherwise-cued catalog. Report-only; the fix is
                         re-authoring cues (see CONTENT-GRAPH.md). Silent on
                         dev DBs that use no cues at all.
+  8. embedding index  — Live semantic retrieval (PhraseEmbedding): curated
+                        phrases missing a vector, or whose stored text_hash /
+                        model / dim no longer match the current embed text
+                        (any phrase/cue edit or an ENGLISH_MODEL_EMBED swap
+                        makes the vector stale — battle would rank on the OLD
+                        situations). Fix: `python -m app.embeddings`. Silent
+                        on dev DBs whose index is empty.
 
 The full asset dependency map (what derives from what, which chain to run after
 which edit) lives in CONTENT-GRAPH.md at the repo root.
@@ -90,7 +97,13 @@ def run(fix: bool = False) -> dict:
                            models.PhraseAttempt: "phrase_attempts",
                            models.ReviewEvent: "review_events",
                            models.CheckPhrase: "check_phrases",
-                           models.ContextExample: "context_examples"}
+                           models.ContextExample: "context_examples",
+                           # Live-mode phrase children: an orphan here can
+                           # MIS-ATTACH when SQLite recycles the phrase id (a
+                           # stale move tag / stale semantic vector on a new
+                           # phrase) — same failure mode as check 2.
+                           models.PhraseIntent: "phrase_intents",
+                           models.PhraseEmbedding: "phrase_embeddings"}
         for tbl, name in fixable_orphans.items():
             rows = [r for r in s.exec(select(tbl)).all()
                     if r.phrase_id not in live_phrase_ids]
@@ -136,6 +149,31 @@ def run(fix: bool = False) -> dict:
             if fix:
                 for rows in dups.values():
                     keep = _pick_best_stat(rows)
+                    for r in rows:
+                        if r is not keep:
+                            s.delete(r)
+                s.commit()
+
+        # -- 3b. duplicate (user, batch) progress -------------------------------
+        # Same twin-row class as check 3 (AUDIT-1): pre-index races could double a
+        # batch's progress row, double-counting the freemium cap. The unique index
+        # (db._migrate) prevents new ones; this catches anything written before it
+        # or through out-of-app writes.
+        bp_by_key: dict = {}
+        for bp in s.exec(select(models.BatchProgress)).all():
+            bp_by_key.setdefault((bp.user_id, bp.batch_id), []).append(bp)
+        bp_dups = {k: v for k, v in bp_by_key.items() if len(v) > 1}
+        if bp_dups:
+            problems["duplicate_progress"] = sum(len(v) - 1 for v in bp_dups.values())
+            print(f"  DUPLICATES batch_progress: {len(bp_dups)} (user,batch) keys"
+                  + (" — keeping the most-progressed row of each"
+                     if fix else " (run --fix to dedup)"))
+            if fix:
+                def _bp_key(bp):
+                    upd = bp.updated_at.isoformat() if bp.updated_at else ""
+                    return (bool(bp.l3_passed), bool(bp.activated), upd, bp.id or 0)
+                for rows in bp_dups.values():
+                    keep = max(rows, key=_bp_key)
                     for r in rows:
                         if r is not keep:
                             s.delete(r)
@@ -299,6 +337,49 @@ def run(fix: bool = False) -> dict:
                 print(f"  UNCUED BATCHES: {len(uncued)} batch(es) with no cues "
                       f"at all in a cued catalog — author cues "
                       f"(see CONTENT-GRAPH.md): {', '.join(sorted(uncued))}")
+
+        # -- 8. embedding index (Live semantic retrieval) -----------------------
+        emb_by_pid = {e.phrase_id: e for e in
+                      s.exec(select(models.PhraseEmbedding)).all()}
+        if emb_by_pid:  # an index exists at all (unseeded dev DBs stay silent)
+            from . import embeddings as emb_mod
+            from .config import get_settings
+            st = get_settings()
+            trig: dict[int, list[str]] = {}
+            for cp in s.exec(
+                    select(models.CheckPhrase)
+                    .where(models.CheckPhrase.status == "approved")
+                    .order_by(models.CheckPhrase.phrase_id,
+                              models.CheckPhrase.order_index,
+                              models.CheckPhrase.id)).all():
+                if (cp.text or "").strip():
+                    trig.setdefault(cp.phrase_id, []).append(cp.text.strip())
+            emb_missing, emb_stale = set(), set()
+            for p in phrase_by_id.values():
+                b = batches.get(p.batch_id)
+                if not b:
+                    continue
+                e = emb_by_pid.get(p.id)
+                if e is None:
+                    emb_missing.add(b.slug)
+                    continue
+                fresh = emb_mod.text_hash(
+                    emb_mod.phrase_embed_text(p, trig.get(p.id, [])))
+                if (e.text_hash != fresh or e.model != st.model_embed
+                        or e.dim != st.embed_dim
+                        or len(e.vector) != st.embed_dim * 4):
+                    emb_stale.add(b.slug)
+            if emb_missing:
+                problems["embedding_holes"] = len(emb_missing)
+                print(f"  EMBEDDING HOLES: {len(emb_missing)} batch(es) with "
+                      f"unembedded phrase(s) — run `python -m app.embeddings`: "
+                      f"{', '.join(sorted(emb_missing))}")
+            if emb_stale:
+                problems["stale_embeddings"] = len(emb_stale)
+                print(f"  STALE EMBEDDINGS: {len(emb_stale)} batch(es) whose "
+                      f"vectors no longer match the current texts/cues/model — "
+                      f"run `python -m app.embeddings`: "
+                      f"{', '.join(sorted(emb_stale))}")
 
     return problems
 

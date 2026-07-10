@@ -164,10 +164,13 @@ def _write_children(session: Session, batch: models.Batch, batch_in: BatchIn) ->
 
 def _wipe_children(session: Session, batch_id: int) -> None:
     # Content-side children keyed by phrase_id die with their phrases (leaving
-    # them would orphan rows pointing at dead — or worse, recycled — phrase ids).
+    # them would orphan rows pointing at dead — or worse, RECYCLED — phrase ids:
+    # a stale PhraseIntent would pin the old move to whatever new phrase inherits
+    # the id, and a stale PhraseEmbedding would rank Live by the old situations).
     pids = _batch_phrase_ids(session, batch_id)
     if pids:
-        for tbl in (models.CheckPhrase, models.ContextExample):
+        for tbl in (models.CheckPhrase, models.ContextExample,
+                    models.PhraseIntent, models.PhraseEmbedding):
             for row in session.exec(select(tbl).where(tbl.phrase_id.in_(pids))).all():
                 session.delete(row)
     for tbl in (models.Phrase, models.Zone, models.MnemoStory):

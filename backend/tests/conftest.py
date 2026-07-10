@@ -86,6 +86,12 @@ def stub_network(monkeypatch):
             "score": 9, "correct_phrase": correct_phrase, "via": "gate"},
     )
     monkeypatch.setattr(
+        "app.scoring.score_answer",
+        lambda anchor, correct_phrase, user_said, task_ru="", situation_ru="": {
+            "score": 9, "fits_task": True, "natural": 8, "note": "стаб",
+            "correct_phrase": correct_phrase, "via": "gate"},
+    )
+    monkeypatch.setattr(
         "app.scoring.score_anchor",
         lambda anchor, user_said: {"score": 10, "correct_anchor": anchor, "via": "gate"},
     )
@@ -130,6 +136,16 @@ def stub_network(monkeypatch):
     monkeypatch.setattr("app.cover.generate_cover", lambda *a, **k: "/covers/stub.png")
     monkeypatch.setattr("app.llm.parse_batch", lambda raw: {"phrases": []})
     monkeypatch.setattr("app.llm.chat", lambda system, user, temperature=None: "{}")
+    # Embeddings: no network. embed_query -> None keeps battle on its
+    # deterministic keyword/learned-first fallback; tests of the semantic path
+    # install their own fakes on top of these. embed_texts returns a unit
+    # vector of the configured dim per text so seed() runs offline.
+    import struct as _struct
+    _dim = s.embed_dim
+    _unit = _struct.pack(f"<{_dim}f", 1.0, *([0.0] * (_dim - 1)))
+    monkeypatch.setattr("app.embeddings.embed_query", lambda text: None)
+    monkeypatch.setattr("app.embeddings.embed_texts",
+                        lambda texts: [_unit for _ in texts])
 
 
 @pytest.fixture

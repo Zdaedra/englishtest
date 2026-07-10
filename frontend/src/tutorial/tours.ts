@@ -34,6 +34,14 @@ export const TOURS: ScreenTour[] = [
       { target: "handsfree", titleKey: "tour.hf.t", bodyKey: "tour.hf.b" },
     ],
   },
+  {
+    // Cabinet: point out that the cover-art protagonist gender is changeable.
+    id: "profile",
+    match: (p) => p.startsWith("/profile"),
+    steps: [
+      { target: "gender", titleKey: "tour.gender.t", bodyKey: "tour.gender.b" },
+    ],
+  },
 ];
 
 const key = (uid: string | number, id: string) => `ee-tour-${id}-${uid}`;

@@ -45,6 +45,10 @@ class Settings(BaseSettings):
     model_coach: str = "gpt-4.1-mini"                  # ENGLISH_MODEL_COACH (AI coach)
     model_import: str = "gpt-4o-mini"                  # ENGLISH_MODEL_IMPORT (llm chat/parse, OpenAI leg)
     model_import_anthropic: str = "claude-sonnet-4-6"  # ENGLISH_MODEL_IMPORT_ANTHROPIC (Anthropic leg)
+    # Live semantic retrieval (app/embeddings.py). Changing either invalidates the
+    # whole PhraseEmbedding index — rerun `python -m app.embeddings` after a swap.
+    model_embed: str = "text-embedding-3-small"        # ENGLISH_MODEL_EMBED
+    embed_dim: int = 512                               # ENGLISH_EMBED_DIM
 
     # Cascade: the cheap scoring model (model_score) is trusted at the extremes
     # (clear pass / clear fail); only its ambiguous-band verdicts are re-scored on the
