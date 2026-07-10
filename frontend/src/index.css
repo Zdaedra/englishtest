@@ -4657,3 +4657,10 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 .ob-gender-txt b { font-size: 1.05rem; font-weight: 650; color: var(--text); }
 .ob-gender-txt span { font-size: 0.85rem; color: var(--text-2); }
 .ob-gender-tick { color: var(--accent); font-weight: 700; font-size: 1.15rem; flex: 0 0 auto; }
+
+/* Widget how-to sheet — two short step blocks inside the standard ava-sheet. */
+.wh-block { width: 100%; text-align: left; margin: 2px 0; }
+.wh-head { margin: 0 0 4px; font-size: 0.875rem; font-weight: 650; color: var(--text); }
+.wh-steps { margin: 0; font-size: 0.875rem; line-height: 1.5; color: var(--text-2); }
+/* Widget nudge card — the green "live surface" accent, same as .live-moment. */
+.widget-nudge .review-due-ico { background: rgba(28, 140, 99, .10); color: var(--map-green); }

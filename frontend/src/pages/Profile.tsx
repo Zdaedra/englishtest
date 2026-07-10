@@ -11,6 +11,8 @@ import { IconGear, IconImport, IconInfo, IconChevron, IconWave } from "../ui/ico
 import { isNative } from "../lib/session";
 import { remindersEnabled, enableReminders, disableReminders, getReminderTime, setReminderTime, notifPermission } from "../lib/reminders";
 import { getLeagueResult } from "../lib/league";
+import { widgetInstalled } from "../lib/widget";
+import WidgetHowto from "../ui/WidgetHowto";
 import { getAvatar, saveAvatar } from "../lib/avatar";
 
 const CROP = 280;   // editor viewport (display px); output is rendered to 256²
@@ -27,6 +29,10 @@ export default function Profile() {
   const { user, logout, refresh } = useAuth();
   const { t, lang } = useI18n();
   const leagueRes = getLeagueResult();   // league row: current tier or "take the test"
+  // Widget row (native): live install status + the how-to sheet.
+  const [widgetOn, setWidgetOn] = useState(false);
+  const [widgetHowto, setWidgetHowto] = useState(false);
+  useEffect(() => { widgetInstalled().then(setWidgetOn).catch(() => {}); }, []);
   const [count, setCount] = useState<number | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [editorSrc, setEditorSrc] = useState<string | null>(null);   // crop editor open?
@@ -368,6 +374,21 @@ export default function Profile() {
                 <input className="time-input" type="time" value={remTime} onChange={(e) => onRemTime(e.target.value)} />
               </div>
             )}
+            {/* Lock-screen widget — iOS can't add it programmatically; this row
+                shows whether it's on the screen (WidgetKit) and opens the how-to. */}
+            <button className="menu-row" onClick={() => setWidgetHowto(true)}>
+              <span className="menu-ico" aria-hidden>
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="8" height="8" rx="2" /><rect x="13" y="3" width="8" height="8" rx="2" /><rect x="3" y="13" width="8" height="8" rx="2" /><path d="M17 14v6M14 17h6" />
+                </svg>
+              </span>
+              <div className="menu-body">
+                <div className="menu-title">{t("widget.rowTitle")}</div>
+                <div className="menu-sub">{t(widgetOn ? "widget.on" : "widget.off")}</div>
+              </div>
+              <span className="menu-chevron"><IconChevron /></span>
+            </button>
+            {widgetHowto && <WidgetHowto onClose={() => setWidgetHowto(false)} />}
           </>
         )}
         <button className="menu-row" onClick={exportMyData} disabled={exporting}>

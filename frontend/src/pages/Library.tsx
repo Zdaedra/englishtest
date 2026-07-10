@@ -14,6 +14,8 @@ import { useTeach } from "../tutorial/teach";
 import { getAvatar } from "../lib/avatar";
 import { syncReviewReminder } from "../lib/reminders";
 import { leagueCardHidden, dismissLeagueCard, leagueRetestDue, daysSinceLeague } from "../lib/league";
+import { shouldNudgeWidget, markWidgetNudgeShown, dismissWidgetNudge } from "../lib/widgetNudge";
+import WidgetHowto from "../ui/WidgetHowto";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 
@@ -51,6 +53,20 @@ export default function Library() {
   // League loop: once a result is ≥5 weeks old, nudge a retake to measure growth.
   const retestDue = leagueRetestDue();
   const retestDays = daysSinceLeague();
+  // Widget nudge (native): suggest adding the lock-screen widget until it's
+  // actually there — ≤5 times total, ≤1/day, dismissible (lib/widgetNudge).
+  const [widgetNudge, setWidgetNudge] = useState(false);
+  const [widgetHowto, setWidgetHowto] = useState(false);
+  useEffect(() => {
+    if (user?.id == null) return;
+    let on = true;
+    shouldNudgeWidget(user.id).then((ok) => {
+      if (!on || !ok) return;
+      markWidgetNudgeShown(user.id);
+      setWidgetNudge(true);
+    });
+    return () => { on = false; };
+  }, [user?.id]);
   const { tip } = useTeach();
   useEffect(() => { if (dueCount > 0) tip("refresh"); }, [dueCount, tip]);
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -419,6 +435,32 @@ export default function Library() {
               </span>
             </button>
           )}
+
+          {/* Widget suggestion (native) — iOS can't add it for the user, so we
+              suggest: tap → the how-to sheet; ✕ → never again; auto-retires once
+              WidgetKit reports the widget is on the screen. */}
+          {widgetNudge && (
+            <button className="review-due widget-nudge" onClick={() => setWidgetHowto(true)}>
+              <span className="review-due-ico">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="8" height="8" rx="2" /><rect x="13" y="3" width="8" height="8" rx="2" /><rect x="3" y="13" width="8" height="8" rx="2" /><path d="M17 14v6M14 17h6" />
+                </svg>
+              </span>
+              <span className="review-due-text">
+                <span className="review-due-title">{t("widget.nudgeTitle")}</span>
+                <span className="review-due-sub">{t("widget.nudgeSub")}</span>
+              </span>
+              <span
+                className="league-skip"
+                role="button"
+                aria-label={t("widget.dismiss")}
+                onClick={(e) => { e.stopPropagation(); if (user?.id != null) dismissWidgetNudge(user.id); setWidgetNudge(false); }}
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </span>
+            </button>
+          )}
+          {widgetHowto && <WidgetHowto onClose={() => setWidgetHowto(false)} />}
 
           {/* Your week — a calm progress cue: how much work landed and which
               phrases stood out. Only once the week has real substance. */}

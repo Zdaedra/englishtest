@@ -10,8 +10,17 @@ interface WidgetBridgePlugin {
   // `due` = total count of phrases slipping now (the widget shows "N к освежению");
   // each phrase carries d:1 when it is itself due (the widget marks/leads them).
   update(opts: { phrases: { en: string; ru: string; b: number; d?: number }[]; due?: number }): Promise<{ count: number }>;
+  // Is our widget actually on the user's screen? (WidgetKit lists its instances.)
+  status(): Promise<{ installed: boolean; count: number }>;
 }
 const WidgetBridge = registerPlugin<WidgetBridgePlugin>("WidgetBridge");
+
+/** True when the user has our widget on their lock/home screen. Used to retire
+ *  the "add the widget" nudge the moment it's actually added. Web/error → false. */
+export async function widgetInstalled(): Promise<boolean> {
+  if (!isNative()) return false;
+  try { return (await WidgetBridge.status()).installed; } catch { return false; }
+}
 
 const MAX = 40;
 const LEARNED = new Set(["familiar", "automatic"]);

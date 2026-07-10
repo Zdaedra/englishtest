@@ -12,7 +12,8 @@ public class WidgetBridgePlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "WidgetBridgePlugin"
     public let jsName = "WidgetBridge"
     public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "update", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "update", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "status", returnType: CAPPluginReturnPromise)
     ]
 
     // Must match EEWidget/EEWidget.swift and both .entitlements files.
@@ -44,5 +45,18 @@ public class WidgetBridgePlugin: CAPPlugin, CAPBridgedPlugin {
         defaults.set(Date().timeIntervalSince1970, forKey: Self.updatedKey)
         WidgetCenter.shared.reloadAllTimelines()
         call.resolve(["count": phrases.count])
+    }
+
+    // status() — is our widget actually on the user's screen? WidgetKit knows its
+    // own installed instances; the app uses this to stop nudging once it's there.
+    @objc func status(_ call: CAPPluginCall) {
+        WidgetCenter.shared.getCurrentConfigurations { result in
+            switch result {
+            case .success(let widgets):
+                call.resolve(["installed": !widgets.isEmpty, "count": widgets.count])
+            case .failure:
+                call.resolve(["installed": false, "count": 0])
+            }
+        }
     }
 }
