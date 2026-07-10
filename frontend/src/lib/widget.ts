@@ -8,8 +8,10 @@ import { isNative } from "./session";
 
 interface WidgetBridgePlugin {
   // `due` = total count of phrases slipping now (the widget shows "N к освежению");
-  // each phrase carries d:1 when it is itself due (the widget marks/leads them).
-  update(opts: { phrases: { en: string; ru: string; b: number; d?: number }[]; due?: number }): Promise<{ count: number }>;
+  // each phrase carries d:1 when it is itself due (due phrases lead the rotation).
+  // We send ONLY the phrase text — no gloss/anchor/keyword line — so the widget
+  // shows the full sentence and nothing else.
+  update(opts: { phrases: { en: string; b: number; d?: number }[]; due?: number }): Promise<{ count: number }>;
   // Is our widget actually on the user's screen? (WidgetKit lists its instances.)
   status(): Promise<{ installed: boolean; count: number }>;
 }
@@ -28,15 +30,15 @@ const LEARNED = new Set(["familiar", "automatic"]);
 // Rotation set = the user's study corpus, learned/touched first (the corpus
 // already arrives learned-first from /api/battle/corpus). Within that, DUE
 // phrases (SRS says they're slipping) lead the rotation — the lock screen should
-// surface exactly what's about to be forgotten. Each carries d:1 so the widget
-// can mark it.
+// surface exactly what's about to be forgotten. Each carries d:1 so due phrases
+// sort to the front. We emit only the phrase text (en) + routing (b) + the due
+// flag (d) — no second keyword/gloss line.
 function pick(items: BattleItem[]) {
   const touched = items.filter((i) => LEARNED.has(i.srs_status) || i.attempts > 0);
   const pool = touched.length >= 5 ? touched : items;
   const ordered = [...pool].sort((a, b) => Number(!!b.due) - Number(!!a.due)); // due first, else stable
   return ordered.slice(0, MAX).map((i) => ({
     en: i.phrase_en,
-    ru: i.gloss_ru || i.anchor,
     b: i.batch_id,
     d: i.due ? 1 : 0,
   }));

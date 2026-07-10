@@ -3,8 +3,9 @@ import WidgetKit
 
 // Executive English lock-screen widget: rotates the phrases the user is
 // currently studying. No auth and no network here — the main app drops
-// {en, ru, b(atch)} JSON into the shared App-Group container (WidgetBridge.swift)
-// and this TimelineProvider builds a local rotation from it.
+// {en, b(atch), d(ue)} JSON into the shared App-Group container (WidgetBridge.swift)
+// and this TimelineProvider builds a local rotation from it. We render the full
+// phrase and nothing else — no gloss/keyword line.
 
 private let appGroup = "group.net.executiveenglish.app"   // = WidgetBridgePlugin.appGroup
 private let phrasesKey = "ee.widget.phrases"
@@ -12,12 +13,11 @@ private let dueKey = "ee.widget.due"                       // = WidgetBridgePlug
 
 struct WPhrase: Codable {
     let en: String
-    let ru: String
     let b: Int          // batch id → deep link target
-    let d: Int?         // 1 = this phrase is due (slipping) — marked in the widget
+    let d: Int?         // 1 = this phrase is due (slipping) — leads the rotation
 }
 
-private let sample = WPhrase(en: "Let me cut to it.", ru: "сразу к делу", b: 0, d: 0)
+private let sample = WPhrase(en: "Let me cut to it.", b: 0, d: 0)
 
 private func loadPhrases() -> [WPhrase] {
     guard let defaults = UserDefaults(suiteName: appGroup),
@@ -107,22 +107,14 @@ struct EEWidgetView: View {
                 .widgetURL(deepLink)
                 .widgetChrome(nil)
         case .accessoryRectangular:
-            VStack(alignment: .leading, spacing: 1) {
-                // A leading dot marks a phrase that's slipping (due).
-                Text((isDue ? "• " : "") + entry.phrase.en)
-                    .font(.system(size: 14, weight: .semibold))
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.7)
-                if !entry.phrase.ru.isEmpty {
-                    Text(entry.phrase.ru)
-                        .font(.system(size: 11))
-                        .opacity(0.75)
-                        .lineLimit(1)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .widgetURL(deepLink)
-            .widgetChrome(nil)
+            // The whole phrase, as large as the row allows — nothing else.
+            Text(entry.phrase.en)
+                .font(.system(size: 15, weight: .semibold))
+                .lineLimit(3)
+                .minimumScaleFactor(0.7)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .widgetURL(deepLink)
+                .widgetChrome(nil)
         default: // .systemSmall on the home screen — brand card
             VStack(alignment: .leading, spacing: 6) {
                 // The eyebrow becomes the SRS nudge when something is slipping:
@@ -131,17 +123,12 @@ struct EEWidgetView: View {
                     .font(.system(size: 8, weight: .bold))
                     .kerning(0.8)
                     .opacity(entry.dueCount > 0 ? 0.95 : 0.7)
+                // The whole phrase, big — nothing else on the card.
+                Text(entry.phrase.en)
+                    .font(.system(size: 18, weight: .semibold))
+                    .lineLimit(5)
+                    .minimumScaleFactor(0.6)
                 Spacer(minLength: 0)
-                Text((isDue ? "• " : "") + entry.phrase.en)
-                    .font(.system(size: 15, weight: .semibold))
-                    .lineLimit(4)
-                    .minimumScaleFactor(0.65)
-                if !entry.phrase.ru.isEmpty {
-                    Text(entry.phrase.ru)
-                        .font(.system(size: 11))
-                        .opacity(0.75)
-                        .lineLimit(2)
-                }
             }
             .foregroundColor(.white)
             .padding(14)
@@ -150,8 +137,6 @@ struct EEWidgetView: View {
             .widgetChrome(brandGreen)
         }
     }
-
-    private var isDue: Bool { (entry.phrase.d ?? 0) == 1 }
 }
 
 @main
