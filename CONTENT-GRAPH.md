@@ -25,6 +25,7 @@
 | MnemoStory (история + spans) | 90 | БД | `mnemo` в content-файле; spans вычисляются | upsert / `app.restory` |
 | **PhraseIntent** (ходы Live, пофразово, 2026-07-09 v2) | 1–3/фразу (2044 связи) | **ТОЛЬКО БД** | `backend/app/intents_curated.json` (курировано вручную, ключ `slug`+`order_index`); словарь фиксирован — **10 ключей**: warm/clarify/pushback/hold/buy_time/lead/ask/close/repair/support | `python -m app.intents` — идемпотентный ресид (`source=manual` руками — сидер их НЕ трогает). **Авторитетный сигнал для боя.** Фраза без строк → фолбэк на BatchIntent → универсально |
 | **BatchIntent** (ходы Live, грубый фолбэк) | 1–4/curated батч | **ТОЛЬКО БД** | `intents_curated.json` (батч-уровень); для батчей вне карты — фолбэк `SECTION_INTENTS` в `app/intents.py`; те же 10 ключей | `python -m app.intents` (тот же сид). Используется, только когда у фразы нет своих PhraseIntent (напр. приватный импорт). Батч без строк = универсальный |
+| **PhraseEmbedding** (семантический индекс Live, 2026-07-09) | 1/фразу | **ТОЛЬКО БД** (derived-кэш — можно дропнуть и пересобрать) | derived: вектор текста «phrase_en+anchor+gloss+situation/task+**approved cues**» (text-embedding-3-small, 512d, L2-норм float32) | `python -m app.embeddings` (идемпотентно: пере-эмбеддит только изменившиеся по text_hash/model/dim). Боевой подбор ранжирует кандидатов косинусом; без индекса — фолбэк на keyword |
 | ContextExample | 0 | БД | — | **спящая таблица**, нигде не используется |
 | situation_ru / task_ru | на каждой Phrase | колонки Phrase | derived (LLM) | `app.gen_context` |
 | gloss_ru | колонка Phrase | БД (+опц. в файле) | куратор; файл пустой = «оставить БД» | rephrase / upsert |
@@ -59,6 +60,9 @@ content/NN-*.json ──upsert/rephrase──▶ Batch / Zone / Phrase(anchor, e
 
 app/intents_curated.json ──app.intents──▶ PhraseIntent (пофразово, авторитет) + BatchIntent (фолбэк)
         (ключ slug+order_index)                        │ ход фразы = ось релевантности боевого режима
+
+Phrase(en+anchor+gloss+situation/task) + CheckPhrase(approved) ──app.embeddings──▶ PhraseEmbedding
+        │ вектор = «ситуации, которые закрывает фраза» — косинусный отбор кандидатов в Live
 ```
 
 Прогресс (UserPhraseStat, TrainingEvent, PhraseAttempt, ReviewEvent) висит на
@@ -75,9 +79,11 @@ guard-ованный `content.upsert` (блок при живом прогрес
 
 | Меняю | Инвалидируется автоматически | Цепочка (по порядку) | Юзеру на проверку |
 |---|---|---|---|
-| **phrase_en / anchor** (текст фразы, слот тот же) | rephrase сам чистит: situation/task, gloss_i18n; **УДАЛЯЕТ cues этой фразы**; spans устаревают. ⚠️ **PhraseIntent НЕ инвалидируется** — теги сидятся по `(slug, order_index)`, а слот тот же, поэтому СТАРЫЙ ход прилипнет к новой фразе, если не переразметить | 1) правка в content/*.json → `app.rephrase` 2) `app.restory` 3) **re-author cues** (см. §4) 4) **re-author тегов хода**: обнови эту фразу в `app/intents_curated.json` → `app.intents` 5) `app.gen_context` 6) `app.i18n_content --refill` | новые cues (обязательно), **новый ход/тег**, новые situation/task |
+| **phrase_en / anchor** (текст фразы, слот тот же) | rephrase сам чистит: situation/task, gloss_i18n; **УДАЛЯЕТ cues этой фразы**; spans устаревают; **PhraseEmbedding устаревает по text_hash** (doctor красный до пере-эмбеддинга). ⚠️ **PhraseIntent НЕ инвалидируется** — теги сидятся по `(slug, order_index)`, а слот тот же, поэтому СТАРЫЙ ход прилипнет к новой фразе, если не переразметить | 1) правка в content/*.json → `app.rephrase` 2) `app.restory` 3) **re-author cues** (см. §4) 4) **re-author тегов хода**: обнови эту фразу в `app/intents_curated.json` → `app.intents` 5) `app.gen_context` 6) `app.i18n_content --refill` 7) `app.embeddings` | новые cues (обязательно), **новый ход/тег**, новые situation/task |
 | **ход фразы (PhraseIntent)** | — (не влияет на другой контент) | правка записи фразы в `app/intents_curated.json` (ключ `slug`+`order_index`) → `python -m app.intents` (идемпотентный ресид; `source=manual` руками сидер не трогает) | какие ходы делает фраза (1–3 из 10 ключей) |
-| **gloss_ru** | rephrase чистит situation/task + gloss_i18n; cues НЕ трогаются | `app.rephrase` → `app.gen_context` → `i18n --refill` | новый gloss + situation/task |
+| **gloss_ru** | rephrase чистит situation/task + gloss_i18n; cues НЕ трогаются; embedding устаревает | `app.rephrase` → `app.gen_context` → `i18n --refill` → `app.embeddings` | новый gloss + situation/task |
+| **cues (CheckPhrase)** добавил/поменял | embedding фразы устаревает (cues входят в её вектор) | вставка по §4 → `python -m app.embeddings` | таблица cues на утверждение (§4) |
+| **модель эмбеддингов** (`ENGLISH_MODEL_EMBED`/`_EMBED_DIM`) | весь индекс устаревает (model/dim в строке) | env-свап + рестарт → `python -m app.embeddings` (пересоберёт всё) | — |
 | **мнемо-история** | — | правка `mnemo` в файле → `app.restory` (сам дропнет устаревшие story_i18n) → `i18n --refill` | история + подсветка якорей |
 | **title** батча | `app.settitle`/`app.retitle` сами чистят title_i18n | settitle/retitle → `i18n --refill` | заголовок |
 | **subtitle** | `app.resubtitle` чистит subtitle_i18n | resubtitle → `i18n --refill` | сабтайтл |
@@ -111,7 +117,9 @@ guard-ованный `content.upsert` (блок при живом прогрес
   4. После «ок» — вставить: `docker exec -i english_app python` +
      `models.CheckPhrase(phrase_id=…, batch_id=…, text=…, lang="en",
      kind="stimulus", order_index=…, status="approved")`.
-  5. `app.doctor` → CLEAN.
+  5. `python -m app.embeddings` — approved cues входят в вектор фразы
+     (семантический индекс Live), без пере-эмбеддинга doctor красный.
+  6. `app.doctor` → CLEAN.
 
 ---
 
@@ -142,6 +150,7 @@ guard-ованный `content.upsert` (блок при живом прогрес
 | 5 | Дрейф файлов vs БД (тексты / кол-во фраз) | `content_drift` / `structural_drift` | `app.rephrase` / re-author |
 | 6 | Дыры кэшей: situation/task; i18n-дыры по **юнион-языкам каталога** (ловит и обнулённые переводы после retitle) | `missing_situation_task` / `i18n_holes` | `gen_context` / `i18n --refill` |
 | 7 | **Дыры cues**: фразы без cues в закьюированном батче (след rephrase) + целиком незакьюированные батчи | `checkphrase_holes` / `uncued_batches` | re-author по §4 |
+| 8 | **Индекс эмбеддингов**: фразы без вектора / вектор не совпадает с текущими текстами+cues+моделью (молчит, пока индекс пуст) | `embedding_holes` / `stale_embeddings` | `python -m app.embeddings` |
 
 Гарантия «нельзя забыть»: rephrase удалил cues → doctor красный (в логах,
 в ответах API и в конце каждого шага цепочки), пока не re-author'ишь;
