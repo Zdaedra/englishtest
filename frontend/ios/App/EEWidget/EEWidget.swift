@@ -32,6 +32,18 @@ private func loadDueCount() -> Int {
     UserDefaults(suiteName: appGroup)?.integer(forKey: dueKey) ?? 0
 }
 
+// Deterministic "phrase of the day": DUE phrases first, then the rest, indexed
+// by the calendar day (+offset). Every timeline rebuild during a day lands on the
+// same phrase — one phrase, all day — and it advances at local midnight.
+private func phraseForDay(_ phrases: [WPhrase], offset: Int = 0) -> WPhrase? {
+    let ordered = phrases.filter { ($0.d ?? 0) == 1 } + phrases.filter { ($0.d ?? 0) != 1 }
+    guard !ordered.isEmpty else { return nil }
+    let cal = Calendar.current
+    let day = cal.ordinality(of: .day, in: .era, for: cal.startOfDay(for: Date())) ?? 0
+    let n = ordered.count
+    return ordered[((day + offset) % n + n) % n]
+}
+
 struct PhraseEntry: TimelineEntry {
     let date: Date
     let phrase: WPhrase
@@ -45,15 +57,15 @@ struct PhraseProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (PhraseEntry) -> Void) {
-        let p = loadPhrases().randomElement() ?? sample
+        let p = phraseForDay(loadPhrases()) ?? sample
         completion(PhraseEntry(date: .now, phrase: p, dueCount: loadDueCount(), isPlaceholder: false))
     }
 
-    // A pass over the study set, one phrase every 20 minutes (WidgetKit treats
-    // sub-15-min steps as best-effort anyway). DUE phrases (slipping) lead the
-    // rotation — shuffled among themselves, then the rest — so the lock screen
-    // surfaces what's about to be forgotten first. .atEnd → the next pass
-    // reshuffles. With no data yet: show the sample and retry hourly.
+    // ONE phrase per day. The pick is deterministic from the calendar day, so it
+    // holds all day (every rebuild lands on the same phrase) and flips at local
+    // midnight. DUE phrases (slipping) sit at the front, so they come up on the
+    // soonest days. We lay out 14 days ahead; .atEnd reloads after that (and the
+    // app re-pushes on foreground). No data yet: show the sample and retry hourly.
     func getTimeline(in context: Context, completion: @escaping (Timeline<PhraseEntry>) -> Void) {
         let phrases = loadPhrases()
         let due = loadDueCount()
@@ -62,15 +74,14 @@ struct PhraseProvider: TimelineProvider {
             completion(Timeline(entries: [entry], policy: .after(.now.addingTimeInterval(3600))))
             return
         }
-        let dueFirst = phrases.filter { ($0.d ?? 0) == 1 }.shuffled()
-            + phrases.filter { ($0.d ?? 0) != 1 }.shuffled()
-        let step: TimeInterval = 20 * 60
-        let start = Date()
-        let entries = dueFirst.prefix(24).enumerated().map { i, p in
-            PhraseEntry(date: start.addingTimeInterval(Double(i) * step),
-                        phrase: p, dueCount: due, isPlaceholder: false)
+        let cal = Calendar.current
+        let startOfToday = cal.startOfDay(for: Date())
+        let entries = (0..<14).map { d -> PhraseEntry in
+            let date = cal.date(byAdding: .day, value: d, to: startOfToday) ?? startOfToday
+            let phrase = phraseForDay(phrases, offset: d) ?? sample
+            return PhraseEntry(date: date, phrase: phrase, dueCount: due, isPlaceholder: false)
         }
-        completion(Timeline(entries: Array(entries), policy: .atEnd))
+        completion(Timeline(entries: entries, policy: .atEnd))
     }
 }
 
