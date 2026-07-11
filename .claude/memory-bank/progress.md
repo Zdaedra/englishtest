@@ -4,6 +4,17 @@
 
 ---
 
+## 2026-07-10 — G16: новая иконка приложения (mesh-speech) + web-favicon
+
+- Round-1 иконок (плоский зелёный фон) Лёша отверг — несовременно. Round-2: 6
+  концептов через gpt-image-1 high (glass-E, dark-gold-spark, mesh-speech,
+  duotone-E, clay-bars, editorial-light). Выбран ③ **mesh-speech** — белый
+  спич-бабл на mesh-градиенте teal→синий→фиолетовый, трендовый app-store вид.
+- Из 1024² исходника собрал: iOS `AppIcon-512@2x.png` (1024, **RGB без альфы** —
+  требование App Store), web `icon-192/512.png` (maskable, спич-бабл в safe-zone).
+- iOS пересобран (xcodebuild) + установлен на iPhone. Web-иконки — со следующим
+  веб-деплоем. Мастер-исходник: `scratchpad/icon2_3_mesh_speech.png`.
+
 ## 2026-07-10 — G15: женские обложки — полный паритет (89/89), сцены из базы
 
 - Запрос: догенерить женский комплект до паритета с мужским (89), в ТОМ ЖЕ
