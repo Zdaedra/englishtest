@@ -21,8 +21,14 @@
 - Обновил `_prod_check_phrases.md` (свежий 811/3191 с баннером; стёр 2026-06-06) +
   `_prod_check_phrases_current.json` (канон с `_meta`). Правила — в
   `CONTENT-GRAPH.md` (перепись §1 + граф §2 + дисциплина §4).
-- НЕ задеплоено (модуль read-only; для `docker exec … app.export_context` на
-  проде нужен бэкенд-ребилд english_app — по запросу).
+- ✅ ЗАДЕПЛОЕНО (2026-07-10): WAL-safe бэкап (`app.db.bak-20260711-023628`) →
+  rsync `backend/` (без --delete) → `docker compose -p english -f
+  docker-compose.deploy.yml up -d --build english_app` (ТОЛЬКО english_app;
+  caddy нетронут; данные в volume `english_data` не тронуты). Верифицировано:
+  doctor чист (кроме close-meeting), `app.export_context` работает на проде
+  (811/3191), root+cover 200. Снапшоты перегенерены живым прод-тулом. Заодно
+  уехали отложенные бэкенд-правки G11 (census-cleanup content/auth/doctor).
+  Прод build-context: `/root/english`.
 
 ## 2026-07-10 — G16: новая иконка приложения (mesh-speech) + web-favicon
 
