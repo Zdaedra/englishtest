@@ -21,7 +21,7 @@
 | Batch | 90 (все curated) | БД | `backend/content/*.json` (89 файлов) + `close-meeting` (авторский, только БД) | `app.seed` / `content.upsert` |
 | Zone | 271 (~3/батч) | БД | `zones` в content-файле | upsert |
 | Phrase | 811 (~9/батч) | БД | `phrases[]` в content-файле | upsert / `app.rephrase` |
-| **CheckPhrase** (проверочные) | **3191** (~4/фразу, `kind=stimulus, lang=en`) | **ТОЛЬКО БД** — content-файла НЕТ | БД = источник; human-readable снапшот `_prod_check_phrases.md` (2026-06-06, устаревает) | Курировались LLM-ом разово; **автогенератора нет** |
+| **CheckPhrase** (проверочные) | **3191** (~4/фразу, `kind=stimulus, lang=en`) | **ТОЛЬКО БД** — content-файла НЕТ | БД = источник; экспорт наружу ТОЛЬКО `python -m app.export_context` (слот-ключ, всегда свежий); снапшот `_prod_check_phrases.md` | Курировались LLM-ом разово; **автогенератора нет** |
 | MnemoStory (история + spans) | 90 | БД | `mnemo` в content-файле; spans вычисляются | upsert / `app.restory` |
 | **PhraseIntent** (ходы Live, пофразово, 2026-07-09 v2) | 1–3/фразу (2044 связи) | **ТОЛЬКО БД** | `backend/app/intents_curated.json` (курировано вручную, ключ `slug`+`order_index`); словарь фиксирован — **10 ключей**: warm/clarify/pushback/hold/buy_time/lead/ask/close/repair/support | `python -m app.intents` — идемпотентный ресид (`source=manual` руками — сидер их НЕ трогает). **Авторитетный сигнал для боя.** Фраза без строк → фолбэк на BatchIntent → универсально |
 | **BatchIntent** (ходы Live, грубый фолбэк) | 1–4/curated батч | **ТОЛЬКО БД** | `intents_curated.json` (батч-уровень); для батчей вне карты — фолбэк `SECTION_INTENTS` в `app/intents.py`; те же 10 ключей | `python -m app.intents` (тот же сид). Используется, только когда у фразы нет своих PhraseIntent (напр. приватный импорт). Батч без строк = универсальный |
@@ -63,6 +63,9 @@ app/intents_curated.json ──app.intents──▶ PhraseIntent (пофразо
 
 Phrase(en+anchor+gloss+situation/task) + CheckPhrase(approved) ──app.embeddings──▶ PhraseEmbedding
         │ вектор = «ситуации, которые закрывает фраза» — косинусный отбор кандидатов в Live
+
+Phrase(situation/task) + CheckPhrase(approved) ──app.export_context──▶ slot-keyed JSON / --md
+        │ единственный благословлённый экспорт cues/ситуаций наружу; ключ = (slug, order_index)
 ```
 
 Прогресс (UserPhraseStat, TrainingEvent, PhraseAttempt, ReviewEvent) висит на
@@ -120,6 +123,13 @@ guard-ованный `content.upsert` (блок при живом прогрес
   5. `python -m app.embeddings` — approved cues входят в вектор фразы
      (семантический индекс Live), без пере-эмбеддинга doctor красный.
   6. `app.doctor` → CLEAN.
+
+- **Экспорт cues/ситуаций наружу** (таблицы, ревью, интеграции) — ТОЛЬКО
+  `python -m app.export_context` (JSON) или `--md`. Кейнут по слоту
+  `(slug, order_index)`, регенерится из живой БД. ⚠️ Любой снапшот, кейнутый по
+  `anchor`/`phrase_en`, устаревает при `rephrase` — джойн по тексту молча теряет
+  переписанные фразы (реальная путаница «57%» после D1b: контент был цел, а
+  снапшот cues — до-D1b и по-якорю). Свежий снапшот: `_prod_check_phrases.md`.
 
 ---
 
