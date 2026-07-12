@@ -3,13 +3,13 @@
 //   on_path = curated learning trajectory (Learning map) · activated = practice deck
 //   invariant: activated ⊆ on_path. See TZ-batch-management.md §12.
 import { api } from "../api";
-import { getProgress, setProgress, writeLocalProgress, BatchProgress } from "./progress";
+import { getProgress, setProgress, writeLocalProgress, focusCount, FOCUS_CAP, BatchProgress } from "./progress";
 
 export type BatchAction =
   | "addPath" | "removePath" | "addActive" | "removeActive" | "reactivate"
   | "moveUp" | "moveDown" | "moveStart" | "moveEnd" | "open";
 
-export type MenuItem = { action: BatchAction; labelKey: string; destructive?: boolean };
+export type MenuItem = { action: BatchAction; labelKey: string; destructive?: boolean; disabled?: boolean };
 
 const OPEN: MenuItem = { action: "open", labelKey: "batch.menu.open" };
 const REMOVE_PATH: MenuItem = { action: "removePath", labelKey: "batch.menu.removePath", destructive: true };
@@ -43,10 +43,17 @@ export function batchMenuItems(batchId: number): MenuItem[] {
       items.push({ action: "moveEnd", labelKey: "batch.menu.moveEnd" });
     }
   }
-  // Active axis (practice-deck rotation)
+  // Active axis (practice-deck rotation). Adding a NEW batch to focus is blocked at
+  // the cap — show it disabled with a "pass an exam first" hint rather than letting
+  // the tap 403. (Removing / reactivating a completed batch never consume a slot.)
   if (active) items.push({ action: "removeActive", labelKey: "batch.menu.removeActive" });
   else if (completed) items.push({ action: "reactivate", labelKey: "batch.menu.reactivate" });
-  else items.push({ action: "addActive", labelKey: "batch.menu.addActive" });
+  else {
+    const atCap = focusCount() >= FOCUS_CAP;
+    items.push({ action: "addActive",
+      labelKey: atCap ? "batch.menu.focusFull" : "batch.menu.addActive",
+      disabled: atCap });
+  }
   // Trajectory axis (learning path)
   items.push(onPath
     ? REMOVE_PATH
@@ -91,7 +98,7 @@ function reorder(batchId: number, dir: ReorderDir): void {
   next.forEach((id, idx) => setProgress(id, { path_rank: idx }));
 }
 
-export type ActionResult = { ok: boolean; locked?: boolean };
+export type ActionResult = { ok: boolean; locked?: boolean; focusFull?: boolean };
 
 // Optimistic local write, then drive the server PUT. On ANY failure (cap/lock 403,
 // network, 5xx) roll the local cache back to avoid silent divergence, and signal
@@ -117,8 +124,11 @@ export async function runBatchAction(batchId: number, action: BatchAction): Prom
     writeLocalProgress(batchId, { on_path: before.on_path, activated: before.activated });
     notifyProgressChanged();
     const msg = String(e);
-    const locked = msg.includes("limit_active") || msg.includes("locked") || msg.includes("403");
-    return { ok: false, locked };
+    // Two distinct 403s: the focus cap (pedagogical — "finish one first", NEVER an
+    // upsell, since it hits paid users too) vs a paywall lock (freemium — upsell).
+    const focusFull = msg.includes("limit_active");
+    const locked = !focusFull && (msg.includes("locked") || msg.includes("403"));
+    return { ok: false, locked, focusFull };
   }
 }
 

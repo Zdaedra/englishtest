@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api, BatchDetail as Batch, BatchListItem, RotationItem } from "../api";
 import { usePlayer } from "../player/PlayerContext";
-import { getProgress, isEngaged, lessonStates, setProgress } from "../lib/progress";
+import { getProgress, isEngaged, lessonStates, setProgress, inFocus, focusCount, FOCUS_CAP } from "../lib/progress";
 import { planPosition } from "../lib/plan";
 import { useI18n } from "../i18n";
 import { haptic } from "../lib/session";
@@ -82,6 +82,30 @@ export default function BatchHome() {
           <p className="bh-sub">{t("paywall.body")}</p>
         </div>
         <button className="bh-activate" onClick={() => nav("/subscribe")}>{t("paywall.cta")}</button>
+      </div>
+    );
+  }
+
+  // Pedagogical focus cap: hold at most FOCUS_CAP batches in active focus at once
+  // (incl. the one currently being learned). A NEW batch, while the cap is full, is
+  // gated here — pass an exam on one of the open ones to free a slot. Batches already
+  // in focus and completed ones (for review) pass through. Mirrors the server's 403.
+  const fprog = getProgress(batch.id);
+  if (!inFocus(fprog) && !fprog.l3_passed && focusCount() >= FOCUS_CAP) {
+    return (
+      <div className="screen bh-screen">
+        <button className="bh-back" onClick={() => nav("/learn")}>
+          <IconBack size={18} /> {t("common.back")}
+        </button>
+        <span className="bh-cover bh-cover-locked">
+          <BatchCover seed={batch.slug} coverUrl={batch.cover_url} />
+          <span className="bh-lock-badge"><IconLock size={22} /></span>
+        </span>
+        <div className="bh-head">
+          <h1 className="bh-title">{batch.title}</h1>
+          <p className="bh-sub">{t("focus.full.body", { n: FOCUS_CAP })}</p>
+        </div>
+        <button className="bh-activate" onClick={() => nav("/learn")}>{t("focus.full.cta")}</button>
       </div>
     );
   }

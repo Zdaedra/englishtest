@@ -141,16 +141,56 @@ def test_completed_batch_does_not_count_toward_cap(make_user):
     assert r.status_code == 200, r.text                              # only 2 active-practice
 
 
-def test_lesson_start_bypasses_cap_and_auto_activates(make_user):
-    """Lesson-driven activation is never walled by the cap (don't block content)."""
+def test_lesson_start_of_a_new_batch_is_capped(make_user):
+    """The focus cap walls a NEW batch entering focus by ANY path — including
+    starting a lesson. You can't pile up focus by opening lessons either."""
     ids = [_free_batch(f"les-{i}") for i in range(3)]
     free = make_user(plan="free")
     for bid in ids:
         free.put(f"/api/progress/{bid}", json={"activated": True})  # at cap
     bid4 = _free_batch("les-4")
     r = free.put(f"/api/progress/{bid4}", json={"l1_listened": True})
+    assert r.status_code == 403
+    assert r.json()["detail"] == "limit_active"
+
+
+def test_lesson_progress_on_an_in_focus_batch_is_never_blocked(make_user):
+    """Continuing the batches already in focus is always allowed — the cap only
+    gates a NEW batch entering focus, never work on the ones you've opened."""
+    ids = [_free_batch(f"cont-{i}") for i in range(3)]
+    free = make_user(plan="free")
+    for bid in ids:
+        free.put(f"/api/progress/{bid}", json={"activated": True})  # at cap
+    r = free.put(f"/api/progress/{ids[0]}", json={"l1_listened": True})
     assert r.status_code == 200, r.text
-    assert r.json()["activated"] is True and r.json()["on_path"] is True
+    assert r.json()["l1_listened"] is True and r.json()["activated"] is True
+
+
+def test_focus_cap_applies_to_paid_unlimited_plans(make_user):
+    """The pedagogical cap is plan-independent: even an 'ai' plan (whose
+    max_active_batches is None/unlimited) can hold at most FOCUS_CAP=3 in focus."""
+    ids = [_free_batch(f"paid-{i}") for i in range(4)]
+    ai = make_user(plan="ai")
+    for bid in ids[:3]:
+        assert ai.put(f"/api/progress/{bid}",
+                      json={"activated": True}).status_code == 200
+    r = ai.put(f"/api/progress/{ids[3]}", json={"activated": True})
+    assert r.status_code == 403
+    assert r.json()["detail"] == "limit_active"
+
+
+def test_paid_exam_pass_frees_a_focus_slot(make_user):
+    """Passing an exam (l3_passed) drops a batch out of active focus, so a paid
+    learner at the cap can then open a new one — the intended release valve."""
+    ids = [_free_batch(f"free-slot-{i}") for i in range(3)]
+    ai = make_user(plan="ai")
+    for bid in ids:
+        ai.put(f"/api/progress/{bid}", json={"activated": True})  # 3/3
+    _seq_proof(ai.user["id"], ids[0])
+    ai.put(f"/api/progress/{ids[0]}", json={"l3_passed": True})   # frees a slot
+    bid4 = _free_batch("free-slot-4")
+    assert ai.put(f"/api/progress/{bid4}",
+                  json={"activated": True}).status_code == 200
 
 
 # --- Work-based streak (/api/progress/streak) --------------------------------

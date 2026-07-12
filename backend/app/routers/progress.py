@@ -12,7 +12,7 @@ from sqlmodel import Session, select
 from .. import access, models
 from ..auth import current_user_id
 from ..db import get_session
-from ..entitlements import user_entitlements
+from ..entitlements import FOCUS_CAP, user_entitlements
 
 router = APIRouter(prefix="/api/progress", tags=["progress"])
 
@@ -188,22 +188,37 @@ def _put_progress(batch_id: int, patch: ProgressPatch, user_id: int,
     if not next_on_path:
         next_activated = False
 
-    # Freemium cap applies ONLY to an EXPLICIT activation (the menu / Activate button),
-    # counting active-practice batches (activated && !l3_passed). De-activation and
-    # lesson-driven activation are never capped — never wall content the user is doing.
-    explicit_activation = next_activated and not bp.activated and not lesson_engaged
+    # "Active focus" = the metered set {activated && !l3_passed}. A write ENTERS that
+    # set iff the batch will be in it and wasn't already (so passing the exam in this
+    # same write — which leaves it activated&&passed — never counts as entering).
+    next_l3 = bool(data.get("l3_passed", bp.l3_passed))
+    was_in_focus = bool(bp.activated) and not bool(bp.l3_passed)
+    will_be_in_focus = bool(next_activated) and not next_l3
+    entering_focus = will_be_in_focus and not was_in_focus
+    explicit_activation = entering_focus and not lesson_engaged
+
+    # (a) Paywall — walls ONLY an explicit "Activate" on locked (paid) content. The
+    # lesson flow gates its own access, so never re-wall content mid-lesson.
     if explicit_activation:
         u = session.get(models.User, user_id)
         if not access.batch_usable(u.plan if u else "free", batch, user_id):
             raise HTTPException(403, "locked")
-        cap = user_entitlements(session, user_id)["max_active_batches"]
-        if cap is not None:
-            active = len(session.exec(select(models.BatchProgress).where(
-                models.BatchProgress.user_id == user_id,
-                models.BatchProgress.activated == True,   # noqa: E712
-                models.BatchProgress.l3_passed == False)).all())  # noqa: E712
-            if active >= cap:
-                raise HTTPException(403, "limit_active")
+
+    # (b) Focus cap — a PEDAGOGICAL limit that applies to EVERY learner (free & paid)
+    # and EVERY path INTO focus (the menu OR starting a lesson on a new batch): you
+    # can't hold more than FOCUS_CAP batches in active focus at once, so you finish
+    # and pass exams instead of piling up. De-activation and continuing/​passing the
+    # ones already in focus are never blocked (they don't enter the set). Passing an
+    # exam frees a slot. The plan's max_active_batches can only make this stricter.
+    if entering_focus:
+        plan_cap = user_entitlements(session, user_id)["max_active_batches"]
+        cap = FOCUS_CAP if plan_cap is None else min(plan_cap, FOCUS_CAP)
+        active = len(session.exec(select(models.BatchProgress).where(
+            models.BatchProgress.user_id == user_id,
+            models.BatchProgress.activated == True,   # noqa: E712
+            models.BatchProgress.l3_passed == False)).all())  # noqa: E712
+        if active >= cap:
+            raise HTTPException(403, "limit_active")
 
     if next_activated and not bp.activated:
         bp.activated_at = now

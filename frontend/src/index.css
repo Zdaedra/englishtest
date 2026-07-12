@@ -4421,7 +4421,20 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 .bm-item:active, .bm-cancel:active { transform: scale(.98); background: rgba(17, 17, 17, .06); }
 .bm-item.danger { color: var(--danger); }
 .bm-item:disabled, .bm-cancel:disabled { opacity: .5; }
+/* "Add to active" at the focus cap: shown muted (still tappable → explains why). */
+.bm-item-off { color: var(--faint); font-weight: 600; }
 .bm-cancel { margin-top: 6px; font-weight: 700; background: rgba(17, 17, 17, .05); }
+
+/* Transient focus-cap nudge ("finish one to open a new one"). Above the tab bar. */
+.bm-toast {
+  position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%); z-index: 60; max-width: min(88vw, 420px);
+  padding: 12px 18px; border-radius: 16px; text-align: center;
+  background: rgba(17, 17, 17, .92); color: #fff; font-size: .95rem; font-weight: 600;
+  line-height: 1.35; box-shadow: 0 8px 30px rgba(17, 17, 17, .28);
+  animation: bm-toast-in .22s var(--spring);
+}
+@keyframes bm-toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 /* Inline AI result on the FRONT bottom zone (replaces the mic; order %→you→model→coach). */
 .tr-result {

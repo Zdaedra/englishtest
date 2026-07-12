@@ -22,6 +22,35 @@ export function isEngaged(p: BatchProgress): boolean {
   return !!(p.activated || p.l1_listened || p.l1_retold || p.l3_s1 || p.l3_s2 || p.l3_passed);
 }
 
+// Pedagogical focus cap: at most this many batches may be in ACTIVE FOCUS
+// (activated && exam not yet passed) at once — for every plan, free or paid.
+// Mirrors backend entitlements.FOCUS_CAP; the server enforces it, this is the
+// client-side gate so the rule reads clearly (don't just eat a 403). Passing an
+// exam frees a slot.
+export const FOCUS_CAP = 3;
+
+// "In focus" = in the practice deck and the final exam isn't passed yet. This is
+// exactly the set the cap meters (and what the last batch in learning belongs to).
+export function inFocus(p: BatchProgress): boolean {
+  return !!p.activated && !p.l3_passed;
+}
+
+// How many batches are in active focus right now (scans the local progress cache,
+// which the server hydrates on login). Used to gate a NEW batch from entering
+// focus past FOCUS_CAP before we ever attempt the (fire-and-forget) server write.
+export function focusCount(): number {
+  let n = 0;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith("ee-progress-")) continue;
+      const p = JSON.parse(localStorage.getItem(k) || "{}");
+      if (p && p.activated && !p.l3_passed) n++;
+    }
+  } catch { /* non-critical */ }
+  return n;
+}
+
 // Two-axis batch management. on_path = curated learning trajectory (Learning map);
 // active = practice-deck rotation. Invariant: active ⊆ on_path. The map now reads
 // on_path directly (lib/plan.ts hides on_path===false nodes); the old isOnPath()

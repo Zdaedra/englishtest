@@ -44,6 +44,15 @@ ENTITLEMENTS: dict[str, dict] = {
 }
 
 
+# Pedagogical focus cap — INDEPENDENT of plan/monetization. No learner (free OR
+# paid) may keep more than this many batches in active focus (activated &&
+# !l3_passed) at once — including the one currently being learned. This forces
+# finishing (passing exams) instead of piling up an unbounded deck. The effective
+# activation limit is min(plan max_active_batches, FOCUS_CAP): a plan can only make
+# it stricter, never looser. Passing an exam frees a slot. Enforced in progress.py.
+FOCUS_CAP = 3
+
+
 def ents(plan: str | None) -> dict:
     return ENTITLEMENTS.get(plan or "free", ENTITLEMENTS["free"])
 
