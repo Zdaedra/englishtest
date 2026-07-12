@@ -1,0 +1,60 @@
+{
+ "slug": "composure-4",
+ "title": "Сохранить лицо после ошибки",
+ "theme": "Ты на людях оговорился или что-то пошло не так — не провалиться в стыд, легко признать и восстановить осанку; одна оплошность не определяет тебя",
+ "subtitle": "Вираж на роликах",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Blooper",
+   "zone": "Warm",
+   "en": "Well — that one's going in the blooper reel."
+  },
+  {
+   "anchor": "Scenic",
+   "zone": "Warm",
+   "en": "Apparently my brain took the scenic route to that sentence."
+  },
+  {
+   "anchor": "Buffered",
+   "zone": "Warm",
+   "en": "Brain buffered for a second there — okay, we're back."
+  },
+  {
+   "anchor": "Scratch",
+   "zone": "Backbone",
+   "en": "Scratch that — here's what I actually meant."
+  },
+  {
+   "anchor": "Fix",
+   "zone": "Backbone",
+   "en": "Let me fix that before I make the real point."
+  },
+  {
+   "anchor": "Clumsy",
+   "zone": "Backbone",
+   "en": "The point stands — I just took the clumsy route to get there."
+  },
+  {
+   "anchor": "Slip",
+   "zone": "Weight",
+   "en": "Small slip — not worth dwelling on. Where were we?"
+  },
+  {
+   "anchor": "Throw",
+   "zone": "Weight",
+   "en": "Takes more than that to throw me off."
+  },
+  {
+   "anchor": "Smooth",
+   "zone": "Weight",
+   "en": "Well, that was smooth. Anyway."
+  }
+ ],
+ "mnemo": "Камешек устраивает blooper, тебя несёт в scenic — живописный — вираж; ты на миг buffered — подвис, — но баннер гасит удар плечом. На асфальте остаётся scratch, но ты первым делом fix — поправляешь — руль. Один clumsy — неуклюжий — вихляж, улыбка соседу: это был slip — мелкая оплошность, — где мы были? Такого мало, чтобы throw — выбить — тебя из седла. Оглядываешь свой вираж с усмешкой: smooth — гладко вышло, — и вкатываешься обратно в поток."
+}

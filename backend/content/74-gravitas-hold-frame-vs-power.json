@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-6",
+ "title": "Держать рамку против ранга/угрозы/силы",
+ "theme": "Тяжеловес давит рангом, угрозой, статусом — не сложиться и не сорваться в агрессию; держать рамку спокойным весом, как равный",
+ "subtitle": "Мост с великаном",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Peg",
+   "zone": "Warm",
+   "en": "I'm not here to take anyone down a peg — I'm here to fix the problem."
+  },
+  {
+   "anchor": "Outcome",
+   "zone": "Warm",
+   "en": "We both want the same thing here: a clean outcome."
+  },
+  {
+   "anchor": "Remind",
+   "zone": "Warm",
+   "en": "No need to remind me who you are — let's stay on the issue."
+  },
+  {
+   "anchor": "Seniority",
+   "zone": "Backbone",
+   "en": "Seniority doesn't decide this — the facts do."
+  },
+  {
+   "anchor": "Threats",
+   "zone": "Backbone",
+   "en": "Threats don't change the facts on the table."
+  },
+  {
+   "anchor": "Intimidated",
+   "zone": "Backbone",
+   "en": "I'm willing to be pressed — I'm not willing to be intimidated."
+  },
+  {
+   "anchor": "Title",
+   "zone": "Weight",
+   "en": "I respect the title — it just doesn't make the argument for you."
+  },
+  {
+   "anchor": "Position",
+   "zone": "Weight",
+   "en": "Push all you want — my position hasn't moved."
+  },
+  {
+   "anchor": "Outrank",
+   "zone": "Weight",
+   "en": "You outrank me — that doesn't make you right."
+  }
+ ],
+ "mnemo": "В переговорке крупный партнёр начинает с давления: “знай своё место”. Ты не пытаешься сбить его на peg — колышек — ниже, просто подходишь к экрану. Показываешь нужный outcome — исход — сделки, ради которого вы здесь. Когда он начинает remind — напоминать — о своём весе, ты возвращаешь курсор к условиям. Его seniority — старшинство — видно и без лишних слов. Потом идут threats — угрозы сорвать контракт, и ты не отвечаешь тем же. Команда смотрит, не intimidated — испугался — ли ты. Ты называешь его title — титул — уважительно и продолжаешь по пунктам. Твоя position — позиция — остаётся на экране. В конце ты спокойно говоришь: ранг не outrank — перекрывает — факты сделки."
+}

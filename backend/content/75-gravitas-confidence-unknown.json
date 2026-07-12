@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-7",
+ "title": "Дать уверенность, когда исход неизвестен",
+ "theme": "Исход правда неизвестен — дать не гарантию результата, а честную опору: процесс, ценности, присутствие; уверенность в нас, не в финале",
+ "subtitle": "Связка в тумане",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Lie",
+   "zone": "Warm",
+   "en": "I won't lie to you to make this easier — I'll just be here."
+  },
+  {
+   "anchor": "Truth",
+   "zone": "Warm",
+   "en": "Truth is, I don't know how this ends — but you won't face it alone."
+  },
+  {
+   "anchor": "Around",
+   "zone": "Warm",
+   "en": "I'll be straight with you, and I'll be around — that much I can give."
+  },
+  {
+   "anchor": "Control",
+   "zone": "Backbone",
+   "en": "Here's what we control: the next move, the standard, and how we treat people."
+  },
+  {
+   "anchor": "Road",
+   "zone": "Backbone",
+   "en": "We can't see the whole road — the next step's clear enough."
+  },
+  {
+   "anchor": "Focus",
+   "zone": "Backbone",
+   "en": "What we can control is how we handle this — so that's our focus."
+  },
+  {
+   "anchor": "Effort",
+   "zone": "Weight",
+   "en": "I can't promise the outcome — I can promise the effort."
+  },
+  {
+   "anchor": "Deal",
+   "zone": "Weight",
+   "en": "However this ends, we'll deal with it the right way."
+  },
+  {
+   "anchor": "Ready",
+   "zone": "Weight",
+   "en": "We'll know soon enough — and we'll be ready."
+  }
+ ],
+ "mnemo": "Перед сложной встречей команда ждёт у лифта. Ты не говоришь lie — ложь — вроде “точно победим”. Вместо этого говоришь truth — правду: исход неизвестен. Пока лифт едет вниз, напоминаешь: я around — рядом — и не исчезну после встречи. У входа берёшь control — контроль — над тем, что реально ваше: подготовка, тон, следующие шаги. Вся road — дорога — не видна, но ближайшая дверь перед вами. Перед входом сводишь focus — фокус — к одному вопросу. Каждый знает свой effort — вклад — на встрече. Ты честно называешь deal — договор: результата не обещаю, присутствие и работу обещаю. Дверь открывается, и вы ready — готовы — зайти."
+}

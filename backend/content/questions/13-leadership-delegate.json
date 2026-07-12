@@ -1,0 +1,208 @@
+{
+  "slug": "leadership-delegate",
+  "batch_file": "13-leadership-delegate.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Entrust». Ответь одной уместной фразой.",
+      "intent": "reins",
+      "accept_anchors": [
+        "Reins"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Делегирование — передать штурвал, дать полномо…). Дай реплику в регистре «Entrust».",
+      "intent": "charge",
+      "accept_anchors": [
+        "Charge"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Entrust». Скажи фразу, которая здесь уместна.",
+      "intent": "lead",
+      "accept_anchors": [
+        "Lead"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Empower». Произнеси подходящую фразу.",
+      "intent": "call",
+      "accept_anchors": [
+        "Call"
+      ],
+      "zone": "Empower",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Делегирование — передать штурвал, дать полномо…). Вступи в тоне «Empower» одной фразой.",
+      "intent": "back",
+      "accept_anchors": [
+        "Back"
+      ],
+      "zone": "Empower",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Empower»).",
+      "intent": "green",
+      "accept_anchors": [
+        "Green"
+      ],
+      "zone": "Empower",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Account». Ответь одной уместной фразой.",
+      "intent": "own",
+      "accept_anchors": [
+        "Own"
+      ],
+      "zone": "Account",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Делегирование — передать штурвал, дать полномо…). Дай реплику в регистре «Account».",
+      "intent": "accountable",
+      "accept_anchors": [
+        "Accountable"
+      ],
+      "zone": "Account",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Account». Скажи фразу, которая здесь уместна.",
+      "intent": "deliver",
+      "accept_anchors": [
+        "Deliver"
+      ],
+      "zone": "Account",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Entrust». Произнеси подходящую фразу.",
+      "intent": "reins",
+      "accept_anchors": [
+        "Reins"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Делегирование — передать штурвал, дать полномо…). Вступи в тоне «Entrust» одной фразой.",
+      "intent": "charge",
+      "accept_anchors": [
+        "Charge"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Entrust»).",
+      "intent": "lead",
+      "accept_anchors": [
+        "Lead"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Empower». Ответь одной уместной фразой.",
+      "intent": "call",
+      "accept_anchors": [
+        "Call"
+      ],
+      "zone": "Empower",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Делегирование — передать штурвал, дать полномо…). Дай реплику в регистре «Empower».",
+      "intent": "back",
+      "accept_anchors": [
+        "Back"
+      ],
+      "zone": "Empower",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Empower». Скажи фразу, которая здесь уместна.",
+      "intent": "green",
+      "accept_anchors": [
+        "Green"
+      ],
+      "zone": "Empower",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Account». Произнеси подходящую фразу.",
+      "intent": "own",
+      "accept_anchors": [
+        "Own"
+      ],
+      "zone": "Account",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Делегирование — передать штурвал, дать полномо…). Вступи в тоне «Account» одной фразой.",
+      "intent": "accountable",
+      "accept_anchors": [
+        "Accountable"
+      ],
+      "zone": "Account",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Account»).",
+      "intent": "deliver",
+      "accept_anchors": [
+        "Deliver"
+      ],
+      "zone": "Account",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Entrust». Ответь одной уместной фразой.",
+      "intent": "reins",
+      "accept_anchors": [
+        "Reins"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Делегирование — передать штурвал, дать полномо…). Дай реплику в регистре «Entrust».",
+      "intent": "charge",
+      "accept_anchors": [
+        "Charge"
+      ],
+      "zone": "Entrust",
+      "difficulty": 1
+    }
+  ]
+}

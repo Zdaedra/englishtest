@@ -1,0 +1,60 @@
+{
+ "slug": "charisma-9",
+ "title": "Спасти неловкий момент",
+ "theme": "Разрядить ляп так, что статус всех растёт, а неловкость превращается в сближение",
+ "subtitle": "Стейдж-дайв",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Head",
+   "zone": "Warm",
+   "en": "Well — that landed better in my head."
+  },
+  {
+   "anchor": "Heard",
+   "zone": "Warm",
+   "en": "Well, everyone heard that one. Moving on."
+  },
+  {
+   "anchor": "Charming",
+   "zone": "Warm",
+   "en": "We're all just going to agree that was charming, right?"
+  },
+  {
+   "anchor": "Dignity",
+   "zone": "Backbone",
+   "en": "We'll circle back to my dignity later — you were saying?"
+  },
+  {
+   "anchor": "Pretend",
+   "zone": "Backbone",
+   "en": "Okay, let's pretend the last ten seconds didn't happen."
+  },
+  {
+   "anchor": "Overthink",
+   "zone": "Backbone",
+   "en": "I'm not going to overthink that — neither should you."
+  },
+  {
+   "anchor": "Formal",
+   "zone": "Weight",
+   "en": "Good — the formal part's officially over. Now we can actually talk."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Weight",
+   "en": "See, now you trust me — nobody this awkward is hiding anything."
+  },
+  {
+   "anchor": "Shape",
+   "zone": "Weight",
+   "en": "If that's our awkward moment tonight, we're in excellent shape."
+  }
+ ],
+ "mnemo": "Киваешь head барабанщику — отсчёт! — и первый же вопль heard — слышен — до последнего ряда; шлёшь charming улыбку залу. На втором куплете цепляешься за кабель, летишь — но встаёшь с dignity, а зал готов pretend — сделать вид, что ничего не было. Ты не overthink — не пережёвываешь: разбег мимо стража в formal пиджаке — и прыжок спиной в толпу, чистый trust. Руки складываются в shape волны и несут тебя над залом."
+}

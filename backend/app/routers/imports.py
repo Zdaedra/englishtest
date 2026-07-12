@@ -3,13 +3,20 @@ import re
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlmodel import Session, select
 
-from .. import content, cover, importer, models
+from .. import content, cover, doctor, importer, models
+from ..auth import current_user_id, is_admin, require_admin
 from ..config import get_settings
 from ..content import BatchAuthor
 from ..db import engine, get_session
+from ..entitlements import user_entitlements
 from ..schemas import BatchIn, ParseRequest, ParseResponse
 
 router = APIRouter(prefix="/api/imports", tags=["imports"])
+
+
+def _require_import(session: Session, user_id: int) -> None:
+    if not user_entitlements(session, user_id)["import"]:
+        raise HTTPException(403, "core_required")
 
 
 def _slugify(title: str) -> str:
@@ -43,7 +50,9 @@ def _gen_cover_bg(batch_id: int, slug: str, title: str, theme: str,
 
 
 @router.post("/parse", response_model=ParseResponse)
-def parse(req: ParseRequest):
+def parse(req: ParseRequest, user_id: int = Depends(current_user_id),
+          session: Session = Depends(get_session)):
+    _require_import(session, user_id)
     try:
         return importer.parse(req.raw_text, use_llm=req.use_llm)
     except Exception as e:  # LLM/network failure shouldn't 500 silently
@@ -52,8 +61,10 @@ def parse(req: ParseRequest):
 
 @router.post("/commit")
 def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
+           user_id: int = Depends(current_user_id),
            session: Session = Depends(get_session)):
     """Create a new batch from the paste→parse UI flow (always a fresh slug)."""
+    _require_import(session, user_id)
     if not batch_in.phrases:
         raise HTTPException(status_code=400, detail="Batch has no phrases")
 
@@ -63,6 +74,13 @@ def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
     batch, _ = content.upsert(session, batch_in, slug=slug,
                               auto_title=True, auto_subtitle=True, auto_cover=False)
 
+    # Admin imports populate the shared catalog (owner_id NULL); a client's import
+    # is private to them (owner_id = the client) so it never leaks into the library.
+    batch.owner_id = None if is_admin(session, user_id) else user_id
+    session.add(batch)
+    session.commit()
+    session.refresh(batch)
+
     if get_settings().auto_cover:
         background_tasks.add_task(_gen_cover_bg, batch.id, batch.slug,
                                   batch.title, batch.theme, batch.subtitle)
@@ -70,26 +88,51 @@ def commit(batch_in: BatchIn, background_tasks: BackgroundTasks,
 
 
 @router.post("/upsert")
-def upsert_authored(author: BatchAuthor, session: Session = Depends(get_session)):
+def upsert_authored(author: BatchAuthor, force: bool = False,
+                    user_id: int = Depends(require_admin),
+                    session: Session = Depends(get_session)):
     """Create-or-replace a batch from the authoring format, keyed by its slug.
 
     This is the corrections path: POST the same slug with edited content and the
-    batch is rewritten in place (id + cover preserved). No hand-written scripts.
+    batch is rewritten in place (id + cover preserved). Admin-only — it edits the
+    shared curated catalog by slug, so clients must not reach it.
+
+    Replacing wipes+recreates the batch's phrases (new ids), so a batch with live
+    user progress answers 409 — text-only edits belong in app.rephrase/app.restory.
+    Pass ?force=true to consciously destroy that progress and replace anyway.
     """
     if not author.phrases:
         raise HTTPException(status_code=400, detail="Batch has no phrases")
     batch_in, warnings = content.to_batch_in(author)
-    batch, created = content.upsert(session, batch_in, slug=author.slug,
-                                    auto_title=True, auto_subtitle=True)
+    try:
+        batch, created = content.upsert(
+            session, batch_in, slug=author.slug, auto_title=True,
+            auto_subtitle=True, on_live_progress="wipe" if force else "block")
+    except content.LiveProgressError as e:
+        raise HTTPException(status_code=409, detail={
+            "error": "live_progress", "slug": e.slug, "counts": e.counts,
+            "hint": "Users have SRS progress on this batch; text edits should go "
+                    "through app.rephrase/app.restory. Retry with ?force=true to "
+                    "destroy their progress and replace anyway (also deletes "
+                    "their training-event history for these phrases, which can "
+                    "retroactively shrink day-streaks)."})
+    # Fresh integrity report in the response: after a replace it doubles as
+    # the list of regeneration steps that remain (cues/gen_context/i18n holes).
     return {"id": batch.id, "slug": batch.slug, "created": created,
-            "warnings": warnings}
+            "warnings": warnings, "doctor": doctor.run(fix=False)}
 
 
 @router.post("/seed")
-def seed(session: Session = Depends(get_session)):
-    """Load every backend/content/*.json file (idempotent upsert by slug)."""
-    results = content.load_all(session)
+def seed(force: bool = False, user_id: int = Depends(require_admin),
+         session: Session = Depends(get_session)):
+    """Load every backend/content/*.json file (idempotent upsert by slug).
+    Admin-only — it populates the shared curated catalog. Batches with live user
+    progress are reported as blocked (not replaced) unless ?force=true."""
+    results = content.load_all(
+        session, on_live_progress="wipe" if force else "block")
     return {"loaded": [
-        {"id": b.id, "slug": b.slug, "created": created, "warnings": warnings}
-        for b, created, warnings in results
-    ]}
+        {"id": r["batch"].id if r["batch"] else None, "slug": r["slug"],
+         "created": r["created"], "warnings": r["warnings"],
+         "blocked": r["blocked"], "unchanged": r["unchanged"]}
+        for r in results
+    ], "doctor": doctor.run(fix=False)}

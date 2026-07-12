@@ -1,0 +1,208 @@
+{
+  "slug": "composure-answer-disrespect",
+  "batch_file": "65-composure-answer-disrespect.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "intended",
+      "accept_anchors": [
+        "Intended"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (С тобой грубы или говорят свысока — ответить, …). Дай реплику в регистре «Warm».",
+      "intent": "again",
+      "accept_anchors": [
+        "Again"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "snark",
+      "accept_anchors": [
+        "Snark"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "candor",
+      "accept_anchors": [
+        "Candor"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (С тобой грубы или говорят свысока — ответить, …). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "challenge",
+      "accept_anchors": [
+        "Challenge"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "ways",
+      "accept_anchors": [
+        "Ways"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "lower",
+      "accept_anchors": [
+        "Lower"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (С тобой грубы или говорят свысока — ответить, …). Дай реплику в регистре «Weight».",
+      "intent": "level",
+      "accept_anchors": [
+        "Level"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "condition",
+      "accept_anchors": [
+        "Condition"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "intended",
+      "accept_anchors": [
+        "Intended"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (С тобой грубы или говорят свысока — ответить, …). Вступи в тоне «Warm» одной фразой.",
+      "intent": "again",
+      "accept_anchors": [
+        "Again"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "snark",
+      "accept_anchors": [
+        "Snark"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "candor",
+      "accept_anchors": [
+        "Candor"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (С тобой грубы или говорят свысока — ответить, …). Дай реплику в регистре «Backbone».",
+      "intent": "challenge",
+      "accept_anchors": [
+        "Challenge"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "ways",
+      "accept_anchors": [
+        "Ways"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "lower",
+      "accept_anchors": [
+        "Lower"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (С тобой грубы или говорят свысока — ответить, …). Вступи в тоне «Weight» одной фразой.",
+      "intent": "level",
+      "accept_anchors": [
+        "Level"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "condition",
+      "accept_anchors": [
+        "Condition"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "intended",
+      "accept_anchors": [
+        "Intended"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (С тобой грубы или говорят свысока — ответить, …). Дай реплику в регистре «Warm».",
+      "intent": "again",
+      "accept_anchors": [
+        "Again"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

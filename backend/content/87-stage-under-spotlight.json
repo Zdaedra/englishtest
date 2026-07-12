@@ -1,0 +1,60 @@
+{
+ "slug": "stage-9",
+ "title": "Под софитами / вниманием прессы",
+ "theme": "Интервью, камеры, журналисты — каждое слово пишется и может быть вырвано в цитату; остаться живым человеком, а не пресс-релизом, владеть своим посланием и дать чистую строку, которую хочешь увидеть в печати; софиты не меняют мой ответ — тон задаю я, не новостной цикл",
+ "subtitle": "Ночная типография",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "statement",
+   "zone": "Warm",
+   "en": "Let's talk like people — I'm not going to read you a statement."
+  },
+  {
+   "anchor": "hide",
+   "zone": "Warm",
+   "en": "I'm not going to hide behind talking points."
+  },
+  {
+   "anchor": "homework",
+   "zone": "Warm",
+   "en": "You've clearly done your homework. I respect that — let's get into it."
+  },
+  {
+   "anchor": "print",
+   "zone": "Backbone",
+   "en": "Here's the line I actually want you to print:"
+  },
+  {
+   "anchor": "speculate",
+   "zone": "Backbone",
+   "en": "I won't speculate on that. What I can tell you is this."
+  },
+  {
+   "anchor": "sentence",
+   "zone": "Backbone",
+   "en": "Here it is in one sentence you can run as-is."
+  },
+  {
+   "anchor": "cameras",
+   "zone": "Weight",
+   "en": "Cameras on or off, you'd get the same answer."
+  },
+  {
+   "anchor": "headline",
+   "zone": "Weight",
+   "en": "I'm not going to let a headline write my answer."
+  },
+  {
+   "anchor": "quote",
+   "zone": "Weight",
+   "en": "Quote me on all of it. I stand behind every word."
+  }
+ ],
+ "mnemo": "Ты выходишь в белые вспышки, сквозь коридор репортёров. Отодвигаешь протянутый лист statement — заготовку: говорить будешь как человек. Расстёгиваешь пальто: тебе не за чем hide — прятаться. Сворачиваешь к тому, кто сделал homework — домашнюю работу. Наклоняешься к диктофону и медленно даёшь строку под print — в печать. Отводишь ладонью микрофон с провокацией: speculate — гадать — не будешь. Чеканишь одну sentence — фразу: бери в эфир как есть. Идёшь через круг света, не меняя шага: cameras — камеры — включены или нет, ответ один. Проходишь мимо бегущего headline — заголовка: не ему писать твой ответ. И у дверей разворачиваешься: quote — цитируйте всё, я за каждым словом."
+}

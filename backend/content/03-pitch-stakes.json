@@ -1,20 +1,60 @@
 {
-  "slug": "pitch-2",
-  "title": "Ставка",
-  "theme": "Питч: боль, цена и «почему сейчас»",
-  "subtitle": "Трещина в стекле",
-  "section": "pitch",
-  "zones": ["Frame", "Cost", "Now"],
-  "phrases": [
-    { "anchor": "Frame",  "zone": "Frame", "en": "Here's how I'd frame the problem." },
-    { "anchor": "Crack",  "zone": "Frame", "en": "There's a crack in how everyone does this today." },
-    { "anchor": "Real",   "zone": "Frame", "en": "Let me make this real for a second." },
-    { "anchor": "Bleed",  "zone": "Cost",  "en": "Every month you wait, you bleed customers you never see." },
-    { "anchor": "Stake",  "zone": "Cost",  "en": "Here's what's actually at stake." },
-    { "anchor": "Tax",    "zone": "Cost",  "en": "The status quo is a tax — you're just paying it quietly." },
-    { "anchor": "Window", "zone": "Now",   "en": "The window for this is open right now, not next year." },
-    { "anchor": "Tide",   "zone": "Now",   "en": "The tide just turned — and here's why now." },
-    { "anchor": "Clock",  "zone": "Now",   "en": "The clock's already running on this one." }
-  ],
-  "mnemo": "Ты вешаешь на стену пустую frame, и в ней проступает трещина, crack, бегущая по стеклу. Проводишь пальцем — кровь, всё real, по-настоящему. Из трещины капля за каплей bleed, и каждая капля — деньги на кону, stake. Невидимый сборщик молча берёт свой tax. За рамкой распахивается window — снаружи прибой, tide поднимается прямо сейчас. А на подоконнике тикает clock — время уже пошло."
+ "slug": "pitch-2",
+ "title": "Ставка",
+ "theme": "Питч: боль, цена и «почему сейчас»",
+ "subtitle": "Трещина в стекле",
+ "section": "pitch",
+ "zones": [
+  "Frame",
+  "Cost",
+  "Now"
+ ],
+ "phrases": [
+  {
+   "anchor": "Frame",
+   "zone": "Frame",
+   "en": "Here's how I'd frame the problem."
+  },
+  {
+   "anchor": "Hole",
+   "zone": "Frame",
+   "en": "There's a hole in how everyone does this today."
+  },
+  {
+   "anchor": "Real",
+   "zone": "Frame",
+   "en": "Let me make this real for a second."
+  },
+  {
+   "anchor": "Bleed",
+   "zone": "Cost",
+   "en": "Every month you wait, you bleed customers you never see."
+  },
+  {
+   "anchor": "Stake",
+   "zone": "Cost",
+   "en": "Here's what's actually at stake."
+  },
+  {
+   "anchor": "Tax",
+   "zone": "Cost",
+   "en": "The status quo is a tax — you're just paying it quietly."
+  },
+  {
+   "anchor": "Window",
+   "zone": "Now",
+   "en": "The window for this is open right now, not next year."
+  },
+  {
+   "anchor": "Flipped",
+   "zone": "Now",
+   "en": "The market just flipped — that's why now."
+  },
+  {
+   "anchor": "Clock",
+   "zone": "Now",
+   "en": "The clock's already running on this one."
+  }
+ ],
+ "mnemo": "Ты приводишь инвестора в клинику за час до открытия и задаёшь простой frame — рамку: пройти путь одного пациента от записи до оплаты. У стойки ресепшна администратор показывает hole — дыру в расписании: три пустых слота подряд. В кабинете врач подтверждает: спрос real — настоящий, вчера таких звонков было больше десяти. Пока вы идёте обратно к стойке, отменяется ещё один визит, и выручка начинает bleed — утекать прямо на глазах. У доски смен ты показываешь stake — что на кону: если утро пустое, простаивают врач, кабинет и ассистент. У кассы открываешь отчёт: каждая отмена работает как tax — налог за медленную запись. На экране календаря находишь короткое window — окно, куда пациента ещё можно переставить. Администратор нажимает кнопку, статус визита flipped — меняется с cancelled на rescheduled. Ты смотришь на clock — часы над стойкой: вся операция заняла меньше двух минут."
 }

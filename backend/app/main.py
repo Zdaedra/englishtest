@@ -1,70 +1,47 @@
-import hashlib
-import hmac
 from pathlib import Path
-from urllib.parse import parse_qs
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
+from sqlmodel import Session
 
+from . import models
 from .config import get_settings
-from .db import init_db
-from .routers import batches, imports, sessions, settings, training
+from .db import engine, init_db
+from .auth import parse_session
+from .routers import admin_stats, analyzer, auth, batches, battle, billing, imports, league, practice, progress, sessions, settings, training, tutorial
 
 app = FastAPI(title="English Executive")
 
 # Dev: Vite runs on :5173 and proxies /api, but allow direct CORS too.
+# Native (Capacitor/iOS) loads from capacitor://localhost and calls the API
+# cross-origin with a Bearer token (no cookie), so its origin must be allowed.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://localhost:5173", "http://127.0.0.1:5173",
+        "capacitor://localhost", "ionic://localhost", "https://localhost",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# --- Single-user cookie auth gate -------------------------------------------
-# Replaces HTTP basic-auth so iOS Safari (and the home-screen PWA) remember the
-# login: one password entry sets a signed, year-long cookie. Cost-bearing TTS
-# stays protected. Disabled when ENGLISH_APP_PASSWORD is empty (local dev).
+# --- Per-user account auth gate ---------------------------------------------
+# Commercial multi-user: a signed session cookie (eng_auth) carries the user id.
+# Only the API + cost-bearing media are gated; the SPA shell/assets load freely
+# and the frontend gates itself via /api/auth/me. Register + login are public.
 _COOKIE = "eng_auth"
-_COOKIE_MAX_AGE = 31536000  # 1 year
-
-
-def _auth_token() -> str:
-    s = get_settings()
-    return hmac.new(s.cookie_secret.encode(), b"eng-auth-v1", hashlib.sha256).hexdigest()
-
-
-def _login_page(error: str = "") -> HTMLResponse:
-    err = f'<p class="err">{error}</p>' if error else ""
-    html = f"""<!doctype html><html lang="ru"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#F8F8F6">
-<title>English Executive — вход</title>
-<style>
-  body{{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-       background:#F8F8F6;color:#111111;
-       font-family:-apple-system,"SF Pro Display","SF Pro Text",system-ui,sans-serif}}
-  form{{width:min(360px,86vw);padding:32px 24px;background:#FFFFFF;border:1px solid #ECECEC;
-       border-radius:26px;box-shadow:0 10px 40px rgba(17,17,17,.06)}}
-  .brand{{font-size:24px;font-weight:800;letter-spacing:-.01em;margin:0 0 4px}}
-  .tag{{font-size:13px;color:#6B6B6B;margin:0 0 22px}}
-  input{{width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border-radius:14px;
-        border:1px solid #ECECEC;background:#F8F8F6;color:#111111;margin-bottom:14px;
-        outline:none;transition:border-color .2s}}
-  input:focus{{border-color:#6B6FCF;background:#FFFFFF}}
-  button{{width:100%;padding:15px;font-size:17px;font-weight:700;border:0;border-radius:14px;
-         background:#6B6FCF;color:#fff;cursor:pointer}}
-  .err{{color:#C0564B;font-size:14px;margin:0 0 12px}}
-</style></head><body>
-<form method="post" action="/login">
-  <h1 class="brand">English Executive</h1>
-  <p class="tag">Executive communication. Built for real conversations.</p>{err}
-  <input type="password" name="password" placeholder="Пароль" autofocus
-         autocomplete="current-password">
-  <button type="submit">Войти</button>
-</form></body></html>"""
-    return HTMLResponse(html)
+_PUBLIC = {"/api/auth/login", "/api/auth/register", "/api/health",
+           "/api/auth/verify-email",  # magic link is opened in a browser, no session
+           "/api/policy/versions",    # legal-doc versions (read before/at login)
+           "/api/tutorial/manifest",  # which coach-mark steps have a video (read-only file listing)
+           "/api/billing/apple-notifications"}  # Apple posts the webhook unauthenticated
+# Authed endpoints an unverified account may still reach (account management) so it
+# can confirm/resend/change its email, switch UI language, or delete itself. Every
+# other /api path is blocked with 403 email_unverified until the email is confirmed.
+_VERIFY_EXEMPT = {"/api/auth/me", "/api/auth/logout", "/api/auth/ui-lang",
+                  "/api/auth/resend-verification", "/api/auth/change-email"}
 
 
 @app.middleware("http")
@@ -78,8 +55,14 @@ async def _cache_control(request: Request, call_next):
     path = request.url.path
     if path.startswith("/assets/"):
         resp.headers["Cache-Control"] = "public, max-age=31536000, immutable"
-    elif path.startswith("/covers/") or path.startswith("/audio/"):
-        resp.headers["Cache-Control"] = "no-cache"
+    elif path.startswith("/audio/"):
+        # Hash-named TTS clips never change under the same name → cache hard.
+        resp.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+    elif path.startswith("/covers/"):
+        # Cover art is effectively static (per-slug); cache on device so native
+        # doesn't re-download megabytes every view. Regenerating a cover is rare —
+        # if needed, change the filename / add a version to bust this.
+        resp.headers["Cache-Control"] = "public, max-age=2592000"
     else:
         resp.headers["Cache-Control"] = "no-store, must-revalidate"
     return resp
@@ -87,47 +70,101 @@ async def _cache_control(request: Request, call_next):
 
 @app.middleware("http")
 async def _auth_gate(request: Request, call_next):
-    s = get_settings()
-    if not s.app_password:  # gate disabled
+    # Let CORS preflight through untouched — the browser sends OPTIONS with no
+    # credentials, and the CORS middleware must answer it (native POSTs with a
+    # JSON body + Bearer header are non-simple and trigger preflight).
+    if request.method == "OPTIONS":
         return await call_next(request)
-
-    token = _auth_token()
     path = request.url.path
-
-    if path == "/login":
-        if request.method == "POST":
-            body = await request.body()
-            pw = (parse_qs(body.decode()).get("password") or [""])[0]
-            if hmac.compare_digest(pw, s.app_password):
-                resp = RedirectResponse("/", status_code=303)
-                resp.set_cookie(_COOKIE, token, max_age=_COOKIE_MAX_AGE,
-                                httponly=True, samesite="lax", path="/")
-                return resp
-            return _login_page("Неверный пароль")
-        return _login_page()
-
-    if hmac.compare_digest(request.cookies.get(_COOKIE, ""), token):
+    # Only the JSON API is auth-gated. Static media (/audio, /covers) is public:
+    # native <img>/<audio> can't carry the Bearer header, the filenames are
+    # non-enumerable hashes, and the API still controls which URLs a user receives
+    # (locked batches return no phrases/audio URLs).
+    if not path.startswith("/api/"):
         return await call_next(request)
-
-    if path.startswith("/api/") or path.startswith("/audio/"):
+    if path in _PUBLIC:
+        return await call_next(request)
+    # Web sends the signed session in the httponly cookie; native clients (no
+    # reliable cross-origin cookie in WKWebView) send the same token as a
+    # Bearer header. Accept either.
+    uid = parse_session(request.cookies.get(_COOKIE, ""))
+    if uid is None:
+        authz = request.headers.get("authorization", "")
+        if authz[:7].lower() == "bearer ":
+            uid = parse_session(authz[7:].strip())
+    if uid is None:
         return Response(status_code=401)
-    return RedirectResponse("/login", status_code=303)
+    request.state.user_id = uid
+    # Mandatory email verification: an authed-but-unconfirmed account may only hit
+    # the account-management endpoints (resend/change/logout/me/ui-lang) until it
+    # confirms its email. Everything else is blocked so the gate has real teeth.
+    if path not in _VERIFY_EXEMPT:
+        with Session(engine()) as s:
+            u = s.get(models.User, uid)
+            if u is not None and not u.email_verified:
+                return JSONResponse({"code": "email_unverified",
+                                     "msg": "Подтвердите email."}, status_code=403)
+    return await call_next(request)
 
+app.include_router(auth.router)
+app.include_router(billing.router)
 app.include_router(imports.router)
 app.include_router(batches.router)
 app.include_router(sessions.router)
 app.include_router(settings.router)
 app.include_router(training.router)
+app.include_router(practice.router)
+app.include_router(progress.router)
+app.include_router(analyzer.router)
+app.include_router(battle.router)
+app.include_router(league.router)
+app.include_router(tutorial.router)
+# Stats cabinet — under /admin (NOT /api, so it bypasses the per-user auth gate)
+# and self-guarded by its own HTTP Basic auth. Registered before the SPA catch-all
+# mount so /admin resolves here, not the app shell.
+app.include_router(admin_stats.router)
 
 
 @app.on_event("startup")
-def _startup():
+async def _startup():
     init_db()
+    # Daily in-process purge of old voice transcripts (data minimisation).
+    import asyncio
+    from .retention import retention_loop
+    asyncio.create_task(retention_loop())
+    # Daily content↔progress integrity report into the app log (report-only;
+    # see app/doctor.py and CONTENT-GRAPH.md).
+    from .doctor import doctor_loop
+    asyncio.create_task(doctor_loop())
 
 
 @app.get("/api/health")
 def health():
     return {"ok": True}
+
+
+# Public Privacy Policy (App Store requires a reachable URL). Registered before the
+# SPA catch-all mount so /privacy returns the policy, not the app shell.
+_privacy_file = Path(__file__).resolve().parent / "static" / "privacy.html"
+
+
+@app.get("/privacy")
+def privacy():
+    return FileResponse(str(_privacy_file), media_type="text/html")
+
+
+_terms_file = Path(__file__).resolve().parent / "static" / "terms.html"
+
+
+@app.get("/terms")
+def terms():
+    return FileResponse(str(_terms_file), media_type="text/html")
+
+
+@app.get("/api/policy/versions")
+def policy_versions():
+    from .policy import PRIVACY_VERSION, TERMS_VERSION
+    return {"privacy": PRIVACY_VERSION, "terms": TERMS_VERSION}
 
 
 # Static rendered audio (sessions + phrases)
@@ -136,6 +173,9 @@ app.mount("/audio", StaticFiles(directory=str(_s.audio_dir)), name="audio")
 
 # AI-generated batch cover art
 app.mount("/covers", StaticFiles(directory=str(_s.covers_dir)), name="covers")
+
+# Coach-mark tutorial videos (dropped in by the founder later; manifest lists them).
+app.mount("/tutorial", StaticFiles(directory=str(_s.tutorial_dir)), name="tutorial")
 
 # Serve built frontend if present (production single-container).
 _dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"

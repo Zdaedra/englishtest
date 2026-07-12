@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-9",
+ "title": "Разговор об ожиданиях и будущем",
+ "theme": "Большой разговор «куда мы идём» — ясно назвать свои потребности и направление без ультиматума и без нужды, пригласить к сонастройке",
+ "subtitle": "Падающая звезда",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Value",
+   "zone": "Warm",
+   "en": "I love what we have — and I'd like to talk about where it's going."
+  },
+  {
+   "anchor": "Years",
+   "zone": "Warm",
+   "en": "Where do you see us a few years from now? I've been thinking about that."
+  },
+  {
+   "anchor": "Build",
+   "zone": "Warm",
+   "en": "I don't want us running on autopilot — I want us to build something."
+  },
+  {
+   "anchor": "Plainly",
+   "zone": "Backbone",
+   "en": "Here's what I want, plainly: a real partnership — and I want to build it with you."
+  },
+  {
+   "anchor": "Ultimatum",
+   "zone": "Backbone",
+   "en": "This isn't an ultimatum — it's me telling you my direction honestly."
+  },
+  {
+   "anchor": "Clarity",
+   "zone": "Backbone",
+   "en": "I'm not asking for a promise tonight — I'm asking for clarity."
+  },
+  {
+   "anchor": "Together",
+   "zone": "Weight",
+   "en": "I know where I'm going — the real question is whether we go there together."
+  },
+  {
+   "anchor": "Want",
+   "zone": "Weight",
+   "en": "I'm not here out of fear or habit — I want this."
+  },
+  {
+   "anchor": "Lose",
+   "zone": "Weight",
+   "en": "I'm all in — but I'm not going to lose myself in it."
+  }
+ ],
+ "mnemo": "Вы смотрите квартиру, где могли бы жить вместе. В прихожей ты называешь value — ценность, которую не хочешь потерять: тепло между вами. В гостиной у пустой стены говоришь про years — годы, которые хотел бы строить не в режиме “как получится”. На кухне показываешь место, где можно build — строить — общую жизнь маленькими решениями, не лозунгами. У обеденного стола говоришь plainly — прямо, чего хочешь. Потом отходишь от двери, чтобы это не звучало как ultimatum — ультиматум, где человеку некуда выйти. У окна становится больше clarity — ясности: ты предлагаешь направление, а не требование. На балконе спрашиваешь, готовы ли вы идти together — вместе. Берёшь её за руку и говоришь want — хочу этого. На выходе каждый забирает свою куртку: быть вместе, но не lose — терять — себя."
+}

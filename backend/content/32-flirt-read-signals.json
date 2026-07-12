@@ -1,0 +1,60 @@
+{
+ "slug": "flirt-8",
+ "title": "Читать и отвечать на сигналы",
+ "theme": "Считывать её сигналы и калиброваться — отзеркалить, проверить, идти за её темпом, без эго",
+ "subtitle": "Стыковка",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Noticed",
+   "zone": "Warm",
+   "en": "I saw that smile — I'm just saying I noticed."
+  },
+  {
+   "anchor": "Leaning",
+   "zone": "Warm",
+   "en": "You were leaning in for a second there — I noticed."
+  },
+  {
+   "anchor": "Rush",
+   "zone": "Warm",
+   "en": "No rush — your pace works for me."
+  },
+  {
+   "anchor": "Wrong",
+   "zone": "Backbone",
+   "en": "I think there's something here — tell me if I'm wrong."
+  },
+  {
+   "anchor": "Light",
+   "zone": "Backbone",
+   "en": "That felt like a green light — am I reading it right?"
+  },
+  {
+   "anchor": "Slow",
+   "zone": "Backbone",
+   "en": "If I'm moving too fast, tell me — I can slow down."
+  },
+  {
+   "anchor": "Push",
+   "zone": "Weight",
+   "en": "I'm not going to push anything — this is good as it is."
+  },
+  {
+   "anchor": "Cue",
+   "zone": "Weight",
+   "en": "I'll take my cue from you."
+  },
+  {
+   "anchor": "Fine",
+   "zone": "Weight",
+   "en": "And if you'd rather leave it here, that's completely fine too."
+  }
+ ],
+ "mnemo": "В книжном кафе ты noticed — заметил, что она у полки leaning — наклоняется — ближе к тебе, когда смеётся. Ты не rush — не спешишь подходить вплотную, а идёшь с ней к столу у окна. Одна шутка выходит wrong — не туда, и ты спокойно возвращаешь разговор к книге, которую она держит. У окна на её лице появляется light — лёгкий интерес, она сама задаёт вопрос. Ты slow — замедляешь — голос и даёшь ей договорить. У двери хочется push — продавить — прогулку дальше, но ты не хватаешься за момент. Ждёшь cue — знак: она сама спрашивает, где рядом можно пройтись. Если ей всё же нужно домой, fine — нормально: вы просто допиваете кофе и расстаётесь легко."
+}

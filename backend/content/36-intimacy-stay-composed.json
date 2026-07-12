@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-2",
+ "title": "Не сорваться, когда задели",
+ "theme": "Партнёр сказал что-то, что уязвило — не ответить ударом и не захлопнуться, а назвать попадание и остаться в контакте",
+ "subtitle": "Пасечник",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Ouch",
+   "zone": "Warm",
+   "en": "Ouch. I want to stay in this with you — but that one got me."
+  },
+  {
+   "anchor": "Sore",
+   "zone": "Warm",
+   "en": "That one hit a sore spot — I just want you to know."
+  },
+  {
+   "anchor": "Stung",
+   "zone": "Warm",
+   "en": "I know you may not have meant it that way — but it stung."
+  },
+  {
+   "anchor": "Harsh",
+   "zone": "Backbone",
+   "en": "Can you try that again? It came out pretty harsh."
+  },
+  {
+   "anchor": "Tone",
+   "zone": "Backbone",
+   "en": "I'm not okay with that tone — but I'm still here."
+  },
+  {
+   "anchor": "Shut",
+   "zone": "Backbone",
+   "en": "When it lands like that, I start to shut down — and I'd rather stay open."
+  },
+  {
+   "anchor": "Fire",
+   "zone": "Weight",
+   "en": "I'm not going to fire back — even though part of me wants to."
+  },
+  {
+   "anchor": "Hurt",
+   "zone": "Weight",
+   "en": "I'm hurt, but I'm not going anywhere."
+  },
+  {
+   "anchor": "Worse",
+   "zone": "Weight",
+   "en": "We're both hurting — let's not make it worse."
+  }
+ ],
+ "mnemo": "В ресторане она говорит фразу, от которой у тебя сразу внутри ouch — больно. Ты не отвечаешь через стол, а выходишь с ней на минуту к тихой стене у входа. Показываешь на грудь: место всё ещё sore — саднит. Говоришь: “это stung — задело сильнее, чем ты, наверное, хотела”. Она начинает объяснять, и ты просишь убрать harsh — жёсткую — формулировку. Голосом ниже задаёшь новый tone — тон разговора. Тебе хочется shut — закрыться — и уйти обратно одному. Хочется fire — выстрелить — в ответ такой же фразой, но ты держишь паузу. “Мне hurt — больно, но я хочу остаться в контакте”. Вы возвращаетесь к столу, и вечер не становится worse — хуже."
+}

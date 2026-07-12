@@ -1,0 +1,208 @@
+{
+  "slug": "pitch-close",
+  "batch_file": "04-pitch-close.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Bridge». Ответь одной уместной фразой.",
+      "intent": "bridge",
+      "accept_anchors": [
+        "Bridge"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Питч: просьба, что замыкает сделку). Дай реплику в регистре «Bridge».",
+      "intent": "door",
+      "accept_anchors": [
+        "Door"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Bridge». Скажи фразу, которая здесь уместна.",
+      "intent": "fit",
+      "accept_anchors": [
+        "Fit"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Ask». Произнеси подходящую фразу.",
+      "intent": "ask",
+      "accept_anchors": [
+        "Ask"
+      ],
+      "zone": "Ask",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Питч: просьба, что замыкает сделку). Вступи в тоне «Ask» одной фразой.",
+      "intent": "yes",
+      "accept_anchors": [
+        "Yes"
+      ],
+      "zone": "Ask",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Ask»).",
+      "intent": "room",
+      "accept_anchors": [
+        "Room"
+      ],
+      "zone": "Ask",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Seal». Ответь одной уместной фразой.",
+      "intent": "skin",
+      "accept_anchors": [
+        "Skin"
+      ],
+      "zone": "Seal",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Питч: просьба, что замыкает сделку). Дай реплику в регистре «Seal».",
+      "intent": "handshake",
+      "accept_anchors": [
+        "Handshake"
+      ],
+      "zone": "Seal",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Seal». Скажи фразу, которая здесь уместна.",
+      "intent": "seal",
+      "accept_anchors": [
+        "Seal"
+      ],
+      "zone": "Seal",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Bridge». Произнеси подходящую фразу.",
+      "intent": "bridge",
+      "accept_anchors": [
+        "Bridge"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Питч: просьба, что замыкает сделку). Вступи в тоне «Bridge» одной фразой.",
+      "intent": "door",
+      "accept_anchors": [
+        "Door"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Bridge»).",
+      "intent": "fit",
+      "accept_anchors": [
+        "Fit"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Ask». Ответь одной уместной фразой.",
+      "intent": "ask",
+      "accept_anchors": [
+        "Ask"
+      ],
+      "zone": "Ask",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Питч: просьба, что замыкает сделку). Дай реплику в регистре «Ask».",
+      "intent": "yes",
+      "accept_anchors": [
+        "Yes"
+      ],
+      "zone": "Ask",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Ask». Скажи фразу, которая здесь уместна.",
+      "intent": "room",
+      "accept_anchors": [
+        "Room"
+      ],
+      "zone": "Ask",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Seal». Произнеси подходящую фразу.",
+      "intent": "skin",
+      "accept_anchors": [
+        "Skin"
+      ],
+      "zone": "Seal",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Питч: просьба, что замыкает сделку). Вступи в тоне «Seal» одной фразой.",
+      "intent": "handshake",
+      "accept_anchors": [
+        "Handshake"
+      ],
+      "zone": "Seal",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Seal»).",
+      "intent": "seal",
+      "accept_anchors": [
+        "Seal"
+      ],
+      "zone": "Seal",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Bridge». Ответь одной уместной фразой.",
+      "intent": "bridge",
+      "accept_anchors": [
+        "Bridge"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Питч: просьба, что замыкает сделку). Дай реплику в регистре «Bridge».",
+      "intent": "door",
+      "accept_anchors": [
+        "Door"
+      ],
+      "zone": "Bridge",
+      "difficulty": 1
+    }
+  ]
+}

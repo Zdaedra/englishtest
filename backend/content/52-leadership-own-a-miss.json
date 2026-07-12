@@ -1,0 +1,60 @@
+{
+ "slug": "lead-6",
+ "title": "Признать промах, не теряя авторитета",
+ "theme": "Публично взять свою ошибку как лидер — чисто, без самобичевания и оправданий; показать коррекцию и выйти с большим доверием",
+ "subtitle": "Лучник",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Wrong",
+   "zone": "Warm",
+   "en": "I got this one wrong — and it landed on you. I want to say that out loud."
+  },
+  {
+   "anchor": "Cost",
+   "zone": "Warm",
+   "en": "That call cost the team time — and that's on me, no one else."
+  },
+  {
+   "anchor": "Guess",
+   "zone": "Warm",
+   "en": "I'll say it straight so nobody has to guess."
+  },
+  {
+   "anchor": "Timing",
+   "zone": "Backbone",
+   "en": "I misjudged the timing — and that's on me."
+  },
+  {
+   "anchor": "Signs",
+   "zone": "Backbone",
+   "en": "I rushed it and missed the warning signs."
+  },
+  {
+   "anchor": "Changes",
+   "zone": "Backbone",
+   "en": "Here's what changes now: clearer checks, earlier flags, no quiet assumptions."
+  },
+  {
+   "anchor": "Authority",
+   "zone": "Weight",
+   "en": "I don't lose authority by owning the miss — I lose it by pretending there wasn't one."
+  },
+  {
+   "anchor": "Lesson",
+   "zone": "Weight",
+   "en": "That one's on me — lesson learned, let's move."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Weight",
+   "en": "Trust gets built in moments like this — by what we do next."
+  }
+ ],
+ "mnemo": "Ты выводишь группу на седловину и видишь: гребень не тот. Разворачиваешься к людям и говоришь в лицо: я свернул wrong — не туда. Показываешь на солнце: это cost — стоило нам двух часов, и это на мне. Расстилаешь карту: никому не надо guess — гадать. Тычешь пальцем в развилку: я не рассчитал timing — время выхода. Ведёшь палец по signs — приметам, которые проглядел. Тут же вносишь changes — перемены: сверяешься вслух на развилках. Затягиваешь лямки и первым выходишь на тропу: authority — авторитет. Говоришь коротко: lesson — урок — усвоен, идём. К закату выводишь всех к воде, и верёвка trust — доверия — натягивается крепче прежней."
+}

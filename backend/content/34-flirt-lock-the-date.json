@@ -1,0 +1,60 @@
+{
+ "slug": "flirt-10",
+ "title": "Перевести флирт в свидание",
+ "theme": "Закрепить продолжение, пока искра жива — перевести заряд в конкретный план, не дать стать «almost»",
+ "subtitle": "Аукцион",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Fizzle",
+   "zone": "Warm",
+   "en": "Let's not let this fizzle out — pick a day."
+  },
+  {
+   "anchor": "Plan",
+   "zone": "Warm",
+   "en": "I don't want tonight to be the end of this — let's make a plan."
+  },
+  {
+   "anchor": "Next",
+   "zone": "Warm",
+   "en": "Let's not leave this as a nice moment — I'd like the next one."
+  },
+  {
+   "anchor": "Number",
+   "zone": "Backbone",
+   "en": "Put your number in my phone — I'll text you tomorrow with a real plan."
+  },
+  {
+   "anchor": "Pick",
+   "zone": "Backbone",
+   "en": "Thursday or Saturday — you pick, I'll handle the rest."
+  },
+  {
+   "anchor": "Overthink",
+   "zone": "Backbone",
+   "en": "Let's lock a night before either of us overthinks it."
+  },
+  {
+   "anchor": "Dinner",
+   "zone": "Weight",
+   "en": "Dinner this week — let's do this properly."
+  },
+  {
+   "anchor": "Consider",
+   "zone": "Weight",
+   "en": "Consider it a date — I'll make sure you're glad you said yes."
+  },
+  {
+   "anchor": "Text",
+   "zone": "Weight",
+   "en": "Text me — the second round will be even better."
+  }
+ ],
+ "mnemo": "Вечер тает, и ты догоняешь её на крыльце, пока такси мигает у обочины. Ловишь момент, не давая ему fizzle — зашипеть и погаснуть. Придерживаешь дверцу: пусть у вечера будет plan — продолжение, а не точка. Делаешь шаг ближе и предлагаешь next — следующую встречу. Протягиваешь телефон ей под пальцы: number — номер. Раскрываешь ладони: четверг или суббота — pick — выбирай. Хлопаешь по её ладони, фиксируя вечер, пока никто не успел overthink — надумать лишнего. Берёшь её руку: заряд доживёт до dinner — ужина. Наклоняешься к окну такси: consider — считай это свиданием. Машина трогается — и телефон в кармане вздрагивает: text — сообщение уже прилетело."
+}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api, BatchDetail as Batch, PhraseScore, RotationItem } from "../api";
 import { useMnemoAudio } from "../audio/useMnemoAudio";
@@ -8,10 +8,12 @@ import { groupByZone } from "../lib/zones";
 import { ZoneHead } from "../ui/Zone";
 import { RecFab, band } from "../ui/RecFab";
 import { IconBack, IconChevron, IconPause, IconPlay } from "../ui/icons";
+import { useI18n } from "../i18n";
 
 export default function Lesson2() {
   const { id } = useParams();
   const nav = useNavigate();
+  const { t } = useI18n();
   const player = usePlayer();
   const mnemo = useMnemoAudio(id ? Number(id) : undefined);
   const rec = useRecorder();
@@ -27,7 +29,6 @@ export default function Lesson2() {
   const [result, setResult] = useState<PhraseScore | null>(null);
   const [busy, setBusy] = useState(false);
   const [drillStarted, setDrillStarted] = useState(false);
-  const lastHintRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -65,28 +66,16 @@ export default function Lesson2() {
 
   const current = rotation[pos] || null;
 
-  // Once the drill is started, each new prompt plays its phrase aloud as a hint —
-  // the test is "hear it, then say it back". Guard on phrase_id so a re-render
-  // doesn't replay the same clip.
-  useEffect(() => {
-    if (!drillStarted || !current || result) return;
-    if (lastHintRef.current === current.phrase_id) return;
-    lastHintRef.current = current.phrase_id;
-    player.playPhrase(current.phrase_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [drillStarted, current, result]);
-
   const startDrill = useCallback(() => {
     setNotice("");
     setResult(null);
-    lastHintRef.current = null;
     setDrillStarted(true);
   }, []);
 
   const handleError = (e: unknown) => {
     const msg = String(e);
     if (msg.includes("429") || msg.toLowerCase().includes("limit")) {
-      setNotice("Дневной лимит проверок исчерпан — продолжайте без оценки, сверяясь с фразами.");
+      setNotice(t("rec.limit"));
     } else {
       setErr(msg);
     }
@@ -110,14 +99,14 @@ export default function Lesson2() {
     }
     const clip = await rec.stop();
     if (!clip || clip.ms < 600) {
-      setNotice("Не расслышал — нажми и говори чуть дольше.");
+      setNotice(t("rec.mishearLonger"));
       return;
     }
     setBusy(true);
     try {
       const r = await api.scorePhrase(current.phrase_id, clip.blob, clip.filename, clip.ms);
       if (!r.transcript?.trim()) {
-        setNotice("Не расслышал — попробуй ещё раз.");
+        setNotice(t("rec.mishearRetry"));
         return;
       }
       setResult(r);
@@ -137,7 +126,7 @@ export default function Lesson2() {
   }, [batch, pos, rotation.length, loadRotation]);
 
   if (err) return <div className="screen"><p className="error">{err}</p></div>;
-  if (!batch) return <div className="screen"><p className="muted">Loading…</p></div>;
+  if (!batch) return <div className="screen"><p className="muted">{t("common.loading")}</p></div>;
 
   const groups = groupByZone(batch);
 
@@ -155,14 +144,12 @@ export default function Lesson2() {
       </button>
 
       <div className="screen-head">
-        <span className="lesson-tag">Урок 2</span>
-        <h1>Фразы</h1>
-        <p className="app-sub" style={{ marginBottom: 0 }}>
-          Свяжи каждый якорь с фразой. Мнемоника всегда под рукой — переслушай, и карточки подсветятся.
-        </p>
+        <span className="lesson-tag">{t("lesson.tag", { n: 2 })}</span>
+        <h1>{t("bh.l2.title")}</h1>
+        <p className="app-sub" style={{ marginBottom: 0 }}>{t("l2.lead")}</p>
       </div>
 
-      <p className="section-label" style={{ marginTop: 18 }}>1 · Мнемоника под рукой</p>
+      <p className="section-label" style={{ marginTop: 18 }}>{t("l2.step1")}</p>
       <div className="mnemo-play">
         <button
           className={`mp-pill${mnemo.layout === "full" ? " on" : ""}`}
@@ -170,18 +157,23 @@ export default function Lesson2() {
           onClick={() => mnemo.play("full")}
         >
           {mnemo.layout === "full" && mnemo.playing ? <IconPause size={16} /> : <IconPlay size={16} />}
-          {mnemo.loading === "full" ? "…" : "Переслушать историю"}
+          {mnemo.loading === "full" ? "…" : t("l2.replayStory")}
         </button>
       </div>
 
-      <p className="section-label" style={{ marginTop: 22 }}>2 · Якорь → фраза</p>
+      <p className="section-label" style={{ marginTop: 22 }}>{t("l2.step2")}</p>
       <div className="zone-stack">
         {groups.map((g) => (
           <div className="zone-group" key={g.key}>
             <ZoneHead title={g.title} level={g.level} total={g.total} count={g.items.length} />
             {g.items.map(({ p, n }) => (
               <div key={p.id} className={`phrase-card${activePhraseId === p.id ? " lit" : ""}`}>
-                <div className="pc-body" onClick={() => togglePhrase(p.id)}>
+                <div className="pc-body" role="button" tabIndex={0}
+                  aria-expanded={revealed.has(p.id)}
+                  onClick={() => togglePhrase(p.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); togglePhrase(p.id); }
+                  }}>
                   <div className="pc-anchor">
                     <span className="pc-num">{n}</span>{p.anchor}
                   </div>
@@ -199,10 +191,8 @@ export default function Lesson2() {
         ))}
       </div>
 
-      <p className="section-label" style={{ marginTop: 24 }}>3 · Слушай все фразы</p>
-      <p className="train-hint" style={{ marginTop: 4 }}>
-        Запусти плеер — все фразы вперемешку, по кругу. Слушай и повторяй вслух.
-      </p>
+      <p className="section-label" style={{ marginTop: 24 }}>{t("l2.step3")}</p>
+      <p className="train-hint" style={{ marginTop: 4 }}>{t("l2.listenAllHint")}</p>
       <button
         className="btn btn-primary btn-block"
         style={{ marginTop: 12 }}
@@ -211,31 +201,26 @@ export default function Lesson2() {
           nav("/play");
         }}
       >
-        <IconPlay size={16} /> Слушать вперемешку
+        <IconPlay size={16} /> {t("l2.listenShuffle")}
       </button>
 
       <p className="section-label" style={{ marginTop: 24 }}>
-        4 · Проверь фразы{attempted > 0 ? ` · средний ${mean.toFixed(1)}` : ""}
+        {t("l2.step4")}{attempted > 0 ? ` · ${t("common.meanShort", { x: mean.toFixed(1) })}` : ""}
       </p>
 
       {!rec.supported && (
-        <p className="error" style={{ marginTop: 12 }}>
-          Этот браузер не умеет записывать звук. Откройте приложение в Safari/Chrome.
-        </p>
+        <p className="error" style={{ marginTop: 12 }}>{t("rec.browserNoAudio")}</p>
       )}
       {rec.error && <p className="error" style={{ marginTop: 12 }}>{rec.error}</p>}
       {notice && <p className="muted small" style={{ marginTop: 12 }}>{notice}</p>}
 
       {!current ? (
-        <p className="muted" style={{ marginTop: 16 }}>Нет фраз для тренировки.</p>
+        <p className="muted" style={{ marginTop: 16 }}>{t("l2.noPhrases")}</p>
       ) : !drillStarted ? (
         <>
-          <p className="train-hint" style={{ marginTop: 4 }}>
-            Покажу якорь и проиграю его фразу вслух. Послушай, нажми кнопку
-            и повтори фразу — ИИ оценит и подскажет.
-          </p>
+          <p className="train-hint" style={{ marginTop: 4 }}>{t("l2.drillIntro")}</p>
           <button className="btn btn-primary btn-block" style={{ marginTop: 12 }} onClick={startDrill}>
-            Начать проверку
+            {t("l2.startCheck")}
           </button>
         </>
       ) : result ? (
@@ -250,19 +235,19 @@ export default function Lesson2() {
           <p className="train-prompt">{current.anchor}</p>
           <div className="mnemo-play" style={{ marginTop: 14 }}>
             <button className="mp-pill" onClick={() => player.playPhrase(current.phrase_id)}>
-              <IconPlay size={16} /> Прослушать ещё раз
+              <IconPlay size={16} /> {t("l2.hintPhrase")}
             </button>
           </div>
           <RecFab recording={rec.recording} busy={busy} onClick={onMic} />
           <p className="rec-label">
-            {rec.recording ? "Идёт запись — нажми «стоп»" : busy ? "Проверяем…" : "Нажми и говори"}
+            {rec.recording ? t("rec.recordingStop") : busy ? t("rec.checking") : t("rec.tapAndSpeak")}
           </p>
         </>
       )}
 
       <button className="btn btn-primary btn-block" style={{ marginTop: 24 }}
         onClick={() => nav(`/batch/${batch.id}/lesson/3`)}>
-        Дальше к тестам <IconChevron size={16} />
+        {t("l2.next")} <IconChevron size={16} />
       </button>
 
       <audio {...mnemo.bind} />
@@ -273,6 +258,7 @@ export default function Lesson2() {
 function DrillResult({
   result, onNext, onPlayCorrect,
 }: { result: PhraseScore; onNext: () => void; onPlayCorrect: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="result-card">
       <div className={`score-badge ${band(result.score)}`}>
@@ -280,21 +266,21 @@ function DrillResult({
       </div>
 
       <div className="result-row">
-        <div className="result-k">Правильная фраза</div>
+        <div className="result-k">{t("res.correctPhrase")}</div>
         <div className="result-v">
           {result.correct_phrase}
-          <button className="inline-play" onClick={onPlayCorrect} aria-label="Прослушать">
+          <button className="inline-play" onClick={onPlayCorrect} aria-label={t("res.playAria")}>
             <IconPlay size={15} />
           </button>
         </div>
       </div>
 
       <div className="result-row">
-        <div className="result-k">Мы услышали</div>
-        <div className="result-v heard">{result.transcript || "— тишина —"}</div>
+        <div className="result-k">{t("res.weHeard")}</div>
+        <div className="result-v heard">{result.transcript || t("res.silence")}</div>
       </div>
 
-      <button className="btn btn-primary train-cta" onClick={onNext}>Дальше</button>
+      <button className="btn btn-primary train-cta" onClick={onNext}>{t("common.next")}</button>
     </div>
   );
 }

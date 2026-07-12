@@ -1,0 +1,60 @@
+{
+ "slug": "charisma-1",
+ "title": "Войти в комнату",
+ "theme": "Появиться и первые секунды так, что тебя замечают — без позы и набивания",
+ "subtitle": "Оседлать волну",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "There",
+   "zone": "Warm",
+   "en": "There they are."
+  },
+  {
+   "anchor": "Going",
+   "zone": "Warm",
+   "en": "Don't stop on my account — keep it going."
+  },
+  {
+   "anchor": "Forward",
+   "zone": "Warm",
+   "en": "I've been looking forward to this one."
+  },
+  {
+   "anchor": "Rolling",
+   "zone": "Backbone",
+   "en": "Let's get this rolling."
+  },
+  {
+   "anchor": "Grab",
+   "zone": "Backbone",
+   "en": "Grab a seat — you'll want to be in on this."
+  },
+  {
+   "anchor": "Count",
+   "zone": "Backbone",
+   "en": "We've got till the top of the hour — let's make it count."
+  },
+  {
+   "anchor": "Slow",
+   "zone": "Weight",
+   "en": "Let's slow this down for a second."
+  },
+  {
+   "anchor": "Dancing",
+   "zone": "Weight",
+   "en": "Can I say the thing we're all dancing around?"
+  },
+  {
+   "anchor": "Back",
+   "zone": "Weight",
+   "en": "Here's what I keep coming back to."
+  }
+ ],
+ "mnemo": "На горизонте встаёт она — there, — и ты гребёшь: волна уже going — пошла, не останавливай, — и бросаешь корпус forward. Волна подхватывает, rolling под доской; на дуге ты grab за рейл и count секунды внутри трубы. Ты выныриваешь из slow-motion пены — доска dancing, приплясывает под ногами, — а океан сам выносит тебя back к берегу."
+}

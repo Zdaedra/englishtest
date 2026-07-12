@@ -1,0 +1,60 @@
+{
+ "slug": "composure-3",
+ "title": "Держаться, когда унижают публично",
+ "theme": "Тебя пытаются принизить при людях — не съёжиться и не взорваться, назвать происходящее и стоять ровно; унижение не прилипает",
+ "subtitle": "Испытание клинка",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Scene",
+   "zone": "Warm",
+   "en": "I'm not going to turn this into a scene."
+  },
+  {
+   "anchor": "Shout",
+   "zone": "Warm",
+   "en": "You don't need to shout — I can hear you just fine."
+  },
+  {
+   "anchor": "Tone",
+   "zone": "Warm",
+   "en": "Point taken — the tone, not so much."
+  },
+  {
+   "anchor": "Directly",
+   "zone": "Backbone",
+   "en": "If there's feedback, give it to me directly — not theatrically."
+  },
+  {
+   "anchor": "Real",
+   "zone": "Backbone",
+   "en": "If there's a real point under all that, I'm listening."
+  },
+  {
+   "anchor": "Adults",
+   "zone": "Backbone",
+   "en": "Let's bring this back to the work and speak like adults."
+  },
+  {
+   "anchor": "Doing",
+   "zone": "Weight",
+   "en": "We're not doing this here."
+  },
+  {
+   "anchor": "Argument",
+   "zone": "Weight",
+   "en": "Raising your voice doesn't win the argument."
+  },
+  {
+   "anchor": "Point",
+   "zone": "Weight",
+   "en": "All right — back to the point."
+  }
+ ],
+ "mnemo": "На общем созвоне коллега превращает вопрос в scene — сцену перед всеми. Ты не начинаешь shout — кричать — поверх него, а спокойно просишь минуту. Сначала отделяешь tone — тон — от содержания: “тон сейчас мешает услышать суть”. Потом предлагаешь обсудить directly — напрямую — после общей части, если есть личная претензия. Из его слов выбираешь real — настоящий — вопрос по проекту. Говоришь: давайте разберём это как adults — взрослые люди. Если цель просто уколоть, мы это здесь не doing — не делаем. Короткий argument — спор — не трогаешь, возвращаешь слайд на экран. Через минуту команда снова обсуждает point — суть."
+}

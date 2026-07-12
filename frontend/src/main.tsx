@@ -2,18 +2,34 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
+import { AuthProvider } from "./auth/AuthContext";
 import Library from "./pages/Library";
+import SectionDetail from "./pages/SectionDetail";
 import Learning from "./pages/Learning";
+import TunePath from "./pages/TunePath";
 import Onboarding from "./pages/Onboarding";
 import BatchHome from "./pages/BatchHome";
 import Lesson1 from "./pages/Lesson1";
 import Lesson2 from "./pages/Lesson2";
 import Lesson3 from "./pages/Lesson3";
 import Playback from "./pages/Playback";
+import Training from "./pages/Training";
 import Profile from "./pages/Profile";
+import About from "./pages/About";
 import Settings from "./pages/Settings";
 import ImportBatch from "./pages/ImportBatch";
+import Subscribe from "./pages/Subscribe";
+import League from "./pages/League";
+import Analyzer from "./pages/Analyzer";
+import Arena from "./pages/Arena";
+import Battle from "./pages/Battle";
+import { I18nProvider } from "./i18n";
+import { isNative } from "./lib/session";
+import { initDynamicType } from "./lib/dynamicType";
 import "./index.css";
+
+// HIG Dynamic Type — scale the rem base from the iOS system text-size (iOS only).
+initDynamicType();
 
 const router = createHashRouter([
   {
@@ -21,15 +37,24 @@ const router = createHashRouter([
     element: <App />,
     children: [
       { index: true, element: <Library /> },
+      { path: "section/:slug", element: <SectionDetail /> },
       { path: "learn", element: <Learning /> },
+      { path: "tune", element: <TunePath /> },
       { path: "batch/:id", element: <BatchHome /> },
       { path: "batch/:id/lesson/1", element: <Lesson1 /> },
       { path: "batch/:id/lesson/2", element: <Lesson2 /> },
       { path: "batch/:id/lesson/3", element: <Lesson3 /> },
       { path: "play", element: <Playback /> },
+      { path: "practice", element: <Training /> },
       { path: "profile", element: <Profile /> },
+      { path: "about", element: <About /> },
       { path: "settings", element: <Settings /> },
       { path: "import", element: <ImportBatch /> },
+      { path: "subscribe", element: <Subscribe /> },
+      { path: "league", element: <League /> },
+      { path: "analyze", element: <Analyzer /> },
+      { path: "arena", element: <Arena /> },
+      { path: "battle", element: <Battle /> },
     ],
   },
   { path: "/onboarding", element: <Onboarding /> },
@@ -37,7 +62,11 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <I18nProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </I18nProvider>
   </React.StrictMode>
 );
 
@@ -45,7 +74,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 // HTTP (the IP deploy) registration is blocked anyway, so there we instead tear
 // down any previously-stuck SW + caches — that's the #1 cause of a stale shell
 // surviving a deploy. On HTTPS we register normally.
-if ("serviceWorker" in navigator) {
+if (!isNative() && "serviceWorker" in navigator) {
   if (window.isSecureContext) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("/sw.js").catch(() => {});

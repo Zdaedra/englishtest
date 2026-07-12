@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-3",
+ "title": "Починить после ссоры",
+ "theme": "Буря прошла — первым протянуть руку через разрыв, взять свою часть и выбрать «нас», не делая вид, что ничего не было",
+ "subtitle": "Снежная битва",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "First",
+   "zone": "Warm",
+   "en": "I don't want to wait each other out — so I'm going first."
+  },
+  {
+   "anchor": "Distance",
+   "zone": "Warm",
+   "en": "I don't like this distance between us — can we close it?"
+  },
+  {
+   "anchor": "Miss",
+   "zone": "Warm",
+   "en": "I miss us — even in the middle of this."
+  },
+  {
+   "anchor": "Sorry",
+   "zone": "Backbone",
+   "en": "I'm sorry. Full stop — that's the whole sentence."
+  },
+  {
+   "anchor": "Defensive",
+   "zone": "Backbone",
+   "en": "I got defensive — and I made it harder for you to reach me."
+  },
+  {
+   "anchor": "Instead",
+   "zone": "Backbone",
+   "en": "Next time I'll slow down instead of going for the throat."
+  },
+  {
+   "anchor": "Right",
+   "zone": "Weight",
+   "en": "I'd rather be close to you than be right."
+  },
+  {
+   "anchor": "Bigger",
+   "zone": "Weight",
+   "en": "We're bigger than one bad night — and I'm choosing us."
+  },
+  {
+   "anchor": "Ammo",
+   "zone": "Weight",
+   "en": "Let's not save this as ammo for later. Let's just put it down."
+  }
+ ],
+ "mnemo": "Ты first — первым — зачерпываешь снег, не дожидаясь чужого броска; до крепости — distance в двадцать шагов, и бросок уходит в miss — мимо: «sorry!» Ныряешь в defensive за бруствер, но instead нового залпа начинаешь катить ком — right по центру поля боя. Ком растёт всё bigger, превращаясь в снеговика, и весь оставшийся ammo уходит ему на глаза и пуговицы."
+}

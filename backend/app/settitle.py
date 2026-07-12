@@ -36,8 +36,11 @@ def run(titles: dict[int, str], *, dry: bool) -> list[tuple[int, str, str]]:
                 rows.append((bid, "—", "NOT FOUND"))
                 continue
             rows.append((bid, b.title, new))
-            if new and not dry:
+            if new and not dry and new != b.title:
                 b.title = new
+                # translations were of the OLD title — clear so app.doctor sees
+                # the hole and `i18n_content --refill` re-translates
+                b.title_i18n = {}
                 s.add(b)
         if not dry:
             s.commit()

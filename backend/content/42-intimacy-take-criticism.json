@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-8",
+ "title": "Принять критику не защищаясь",
+ "theme": "Близкий говорит неприятное — впустить, найти зерно правды и остаться открытым, не защищаясь и не контратакуя",
+ "subtitle": "Разбитый горшок",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Listening",
+   "zone": "Warm",
+   "en": "Okay. I'm listening — really listening, not waiting to argue."
+  },
+  {
+   "anchor": "Guts",
+   "zone": "Warm",
+   "en": "Thank you — that took guts to say to my face."
+  },
+  {
+   "anchor": "Argue",
+   "zone": "Warm",
+   "en": "Part of me wants to argue — but go on, I'm listening."
+  },
+  {
+   "anchor": "Rest",
+   "zone": "Backbone",
+   "en": "You're right about some of this — don't stop, tell me the rest."
+  },
+  {
+   "anchor": "Specific",
+   "zone": "Backbone",
+   "en": "Can you give me a specific example? I'd rather get this exactly right."
+  },
+  {
+   "anchor": "Part",
+   "zone": "Backbone",
+   "en": "I may not agree with every part — but I won't dismiss the part that's real."
+  },
+  {
+   "anchor": "Hear",
+   "zone": "Weight",
+   "en": "That's hard to hear, but I'd rather hear it from you."
+  },
+  {
+   "anchor": "Sit",
+   "zone": "Weight",
+   "en": "Let me sit with that — some of it's true."
+  },
+  {
+   "anchor": "Learn",
+   "zone": "Weight",
+   "en": "I'd rather learn from this than win the argument."
+  }
+ ],
+ "mnemo": "Близкий человек просит пройтись, и ты первые пять минут идёшь рядом, listening — слушая — без перебивания. Он говорит прямо, и ты признаёшь: нужны guts — смелость — сказать такое в лицо. У перехода в тебе поднимается желание argue — спорить, но ты просто нажимаешь кнопку светофора. На другой стороне просишь сказать rest — остальное, не смягчая. У скамейки задаёшь вопрос: “дай specific — конкретный — пример”. Он называет один эпизод, и ты отделяешь part — часть, с которой согласен, от того, что видишь иначе. Это тяжело hear — слышать, и ты не делаешь вид, что легко. Вы садитесь sit — сидите — на скамейку, чтобы не убежать из разговора. Домой ты возвращаешься с тем, на чём можешь learn — учиться."
+}

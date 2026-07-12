@@ -1,0 +1,60 @@
+{
+  "slug": "charisma-5",
+  "title": "Рассказать историю",
+  "theme": "Короткая живая история так, что все замолкают и слушают — ходы рассказчика",
+  "subtitle": "Особняк с привидениями",
+  "section": "charisma",
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
+  ],
+  "phrases": [
+    {
+      "anchor": "Stop",
+      "zone": "Warm",
+      "en": "Stop me if I've told you this one — actually, don't, it's too good."
+    },
+    {
+      "anchor": "Badly",
+      "zone": "Warm",
+      "en": "You'll like this — it starts badly."
+    },
+    {
+      "anchor": "Picture",
+      "zone": "Warm",
+      "en": "Picture me at 2 a.m., completely lost — that's where this starts."
+    },
+    {
+      "anchor": "Mind",
+      "zone": "Backbone",
+      "en": "Keep that one detail in mind — it matters in a minute."
+    },
+    {
+      "anchor": "Worse",
+      "zone": "Backbone",
+      "en": "And here's where it gets worse."
+    },
+    {
+      "anchor": "Quiet",
+      "zone": "Backbone",
+      "en": "And then the room went very quiet."
+    },
+    {
+      "anchor": "Hang",
+      "zone": "Weight",
+      "en": "…and I'm going to let that just hang there for a second."
+    },
+    {
+      "anchor": "Turns",
+      "zone": "Weight",
+      "en": "Turns out it'd been him the whole time."
+    },
+    {
+      "anchor": "Anyway",
+      "zone": "Weight",
+      "en": "Anyway. Pass the wine."
+    }
+  ],
+  "mnemo": "У ржавых ворот особняка ты делаешь stop, потом толкаешь дверь — петли скрипят badly. В холле висит огромная picture — портрет хозяина, а у лестницы табличка: «mind the step». Наверху скрип становится всё worse — и вдруг обрывается в мёртвую quiet; только под потолком hang и качается люстра. Краем глаза ловишь, как портрет turns голову тебе вслед, — но ты пожимаешь плечами и anyway поднимаешься по ступеням."
+}

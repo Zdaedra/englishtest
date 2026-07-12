@@ -1,0 +1,60 @@
+{
+ "slug": "lead-3",
+ "title": "Стать спокойствием в кризисе",
+ "theme": "Комната паникует — стать якорем: снизить градус, дать ясность и следующий шаг, излучать заразительную устойчивость",
+ "subtitle": "Пилот в турбулентности",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Breathe",
+   "zone": "Warm",
+   "en": "Okay — everybody breathe for one second. Me included."
+  },
+  {
+   "anchor": "Hard",
+   "zone": "Warm",
+   "en": "This is a lot — and nobody has to pretend it isn't."
+  },
+  {
+   "anchor": "Footing",
+   "zone": "Warm",
+   "en": "Let's find our footing before we make any calls."
+  },
+  {
+   "anchor": "Facts",
+   "zone": "Backbone",
+   "en": "Here are the facts we actually have — and here's what we don't know yet."
+  },
+  {
+   "anchor": "Separate",
+   "zone": "Backbone",
+   "en": "Let's separate what happened from what we're afraid it means."
+  },
+  {
+   "anchor": "Next",
+   "zone": "Backbone",
+   "en": "The next move is simple: stabilize first, then make the call."
+  },
+  {
+   "anchor": "Panic",
+   "zone": "Weight",
+   "en": "Panic won't help us — clear heads will."
+  },
+  {
+   "anchor": "Weathered",
+   "zone": "Weight",
+   "en": "We've weathered hard things before — we're not starting from zero."
+  },
+  {
+   "anchor": "Step",
+   "zone": "Weight",
+   "en": "Stick with me — we'll take this one step at a time."
+  }
+ ],
+ "mnemo": "Шторм рвёт лагерь, люди мечутся между палатками. Выходишь в центр и первым breathe — дышишь — на виду. Киваешь: да, это hard — тяжело. Опускаешься на колено, нащупывая footing — опору под ногами. Раскладываешь на ящике facts — факты: карта, запасы, что ещё не знаем. Ножом чертишь линию, separate — отделяя случившееся от страха. Показываешь next — следующий шаг: сперва закрепить, решать потом. Panic — панике — здесь делать нечего. Стучишь по шесту со старыми заплатами: мы уже weathered — переживали бури. И ведёшь колонну под скалу — step за шагом."
+}

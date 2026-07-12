@@ -1,0 +1,208 @@
+{
+  "slug": "composure-hold-the-pause",
+  "batch_file": "64-composure-hold-the-pause.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "beat",
+      "accept_anchors": [
+        "Beat"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (От тебя требуют ответа сейчас — не дать себя п…). Дай реплику в регистре «Warm».",
+      "intent": "mull",
+      "accept_anchors": [
+        "Mull"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "sloppy",
+      "accept_anchors": [
+        "Sloppy"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "speed",
+      "accept_anchors": [
+        "Speed"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (От тебя требуют ответа сейчас — не дать себя п…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "clear",
+      "accept_anchors": [
+        "Clear"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "space",
+      "accept_anchors": [
+        "Space"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "stopwatch",
+      "accept_anchors": [
+        "Stopwatch"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (От тебя требуют ответа сейчас — не дать себя п…). Дай реплику в регистре «Weight».",
+      "intent": "clock",
+      "accept_anchors": [
+        "Clock"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "hesitation",
+      "accept_anchors": [
+        "Hesitation"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "beat",
+      "accept_anchors": [
+        "Beat"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (От тебя требуют ответа сейчас — не дать себя п…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "mull",
+      "accept_anchors": [
+        "Mull"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "sloppy",
+      "accept_anchors": [
+        "Sloppy"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "speed",
+      "accept_anchors": [
+        "Speed"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (От тебя требуют ответа сейчас — не дать себя п…). Дай реплику в регистре «Backbone».",
+      "intent": "clear",
+      "accept_anchors": [
+        "Clear"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "space",
+      "accept_anchors": [
+        "Space"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "stopwatch",
+      "accept_anchors": [
+        "Stopwatch"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (От тебя требуют ответа сейчас — не дать себя п…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "clock",
+      "accept_anchors": [
+        "Clock"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "hesitation",
+      "accept_anchors": [
+        "Hesitation"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "beat",
+      "accept_anchors": [
+        "Beat"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (От тебя требуют ответа сейчас — не дать себя п…). Дай реплику в регистре «Warm».",
+      "intent": "mull",
+      "accept_anchors": [
+        "Mull"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

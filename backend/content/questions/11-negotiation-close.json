@@ -1,0 +1,208 @@
+{
+  "slug": "negotiation-close",
+  "batch_file": "11-negotiation-close.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Test». Ответь одной уместной фразой.",
+      "intent": "page",
+      "accept_anchors": [
+        "Page"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Закрыть сделку — проверить готовность, надавит…). Дай реплику в регистре «Test».",
+      "intent": "holdup",
+      "accept_anchors": [
+        "Holdup"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Test». Скажи фразу, которая здесь уместна.",
+      "intent": "sticking",
+      "accept_anchors": [
+        "Sticking"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Press». Произнеси подходящую фразу.",
+      "intent": "fence",
+      "accept_anchors": [
+        "Fence"
+      ],
+      "zone": "Press",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Закрыть сделку — проверить готовность, надавит…). Вступи в тоне «Press» одной фразой.",
+      "intent": "pull",
+      "accept_anchors": [
+        "Pull"
+      ],
+      "zone": "Press",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Press»).",
+      "intent": "board",
+      "accept_anchors": [
+        "Board"
+      ],
+      "zone": "Press",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Close». Ответь одной уместной фразой.",
+      "intent": "dotted",
+      "accept_anchors": [
+        "Dotted"
+      ],
+      "zone": "Close",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Закрыть сделку — проверить готовность, надавит…). Дай реплику в регистре «Close».",
+      "intent": "shake",
+      "accept_anchors": [
+        "Shake"
+      ],
+      "zone": "Close",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Close». Скажи фразу, которая здесь уместна.",
+      "intent": "done",
+      "accept_anchors": [
+        "Done"
+      ],
+      "zone": "Close",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Test». Произнеси подходящую фразу.",
+      "intent": "page",
+      "accept_anchors": [
+        "Page"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Закрыть сделку — проверить готовность, надавит…). Вступи в тоне «Test» одной фразой.",
+      "intent": "holdup",
+      "accept_anchors": [
+        "Holdup"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Test»).",
+      "intent": "sticking",
+      "accept_anchors": [
+        "Sticking"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Press». Ответь одной уместной фразой.",
+      "intent": "fence",
+      "accept_anchors": [
+        "Fence"
+      ],
+      "zone": "Press",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Закрыть сделку — проверить готовность, надавит…). Дай реплику в регистре «Press».",
+      "intent": "pull",
+      "accept_anchors": [
+        "Pull"
+      ],
+      "zone": "Press",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Press». Скажи фразу, которая здесь уместна.",
+      "intent": "board",
+      "accept_anchors": [
+        "Board"
+      ],
+      "zone": "Press",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Close». Произнеси подходящую фразу.",
+      "intent": "dotted",
+      "accept_anchors": [
+        "Dotted"
+      ],
+      "zone": "Close",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Закрыть сделку — проверить готовность, надавит…). Вступи в тоне «Close» одной фразой.",
+      "intent": "shake",
+      "accept_anchors": [
+        "Shake"
+      ],
+      "zone": "Close",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Close»).",
+      "intent": "done",
+      "accept_anchors": [
+        "Done"
+      ],
+      "zone": "Close",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Test». Ответь одной уместной фразой.",
+      "intent": "page",
+      "accept_anchors": [
+        "Page"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Закрыть сделку — проверить готовность, надавит…). Дай реплику в регистре «Test».",
+      "intent": "holdup",
+      "accept_anchors": [
+        "Holdup"
+      ],
+      "zone": "Test",
+      "difficulty": 1
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+ "slug": "charisma-4",
+ "title": "Держать стол",
+ "theme": "Управлять динамикой застолья, не доминируя — всем хорошо, и это явно твой стол",
+ "subtitle": "Ночной луна-парк",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Quiet",
+   "zone": "Warm",
+   "en": "Hey, the quiet end of the table — I want in on whatever you're discussing."
+  },
+  {
+   "anchor": "Smiling",
+   "zone": "Warm",
+   "en": "You've been smiling like you know something we don't."
+  },
+  {
+   "anchor": "Hog",
+   "zone": "Warm",
+   "en": "Okay, I've been hogging this — someone take it from me."
+  },
+  {
+   "anchor": "Around",
+   "zone": "Backbone",
+   "en": "Let's go around — I want everyone's one-liner on this."
+  },
+  {
+   "anchor": "Park",
+   "zone": "Backbone",
+   "en": "Let's park that — it deserves its own conversation."
+  },
+  {
+   "anchor": "Loop",
+   "zone": "Backbone",
+   "en": "Hang on — we never looped back to what Dave started."
+  },
+  {
+   "anchor": "Drop",
+   "zone": "Weight",
+   "en": "Let's drop the charm for a minute and actually talk."
+  },
+  {
+   "anchor": "Honest",
+   "zone": "Weight",
+   "en": "Come on, that's the safe answer — give me the honest one."
+  },
+  {
+   "anchor": "Quick",
+   "zone": "Weight",
+   "en": "Quick round: what's something you changed your mind about this year? I'll go first."
+  }
+ ],
+ "mnemo": "За ужином ты садишься в quiet — тихий — конец длинного стола, где люди пока только листают меню. Подходит официант, ты smiling — улыбаешься — и просишь принести блюда в центр, чтобы все тянулись друг к другу. Один гость начинает hog — забирать — разговор себе, и ты передаёшь салат around — по кругу, переключая внимание на соседей. Телефоны вы предлагаешь park — припарковать — в корзинку на краю стола. Когда спор снова заходит в старый loop — круг, ты поднимаешь бокал и мягко предлагаешь drop — отпустить эту тему. Потом просишь каждого сказать одну honest — честную — вещь о своём дне. В конце делаешь quick — короткий — тост и передаёшь слово самому тихому гостю."
+}

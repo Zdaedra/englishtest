@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-9",
+ "title": "Командовать через спокойствие и экономию слов",
+ "theme": "Комната шумит — командовать обратным: меньше слов, тише, медленнее; не перекрикивать, а понизить, и комната подстроится; спокойствие — это команда",
+ "subtitle": "Палочка тишины",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Notch",
+   "zone": "Warm",
+   "en": "Let's take it down a notch — we'll think better."
+  },
+  {
+   "anchor": "Volume",
+   "zone": "Warm",
+   "en": "Bring it down — we'll get more done at half the volume."
+  },
+  {
+   "anchor": "One",
+   "zone": "Warm",
+   "en": "One voice at a time — I actually want to hear it."
+  },
+  {
+   "anchor": "Chatter",
+   "zone": "Backbone",
+   "en": "Cut the chatter — give me facts."
+  },
+  {
+   "anchor": "Safety",
+   "zone": "Backbone",
+   "en": "One thing at a time — safety first."
+  },
+  {
+   "anchor": "Decide",
+   "zone": "Backbone",
+   "en": "Let's stop, get the facts, then decide."
+  },
+  {
+   "anchor": "Yell",
+   "zone": "Weight",
+   "en": "I'm not going to yell over anyone — let's just settle down and talk."
+  },
+  {
+   "anchor": "Quietly",
+   "zone": "Weight",
+   "en": "I'm going to say this quietly, because it matters."
+  },
+  {
+   "anchor": "Calm",
+   "zone": "Weight",
+   "en": "We stay calm, we get through it."
+  }
+ ],
+ "mnemo": "В переговорке все говорят одновременно. Ты опускаешь ладонь на notch — одно деление — ниже: тише. Потом просишь сбавить volume — громкость — ещё. Поднимаешь one — один — палец: говорит один человек. На доске пишешь chatter — шум — и зачеркиваешь всё, что не факт. Рядом пишешь safety — безопасность — как первую рамку. Только после этого переходите к decide — решать. Кто-то пытается yell — крикнуть — поверх остальных, и ты просто молча смотришь на него. Затем quietly — тихо — повторяешь вопрос. Через минуту в комнате появляется calm — спокойствие, и люди начинают слышать друг друга."
+}

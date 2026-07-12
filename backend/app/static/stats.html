@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Executive English · Кабинет статистики</title>
+<style>
+  :root{
+    --bg:#F4F4F2; --card:#FFFFFF; --ink:#16201C; --muted:#5B6B62; --faint:#9AA59E;
+    --line:#E7E9E5; --green:#1C8C63; --green-soft:#E4F1EB; --bronze:#9E7C44;
+    --bronze-soft:#F2EBDD; --slate:#5B6B7A; --slate-soft:#EBEEF1; --shadow:0 1px 3px rgba(20,30,25,.05),0 12px 28px rgba(20,30,25,.06);
+    --r:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 64px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  h1{font-size:1.55rem;font-weight:760;letter-spacing:-.02em;margin:0}
+  .sub{color:var(--muted);font-size:.85rem;margin-top:3px}
+  .controls{display:flex;gap:8px;align-items:center}
+  .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;overflow:hidden;box-shadow:var(--shadow)}
+  .seg button{border:0;background:none;padding:7px 13px;font-size:.8rem;font-weight:650;color:var(--muted);cursor:pointer}
+  .seg button.on{background:var(--green);color:#fff}
+  .btn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:.8rem;font-weight:650;color:var(--ink);cursor:pointer;box-shadow:var(--shadow)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+  @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;box-shadow:var(--shadow)}
+  .kpi .lbl{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
+  .kpi .val{font-size:1.7rem;font-weight:770;letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums}
+  .kpi .hint{font-size:.78rem;color:var(--muted);margin-top:2px}
+  .kpi.accent .val{color:var(--green)}
+  .kpi.bronze .val{color:var(--bronze)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+  .panel.full{grid-column:1 / -1}
+  .panel h2{font-size:1rem;font-weight:720;margin:0 0 2px}
+  .panel .note{font-size:.78rem;color:var(--faint);margin:0 0 14px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.78rem;color:var(--muted)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+  table{width:100%;border-collapse:collapse;font-size:.83rem}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);font-weight:700}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .tag{display:inline-block;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--slate-soft);color:var(--slate)}
+  .tag.free{background:var(--green-soft);color:var(--green)}
+  .funnel-row{display:flex;align-items:center;gap:10px;margin:9px 0}
+  .funnel-row .fl{width:160px;font-size:.82rem;color:var(--muted);flex:none}
+  .funnel-bar{flex:1;height:26px;background:var(--green-soft);border-radius:8px;position:relative;overflow:hidden}
+  .funnel-bar span{position:absolute;left:0;top:0;bottom:0;background:var(--green);border-radius:8px}
+  .funnel-row .fv{width:118px;text-align:right;font-variant-numeric:tabular-nums;font-size:.82rem;flex:none}
+  .coh td{font-variant-numeric:tabular-nums;text-align:center;border:1px solid var(--line)}
+  .coh td.h{text-align:left;white-space:nowrap}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:6px}
+  .bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px}
+  .bars .b .bar{width:100%;max-width:54px;background:var(--green);border-radius:7px 7px 0 0;min-height:2px}
+  .bars .b small{font-size:.72rem;color:var(--muted)}
+  .bars .b b{font-size:.8rem;font-variant-numeric:tabular-nums}
+  .err{background:#FCE8E6;color:#9b1c1c;border-radius:12px;padding:14px 16px;margin-top:16px;font-size:.85rem}
+  .muted{color:var(--muted)}
+  .loading{color:var(--faint);font-size:.85rem;padding:8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Кабинет статистики</h1>
+      <div class="sub">Executive English · <span id="stamp">…</span></div>
+    </div>
+    <div class="controls">
+      <div class="seg" id="range">
+        <button data-d="30" class="on">30 дней</button>
+        <button data-d="90">90 дней</button>
+      </div>
+      <button class="btn" id="refresh">Обновить</button>
+    </div>
+  </header>
+
+  <div id="err"></div>
+  <div class="kpis" id="kpis"><div class="loading">Загрузка…</div></div>
+
+  <div class="grid">
+    <div class="panel full">
+      <h2>Динамика</h2>
+      <p class="note">Регистрации · активные пользователи (DAU) · оценённые попытки в день.</p>
+      <div id="trend" class="loading">…</div>
+      <div class="legend">
+        <span><i style="background:var(--green)"></i>Активные (DAU)</span>
+        <span><i style="background:var(--bronze)"></i>Регистрации</span>
+        <span><i style="background:var(--slate)"></i>Оценённые попытки</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Воронка активации</h2>
+      <p class="note">От регистрации до завершённого набора. Каждая ступень — уникальные пользователи.</p>
+      <div id="funnel" class="loading">…</div>
+    </div>
+
+    <div class="panel">
+      <h2>Планы и монетизация</h2>
+      <p class="note">Распределение тарифов · источник платных · истекают в 30 дней.</p>
+      <div id="plans" class="loading">…</div>
+    </div>
+
+    <div class="panel full">
+      <h2>Удержание по когортам</h2>
+      <p class="note">Недельные когорты × недели после регистрации. Активность = любое событие за неделю.</p>
+      <div id="retention" class="loading">…</div>
+    </div>
+
+    <div class="panel">
+      <h2>Качество обучения</h2>
+      <p class="note">Состояния SRS · распределение среднего балла · калибровка уверенности.</p>
+      <div id="quality" class="loading">…</div>
+    </div>
+
+    <div class="panel">
+      <h2>Сводные показатели качества</h2>
+      <p class="note">Test B (устный recall) и Test A (последовательность).</p>
+      <div id="qstats" class="loading">…</div>
+    </div>
+
+    <div class="panel full">
+      <h2>Контент по наборам</h2>
+      <p class="note">Охват, активация, завершение и средний балл. Топ-60 по охвату.</p>
+      <div id="content" class="loading">…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=(id)=>document.getElementById(id);
+const nf=(n)=>n==null?"—":Number(n).toLocaleString("ru-RU");
+let RANGE=30;
+
+async function get(path){
+  const r=await fetch(path,{headers:{"Accept":"application/json"}});
+  if(!r.ok) throw new Error(path+" → "+r.status);
+  return r.json();
+}
+function showErr(e){ $("err").innerHTML='<div class="err">Ошибка загрузки: '+String(e.message||e)+'</div>'; }
+
+function kpi(lbl,val,hint,cls){
+  return `<div class="kpi ${cls||""}"><div class="lbl">${lbl}</div><div class="val">${val}</div>${hint?`<div class="hint">${hint}</div>`:""}</div>`;
+}
+async function renderOverview(){
+  const o=await get("/admin/api/overview");
+  $("kpis").innerHTML=[
+    kpi("Пользователи",nf(o.total_users),`+${nf(o.new_7d)} за 7 дней`),
+    kpi("WAL · недельно активные",nf(o.wal),`${nf(o.attempts_7d)} попыток / 7д`,"accent"),
+    kpi("DAU / WAU / MAU",`${nf(o.dau)} / ${nf(o.wau)} / ${nf(o.mau)}`,`липкость ${o.stickiness}%`),
+    kpi("Активация (30д)",o.activation_rate+"%","активировали набор"),
+    kpi("Платные",nf(o.paid_users),`${o.paid_pct}% от всех`,"bronze"),
+    kpi("Новые за 30 дней",nf(o.new_30d)),
+    kpi("Подтвердили email",o.verified_pct+"%"),
+    kpi("Доля платных",o.paid_pct+"%","≈ конверсия"),
+  ].join("");
+}
+
+function svgLine(series, w, h){
+  const pad={l:34,r:8,t:10,b:20};
+  const n=series[0].data.length;
+  let max=0; series.forEach(s=>s.data.forEach(d=>max=Math.max(max,d.val)));
+  max=max||1;
+  const innerW=w-pad.l-pad.r, innerH=h-pad.t-pad.b;
+  const x=(i)=>pad.l+(n<=1?innerW/2:innerW*i/(n-1));
+  const y=(v)=>pad.t+innerH-(innerH*v/max);
+  let g=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none" font-family="inherit">`;
+  // gridlines
+  for(let k=0;k<=2;k++){const gy=pad.t+innerH*k/2; const val=Math.round(max*(1-k/2));
+    g+=`<line x1="${pad.l}" y1="${gy}" x2="${w-pad.r}" y2="${gy}" stroke="#EEF0ED"/>`;
+    g+=`<text x="2" y="${gy+3}" font-size="9" fill="#9AA59E">${val}</text>`;}
+  series.forEach(s=>{
+    let d="";
+    s.data.forEach((p,i)=>{ d+=(i?"L":"M")+x(i).toFixed(1)+" "+y(p.val).toFixed(1)+" "; });
+    g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  // x labels: first / mid / last
+  const idxs=[0,Math.floor((n-1)/2),n-1];
+  idxs.forEach(i=>{ if(i<0||i>=n)return; const lbl=(series[0].data[i].date||"").slice(5);
+    g+=`<text x="${x(i)}" y="${h-6}" font-size="9" fill="#9AA59E" text-anchor="middle">${lbl}</text>`;});
+  return g+"</svg>";
+}
+async function renderTrend(){
+  const data=await get("/admin/api/timeseries?days="+RANGE);
+  const mk=(key,color)=>({color,data:data.map(d=>({date:d.date,val:d[key]}))});
+  $("trend").classList.remove("loading");
+  $("trend").innerHTML=svgLine([mk("active","#1C8C63"),mk("signups","#9E7C44"),mk("attempts","#5B6B7A")],1100,210);
+}
+
+async function renderFunnel(){
+  const f=await get("/admin/api/funnel");
+  const steps=[["Регистрация","signed_up"],["Подтвердили email","verified"],
+    ["Активировали набор","activated_batch"],["1-я оценка","first_scored"],
+    ["Завершили набор","completed_batch"]];
+  const top=f.signed_up||1;
+  $("funnel").classList.remove("loading");
+  $("funnel").innerHTML=steps.map(([lbl,k])=>{
+    const v=f[k]||0, pct=Math.round(100*v/top);
+    return `<div class="funnel-row"><div class="fl">${lbl}</div>
+      <div class="funnel-bar"><span style="width:${Math.max(pct,1)}%"></span></div>
+      <div class="fv">${nf(v)} · ${pct}%</div></div>`;
+  }).join("");
+}
+
+async function renderPlans(){
+  const p=await get("/admin/api/plans");
+  const tot=(p.free+p.core+p.ai)||1;
+  const row=(lbl,v,c)=>`<div class="funnel-row"><div class="fl">${lbl}</div>
+    <div class="funnel-bar" style="background:#EEF0ED"><span style="width:${Math.max(Math.round(100*v/tot),1)}%;background:${c}"></span></div>
+    <div class="fv">${nf(v)}</div></div>`;
+  const src=Object.entries(p.source||{}).map(([k,v])=>`${k}: ${nf(v)}`).join(" · ")||"—";
+  $("plans").classList.remove("loading");
+  $("plans").innerHTML=row("Free",p.free,"#9AA59E")+row("Core",p.core,"#1C8C63")+row("AI",p.ai,"#9E7C44")+
+    `<div class="muted" style="margin-top:10px;font-size:.8rem">Источник платных: ${src}<br>Истекают в 30 дней: <b>${nf(p.expiring_30d)}</b></div>`;
+}
+
+function heat(pct){ // emerald scale
+  if(pct<=0) return "background:#F6F7F6;color:#C7CEC9";
+  const a=Math.min(1,pct/100); const bg=`rgba(28,140,99,${0.10+0.78*a})`;
+  return `background:${bg};color:${a>0.45?'#fff':'#16201C'}`;
+}
+async function renderRetention(){
+  const r=await get("/admin/api/retention");
+  const c=r.cohorts||[];
+  if(!c.length){ $("retention").classList.remove("loading"); $("retention").innerHTML='<div class="muted">Пока нет данных по когортам.</div>'; return; }
+  const maxk=Math.max(...c.map(x=>x.cells.length))-1;
+  let h="<table class='coh'><thead><tr><th class='h'>Когорта (нед.)</th><th class='num'>Размер</th>";
+  for(let k=0;k<=maxk;k++) h+=`<th class='num'>W${k}</th>`;
+  h+="</tr></thead><tbody>";
+  c.forEach(row=>{
+    h+=`<tr><td class='h'>${row.week}</td><td class='num'>${nf(row.size)}</td>`;
+    row.cells.forEach(cell=>{ h+=`<td style="${heat(cell.pct)}">${cell.pct?cell.pct+"%":"·"}</td>`; });
+    h+="</tr>";
+  });
+  $("retention").classList.remove("loading");
+  $("retention").innerHTML=h+"</tbody></table>";
+}
+
+function barChart(pairs,color){
+  const max=Math.max(1,...pairs.map(p=>p[1]));
+  return `<div class="bars">`+pairs.map(([lbl,v])=>
+    `<div class="b"><b>${nf(v)}</b><div class="bar" style="height:${Math.round(100*v/max)}%;background:${color||'#1C8C63'}"></div><small>${lbl}</small></div>`
+  ).join("")+`</div>`;
+}
+async function renderQuality(){
+  const q=await get("/admin/api/quality");
+  const srs=[["new",q.srs.new],["shaky",q.srs.shaky],["familiar",q.srs.familiar],["automatic",q.srs.automatic]];
+  const hk=["0–2","2–4","4–6","6–8","8–10"];
+  const hist=hk.map(k=>[k,(q.score_hist||{})[k]||0]);
+  $("quality").classList.remove("loading");
+  $("quality").innerHTML=`<div class="muted" style="font-size:.78rem;margin-bottom:2px">Состояния SRS</div>`+barChart(srs,"#1C8C63")+
+    `<div class="muted" style="font-size:.78rem;margin:14px 0 2px">Средний балл по фразам</div>`+barChart(hist,"#9E7C44");
+  $("qstats").classList.remove("loading");
+  $("qstats").innerHTML=[
+    kpi("Test B · средний балл",q.testb_avg==null?"—":q.testb_avg,"устный recall (0–10)","accent"),
+    kpi("Test A · сдача ≥7",q.testa_pass_pct+"%","последовательность"),
+    kpi("Разрыв калибровки",q.confidence_gap_pct+"%","«знаю», но балл < 6","bronze"),
+  ].join("").replace(/class="kpi/g,'style="margin-bottom:10px" class="kpi');
+}
+
+async function renderContent(){
+  const rows=await get("/admin/api/content");
+  $("content").classList.remove("loading");
+  if(!rows.length){ $("content").innerHTML='<div class="muted">Пока нет наборов с активностью.</div>'; return; }
+  let h="<table><thead><tr><th>Набор</th><th>Раздел</th><th class='num'>Охват</th><th class='num'>Активир.</th><th class='num'>Заверш.</th><th class='num'>% заверш.</th><th class='num'>Ср. балл</th></tr></thead><tbody>";
+  rows.forEach(r=>{
+    h+=`<tr><td>${r.title} ${r.is_free?'<span class="tag free">free</span>':''}</td>
+      <td><span class="tag">${r.section}</span></td>
+      <td class="num">${nf(r.reach)}</td><td class="num">${nf(r.activated)}</td>
+      <td class="num">${nf(r.completed)}</td><td class="num">${r.completion_pct}%</td>
+      <td class="num">${r.avg_score==null?"—":r.avg_score}</td></tr>`;
+  });
+  $("content").innerHTML=h+"</tbody></table>";
+}
+
+async function loadAll(){
+  $("err").innerHTML="";
+  $("stamp").textContent=new Date().toLocaleString("ru-RU");
+  try{
+    await Promise.all([
+      renderOverview(), renderTrend(), renderFunnel(), renderPlans(),
+      renderRetention(), renderQuality(), renderContent(),
+    ]);
+  }catch(e){ showErr(e); }
+}
+$("refresh").onclick=loadAll;
+$("range").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  [...$("range").children].forEach(x=>x.classList.toggle("on",x===b));
+  RANGE=+b.dataset.d; renderTrend().catch(showErr);
+});
+loadAll();
+</script>
+</body>
+</html>

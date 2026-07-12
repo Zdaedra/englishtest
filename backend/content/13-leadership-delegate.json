@@ -1,0 +1,60 @@
+{
+ "slug": "leadership-2",
+ "title": "Делегировать",
+ "theme": "Делегирование — передать штурвал, дать полномочия, спросить за результат",
+ "subtitle": "",
+ "section": "leadership",
+ "zones": [
+  "Entrust",
+  "Empower",
+  "Account"
+ ],
+ "phrases": [
+  {
+   "anchor": "Reins",
+   "zone": "Entrust",
+   "en": "I'm handing you the reins."
+  },
+  {
+   "anchor": "Charge",
+   "zone": "Entrust",
+   "en": "You're in charge of this now."
+  },
+  {
+   "anchor": "Lead",
+   "zone": "Entrust",
+   "en": "I need you to lead on this."
+  },
+  {
+   "anchor": "Call",
+   "zone": "Empower",
+   "en": "It's your call from here."
+  },
+  {
+   "anchor": "Back",
+   "zone": "Empower",
+   "en": "I've got your back on this."
+  },
+  {
+   "anchor": "Green",
+   "zone": "Empower",
+   "en": "You've got the green light."
+  },
+  {
+   "anchor": "Own",
+   "zone": "Account",
+   "en": "I need you to own the outcome."
+  },
+  {
+   "anchor": "Accountable",
+   "zone": "Account",
+   "en": "I'll hold you accountable for it."
+  },
+  {
+   "anchor": "Deliver",
+   "zone": "Account",
+   "en": "I'm counting on you to deliver."
+  }
+ ],
+ "mnemo": "Ты гонишь собачью упряжку сквозь метель и на перевале спрыгиваешь в снег. Вкладываешь reins — поводья — в руки ученика и подталкиваешь его на полоз: принимай charge — командование. Первые метры бежишь рядом, показывая, как lead — вести за собой. У развилки лишь машешь рукой: дальше твой call — твоё решение. Плечом подпираешь нарты сзади, прикрывая back — спину, срываешь со столба green — зелёный флаг — и вскидываешь его: путь открыт. Разжимаешь пальцы: own — владей маршрутом целиком. Ножом царапаешь на столбе срок: по нему держишь его accountable — спросишь за результат. И взбегаешь на вышку смотреть, как он deliver — довезёт груз до финиша."
+}

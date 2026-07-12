@@ -1,0 +1,60 @@
+{
+ "slug": "lead-9",
+ "title": "Сообщить плохую новость команде",
+ "theme": "Донести тяжёлую новость группе, сохранив доверие — без приукрашивания и спина, держа достоинство и оставаясь рядом",
+ "subtitle": "Ночной заморозок",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Straight",
+   "zone": "Warm",
+   "en": "This is hard news, and I'm going to give it to you straight."
+  },
+  {
+   "anchor": "Grapevine",
+   "zone": "Warm",
+   "en": "You're hearing this from me — not through the grapevine."
+  },
+  {
+   "anchor": "Lands",
+   "zone": "Warm",
+   "en": "I care about how this lands — there are people behind the numbers."
+  },
+  {
+   "anchor": "Situation",
+   "zone": "Backbone",
+   "en": "Here's the situation, no dressing it up: the plan changed, and it affects us."
+  },
+  {
+   "anchor": "Know",
+   "zone": "Backbone",
+   "en": "Here's what we know, what we don't know yet, and what happens next."
+  },
+  {
+   "anchor": "Spin",
+   "zone": "Backbone",
+   "en": "I'm giving you the facts — not spin."
+  },
+  {
+   "anchor": "Sugarcoat",
+   "zone": "Weight",
+   "en": "I'm not going to sugarcoat this to make the room more comfortable."
+  },
+  {
+   "anchor": "Insult",
+   "zone": "Weight",
+   "en": "I won't insult you by pretending this is easy."
+  },
+  {
+   "anchor": "Dropping",
+   "zone": "Weight",
+   "en": "I'm not dropping this on you and walking away."
+  }
+ ],
+ "mnemo": "Ты проходишь по офису сам и зовёшь команду в переговорку: скажешь straight — прямо, без пересказов. Дверь закрывается до того, как новость пойдёт через grapevine — сарафанное радио. У доски ты смотришь, как это lands — приземляется — на лицах людей. Потом пишешь situation — ситуацию — одной строкой: контракт потерян. Ниже делишь доску на три колонки: что know — знаем, чего не знаем, что делаем дальше. Не добавляешь spin — красивый разворот формулировок. Самую неприятную цифру пишешь без sugarcoat — подслащивания. Не insult — не оскорбляешь — команду фразой “это легко пережить”. И не dropping — не бросаешь — новость у двери: остаёшься у доски отвечать на вопросы."
+}

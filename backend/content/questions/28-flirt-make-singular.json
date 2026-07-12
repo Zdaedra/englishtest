@@ -1,0 +1,208 @@
+{
+  "slug": "flirt-make-singular",
+  "batch_file": "28-flirt-make-singular.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "noticed",
+      "accept_anchors": [
+        "Noticed"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Твоё внимание сужается до неё одной — выделена…). Дай реплику в регистре «Warm».",
+      "intent": "track",
+      "accept_anchors": [
+        "Track"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "quiet",
+      "accept_anchors": [
+        "Quiet"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "rest",
+      "accept_anchors": [
+        "Rest"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Твоё внимание сужается до неё одной — выделена…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "crossed",
+      "accept_anchors": [
+        "Crossed"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "choice",
+      "accept_anchors": [
+        "Choice"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "polite",
+      "accept_anchors": [
+        "Polite"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Твоё внимание сужается до неё одной — выделена…). Дай реплику в регистре «Weight».",
+      "intent": "full",
+      "accept_anchors": [
+        "Full"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "else",
+      "accept_anchors": [
+        "Else"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "noticed",
+      "accept_anchors": [
+        "Noticed"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Твоё внимание сужается до неё одной — выделена…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "track",
+      "accept_anchors": [
+        "Track"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "quiet",
+      "accept_anchors": [
+        "Quiet"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "rest",
+      "accept_anchors": [
+        "Rest"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Твоё внимание сужается до неё одной — выделена…). Дай реплику в регистре «Backbone».",
+      "intent": "crossed",
+      "accept_anchors": [
+        "Crossed"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "choice",
+      "accept_anchors": [
+        "Choice"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "polite",
+      "accept_anchors": [
+        "Polite"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Твоё внимание сужается до неё одной — выделена…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "full",
+      "accept_anchors": [
+        "Full"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "else",
+      "accept_anchors": [
+        "Else"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "noticed",
+      "accept_anchors": [
+        "Noticed"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Твоё внимание сужается до неё одной — выделена…). Дай реплику в регистре «Warm».",
+      "intent": "track",
+      "accept_anchors": [
+        "Track"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

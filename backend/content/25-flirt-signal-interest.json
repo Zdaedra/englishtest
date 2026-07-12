@@ -1,0 +1,60 @@
+{
+ "slug": "flirt-1",
+ "title": "Обозначить интерес",
+ "theme": "Дать понять, что человек интересен тебе романтически — уверенно, с искрой, без нужды",
+ "subtitle": "Рыбалка нахлыстом",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Reasons",
+   "zone": "Warm",
+   "en": "I keep finding reasons to end up back over here."
+  },
+  {
+   "anchor": "Room",
+   "zone": "Warm",
+   "en": "You're making it very easy to forget the rest of the room."
+  },
+  {
+   "anchor": "Distracting",
+   "zone": "Warm",
+   "en": "You're a little distracting — and I'm choosing not to fight it."
+  },
+  {
+   "anchor": "Plainly",
+   "zone": "Backbone",
+   "en": "I find you really attractive — and I'd rather just say it plainly."
+  },
+  {
+   "anchor": "Dance",
+   "zone": "Backbone",
+   "en": "I'm interested — I'd rather tell you than dance around it."
+  },
+  {
+   "anchor": "Drawn",
+   "zone": "Backbone",
+   "en": "No pressure — but I'm not going to pretend I'm not drawn to you."
+  },
+  {
+   "anchor": "Attention",
+   "zone": "Weight",
+   "en": "You've had my attention all night — that doesn't happen often."
+  },
+  {
+   "anchor": "Usually",
+   "zone": "Weight",
+   "en": "I don't usually say this kind of thing — which should tell you something."
+  },
+  {
+   "anchor": "Find",
+   "zone": "Weight",
+   "en": "You know where to find me."
+  }
+ ],
+ "mnemo": "Есть reasons доспать, но ты уже в реке — заходишь глубже, освобождая room для замаха, и distracting рябь тебя не сбивает. В прозрачной струе plainly виден силуэт форели; твоя мушка dance на воде — и вдруг леска drawn в струну: поклёвка! Всё твоё attention — внимание — на леске; usually такие срываются у берега — но ты замираешь у камня, где она сможет тебя find — найти: форель заходит в сачок."
+}

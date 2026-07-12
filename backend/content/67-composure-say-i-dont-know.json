@@ -1,0 +1,60 @@
+{
+ "slug": "composure-10",
+ "title": "Сказать «не знаю» без потери лица",
+ "theme": "Тебя спрашивают, а ты не знаешь — признать спокойно и с авторитетом, без блефа; честное «не знаю» весомее блефа",
+ "subtitle": "Мост в тумане",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Top",
+   "zone": "Warm",
+   "en": "Great question — not one I'll answer off the top of my head."
+  },
+  {
+   "anchor": "Comfortable",
+   "zone": "Warm",
+   "en": "I'm not sure — and I'm comfortable saying that out loud."
+  },
+  {
+   "anchor": "Stumped",
+   "zone": "Warm",
+   "en": "You've genuinely stumped me there."
+  },
+  {
+   "anchor": "Solid",
+   "zone": "Backbone",
+   "en": "I don't know yet — I'll find out and come back with something solid."
+  },
+  {
+   "anchor": "Verify",
+   "zone": "Backbone",
+   "en": "I'm not going to guess on that — I'll verify it first."
+  },
+  {
+   "anchor": "Tomorrow",
+   "zone": "Backbone",
+   "en": "Here's what I know so far — I'll have the rest by tomorrow."
+  },
+  {
+   "anchor": "Precise",
+   "zone": "Weight",
+   "en": "I'd rather be precise later than confident and wrong now."
+  },
+  {
+   "anchor": "Pretend",
+   "zone": "Weight",
+   "en": "I don't know — and I'm not going to pretend I do."
+  },
+  {
+   "anchor": "Wing",
+   "zone": "Weight",
+   "en": "I'm not going to wing an answer to a question this important."
+  }
+ ],
+ "mnemo": "Пещера. Взбираешься на top — верхний — уступ в comfortable — удобный — упор и ведёшь лучом: три чёрных хода. Ты stumped — в тупике — и говоришь это вслух. Простукиваешь стену костяшками, ищешь solid — твёрдый — камень. Заползаешь в первый лаз — verify — проверить — своими руками. Дальше фонарь не бьёт: остальное доразведаешь tomorrow — завтра. Мелом ставишь precise — точную — метку только там, где прошёл сам. Из второго хода тянет водой: не pretend — не изображаешь, что видел дно. А у края обрыва не wing — не лезешь наугад: спускаешь фонарь на шнуре."
+}

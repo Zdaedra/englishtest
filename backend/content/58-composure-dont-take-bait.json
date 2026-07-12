@@ -1,0 +1,60 @@
+{
+ "slug": "composure-1",
+ "title": "Не дать себя спровоцировать",
+ "theme": "Тебя подкалывают, чтобы вырвать реакцию — не клюнуть на наживку, спокойно назвать приём; самообладание читается как сила",
+ "subtitle": "Театр марионеток",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Bait",
+   "zone": "Warm",
+   "en": "I see the bait — and I admire the presentation."
+  },
+  {
+   "anchor": "Rise",
+   "zone": "Warm",
+   "en": "Nice try getting a rise out of me."
+  },
+  {
+   "anchor": "Slide",
+   "zone": "Warm",
+   "en": "Nice try — I'm letting that one slide."
+  },
+  {
+   "anchor": "Biting",
+   "zone": "Backbone",
+   "en": "I know what that was — not biting."
+  },
+  {
+   "anchor": "Part",
+   "zone": "Backbone",
+   "en": "I'm not playing that part."
+  },
+  {
+   "anchor": "Ask",
+   "zone": "Backbone",
+   "en": "If you're that curious, just ask."
+  },
+  {
+   "anchor": "Land",
+   "zone": "Weight",
+   "en": "You're welcome to keep trying — it's not going to land."
+  },
+  {
+   "anchor": "Time",
+   "zone": "Weight",
+   "en": "You're wasting your time with this."
+  },
+  {
+   "anchor": "Work",
+   "zone": "Weight",
+   "en": "Anyway — I've got work to do."
+  }
+ ],
+ "mnemo": "На встрече клиент начинает с bait — наживки: “ну вы же сами понимаете, что это провал”. Ты не дёргаешься, а встаёшь и подходишь к доске. Его голос rise — поднимается, ты пишешь вопрос ровно. Вторая колкость пытается slide — проскользнуть — в разговор, но ты не подхватываешь. На самую жирную фразу ты не biting — не клюёшь, а обводишь факты. Говоришь: эту part — роль — обиженного я играть не буду. Потом поворачиваешься и ask — спрашиваешь: “какой результат вам нужен к пятнице?” Его следующий выпад не land — не попадает, потому что рамка уже сменилась. Ты смотришь на time — время — встречи. И возвращаешь разговор к work — работе."
+}

@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-6",
+ "title": "Быть рядом в чужой боли",
+ "theme": "Близкому плохо — держать пространство, не чинить и не обесценивать, выдержать боль и не уйти",
+ "subtitle": "Палатка в бурю",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Strong",
+   "zone": "Warm",
+   "en": "I'm here with you. You don't have to be strong right now."
+  },
+  {
+   "anchor": "Hold",
+   "zone": "Warm",
+   "en": "Come here — you don't have to hold this by yourself."
+  },
+  {
+   "anchor": "Beside",
+   "zone": "Warm",
+   "en": "I hate that you're going through this — and I'm right beside you."
+  },
+  {
+   "anchor": "Fix",
+   "zone": "Backbone",
+   "en": "I'm not going to rush in and fix this — I just want to understand where it hurts."
+  },
+  {
+   "anchor": "Need",
+   "zone": "Backbone",
+   "en": "Tell me what you need — words, quiet, or just my hand."
+  },
+  {
+   "anchor": "Sit",
+   "zone": "Backbone",
+   "en": "I can sit with this without trying to explain it away."
+  },
+  {
+   "anchor": "Soften",
+   "zone": "Weight",
+   "en": "You don't have to soften it for me."
+  },
+  {
+   "anchor": "Afraid",
+   "zone": "Weight",
+   "en": "I'm not afraid of this part of you."
+  },
+  {
+   "anchor": "Staying",
+   "zone": "Weight",
+   "en": "I'm staying. We can let this be as heavy as it is."
+  }
+ ],
+ "mnemo": "Друг приходит поздно вечером и с порога говорит, что сегодня не может быть strong — сильным. Ты забираешь у него куртку и hold — держишь — чашку чая, пока он снимает обувь. На диване садишься beside — рядом, не напротив как на допросе. Рука тянется к телефону, чтобы fix — починить — ситуацию советом, но ты кладёшь телефон на стол. Спрашиваешь только: “что тебе need — нужно прямо сейчас?” Он молчит, и вы просто sit — сидите рядом несколько минут. Когда он начинает оправдываться, ты не пытаешься soften — смягчить — его боль быстрыми фразами. Он наконец говорит самое страшное, и ты не afraid — не пугаешься. Чай остывает, ночь идёт дальше, а ты staying — остаёшься — на диване рядом."
+}

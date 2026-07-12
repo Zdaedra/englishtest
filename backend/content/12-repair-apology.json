@@ -1,0 +1,60 @@
+{
+ "slug": "repair-1",
+ "title": "Помириться",
+ "theme": "Починка отношений — признать вину, извиниться, восстановить доверие",
+ "subtitle": "",
+ "section": "repair",
+ "zones": [
+  "Admit",
+  "Mend",
+  "Rebuild"
+ ],
+ "phrases": [
+  {
+   "anchor": "Owe",
+   "zone": "Admit",
+   "en": "I owe you an apology."
+  },
+  {
+   "anchor": "Overstepped",
+   "zone": "Admit",
+   "en": "I overstepped, and I know it."
+  },
+  {
+   "anchor": "Fault",
+   "zone": "Admit",
+   "en": "This is my fault here."
+  },
+  {
+   "anchor": "Sorry",
+   "zone": "Mend",
+   "en": "I'm truly sorry about that."
+  },
+  {
+   "anchor": "Right",
+   "zone": "Mend",
+   "en": "Let me make this right."
+  },
+  {
+   "anchor": "Watch",
+   "zone": "Mend",
+   "en": "Don't take my word for it — just watch."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Rebuild",
+   "en": "I want to earn back your trust."
+  },
+  {
+   "anchor": "Slate",
+   "zone": "Rebuild",
+   "en": "Can we wipe the slate clean?"
+  },
+  {
+   "anchor": "Track",
+   "zone": "Rebuild",
+   "en": "Let's get back on track."
+  }
+ ],
+ "mnemo": "Ты толкаешь калитку её двора с ящиком инструментов: ты owe — должен ей извинение. Ты overstepped — переступил её межу — и повалил секцию забора. Опускаешься на колено у пролома: fault — вина, и она твоя. Поднимаешь глаза на её крыльцо и говоришь первым: sorry — прости. Упираешься плечом в накренившийся столб и ставишь его right — ровно. Прибиваешь новую доску: watch — просто смотри. Качаешь секцию, проверяя trust — доверие: держит. У крыльца рукавом стираешь вашу перепалку со slate — грифельной доски для записок — дочиста. И выкатываешь её велосипед на track — укатанную дорожку."
+}

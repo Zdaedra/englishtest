@@ -1,0 +1,60 @@
+{
+ "slug": "lead-11",
+ "title": "Задать планку / позвать к лучшему",
+ "theme": "Поднять стандарт и позвать людей к их лучшей версии — требовательность из уважения, зов вверх, а не давление вниз",
+ "subtitle": "Прыжок с шестом",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Seen",
+   "zone": "Warm",
+   "en": "I'm asking more of you because I've seen what you can actually do."
+  },
+  {
+   "anchor": "Capable",
+   "zone": "Warm",
+   "en": "You're capable of way more than this — and you know it."
+  },
+  {
+   "anchor": "More",
+   "zone": "Warm",
+   "en": "I see more in you than the work is currently showing."
+  },
+  {
+   "anchor": "Bar",
+   "zone": "Backbone",
+   "en": "'Fine' isn't the bar here — you know that."
+  },
+  {
+   "anchor": "Excellent",
+   "zone": "Backbone",
+   "en": "Let's define what 'excellent' actually means here — concretely, not just 'better.'"
+  },
+  {
+   "anchor": "Holding",
+   "zone": "Backbone",
+   "en": "'Good enough' is exactly what's holding us back."
+  },
+  {
+   "anchor": "Pushing",
+   "zone": "Weight",
+   "en": "I'm pushing you because I've seen your best — this isn't it."
+  },
+  {
+   "anchor": "Slide",
+   "zone": "Weight",
+   "en": "I'd be wasting you if I let this slide."
+  },
+  {
+   "anchor": "Piling",
+   "zone": "Weight",
+   "en": "This isn't me piling on — I just know what you can do."
+  }
+ ],
+ "mnemo": "Тренер seen — видел — твой прыжок и кивает вверх: ты capable — способен — на more — большее. Он поднимает bar на два деления — высоту excellent прыгунов. «И так нормально» — вот что holding — держало — тебя ниже планки. Тренер pushing — дожимает, — потому что видел твой лучший прыжок: этот — не он. Ни одной сбитой попытке он не даёт slide — проскочить молча. И это не piling — не добивание: он знает, на что ты способен. Разбег — и ты переваливаешь планку с запасом."
+}

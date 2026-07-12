@@ -1,0 +1,60 @@
+{
+ "slug": "stage-2",
+ "title": "Командовать сценой (тело/голос/пауза)",
+ "theme": "Владеть залом в процессе — вести внимание, использовать паузу и замедление как команду, командовать через тишину; пространство моё",
+ "subtitle": "Проявка кадра",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Remember",
+   "zone": "Warm",
+   "en": "Here comes the part you'll want to remember."
+  },
+  {
+   "anchor": "Stay",
+   "zone": "Warm",
+   "en": "Stay with me here — this is where it starts to matter."
+  },
+  {
+   "anchor": "Picture",
+   "zone": "Warm",
+   "en": "Picture this with me for a second."
+  },
+  {
+   "anchor": "Sink",
+   "zone": "Backbone",
+   "en": "Let that sink in for a second."
+  },
+  {
+   "anchor": "Slow",
+   "zone": "Backbone",
+   "en": "Let me slow down here — this part matters."
+  },
+  {
+   "anchor": "Write",
+   "zone": "Backbone",
+   "en": "If you write down one line, write this one."
+  },
+  {
+   "anchor": "Moment",
+   "zone": "Weight",
+   "en": "I'll give that a moment to land."
+  },
+  {
+   "anchor": "Laugh",
+   "zone": "Weight",
+   "en": "You can laugh — it's allowed."
+  },
+  {
+   "anchor": "Wait",
+   "zone": "Weight",
+   "en": "Take a second with that one — I'll wait."
+  }
+ ],
+ "mnemo": "Ты ступаешь на канат над площадью, и гул внизу обрывается. Начинается отрезок, который стоит remember — запомнить. Поднимаешь ладонь: stay — останьтесь со мной, дальше — главное. Балансиром рисуешь в воздухе picture — картину. Замираешь, давая мысли sink — осесть. Нарочно идёшь slow — медленнее: точность дороже скорости. Носком ноги write — выводишь по канату единственную строчку. Повисаешь на одной ноге, давая сказанному moment — мгновение — долететь. Снизу смешок — ты киваешь: laugh — смеяться можно. И спокойно wait — ждёшь на середине."
+}

@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-10",
+ "title": "Ревность без обвинения",
+ "theme": "Назвать ревность как своё чувство — не обвиняя, не контролируя и не делая партнёра виноватым; трюст вместо страха",
+ "subtitle": "Сокольник",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Jealous",
+   "zone": "Warm",
+   "en": "I felt a little jealous earlier — and I'd rather name it than hide it."
+  },
+  {
+   "anchor": "Flare",
+   "zone": "Warm",
+   "en": "I felt it flare up tonight — that's mine to deal with."
+  },
+  {
+   "anchor": "Admit",
+   "zone": "Warm",
+   "en": "Can I admit something a little unflattering — without it turning into a fight?"
+  },
+  {
+   "anchor": "Check",
+   "zone": "Backbone",
+   "en": "I don't want to check up on you — I just need to hear we're good."
+  },
+  {
+   "anchor": "Felt",
+   "zone": "Backbone",
+   "en": "I'm not accusing you — I'm just telling you how it felt."
+  },
+  {
+   "anchor": "Mine",
+   "zone": "Backbone",
+   "en": "This is mine to work through — not yours to fix."
+  },
+  {
+   "anchor": "Fear",
+   "zone": "Weight",
+   "en": "This is my fear talking — you didn't do anything wrong."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Weight",
+   "en": "Yeah, I get jealous sometimes — I still trust you."
+  },
+  {
+   "anchor": "Problem",
+   "zone": "Weight",
+   "en": "This one's my problem — I'm not going to make it yours."
+  }
+ ],
+ "mnemo": "После вечеринки вы идёте от парковки к дому, и в тебе поднимается jealous — ревность. У подъезда это чувство flare — вспыхивает — снова, когда она упоминает тот разговор. Ты не заходишь в проверку, а у лифта admit — признаёшь — вслух: “я ревную”. Дома телефон лежит на столе, и ты не check — не проверяешь — его. На кухне спокойно объясняешь, как это felt — ощущалось — у тебя внутри. Потом кладёшь ладонь на грудь: это mine — моё чувство, не её вина. Называешь свой fear — страх, вместо того чтобы обвинять. На диване просишь обычное подтверждение связи и выбираешь trust — доверие. В конце формулируешь problem — проблему — как свою работу с ревностью, а не как её обязанность оправдываться."
+}

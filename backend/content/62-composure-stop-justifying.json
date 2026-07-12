@@ -1,0 +1,60 @@
+{
+ "slug": "composure-5",
+ "title": "Не оправдываться под давлением",
+ "theme": "На тебя давят за объяснениями — дать один чистый ответ и остановиться; уверенность не нуждается в защите, «нет» — полное предложение",
+ "subtitle": "Ларец через базар",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Asking",
+   "zone": "Warm",
+   "en": "I hear why you're asking — and my answer's still the same."
+  },
+  {
+   "anchor": "Polite",
+   "zone": "Warm",
+   "en": "It's a no — a polite one, but a no."
+  },
+  {
+   "anchor": "Civil",
+   "zone": "Warm",
+   "en": "I'll keep it short and civil."
+  },
+  {
+   "anchor": "Answer",
+   "zone": "Backbone",
+   "en": "The answer is no — and I'm not going to dress it up."
+  },
+  {
+   "anchor": "Decision",
+   "zone": "Backbone",
+   "en": "That's my decision — I'm comfortable with it."
+  },
+  {
+   "anchor": "Muddy",
+   "zone": "Backbone",
+   "en": "More reasons would just muddy it."
+  },
+  {
+   "anchor": "Defense",
+   "zone": "Weight",
+   "en": "I don't owe a defense for every no."
+  },
+  {
+   "anchor": "Hang",
+   "zone": "Weight",
+   "en": "I'm fine letting that hang there."
+  },
+  {
+   "anchor": "Negotiating",
+   "zone": "Weight",
+   "en": "I'm not negotiating this."
+  }
+ ],
+ "mnemo": "После презентации к тебе подходят трое и начинают asking — спрашивать — почему ты отказался от предложения. Ты отвечаешь polite — вежливо — и идёшь к стойке регистрации забрать бейдж. Второму говоришь так же civil — спокойно: “нет, спасибо”. На телефоне уже открыт короткий answer — ответ, который ты отправил организатору. У выхода ты повторяешь: это моё decision — решение. Новые доводы только muddy — мутят — воду, поэтому ты не разбираешь каждый по отдельности. На просьбу дать подробную defense — защиту — ты не открываешь длинную речь. Пауза hang — висит — пару секунд, и это нормально. У дверей ты добавляешь: я не negotiating — не торгуюсь, решение принято."
+}

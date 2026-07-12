@@ -1,0 +1,60 @@
+{
+ "slug": "lead-5",
+ "title": "Призвать к ответственности без молотка",
+ "theme": "Человек подвёл — назвать разрыв и восстановить стандарт без злости и стыда, сохранив достоинство и получив реальное переобязательство",
+ "subtitle": "Скейт-рампа",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Assuming",
+   "zone": "Warm",
+   "en": "This isn't like you — which is why I'm asking, not assuming."
+  },
+  {
+   "anchor": "Sideways",
+   "zone": "Warm",
+   "en": "I'm not here to pile on — I want to understand where it went sideways."
+  },
+  {
+   "anchor": "Audience",
+   "zone": "Warm",
+   "en": "Let's keep this just us — no audience, no drama."
+  },
+  {
+   "anchor": "Committed",
+   "zone": "Backbone",
+   "en": "You committed to this and it didn't happen — walk me through it."
+  },
+  {
+   "anchor": "Apart",
+   "zone": "Backbone",
+   "en": "Where did this fall apart?"
+  },
+  {
+   "anchor": "Follow",
+   "zone": "Backbone",
+   "en": "Good intent doesn't replace follow-through here."
+  },
+  {
+   "anchor": "Again",
+   "zone": "Weight",
+   "en": "This stays between us — but it can't happen again."
+  },
+  {
+   "anchor": "Trust",
+   "zone": "Weight",
+   "en": "I trust you to make this right — and I need a clear commitment."
+  },
+  {
+   "anchor": "Behind",
+   "zone": "Weight",
+   "en": "Tell me what you can stand behind — and I'll hold you to it."
+  }
+ ],
+ "mnemo": "В демозале ты assuming — предполагаешь — лёгкую репетицию перед клиентом. Но тележка с прототипом уходит sideways — боком — и цепляет стойку. Маленькая Audience — аудитория — из команды всё видит. Ты напоминаешь, что был committed — взят — конкретный стандарт показа, не “как получится”. Вместе поднимаете прототип: крепление разошлось apart — на части. У рабочего стола просишь пройти весь follow — порядок действий — по чеклисту, а не на памяти. Потом ставите тележку на старт again — снова. Ты даёшь человеку второй заход, потому что trust — доверие — восстанавливается делом. В конце он сам оставляет старую спешку behind — позади."
+}

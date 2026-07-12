@@ -1,0 +1,60 @@
+{
+ "slug": "flirt-9",
+ "title": "Держать загадку",
+ "theme": "Не выкладывать всё сразу — недосказанность, интрига, уйти на пике, оставить хотеть больше",
+ "subtitle": "Съёмочная площадка",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Cliffhanger",
+   "zone": "Warm",
+   "en": "Some things are better left as a cliffhanger."
+  },
+  {
+   "anchor": "Version",
+   "zone": "Warm",
+   "en": "You get the charming version tonight — the full version takes longer."
+  },
+  {
+   "anchor": "Imagination",
+   "zone": "Warm",
+   "en": "There's more to that story — but I like where your imagination went."
+  },
+  {
+   "anchor": "Second",
+   "zone": "Backbone",
+   "en": "That one's a story for the second date."
+  },
+  {
+   "anchor": "Purpose",
+   "zone": "Backbone",
+   "en": "I'm leaving that one open on purpose — you'll live."
+  },
+  {
+   "anchor": "Mystery",
+   "zone": "Backbone",
+   "en": "A little mystery never hurt anyone."
+  },
+  {
+   "anchor": "Know",
+   "zone": "Weight",
+   "en": "Wouldn't you like to know."
+  },
+  {
+   "anchor": "Leave",
+   "zone": "Weight",
+   "en": "Best to leave while it's still this good."
+  },
+  {
+   "anchor": "Ahead",
+   "zone": "Weight",
+   "en": "I'll quit while I'm ahead. Goodnight."
+  }
+ ],
+ "mnemo": "Вы идёте после ужина к её машине, и она просит досказать историю про сорванную поездку. У самого смешного места ты останавливаешься на cliffhanger — обрыве: “а вот что было у стойки регистрации, это уже отдельная серия”. Даёшь только короткую version — версию, пока вы переходите улицу. Видишь, как включается её imagination — воображение, и не забираешь у неё этот момент подробностями. У машины говоришь: “оставим это на second — вторую — встречу”. Это сделано on purpose — нарочно, но без игры в загадочного человека. В воздухе остаётся немного mystery — тайны. Она смеётся: “теперь я должна know — узнать конец”. Ты решаешь leave — уйти, пока вечер живой. И уходишь ahead — чуть впереди её ожидания, уже с поводом увидеться снова."
+}

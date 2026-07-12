@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-12",
+ "title": "Желание и тепло без клише",
+ "theme": "Выразить влечение и нежность свежо и конкретно — дать почувствовать, что видят, хотят и ценят; желание из присутствия, а не из нужды",
+ "subtitle": "Пёс на пляже",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Laugh",
+   "zone": "Warm",
+   "en": "The way you laugh with your whole face — that's my favorite thing in any room."
+  },
+  {
+   "anchor": "Catch",
+   "zone": "Warm",
+   "en": "I catch myself watching how you do small things — they get me every time."
+  },
+  {
+   "anchor": "Grocery",
+   "zone": "Warm",
+   "en": "Somehow even grocery runs are fun with you."
+  },
+  {
+   "anchor": "Simple",
+   "zone": "Backbone",
+   "en": "I want you — simple as that."
+  },
+  {
+   "anchor": "Far",
+   "zone": "Backbone",
+   "en": "Come here — you're too far away."
+  },
+  {
+   "anchor": "Look",
+   "zone": "Backbone",
+   "en": "That look you just gave me — still gets me, every time."
+  },
+  {
+   "anchor": "Pick",
+   "zone": "Weight",
+   "en": "I know all of you by now — and I'd still pick you."
+  },
+  {
+   "anchor": "Fix",
+   "zone": "Weight",
+   "en": "I don't need you to fix me — I just want you here."
+  },
+  {
+   "anchor": "Surprise",
+   "zone": "Weight",
+   "en": "Ten years in, you still surprise me."
+  }
+ ],
+ "mnemo": "Утром вы идёте с ней на рынок. У первой лавки она роняет апельсин, и ты laugh — смеёшься — вместе с ней, не над ней. У следующего стола ветер срывает список покупок, и ты catch — ловишь — его у ящика. Даже обычный grocery — продуктовый — круг становится маленьким приключением. У цветочной лавки ты говоришь simple — просто: “мне с тобой хорошо, и я тебя хочу”. Она отходит far — далеко — к витрине с хлебом, и ты не зовёшь резко, просто ждёшь. Она оборачивается, и её look — взгляд — снова сбивает тебя с курса. На кассе ты pick — выбираешь — её любимые ягоды без просьбы. Тебе не нужно её fix — чинить или менять. У выхода она находит в пакете маленький цветок, и это снова surprise — сюрприз."
+}

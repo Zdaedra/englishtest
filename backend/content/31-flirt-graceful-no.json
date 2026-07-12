@@ -1,0 +1,60 @@
+{
+ "slug": "flirt-7",
+ "title": "Принять или дать отказ изящно",
+ "theme": "Когда интерес не взаимен — принять «нет» с достоинством или мягко отказать; статус цел у обоих",
+ "subtitle": "Экзамен по вождению",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Fair",
+   "zone": "Warm",
+   "en": "That's fair — and I'm glad I said it."
+  },
+  {
+   "anchor": "Flattered",
+   "zone": "Warm",
+   "en": "I'm genuinely flattered — it's just not where I am right now."
+  },
+  {
+   "anchor": "Weird",
+   "zone": "Warm",
+   "en": "You can say no — nothing gets weird, I promise."
+  },
+  {
+   "anchor": "Straight",
+   "zone": "Backbone",
+   "en": "Just tell me straight — I'd rather know."
+  },
+  {
+   "anchor": "Honest",
+   "zone": "Backbone",
+   "en": "I'd rather be honest — not in that way for me, but I really like you."
+  },
+  {
+   "anchor": "Negotiate",
+   "zone": "Backbone",
+   "en": "I respect that — I won't try to negotiate your answer."
+  },
+  {
+   "anchor": "Feelings",
+   "zone": "Weight",
+   "en": "It's okay to say no — really, no hard feelings."
+  },
+  {
+   "anchor": "Respect",
+   "zone": "Weight",
+   "en": "Nothing changes — same respect, same ease."
+  },
+  {
+   "anchor": "Adults",
+   "zone": "Weight",
+   "en": "Well, look at us handling this like adults."
+  }
+ ],
+ "mnemo": "Инструктор обещает fair экзамен и так хвалит твой прошлый заезд, что ты flattered — польщён — почти до weird — неловкости; ты улыбаешься и щёлкаешь ремнём. Протираешь лобовое: видно straight — прямо до горизонта; зеркала honest — честны. Ты negotiate змейку между конусами — и всё же цепляешь последний: ничего, конус резиновый, никаких hard feelings — обид. Инструктор кивает с respect — с уважением — «сдал!» — и протягивает права: добро пожаловать к adults — взрослым — за рулём."
+}

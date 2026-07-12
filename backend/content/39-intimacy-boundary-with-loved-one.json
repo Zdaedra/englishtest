@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-5",
+ "title": "Поставить границу с близким",
+ "theme": "Сказать «нет» близкому без вины и без агрессии — защитить свой предел и сохранить связь и тепло",
+ "subtitle": "Дайвинг",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Less",
+   "zone": "Warm",
+   "en": "My 'no' here doesn't mean I love you any less."
+  },
+  {
+   "anchor": "Need",
+   "zone": "Warm",
+   "en": "This isn't me pushing you away — I just need this for myself."
+  },
+  {
+   "anchor": "Limit",
+   "zone": "Warm",
+   "en": "I'm at my limit here — it's not about you."
+  },
+  {
+   "anchor": "Complete",
+   "zone": "Backbone",
+   "en": "The answer is no — and 'no' is a complete sentence."
+  },
+  {
+   "anchor": "Leave",
+   "zone": "Backbone",
+   "en": "The answer's no, and I'm going to leave it at that."
+  },
+  {
+   "anchor": "Pressured",
+   "zone": "Backbone",
+   "en": "I'm willing to talk — but I'm not willing to be pressured."
+  },
+  {
+   "anchor": "Ground",
+   "zone": "Weight",
+   "en": "I don't need to raise my voice to hold my ground."
+  },
+  {
+   "anchor": "Upset",
+   "zone": "Weight",
+   "en": "You're allowed to be upset with me. The answer is still no."
+  },
+  {
+   "anchor": "Love",
+   "zone": "Weight",
+   "en": "I love you, and the answer is still no."
+  }
+ ],
+ "mnemo": "Манометр: воздуха всё less — меньше; тебе need — нужен — собственный запас. Дайв-компьютер пищит — limit глубины; осмотр рубки complete, и ты показываешь один жест: leave — уходим, и точка. Толща воды держит тебя pressured, ты отталкиваешься от песчаного ground — потревоженный скат, upset, взметает облако песка. На подъёме сжимаешь ладонь напарника: love — вы команда, — но большой палец показывает вверх."
+}

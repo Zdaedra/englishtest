@@ -1,0 +1,60 @@
+{
+ "slug": "stage-7",
+ "title": "История, которая держит зал",
+ "theme": "Держать зал через повествование — крючок и сцена, в которую их бросаешь, нарастающие ставки и удержанная развязка, и в конце смысл, который они унесут; история не украшение — она несёт мысль и убеждает вместо тебя, оставляя один образ",
+ "subtitle": "Театр теней",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "smell",
+   "zone": "Warm",
+   "en": "Let me put you in the room: smell the coffee, hear the clock ticking."
+  },
+  {
+   "anchor": "stomach",
+   "zone": "Warm",
+   "en": "You know that feeling when your stomach drops? Hold onto it."
+  },
+  {
+   "anchor": "embarrassing",
+   "zone": "Warm",
+   "en": "This next part's embarrassing — which is exactly why I'm telling you."
+  },
+  {
+   "anchor": "deal",
+   "zone": "Backbone",
+   "en": "Get this wrong, and we'd lose everything we'd built — that was the deal."
+  },
+  {
+   "anchor": "coming",
+   "zone": "Backbone",
+   "en": "Now hold that — because what happened next, I never saw coming."
+  },
+  {
+   "anchor": "flips",
+   "zone": "Backbone",
+   "en": "And this is where the whole thing flips."
+  },
+  {
+   "anchor": "revealed",
+   "zone": "Weight",
+   "en": "The point is not what happened. The point is what it revealed."
+  },
+  {
+   "anchor": "picture",
+   "zone": "Weight",
+   "en": "Keep that picture in your head — we'll come back to it."
+  },
+  {
+   "anchor": "commentary",
+   "zone": "Weight",
+   "en": "[pause] Some things don't need commentary."
+  }
+ ],
+ "mnemo": "Ты ведёшь группу в старый дом; в прихожей ловишь smell — запах — кофе. На лестнице проваливается stomach — живот, — и ты передаёшь это всем. Спотыкаешься — embarrassing — неловко, — но нарочно оборачиваешься. В зале выкладываешь ключи от всего дома: таков deal — уговор: ошибётесь — и он не ваш. Слышишь шаги: что-то coming — приближается, — и прижимаешь всех к стене. И тут всё flips — переворачивается: сдёргиваешь чехол — revealed — открылось: под ним зеркало, и в нём вы сами. Держишь фонарь, пока picture — картинка — впечатывается. Медленно опускаешься на пол: некоторым вещам не нужен commentary — комментарий."
+}

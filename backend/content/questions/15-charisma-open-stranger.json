@@ -1,0 +1,208 @@
+{
+  "slug": "charisma-open-stranger",
+  "batch_file": "15-charisma-open-stranger.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "soul",
+      "accept_anchors": [
+        "Soul"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Заговорить с тем, кого не знаешь, так, что чел…). Дай реплику в регистре «Warm».",
+      "intent": "laugh",
+      "accept_anchors": [
+        "Laugh"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "crash",
+      "accept_anchors": [
+        "Crash"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "skip",
+      "accept_anchors": [
+        "Skip"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Заговорить с тем, кого не знаешь, так, что чел…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "read",
+      "accept_anchors": [
+        "Read"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "settle",
+      "accept_anchors": [
+        "Settle"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "watching",
+      "accept_anchors": [
+        "Watching"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Заговорить с тем, кого не знаешь, так, что чел…). Дай реплику в регистре «Weight».",
+      "intent": "usual",
+      "accept_anchors": [
+        "Usual"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "deal",
+      "accept_anchors": [
+        "Deal"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "soul",
+      "accept_anchors": [
+        "Soul"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Заговорить с тем, кого не знаешь, так, что чел…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "laugh",
+      "accept_anchors": [
+        "Laugh"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "crash",
+      "accept_anchors": [
+        "Crash"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "skip",
+      "accept_anchors": [
+        "Skip"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Заговорить с тем, кого не знаешь, так, что чел…). Дай реплику в регистре «Backbone».",
+      "intent": "read",
+      "accept_anchors": [
+        "Read"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "settle",
+      "accept_anchors": [
+        "Settle"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "watching",
+      "accept_anchors": [
+        "Watching"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Заговорить с тем, кого не знаешь, так, что чел…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "usual",
+      "accept_anchors": [
+        "Usual"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "deal",
+      "accept_anchors": [
+        "Deal"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "soul",
+      "accept_anchors": [
+        "Soul"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Заговорить с тем, кого не знаешь, так, что чел…). Дай реплику в регистре «Warm».",
+      "intent": "laugh",
+      "accept_anchors": [
+        "Laugh"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

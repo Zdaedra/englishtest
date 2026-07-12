@@ -1,11 +1,14 @@
 import random
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
-from .. import audio, models
+from .. import access, audio, models
+from ..auth import current_user_id, is_admin
 from ..config import get_settings
 from ..db import get_session
+from ..entitlements import user_entitlements
 from ..schemas import SessionRequest, SessionResponse
 
 router = APIRouter(prefix="/api/sessions", tags=["sessions"])
@@ -61,16 +64,40 @@ def _build_segments(mode: str, phrases: list[models.Phrase], st: models.Setting)
 
 
 @router.post("", response_model=SessionResponse)
-def create_session(req: SessionRequest, session: Session = Depends(get_session)):
+def create_session(req: SessionRequest, user_id: int = Depends(current_user_id),
+                   session: Session = Depends(get_session)):
     batch = session.get(models.Batch, req.batch_id)
-    if not batch or batch.deleted_at:
+    admin = is_admin(session, user_id)
+    if (not batch or batch.deleted_at
+            or not (batch.owner_id is None or batch.owner_id == user_id or admin)):
         raise HTTPException(404, "Batch not found")
+    # Freemium gate: only the free batch (+ own imports) is usable without a paid plan.
+    if not admin:
+        u = session.get(models.User, user_id)
+        if not access.batch_usable(u.plan if u else "free", batch, user_id):
+            raise HTTPException(403, "locked")
     phrases = session.exec(select(models.Phrase).where(models.Phrase.batch_id == req.batch_id)
                            .order_by(models.Phrase.order_index)).all()
     if not phrases:
         raise HTTPException(400, "Batch has no phrases")
 
-    st = session.get(models.Setting, 1) or models.Setting(id=1)
+    # Free plan: cap gapless audio sessions/day (TTS cost lever; upgrade trigger).
+    cap = user_entitlements(session, user_id)["gapless_per_day"]
+    if cap is not None:
+        day_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        used = len(session.exec(select(models.PlaybackSession).where(
+            models.PlaybackSession.user_id == user_id,
+            models.PlaybackSession.created_at >= day_start)).all())
+        if used >= cap:
+            raise HTTPException(429, "daily_limit")
+
+    # Read-only snapshot of the global config: detach so per-request overrides
+    # (e.g. repeats) never persist back onto the shared singleton.
+    st = session.get(models.Setting, 1)
+    if st is not None:
+        session.expunge(st)
+    else:
+        st = models.Setting(id=1)
     if req.repeats is not None:
         st.listening_repeats = req.repeats
 
@@ -78,7 +105,7 @@ def create_session(req: SessionRequest, session: Session = Depends(get_session))
     ordered = _order_phrases(phrases, req.order_mode, seed)
     segments = _build_segments(req.mode, ordered, st)
 
-    ps = models.PlaybackSession(batch_id=req.batch_id, mode=req.mode,
+    ps = models.PlaybackSession(user_id=user_id, batch_id=req.batch_id, mode=req.mode,
                                 order_mode=req.order_mode, shuffle_seed=seed, plan=[])
     session.add(ps)
     session.commit()

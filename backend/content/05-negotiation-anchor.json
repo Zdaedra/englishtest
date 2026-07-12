@@ -1,20 +1,60 @@
 {
-  "slug": "negotiation-1",
-  "title": "Торг",
-  "theme": "Переговоры: открыть, разменять, удержать",
-  "subtitle": "Партия за столом",
-  "section": "negotiation",
-  "zones": ["Anchor", "Trade", "Hold"],
-  "phrases": [
-    { "anchor": "Start", "zone": "Anchor", "en": "Here's where I'd start." },
-    { "anchor": "Table", "zone": "Anchor", "en": "Let me put my number on the table." },
-    { "anchor": "Map",   "zone": "Anchor", "en": "Let me map out what a good deal looks like for me." },
-    { "anchor": "Move",  "zone": "Trade",  "en": "If you can move on price, I can move on timing." },
-    { "anchor": "Give",  "zone": "Trade",  "en": "I can give you that — but I'll need something back." },
-    { "anchor": "Meet",  "zone": "Trade",  "en": "Let's meet in the middle on this one." },
-    { "anchor": "Line",  "zone": "Hold",   "en": "That's my line — I won't go below it." },
-    { "anchor": "Floor", "zone": "Hold",   "en": "We're already at the floor here." },
-    { "anchor": "Walk",  "zone": "Hold",   "en": "At that number, I'd honestly rather walk." }
-  ],
-  "mnemo": "Ты делаешь первый ход — start. Кладёшь на table свою цену, рядом разворачиваешь map будущей сделки. Партнёр давит — ты делаешь move: уступаешь шаг, чтобы выиграть другой. Что-то give, но тут же тянешь нить обратно. Вы сходитесь meet посередине стола. Дальше — твоя line, за неё нельзя. Под ногами уже floor, ниже падать некуда. И если он давит ещё — ты спокойно встаёшь и walk к двери."
+ "slug": "negotiation-1",
+ "title": "Торг",
+ "theme": "Переговоры: открыть, разменять, удержать",
+ "subtitle": "Партия за столом",
+ "section": "negotiation",
+ "zones": [
+  "Anchor",
+  "Trade",
+  "Hold"
+ ],
+ "phrases": [
+  {
+   "anchor": "Start",
+   "zone": "Anchor",
+   "en": "Here's where I'd start."
+  },
+  {
+   "anchor": "Table",
+   "zone": "Anchor",
+   "en": "Let me put my number on the table."
+  },
+  {
+   "anchor": "Map",
+   "zone": "Anchor",
+   "en": "Let me map out what a good deal looks like for me."
+  },
+  {
+   "anchor": "Move",
+   "zone": "Trade",
+   "en": "If you can move on price, I can move on timing."
+  },
+  {
+   "anchor": "Give",
+   "zone": "Trade",
+   "en": "I can give you that — but I'll need something back."
+  },
+  {
+   "anchor": "Meet",
+   "zone": "Trade",
+   "en": "Let's meet in the middle on this one."
+  },
+  {
+   "anchor": "Bottom",
+   "zone": "Hold",
+   "en": "That's my bottom line — I won't go under it."
+  },
+  {
+   "anchor": "Floor",
+   "zone": "Hold",
+   "en": "We're already at the floor here."
+  },
+  {
+   "anchor": "Walk",
+   "zone": "Hold",
+   "en": "At that number, I'd honestly rather walk."
+  }
+ ],
+ "mnemo": "Ты делаешь start — начинаешь — не за столом, а у входа на склад поставщика: показываешь, какой товар нужен. У packing table — упаковочного стола — кладёшь образец и список объёмов. На стене рядом висит map — карта доставки: от склада до твоих точек продаж. Когда цена звучит слишком высоко, ты move — переходишь — вместе с ним к стеллажам, чтобы смотреть комплектацию. У коробок ты готов give — дать уступку: забрать товар самовывозом и оплатить раньше. На середине прохода вы meet — встречаетесь — на варианте: он снижает цену, ты берёшь больший объём. У нижнего яруса стеллажа показываешь bottom — базовую — комплектацию без лишних добавок. Ниже уже только floor — бетонный пол: убирать из поставки больше нечего, иначе товар теряет смысл. Он просит подумать, и ты walk — выходишь — к двери склада, оставляя решение за ним."
 }

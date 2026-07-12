@@ -1,0 +1,208 @@
+{
+  "slug": "charisma-graceful-exit",
+  "batch_file": "21-charisma-graceful-exit.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "needed",
+      "accept_anchors": [
+        "Needed"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Уйти так, что человек польщён и остаётся «хочу…). Дай реплику в регистре «Warm».",
+      "intent": "selfish",
+      "accept_anchors": [
+        "Selfish"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "high",
+      "accept_anchors": [
+        "High"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "rounds",
+      "accept_anchors": [
+        "Rounds"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Уйти так, что человек польщён и остаётся «хочу…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "calendar",
+      "accept_anchors": [
+        "Calendar"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "pick",
+      "accept_anchors": [
+        "Pick"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "trouble",
+      "accept_anchors": [
+        "Trouble"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Уйти так, что человек польщён и остаётся «хочу…). Дай реплику в регистре «Weight».",
+      "intent": "mystery",
+      "accept_anchors": [
+        "Mystery"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "next",
+      "accept_anchors": [
+        "Next"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "needed",
+      "accept_anchors": [
+        "Needed"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Уйти так, что человек польщён и остаётся «хочу…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "selfish",
+      "accept_anchors": [
+        "Selfish"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "high",
+      "accept_anchors": [
+        "High"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "rounds",
+      "accept_anchors": [
+        "Rounds"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Уйти так, что человек польщён и остаётся «хочу…). Дай реплику в регистре «Backbone».",
+      "intent": "calendar",
+      "accept_anchors": [
+        "Calendar"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "pick",
+      "accept_anchors": [
+        "Pick"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "trouble",
+      "accept_anchors": [
+        "Trouble"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Уйти так, что человек польщён и остаётся «хочу…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "mystery",
+      "accept_anchors": [
+        "Mystery"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "next",
+      "accept_anchors": [
+        "Next"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "needed",
+      "accept_anchors": [
+        "Needed"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Уйти так, что человек польщён и остаётся «хочу…). Дай реплику в регистре «Warm».",
+      "intent": "selfish",
+      "accept_anchors": [
+        "Selfish"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

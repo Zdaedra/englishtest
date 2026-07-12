@@ -6,9 +6,7 @@ never persist the raw clip, just the resulting transcript downstream.
 """
 import httpx
 
-from .config import get_secrets
-
-STT_MODEL = "gpt-4o-mini-transcribe"
+from .config import get_secrets, get_settings
 
 
 def transcribe(audio_bytes: bytes, filename: str = "clip.webm",
@@ -21,7 +19,7 @@ def transcribe(audio_bytes: bytes, filename: str = "clip.webm",
         raise RuntimeError("OPENAI_API_KEY not set — cannot transcribe.")
     if not audio_bytes:
         return ""
-    data = {"model": STT_MODEL, "response_format": "json"}
+    data = {"model": get_settings().model_stt, "response_format": "json"}
     if language:
         data["language"] = language
     r = httpx.post(

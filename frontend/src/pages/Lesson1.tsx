@@ -7,10 +7,12 @@ import { usePlayer } from "../player/PlayerContext";
 import { getProgress, setProgress } from "../lib/progress";
 import { RecFab, band } from "../ui/RecFab";
 import { IconBack, IconCheck, IconChevron, IconPause, IconPlay } from "../ui/icons";
+import { useI18n } from "../i18n";
 
 export default function Lesson1() {
   const { id } = useParams();
   const nav = useNavigate();
+  const { t } = useI18n();
   const player = usePlayer();
   const mnemo = useMnemoAudio(id ? Number(id) : undefined);
   const rec = useRecorder();
@@ -45,7 +47,7 @@ export default function Lesson1() {
   const handleError = (e: unknown) => {
     const msg = String(e);
     if (msg.includes("429") || msg.toLowerCase().includes("limit")) {
-      setNotice("Дневной лимит проверок исчерпан — продолжайте без оценки, сверяясь с историей.");
+      setNotice(t("rec.limit"));
     } else {
       setErr(msg);
     }
@@ -83,7 +85,7 @@ export default function Lesson1() {
   }, [batch, rec]);
 
   if (err) return <div className="screen"><p className="error">{err}</p></div>;
-  if (!batch) return <div className="screen"><p className="muted">Loading…</p></div>;
+  if (!batch) return <div className="screen"><p className="muted">{t("common.loading")}</p></div>;
 
   const story = batch.mnemo.story_ru;
 
@@ -134,34 +136,28 @@ export default function Lesson1() {
       </button>
 
       <div className="screen-head">
-        <span className="lesson-tag">Урок 1</span>
-        <h1>Мнемоническая основа</h1>
-        <p className="app-sub" style={{ marginBottom: 0 }}>
-          Слушай историю и тапай якоря — это крючки, на которые сядут фразы.
-        </p>
+        <span className="lesson-tag">{t("lesson.tag", { n: 1 })}</span>
+        <h1>{t("bh.l1.title")}</h1>
+        <p className="app-sub" style={{ marginBottom: 0 }}>{t("l1.lead")}</p>
       </div>
 
-      <p className="section-label" style={{ marginTop: 18 }}>1 · Послушай</p>
+      <p className="section-label" style={{ marginTop: 18 }}>{t("l1.step1")}</p>
       <div className="mnemo-play">
-        {pill("full", "Вся история")}
-        {pill("anchors", "По порядку")}
+        {pill("full", t("l1.playFull"))}
+        {pill("anchors", t("l1.playOrder"))}
       </div>
 
       <div className="card-block" style={{ marginTop: 12 }}>
         <div className="story">{pieces}</div>
       </div>
 
-      <p className="section-label" style={{ marginTop: 22 }}>2 · Перескажи</p>
+      <p className="section-label" style={{ marginTop: 22 }}>{t("l1.step2")}</p>
       <p className="train-hint" style={{ marginTop: 4 }}>
-        {rec.recording
-          ? "Рассказывай историю, называя якоря по порядку…"
-          : "Перескажи историю своими словами — это мягкая проверка, без блокировки."}
+        {rec.recording ? t("l1.retellRecording") : t("l1.retellIdle")}
       </p>
 
       {!rec.supported && (
-        <p className="error" style={{ marginTop: 12 }}>
-          Этот браузер не умеет записывать звук. Откройте приложение в Safari/Chrome.
-        </p>
+        <p className="error" style={{ marginTop: 12 }}>{t("rec.browserNoAudio")}</p>
       )}
       {rec.error && <p className="error" style={{ marginTop: 12 }}>{rec.error}</p>}
       {notice && <p className="muted small" style={{ marginTop: 12 }}>{notice}</p>}
@@ -171,13 +167,13 @@ export default function Lesson1() {
       ) : (
         <>
           <RecFab recording={rec.recording} busy={busy} onClick={onMic} />
-          <p className="rec-label">{rec.recording ? "Стоп" : busy ? "Проверяем" : "Запись"}</p>
+          <p className="rec-label">{rec.recording ? t("rec.stop") : busy ? t("rec.checking") : t("rec.record")}</p>
         </>
       )}
 
       <button className="btn btn-primary btn-block" style={{ marginTop: 24 }}
         onClick={() => nav(`/batch/${batch.id}/lesson/2`)}>
-        Дальше к фразам <IconChevron size={16} />
+        {t("l1.next")} <IconChevron size={16} />
       </button>
 
       <audio {...mnemo.bind} />
@@ -186,6 +182,7 @@ export default function Lesson1() {
 }
 
 function RetellResult({ result, onAgain }: { result: SequenceScore; onAgain: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="result-card">
       <div className={`score-badge ${band(result.score)}`}>
@@ -194,13 +191,13 @@ function RetellResult({ result, onAgain }: { result: SequenceScore; onAgain: () 
 
       {result.passed && (
         <div className="center" style={{ marginBottom: 12 }}>
-          <span className="pass-pill ok"><IconCheck size={15} /> Каркас крепкий</span>
+          <span className="pass-pill ok"><IconCheck size={15} /> {t("res.frameStrong")}</span>
         </div>
       )}
 
       {result.missed_anchors.length > 0 && (
         <div className="result-row">
-          <div className="result-k">Забыл якоря</div>
+          <div className="result-k">{t("res.forgotAnchors")}</div>
           <div className="miss-chips">
             {result.missed_anchors.map((a, i) => <span className="miss-chip" key={i}>{a}</span>)}
           </div>
@@ -208,16 +205,16 @@ function RetellResult({ result, onAgain }: { result: SequenceScore; onAgain: () 
       )}
 
       <div className="result-row">
-        <div className="result-k">Порядок</div>
-        <div className="result-v">{result.order_ok ? "сохранён" : "нарушен"}</div>
+        <div className="result-k">{t("res.order")}</div>
+        <div className="result-v">{result.order_ok ? t("res.orderOk") : t("res.orderBroken")}</div>
       </div>
 
       <div className="result-row">
-        <div className="result-k">Мы услышали</div>
-        <div className="result-v heard">{result.transcript || "— тишина —"}</div>
+        <div className="result-k">{t("res.weHeard")}</div>
+        <div className="result-v heard">{result.transcript || t("res.silence")}</div>
       </div>
 
-      <button className="btn btn-tint train-cta" onClick={onAgain}>Ещё раз</button>
+      <button className="btn btn-tint train-cta" onClick={onAgain}>{t("common.again")}</button>
     </div>
   );
 }

@@ -1,0 +1,60 @@
+{
+ "slug": "composure-11",
+ "title": "Держать достоинство в проигрыше/отказе",
+ "theme": "Тебя обошли или сказали «нет» — принять исход без горечи и обвала; красивый проигрыш парадоксально поднимает статус",
+ "subtitle": "Фехтовальный поклон",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Earned",
+   "zone": "Warm",
+   "en": "Congratulations — you earned that, and I mean it."
+  },
+  {
+   "anchor": "Asterisk",
+   "zone": "Warm",
+   "en": "She earned it, and I'm glad for her. No asterisk."
+  },
+  {
+   "anchor": "Genuinely",
+   "zone": "Warm",
+   "en": "I'm disappointed — and I'm genuinely happy for you."
+  },
+  {
+   "anchor": "Accept",
+   "zone": "Backbone",
+   "en": "I accept the decision — I'd value a clear read on where I fell short."
+  },
+  {
+   "anchor": "Tipped",
+   "zone": "Backbone",
+   "en": "Fair enough — what would've tipped it my way?"
+  },
+  {
+   "anchor": "Argue",
+   "zone": "Backbone",
+   "en": "I'm not going to argue the outcome — I want to learn from it."
+  },
+  {
+   "anchor": "Stings",
+   "zone": "Weight",
+   "en": "It stings, sure — but I'll take the lesson and move on."
+  },
+  {
+   "anchor": "Cleanly",
+   "zone": "Weight",
+   "en": "I'll take the loss cleanly — and come back better."
+  },
+  {
+   "anchor": "Handle",
+   "zone": "Weight",
+   "en": "How I handle this will say more about me than the loss itself."
+  }
+ ],
+ "mnemo": "Финиш марафона. Соперник рвёт ленту первым — earned — заслужил; на бегу вскидываешь ему большой палец. Пробегаешь табло: у его имени нет asterisk — сноски. За чертой genuinely — искренне — обнимаешь его. У судейского стола accept — принимаешь — протокол, расписываясь без паузы. И спрашиваешь у тренера одно: что бы tipped — перевесило — в мою сторону? Мимо палатки протестов идёшь не сворачивая: не argue — не споришь. Поражение stings — щиплет, — забираешь урок и держишь шаг. Cleanly — чисто — снимаешь номер, не скомкав его. Берёшься за ручку сумки и несёшь ровно: так и handle — справляешься — с проигрышем; уходишь прямой спиной."
+}

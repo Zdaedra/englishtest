@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-2",
+ "title": "Говорить с весом, когда внутри страшно",
+ "theme": "Высокие ставки, внутри трясёт — сознательно проецировать спокойный авторитет: замедлить, держать голос ровным; страх остаётся внутри",
+ "subtitle": "Маяк в шторм",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Step",
+   "zone": "Warm",
+   "en": "Stay with me — one step, then the next."
+  },
+  {
+   "anchor": "Scary",
+   "zone": "Warm",
+   "en": "Yeah, this is scary — we can still think straight."
+  },
+  {
+   "anchor": "Slow",
+   "zone": "Warm",
+   "en": "Everyone slow down — we'll do this right."
+  },
+  {
+   "anchor": "True",
+   "zone": "Backbone",
+   "en": "Here is what's true right now."
+  },
+  {
+   "anchor": "Pace",
+   "zone": "Backbone",
+   "en": "We're not letting fear set the pace."
+  },
+  {
+   "anchor": "Noise",
+   "zone": "Backbone",
+   "en": "Facts first, calm voices — let's cut the noise."
+  },
+  {
+   "anchor": "Matters",
+   "zone": "Weight",
+   "en": "Listen up — this next part matters."
+  },
+  {
+   "anchor": "Easy",
+   "zone": "Weight",
+   "en": "Nice and easy — we'll talk it through."
+  },
+  {
+   "anchor": "Nervous",
+   "zone": "Weight",
+   "en": "Of course I'm nervous — doesn't change the job."
+  }
+ ],
+ "mnemo": "У двери маяка ты делаешь первый step — шаг по ступеням: один, потом следующий. Слышишь scary — жуткий — удар волны, но голова остаётся ясной, и ты продолжаешь slow подъём. На стене находишь метку true севера, подстраиваешь pace механизма и отсекаешь noise — шум — ветра. В переговорную трубу говоришь коротко: следующая часть matters — важна, слушайте. Сирену ведёшь easy — плавно, без рывков. Да, тебе тоже nervous — не по себе, — но работа идёт."
+}

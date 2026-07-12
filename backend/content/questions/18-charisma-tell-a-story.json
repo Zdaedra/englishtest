@@ -1,0 +1,208 @@
+{
+  "slug": "charisma-tell-a-story",
+  "batch_file": "18-charisma-tell-a-story.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "stop",
+      "accept_anchors": [
+        "Stop"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Короткая живая история так, что все замолкают …). Дай реплику в регистре «Warm».",
+      "intent": "badly",
+      "accept_anchors": [
+        "Badly"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "picture",
+      "accept_anchors": [
+        "Picture"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "mind",
+      "accept_anchors": [
+        "Mind"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Короткая живая история так, что все замолкают …). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "worse",
+      "accept_anchors": [
+        "Worse"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "quiet",
+      "accept_anchors": [
+        "Quiet"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "hang",
+      "accept_anchors": [
+        "Hang"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Короткая живая история так, что все замолкают …). Дай реплику в регистре «Weight».",
+      "intent": "turns",
+      "accept_anchors": [
+        "Turns"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "anyway",
+      "accept_anchors": [
+        "Anyway"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "stop",
+      "accept_anchors": [
+        "Stop"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Короткая живая история так, что все замолкают …). Вступи в тоне «Warm» одной фразой.",
+      "intent": "badly",
+      "accept_anchors": [
+        "Badly"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "picture",
+      "accept_anchors": [
+        "Picture"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "mind",
+      "accept_anchors": [
+        "Mind"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Короткая живая история так, что все замолкают …). Дай реплику в регистре «Backbone».",
+      "intent": "worse",
+      "accept_anchors": [
+        "Worse"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "quiet",
+      "accept_anchors": [
+        "Quiet"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "hang",
+      "accept_anchors": [
+        "Hang"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Короткая живая история так, что все замолкают …). Вступи в тоне «Weight» одной фразой.",
+      "intent": "turns",
+      "accept_anchors": [
+        "Turns"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "anyway",
+      "accept_anchors": [
+        "Anyway"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "stop",
+      "accept_anchors": [
+        "Stop"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Короткая живая история так, что все замолкают …). Дай реплику в регистре «Warm».",
+      "intent": "badly",
+      "accept_anchors": [
+        "Badly"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

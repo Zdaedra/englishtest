@@ -1,0 +1,60 @@
+{
+ "slug": "stage-3",
+ "title": "Держаться на камеру / в записи",
+ "theme": "Говорить в объектив без живого зала — обращаться к одному человеку сквозь стекло, дать тепло, говорить чётко и в темпе под запись, остаться спокойным и неподдельным перед линзой; на экране считывается присутствие, а не игра",
+ "subtitle": "Стеклянная кухня",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "lens",
+   "zone": "Warm",
+   "en": "Forget the lens — it's just you and me."
+  },
+  {
+   "anchor": "screen",
+   "zone": "Warm",
+   "en": "Yeah, we're on a screen — let's talk like we're not."
+  },
+  {
+   "anchor": "coffee",
+   "zone": "Warm",
+   "en": "Imagine we're just talking over coffee."
+  },
+  {
+   "anchor": "fluff",
+   "zone": "Backbone",
+   "en": "Three points, ninety seconds, no fluff."
+  },
+  {
+   "anchor": "rambling",
+   "zone": "Backbone",
+   "en": "No rambling, no filler — straight through."
+  },
+  {
+   "anchor": "ties",
+   "zone": "Backbone",
+   "en": "Stick with me — this all ties together."
+  },
+  {
+   "anchor": "script",
+   "zone": "Weight",
+   "en": "I ditched the script — it kept getting in the way."
+  },
+  {
+   "anchor": "camera",
+   "zone": "Weight",
+   "en": "It's just a camera — we can take our time."
+  },
+  {
+   "anchor": "comfortable",
+   "zone": "Weight",
+   "en": "I'm comfortable if you are."
+  }
+ ],
+ "mnemo": "Перед записью ты протираешь lens — объектив — и ставишь камеру на уровень глаз. На соседнем screen — экране — открываешь лицо одного слушателя из тестовой записи, чтобы говорить не “в пустоту”. На стол ставишь чашку coffee — кофе, как перед обычным разговором. На листе оставляешь три пункта и вычёркиваешь fluff — воду. Из первого дубля убираешь rambling — блуждание — по теме. Каждый пункт ties — связываешь — с конкретным примером. Потом кладёшь script — сценарий — ниже камеры, а не закрываешься им. Смотришь прямо в camera — камеру. На третьем дубле тело наконец становится comfortable — спокойным."
+}

@@ -77,12 +77,3 @@ class SessionResponse(BaseModel):
     audio_url: str
     duration: float
     plan: list[dict]
-
-
-# ---- Review (SRS-lite) ----
-
-class ReviewIn(BaseModel):
-    phrase_id: int
-    event_type: str = "recall"
-    score: str  # easy | slow | failed
-    latency_ms: Optional[int] = None

@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-3",
+ "title": "Сделать необратимый звонок под неопределённостью",
+ "theme": "Данных мало, решать надо сейчас и необратимо — взять решение на себя, признать риск, выбрать и двинуть комнату; не решить хуже",
+ "subtitle": "Стрелка в тумане",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Half",
+   "zone": "Warm",
+   "en": "We're deciding with half the picture — that's just where we are."
+  },
+  {
+   "anchor": "Luxury",
+   "zone": "Warm",
+   "en": "We'd all love more data — we don't have that luxury today."
+  },
+  {
+   "anchor": "Uneasy",
+   "zone": "Warm",
+   "en": "Everyone's uneasy about this — me too. We move anyway."
+  },
+  {
+   "anchor": "Decision",
+   "zone": "Backbone",
+   "en": "My decision is this: we stop the spread and protect the core."
+  },
+  {
+   "anchor": "Live",
+   "zone": "Backbone",
+   "en": "I'm picking the option we can live with if it goes wrong."
+  },
+  {
+   "anchor": "Pivot",
+   "zone": "Backbone",
+   "en": "If new facts change the picture, we pivot fast — and I'll say so."
+  },
+  {
+   "anchor": "Own",
+   "zone": "Weight",
+   "en": "It's my call, and I'll own whatever comes of it."
+  },
+  {
+   "anchor": "Waiting",
+   "zone": "Weight",
+   "en": "Waiting is also a decision — and right now it's the riskier one."
+  },
+  {
+   "anchor": "Lock",
+   "zone": "Weight",
+   "en": "Lock it in — we move, and we learn on the way."
+  }
+ ],
+ "mnemo": "На утреннем запуске у тебя есть только half — половина — данных: отчёт по продажам обновился не полностью. В шоуруме уже ждёт luxury-сегмент клиентов, и команда нервничает. У стола с образцами становится uneasy — не по себе: полного ответа нет, а решение нужно. Ты подходишь к доске и берёшь decision — решение — на себя: запускаем не всю линейку, а пилот. Выбираешь вариант, с которым можно live — жить, если цифры окажутся хуже. На плане запуска маркером делаешь pivot — поворот — с полного релиза на ограниченный тест. Потом прямо говоришь, что own — берёшь — этот выбор на себя. Waiting — ждать — идеальных данных опаснее, чем проверить малый формат. В системе продаж ставишь lock — фиксируешь — только пилотный объём."
+}

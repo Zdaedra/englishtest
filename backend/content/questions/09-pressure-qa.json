@@ -1,0 +1,208 @@
+{
+  "slug": "pressure-qa",
+  "batch_file": "09-pressure-qa.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Absorb». Ответь одной уместной фразой.",
+      "intent": "fair",
+      "accept_anchors": [
+        "Fair"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Под давлением — поглотить вопрос, удержать поз…). Дай реплику в регистре «Absorb».",
+      "intent": "feet",
+      "accept_anchors": [
+        "Feet"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Absorb». Скажи фразу, которая здесь уместна.",
+      "intent": "spot",
+      "accept_anchors": [
+        "Spot"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Hold». Произнеси подходящую фразу.",
+      "intent": "loaded",
+      "accept_anchors": [
+        "Loaded"
+      ],
+      "zone": "Hold",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Под давлением — поглотить вопрос, удержать поз…). Вступи в тоне «Hold» одной фразой.",
+      "intent": "ground",
+      "accept_anchors": [
+        "Ground"
+      ],
+      "zone": "Hold",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Hold»).",
+      "intent": "budging",
+      "accept_anchors": [
+        "Budging"
+      ],
+      "zone": "Hold",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Turn». Ответь одной уместной фразой.",
+      "intent": "tackle",
+      "accept_anchors": [
+        "Tackle"
+      ],
+      "zone": "Turn",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Под давлением — поглотить вопрос, удержать поз…). Дай реплику в регистре «Turn».",
+      "intent": "heart",
+      "accept_anchors": [
+        "Heart"
+      ],
+      "zone": "Turn",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Turn». Скажи фразу, которая здесь уместна.",
+      "intent": "down",
+      "accept_anchors": [
+        "Down"
+      ],
+      "zone": "Turn",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Absorb». Произнеси подходящую фразу.",
+      "intent": "fair",
+      "accept_anchors": [
+        "Fair"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Под давлением — поглотить вопрос, удержать поз…). Вступи в тоне «Absorb» одной фразой.",
+      "intent": "feet",
+      "accept_anchors": [
+        "Feet"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Absorb»).",
+      "intent": "spot",
+      "accept_anchors": [
+        "Spot"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Hold». Ответь одной уместной фразой.",
+      "intent": "loaded",
+      "accept_anchors": [
+        "Loaded"
+      ],
+      "zone": "Hold",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Под давлением — поглотить вопрос, удержать поз…). Дай реплику в регистре «Hold».",
+      "intent": "ground",
+      "accept_anchors": [
+        "Ground"
+      ],
+      "zone": "Hold",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Hold». Скажи фразу, которая здесь уместна.",
+      "intent": "budging",
+      "accept_anchors": [
+        "Budging"
+      ],
+      "zone": "Hold",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Turn». Произнеси подходящую фразу.",
+      "intent": "tackle",
+      "accept_anchors": [
+        "Tackle"
+      ],
+      "zone": "Turn",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Под давлением — поглотить вопрос, удержать поз…). Вступи в тоне «Turn» одной фразой.",
+      "intent": "heart",
+      "accept_anchors": [
+        "Heart"
+      ],
+      "zone": "Turn",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Turn»).",
+      "intent": "down",
+      "accept_anchors": [
+        "Down"
+      ],
+      "zone": "Turn",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Absorb». Ответь одной уместной фразой.",
+      "intent": "fair",
+      "accept_anchors": [
+        "Fair"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Под давлением — поглотить вопрос, удержать поз…). Дай реплику в регистре «Absorb».",
+      "intent": "feet",
+      "accept_anchors": [
+        "Feet"
+      ],
+      "zone": "Absorb",
+      "difficulty": 1
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "flirt-2",
+  "title": "Заряженная пикировка",
+  "theme": "Флиртующий пинг-понг — поддразнивание с искрой, вызов в тёплой обёртке, на равных",
+  "subtitle": "Фехтование",
+  "section": "flirt",
+  "zones": [
+    "Warm",
+    "Backbone",
+    "Weight"
+  ],
+  "phrases": [
+    {
+      "anchor": "Working",
+      "zone": "Warm",
+      "en": "You think you're charming — it's almost working."
+    },
+    {
+      "anchor": "Innocent",
+      "zone": "Warm",
+      "en": "That sounded innocent — I'm not sure I believe you."
+    },
+    {
+      "anchor": "Show",
+      "zone": "Warm",
+      "en": "Oh, you're putting on a whole show for me — keep going."
+    },
+    {
+      "anchor": "Smooth",
+      "zone": "Backbone",
+      "en": "That was smooth. Suspiciously smooth. I'm watching you."
+    },
+    {
+      "anchor": "Allow",
+      "zone": "Backbone",
+      "en": "You're flirting with me — badly — but I'll allow it."
+    },
+    {
+      "anchor": "Spar",
+      "zone": "Backbone",
+      "en": "You picked the wrong person to spar with — I do this for fun."
+    },
+    {
+      "anchor": "Exactly",
+      "zone": "Weight",
+      "en": "[a beat] …you know exactly what you're doing."
+    },
+    {
+      "anchor": "Trying",
+      "zone": "Weight",
+      "en": "Careful — keep that up and I might actually start trying."
+    },
+    {
+      "anchor": "Spark",
+      "zone": "Weight",
+      "en": "There it is — that's the spark I was waiting for."
+    }
+  ],
+  "mnemo": "Ты гнёшь рапиру о пол — пружинит, working, — а соперник с innocent улыбкой опускает маску. Вы салютуете клинками — короткое show трибунам — и одним smooth движением встаёте в стойки; судья взмахом allow бой: «Allez!» Начинается spar: звон стали, ты парируешь exactly в его темп, пока он trying финт за финтом. Встречный выпад — клинки высекают spark, и лампа туше вспыхивает над тобой."
+}

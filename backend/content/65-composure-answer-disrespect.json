@@ -1,0 +1,60 @@
+{
+ "slug": "composure-8",
+ "title": "Ответить на неуважение, не опускаясь",
+ "theme": "С тобой грубы или говорят свысока — ответить, не опускаясь до их уровня: назвать неуважение и стандарт, отвечать вверх, а не вниз",
+ "subtitle": "Лифт выше шума",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Intended",
+   "zone": "Warm",
+   "en": "I'm guessing that came out worse than you intended."
+  },
+  {
+   "anchor": "Attitude",
+   "zone": "Warm",
+   "en": "Try that again — minus the attitude."
+  },
+  {
+   "anchor": "Snark",
+   "zone": "Warm",
+   "en": "The snark's just slowing us down — let's lose it."
+  },
+  {
+   "anchor": "Candor",
+   "zone": "Backbone",
+   "en": "Don't talk down to me and call it candor."
+  },
+  {
+   "anchor": "Challenge",
+   "zone": "Backbone",
+   "en": "I'm open to challenge — I'm not open to disrespect."
+  },
+  {
+   "anchor": "Ways",
+   "zone": "Backbone",
+   "en": "Respect goes both ways."
+  },
+  {
+   "anchor": "Match",
+   "zone": "Weight",
+   "en": "I'm not going to match that tone."
+  },
+  {
+   "anchor": "Ready",
+   "zone": "Weight",
+   "en": "When you're ready to talk properly, I'm right here."
+  },
+  {
+   "anchor": "Talking",
+   "zone": "Weight",
+   "en": "We can keep talking — just not like this."
+  }
+ ],
+ "mnemo": "На площадке подрядчик отвечает сверху вниз, будто твой вопрос лишний. Ты спокойно уточняешь: “это так intended — задумано — прозвучало?” Он отвечает с attitude — гонором, и ты не повышаешь голос. Убираешь из разговора snark — язвительность: “давай без этого слоя”. Если под этим есть candor — прямота — по делу, ты готов слушать. Указываешь на чертёж: challenge — вызов — здесь реальный, тон его не решит. Оставляешь ему два ways — способа — ответить: по фактам сейчас или позже письменно. Не match — подхватываешь — его манеру. Когда он будет ready — готов — говорить нормально, ты продолжишь. И talking — разговор — возвращается к чертежу, а не к эго."
+}

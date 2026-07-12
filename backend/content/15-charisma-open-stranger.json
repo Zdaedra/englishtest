@@ -1,0 +1,60 @@
+{
+ "slug": "charisma-2",
+ "title": "Открыть разговор с незнакомцем",
+ "theme": "Заговорить с тем, кого не знаешь, так, что человеку сразу интересно",
+ "subtitle": "Ковбой в салуне",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Soul",
+   "zone": "Warm",
+   "en": "I don't know a soul here, so I'm starting with you."
+  },
+  {
+   "anchor": "Laugh",
+   "zone": "Warm",
+   "en": "That laugh sounded like it had a story behind it."
+  },
+  {
+   "anchor": "Crash",
+   "zone": "Warm",
+   "en": "You looked like the most fun in the room — mind if I crash?"
+  },
+  {
+   "anchor": "Skip",
+   "zone": "Backbone",
+   "en": "Tell me what you actually do — and skip the elevator pitch."
+  },
+  {
+   "anchor": "Figured",
+   "zone": "Backbone",
+   "en": "You look like you've already figured this room out."
+  },
+  {
+   "anchor": "Settle",
+   "zone": "Backbone",
+   "en": "Settle a debate for me — you look like you'd have an opinion."
+  },
+  {
+   "anchor": "Networking",
+   "zone": "Weight",
+   "en": "You're the only person here who isn't networking — I had to come say hi."
+  },
+  {
+   "anchor": "Forget",
+   "zone": "Weight",
+   "en": "Forget small talk — what's actually worth talking about tonight?"
+  },
+  {
+   "anchor": "Story",
+   "zone": "Weight",
+   "en": "Give me ninety seconds — worst case, you get a good story."
+  }
+ ],
+ "mnemo": "Ты въезжаешь в городок, где ни soul, но из салуна катится чей-то laugh. Распахиваешь створки — с crash падает стакан, и ты skip через ступени к столу. С порога ты уже figured — раскусил — весь расклад и settle на свободный стул — рядом с единственным, кто не networking, не кружит по залу с рукопожатиями. Бармену машешь: forget — забудь про виски, — берёшь колоду: в худшем случае выйдет хорошая story."
+}

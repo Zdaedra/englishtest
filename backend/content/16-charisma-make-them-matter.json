@@ -1,0 +1,60 @@
+{
+ "slug": "charisma-3",
+ "title": "Сделать собеседника главным",
+ "theme": "Твоё внимание как валюта — человек уходит, чувствуя себя крупнее и интереснее, чем пришёл",
+ "subtitle": "Золотая лихорадка",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Fired",
+   "zone": "Warm",
+   "en": "What's got you genuinely fired up lately?"
+  },
+  {
+   "anchor": "Lit",
+   "zone": "Warm",
+   "en": "You lit up just then — tell me more about that."
+  },
+  {
+   "anchor": "Obsessed",
+   "zone": "Warm",
+   "en": "What are you a little obsessed with right now?"
+  },
+  {
+   "anchor": "Word",
+   "zone": "Backbone",
+   "en": "You keep coming back to one word — say more about that."
+  },
+  {
+   "anchor": "Rush",
+   "zone": "Backbone",
+   "en": "That's the part I don't want to rush past."
+  },
+  {
+   "anchor": "Coming",
+   "zone": "Backbone",
+   "en": "So you saw it coming before anyone else did."
+  },
+  {
+   "anchor": "Cost",
+   "zone": "Weight",
+   "en": "What did that cost you to learn?"
+  },
+  {
+   "anchor": "Years",
+   "zone": "Weight",
+   "en": "Which of these actually matters to you ten years from now?"
+  },
+  {
+   "anchor": "Ahead",
+   "zone": "Weight",
+   "en": "What are you seeing that the rest of us are still catching up to?"
+  }
+ ],
+ "mnemo": "Стартовый запал fired — взрыв вскрывает штольню, лампа на твоей каске lit — вспыхивает, и ты шагаешь в темноту. Копаешь, obsessed, пока кирка не звенит, а на стене выцарапано word: «глубже». Начинается золотая rush — следом ломятся, но только ты видишь, куда жила coming — выходит. Скупщик называет cost самородка, а ты прикидываешь, что он будет стоить через years — десять лет, — и на рассвете выезжаешь из городка ahead всех."
+}

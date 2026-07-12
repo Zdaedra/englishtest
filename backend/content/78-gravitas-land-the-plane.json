@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-10",
+ "title": "Завершить кризис, посадить самолёт",
+ "theme": "Острая фаза позади — отметить поворот к восстановлению, признать людей, спокойно вернуть норму; кризис определяет не нас, а наш выход из него",
+ "subtitle": "Посадка после грозы",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Worst",
+   "zone": "Warm",
+   "en": "Breathe — the worst of it is behind us."
+  },
+  {
+   "anchor": "Hold",
+   "zone": "Warm",
+   "en": "I saw people hold the line under real pressure — and that matters."
+  },
+  {
+   "anchor": "Through",
+   "zone": "Warm",
+   "en": "This took a lot out of everyone — thank you for staying steady through it."
+  },
+  {
+   "anchor": "Rebuild",
+   "zone": "Backbone",
+   "en": "The fire's out — now we rebuild."
+  },
+  {
+   "anchor": "Stable",
+   "zone": "Backbone",
+   "en": "Here's what's stable, what's still exposed, and what we watch next."
+  },
+  {
+   "anchor": "Reset",
+   "zone": "Backbone",
+   "en": "No victory lap yet — we debrief, repair, and reset."
+  },
+  {
+   "anchor": "Guardrails",
+   "zone": "Weight",
+   "en": "Now we put in the guardrails so this doesn't happen twice."
+  },
+  {
+   "anchor": "Change",
+   "zone": "Weight",
+   "en": "What matters now is what we change because of this."
+  },
+  {
+   "anchor": "Comeback",
+   "zone": "Weight",
+   "en": "Rough week — the comeback starts Monday."
+  }
+ ],
+ "mnemo": "Шторм стихает. Ты последним перелезаешь гребень завала: worst — худшее — позади, дыши. Упираешься спиной в балку и hold — держишь — её, пока проходят твои люди. Ведёшь колонну through — насквозь — коридор. Последний очаг сбиваешь курткой: огонь потушен, теперь rebuild — отстраиваем заново. Толкаешь опоры ладонью: эта stable — устойчива, — две помечаешь мелом. У щитка жмёшь reset — сброс. Вдоль прохода ставишь guardrails — поручни, чтобы такое не повторилось дважды. Поднимаешь погнутый болт: важно то, что вы change — меняете — после этого. И первым толкаешь дверь: comeback — возвращение — начинается с понедельника."
+}

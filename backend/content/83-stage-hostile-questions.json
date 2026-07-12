@@ -1,0 +1,60 @@
+{
+ "slug": "stage-5",
+ "title": "Враждебные вопросы из зала",
+ "theme": "Из зала летит агрессивный «gotcha»-вопрос с ложной посылкой при всех — удержать комнату, не уйти в оборону и не вступить в драку; снять жар и найти боль под выпадом, держать рамку без ответной агрессии, остаться выше; зал запомнит не вопрос, а мою реакцию",
+ "subtitle": "Огненный ящик",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "fair",
+   "zone": "Warm",
+   "en": "That's a fair question — angry, but fair."
+  },
+  {
+   "anchor": "underneath",
+   "zone": "Warm",
+   "en": "That's a sharp one — and there's a real worry underneath it."
+  },
+  {
+   "anchor": "bold",
+   "zone": "Warm",
+   "en": "Bold question — I like it. Let's dig in."
+  },
+  {
+   "anchor": "setup",
+   "zone": "Backbone",
+   "en": "I don't buy the setup, but the worry behind it is real — so let's talk about that."
+  },
+  {
+   "anchor": "framing",
+   "zone": "Backbone",
+   "en": "I'll skip the framing and answer the actual question."
+  },
+  {
+   "anchor": "separate",
+   "zone": "Backbone",
+   "en": "Let me separate the accusation from the real question, and answer the second."
+  },
+  {
+   "anchor": "glad",
+   "zone": "Weight",
+   "en": "Honestly, I'm glad you asked — it lets me clear this up."
+  },
+  {
+   "anchor": "spar",
+   "zone": "Weight",
+   "en": "I'm not here to spar with you — everyone came for answers."
+  },
+  {
+   "anchor": "second",
+   "zone": "Weight",
+   "en": "Tough one — give me a second to get it right."
+  }
+ ],
+ "mnemo": "Из зала прилетает жёсткий вопрос, и ты сначала повторяешь его fair — честную — часть. Потом подходишь к флипчарту и пишешь, что underneath — под ним — лежит реальная тревога. Отмечаешь bold — смелую — формулировку, не обесценивая человека. Но рядом отделяешь setup — подставную — посылку, которая делает вопрос ловушкой. На доске меняешь framing — рамку — с “кто виноват” на “что правда происходит”. Линией separate — отделяешь — факт от обвинения. Говоришь, что glad — рад — ответить на факт. В драку spar — спарринг — не заходишь. И оставляешь second — вторую — часть вопроса для личного разговора после сессии."
+}

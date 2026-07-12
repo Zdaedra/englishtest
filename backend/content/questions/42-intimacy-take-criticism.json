@@ -1,0 +1,208 @@
+{
+  "slug": "intimacy-take-criticism",
+  "batch_file": "42-intimacy-take-criticism.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "listening",
+      "accept_anchors": [
+        "Listening"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Близкий говорит неприятное — впустить, найти з…). Дай реплику в регистре «Warm».",
+      "intent": "guts",
+      "accept_anchors": [
+        "Guts"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "defend",
+      "accept_anchors": [
+        "Defend"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "truth",
+      "accept_anchors": [
+        "Truth"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Близкий говорит неприятное — впустить, найти з…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "specific",
+      "accept_anchors": [
+        "Specific"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "part",
+      "accept_anchors": [
+        "Part"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "shatter",
+      "accept_anchors": [
+        "Shatter"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Близкий говорит неприятное — впустить, найти з…). Дай реплику в регистре «Weight».",
+      "intent": "sift",
+      "accept_anchors": [
+        "Sift"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "grow",
+      "accept_anchors": [
+        "Grow"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "listening",
+      "accept_anchors": [
+        "Listening"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Близкий говорит неприятное — впустить, найти з…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "guts",
+      "accept_anchors": [
+        "Guts"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "defend",
+      "accept_anchors": [
+        "Defend"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "truth",
+      "accept_anchors": [
+        "Truth"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Близкий говорит неприятное — впустить, найти з…). Дай реплику в регистре «Backbone».",
+      "intent": "specific",
+      "accept_anchors": [
+        "Specific"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "part",
+      "accept_anchors": [
+        "Part"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "shatter",
+      "accept_anchors": [
+        "Shatter"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Близкий говорит неприятное — впустить, найти з…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "sift",
+      "accept_anchors": [
+        "Sift"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "grow",
+      "accept_anchors": [
+        "Grow"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "listening",
+      "accept_anchors": [
+        "Listening"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Близкий говорит неприятное — впустить, найти з…). Дай реплику в регистре «Warm».",
+      "intent": "guts",
+      "accept_anchors": [
+        "Guts"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

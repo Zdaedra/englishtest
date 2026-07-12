@@ -1,20 +1,60 @@
 {
-  "slug": "pitch-1",
-  "title": "Крючок",
-  "theme": "Питч: первые 15 секунд — зацепить внимание",
-  "subtitle": "Крючок на леске",
-  "section": "pitch",
-  "zones": ["Spark", "Pull", "Lock"],
-  "phrases": [
-    { "anchor": "Picture", "zone": "Spark", "en": "Picture this — it's Monday morning and the whole thing already broke." },
-    { "anchor": "Quick",   "zone": "Spark", "en": "Give me thirty seconds — quick one." },
-    { "anchor": "Hook",    "zone": "Spark", "en": "Here's the hook — we make X feel like Y." },
-    { "anchor": "Catch",   "zone": "Pull",  "en": "Most people miss this, and that's the whole catch." },
-    { "anchor": "Lean",    "zone": "Pull",  "en": "Lean in — this is the part nobody talks about." },
-    { "anchor": "Bet",     "zone": "Pull",  "en": "I'd bet money you've felt this exact thing." },
-    { "anchor": "Knife",   "zone": "Lock",  "en": "Here's where the knife comes down — what actually matters." },
-    { "anchor": "One",     "zone": "Lock",  "en": "If you take one thing away, take this." },
-    { "anchor": "Grab",    "zone": "Lock",  "en": "This is the line that should grab you." }
-  ],
-  "mnemo": "Тёмная сцена. Ты чиркаешь спичкой — picture, и в воздухе вспыхивает картинка. Зал замирает на один quick вдох. Ты выбрасываешь вперёд hook — крючок блестит на леске. Толпа дёргается — вот он, catch. Леска тянет всех, и люди невольно lean вперёд. Ты делаешь bet — ставишь всё на эту секунду. В тишине достаёшь knife, режешь воздух — остаётся one яркая нить. Сжимаешь её в кулаке: grab. Зал — твой."
+ "slug": "pitch-1",
+ "title": "Крючок",
+ "theme": "Питч: первые 15 секунд — зацепить внимание",
+ "subtitle": "Крючок на леске",
+ "section": "pitch",
+ "zones": [
+  "Spark",
+  "Pull",
+  "Lock"
+ ],
+ "phrases": [
+  {
+   "anchor": "Fire",
+   "zone": "Spark",
+   "en": "Picture this: Monday morning, and the whole thing's on fire before your first coffee."
+  },
+  {
+   "anchor": "Quick",
+   "zone": "Spark",
+   "en": "Give me thirty seconds — quick one."
+  },
+  {
+   "anchor": "Hook",
+   "zone": "Spark",
+   "en": "Here's the hook — we make X feel like Y."
+  },
+  {
+   "anchor": "Opportunity",
+   "zone": "Pull",
+   "en": "Most people walk right past this — that's the opportunity."
+  },
+  {
+   "anchor": "Money",
+   "zone": "Pull",
+   "en": "Here's the part everyone skips — and it's where the money is."
+  },
+  {
+   "anchor": "Bet",
+   "zone": "Pull",
+   "en": "I'd bet money you've felt this exact thing."
+  },
+  {
+   "anchor": "Strip",
+   "zone": "Lock",
+   "en": "Strip everything else away, and this is what matters."
+  },
+  {
+   "anchor": "One",
+   "zone": "Lock",
+   "en": "If you take one thing away, take this."
+  },
+  {
+   "anchor": "Remember",
+   "zone": "Lock",
+   "en": "If you remember one thing today, make it this."
+  }
+ ],
+ "mnemo": "Ты сбегаешь на пирс к рыбакам. Показываешь на дымящий баркас: fire — вот что у них полыхает каждый понедельник с утра. Вскидываешь руку: quick — быстро, тридцать секунд. Выхватываешь hook — крюк — и забрасываешь леску. Подсекаешь opportunity — возможность, мимо которой все проходят. Тычешь пальцем в воду: вот здесь money — деньги, у них под ногами. Бьёшь кулаком о ладонь: bet — ставка, — каждый это чувствовал. Ножом strip — счищаешь — чешую и всё лишнее: остаётся суть. Поднимаешь one — один — кусок над головой: вот это. И бросаешь его ближайшему: remember — запомни именно этот."
 }

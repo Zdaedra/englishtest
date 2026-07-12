@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-1",
+ "title": "Поднять трудную тему",
+ "theme": "Начать с партнёром тяжёлый разговор без атаки и без оправданий — держа рамку любви",
+ "subtitle": "Рафтинг вдвоём",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Close",
+   "zone": "Warm",
+   "en": "I want to talk about something — not to fight, just to feel close to you again."
+  },
+  {
+   "anchor": "Gently",
+   "zone": "Warm",
+   "en": "Can we take this gently? It matters to me."
+  },
+  {
+   "anchor": "Together",
+   "zone": "Warm",
+   "en": "I don't want to carry this alone — and I don't want to put it on you. Let's look at it together."
+  },
+  {
+   "anchor": "Avoiding",
+   "zone": "Backbone",
+   "en": "I've been avoiding this — and I don't want that to become our pattern."
+  },
+  {
+   "anchor": "Blame",
+   "zone": "Backbone",
+   "en": "Something's been sitting between us, and I want to talk about it — no blame."
+  },
+  {
+   "anchor": "Part",
+   "zone": "Backbone",
+   "en": "My part is that I've been quiet when I should've been honest."
+  },
+  {
+   "anchor": "Win",
+   "zone": "Weight",
+   "en": "This may be hard — but I'm not here to win. I'm here to understand what's true."
+  },
+  {
+   "anchor": "Against",
+   "zone": "Weight",
+   "en": "It's not me against you — it's us against the problem."
+  },
+  {
+   "anchor": "Tomorrow",
+   "zone": "Weight",
+   "en": "We can argue tonight and still be good tomorrow."
+  }
+ ],
+ "mnemo": "На кухне разговор уже close — близок — к ссоре, и ты gently — мягко — ставишь две чашки на стол. Вместо того чтобы стоять напротив, вы садитесь together — рядом на диван. Avoiding — обходя — старую тему, ты открываешь заметку с одной конкретной ситуацией. Первым убираешь blame — обвинение: говоришь только о своём действии и своей реакции. На листе делишь проблему на part — части: что моё, что твоё, что общее. Маленькая win — победа — случается уже здесь: вы оба дослушали до конца. Потом смотрите, against — против — чего вы на самом деле вместе стоите: не друг против друга, а против повторяющегося сценария. В конце ставите чашки в раковину и договариваетесь вернуться к теме tomorrow — завтра."
+}

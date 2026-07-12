@@ -4,11 +4,58 @@
 // is derived live from the rotation endpoint (avg_score / attempts), not stored here.
 
 export type BatchProgress = {
+  on_path?: boolean; // on the curated learning trajectory (drawn on the Learning map)
+  on_path_at?: string; // ISO timestamp added to the path
+  path_rank?: number; // manual queue order across the whole plan (server-synced)
+  activated?: boolean; // in the practice-deck rotation (invariant: activated ⊆ on_path)
   l1_listened?: boolean; // played the full story at least once
   l1_retold?: boolean; // did at least one sequence retell
   l1_best_seq?: number; // best sequence score so far (informational)
-  l3_passed?: boolean; // passed the final exam (Test A ≥ 7)
+  l3_s1?: boolean; // exam stage 1 passed (full retell, avg ≥ 8)
+  l3_s2?: boolean; // exam stage 2 passed (story-stop phrase, avg ≥ 8)
+  l3_passed?: boolean; // passed the whole 3-stage final exam (all stages ≥ 80%)
 };
+
+// A batch is "engaged" (appears in the In Progress count + the Library's active
+// row) once the learner has activated it or made any progress.
+export function isEngaged(p: BatchProgress): boolean {
+  return !!(p.activated || p.l1_listened || p.l1_retold || p.l3_s1 || p.l3_s2 || p.l3_passed);
+}
+
+// Pedagogical focus cap: at most this many batches may be in ACTIVE FOCUS
+// (activated && exam not yet passed) at once — for every plan, free or paid.
+// Mirrors backend entitlements.FOCUS_CAP; the server enforces it, this is the
+// client-side gate so the rule reads clearly (don't just eat a 403). Passing an
+// exam frees a slot.
+export const FOCUS_CAP = 3;
+
+// "In focus" = in the practice deck and the final exam isn't passed yet. This is
+// exactly the set the cap meters (and what the last batch in learning belongs to).
+export function inFocus(p: BatchProgress): boolean {
+  return !!p.activated && !p.l3_passed;
+}
+
+// How many batches are in active focus right now (scans the local progress cache,
+// which the server hydrates on login). Used to gate a NEW batch from entering
+// focus past FOCUS_CAP before we ever attempt the (fire-and-forget) server write.
+export function focusCount(): number {
+  let n = 0;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith("ee-progress-")) continue;
+      const p = JSON.parse(localStorage.getItem(k) || "{}");
+      if (p && p.activated && !p.l3_passed) n++;
+    }
+  } catch { /* non-critical */ }
+  return n;
+}
+
+// Two-axis batch management. on_path = curated learning trajectory (Learning map);
+// active = practice-deck rotation. Invariant: active ⊆ on_path. The map now reads
+// on_path directly (lib/plan.ts hides on_path===false nodes); the old isOnPath()
+// helper was dead and removed 2026-07-09.
+export function isActive(p: BatchProgress): boolean { return !!p.activated; }
 
 const key = (batchId: number) => `ee-progress-${batchId}`;
 
@@ -27,7 +74,83 @@ export function setProgress(batchId: number, patch: Partial<BatchProgress>): Bat
   } catch {
     /* storage full / disabled — progress is non-critical */
   }
+  // Mirror to the server (per-user source of truth). Fire-and-forget; the local
+  // cache keeps the UI synchronous. activatedAt/completed_at are server-set.
+  const srv: Record<string, unknown> = {};
+  for (const k of ["on_path", "path_rank", "activated", "l1_listened", "l1_retold", "l1_best_seq", "l3_s1", "l3_s2", "l3_passed"] as const) {
+    if (k in patch && patch[k] !== undefined) srv[k] = patch[k];
+  }
+  if (Object.keys(srv).length) {
+    import("../api").then(({ api }) => api.putProgress(batchId, srv as any).catch(() => {}));
+  }
   return next;
+}
+
+// Local-only write (no server mirror). For callers (batchActions) that drive the
+// server PUT themselves and must roll back the local cache on failure (cap-403).
+export function writeLocalProgress(batchId: number, patch: Partial<BatchProgress>): void {
+  const next = { ...getProgress(batchId), ...patch };
+  try { localStorage.setItem(key(batchId), JSON.stringify(next)); } catch { /* non-critical */ }
+}
+
+// Drop all local progress (on login/logout) so a shared browser never leaks one
+// account's progress to another before server hydration.
+export function clearLocalProgress(): void {
+  try {
+    const ks: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("ee-progress-")) ks.push(k);
+    }
+    ks.forEach((k) => localStorage.removeItem(k));
+  } catch { /* ignore */ }
+}
+
+// Drop every batch's manual queue rank so the plan falls back to the freshly
+// computed domain apportionment. Called when the learner re-tunes their domains —
+// a new focus mix should rebuild the order rather than be frozen by old manual
+// drags. Mirrors the clear to the server (explicit null) so other devices follow.
+export function clearAllPathRanks(): void {
+  const cleared: number[] = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith("ee-progress-")) continue;
+      const p = JSON.parse(localStorage.getItem(k) || "{}");
+      if (p && p.path_rank != null) {
+        delete p.path_rank;
+        localStorage.setItem(k, JSON.stringify(p));
+        cleared.push(Number(k.slice("ee-progress-".length)));
+      }
+    }
+  } catch { /* non-critical */ }
+  if (cleared.length) {
+    import("../api").then(({ api }) =>
+      cleared.forEach((id) => api.putProgress(id, { path_rank: null } as any).catch(() => {})));
+  }
+}
+
+// Pull this user's progress from the server into the local cache (on login).
+export async function hydrateProgress(): Promise<void> {
+  try {
+    const { api } = await import("../api");
+    const rows = await api.listProgress();
+    rows.forEach((r) => {
+      const bp: BatchProgress = {
+        on_path: r.on_path,
+        on_path_at: r.on_path_at || undefined,
+        path_rank: r.path_rank ?? undefined,
+        activated: r.activated,
+        l1_listened: r.l1_listened,
+        l1_retold: r.l1_retold,
+        l1_best_seq: r.l1_best_seq ?? undefined,
+        l3_s1: r.l3_s1,
+        l3_s2: r.l3_s2,
+        l3_passed: r.l3_passed,
+      };
+      try { localStorage.setItem(key(r.batch_id), JSON.stringify(bp)); } catch { /* ignore */ }
+    });
+  } catch { /* offline / not critical */ }
 }
 
 export type LessonState = "locked" | "open" | "done";

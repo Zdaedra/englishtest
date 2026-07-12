@@ -1,0 +1,60 @@
+{
+ "slug": "intimacy-11",
+ "title": "Заряженный разговор с семьёй",
+ "theme": "Остаться взрослым с родителями, когда жмут старые кнопки — граница с любовью, уважение без подчинения, встреча на равных",
+ "subtitle": "Теннисный матч",
+ "section": "intimacy",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Love",
+   "zone": "Warm",
+   "en": "I know this comes from love — I really do."
+  },
+  {
+   "anchor": "Agree",
+   "zone": "Warm",
+   "en": "We don't have to agree to be close — I'm not going anywhere."
+  },
+  {
+   "anchor": "Worried",
+   "zone": "Warm",
+   "en": "I know you're worried — let's not turn it into an argument."
+  },
+  {
+   "anchor": "Trial",
+   "zone": "Backbone",
+   "en": "I'm not going to argue my life like it's on trial."
+  },
+  {
+   "anchor": "Steering",
+   "zone": "Backbone",
+   "en": "I can listen to you without handing you the steering wheel."
+  },
+  {
+   "anchor": "Vote",
+   "zone": "Backbone",
+   "en": "That part of my life isn't open for a family vote."
+  },
+  {
+   "anchor": "Child",
+   "zone": "Weight",
+   "en": "I'm your child — but I'm not a child in this conversation."
+  },
+  {
+   "anchor": "Permission",
+   "zone": "Weight",
+   "en": "I'm not asking for permission — I'm offering you honesty."
+  },
+  {
+   "anchor": "Adult",
+   "zone": "Weight",
+   "en": "You raised an adult — trust that."
+  }
+ ],
+ "mnemo": "Перед матчем сжимаешь браслет love — любовь, — и вы agree на три сета, хотя тучи worried — тревожат. Выходите на центральный корт, как на trial — слушание; ты подаёшь, steering мяч точно в угол. Спорный аут — vote криками; child-болбой подаёт мяч, и ты просишь у судьи permission на челлендж. «Ястребиный глаз»: мяч в поле! — и вы пожимаете руки через сетку, adult — взрослый со взрослым."
+}

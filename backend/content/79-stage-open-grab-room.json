@@ -1,0 +1,60 @@
+{
+ "slug": "stage-1",
+ "title": "Открыть выступление, схватить зал",
+ "theme": "Первые секунды на сцене — взять внимание с первой фразы, без разогрева и извинений; крючок, обещание и спокойное владение сценой",
+ "subtitle": "Прожектор в цирке",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Speech",
+   "zone": "Warm",
+   "en": "I'm not going to give a speech — I'd rather just talk to you."
+  },
+  {
+   "anchor": "Row",
+   "zone": "Warm",
+   "en": "Hello back row — I see you too."
+  },
+  {
+   "anchor": "Useful",
+   "zone": "Warm",
+   "en": "Let's make this useful, not polished."
+  },
+  {
+   "anchor": "Pretending",
+   "zone": "Backbone",
+   "en": "Here's the question under all of this: what are we pretending not to know?"
+  },
+  {
+   "anchor": "Mistake",
+   "zone": "Backbone",
+   "en": "I'll open with the mistake that changed everything for me."
+  },
+  {
+   "anchor": "Unsee",
+   "zone": "Backbone",
+   "en": "If I do my job, you'll leave with one thing you can't unsee."
+  },
+  {
+   "anchor": "Ground",
+   "zone": "Weight",
+   "en": "Settle in — we've got some ground to cover."
+  },
+  {
+   "anchor": "Hurry",
+   "zone": "Weight",
+   "en": "I'm in no hurry up here — stay with me."
+  },
+  {
+   "anchor": "Hour",
+   "zone": "Weight",
+   "en": "You're here, I'm here — let's make this hour matter."
+  }
+ ],
+ "mnemo": "Ты выходишь на сцену без долгой разминки: это не speech — речь — по бумаге, а разговор с залом. Сначала проходишь взглядом последний row — ряд, чтобы он тоже был внутри. Поднимаешь со стола useful — полезный — предмет, который понадобится в примере. Не надеваешь pretending — притворную — бодрость, говоришь живым голосом. Первой фразой называешь mistake — ошибку, которую почти все в зале делают. На экране появляется схема, и её уже трудно unsee — развидеть. Ты спускаешься на ground — пол — перед сценой, ближе к людям. Не hurry — торопишься — заполнить паузу. И обещаешь: за этот hour — час — они уйдут с одним рабочим приёмом."
+}

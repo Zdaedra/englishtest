@@ -1,0 +1,60 @@
+{
+ "slug": "flirt-3",
+ "title": "Удержать заряженный момент",
+ "theme": "Когда повисло напряжение — удержать момент, не суетясь заполнить; комфорт с искрой",
+ "subtitle": "Снежный барс",
+ "section": "flirt",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Quiet",
+   "zone": "Warm",
+   "en": "I don't mind the quiet with you."
+  },
+  {
+   "anchor": "Moment",
+   "zone": "Warm",
+   "en": "Let's not talk this moment to death."
+  },
+  {
+   "anchor": "Smile",
+   "zone": "Warm",
+   "en": "That smile said more than the sentence did."
+  },
+  {
+   "anchor": "Happening",
+   "zone": "Backbone",
+   "en": "There's something happening here, and we both know it."
+  },
+  {
+   "anchor": "Look",
+   "zone": "Backbone",
+   "en": "What? I'm allowed to look."
+  },
+  {
+   "anchor": "Rush",
+   "zone": "Backbone",
+   "en": "Let's not rush past whatever just happened."
+  },
+  {
+   "anchor": "Hurry",
+   "zone": "Weight",
+   "en": "I'm in no hurry — this is nice."
+  },
+  {
+   "anchor": "Ruin",
+   "zone": "Weight",
+   "en": "Explaining it would just ruin it."
+  },
+  {
+   "anchor": "Sit",
+   "zone": "Weight",
+   "en": "We don't have to do anything with this — we can just let it sit."
+  }
+ ],
+ "mnemo": "Музыка замедляется, и вы застываете в quiet — тишине — посреди шага. Этот moment — момент — ведёшь медленным поворотом, не давая оборваться. Ловишь её smile — улыбку — и отвечаешь своей, продолжая вести. Между вами что-то happening — происходит, — и ты подтягиваешь её ближе. Она ловит твой look — взгляд; ты пожимаешь плечами. Оркестр ускоряется — ты не rush — не гонишь: держишь свой счёт. И не hurry — не спешишь — разрывать связку. Не объясняешь фигуру словами — это бы её ruin — испортило. И с последним аккордом вы опускаетесь на подоконник — просто sit — посидеть."
+}

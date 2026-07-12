@@ -14,6 +14,18 @@ services:
       # Cookie auth gate (replaces Caddy basic-auth so iOS remembers login).
       - ENGLISH_APP_PASSWORD=${ENGLISH_APP_PASSWORD}
       - ENGLISH_COOKIE_SECRET=${ENGLISH_COOKIE_SECRET}
+      # Apple IAP (StoreKit 2) — bundle id has a config default; these enable
+      # transaction verification. Not secrets. Flip ENV to production at launch.
+      - ENGLISH_APPLE_APP_APPLE_ID=${ENGLISH_APPLE_APP_APPLE_ID:-6782193688}
+      - ENGLISH_APPLE_ENV=${ENGLISH_APPLE_ENV:-sandbox}
+      # Email verification (Resend). Empty key => the verification gate stays
+      # dormant (signups auto-verify); set RESEND_API_KEY on the host to activate.
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - ENGLISH_PUBLIC_BASE_URL=${ENGLISH_PUBLIC_BASE_URL:-https://executive-english.net}
+      # Stats cabinet (/admin) HTTP Basic credentials. Both must be set on the host
+      # (.env) to enable it; empty => the cabinet returns 404 (fail-closed).
+      - ENGLISH_STATS_USER=${ENGLISH_STATS_USER:-}
+      - ENGLISH_STATS_PASSWORD=${ENGLISH_STATS_PASSWORD:-}
     volumes:
       - english_data:/srv/backend/data
     expose:

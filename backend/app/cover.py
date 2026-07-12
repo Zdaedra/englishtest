@@ -34,6 +34,28 @@ def accent_for(batch_id: int) -> tuple[str, str]:
     return _PALETTE[batch_id % len(_PALETTE)]
 
 
+def cover_url_for(cover_path: str | None, batch_id: int, hero_gender: str) -> str | None:
+    """Resolve the cover variant for a user's protagonist preference (D3, #24).
+
+    Covers are generated with a v2 (male-protagonist) path stored on the batch. A
+    parallel female set lives beside it on disk as `<slug>.v3.jpg`. This picks:
+      * male   → the stored v2 path, unchanged;
+      * female → the v3 file where it exists, else the v2 fallback;
+      * mixed  → v3 on even batch ids, v2 on odd — but only where a v3 exists, so
+                 the library alternates the protagonist batch-by-batch.
+    Batches with no female variant (or a non-v2 path) always return the original,
+    so the 56 not-yet-regenerated batches simply keep the male cover for everyone.
+    """
+    if not cover_path or ".v2." not in cover_path or hero_gender not in ("female", "mixed"):
+        return cover_path
+    v3 = cover_path.replace(".v2.", ".v3.")
+    if not (get_settings().covers_dir / v3.rsplit("/", 1)[-1]).exists():
+        return cover_path
+    if hero_gender == "female":
+        return v3
+    return v3 if batch_id % 2 == 0 else cover_path   # mixed: alternate by batch
+
+
 # Keyword → visual metaphor. First match wins; order matters (specific first).
 _METAPHORS: list[tuple[tuple[str, ...], str]] = [
     (("восхожд", "ascen", "ladder", "climb", "восхожден", "intensit", "disagree"),
@@ -170,8 +192,10 @@ def generate_cover(batch_id: int, slug: str, title: str, theme: str,
     swaps in a cached image with no re-generation cost."""
     s = get_settings()
     v = version or active_prompt_version()
-    out = s.covers_dir / f"{slug}.v{v}.png"
-    url = f"/covers/{slug}.v{v}.png"
+    # Covers are served to a mobile app — store a compressed JPEG (~100KB), not the
+    # raw ~1.6MB PNG, so native doesn't download megabytes per view.
+    out = s.covers_dir / f"{slug}.v{v}.jpg"
+    url = f"/covers/{slug}.v{v}.jpg"
     if out.exists() and out.stat().st_size > 0 and not force:
         return url
 
@@ -179,5 +203,17 @@ def generate_cover(batch_id: int, slug: str, title: str, theme: str,
     prompt = build_prompt(title, theme, accent_name, accent_hex, metaphor,
                           subtitle=subtitle, version=v)
     data = _request_image(prompt, s.image_model, s.cover_size, quality or s.cover_quality)
-    out.write_bytes(data)
+    _save_cover_jpeg(data, out)
     return url
+
+
+def _save_cover_jpeg(png_bytes: bytes, out, maxdim: int = 1000, quality: int = 82) -> None:
+    """Resize to <= maxdim and save as optimized JPEG (mobile-friendly cover)."""
+    import io
+    from PIL import Image
+    im = Image.open(io.BytesIO(png_bytes)).convert("RGB")
+    w, h = im.size
+    scale = min(1.0, maxdim / max(w, h))
+    if scale < 1.0:
+        im = im.resize((round(w * scale), round(h * scale)), Image.LANCZOS)
+    im.save(out, "JPEG", quality=quality, optimize=True)

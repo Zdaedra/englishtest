@@ -3,6 +3,7 @@ import {
 } from "react";
 import { api, BatchDetail, PlanSeg, Phrase, SessionResp } from "../api";
 import { cacheAudio, isCached, setupMediaSession } from "../audio/helpers";
+import { useAuth } from "../auth/AuthContext";
 
 export type Mode = "listening" | "recall";
 export type Order = "ordered" | "zone_random" | "full_random";
@@ -53,12 +54,29 @@ export const usePlayer = () => {
   return c;
 };
 
-const FAV_KEY = "ee-favorites";
+// Favorites are ACCOUNT-scoped (ee-favorites:<uid>) so a shared browser never
+// shows one account's favorited phrases to another. The pre-account global key
+// is migrated to the first account that signs in, then removed. (Device-local:
+// no server sync, so we keep — not clear — per account across logins.)
+const LEGACY_FAV_KEY = "ee-favorites";
+const favKey = (uid: number | null) => (uid != null ? `ee-favorites:${uid}` : LEGACY_FAV_KEY);
 const RATES = [0.75, 1, 1.25, 1.5];
 
-function loadFavs(): Set<number> {
+function loadFavs(uid: number | null): Set<number> {
   try {
-    return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+    const raw = localStorage.getItem(favKey(uid));
+    if (raw != null) return new Set(JSON.parse(raw));
+    // First bind for this account on a device that used the old global key:
+    // adopt it once, then retire it so the next account starts clean.
+    if (uid != null) {
+      const legacy = localStorage.getItem(LEGACY_FAV_KEY);
+      if (legacy != null) {
+        localStorage.setItem(favKey(uid), legacy);
+        localStorage.removeItem(LEGACY_FAV_KEY);
+        return new Set(JSON.parse(legacy));
+      }
+    }
+    return new Set();
   } catch {
     return new Set();
   }
@@ -66,6 +84,8 @@ function loadFavs(): Set<number> {
 
 export function PlayerProvider({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { user } = useAuth();
+  const uid = user?.id ?? null;
 
   const [batch, setBatch] = useState<BatchDetail | null>(null);
   const [session, setSession] = useState<SessionResp | null>(null);
@@ -79,7 +99,10 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [rate, setRate] = useState(1);
   const [loop, setLoop] = useState(true);
   const [cached, setCached] = useState(false);
-  const [favorites, setFavorites] = useState<Set<number>>(loadFavs);
+  const [favorites, setFavorites] = useState<Set<number>>(() => loadFavs(uid));
+  // Rebind favorites to the signed-in account (and migrate the legacy global key
+  // once) so a shared browser never carries one account's favorites into another.
+  useEffect(() => { setFavorites(loadFavs(uid)); }, [uid]);
 
   // Pending autoplay / seek applied once the new src reports metadata.
   const seekTimeRef = useRef(0);
@@ -305,10 +328,10 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setFavorites((prev) => {
       const n = new Set(prev);
       n.has(id) ? n.delete(id) : n.add(id);
-      localStorage.setItem(FAV_KEY, JSON.stringify([...n]));
+      localStorage.setItem(favKey(uid), JSON.stringify([...n]));
       return n;
     });
-  }, []);
+  }, [uid]);
   const isFavorite = useCallback((id: number) => favorites.has(id), [favorites]);
 
   const download = useCallback(async () => {

@@ -1,0 +1,60 @@
+{
+ "slug": "stage-10",
+ "title": "Сделать момент личным с большой аудиторией",
+ "theme": "Перед тобой сотни или тысячи — схлопнуть масштаб так, чтобы каждый почувствовал, что говорят лично с ним; интимность и есть сила: шёпот в большом зале бьёт сильнее крика, и присутствие не в том, чтобы заполнить зал, а чтобы каждый почувствовал себя увиденным",
+ "subtitle": "Личный планетарий",
+ "section": "stage",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "thousand",
+   "zone": "Warm",
+   "en": "I know there are a thousand of you — but right now I'm talking to one. You."
+  },
+  {
+   "anchor": "between",
+   "zone": "Warm",
+   "en": "Lean in for a second — this one's just between us."
+  },
+  {
+   "anchor": "nothing",
+   "zone": "Warm",
+   "en": "If you remember nothing else tonight, remember this."
+  },
+  {
+   "anchor": "mind",
+   "zone": "Backbone",
+   "en": "Think of the one person who needs to hear this — keep them in mind."
+  },
+  {
+   "anchor": "avoiding",
+   "zone": "Backbone",
+   "en": "Ask yourself the question you've been avoiding. [pause] You know the one."
+  },
+  {
+   "anchor": "nodding",
+   "zone": "Backbone",
+   "en": "I can see some of you nodding — you know exactly what I mean."
+  },
+  {
+   "anchor": "shout",
+   "zone": "Weight",
+   "en": "I don't need to shout this — you can hear me just fine."
+  },
+  {
+   "anchor": "show",
+   "zone": "Weight",
+   "en": "Don't tell the crew, but the show isn't the point."
+  },
+  {
+   "anchor": "land",
+   "zone": "Weight",
+   "en": "I'm not trying to impress you — I just want this to land."
+  }
+ ],
+ "mnemo": "Обводишь рукой thousand — тысячу — лиц и сходишь со сцены. Спускаешься в проход и наклоняешься ближе: это — between — между вами. Гасишь свет до nothing — до ничего: один твой фонарик. Останавливаешься у одного кресла: вот человек, которого ты держал в mind — в мыслях. Обходишь тянущиеся камеры, avoiding — избегая — их. В луче видно, как кто-то nodding — кивает: узнали себя. Тебе незачем shout — кричать: тебя слышно и в шёпоте. За спиной вспыхивает show — шоу; ты подмигиваешь. Поднимаешь фонарик, чтобы сказанное land — долетело."
+}

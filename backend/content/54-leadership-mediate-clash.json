@@ -1,0 +1,60 @@
+{
+ "slug": "lead-8",
+ "title": "Разрулить чужой конфликт",
+ "theme": "Двое сцепились при тебе — вступить нейтральным авторитетом: снизить градус, дать структуру и вернуть их на одну сторону, не судя",
+ "subtitle": "Встречный пал",
+ "section": "lead-presence",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Ends",
+   "zone": "Warm",
+   "en": "You two are arguing the same point from different ends."
+  },
+  {
+   "anchor": "Enemy",
+   "zone": "Warm",
+   "en": "Neither of you is the enemy here."
+  },
+  {
+   "anchor": "Start",
+   "zone": "Warm",
+   "en": "You both want the same thing — start from there."
+  },
+  {
+   "anchor": "Crossfire",
+   "zone": "Backbone",
+   "en": "Let's stop the crossfire — one voice at a time, uninterrupted."
+  },
+  {
+   "anchor": "Happened",
+   "zone": "Backbone",
+   "en": "First, tell me what happened — we'll get to the rest."
+  },
+  {
+   "anchor": "Temperature",
+   "zone": "Backbone",
+   "en": "Let's separate the issue from the temperature in the room."
+  },
+  {
+   "anchor": "Referee",
+   "zone": "Weight",
+   "en": "I'm not the referee here — I just want you two to hear each other."
+  },
+  {
+   "anchor": "Track",
+   "zone": "Weight",
+   "en": "I'll keep us on track until you two can hear each other."
+  },
+  {
+   "anchor": "Side",
+   "zone": "Weight",
+   "en": "I'm not picking a side — I'm getting you back onto the same one."
+  }
+ ],
+ "mnemo": "Во дворе двое тянут одну стойку за разные ends — концы — и спорят, куда её ставить. Ты встаёшь между ними и говоришь: здесь нет enemy — врага, есть одна незаконченная стойка. Сначала возвращаешь всех к start — началу: где она должна стоять по плану. Реплики летят crossfire — перекрёстным огнём, и ты поднимаешь руку: говорим по одному. Первому даёшь минуту объяснить, что happened — случилось. Потом открываешь ворота и буквально снижешь temperature — температуру: вы выходите из тесного угла на воздух. Ты не referee — судья, поэтому не раздаёшь победу. Мелом чертишь track — линию — по полу. В конце они становятся на одну side — сторону — стойки и несут её вместе."
+}

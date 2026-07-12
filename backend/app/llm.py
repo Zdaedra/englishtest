@@ -40,7 +40,7 @@ def _anthropic_call(base_url: str, api_key: Optional[str], system: str, user: st
     if api_key:
         headers["x-api-key"] = api_key
     body = {
-        "model": "claude-sonnet-4-6",
+        "model": get_settings().model_import_anthropic,
         "max_tokens": max_tokens,
         "system": system,
         "messages": [{"role": "user", "content": user}],
@@ -57,7 +57,7 @@ def _openai_call(api_key: str, system: str, user: str,
                  temperature: Optional[float] = None) -> str:
     headers = {"Authorization": f"Bearer {api_key}", "content-type": "application/json"}
     body = {
-        "model": "gpt-4o-mini",
+        "model": get_settings().model_import,
         "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": user},
@@ -74,18 +74,21 @@ def _resolve_provider() -> str:
     s = get_settings()
     if s.llm_provider != "auto":
         return s.llm_provider
-    # auto: meridian (if reachable) -> anthropic -> openai
-    try:
-        httpx.get(s.meridian_url, timeout=1.5)
-        return "meridian"
-    except Exception:
-        pass
+    # auto: prefer a COMMERCIAL API (covered by a signed DPA, no training on inputs)
+    # for any real/user data. The Meridian dev proxy is a personal Anthropic Max
+    # subscription (consumer terms, no DPA) and must NEVER be the production default —
+    # so it is the LAST resort, only when no commercial key is configured (pure dev).
     sec = get_secrets()
     if sec.anthropic_api_key:
         return "anthropic"
     if sec.openai_api_key:
         return "openai"
-    raise RuntimeError("No LLM provider available (meridian unreachable, no API keys).")
+    try:
+        httpx.get(s.meridian_url, timeout=1.5)
+        return "meridian"
+    except Exception:
+        pass
+    raise RuntimeError("No LLM provider available (no API keys, meridian unreachable).")
 
 
 def chat(system: str, user: str, temperature: Optional[float] = None) -> str:

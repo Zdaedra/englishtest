@@ -38,8 +38,11 @@ def run(ids: list[int], *, all_: bool, dry: bool) -> list[tuple[int, str, str]]:
                 rows.append((b.id, old, f"ERR {e}"))
                 continue
             rows.append((b.id, old, new))
-            if new and not dry:
+            if new and not dry and new != b.subtitle:
                 b.subtitle = new
+                # translations were of the OLD subtitle — clear so app.doctor
+                # sees the hole and `i18n_content --refill` re-translates
+                b.subtitle_i18n = {}
                 s.add(b)
         if not dry:
             s.commit()

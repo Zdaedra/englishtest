@@ -1,0 +1,208 @@
+{
+  "slug": "intimacy-boundary-with-loved-one",
+  "batch_file": "39-intimacy-boundary-with-loved-one.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "less",
+      "accept_anchors": [
+        "Less"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Сказать «нет» близкому без вины и без агрессии…). Дай реплику в регистре «Warm».",
+      "intent": "protecting",
+      "accept_anchors": [
+        "Protecting"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Warm». Скажи фразу, которая здесь уместна.",
+      "intent": "limit",
+      "accept_anchors": [
+        "Limit"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Backbone». Произнеси подходящую фразу.",
+      "intent": "complete",
+      "accept_anchors": [
+        "Complete"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Сказать «нет» близкому без вины и без агрессии…). Вступи в тоне «Backbone» одной фразой.",
+      "intent": "explain",
+      "accept_anchors": [
+        "Explain"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Backbone»).",
+      "intent": "pressured",
+      "accept_anchors": [
+        "Pressured"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Weight». Ответь одной уместной фразой.",
+      "intent": "ground",
+      "accept_anchors": [
+        "Ground"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Сказать «нет» близкому без вины и без агрессии…). Дай реплику в регистре «Weight».",
+      "intent": "upset",
+      "accept_anchors": [
+        "Upset"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Weight». Скажи фразу, которая здесь уместна.",
+      "intent": "line",
+      "accept_anchors": [
+        "Line"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Warm». Произнеси подходящую фразу.",
+      "intent": "less",
+      "accept_anchors": [
+        "Less"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Сказать «нет» близкому без вины и без агрессии…). Вступи в тоне «Warm» одной фразой.",
+      "intent": "protecting",
+      "accept_anchors": [
+        "Protecting"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Warm»).",
+      "intent": "limit",
+      "accept_anchors": [
+        "Limit"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Backbone». Ответь одной уместной фразой.",
+      "intent": "complete",
+      "accept_anchors": [
+        "Complete"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Сказать «нет» близкому без вины и без агрессии…). Дай реплику в регистре «Backbone».",
+      "intent": "explain",
+      "accept_anchors": [
+        "Explain"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Backbone». Скажи фразу, которая здесь уместна.",
+      "intent": "pressured",
+      "accept_anchors": [
+        "Pressured"
+      ],
+      "zone": "Backbone",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Weight». Произнеси подходящую фразу.",
+      "intent": "ground",
+      "accept_anchors": [
+        "Ground"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Сказать «нет» близкому без вины и без агрессии…). Вступи в тоне «Weight» одной фразой.",
+      "intent": "upset",
+      "accept_anchors": [
+        "Upset"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Weight»).",
+      "intent": "line",
+      "accept_anchors": [
+        "Line"
+      ],
+      "zone": "Weight",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Warm». Ответь одной уместной фразой.",
+      "intent": "less",
+      "accept_anchors": [
+        "Less"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Сказать «нет» близкому без вины и без агрессии…). Дай реплику в регистре «Warm».",
+      "intent": "protecting",
+      "accept_anchors": [
+        "Protecting"
+      ],
+      "zone": "Warm",
+      "difficulty": 1
+    }
+  ]
+}

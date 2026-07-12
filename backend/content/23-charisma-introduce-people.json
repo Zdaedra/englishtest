@@ -1,0 +1,60 @@
+{
+ "slug": "charisma-10",
+ "title": "Представить людей",
+ "theme": "Свести двоих так, что оба благодарны, а ты — связующий центр, поднявший статус всех",
+ "subtitle": "Фотофиниш",
+ "section": "charisma",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Favorite",
+   "zone": "Warm",
+   "en": "Two of my favorite people, and somehow you'd never met."
+  },
+  {
+   "anchor": "Click",
+   "zone": "Warm",
+   "en": "I had a feeling you two would click — let's find out."
+  },
+  {
+   "anchor": "Better",
+   "zone": "Warm",
+   "en": "You both make a room better — in very different ways."
+  },
+  {
+   "anchor": "Compare",
+   "zone": "Backbone",
+   "en": "You two should compare notes — you're solving the same thing from opposite ends."
+  },
+  {
+   "anchor": "Ask",
+   "zone": "Backbone",
+   "en": "Ask her about Lagos, ask him about the raise — then I'll get out of your way."
+  },
+  {
+   "anchor": "Only",
+   "zone": "Backbone",
+   "en": "He's the only other person I know who sees this the way you do."
+  },
+  {
+   "anchor": "Meet",
+   "zone": "Weight",
+   "en": "You two need to meet — trust me on this."
+  },
+  {
+   "anchor": "Record",
+   "zone": "Weight",
+   "en": "When you two build something, I want it on record I started it."
+  },
+  {
+   "anchor": "Thank",
+   "zone": "Weight",
+   "en": "This is the introduction you'll both quietly thank me for in a year."
+  }
+ ],
+ "mnemo": "На приёме ты видишь своего favorite — любимого — дизайнера у стены с образцами и основателя, которому нужен именно такой человек. Подходишь к дизайнеру и говоришь, почему они могут click — сойтись — по проекту. Ведёшь его через зал к столу с прототипами: вместе они сделают запуск better — лучше. Кладёшь перед ними два похожих кейса и просишь compare — сравнить — подходы. Потом задаёшь один ask — вопрос: “что бы вы поменяли в этой упаковке?” Оба отвечают почти одинаково, и ты улыбаешься: only — только — вы двое сейчас увидели это так быстро. Ты предлагаешь им meet — встретиться — отдельно у этого же стола завтра. Достаёшь телефон и record — записываешь — контакты друг другу. Когда отходишь к бару, слышишь thank — благодарное — “спасибо, это было прямо в тему”."
+}

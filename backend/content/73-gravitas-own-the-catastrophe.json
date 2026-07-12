@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-5",
+ "title": "Признать катастрофу, не теряя командования",
+ "theme": "Масштабный провал на твоей зоне — честно назвать масштаб и взять на себя, но руль в руках; именно поэтому я не отпускаю штурвал",
+ "subtitle": "Дирижабль в огне",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Minimize",
+   "zone": "Warm",
+   "en": "I'm not going to stand here and minimize what this did to people."
+  },
+  {
+   "anchor": "Affected",
+   "zone": "Warm",
+   "en": "To everyone affected: I'm sorry — and here's what we're doing about it."
+  },
+  {
+   "anchor": "Performance",
+   "zone": "Warm",
+   "en": "You don't need a performance from me — you need the truth and a plan."
+  },
+  {
+   "anchor": "Failure",
+   "zone": "Backbone",
+   "en": "This is a failure — not a 'setback.' And it's mine to answer for."
+  },
+  {
+   "anchor": "Watch",
+   "zone": "Backbone",
+   "en": "No softening it: it's the worst we've had — and it happened on my watch."
+  },
+  {
+   "anchor": "Scope",
+   "zone": "Backbone",
+   "en": "Here's the full scope, unvarnished — then what I'm doing about it."
+  },
+  {
+   "anchor": "Fix",
+   "zone": "Weight",
+   "en": "This one's on me — and I'm going to fix it."
+  },
+  {
+   "anchor": "Staying",
+   "zone": "Weight",
+   "en": "It's bad — and I'm staying right here until it isn't."
+  },
+  {
+   "anchor": "Plan",
+   "zone": "Weight",
+   "en": "The damage is real. So is the plan to fix it — starting today."
+  }
+ ],
+ "mnemo": "После сбоя в приложении ты не пытаешься minimize — преуменьшить — проблему. На большом экране открываешь список affected — затронутых — клиентов. Убираешь красивую презентацию: сейчас не время для performance — спектакля. В журнале ошибок красным видно failure — сбой, и ты оставляешь его на экране. Говоришь команде: это случилось на моей watch — вахте. Потом отмечаешь scope — масштаб: какие регионы, какие платежи, какие часы. У доски делишь fix — исправление — на три шага. Не уходишь после первой фразы, а staying — остаёшься — в комнате с инженерами. В конце отправляешь клиентам короткий plan — план — с временем следующего обновления."
+}

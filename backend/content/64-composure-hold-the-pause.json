@@ -1,0 +1,60 @@
+{
+ "slug": "composure-7",
+ "title": "Держать паузу под напором",
+ "theme": "От тебя требуют ответа сейчас — не дать себя поторопить, взять паузу, назвать когда ответишь; пауза — это вес, а не слабость",
+ "subtitle": "Блиц-пауза",
+ "section": "composure",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Beat",
+   "zone": "Warm",
+   "en": "Give me a beat — I want to answer that well, not fast."
+  },
+  {
+   "anchor": "Chew",
+   "zone": "Warm",
+   "en": "Let me chew on that overnight."
+  },
+  {
+   "anchor": "Hour",
+   "zone": "Warm",
+   "en": "Give me an hour and you'll get a real answer instead of a guess."
+  },
+  {
+   "anchor": "Hallway",
+   "zone": "Backbone",
+   "en": "A decision this big doesn't get made in a hallway."
+  },
+  {
+   "anchor": "Clear",
+   "zone": "Backbone",
+   "en": "I'll give you a clear answer by end of day — not a minute sooner."
+  },
+  {
+   "anchor": "Space",
+   "zone": "Backbone",
+   "en": "Pressure won't make the decision better — a little space will."
+  },
+  {
+   "anchor": "Rushing",
+   "zone": "Weight",
+   "en": "Rushing this helps nobody."
+  },
+  {
+   "anchor": "Deadline",
+   "zone": "Weight",
+   "en": "The deadline's real, but so is the cost of getting this wrong."
+  },
+  {
+   "anchor": "Stalling",
+   "zone": "Weight",
+   "en": "I'm not stalling — I'm making sure we get it right."
+  }
+ ],
+ "mnemo": "В коридоре после встречи тебя просят подписать решение прямо сейчас. Ты берёшь beat — паузу — и не достаёшь ручку. Говоришь, что должен chew — обдумать — цифры, а не ставить подпись на ходу. Просишь один hour — час — и показываешь на переговорку. Такое решение не принимают в hallway — коридоре между дверями. В комнате освобождаешь clear — чистое — место на столе и раскладываешь документы. Берёшь space — пространство — для нормального ответа. Да, все rushing — торопятся, и ты это видишь. На календаре есть deadline — срок, но это не повод ошибиться. Через час возвращаешься: это не stalling — затягивание, а нормальная проверка."
+}

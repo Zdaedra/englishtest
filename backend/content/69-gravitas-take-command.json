@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-1",
+ "title": "Взять командование, когда всё горит",
+ "theme": "Кризис разворачивается сейчас, паника — решительно взять руль: заземлить, раздать приказы, дать единый центр; разберёмся потом",
+ "subtitle": "Крыша в шторм",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Breath",
+   "zone": "Warm",
+   "en": "Everyone, look at me. Deep breath. Now let's move."
+  },
+  {
+   "anchor": "Hold",
+   "zone": "Warm",
+   "en": "Everybody hold steady — I've got this."
+  },
+  {
+   "anchor": "Solo",
+   "zone": "Warm",
+   "en": "Stay in pairs, stay in touch — nobody goes solo on this."
+  },
+  {
+   "anchor": "Jobs",
+   "zone": "Backbone",
+   "en": "Names and jobs: you on comms, you on the floor, me on the call."
+  },
+  {
+   "anchor": "Priority",
+   "zone": "Backbone",
+   "en": "Priority one is safety, two is containment — everything else waits."
+  },
+  {
+   "anchor": "Drop",
+   "zone": "Backbone",
+   "en": "Drop everything else — this is the only thing that exists right now."
+  },
+  {
+   "anchor": "Command",
+   "zone": "Weight",
+   "en": "I'm taking command until this is stable — so we don't trip over each other."
+  },
+  {
+   "anchor": "Signal",
+   "zone": "Weight",
+   "en": "We move together, on my signal."
+  },
+  {
+   "anchor": "Later",
+   "zone": "Weight",
+   "en": "We sort the why later — right now, you execute."
+  }
+ ],
+ "mnemo": "В кафе внезапно гаснет свет, и зал начинает шуметь. Ты делаешь один breath — вдох — сам и просишь команду сделать то же. Первым делом hold — удерживаешь — вход свободным, чтобы никто не толпился у двери. Говоришь: никто solo — один — не бежит в подсобку. Быстро раздаёшь jobs — задачи: свечи, касса, гости, кухня. На стойке пишешь priority — приоритет: безопасность, потом заказы. Просишь drop — отложить — новые блюда, пока кухня не видит нормально. Берёшь command — управление — на себя у стойки. Когда фонари готовы, даёшь signal — сигнал — открывать двери на воздух. Разбор будет later — позже, сейчас все спокойно выводят гостей."
+}

@@ -1,0 +1,60 @@
+{
+ "slug": "gravitas-8",
+ "title": "Остановить опасную эскалацию словом",
+ "theme": "Разгоняется опасное/необратимое — одним весомым словом нажать на тормоз, заморозить момент, взять стоп на себя",
+ "subtitle": "Красный флаг",
+ "section": "gravitas",
+ "zones": [
+  "Warm",
+  "Backbone",
+  "Weight"
+ ],
+ "phrases": [
+  {
+   "anchor": "Temperature",
+   "zone": "Warm",
+   "en": "Hold on — let's bring the temperature down first."
+  },
+  {
+   "anchor": "Win",
+   "zone": "Warm",
+   "en": "Take a breath — nobody needs to win the next ten seconds."
+  },
+  {
+   "anchor": "Later",
+   "zone": "Warm",
+   "en": "I'm stepping in because I don't want anyone paying for this later."
+  },
+  {
+   "anchor": "Winding",
+   "zone": "Backbone",
+   "en": "We're winding each other up, not deciding anything."
+  },
+  {
+   "anchor": "Watch",
+   "zone": "Backbone",
+   "en": "Nobody makes a permanent call on adrenaline — not on my watch."
+  },
+  {
+   "anchor": "Undo",
+   "zone": "Backbone",
+   "en": "Whatever we decide, let's not make it something we can't undo."
+  },
+  {
+   "anchor": "Stop",
+   "zone": "Weight",
+   "en": "Stop. Not under these conditions."
+  },
+  {
+   "anchor": "Blame",
+   "zone": "Weight",
+   "en": "Blame me for the delay later — right now we stop."
+  },
+  {
+   "anchor": "Temporary",
+   "zone": "Weight",
+   "en": "Let's not do permanent damage over a temporary fight."
+  }
+ ],
+ "mnemo": "На складе команда уже готова отгрузить спорную партию, и temperature — накал — растёт. На табло продаж мигает win — победа: заказ большой. Но возвраты придут later — позже, если сейчас отправить брак. Лента упаковки winding — накручивается — всё быстрее, люди торопятся. На adrenaline — адреналине — хочется нажать “send”. Ты говоришь: не на моей watch — вахте. Если уйдёт не тот товар, это не undo — не откатить — одним письмом. Ты нажимаешь stop — стоп — на линии. Берёшь blame — ответственность — за задержку на себя. И ставишь temporary — временную — блокировку партии до проверки."
+}

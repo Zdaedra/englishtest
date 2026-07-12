@@ -22,20 +22,73 @@ class Batch(SQLModel, table=True):
     version: int = 1
     status: str = Field(default="draft")  # draft | approved
     source_text: str = ""
+    # Content i18n: {lang: value} for es/de/fr (ru is the base column above).
+    # Missing lang falls back to the base field. See app/localize.py.
+    title_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    subtitle_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    theme_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
     cover_path: Optional[str] = None  # URL path to AI-generated cover, e.g. /covers/<slug>.png
+    # Freemium: exactly one catalog batch is `is_free` — fully open to everyone
+    # (all phrases + mic/AI). Every other catalog batch needs a paid plan.
+    is_free: bool = Field(default=False)
+    # NULL = shared curated catalog (visible to everyone). Set = a user's private
+    # import (visible only to that user). Keeps client imports out of the catalog.
+    owner_id: Optional[int] = Field(default=None, foreign_key="user.id", index=True)
     created_at: datetime = Field(default_factory=_now)
     deleted_at: Optional[datetime] = None
+
+
+class BatchIntent(SQLModel, table=True):
+    """Conversational-move tag on a batch — the linked-entity system behind Live
+    relevance (единая система ходов: осадить, попросить, уточнить, расположить…).
+    Vocabulary = the fixed key set intents.INTENTS; a batch with NO rows serves
+    every move (universal — e.g. private imports). Rows are derived from OUR
+    content by `python -m app.intents` and re-syncable at any time.
+
+    source: "section" = derived from Batch.section (resynced on re-seed);
+            "llm"     = content-grounded classification (seed --llm);
+            "manual"  = curator's hand tag — the seeder NEVER touches these."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    batch_id: int = Field(foreign_key="batch.id", index=True)
+    intent: str = Field(index=True)
+    source: str = Field(default="section")
+    created_at: datetime = Field(default_factory=_now)
+
+
+class PhraseIntent(SQLModel, table=True):
+    """Conversational-move tag on a single PHRASE — the phrase-level relevance
+    axis behind Live mode (боевой режим). This is the authoritative signal: the
+    move a given line makes (расположить, повести, поддержать…), 1–3 per phrase.
+    Vocabulary = the fixed key set intents.INTENTS.
+
+    Battle picks by THIS, not the batch: filter_rows keeps phrases tagged with the
+    chosen move; a phrase with NO rows falls back to its batch's BatchIntent, then
+    to universal. Rows are seeded from the curated map (app/intents_curated.json,
+    keyed by slug+order_index) via `python -m app.intents` — re-syncable, and
+    (per CONTENT-GRAPH.md) MUST be re-authored whenever a phrase or its anchor is
+    replaced, since the move can shift with the wording.
+
+    source: "curated" = from the authored intents_curated.json (resynced on seed);
+            "manual"   = curator's hand tag — the seeder NEVER touches these."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    phrase_id: int = Field(foreign_key="phrase.id", index=True)
+    intent: str = Field(index=True)
+    source: str = Field(default="curated")
+    created_at: datetime = Field(default_factory=_now)
 
 
 class Zone(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
     title: str
+    title_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
     order_index: int = 0
     intensity_label: str = ""
 
 
 class Phrase(SQLModel, table=True):
+    """Shared curated content. ALL per-user state (mastery/SRS/swipe signals) lives
+    on UserPhraseStat — never here, so the library is the same for every account."""
     id: Optional[int] = Field(default=None, primary_key=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
     zone_id: Optional[int] = Field(default=None, foreign_key="zone.id")
@@ -43,15 +96,55 @@ class Phrase(SQLModel, table=True):
     anchor: str = ""
     phrase_en: str = ""
     gloss_ru: str = ""
+    # Active-recall prompt (LLM-generated, cached): a RU scene + the communicative
+    # task, shown on the card FRONT instead of an ambiguous English stimulus. The
+    # English phrase_en is revealed only after answering. See gen_context.py.
+    situation_ru: str = ""
+    task_ru: str = ""
+    # Content i18n: {lang: gloss} for es/de/fr (gloss_ru is the base).
+    gloss_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
     intensity_score: float = 0.0
     tags: list = Field(default_factory=list, sa_column=Column(JSON))
-    # SRS-lite status: new | shaky | familiar | automatic
-    srs_status: str = Field(default="new")
-    # Feedback-training rollup (Test B). EWMA of 0..10 scores; NULL until first attempt.
+
+
+class UserPhraseStat(SQLModel, table=True):
+    """Per-user, per-phrase learning state (one row per (user, phrase)). Replaces
+    the old columns on Phrase. avg_score = EWMA of spoken-recall (0..10);
+    self_ewma = EWMA of self-assessed swipes (1=knew); srs_status = SRS-lite."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+    phrase_id: int = Field(foreign_key="phrase.id", index=True)
+    batch_id: int = Field(foreign_key="batch.id", index=True)
+    srs_status: str = Field(default="new")  # new | shaky | familiar | automatic
     avg_score: Optional[float] = None
     attempts: int = 0
     last_score: Optional[int] = None
     last_seen_at: Optional[datetime] = None
+    self_ewma: Optional[float] = None
+    last_failed_at: Optional[datetime] = None
+    last_success_at: Optional[datetime] = None
+    # SM-2-lite spaced-repetition schedule (see app/srs.py). next_review_at is the
+    # due time the deck prioritizes; interval/ease/reps drive it and are seeded
+    # from avg_score the first time a phrase is scheduled (no cold-start reset).
+    interval_days: float = 0.0
+    ease: float = 2.3
+    reps: int = 0
+    next_review_at: Optional[datetime] = None
+    # EWMA of answer latency (ms). Gates "automatic": a phrase is only mastered
+    # when recalled both accurately AND fast (ACT-R automaticity). See app/srs.py.
+    latency_ewma_ms: Optional[float] = None
+    # How many times this phrase has been drilled (swipe or scored). Rotates the
+    # situational-cue variant so the learner cycles all of them, not one repeated.
+    shown_count: int = 0
+    # Live/Battle demand signal: the learner asked the suffleur for THIS line in a
+    # real conversation (didn't recall it themselves) — the truest "I need this"
+    # signal there is. Recorded on the top pick; NEVER touches avg_score/srs (no
+    # recall attempt was made). Lifts the phrase in the practice deck (app/routers/
+    # training.py _live_factor) and seeds the "moment of the day" surface. Creating
+    # this row for an "all"-scope phrase the user never studied pulls it into their
+    # arsenal — a real-world need becomes a study target.
+    live_requested_at: Optional[datetime] = None
+    live_request_count: int = 0
 
 
 class MnemoStory(SQLModel, table=True):
@@ -60,6 +153,10 @@ class MnemoStory(SQLModel, table=True):
     story_ru: str = ""
     # spans: [{anchor_id, phrase_id, start, end}]
     spans: list = Field(default_factory=list, sa_column=Column(JSON))
+    # Content i18n: per-language story text + recomputed spans (offsets differ per
+    # translation). {lang: "story…"} and {lang: [{anchor_id,phrase_id,start,end}]}.
+    story_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    spans_i18n: dict = Field(default_factory=dict, sa_column=Column(JSON))
 
 
 class ContextExample(SQLModel, table=True):
@@ -78,6 +175,47 @@ class ContextExample(SQLModel, table=True):
     created_at: datetime = Field(default_factory=_now)
 
 
+class CheckPhrase(SQLModel, table=True):
+    """Проверочные фразы — curated interlocutor cues attached to a single phrase
+    (one phrase -> many). LIVE and central: the training deck shows them as the
+    card stimulus (rotated by shown_count), and Live's semantic index embeds them
+    as the phrase's situational identity (app/embeddings.py). There is NO
+    autogenerator and no in-app writer — rows are authored straight into the prod
+    DB per CONTENT-GRAPH.md §4 (3191 rows as of 2026-07); `app.rephrase` DROPS a
+    phrase's cues when its text changes, and doctor check 7 stays red until they
+    are re-authored. `text` holds the cue; `lang` ru/en; `kind` e.g. stimulus."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    phrase_id: int = Field(foreign_key="phrase.id", index=True)
+    batch_id: int = Field(foreign_key="batch.id", index=True)
+    text: str = ""
+    lang: str = "ru"  # ru | en
+    kind: str = ""
+    order_index: int = 0
+    status: str = Field(default="draft")  # draft | approved
+    created_at: datetime = Field(default_factory=_now)
+
+
+class PhraseEmbedding(SQLModel, table=True):
+    """Semantic vector for ONE phrase — the Live-mode retrieval index
+    (app/embeddings.py). The embedded text is the phrase's SITUATIONAL identity:
+    phrase_en + anchor + gloss + situation/task + its approved CheckPhrase
+    triggers (реплики собеседника, вызывающие фразу) — so a dictated moment
+    matches the situations a line answers, not its wording.
+
+    vector = L2-normalized float32 little-endian bytes (cosine == dot product);
+    text_hash detects staleness after any content edit (rephrase/restory/cue
+    changes) and model/dim mismatches after an env model swap — `python -m
+    app.embeddings` re-embeds only what changed. Derived cache: safe to drop and
+    rebuild at any time; battle falls back to keyword retrieval while empty."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    phrase_id: int = Field(foreign_key="phrase.id", index=True)
+    model: str = ""
+    dim: int = 0
+    text_hash: str = ""
+    vector: bytes = b""
+    updated_at: datetime = Field(default_factory=_now)
+
+
 class AudioAsset(SQLModel, table=True):
     # Rich cache key: hash(text, voice, model, speed, format, normalization_version)
     hash: str = Field(primary_key=True)
@@ -94,6 +232,7 @@ class AudioAsset(SQLModel, table=True):
 
 class PlaybackSession(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=0, foreign_key="user.id", index=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
     mode: str = "recall"  # recall | listening | context
     order_mode: str = "ordered"  # ordered | zone_random | full_random
@@ -106,6 +245,7 @@ class PlaybackSession(SQLModel, table=True):
 
 class ReviewEvent(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=0, foreign_key="user.id", index=True)
     phrase_id: int = Field(foreign_key="phrase.id", index=True)
     event_type: str = ""  # recall | listening
     score: str = ""  # easy | slow | failed
@@ -116,6 +256,7 @@ class ReviewEvent(SQLModel, table=True):
 class PhraseAttempt(SQLModel, table=True):
     """One spoken-recall attempt on a single phrase (Test B, feedback training)."""
     id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=0, foreign_key="user.id", index=True)
     phrase_id: int = Field(foreign_key="phrase.id", index=True)
     score: int = 0  # 0..10
     transcript: str = ""  # what STT heard the learner say
@@ -127,6 +268,7 @@ class PhraseAttempt(SQLModel, table=True):
 class SequenceAttempt(SQLModel, table=True):
     """One spoken retelling of a whole mnemonic sequence (Test A, the exam)."""
     id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=0, foreign_key="user.id", index=True)
     batch_id: int = Field(foreign_key="batch.id", index=True)
     score: int = 0  # 0..10
     transcript: str = ""
@@ -135,6 +277,121 @@ class SequenceAttempt(SQLModel, table=True):
     via: str = ""  # llm | self
     latency_ms: Optional[int] = None
     created_at: datetime = Field(default_factory=_now)
+
+
+class User(SQLModel, table=True):
+    """A product account (commercial multi-user). Auth = email + PBKDF2 password
+    hash; access via a signed session cookie. `plan` gates paid AI features."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    email: str = Field(index=True, unique=True)
+    password_hash: str
+    name: str = ""
+    plan: str = Field(default="free")  # free | core | ai
+    is_admin: bool = Field(default=False)  # owner: may curate the shared catalog
+    # Mandatory email verification: a fresh signup is False until the user clicks
+    # the magic link emailed to them; existing accounts are grandfathered True by
+    # the db migration so they're never locked out. See app/mail.py + the auth gate.
+    email_verified: bool = Field(default=False)
+    ui_lang: Optional[str] = Field(default=None)  # UI language pref: ru | es | de | fr
+    # Cover-art protagonist preference (D3, #24): male (v2 back-to-camera) |
+    # female (v3 back-to-camera) | mixed (alternate by batch). Default male so
+    # existing accounts keep the covers they already see until they choose.
+    hero_gender: str = Field(default="male")
+    # Learning profile (goals/strategy/plan mode/manual set/league result +
+    # onboarding marks) — the client-authoritative blob lib/profile.ts syncs so
+    # the trajectory is a property of the ACCOUNT, not of one device's
+    # localStorage (shared-device leak + lost-on-reinstall fix). Last write wins;
+    # the server only stores and echoes it in /me.
+    learn_profile: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    # Billing (Apple IAP). plan_source: manual | apple. plan_expires_at: when an
+    # auto-renew sub lapses (NULL = no expiry / manual). apple_original_tx_id ties
+    # the account to its App Store subscription across renewals.
+    plan_source: str = Field(default="manual")
+    plan_expires_at: Optional[datetime] = Field(default=None)
+    apple_original_tx_id: Optional[str] = Field(default=None, index=True)
+    created_at: datetime = Field(default_factory=_now)
+
+
+class BatchProgress(SQLModel, table=True):
+    """Server-side per-batch learning state (single-user). Source of truth for the
+    swipe-trainer's 'active in-progress batches' (activated AND not l3_passed) and
+    the learning path. Mirrors the client localStorage ee-progress-* it replaces."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=0, foreign_key="user.id", index=True)
+    batch_id: int = Field(foreign_key="batch.id", index=True)
+    # Two axes (long-press batch management): on_path = curated learning trajectory
+    # (drawn on the Learning map); activated = practice-deck rotation. Invariant:
+    # activated ⊆ on_path (you can only drill what's on your path).
+    on_path: bool = False
+    on_path_at: Optional[datetime] = None
+    # Manual queue order across the whole plan (drag on the Learning map). NULL =
+    # follow the computed domain apportionment; synced so it survives devices.
+    path_rank: Optional[int] = None
+    activated: bool = False
+    activated_at: Optional[datetime] = None
+    l1_listened: bool = False
+    l1_retold: bool = False
+    l1_best_seq: Optional[float] = None
+    l3_s1: bool = False
+    l3_s2: bool = False
+    l3_passed: bool = False  # batch completed
+    completed_at: Optional[datetime] = None
+    updated_at: datetime = Field(default_factory=_now)
+
+
+class TrainingEvent(SQLModel, table=True):
+    """One swipe-deck interaction (both modes). Raw event log for training stats;
+    per-phrase rollups live on Phrase. Audio is never stored (only the transcript),
+    matching PhraseAttempt's privacy/storage stance."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=0, foreign_key="user.id", index=True)
+    session_id: str = Field(index=True)
+    batch_id: int = Field(foreign_key="batch.id", index=True)
+    phrase_id: int = Field(foreign_key="phrase.id", index=True)
+    training_mode: str = ""  # swipe | answer
+    swipe_direction: Optional[str] = None  # left (don't know) | right (know)
+    transcript: str = ""  # answer mode
+    ai_score: Optional[int] = None  # 0..10 (answer mode)
+    ai_feedback: str = ""  # short LLM summary (answer mode)
+    manual_success: Optional[bool] = None  # Success/Not Success confirm, or self-swipe
+    response_time_ms: Optional[int] = None
+    attempt_number: int = 1
+    shown_at: datetime = Field(default_factory=_now)
+    created_at: datetime = Field(default_factory=_now)
+
+
+class ConsentRecord(SQLModel, table=True):
+    """Append-only audit of a user's consents (privacy/terms acceptance, voice→AI
+    processing, withdrawals). Each event is a NEW row — never updated — so the full
+    history ("granted on X, withdrew on Y") is provable to a regulator."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+    kind: str = ""              # voice_ai | privacy_terms | withdraw_voice_ai
+    granted: bool = True
+    policy_version: str = ""    # PRIVACY/TERMS version at consent time ("" for voice)
+    user_agent: str = ""        # for audit
+    created_at: datetime = Field(default_factory=_now)
+
+
+class DeletionLog(SQLModel, table=True):
+    """Non-PII proof that an account was deleted (GDPR/CCPA want evidence, but we
+    must not retain the deleted user's personal data — so store only the id + when)."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    deleted_user_id: int = 0
+    transcripts_purged: int = 0
+    deleted_at: datetime = Field(default_factory=_now)
+
+
+class UsageLedger(SQLModel, table=True):
+    """Per-user, per-calendar-month accrued estimated AI cost (micro-USD). The
+    profitability guardrail — `usage.accrue` adds to it on every billable AI call,
+    and the daily-cap check also blocks paid AI once the month crosses the plan's
+    cost cap. Not PII; safe to keep."""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+    period: int = Field(index=True)   # yyyymm, e.g. 202606
+    micros: int = 0                   # accrued estimated cost in micro-USD
+    updated_at: datetime = Field(default_factory=_now)
 
 
 class Setting(SQLModel, table=True):

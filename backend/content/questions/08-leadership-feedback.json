@@ -1,0 +1,208 @@
+{
+  "slug": "leadership-feedback",
+  "batch_file": "08-leadership-feedback.json",
+  "stub": true,
+  "note": "Auto-generated placeholder questions. Replace with real situational prompts (consilium) later.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Gentle». Ответь одной уместной фразой.",
+      "intent": "candid",
+      "accept_anchors": [
+        "Candid"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    },
+    {
+      "id": "q2",
+      "prompt_ru": "Момент в разговоре (Прямая обратная связь — от мягкого захода к вы…). Дай реплику в регистре «Gentle».",
+      "intent": "place",
+      "accept_anchors": [
+        "Place"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    },
+    {
+      "id": "q3",
+      "prompt_ru": "Ситуация требует ответа в тоне «Gentle». Скажи фразу, которая здесь уместна.",
+      "intent": "wrong",
+      "accept_anchors": [
+        "Wrong"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    },
+    {
+      "id": "q4",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Honest». Произнеси подходящую фразу.",
+      "intent": "short",
+      "accept_anchors": [
+        "Short"
+      ],
+      "zone": "Honest",
+      "difficulty": 1
+    },
+    {
+      "id": "q5",
+      "prompt_ru": "Разговор идёт к развязке (Прямая обратная связь — от мягкого захода к вы…). Вступи в тоне «Honest» одной фразой.",
+      "intent": "tripped",
+      "accept_anchors": [
+        "Tripped"
+      ],
+      "zone": "Honest",
+      "difficulty": 1
+    },
+    {
+      "id": "q6",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Honest»).",
+      "intent": "pattern",
+      "accept_anchors": [
+        "Pattern"
+      ],
+      "zone": "Honest",
+      "difficulty": 1
+    },
+    {
+      "id": "q7",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Pointed». Ответь одной уместной фразой.",
+      "intent": "mark",
+      "accept_anchors": [
+        "Mark"
+      ],
+      "zone": "Pointed",
+      "difficulty": 1
+    },
+    {
+      "id": "q8",
+      "prompt_ru": "Момент в разговоре (Прямая обратная связь — от мягкого захода к вы…). Дай реплику в регистре «Pointed».",
+      "intent": "tighten",
+      "accept_anchors": [
+        "Tighten"
+      ],
+      "zone": "Pointed",
+      "difficulty": 1
+    },
+    {
+      "id": "q9",
+      "prompt_ru": "Ситуация требует ответа в тоне «Pointed». Скажи фразу, которая здесь уместна.",
+      "intent": "bar",
+      "accept_anchors": [
+        "Bar"
+      ],
+      "zone": "Pointed",
+      "difficulty": 1
+    },
+    {
+      "id": "q10",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Gentle». Произнеси подходящую фразу.",
+      "intent": "candid",
+      "accept_anchors": [
+        "Candid"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    },
+    {
+      "id": "q11",
+      "prompt_ru": "Разговор идёт к развязке (Прямая обратная связь — от мягкого захода к вы…). Вступи в тоне «Gentle» одной фразой.",
+      "intent": "place",
+      "accept_anchors": [
+        "Place"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    },
+    {
+      "id": "q12",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Gentle»).",
+      "intent": "wrong",
+      "accept_anchors": [
+        "Wrong"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    },
+    {
+      "id": "q13",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Honest». Ответь одной уместной фразой.",
+      "intent": "short",
+      "accept_anchors": [
+        "Short"
+      ],
+      "zone": "Honest",
+      "difficulty": 1
+    },
+    {
+      "id": "q14",
+      "prompt_ru": "Момент в разговоре (Прямая обратная связь — от мягкого захода к вы…). Дай реплику в регистре «Honest».",
+      "intent": "tripped",
+      "accept_anchors": [
+        "Tripped"
+      ],
+      "zone": "Honest",
+      "difficulty": 1
+    },
+    {
+      "id": "q15",
+      "prompt_ru": "Ситуация требует ответа в тоне «Honest». Скажи фразу, которая здесь уместна.",
+      "intent": "pattern",
+      "accept_anchors": [
+        "Pattern"
+      ],
+      "zone": "Honest",
+      "difficulty": 1
+    },
+    {
+      "id": "q16",
+      "prompt_ru": "Тебе нужно отреагировать — регистр «Pointed». Произнеси подходящую фразу.",
+      "intent": "mark",
+      "accept_anchors": [
+        "Mark"
+      ],
+      "zone": "Pointed",
+      "difficulty": 1
+    },
+    {
+      "id": "q17",
+      "prompt_ru": "Разговор идёт к развязке (Прямая обратная связь — от мягкого захода к вы…). Вступи в тоне «Pointed» одной фразой.",
+      "intent": "tighten",
+      "accept_anchors": [
+        "Tighten"
+      ],
+      "zone": "Pointed",
+      "difficulty": 1
+    },
+    {
+      "id": "q18",
+      "prompt_ru": "Подбери и скажи уместную реплику для этого момента (тон: «Pointed»).",
+      "intent": "bar",
+      "accept_anchors": [
+        "Bar"
+      ],
+      "zone": "Pointed",
+      "difficulty": 1
+    },
+    {
+      "id": "q19",
+      "prompt_ru": "Собеседник только что высказался — нужна твоя реакция в тоне «Gentle». Ответь одной уместной фразой.",
+      "intent": "candid",
+      "accept_anchors": [
+        "Candid"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    },
+    {
+      "id": "q20",
+      "prompt_ru": "Момент в разговоре (Прямая обратная связь — от мягкого захода к вы…). Дай реплику в регистре «Gentle».",
+      "intent": "place",
+      "accept_anchors": [
+        "Place"
+      ],
+      "zone": "Gentle",
+      "difficulty": 1
+    }
+  ]
+}
