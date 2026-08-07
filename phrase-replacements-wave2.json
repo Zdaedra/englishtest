@@ -1,0 +1,652 @@
+{
+ "replacements": {
+  "batch-3/Elephant": {
+   "order_index": 7,
+   "new_en": "What's the elephant in the room?",
+   "new_anchor": "elephant",
+   "story_change": false,
+   "gpt": "Can we name what's not being said here?",
+   "comment": "AI speak"
+  },
+  "charisma-4/Quiet": {
+   "order_index": 0,
+   "new_en": "We haven't heard from you yet? What's your take on the situation?",
+   "new_anchor": "situation",
+   "story_change": true,
+   "gpt": "We haven't heard from this end of the table yet—what's your take?",
+   "comment": "The whole sentence is way too familiar."
+  },
+  "charisma-4/Drop": {
+   "order_index": 6,
+   "new_en": "We've hit some surface issues. Let's take a deeper dive.",
+   "new_anchor": "surface",
+   "story_change": true,
+   "gpt": "Let's move past the pleasantries and get to the real issue.",
+   "comment": "A CEO isn't going to say that. Sounds like AI."
+  },
+  "charisma-4/Honest": {
+   "order_index": 7,
+   "new_en": "Polished and safe answers won't get us to where we need to go. I need some unvarnished perspective.",
+   "new_anchor": "unvarnished",
+   "story_change": true,
+   "gpt": "That's the safe answer. What's your honest read?",
+   "comment": "Too familiar and blunt."
+  },
+  "charisma-8/Night": {
+   "order_index": 1,
+   "new_en": "It's getting late and I've got a full day tomorrow.",
+   "new_anchor": "tomorrow",
+   "story_change": true,
+   "gpt": "I could keep talking, but I should let you get back to your evening.",
+   "comment": "Hard pass."
+  },
+  "charisma-9/Heard": {
+   "order_index": 1,
+   "new_en": "We've covered that ground already. What's next?",
+   "new_anchor": "covered",
+   "story_change": true,
+   "gpt": "Well, that's out there now. Anyway, you were saying?",
+   "comment": "mean-spirited."
+  },
+  "charisma-9/Charming": {
+   "order_index": 2,
+   "new_en": "I think we can all agree that on the surface, that sounds good but I sense there's more to it.",
+   "new_anchor": "surface",
+   "story_change": true,
+   "gpt": "I'm choosing to call that charming.",
+   "comment": "familiar and not leader like."
+  },
+  "charisma-9/Dignity": {
+   "order_index": 3,
+   "new_en": "Let's circle back on that. You were saying?",
+   "new_anchor": "circle",
+   "story_change": true,
+   "gpt": "Let's move past my graceful moment. You were saying?",
+   "comment": "Simply out of bounds for a leader."
+  },
+  "charisma-9/Pretend": {
+   "order_index": 4,
+   "new_en": "Let's reset and start fresh.",
+   "new_anchor": "reset",
+   "story_change": true,
+   "gpt": "Let's reset and try that again.",
+   "comment": "Snarky and not constructive"
+  },
+  "charisma-9/Trust": {
+   "order_index": 7,
+   "new_en": "We've established a level of trust which is the foundation for the work ahead.",
+   "new_anchor": "trust",
+   "story_change": false,
+   "gpt": "Well, at least you know I'm not overly rehearsed.",
+   "comment": "No CEO would say that."
+  },
+  "charisma-10/Record": {
+   "order_index": 7,
+   "new_en": "When you two build something, please has a strong metric in place and benchmark the current situation.",
+   "new_anchor": "something",
+   "story_change": true,
+   "gpt": "When you two build something together, I'll be glad I made the introduction.",
+   "comment": "Not something a serious CEO would say. It's we, not me."
+  },
+  "charisma-11/Smiled": {
+   "order_index": 0,
+   "new_en": "Your name came up last night in a positive light.",
+   "new_anchor": "positive",
+   "story_change": true,
+   "gpt": "Your name came up last night, and it made me smile.",
+   "comment": "Not leader like."
+  },
+  "charisma-3/Ahead": {
+   "order_index": 8,
+   "new_en": "What are you seeing that the rest of us are missing?",
+   "new_anchor": "missing",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Not something a CEO would say"
+  },
+  "charisma-6/Hand": {
+   "order_index": 6,
+   "new_en": "Good for you. You saved the best for last.",
+   "new_anchor": "saved",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Too familiar"
+  },
+  "charisma-8/Trouble": {
+   "order_index": 6,
+   "new_en": "Looking forward to working together.",
+   "new_anchor": "together",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Context matters but too familiar."
+  },
+  "batch/Run": {
+   "order_index": 1,
+   "new_en": "Take me through how you got to that number.",
+   "new_anchor": "through",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Take me through...not run me through"
+  },
+  "charisma-5/Badly": {
+   "order_index": 1,
+   "new_en": "This story is instructive despite the difficult beginning.",
+   "new_anchor": "instructive",
+   "story_change": true,
+   "gpt": "",
+   "comment": "too colloquial"
+  },
+  "charisma-6/Generous": {
+   "order_index": 1,
+   "new_en": "You read people well. That's skill not everyone has.",
+   "new_anchor": "everyone",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Feels like AI."
+  },
+  "charisma-6/Rehearse": {
+   "order_index": 2,
+   "new_en": "Nicely done. You've come prepared.",
+   "new_anchor": "prepared",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Too snarky"
+  },
+  "charisma-6/Careful": {
+   "order_index": 3,
+   "new_en": "You've got a good sense of humor.",
+   "new_anchor": "sense",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Mean-spirited. Not leader like."
+  },
+  "charisma-6/Laugh": {
+   "order_index": 4,
+   "new_en": "Don't mind me. Keep going.",
+   "new_anchor": "going",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Might be ok behind closed doors. Not in front of others."
+  },
+  "charisma-6/Landing": {
+   "order_index": 5,
+   "new_en": "Bold opening. I'm ready to hear the rest.",
+   "new_anchor": "opening",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Snarky and mean,"
+  },
+  "pitch-2/Hole": {
+   "order_index": 1,
+   "new_en": "There's a disparity in how the market is approaching this today.",
+   "new_anchor": "approaching",
+   "story_change": true,
+   "gpt": "",
+   "comment": "The sentence doesn't make sense."
+  },
+  "pressure-1/Feet": {
+   "order_index": 1,
+   "new_en": "I'm thinking out loud.",
+   "new_anchor": "thinking",
+   "story_change": true,
+   "gpt": "",
+   "comment": "More apt to say, I'm thinking out loud...not on my feet."
+  },
+  "charisma-5/Stop": {
+   "order_index": 0,
+   "new_en": "I'm going to risk repeating myself but the learning is too important.",
+   "new_anchor": "repeating",
+   "story_change": true,
+   "gpt": "",
+   "comment": "too familiar"
+  },
+  "flirt-9/Cliffhanger": {
+   "order_index": 0,
+   "new_en": "Some things are better left unsaid.",
+   "new_anchor": "things",
+   "story_change": true,
+   "gpt": "",
+   "comment": "cliffhanger is misapplied here."
+  },
+  "batch/Angle": {
+   "order_index": 2,
+   "new_en": "I'd like to offer a different perspective.",
+   "new_anchor": "perspective",
+   "story_change": true,
+   "gpt": "",
+   "comment": "not angle"
+  },
+  "batch-3/Agenda": {
+   "order_index": 5,
+   "new_en": "You probably think I've got my mind made up.",
+   "new_anchor": "probably",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Not reflective of a leader"
+  },
+  "pitch-1/Fire": {
+   "order_index": 0,
+   "new_en": "Imagine, it's Monday morning and your day starts with a fire drill.",
+   "new_anchor": "fire",
+   "story_change": false,
+   "gpt": "",
+   "comment": "CEOs don't say \"picture this.\""
+  },
+  "requests-1/Heads": {
+   "order_index": 0,
+   "new_en": "I don't want you to be blindsided. We've got a problem.",
+   "new_anchor": "blindsided",
+   "story_change": true,
+   "gpt": "",
+   "comment": "two phrases don't go together"
+  },
+  "leadership-2/Lead": {
+   "order_index": 2,
+   "new_en": "I need you to *take* the lead on this.",
+   "new_anchor": "lead",
+   "story_change": false,
+   "gpt": "",
+   "comment": "Not \"lead on this\""
+  },
+  "charisma-1/Dancing": {
+   "order_index": 7,
+   "new_en": "Can we talk about the elephant in the room?",
+   "new_anchor": "elephant",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Dancing around = wrong parlance"
+  },
+  "charisma-2/Forget": {
+   "order_index": 7,
+   "new_en": "What's on our agenda?",
+   "new_anchor": "agenda",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Forget small talk is too brash"
+  },
+  "charisma-4/Loop": {
+   "order_index": 5,
+   "new_en": "Let's take a pause and loop back to David's point.",
+   "new_anchor": "loop",
+   "story_change": false,
+   "gpt": "",
+   "comment": "too familiar"
+  },
+  "batch-3/Kill": {
+   "order_index": 6,
+   "new_en": "My inclination is to punt the whole thing. Tell me why I shouldn't.",
+   "new_anchor": "inclination",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Be careful with kill. See trigger."
+  },
+  "repair-1/Trust": {
+   "order_index": 6,
+   "new_en": "Let's reset.",
+   "new_anchor": "reset",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Car Salesman"
+  },
+  "charisma-2/Crash": {
+   "order_index": 2,
+   "new_en": "This looks like this is the place to be. Mind if I join?",
+   "new_anchor": "looks",
+   "story_change": true,
+   "gpt": "",
+   "comment": "fun and crash. Not words a CEO would use."
+  },
+  "charisma-4/Hog": {
+   "order_index": 2,
+   "new_en": "I've talked enough. I want to hear other points of view.",
+   "new_anchor": "talked",
+   "story_change": true,
+   "gpt": "",
+   "comment": "too familiar"
+  },
+  "charisma-4/Around": {
+   "order_index": 3,
+   "new_en": "I want to hear from everyone. Let's go around the table. Each person share your point of view but in just one sentence.",
+   "new_anchor": "around",
+   "story_change": false,
+   "gpt": "",
+   "comment": "not something a leader would say"
+  },
+  "charisma-4/Park": {
+   "order_index": 4,
+   "new_en": "Let's park that and come back to it.",
+   "new_anchor": "park",
+   "story_change": false,
+   "gpt": "",
+   "comment": "keep it simple."
+  },
+  "charisma-5/Anyway": {
+   "order_index": 8,
+   "new_en": "Ok. New topic.",
+   "new_anchor": "topic",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Too colloquial"
+  },
+  "charisma-8/Calendar": {
+   "order_index": 4,
+   "new_en": "Let's get something on the calendar to lock this in.",
+   "new_anchor": "calendar",
+   "story_change": false,
+   "gpt": "",
+   "comment": "the pretend will and don't isn't something a leader says."
+  },
+  "charisma-9/Head": {
+   "order_index": 0,
+   "new_en": "I didn't anticipate that response.",
+   "new_anchor": "anticipate",
+   "story_change": true,
+   "gpt": "",
+   "comment": "too revealing."
+  },
+  "charisma-9/Formal": {
+   "order_index": 6,
+   "new_en": "With formal lines of communication officially opened, let's roll up our sleeves and dig in a little deeper.",
+   "new_anchor": "formal",
+   "story_change": false,
+   "gpt": "",
+   "comment": "This implies a level of deception."
+  },
+  "composure-1/Bait": {
+   "order_index": 0,
+   "new_en": "I'm know what you're doing and appreciate it.",
+   "new_anchor": "appreciate",
+   "story_change": true,
+   "gpt": "",
+   "comment": "AI speak. Not human speak."
+  },
+  "composure-3/Directly": {
+   "order_index": 3,
+   "new_en": "If there's feedback, give it to me directly.",
+   "new_anchor": "directly",
+   "story_change": false,
+   "gpt": "",
+   "comment": "drop theatrically"
+  },
+  "composure-10/Comfortable": {
+   "order_index": 1,
+   "new_en": "I'm not sure.",
+   "new_anchor": "sure",
+   "story_change": true,
+   "gpt": "",
+   "comment": "I'm not sure is plenty. The rest isn't a leader would say."
+  },
+  "stage-4/present": {
+   "order_index": 8,
+   "new_en": "We're not seeking perfection here. Instead, we're sitting with a problem, together.",
+   "new_anchor": "perfection",
+   "story_change": true,
+   "gpt": "",
+   "comment": "a leader isn't going to blatantly admit imperfection."
+  },
+  "batch-3/Off": {
+   "order_index": 4,
+   "new_en": "Something's not lining up - take me through your thought process",
+   "new_anchor": "through",
+   "story_change": true,
+   "gpt": "",
+   "comment": "CEOs don't need to figure out stuff"
+  },
+  "pitch-1/Quick": {
+   "order_index": 1,
+   "new_en": "I'll need a moment to process this.",
+   "new_anchor": "process",
+   "story_change": true,
+   "gpt": "",
+   "comment": "CEOs don't ask for 30 sec to say something"
+  },
+  "pitch-1/Bet": {
+   "order_index": 5,
+   "new_en": "My hunch is you know what that feels like.",
+   "new_anchor": "hunch",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Too salesy"
+  },
+  "requests-1/Buck": {
+   "order_index": 5,
+   "new_en": "I'm accountable",
+   "new_anchor": "accountable",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Antiquated"
+  },
+  "repair-1/Overstepped": {
+   "order_index": 1,
+   "new_en": "I overstepped.",
+   "new_anchor": "overstepped",
+   "story_change": false,
+   "gpt": "",
+   "comment": "Cut \"and I know it.\""
+  },
+  "leadership-2/Charge": {
+   "order_index": 1,
+   "new_en": "You're accountable for this now.",
+   "new_anchor": "accountable",
+   "story_change": true,
+   "gpt": "",
+   "comment": "A little off"
+  },
+  "leadership-2/Call": {
+   "order_index": 3,
+   "new_en": "It's your call.",
+   "new_anchor": "call",
+   "story_change": false,
+   "gpt": "",
+   "comment": "cut \"from here\""
+  },
+  "charisma-5/Picture": {
+   "order_index": 2,
+   "new_en": "I'll set the scene. It's late at night. I'm at a loss for an answer. That's how this change of perspective began.",
+   "new_anchor": "perspective",
+   "story_change": true,
+   "gpt": "",
+   "comment": ""
+  },
+  "charisma-5/Mind": {
+   "order_index": 3,
+   "new_en": "Keep that thought. We'll come back to it in a minute.",
+   "new_anchor": "thought",
+   "story_change": true,
+   "gpt": "",
+   "comment": ""
+  },
+  "charisma-8/Next": {
+   "order_index": 8,
+   "new_en": "Next time, let's take a deeper dive.",
+   "new_anchor": "Next",
+   "story_change": false,
+   "gpt": "",
+   "comment": "too brash."
+  },
+  "charisma-11/Free": {
+   "order_index": 4,
+   "new_en": "Apology accepted. Now, let's focus on a good time to regroup.",
+   "new_anchor": "accepted",
+   "story_change": true,
+   "gpt": "",
+   "comment": "too brash"
+  },
+  "composure-11/Handle": {
+   "order_index": 8,
+   "new_en": "how we handle this will reveal more about our character than the loss itself.",
+   "new_anchor": "handle",
+   "story_change": false,
+   "gpt": "",
+   "comment": "Too I/me focused. Adopt a we focus with accountability."
+  },
+  "gravitas-6/Outrank": {
+   "order_index": 8,
+   "new_en": "Part of my job is to speak truth to power. That's what I'm doing right now.",
+   "new_anchor": "speak",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Not something a leader would say. Feels like AI speak."
+  },
+  "stage-6/derailed": {
+   "order_index": 5,
+   "new_en": "help me remember where we left off.",
+   "new_anchor": "remember",
+   "story_change": true,
+   "gpt": "",
+   "comment": "a leader isn't going to say that about him or herself"
+  },
+  "stage-11/safety": {
+   "order_index": 6,
+   "new_en": "No safety net today? Let's see how I do and then assess.",
+   "new_anchor": "safety",
+   "story_change": false,
+   "gpt": "",
+   "comment": "Leaders mitigate risks more than take them."
+  },
+  "repair-1/Slate": {
+   "order_index": 7,
+   "new_en": "Let's reset.",
+   "new_anchor": "reset",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Sounds like AI"
+  },
+  "repair-1/Track": {
+   "order_index": 8,
+   "new_en": "Let's make sure we're in alignment.",
+   "new_anchor": "alignment",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Wrong parlance"
+  },
+  "charisma-3/Obsessed": {
+   "order_index": 2,
+   "new_en": "Where are you focusing your attention right now?",
+   "new_anchor": "attention",
+   "story_change": true,
+   "gpt": "",
+   "comment": "a little obsessed with = wrong parlance"
+  },
+  "stage-11/deck": {
+   "order_index": 5,
+   "new_en": "I don't need the deck but I do need notes to be at my best.",
+   "new_anchor": "deck",
+   "story_change": false,
+   "gpt": "",
+   "comment": "Leaders know not to wing it."
+  },
+  "pitch-3/Ask": {
+   "order_index": 3,
+   "new_en": "So, here's the ask.",
+   "new_anchor": "ask",
+   "story_change": false,
+   "gpt": "",
+   "comment": "drop plainly."
+  },
+  "pitch-3/Skin": {
+   "order_index": 6,
+   "new_en": "I've got skin in the game.",
+   "new_anchor": "skin",
+   "story_change": false,
+   "gpt": "",
+   "comment": "stop at skin in the game."
+  },
+  "negotiation-2/Dotted": {
+   "order_index": 6,
+   "new_en": "Are we aligned?",
+   "new_anchor": "aligned",
+   "story_change": true,
+   "gpt": "",
+   "comment": "no one says dotted line"
+  },
+  "repair-1/Fault": {
+   "order_index": 2,
+   "new_en": "I take accountability for that.",
+   "new_anchor": "accountability",
+   "story_change": true,
+   "gpt": "",
+   "comment": "I wouldn't say this is my fault here."
+  },
+  "repair-1/Watch": {
+   "order_index": 5,
+   "new_en": "My team brought a demo I think you'll love.",
+   "new_anchor": "brought",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Too much bravado."
+  },
+  "leadership-2/Reins": {
+   "order_index": 0,
+   "new_en": "You're taking the lead now.",
+   "new_anchor": "taking",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Wrong parlance"
+  },
+  "stage-11/luck": {
+   "order_index": 7,
+   "new_en": "No rehearsal for this one is not the way to go. Let's put in the time.",
+   "new_anchor": "rehearsal",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Leaders at high levels value preparation."
+  },
+  "stage-11/cold": {
+   "order_index": 8,
+   "new_en": "No script? Let's talk it through and get something down.",
+   "new_anchor": "something",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Leaders at high levels know not to wing it."
+  },
+  "pitch-3/Shake": {
+   "order_index": 7,
+   "new_en": "Great that we're aligned...and extend you hand.",
+   "new_anchor": "aligned",
+   "story_change": true,
+   "gpt": "",
+   "comment": "I've never heard a leader say \"let's shake on it.\""
+  },
+  "negotiation-1/Map": {
+   "order_index": 2,
+   "new_en": "Let's map out what a good deal looks like",
+   "new_anchor": "map",
+   "story_change": false,
+   "gpt": "",
+   "comment": "Probably wouldn't say \"for me.\""
+  },
+  "negotiation-1/Bottom": {
+   "order_index": 6,
+   "new_en": "That's my bottom line.",
+   "new_anchor": "bottom",
+   "story_change": false,
+   "gpt": "",
+   "comment": "Delete I won't go under it."
+  },
+  "leadership-1/Wrong": {
+   "order_index": 2,
+   "new_en": "Please let me know if any of this is unclear.",
+   "new_anchor": "unclear",
+   "story_change": true,
+   "gpt": "",
+   "comment": "Not a hedge I've heard a leader use."
+  },
+  "stage-9/sentence": {
+   "order_index": 5,
+   "new_en": "Good reframe/bridge",
+   "new_anchor": "reframe",
+   "story_change": true,
+   "gpt": "",
+   "comment": ""
+  },
+  "charisma-3/Fired": {
+   "order_index": 0,
+   "new_en": "What's top of mind for you right now?",
+   "new_anchor": "right",
+   "story_change": true,
+   "gpt": "",
+   "comment": "fired up = wrong parlance."
+  }
+ }
+}

@@ -2188,3 +2188,41 @@
   (интент перевёрнут). Backend suite 288 passed. Frontend tsc 0 + vite build ✓,
   dev-сервер собрал изменения без ошибок (боевой authed-гейт на устройстве — за
   Лёшей: залогиненную сессию не поднять без ввода пароля).
+- ДЕПЛОЙ (коммит 9287beb, ветка redesign/green-ui-design-system, pushed):
+  - Прод: rsync backend/ + frontend/dist → /root/english, rebuild ТОЛЬКО
+    english_app (`docker compose -p english -f docker-compose.deploy.yml up -d
+    --build english_app`); english_caddy и ~60 чужих контейнеров не тронуты.
+    WAL-safe бэкап app.db.bak-focuscap-20260711-195024 (5.5 MB) в volume.
+    Проверено: FOCUS_CAP=3 и entering_focus в живом контейнере, doctor чист
+    (только прежний close-meeting), root 200, https://executive-english.net 200.
+  - iOS: `npx cap copy ios` (dist вшит) → xcodebuild (BUILD SUCCEEDED) →
+    devicectl install+launch на iPhone 15 Pro (net.executiveenglish.app). Правило
+    само работало и в старом приложении (сервер режет 4-ю активацию), но старый
+    веб слал капнутого на upsell — пересборка чинит на нудж «сначала сдай экзамен».
+
+## 2026-08-06 — wave-2 cues на прод + app полностью обновлён под новые фразы
+
+- **360 проверочных фраз (CheckPhrase) пере-авторены и вставлены на прод.** 90 фраз
+  без cues (80 изменённых в wave-2, у которых `rephrase` снёс старые cues, + 10
+  `close-meeting` — старый долг `uncued_batches`). По 4 cue на фразу через
+  ChatGPT/Chrome (модель «Высокий», 3 бина по 30). Каждый cue — реплика
+  собеседника, подводящая к целевой фразе, без её слов (recall-тест).
+- **Валидация до вставки:** покрытие 90/90, у всех ровно по 4 cue, 0 реальных
+  утечек целевых слов (свой чекер + few-shot из живых cues). Юзеру — Google-таблица
+  на утверждение (90×4), одобрено.
+- **Вставка:** WAL-safe бэкап `app.db.bak-cues` → `docker exec english_app python`
+  (models.CheckPhrase, lang=en, kind=stimulus, status=approved, idempotent:
+  skip-if-cued) → 360 inserted, 0 skipped/notfound → `app.embeddings` (90 фраз
+  пере-эмбеддены, cues вошли в вектор Live-индекса) → **`app.doctor` ПОЛНОСТЬЮ
+  CLEAN** (закрыт и старый долг close-meeting).
+- **intents/«ходы»:** проверено против живых PhraseIntent — переформулировки wave-2
+  сохранили communicative move, 0 расхождений тегов, правки не требовались.
+  `intents_curated.json`: синхронизирован `en` для 80 слотов (indent=1, чтобы не
+  разнести весь файл). Прод не трогали (теги уже верные).
+- **Коммит 6140c01** (ветка redesign/green-ui-design-system): 31 content-файл
+  (80 фраз + 28 историй, уже на проде с прошлой сессии) + intents_curated.json.
+  cues живут только в БД прода (в git их нет по модели). Backend suite 288 passed.
+- Заметка: у `composure-1 #1` на проде опечатка в тексте фразы — «I'm know what
+  you're doing…» (лишнее «m»); отдельная правка rephrase→restory, ждёт «да».
+- Механика извлечения больших LLM-ответов из Chrome — в auto-memory
+  [[llm-work-via-chrome]] (Blob-download мимо контент-фильтра).
