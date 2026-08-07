@@ -415,7 +415,7 @@
    "slug": "batch",
    "oi": 2,
    "anchor": "Run",
-   "en": "Run me through how you got to that number.",
+   "en": "Take me through how you got to that number.",
    "intents": [
     "ask",
     "clarify",
@@ -426,7 +426,7 @@
    "slug": "batch",
    "oi": 3,
    "anchor": "Angle",
-   "en": "Can I offer a different angle?",
+   "en": "I'd like to offer a different perspective.",
    "intents": [
     "clarify",
     "pushback",
@@ -638,7 +638,7 @@
    "slug": "batch-3",
    "oi": 5,
    "anchor": "Off",
-   "en": "Something's off here — help me figure out what it is.",
+   "en": "Something's not lining up - take me through your thought process.",
    "intents": [
     "ask",
     "clarify",
@@ -649,7 +649,7 @@
    "slug": "batch-3",
    "oi": 6,
    "anchor": "Agenda",
-   "en": "You probably think I've got my own agenda here.",
+   "en": "You probably think I've got my mind made up.",
    "intents": [
     "clarify",
     "support"
@@ -659,7 +659,7 @@
    "slug": "batch-3",
    "oi": 7,
    "anchor": "Kill",
-   "en": "Honestly, I'd kill the whole thing myself — talk me out of i",
+   "en": "My inclination is to punt the whole thing. Tell me why I shouldn't.",
    "intents": [
     "ask",
     "clarify",
@@ -670,7 +670,7 @@
    "slug": "batch-3",
    "oi": 8,
    "anchor": "Elephant",
-   "en": "Feels like there's an elephant in the room nobody's naming —",
+   "en": "What's the elephant in the room?",
    "intents": [
     "clarify",
     "support"
@@ -759,7 +759,7 @@
    "slug": "charisma-1",
    "oi": 8,
    "anchor": "Dancing",
-   "en": "Can I say the thing we're all dancing around?",
+   "en": "Can we talk about the elephant in the room?",
    "intents": [
     "clarify",
     "lead"
@@ -852,7 +852,7 @@
    "slug": "charisma-10",
    "oi": 8,
    "anchor": "Record",
-   "en": "When you two build something, I want it on record I started ",
+   "en": "When you two build something together, I'll be glad I made the introduction.",
    "intents": [
     "warm",
     "lead"
@@ -872,7 +872,7 @@
    "slug": "charisma-11",
    "oi": 1,
    "anchor": "Smiled",
-   "en": "Your name came up last night and I smiled like an idiot.",
+   "en": "Your name came up last night in a positive light.",
    "intents": [
     "warm"
    ]
@@ -912,7 +912,7 @@
    "slug": "charisma-11",
    "oi": 5,
    "anchor": "Free",
-   "en": "Skip the apologies — when are you free?",
+   "en": "Apology accepted. Now, let's focus on a good time to regroup.",
    "intents": [
     "repair",
     "ask",
@@ -985,7 +985,7 @@
    "slug": "charisma-2",
    "oi": 3,
    "anchor": "Crash",
-   "en": "You looked like the most fun in the room — mind if I crash?",
+   "en": "This looks like this is the place to be. Mind if I join?",
    "intents": [
     "warm",
     "clarify",
@@ -1038,7 +1038,7 @@
    "slug": "charisma-2",
    "oi": 8,
    "anchor": "Forget",
-   "en": "Forget small talk — what's actually worth talking about toni",
+   "en": "What's on our agenda?",
    "intents": [
     "ask",
     "warm",
@@ -1060,7 +1060,7 @@
    "slug": "charisma-3",
    "oi": 1,
    "anchor": "Fired",
-   "en": "What's got you genuinely fired up lately?",
+   "en": "What's top of mind for you right now?",
    "intents": [
     "clarify",
     "warm"
@@ -1081,7 +1081,7 @@
    "slug": "charisma-3",
    "oi": 3,
    "anchor": "Obsessed",
-   "en": "What are you a little obsessed with right now?",
+   "en": "Where are you focusing your attention right now?",
    "intents": [
     "clarify",
     "buy_time",
@@ -1147,7 +1147,7 @@
    "slug": "charisma-3",
    "oi": 9,
    "anchor": "Ahead",
-   "en": "What are you seeing that the rest of us are still catching u",
+   "en": "What are you seeing that the rest of us are missing?",
    "intents": [
     "clarify",
     "warm"
@@ -1157,7 +1157,7 @@
    "slug": "charisma-4",
    "oi": 1,
    "anchor": "Quiet",
-   "en": "Hey, the quiet end of the table — I want in on whatever you'",
+   "en": "We haven't heard from you yet? What's your take on the situation?",
    "intents": [
     "lead",
     "warm",
@@ -1178,7 +1178,7 @@
    "slug": "charisma-4",
    "oi": 3,
    "anchor": "Hog",
-   "en": "Okay, I've been hogging this — someone take it from me.",
+   "en": "I've talked enough. I want to hear other points of view.",
    "intents": [
     "lead",
     "repair"
@@ -1188,7 +1188,7 @@
    "slug": "charisma-4",
    "oi": 4,
    "anchor": "Around",
-   "en": "Let's go around — I want everyone's one-liner on this.",
+   "en": "I want to hear from everyone. Let's go around the table. Each person share your point of view but in just one sentence.",
    "intents": [
     "ask",
     "lead",
@@ -1199,7 +1199,7 @@
    "slug": "charisma-4",
    "oi": 5,
    "anchor": "Park",
-   "en": "Let's park that — it deserves its own conversation.",
+   "en": "Let's park that and come back to it.",
    "intents": [
     "lead",
     "close"
@@ -1209,7 +1209,7 @@
    "slug": "charisma-4",
    "oi": 6,
    "anchor": "Loop",
-   "en": "Hang on — we never looped back to what Dave started.",
+   "en": "Let's take a pause and loop back to David's point.",
    "intents": [
     "lead",
     "repair"
@@ -1219,7 +1219,7 @@
    "slug": "charisma-4",
    "oi": 7,
    "anchor": "Drop",
-   "en": "Let's drop the charm for a minute and actually talk.",
+   "en": "We've hit some surface issues. Let's take a deeper dive.",
    "intents": [
     "lead",
     "pushback"
@@ -1229,7 +1229,7 @@
    "slug": "charisma-4",
    "oi": 8,
    "anchor": "Honest",
-   "en": "Come on, that's the safe answer — give me the honest one.",
+   "en": "Polished and safe answers won't get us to where we need to go. I need some unvarnished perspective.",
    "intents": [
     "pushback",
     "clarify"
@@ -1250,7 +1250,7 @@
    "slug": "charisma-5",
    "oi": 1,
    "anchor": "Stop",
-   "en": "Stop me if I've told you this one — actually, don't, it's to",
+   "en": "I'm going to risk repeating myself but the learning is too important.",
    "intents": [
     "lead",
     "warm",
@@ -1261,7 +1261,7 @@
    "slug": "charisma-5",
    "oi": 2,
    "anchor": "Badly",
-   "en": "You'll like this — it starts badly.",
+   "en": "This story is instructive despite the difficult beginning.",
    "intents": [
     "lead",
     "warm"
@@ -1271,7 +1271,7 @@
    "slug": "charisma-5",
    "oi": 3,
    "anchor": "Picture",
-   "en": "Picture me at 2 a.m., completely lost — that's where this st",
+   "en": "I'll set the scene. It's late at night. I'm at a loss for an answer. That's how this change of perspective began.",
    "intents": [
     "lead",
     "warm"
@@ -1281,7 +1281,7 @@
    "slug": "charisma-5",
    "oi": 4,
    "anchor": "Mind",
-   "en": "Keep that one detail in mind — it matters in a minute.",
+   "en": "Keep that thought. We'll come back to it in a minute.",
    "intents": [
     "lead",
     "warm"
@@ -1334,7 +1334,7 @@
    "slug": "charisma-5",
    "oi": 9,
    "anchor": "Anyway",
-   "en": "Anyway. Pass the wine.",
+   "en": "Ok. New topic.",
    "intents": [
     "buy_time",
     "lead",
@@ -1355,7 +1355,7 @@
    "slug": "charisma-6",
    "oi": 2,
    "anchor": "Generous",
-   "en": "That's generous — most people wait ten minutes before diagno",
+   "en": "You read people well. That's skill not everyone has.",
    "intents": [
     "warm",
     "pushback"
@@ -1365,7 +1365,7 @@
    "slug": "charisma-6",
    "oi": 3,
    "anchor": "Rehearse",
-   "en": "Not bad — did you rehearse that in the car?",
+   "en": "Nicely done. You've come prepared.",
    "intents": [
     "warm",
     "pushback",
@@ -1376,7 +1376,7 @@
    "slug": "charisma-6",
    "oi": 4,
    "anchor": "Careful",
-   "en": "Careful — you're dangerously close to being funny.",
+   "en": "You've got a good sense of humor.",
    "intents": [
     "warm",
     "pushback"
@@ -1386,7 +1386,7 @@
    "slug": "charisma-6",
    "oi": 5,
    "anchor": "Laugh",
-   "en": "If I laugh, you'll just keep going.",
+   "en": "Don't mind me. Keep going.",
    "intents": [
     "warm",
     "pushback",
@@ -1397,7 +1397,7 @@
    "slug": "charisma-6",
    "oi": 6,
    "anchor": "Landing",
-   "en": "Bold opening — let's see if you can stick the landing.",
+   "en": "Bold opening. I'm ready to hear the rest.",
    "intents": [
     "warm",
     "pushback"
@@ -1407,7 +1407,7 @@
    "slug": "charisma-6",
    "oi": 7,
    "anchor": "Hand",
-   "en": "Give him a hand, folks — he's been saving that one all night",
+   "en": "Good for you. You saved the best for last.",
    "intents": [
     "ask",
     "warm",
@@ -1537,7 +1537,7 @@
    "slug": "charisma-8",
    "oi": 2,
    "anchor": "Night",
-   "en": "I could talk to you all night — which is exactly why I shoul",
+   "en": "It's getting late and I've got a full day tomorrow.",
    "intents": [
     "close",
     "warm"
@@ -1567,7 +1567,7 @@
    "slug": "charisma-8",
    "oi": 5,
    "anchor": "Calendar",
-   "en": "Let's get something on the calendar before we both pretend w",
+   "en": "Let's get something on the calendar to lock this in.",
    "intents": [
     "close",
     "ask",
@@ -1589,7 +1589,7 @@
    "slug": "charisma-8",
    "oi": 7,
    "anchor": "Trouble",
-   "en": "You and I are going to be trouble together — I can already t",
+   "en": "Looking forward to working together.",
    "intents": [
     "close",
     "warm"
@@ -1609,7 +1609,7 @@
    "slug": "charisma-8",
    "oi": 9,
    "anchor": "Next",
-   "en": "Next time, I want the question you were too polite to ask me",
+   "en": "Next time, let's take a deeper dive.",
    "intents": [
     "close",
     "clarify",
@@ -1620,7 +1620,7 @@
    "slug": "charisma-9",
    "oi": 1,
    "anchor": "Head",
-   "en": "Well — that landed better in my head.",
+   "en": "I didn't anticipate that response.",
    "intents": [
     "buy_time",
     "repair",
@@ -1631,7 +1631,7 @@
    "slug": "charisma-9",
    "oi": 2,
    "anchor": "Heard",
-   "en": "Well, everyone heard that one. Moving on.",
+   "en": "We've covered that ground already. What's next?",
    "intents": [
     "repair",
     "warm"
@@ -1641,7 +1641,7 @@
    "slug": "charisma-9",
    "oi": 3,
    "anchor": "Charming",
-   "en": "We're all just going to agree that was charming, right?",
+   "en": "I think we can all agree that on the surface, that sounds good but I sense there's more to it.",
    "intents": [
     "repair",
     "warm",
@@ -1652,7 +1652,7 @@
    "slug": "charisma-9",
    "oi": 4,
    "anchor": "Dignity",
-   "en": "We'll circle back to my dignity later — you were saying?",
+   "en": "Let's circle back on that. You were saying?",
    "intents": [
     "repair",
     "warm",
@@ -1663,7 +1663,7 @@
    "slug": "charisma-9",
    "oi": 5,
    "anchor": "Pretend",
-   "en": "Okay, let's pretend the last ten seconds didn't happen.",
+   "en": "Let's reset and start fresh.",
    "intents": [
     "ask",
     "repair",
@@ -1685,7 +1685,7 @@
    "slug": "charisma-9",
    "oi": 7,
    "anchor": "Formal",
-   "en": "Good — the formal part's officially over. Now we can actuall",
+   "en": "With formal lines of communication officially opened, let's roll up our sleeves and dig in a little deeper.",
    "intents": [
     "buy_time",
     "repair",
@@ -1696,7 +1696,7 @@
    "slug": "charisma-9",
    "oi": 8,
    "anchor": "Trust",
-   "en": "See, now you trust me — nobody this awkward is hiding anythi",
+   "en": "We've established a level of trust which is the foundation for the work ahead.",
    "intents": [
     "repair",
     "warm"
@@ -1821,7 +1821,7 @@
    "slug": "composure-1",
    "oi": 1,
    "anchor": "Bait",
-   "en": "I see the bait — and I admire the presentation.",
+   "en": "I'm know what you're doing and appreciate it.",
    "intents": [
     "hold",
     "pushback",
@@ -1925,7 +1925,7 @@
    "slug": "composure-10",
    "oi": 2,
    "anchor": "Comfortable",
-   "en": "I'm not sure — and I'm comfortable saying that out loud.",
+   "en": "I'm not sure.",
    "intents": [
     "buy_time",
     "clarify",
@@ -2097,7 +2097,7 @@
    "slug": "composure-11",
    "oi": 9,
    "anchor": "Handle",
-   "en": "How I handle this will say more about me than the loss itsel",
+   "en": "How we handle this will reveal more about our character than the loss itself.",
    "intents": [
     "buy_time",
     "hold",
@@ -2230,7 +2230,7 @@
    "slug": "composure-3",
    "oi": 4,
    "anchor": "Directly",
-   "en": "If there's feedback, give it to me directly — not theatrical",
+   "en": "If there's feedback, give it to me directly.",
    "intents": [
     "hold",
     "pushback"
@@ -3716,7 +3716,7 @@
    "slug": "flirt-9",
    "oi": 1,
    "anchor": "Cliffhanger",
-   "en": "Some things are better left as a cliffhanger.",
+   "en": "Some things are better left unsaid.",
    "intents": [
     "buy_time",
     "warm",
@@ -4482,7 +4482,7 @@
    "slug": "gravitas-6",
    "oi": 9,
    "anchor": "Outrank",
-   "en": "You outrank me — that doesn't make you right.",
+   "en": "Part of my job is to speak truth to power. That's what I'm doing right now.",
    "intents": [
     "hold",
     "pushback"
@@ -6974,7 +6974,7 @@
    "slug": "leadership-1",
    "oi": 3,
    "anchor": "Wrong",
-   "en": "Don't take this the wrong way.",
+   "en": "Please let me know if any of this is unclear.",
    "intents": [
     "pushback",
     "support",
@@ -7051,7 +7051,7 @@
    "slug": "leadership-2",
    "oi": 1,
    "anchor": "Reins",
-   "en": "I'm handing you the reins.",
+   "en": "You're taking the lead now.",
    "intents": [
     "lead",
     "ask"
@@ -7061,7 +7061,7 @@
    "slug": "leadership-2",
    "oi": 2,
    "anchor": "Charge",
-   "en": "You're in charge of this now.",
+   "en": "You're accountable for this now.",
    "intents": [
     "lead",
     "ask"
@@ -7071,7 +7071,7 @@
    "slug": "leadership-2",
    "oi": 3,
    "anchor": "Lead",
-   "en": "I need you to lead on this.",
+   "en": "I need you to take the lead on this.",
    "intents": [
     "lead",
     "ask"
@@ -7081,7 +7081,7 @@
    "slug": "leadership-2",
    "oi": 4,
    "anchor": "Call",
-   "en": "It's your call from here.",
+   "en": "It's your call.",
    "intents": [
     "lead",
     "ask"
@@ -7163,7 +7163,7 @@
    "slug": "negotiation-1",
    "oi": 3,
    "anchor": "Map",
-   "en": "Let me map out what a good deal looks like for me.",
+   "en": "Let's map out what a good deal looks like.",
    "intents": [
     "lead",
     "clarify"
@@ -7204,7 +7204,7 @@
    "slug": "negotiation-1",
    "oi": 7,
    "anchor": "Bottom",
-   "en": "That's my bottom line — I won't go under it.",
+   "en": "That's my bottom line.",
    "intents": [
     "hold",
     "close"
@@ -7294,7 +7294,7 @@
    "slug": "negotiation-2",
    "oi": 7,
    "anchor": "Dotted",
-   "en": "Ready to sign on the dotted line?",
+   "en": "Are we aligned?",
    "intents": [
     "ask",
     "close"
@@ -7322,7 +7322,7 @@
    "slug": "pitch-1",
    "oi": 1,
    "anchor": "Fire",
-   "en": "Picture this: Monday morning, and the whole thing's on fire ",
+   "en": "Imagine, it's Monday morning and your day starts with a fire drill.",
    "intents": [
     "lead",
     "warm"
@@ -7332,7 +7332,7 @@
    "slug": "pitch-1",
    "oi": 2,
    "anchor": "Quick",
-   "en": "Give me thirty seconds — quick one.",
+   "en": "I'll need a moment to process this.",
    "intents": [
     "ask",
     "buy_time"
@@ -7372,7 +7372,7 @@
    "slug": "pitch-1",
    "oi": 6,
    "anchor": "Bet",
-   "en": "I'd bet money you've felt this exact thing.",
+   "en": "My hunch is you know what that feels like.",
    "intents": [
     "lead",
     "warm"
@@ -7422,7 +7422,7 @@
    "slug": "pitch-2",
    "oi": 2,
    "anchor": "Hole",
-   "en": "There's a hole in how everyone does this today.",
+   "en": "There's a disparity in how the market is approaching this today.",
    "intents": [
     "lead",
     "pushback"
@@ -7535,7 +7535,7 @@
    "slug": "pitch-3",
    "oi": 4,
    "anchor": "Ask",
-   "en": "So here's the ask, plainly.",
+   "en": "So, here's the ask.",
    "intents": [
     "ask",
     "close"
@@ -7567,7 +7567,7 @@
    "slug": "pitch-3",
    "oi": 7,
    "anchor": "Skin",
-   "en": "I've got skin in the game — I'm taking the same risk I'm ask",
+   "en": "I've got skin in the game.",
    "intents": [
     "close",
     "ask",
@@ -7578,7 +7578,7 @@
    "slug": "pitch-3",
    "oi": 8,
    "anchor": "Shake",
-   "en": "If we're aligned, let's shake on it and get moving.",
+   "en": "Great — we're aligned. Let's shake hands and get moving.",
    "intents": [
     "ask",
     "close",
@@ -7609,7 +7609,7 @@
    "slug": "pressure-1",
    "oi": 2,
    "anchor": "Feet",
-   "en": "I'm thinking on my feet here.",
+   "en": "I'm thinking out loud.",
    "intents": [
     "buy_time",
     "hold"
@@ -7701,7 +7701,7 @@
    "slug": "repair-1",
    "oi": 2,
    "anchor": "Overstepped",
-   "en": "I overstepped, and I know it.",
+   "en": "I overstepped.",
    "intents": [
     "repair",
     "close"
@@ -7711,7 +7711,7 @@
    "slug": "repair-1",
    "oi": 3,
    "anchor": "Fault",
-   "en": "This is my fault here.",
+   "en": "I take accountability for that.",
    "intents": [
     "repair",
     "close",
@@ -7743,7 +7743,7 @@
    "slug": "repair-1",
    "oi": 6,
    "anchor": "Watch",
-   "en": "Don't take my word for it — just watch.",
+   "en": "I'll let my actions do the talking.",
    "intents": [
     "ask",
     "repair",
@@ -7754,7 +7754,7 @@
    "slug": "repair-1",
    "oi": 7,
    "anchor": "Trust",
-   "en": "I want to earn back your trust.",
+   "en": "Let's reset.",
    "intents": [
     "repair",
     "close"
@@ -7764,7 +7764,7 @@
    "slug": "repair-1",
    "oi": 8,
    "anchor": "Slate",
-   "en": "Can we wipe the slate clean?",
+   "en": "Can we start fresh?",
    "intents": [
     "ask",
     "repair",
@@ -7775,7 +7775,7 @@
    "slug": "repair-1",
    "oi": 9,
    "anchor": "Track",
-   "en": "Let's get back on track.",
+   "en": "Let's make sure we're in alignment.",
    "intents": [
     "ask",
     "repair",
@@ -7786,7 +7786,7 @@
    "slug": "requests-1",
    "oi": 1,
    "anchor": "Heads",
-   "en": "Heads up — we've got a problem.",
+   "en": "I don't want you to be blindsided. We've got a problem.",
    "intents": [
     "lead",
     "repair",
@@ -7841,7 +7841,7 @@
    "slug": "requests-1",
    "oi": 6,
    "anchor": "Buck",
-   "en": "The buck stops with me on this.",
+   "en": "I'm accountable.",
    "intents": [
     "lead",
     "repair",
@@ -8132,7 +8132,7 @@
    "slug": "stage-11",
    "oi": 6,
    "anchor": "deck",
-   "en": "I don't need the deck — the argument lives in my head.",
+   "en": "I don't need the deck but I do need notes to be at my best.",
    "intents": [
     "lead",
     "hold"
@@ -8142,7 +8142,7 @@
    "slug": "stage-11",
    "oi": 7,
    "anchor": "safety",
-   "en": "No safety net today — that's when it gets good.",
+   "en": "No safety net today? Let's see how I do and then assess.",
    "intents": [
     "buy_time",
     "lead",
@@ -8153,7 +8153,7 @@
    "slug": "stage-11",
    "oi": 8,
    "anchor": "luck",
-   "en": "No rehearsal for this one — wish me luck.",
+   "en": "No rehearsal for this one is not the way to go. Let's put in the time.",
    "intents": [
     "ask",
     "lead",
@@ -8164,7 +8164,7 @@
    "slug": "stage-11",
    "oi": 9,
    "anchor": "cold",
-   "en": "No script? Fine — I know this stuff cold.",
+   "en": "No script? Let's talk it through and get something down.",
    "intents": [
     "lead",
     "hold",
@@ -8442,7 +8442,7 @@
    "slug": "stage-4",
    "oi": 9,
    "anchor": "present",
-   "en": "I don't have to be perfect up here. I have to be present.",
+   "en": "We're not seeking perfection here. Instead, we're sitting with a problem, together.",
    "intents": [
     "support",
     "hold"
@@ -8602,7 +8602,7 @@
    "slug": "stage-6",
    "oi": 6,
    "anchor": "derailed",
-   "en": "So — where was I before I derailed myself?",
+   "en": "Help me remember where we left off.",
    "intents": [
     "repair",
     "lead",

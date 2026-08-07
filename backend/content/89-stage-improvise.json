@@ -38,23 +38,23 @@
   {
    "anchor": "deck",
    "zone": "Backbone",
-   "en": "I don't need the deck — the argument lives in my head."
+   "en": "I don't need the deck but I do need notes to be at my best."
   },
   {
    "anchor": "safety",
    "zone": "Weight",
-   "en": "No safety net today — that's when it gets good."
+   "en": "No safety net today? Let's see how I do and then assess."
   },
   {
-   "anchor": "luck",
+   "anchor": "time",
    "zone": "Weight",
-   "en": "No rehearsal for this one — wish me luck."
+   "en": "No rehearsal for this one is not the way to go. Let's put in the time."
   },
   {
-   "anchor": "cold",
+   "anchor": "down",
    "zone": "Weight",
-   "en": "No script? Fine — I know this stuff cold."
+   "en": "No script? Let's talk it through and get something down."
   }
  ],
- "mnemo": "Шквал вырывает plans, и вокруг не та crowd — толпа — волн, к которой ты готовился. Парусник входит в волну real — по-настоящему. Ты хватаешься за мачту — за одну idea — стержневую мысль курса — и режешь оснастку до simpler — простого: один парус, один галс. Перебегаешь через мокрый deck к штурвалу. С борта срывается safety — страховочная — сетка. Стучишь костяшками по мачте — на luck — удачу: сегодня идёшь без репетиций. Но карта не нужна — ты знаешь этот фарватер cold — наизусть."
+ "mnemo": "За пять минут до выступления организатор меняет plans — вместо закрытого воркшопа тебя ставят на главную сцену. За кулисами слышно, как новая crowd — толпа — заполняет зал. Ты выходишь и задаёшь аудитории один real — настоящий — вопрос, чтобы понять её уровень. Из всей программы оставляешь одну idea — главную мысль — и делаешь объяснение simpler — проще. На ноутбуке закрываешь половину slide deck — презентации. В этот момент пропадает интернет, а вместе с ним safety — запасной — интерактивный демо-режим. Ты просишь ведущего дать минуту time — времени, достаёшь карточку и успеваешь write down — записать — три опорных шага. Возвращаешься к микрофону и строишь вокруг них живой разговор."
 }

@@ -16,9 +16,9 @@
    "en": "This was exactly the conversation I needed tonight."
   },
   {
-   "anchor": "Night",
+   "anchor": "late",
    "zone": "Warm",
-   "en": "I could talk to you all night — which is exactly why I should go."
+   "en": "It's getting late and I've got a full day tomorrow."
   },
   {
    "anchor": "High",
@@ -33,7 +33,7 @@
   {
    "anchor": "Calendar",
    "zone": "Backbone",
-   "en": "Let's get something on the calendar before we both pretend we will and don't."
+   "en": "Let's get something on the calendar to lock this in."
   },
   {
    "anchor": "Pick",
@@ -41,9 +41,9 @@
    "en": "Let me step away one second — but I want to pick this back up."
   },
   {
-   "anchor": "Trouble",
+   "anchor": "together",
    "zone": "Weight",
-   "en": "You and I are going to be trouble together — I can already tell."
+   "en": "Looking forward to working together."
   },
   {
    "anchor": "Save",
@@ -53,8 +53,8 @@
   {
    "anchor": "Next",
    "zone": "Weight",
-   "en": "Next time, I want the question you were too polite to ask me."
+   "en": "Next time, let's take a deeper dive."
   }
  ],
- "mnemo": "В ночном музее тебе needed только одно — рубин в центральной витрине; вся night — ночь — твоя, но остального ты не тронешь. Спускаешься на тросе с high купола; внизу охранник rounds — обходит зал, а calendar на стене отсчитывает ночь. Отмычкой pick замок витрины — и вдруг вой сирены: trouble! Растворяешься в темноте, оставив карточку «save — остальное приберегу» и подпись: «до next раза»."
+ "mnemo": "На вечернем приёме тебе needed — нужно — поговорить с одним инвестором, но уже late — поздно. Вы встречаетесь на high — верхней — террасе, пока официант делает последние rounds — обходы. На телефоне ты замечаешь calendar — календарь: машина будет через десять минут. Вместо попытки закрыть все темы просишь его pick — выбрать — один главный вопрос на сегодня. Вы решаете, что остальное разберёте together — вместе — за завтраком. Ты нажимаешь save — сохранить — его контакт и говоришь: продолжим в next — следующую — среду. Благодаришь за разговор и уходишь до того, как встреча начинает выдыхаться."
 }

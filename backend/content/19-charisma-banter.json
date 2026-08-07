@@ -16,34 +16,34 @@
    "en": "I walked right into that one — nicely done."
   },
   {
-   "anchor": "Generous",
+   "anchor": "read",
    "zone": "Warm",
-   "en": "That's generous — most people wait ten minutes before diagnosing me."
+   "en": "You read people well. That's skill not everyone has."
   },
   {
-   "anchor": "Rehearse",
+   "anchor": "prepared",
    "zone": "Warm",
-   "en": "Not bad — did you rehearse that in the car?"
+   "en": "Nicely done. You've come prepared."
   },
   {
-   "anchor": "Careful",
+   "anchor": "humor",
    "zone": "Backbone",
-   "en": "Careful — you're dangerously close to being funny."
+   "en": "You've got a good sense of humor."
   },
   {
-   "anchor": "Laugh",
+   "anchor": "going",
    "zone": "Backbone",
-   "en": "If I laugh, you'll just keep going."
+   "en": "Don't mind me. Keep going."
   },
   {
-   "anchor": "Landing",
+   "anchor": "opening",
    "zone": "Backbone",
-   "en": "Bold opening — let's see if you can stick the landing."
+   "en": "Bold opening. I'm ready to hear the rest."
   },
   {
-   "anchor": "Hand",
+   "anchor": "last",
    "zone": "Weight",
-   "en": "Give him a hand, folks — he's been saving that one all night."
+   "en": "Good for you. You saved the best for last."
   },
   {
    "anchor": "Worst",
@@ -56,5 +56,5 @@
    "en": "[a beat, to the room] …I like this guy."
   }
  ],
- "mnemo": "Под куполом ты walked — вышел — на канат, и распорядитель generous — щедрым — жестом объявляет твой номер. Каждый шаг ты успел rehearse — отрепетировать — в гримёрке; идёшь careful, пока снизу не взлетает первый laugh — смешок. Сальто — чистое landing на платформу, тебе протягивают hand. Из темноты клоун орёт: «worst номер сезона!» — а ты шлёшь ему большой палец, like, и кланяешься залу."
+ "mnemo": "Перед благотворительным аукционом ты walked — вышел — к микрофону. Ведущий успел read — прочитать — зал: люди устали от длинных речей. Ты prepared — подготовил — только три короткие строки. Первая вызывает смех, и ведущий подхватывает твой humor — юмор. Из-за кулис он показывает: going — продолжай. Ты понимаешь, что это лишь opening — начало, — и ведёшь зал к торгам. Самую точную шутку оставляешь на last — конец. После неё друг из первого ряда кричит: worst — худшая — речь вечера! Ты отвечаешь: поставь like — лайк — размером с пожертвование, и ставки сразу растут."
 }

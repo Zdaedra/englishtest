@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Quiet",
+   "anchor": "take",
    "zone": "Warm",
-   "en": "Hey, the quiet end of the table — I want in on whatever you're discussing."
+   "en": "We haven't heard from you yet? What's your take on the situation?"
   },
   {
    "anchor": "Smiling",
@@ -21,34 +21,34 @@
    "en": "You've been smiling like you know something we don't."
   },
   {
-   "anchor": "Hog",
+   "anchor": "others",
    "zone": "Warm",
-   "en": "Okay, I've been hogging this — someone take it from me."
+   "en": "I've talked enough. I want to hear other points of view."
   },
   {
    "anchor": "Around",
    "zone": "Backbone",
-   "en": "Let's go around — I want everyone's one-liner on this."
+   "en": "I want to hear from everyone. Let's go around the table. Each person share your point of view but in just one sentence."
   },
   {
    "anchor": "Park",
    "zone": "Backbone",
-   "en": "Let's park that — it deserves its own conversation."
+   "en": "Let's park that and come back to it."
   },
   {
    "anchor": "Loop",
    "zone": "Backbone",
-   "en": "Hang on — we never looped back to what Dave started."
+   "en": "Let's take a pause and loop back to David's point."
   },
   {
-   "anchor": "Drop",
+   "anchor": "deeper",
    "zone": "Weight",
-   "en": "Let's drop the charm for a minute and actually talk."
+   "en": "We've hit some surface issues. Let's take a deeper dive."
   },
   {
-   "anchor": "Honest",
+   "anchor": "raw",
    "zone": "Weight",
-   "en": "Come on, that's the safe answer — give me the honest one."
+   "en": "Polished and safe answers won't get us to where we need to go. I need some unvarnished perspective."
   },
   {
    "anchor": "Quick",
@@ -56,5 +56,5 @@
    "en": "Quick round: what's something you changed your mind about this year? I'll go first."
   }
  ],
- "mnemo": "За ужином ты садишься в quiet — тихий — конец длинного стола, где люди пока только листают меню. Подходит официант, ты smiling — улыбаешься — и просишь принести блюда в центр, чтобы все тянулись друг к другу. Один гость начинает hog — забирать — разговор себе, и ты передаёшь салат around — по кругу, переключая внимание на соседей. Телефоны вы предлагаешь park — припарковать — в корзинку на краю стола. Когда спор снова заходит в старый loop — круг, ты поднимаешь бокал и мягко предлагаешь drop — отпустить эту тему. Потом просишь каждого сказать одну honest — честную — вещь о своём дне. В конце делаешь quick — короткий — тост и передаёшь слово самому тихому гостю."
+ "mnemo": "За ужином ты садишься в конце стола и просишь молчавшего гостя дать свой take — взгляд — на разговор. Официант подходит, ты smiling — улыбаешься — и просишь блюда в центр. Один гость говорит слишком долго, и ты предлагаешь послушать others — остальных, — передавая салат around — по кругу. Телефоны предлагаешь park — в корзинку. Спор заходит в старый loop — круг, ты предлагаешь копнуть deeper — глубже. Просишь каждого дать одну raw — неприглаженную — оценку. В конце делаешь quick — короткий — тост."
 }

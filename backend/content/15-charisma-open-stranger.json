@@ -21,9 +21,9 @@
    "en": "That laugh sounded like it had a story behind it."
   },
   {
-   "anchor": "Crash",
+   "anchor": "Join",
    "zone": "Warm",
-   "en": "You looked like the most fun in the room — mind if I crash?"
+   "en": "This looks like this is the place to be. Mind if I join?"
   },
   {
    "anchor": "Skip",
@@ -46,9 +46,9 @@
    "en": "You're the only person here who isn't networking — I had to come say hi."
   },
   {
-   "anchor": "Forget",
+   "anchor": "Agenda",
    "zone": "Weight",
-   "en": "Forget small talk — what's actually worth talking about tonight?"
+   "en": "What's on our agenda?"
   },
   {
    "anchor": "Story",
@@ -56,5 +56,5 @@
    "en": "Give me ninety seconds — worst case, you get a good story."
   }
  ],
- "mnemo": "Ты въезжаешь в городок, где ни soul, но из салуна катится чей-то laugh. Распахиваешь створки — с crash падает стакан, и ты skip через ступени к столу. С порога ты уже figured — раскусил — весь расклад и settle на свободный стул — рядом с единственным, кто не networking, не кружит по залу с рукопожатиями. Бармену машешь: forget — забудь про виски, — берёшь колоду: в худшем случае выйдет хорошая story."
+ "mnemo": "На приёме ты не видишь ни одной знакомой soul — души. У окна один человек тихо смеётся — короткий laugh — над сообщением в телефоне. Ты подходишь и спрашиваешь, можно ли join — присоединиться. После представления предлагаешь skip — пропустить — привычный обмен должностями. По бейджу ты уже figured — понял — что он занимается робототехникой. Вы settle — устраиваетесь — за свободным столиком, пока вокруг остальные заняты networking. Ты задаёшь agenda — тему — по существу: что в вашей работе сейчас самое трудное? Вместо визитки он отвечает живой story — историей — о роботе, который остановил линию в день запуска."
 }

@@ -11,9 +11,9 @@
  ],
  "phrases": [
   {
-   "anchor": "Smiled",
+   "anchor": "Light",
    "zone": "Warm",
-   "en": "Your name came up last night and I smiled like an idiot."
+   "en": "Your name came up last night in a positive light."
   },
   {
    "anchor": "Missed",
@@ -31,9 +31,9 @@
    "en": "I won't insult us both with an excuse — coffee Thursday?"
   },
   {
-   "anchor": "Free",
+   "anchor": "Time",
    "zone": "Backbone",
-   "en": "Skip the apologies — when are you free?"
+   "en": "Apology accepted. Now, let's focus on a good time to regroup."
   },
   {
    "anchor": "Dinner",
@@ -56,5 +56,5 @@
    "en": "Funny how with the right people, no time's actually passed."
   }
  ],
- "mnemo": "Проводница smiled — улыбнулась — тебе с подножки — и двери захлопнулись: ты missed поезд. Но ты refuse сдаваться: бежишь по перрону с криком «excuse me!», а на билете в кулаке штамп free — свободен: впиши любой день. Прыжок — ты в последнем вагоне, где dinner — ужин — уже накрыт. Тебя спрашивают: «where ваше место?» — а ты смеёшься: ждать ещё year — год — ты не собирался, — за окном уже passed первые огни."
+ "mnemo": "В телефоне загорается light — индикатор — старого чата. Ты видишь несколько missed — пропущенных — сообщений и refuse — отказываешься — снова закрыть экран. Пишешь: excuse — прости, что так надолго исчез. Сразу предлагаешь конкретный time — время — и dinner — ужин — в четверг. В ответ приходит: where — где? Ты называешь ваше старое место и добавляешь: почти year — год — прошёл, и слишком много времени уже passed — прошло. Через минуту он присылает адрес и подтверждение."
 }

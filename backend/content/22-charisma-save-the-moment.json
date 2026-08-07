@@ -11,29 +11,29 @@
  ],
  "phrases": [
   {
-   "anchor": "Head",
+   "anchor": "response",
    "zone": "Warm",
-   "en": "Well — that landed better in my head."
+   "en": "I didn't anticipate that response."
   },
   {
-   "anchor": "Heard",
+   "anchor": "covered",
    "zone": "Warm",
-   "en": "Well, everyone heard that one. Moving on."
+   "en": "We've covered that ground already. What's next?"
   },
   {
-   "anchor": "Charming",
+   "anchor": "surface",
    "zone": "Warm",
-   "en": "We're all just going to agree that was charming, right?"
+   "en": "I think we can all agree that on the surface, that sounds good but I sense there's more to it."
   },
   {
-   "anchor": "Dignity",
+   "anchor": "back",
    "zone": "Backbone",
-   "en": "We'll circle back to my dignity later — you were saying?"
+   "en": "Let's circle back on that. You were saying?"
   },
   {
-   "anchor": "Pretend",
+   "anchor": "reset",
    "zone": "Backbone",
-   "en": "Okay, let's pretend the last ten seconds didn't happen."
+   "en": "Let's reset and start fresh."
   },
   {
    "anchor": "Overthink",
@@ -43,12 +43,12 @@
   {
    "anchor": "Formal",
    "zone": "Weight",
-   "en": "Good — the formal part's officially over. Now we can actually talk."
+   "en": "With formal lines of communication officially opened, let's roll up our sleeves and dig in a little deeper."
   },
   {
    "anchor": "Trust",
    "zone": "Weight",
-   "en": "See, now you trust me — nobody this awkward is hiding anything."
+   "en": "We've established a level of trust which is the foundation for the work ahead."
   },
   {
    "anchor": "Shape",
@@ -56,5 +56,5 @@
    "en": "If that's our awkward moment tonight, we're in excellent shape."
   }
  ],
- "mnemo": "Киваешь head барабанщику — отсчёт! — и первый же вопль heard — слышен — до последнего ряда; шлёшь charming улыбку залу. На втором куплете цепляешься за кабель, летишь — но встаёшь с dignity, а зал готов pretend — сделать вид, что ничего не было. Ты не overthink — не пережёвываешь: разбег мимо стража в formal пиджаке — и прыжок спиной в толпу, чистый trust. Руки складываются в shape волны и несут тебя над залом."
+ "mnemo": "Первый аккорд вызывает неожиданный response — отклик — толпы; этот куплет уже covered — пройден, — и ты ведёшь группу дальше. На surface — поверхности — звук кажется чистым, но под ним чувствуется напряжение. На втором куплете цепляешься за кабель, летишь — но возвращаешься back — обратно — к микрофону и продолжаешь оборванную строку. Делаешь reset — перезапуск — и начинаешь куплет заново. Ты не overthink — не пережёвываешь: разбег мимо стража в formal пиджаке — прыжок спиной в толпу, чистый trust. Руки складываются в shape волны."
 }

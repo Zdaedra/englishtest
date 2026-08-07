@@ -18,12 +18,12 @@
   {
    "anchor": "Overstepped",
    "zone": "Admit",
-   "en": "I overstepped, and I know it."
+   "en": "I overstepped."
   },
   {
-   "anchor": "Fault",
+   "anchor": "accountability",
    "zone": "Admit",
-   "en": "This is my fault here."
+   "en": "I take accountability for that."
   },
   {
    "anchor": "Sorry",
@@ -36,25 +36,25 @@
    "en": "Let me make this right."
   },
   {
-   "anchor": "Watch",
+   "anchor": "actions",
    "zone": "Mend",
-   "en": "Don't take my word for it — just watch."
+   "en": "I'll let my actions do the talking."
   },
   {
-   "anchor": "Trust",
+   "anchor": "reset",
    "zone": "Rebuild",
-   "en": "I want to earn back your trust."
+   "en": "Let's reset."
   },
   {
-   "anchor": "Slate",
+   "anchor": "fresh",
    "zone": "Rebuild",
-   "en": "Can we wipe the slate clean?"
+   "en": "Can we start fresh?"
   },
   {
-   "anchor": "Track",
+   "anchor": "alignment",
    "zone": "Rebuild",
-   "en": "Let's get back on track."
+   "en": "Let's make sure we're in alignment."
   }
  ],
- "mnemo": "Ты толкаешь калитку её двора с ящиком инструментов: ты owe — должен ей извинение. Ты overstepped — переступил её межу — и повалил секцию забора. Опускаешься на колено у пролома: fault — вина, и она твоя. Поднимаешь глаза на её крыльцо и говоришь первым: sorry — прости. Упираешься плечом в накренившийся столб и ставишь его right — ровно. Прибиваешь новую доску: watch — просто смотри. Качаешь секцию, проверяя trust — доверие: держит. У крыльца рукавом стираешь вашу перепалку со slate — грифельной доски для записок — дочиста. И выкатываешь её велосипед на track — укатанную дорожку."
+ "mnemo": "Толкаешь калитку с ящиком: ты owe ей извинение. Ты overstepped межу, повалил забор. У пролома берёшь accountability — ответственность — на себя. Говоришь первым: sorry. Ставишь столб right — ровно. Прибиваешь доску: пусть actions — дела — говорят за тебя. Отступаешь на шаг: reset — начать заново. Стираешь перепалку с доски дочиста: всё fresh — с чистого листа. Выкатываешь её велосипед и выравниваешь колесо в alignment — по линии."
 }

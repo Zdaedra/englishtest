@@ -28,7 +28,7 @@
   {
    "anchor": "Ask",
    "zone": "Ask",
-   "en": "So here's the ask, plainly."
+   "en": "So, here's the ask."
   },
   {
    "anchor": "Yes",
@@ -43,12 +43,12 @@
   {
    "anchor": "Skin",
    "zone": "Seal",
-   "en": "I've got skin in the game — I'm taking the same risk I'm asking you to take."
+   "en": "I've got skin in the game."
   },
   {
-   "anchor": "Shake",
+   "anchor": "hands",
    "zone": "Seal",
-   "en": "If we're aligned, let's shake on it and get moving."
+   "en": "Great — we're aligned. Let's shake hands and get moving."
   },
   {
    "anchor": "Word",
@@ -56,5 +56,5 @@
    "en": "Say the word and I'll have it signed by Friday."
   }
  ],
- "mnemo": "Ты встречаешь партнёра у входа в шоурум и ведёшь его по короткому path — пути запуска: витрина, склад, договор. У демонстрационного table — стола — кладёшь рядом образец продукта, цену и сроки. Он берёт образец в руки и видит, что формат fit — подходит — его сети без переделок. У стойки с договорами ты прямо называешь ask — просьбу: запустить пилот на этой неделе. Он смотрит на календарь поставок и говорит yes — да, если первая партия будет маленькой. Вы проходите к полке с уже собранными коробками, и спрос становится obvious — очевидным: товар фактически готов. У кассы ты первым оплачиваешь свою часть теста: это твой skin — skin in the game, ты тоже рискуешь. У двери склада вы shake — жмёте руки. Он диктует менеджеру одно word — слово: approved, и пилот уходит в работу."
+ "mnemo": "Ведёшь партнёра по path запуска. У table кладёшь образец, цену, сроки. Формат fit его сети. Называешь ask: пилот на неделе. Он говорит yes. Спрос obvious. Ты первым платишь: skin in the game. У двери склада вы протягиваете hands — руки — навстречу. Он диктует одно word: approved."
 }

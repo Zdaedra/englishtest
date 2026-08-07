@@ -31,24 +31,24 @@
    "en": "Here's where my head's at — tell me where I'm wrong."
   },
   {
-   "anchor": "Off",
+   "anchor": "Lining",
    "zone": "Warm",
-   "en": "Something's off here — help me figure out what it is."
+   "en": "Something's not lining up - take me through your thought process."
   },
   {
-   "anchor": "Agenda",
+   "anchor": "Made",
    "zone": "Warm",
-   "en": "You probably think I've got my own agenda here."
+   "en": "You probably think I've got my mind made up."
   },
   {
-   "anchor": "Kill",
+   "anchor": "Punt",
    "zone": "Presence",
-   "en": "Honestly, I'd kill the whole thing myself — talk me out of it."
+   "en": "My inclination is to punt the whole thing. Tell me why I shouldn't."
   },
   {
    "anchor": "Elephant",
    "zone": "Presence",
-   "en": "Feels like there's an elephant in the room nobody's naming — what is it?"
+   "en": "What's the elephant in the room?"
   },
   {
    "anchor": "Obvious",
@@ -56,5 +56,5 @@
    "en": "I'm probably missing something obvious — what is it?"
   }
  ],
- "mnemo": "После сложной встречи вы выходите из переговорки в коридор. Пока идёте к пустой кухне, ты просишь его повторить своими словами, как всё sounds — звучит — для него. У кофемашины ты аккуратно отражаешь: seems — кажется, тебя задел не только тон, но и само решение. Он молчит, и по этой паузе у тебя появляется sense — ощущение, что главный слой ещё не назван. За маленьким столом ты открываешь блокнот: в моей head — голове — это выглядит так. На листе ты обводишь одну фразу: здесь что-то off — не сходится. Чтобы он не защищался, ты разворачиваешь блокнот к нему: у меня нет скрытой agenda — повестки. Одну свою версию ты тут же kill — вычёркиваешь. На чистой строке пишешь elephant — слон в комнате: “ты не доверяешь решению”. Он кивает, и становится obvious — очевидно, с чего начинать настоящий разговор."
+ "mnemo": "После сложной встречи вы выходите из переговорки в коридор. Пока идёте к пустой кухне, ты просишь его повторить своими словами, как всё sounds — звучит — для него. У кофемашины ты аккуратно отражаешь: seems — кажется, тебя задел не только тон, но и само решение. Он молчит, и по этой паузе у тебя появляется sense — ощущение, что главный слой ещё не назван. За маленьким столом ты открываешь блокнот: в моей head — голове — это выглядит так. На листе ты обводишь одну фразу: здесь что-то не lining up — не сходится. Чтобы он не защищался, ты разворачиваешь блокнот к нему: у меня нет заранее made up — готового — решения. Одну свою версию ты уже готов punt — отбросить целиком. На чистой строке пишешь elephant — слон в комнате: «ты не доверяешь решению». Он кивает, и становится obvious — очевидно, с чего начинать настоящий разговор."
 }

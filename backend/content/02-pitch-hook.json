@@ -13,12 +13,12 @@
   {
    "anchor": "Fire",
    "zone": "Spark",
-   "en": "Picture this: Monday morning, and the whole thing's on fire before your first coffee."
+   "en": "Imagine, it's Monday morning and your day starts with a fire drill."
   },
   {
-   "anchor": "Quick",
+   "anchor": "moment",
    "zone": "Spark",
-   "en": "Give me thirty seconds — quick one."
+   "en": "I'll need a moment to process this."
   },
   {
    "anchor": "Hook",
@@ -36,9 +36,9 @@
    "en": "Here's the part everyone skips — and it's where the money is."
   },
   {
-   "anchor": "Bet",
+   "anchor": "hunch",
    "zone": "Pull",
-   "en": "I'd bet money you've felt this exact thing."
+   "en": "My hunch is you know what that feels like."
   },
   {
    "anchor": "Strip",
@@ -56,5 +56,5 @@
    "en": "If you remember one thing today, make it this."
   }
  ],
- "mnemo": "Ты сбегаешь на пирс к рыбакам. Показываешь на дымящий баркас: fire — вот что у них полыхает каждый понедельник с утра. Вскидываешь руку: quick — быстро, тридцать секунд. Выхватываешь hook — крюк — и забрасываешь леску. Подсекаешь opportunity — возможность, мимо которой все проходят. Тычешь пальцем в воду: вот здесь money — деньги, у них под ногами. Бьёшь кулаком о ладонь: bet — ставка, — каждый это чувствовал. Ножом strip — счищаешь — чешую и всё лишнее: остаётся суть. Поднимаешь one — один — кусок над головой: вот это. И бросаешь его ближайшему: remember — запомни именно этот."
+ "mnemo": "На рассвете у причала ты замечаешь fire — огонь — в моторном отсеке катера и вместе с командой быстро его тушишь. Просишь moment — минуту — проверить, что потеряно. Берёшь hook — крюк — и вытягиваешь из воды оборванную сеть. В ней ещё бьётся улов: вот opportunity — возможность спасти рейс. Каждая рыба здесь — money — деньги, которые иначе уйдут на дно. По запаху топлива возникает hunch — догадка, где началась неисправность. Ножом strip — снимаешь — оплавленную изоляцию с кабеля и находишь короткое замыкание. Оставляешь one — один — исправный провод как образец для замены. Обгоревший кладёшь капитану на стол: remember — чтобы до следующего выхода он не забыл ремонт."
 }

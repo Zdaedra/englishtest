@@ -23,7 +23,7 @@
   {
    "anchor": "Map",
    "zone": "Anchor",
-   "en": "Let me map out what a good deal looks like for me."
+   "en": "Let's map out what a good deal looks like."
   },
   {
    "anchor": "Move",
@@ -43,7 +43,7 @@
   {
    "anchor": "Bottom",
    "zone": "Hold",
-   "en": "That's my bottom line — I won't go under it."
+   "en": "That's my bottom line."
   },
   {
    "anchor": "Floor",
