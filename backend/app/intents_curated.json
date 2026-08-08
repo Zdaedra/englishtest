@@ -1188,7 +1188,7 @@
    "slug": "charisma-4",
    "oi": 4,
    "anchor": "Around",
-   "en": "I want to hear from everyone. Let's go around the table. Each person share your point of view but in just one sentence.",
+   "en": "Let's go around the table — one sentence each.",
    "intents": [
     "ask",
     "lead",
@@ -1271,7 +1271,7 @@
    "slug": "charisma-5",
    "oi": 3,
    "anchor": "Picture",
-   "en": "I'll set the scene. It's late at night. I'm at a loss for an answer. That's how this change of perspective began.",
+   "en": "I'll set the scene.",
    "intents": [
     "lead",
     "warm"
@@ -1821,7 +1821,7 @@
    "slug": "composure-1",
    "oi": 1,
    "anchor": "Bait",
-   "en": "I'm know what you're doing and appreciate it.",
+   "en": "I know what you're doing and appreciate it.",
    "intents": [
     "hold",
     "pushback",
