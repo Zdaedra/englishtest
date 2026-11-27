@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { api, DeckCard, AnswerResult, SessionSummary } from "../api";
+import { api, DeckCard, AnswerResult, SessionSummary, errKey } from "../api";
+import LoadError from "../ui/LoadError";
 import { ModelPhrase } from "../ui/ModelPhrase";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
@@ -12,7 +13,7 @@ import { useHandsFree } from "../audio/useHandsFree";
 import { speakCueAudio, cancelSpeak, unlockAudio, prefetchCueAudio } from "../lib/speak";
 import { getProgress } from "../lib/progress";
 import { haptic, isNative } from "../lib/session";
-import { SECTION_BY_SLUG } from "../lib/sections";
+import { SECTION_BY_SLUG, sectionName } from "../lib/sections";
 import { BatchCover } from "../ui/Art";
 import { IconPlay, IconMic } from "../ui/icons";
 
@@ -37,16 +38,10 @@ const bumpSwipes = (uid?: number) => {
   return n;
 };
 
-const PILL: Record<string, string> = {
-  "live-tone": "Disagreement", pitch: "Pitch", negotiation: "Negotiation",
-  pressure: "Under Pressure", repair: "Repair", leadership: "Leadership",
-  requests: "Requests", written: "Written", "small-talk": "Small Talk",
-  charisma: "Charisma", flirt: "Attraction", intimacy: "Intimacy",
-  "lead-presence": "Leadership", composure: "Composure", gravitas: "Gravitas",
-  stage: "Stage",
-};
+// Localized section name: the old hardcoded English map showed "Disagreement"
+// on Russian, Spanish, German and French cards alike (2026-11-27).
 const pillLabel = (c: DeckCard) =>
-  PILL[c.section] || SECTION_BY_SLUG[c.section]?.en || c.batch_title || "Executive";
+  (SECTION_BY_SLUG[c.section] ? sectionName(c.section) : "") || c.batch_title || "Executive";
 
 const prefersReduced = () =>
   typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -189,7 +184,7 @@ export default function Training() {
     setPhase("loading");
     api.getDeck(batchIds, { maintenanceIds, limit: FETCH_LIMIT, dueOnly: review, gapOnly: gap, liveOnly: live })
       .then((d) => { setQueue(d); setPhase(d.length ? "deck" : "empty"); shownAtRef.current = Date.now(); })
-      .catch((e) => { setErr(String(e)); setPhase("error"); });
+      .catch((e) => { setErr(errKey(e)); setPhase("error"); });
   }, [sources, review, gap, live]);
 
   useEffect(() => { loadDeck(); }, [loadDeck]);
@@ -245,7 +240,7 @@ export default function Training() {
     setPhase("loading");
     api.trainSummary(sessionId)
       .then((s) => { setSummary(s); setPhase("summary"); })
-      .catch((e) => { setErr(String(e)); setPhase("error"); });
+      .catch((e) => { setErr(errKey(e)); setPhase("error"); });
   }, [sessionId]);
 
   const advance = useCallback((known: boolean, dir: "left" | "right") => {
@@ -533,7 +528,7 @@ export default function Training() {
     loadDeck();
   };
 
-  if (phase === "error") return <div className="screen tr-screen"><p className="error">{err}</p></div>;
+  if (phase === "error") return <LoadError msgKey={err} />;
   if (phase === "loading") return <div className="screen tr-screen"><p className="muted" style={{ marginTop: 28 }}>{t("practice.loading")}</p></div>;
 
   if (phase === "empty") {

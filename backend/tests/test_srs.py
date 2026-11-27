@@ -106,7 +106,7 @@ def test_swipe_right_schedules_unspoken_phrase(make_user):
     admin = make_user(plan="ai", is_admin=True)
     bid = commit_sample_batch(admin)
     pid = phrase_ids(admin, bid)[0]
-    free = make_user(plan="free")
+    free = make_user(plan="core")   # paid topic: core has the content, not the mic
     r = free.post("/api/training/swipe",
                   json={"session_id": "s", "phrase_id": pid, "swipe_direction": "right"})
     assert r.status_code == 200, r.text
@@ -121,7 +121,7 @@ def test_swipe_left_lapses_unspoken_phrase(make_user):
     admin = make_user(plan="ai", is_admin=True)
     bid = commit_sample_batch(admin)
     pid = phrase_ids(admin, bid)[0]
-    free = make_user(plan="free")
+    free = make_user(plan="core")
     free.post("/api/training/swipe",
               json={"session_id": "s", "phrase_id": pid, "swipe_direction": "left"})
     st = _stat_row(free.user["id"], pid)

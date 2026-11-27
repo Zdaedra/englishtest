@@ -90,6 +90,7 @@ const en: Dict = {
   "auth.tagRegister": "Create an account to begin.",
   "auth.name": "Name",
   "auth.password": "Password",
+  "auth.forgot": "Forgot password?",
   "auth.login": "Sign in",
   "auth.register": "Create account",
   "auth.toLogin": "Already have an account? Sign in",
@@ -207,7 +208,7 @@ const en: Dict = {
   "sub.autorenew": "Your subscription renews automatically unless you cancel it at least 24 hours before the end of the period. Payment goes through the App Store; manage or cancel your subscription in your Apple ID settings.",
   "auth.legalNote": "By continuing, you accept:",
   "voice.consentTitle": "Voice and AI",
-  "voice.consentText": "To score your speech, the recording is sent for transcription (OpenAI), and the text of your answer goes to AI services (OpenAI/Anthropic) for scoring and hints. Audio is not stored; the text transcript is kept in your progress. You can turn this off.",
+  "voice.consentText": "To score your answers, what you say or type is sent to AI services: speech is turned into text by Apple speech recognition or OpenAI, and the text is scored by OpenAI or Anthropic. Audio is not stored; the text of your answers is kept in your progress for up to 12 months.",
   "voice.consentAccept": "Continue",
   "profile.exportTitle": "Download my data",
   "profile.exportSub": "Export your account and progress (JSON)",
@@ -273,12 +274,21 @@ const en: Dict = {
 
   // ── Common / paywall ───────────────────────────────────────────────
   "common.back": "Back",
+  "common.retry": "Try again",
+  "err.offline": "No connection to the server.",
+  "err.server": "The server didn't respond.",
+  "err.aiRequired": "Voice scoring is part of the AI plan.",
+  "err.locked": "This topic opens with a subscription.",
+  "err.monthlyLimit": "This month's AI limit is used up.",
+  "err.tooLong": "The recording is too long.",
   "paywall.body": "This topic opens with a subscription. One set is already free in full — work through it.",
   "paywall.cta": "Get full access →",
 
   // ── Account deletion (Apple-required) ──────────────────────────────
   "account.delete": "Delete account",
   "account.deleteConfirm": "Delete your account for good? All progress and data will be erased.",
+  "account.deleteSubNote": "Deleting the account doesn't cancel an App Store subscription.",
+  "account.manageSub": "Manage subscriptions",
   "account.deleteYes": "Delete permanently",
   "account.deleteFailed": "Could not delete the account. Check your connection and try again.",
   "account.deleteCancel": "Cancel",
@@ -296,6 +306,7 @@ const en: Dict = {
   "sub.choose": "Choose",
   "sub.current": "Current plan",
   "sub.restore": "Restore purchases",
+  "sub.pricesUnavailable": "App Store prices didn't load.",
   "sub.soon": "Payment arrives in an upcoming app update.",
   "sub.thanks": "Subscription active — thank you!",
   "sub.failed": "Couldn’t complete the purchase. Try again.",
@@ -310,7 +321,7 @@ const en: Dict = {
   "sub.ai.f4": "The whole library, Learn and Practice",
   "sub.core.name": "Executive Core",
   "sub.core.tagline": "The whole library without the AI voice",
-  "sub.core.f1": "All topics (89 sets)",
+  "sub.core.f1": "All topics",
   "sub.core.f2": "Learn and swipe practice",
   "sub.core.f3": "Audio playback of phrases",
 
@@ -339,6 +350,7 @@ const en: Dict = {
   "lib.mInWork": "Under way",
   "lib.mStreak": "Days in a row",
   "lib.nPatterns": "Patterns: {{n}}",
+  "lib.nMin": "{{n}} min",
   "lib.listenAria": "Listen",
   "lib.comingSoon": "Soon",
 

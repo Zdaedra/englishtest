@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { api, BatchListItem } from "../api";
+import { api, BatchListItem, errKey } from "../api";
 import { BatchCover } from "../ui/Art";
 import { IconBack } from "../ui/icons";
 import { sectionName, sectionBlurb } from "../lib/sections";
@@ -19,7 +19,7 @@ export default function SectionDetail() {
   const [err, setErr] = useState("");
 
   useEffect(() => {
-    api.listBatches().then(setBatches).catch((e) => setErr(String(e)));
+    api.listBatches().then(setBatches).catch((e) => setErr(errKey(e)));
   }, []);
 
   const blurb = sectionBlurb(slug);
@@ -42,7 +42,7 @@ export default function SectionDetail() {
         {blurb && <p className="app-sub">{blurb}</p>}
       </div>
 
-      {err && <p className="error">{err}</p>}
+      {err && <p className="error">{t(err)}</p>}
 
       <div className="grid">
         {items.map((b, i) => (

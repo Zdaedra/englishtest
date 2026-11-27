@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useVoiceConsent } from "../ui/VoiceConsent";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { IconBack } from "../ui/icons";
@@ -13,6 +14,7 @@ Curious (1-3)
 export default function ImportBatch() {
   const nav = useNavigate();
   const loc = useLocation();
+  const { requireConsent, consentModal } = useVoiceConsent();
   // Prefill from the Call Analyzer's "train these phrases" hand-off.
   const [raw, setRaw] = useState<string>((loc.state as { raw?: string } | null)?.raw || "");
   const [useLlm, setUseLlm] = useState(false);
@@ -23,6 +25,7 @@ export default function ImportBatch() {
   const [err, setErr] = useState("");
 
   const doParse = async () => {
+    if (!requireConsent()) return;   // Apple 5.1.2(i): an unrecognised format goes to an LLM
     setErr(""); setBusy(true);
     try {
       const r = await api.parse(raw, useLlm);
@@ -46,6 +49,7 @@ export default function ImportBatch() {
 
   return (
     <div className="screen">
+      {consentModal}
       <button className="back-link" onClick={() => nav("/profile")}>
         <IconBack /> Profile
       </button>

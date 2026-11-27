@@ -1,7 +1,7 @@
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, ReactNode,
 } from "react";
-import { api, BatchDetail, PlanSeg, Phrase, SessionResp } from "../api";
+import { api, errKey, BatchDetail, PlanSeg, Phrase, SessionResp } from "../api";
 import { cacheAudio, isCached, setupMediaSession } from "../audio/helpers";
 import { useAuth } from "../auth/AuthContext";
 
@@ -166,7 +166,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       } catch (e) {
         // The free plan's sittings-per-day cap: a known state, not a failure —
         // Playback renders it as a sentence + upgrade, never the raw JSON.
-        setErr(String(e).includes("daily_limit") ? "daily_limit" : String(e));
+        setErr(String(e).includes("daily_limit") ? "daily_limit" : errKey(e));
       } finally {
         setBusy(false);
       }
@@ -288,7 +288,9 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         a.src = audio_url;
         await a.play();
       } catch (e) {
-        setErr(String(e));
+        // iOS refuses play() without a fresh tap (NotAllowedError): the learner
+        // just taps again — not an error worth a red line.
+        if ((e as { name?: string })?.name !== "NotAllowedError") setErr(errKey(e));
       }
     },
     [rate]

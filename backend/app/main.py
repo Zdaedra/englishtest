@@ -9,7 +9,7 @@ from sqlmodel import Session
 from . import models
 from .config import get_settings
 from .db import engine, init_db
-from .auth import parse_session
+from .auth import parse_session, parse_session_full, token_fits_user
 from .routers import admin_stats, analyzer, auth, batches, battle, billing, imports, league, practice, progress, sessions, settings, training, tutorial
 
 app = FastAPI(title="English Executive")
@@ -87,23 +87,28 @@ async def _auth_gate(request: Request, call_next):
     # Web sends the signed session in the httponly cookie; native clients (no
     # reliable cross-origin cookie in WKWebView) send the same token as a
     # Bearer header. Accept either.
-    uid = parse_session(request.cookies.get(_COOKIE, ""))
-    if uid is None:
+    parsed = parse_session_full(request.cookies.get(_COOKIE, ""))
+    if parsed is None:
         authz = request.headers.get("authorization", "")
         if authz[:7].lower() == "bearer ":
-            uid = parse_session(authz[7:].strip())
-    if uid is None:
+            parsed = parse_session_full(authz[7:].strip())
+    if parsed is None:
         return Response(status_code=401)
+    uid, issued_at = parsed
+    with Session(engine()) as s:
+        u = s.get(models.User, uid)
+        # No such account (deleted), or the id now belongs to a newer account
+        # than this token: 401, never someone else's data and never a 500.
+        if not token_fits_user(issued_at, u):
+            return Response(status_code=401)
+        verified = bool(u.email_verified)
     request.state.user_id = uid
     # Mandatory email verification: an authed-but-unconfirmed account may only hit
     # the account-management endpoints (resend/change/logout/me/ui-lang) until it
     # confirms its email. Everything else is blocked so the gate has real teeth.
-    if path not in _VERIFY_EXEMPT:
-        with Session(engine()) as s:
-            u = s.get(models.User, uid)
-            if u is not None and not u.email_verified:
-                return JSONResponse({"code": "email_unverified",
-                                     "msg": "Подтвердите email."}, status_code=403)
+    if path not in _VERIFY_EXEMPT and not verified:
+        return JSONResponse({"code": "email_unverified",
+                             "msg": "Подтвердите email."}, status_code=403)
     return await call_next(request)
 
 app.include_router(auth.router)

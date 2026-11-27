@@ -224,6 +224,18 @@ def _apply_plan(session: Session, user: models.User, product_id: str,
     user.plan_expires_at = _ms_to_dt(expires_ms)
     if original_tx_id:
         user.apple_original_tx_id = original_tx_id
+        # One Apple subscription = one account. "Restore purchases" on a second
+        # account used to COPY the plan (two paid accounts, one payment; webhooks
+        # then updated only one of them). Applying here MOVES it (2026-11-27).
+        for other in session.exec(select(models.User).where(
+                models.User.apple_original_tx_id == original_tx_id,
+                models.User.id != user.id)).all():
+            other.plan = "free"
+            other.plan_expires_at = None
+            other.apple_original_tx_id = None
+            session.add(other)
+            _log.info("subscription %s moved from user %s to user %s",
+                      original_tx_id, other.id, user.id)
     session.add(user)
     session.commit()
     return plan
@@ -231,6 +243,10 @@ def _apply_plan(session: Session, user: models.User, product_id: str,
 
 class VerifyIn(BaseModel):
     signed_transaction: str  # StoreKit2 Transaction.jwsRepresentation
+    # purchase: bought just now on this account; restore: the user pressed
+    # "Restore purchases"; sync: the app re-posting the device's entitlements on
+    # sign-in / launch. Old builds send nothing -> treated as purchase.
+    source: str = "purchase"
 
 
 @router.post("/verify")
@@ -245,9 +261,41 @@ def verify(body: VerifyIn, request: Request, session: Session = Depends(get_sess
     tx = _decode_tx(body.signed_transaction)
     if tx is None:
         raise HTTPException(400, {"code": "invalid_transaction"})
+    ignored = _why_not_apply(session, u, tx, body.source)
+    if ignored:
+        _log.info("verify for user %s (%s): ignored, %s", u.id, body.source, ignored)
+        return {"ok": True, "plan": effective_plan(u), "ignored": ignored,
+                "plan_expires_at": u.plan_expires_at.isoformat() if u.plan_expires_at else None}
     plan = _apply_plan(session, u, tx.productId or "", tx.expiresDate, tx.originalTransactionId)
     return {"ok": True, "plan": plan,
             "plan_expires_at": u.plan_expires_at.isoformat() if u.plan_expires_at else None}
+
+
+def _why_not_apply(session: Session, u, tx, source: str) -> str | None:
+    """Reasons a verified transaction must NOT change this account's plan.
+
+    Found 2026-11-27: the silent sign-in sync re-posts whatever the DEVICE holds,
+    and the server applied it to whoever was signed in. A reviewer who buys on the
+    free demo account and then signs into the full demo account turned it into
+    "core" (and into free once the sandbox sub lapsed); one Apple subscription
+    also unlocked any number of accounts on a shared device.
+    """
+    if getattr(tx, "revocationDate", None):
+        return "revoked"                       # refunded / revoked: never grants
+    if source != "sync":
+        return None                            # an explicit purchase or restore applies
+    exp = getattr(tx, "expiresDate", None)
+    if exp and exp < datetime.now(timezone.utc).timestamp() * 1000:
+        return "expired"
+    orig = getattr(tx, "originalTransactionId", None)
+    if orig and orig != u.apple_original_tx_id:
+        holder = session.exec(select(models.User).where(
+            models.User.apple_original_tx_id == orig, models.User.id != u.id)).first()
+        if holder is not None:
+            return "linked_to_another_account"
+    if (u.plan_source or "manual") == "manual" and (u.plan or "free") != "free":
+        return "manual_plan"                   # a hand-granted plan is not overwritten silently
+    return None
 
 
 # Lazy self-repair throttle {user_id: monotonic time of the next allowed ask}.
@@ -338,6 +386,17 @@ _EXPIRE_TYPES = {"EXPIRED", "REVOKE", "REFUND", "GRACE_PERIOD_EXPIRED"}
 _GRANT_TYPES = {"SUBSCRIBED", "DID_RENEW", "OFFER_REDEEMED", "RENEWAL_EXTENDED", "REFUND_REVERSED"}
 
 
+
+def _is_stale(u, tx) -> bool:
+    """The notification's period ends before the period we already hold."""
+    held = getattr(u, "plan_expires_at", None)
+    ends = _ms_to_dt(getattr(tx, "expiresDate", None))
+    if held is None or ends is None:
+        return False
+    if held.tzinfo is None:
+        held = held.replace(tzinfo=timezone.utc)
+    return ends < held
+
 @router.post("/apple-notifications")
 async def apple_notifications(request: Request, session: Session = Depends(get_session)):
     """App Store Server Notifications V2 webhook (renew / expire / refund / etc).
@@ -364,6 +423,13 @@ async def apple_notifications(request: Request, session: Session = Depends(get_s
                   ntype, subtype or "-")
         return {"ok": True}  # unknown subscriber (e.g. before first /verify)
 
+    if ntype in ("EXPIRED", "GRACE_PERIOD_EXPIRED") and _is_stale(u, tx):
+        # A late EXPIRED for a period the subscriber has already renewed past used
+        # to lock them out — and /me self-repair never ran, since the plan was
+        # already "free" (2026-11-27). Refund/revoke still always apply.
+        _log.info("apple notification %s/%s for user %s: stale (ends %s, renewed to %s) — ignored",
+                  ntype, subtype or "-", u.id, _ms_to_dt(tx.expiresDate), u.plan_expires_at)
+        return {"ok": True}
     if ntype in _EXPIRE_TYPES:
         u.plan = "free"
         u.plan_expires_at = _ms_to_dt(tx.expiresDate)

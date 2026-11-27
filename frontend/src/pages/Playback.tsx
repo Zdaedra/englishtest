@@ -233,7 +233,7 @@ export default function Playback() {
 function PlaybackError({ err }: { err: string }) {
   const nav = useNavigate();
   const { t } = useI18n();
-  if (err !== "daily_limit") return <p className="error">{err}</p>;
+  if (err !== "daily_limit") return <p className="error">{t(err)}</p>;
   return (
     <div className="pb-limit">
       <p>{t("pb.dailyLimit")}</p>

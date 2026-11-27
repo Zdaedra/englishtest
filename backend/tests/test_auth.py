@@ -178,3 +178,66 @@ def test_gated_endpoint_without_token_is_401(client):
 
 def test_health_is_public(client):
     assert client.get("/api/health").json() == {"ok": True}
+
+
+def test_delete_account_with_usage_ledger_really_deletes(make_user):
+    """Found 2026-11-27: UsageLedger (written by the first voice scoring) was
+    missing from the deletion list, its FK blocked the delete -> 500, the account
+    stayed — and the app logged the user out as if it had worked."""
+    from sqlmodel import Session
+    from app import models
+    from app.db import engine
+    c = make_user(email="ledger@example.com", plan="ai")
+    uid = c.user["id"]  # type: ignore[attr-defined]
+    with Session(engine()) as s:
+        s.add(models.UsageLedger(user_id=uid, period=202611, micros=1234))
+        s.commit()
+    r = c.request("DELETE", "/api/auth/me")
+    assert r.status_code == 200, r.text
+    with Session(engine()) as s:
+        assert s.get(models.User, uid) is None, "account survived deletion"
+
+
+def test_every_user_table_is_in_the_deletion_list():
+    """Any table with a user_id FK that the deletion forgets blocks the delete
+    (FK) or leaves personal data behind. Batch is handled separately (owner_id)."""
+    from sqlmodel import SQLModel
+    from app.routers.auth import _USER_TABLES
+    covered = {M.__table__.name for M in _USER_TABLES}
+    missing = []
+    for t in SQLModel.metadata.tables.values():
+        if t.name in ("user", "batch"):
+            continue
+        for fk in t.foreign_keys:
+            if fk.column.table.name == "user" and t.name not in covered:
+                missing.append(t.name)
+    assert not missing, f"user tables missing from deletion: {missing}"
+
+
+def test_token_of_a_deleted_account_does_not_open_the_next_one(make_user):
+    """SQLite hands the freed id to the next signup and the token carries only
+    the id — so a deleted account's token opened the next person's account."""
+    from datetime import datetime, timedelta, timezone
+    from sqlmodel import Session
+    from app import models
+    from app.auth import make_session
+    from app.db import engine
+    old = make_user(email="gone@example.com")
+    uid = old.user["id"]  # type: ignore[attr-defined]
+    token = make_session(uid)
+    assert old.request("DELETE", "/api/auth/me").status_code == 200
+    new = make_user(email="next@example.com")
+    assert new.user["id"] == uid, "precondition: SQLite reused the id"  # type: ignore[attr-defined]
+    with Session(engine()) as s:          # the new account was created after the token
+        u = s.get(models.User, uid)
+        u.created_at = datetime.now(timezone.utc) + timedelta(minutes=1)
+        s.add(u); s.commit()
+    c = TestClient(app)
+    r = c.get("/api/auth/me", headers={"Authorization": f"Bearer {token}"})
+    assert r.status_code == 401, "an old token opened someone else's account"
+
+
+def test_token_for_a_missing_user_is_401_not_500(client):
+    from app.auth import make_session
+    r = client.get("/api/progress", headers={"Authorization": f"Bearer {make_session(987654)}"})
+    assert r.status_code == 401

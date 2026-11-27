@@ -166,9 +166,44 @@ function apiFetch(path: string, init?: RequestInit): Promise<Response> {
 let _onUnauthorized: (() => void) | null = null;
 export function setOnUnauthorized(cb: () => void) { _onUnauthorized = cb; }
 
+/** A non-2xx API answer. The message keeps "<status> <body>", so the older
+ *  `includes("429")`-style checks around the app finally see the status code —
+ *  before this the status was dropped and those checks never fired. */
+export class ApiError extends Error {
+  status: number;
+  body: string;
+  constructor(status: number, body: string) {
+    super(`${status} ${body}`);
+    this.name = "ApiError";
+    this.status = status;
+    this.body = body;
+  }
+  get code(): string {
+    try {
+      const d = JSON.parse(this.body)?.detail;
+      return typeof d === "string" ? d : (d?.code ?? "");
+    } catch { return ""; }
+  }
+}
+
+/** The i18n key of one short sentence for any failure — never the raw body. */
+export function errKey(e: unknown): string {
+  if (e instanceof ApiError) {
+    const c = e.code;
+    if (e.status === 403 && c === "ai_required") return "err.aiRequired";
+    if (e.status === 403 && c === "locked") return "err.locked";
+    if (e.status === 429) return /month/i.test(e.body) ? "err.monthlyLimit" : "rec.limit";
+    if (e.status === 413) return "err.tooLong";
+    if (e.status >= 500) return "err.server";
+    return "auth.errGeneric";
+  }
+  if (e instanceof TypeError) return "err.offline";   // fetch itself failed: no network
+  return "auth.errGeneric";
+}
+
 async function j<T>(r: Response): Promise<T> {
   if (r.status === 401) _onUnauthorized?.();
-  if (!r.ok) throw new Error((await r.text()) || r.statusText);
+  if (!r.ok) throw new ApiError(r.status, (await r.text()) || r.statusText);
   return r.json();
 }
 
@@ -192,11 +227,13 @@ export const api = {
     apiFetch(`/api/batches/${id}`, { method: "DELETE" }).then(j<{ ok: boolean }>),
   // Apple IAP: after a StoreKit 2 purchase/restore, POST the signed transaction
   // (Transaction.jwsRepresentation) for server-side verification → applies the plan.
-  verifyPurchase: (signedTransaction: string) =>
+  // source: "sync" (silent sign-in sweep) never moves a subscription that another
+  // account holds and never overwrites a hand-granted plan; see billing._why_not_apply.
+  verifyPurchase: (signedTransaction: string, source: "purchase" | "restore" | "sync") =>
     apiFetch("/api/billing/verify", {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ signed_transaction: signedTransaction }),
-    }).then(j<{ ok: boolean; plan: string; plan_expires_at: string | null }>),
+      body: JSON.stringify({ signed_transaction: signedTransaction, source }),
+    }).then(j<{ ok: boolean; plan: string; plan_expires_at: string | null; ignored?: string }>),
   // Ask the server to re-check this account against Apple's live subscription
   // status. `checked` is false when it could not ask at all, so "nothing
   // changed" is distinguishable from "we never looked".
@@ -357,7 +394,14 @@ export const api = {
       body: JSON.stringify(patch),
     }).then(j<any>),
   // --- Auth (commercial multi-user) ---
-  me: () => apiFetch("/api/auth/me").then((r) => (r.ok ? (r.json() as Promise<Me>) : null)),
+  // null ONLY for a real 401 (signed out). Anything else — no network, 5xx, a 502
+  // while the server redeploys — throws: it used to return null too, and a
+  // signed-in learner who opened the app offline landed on the login screen.
+  me: () => apiFetch("/api/auth/me").then((r) => {
+    if (r.status === 401) return null;
+    if (!r.ok) throw new Error(`me ${r.status}`);
+    return r.json() as Promise<Me>;
+  }),
   login: (email: string, password: string) =>
     apiFetch("/api/auth/login", {
       method: "POST", headers: { "content-type": "application/json" },
@@ -369,7 +413,12 @@ export const api = {
       body: JSON.stringify({ email, password, name }),
     }).then(j<Me>),
   logout: () => apiFetch("/api/auth/logout", { method: "POST" }).then((r) => r.ok),
-  deleteAccount: () => apiFetch("/api/auth/me", { method: "DELETE" }).then((r) => r.ok),
+  // Throws on any non-2xx: a 500 here used to resolve `false`, the caller never
+  // looked, and the app signed out as if the account were gone (2026-11-27).
+  deleteAccount: () => apiFetch("/api/auth/me", { method: "DELETE" }).then((r) => {
+    if (!r.ok) throw new Error(`delete failed: ${r.status}`);
+    return true;
+  }),
   // Privacy: export everything tied to the account (access/portability right).
   exportData: () => apiFetch("/api/auth/export").then(j<Record<string, unknown>>),
   // Privacy: append-only consent audit (voice_ai | privacy_terms | withdraw_voice_ai).

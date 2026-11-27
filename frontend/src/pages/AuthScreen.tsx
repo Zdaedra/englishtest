@@ -5,7 +5,7 @@ import LangSwitcher from "../ui/LangSwitcher";
 
 function humanize(s: string, t: (k: string, vars?: Record<string, string | number>) => string): string {
   try {
-    const d = JSON.parse(s.replace(/^Error:\s*/, ""))?.detail;
+    const d = JSON.parse(s.replace(/^\w*Error:\s*/, "").replace(/^\d{3}\s+/, ""))?.detail;
     if (d && typeof d === "object" && d.code) {
       const key = `auth.err.${d.code}`;
       const out = t(key, d.min != null ? { min: d.min } : undefined);
@@ -71,6 +71,11 @@ export default function AuthScreen() {
           {" · "}
           <a href="https://executive-english.net/privacy" target="_blank" rel="noreferrer">{t("about.privacy")}</a>
         </p>
+        {mode === "login" && (
+          <a className="auth-forgot" href="https://executive-english.net/support" target="_blank" rel="noreferrer">
+            {t("auth.forgot")}
+          </a>
+        )}
         <button className="auth-toggle" type="button"
           onClick={() => { setMode(mode === "login" ? "register" : "login"); setErr(""); }}>
           {mode === "login" ? t("auth.toRegister") : t("auth.toLogin")}

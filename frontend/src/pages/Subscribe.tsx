@@ -36,13 +36,14 @@ const TIERS: Tier[] = [
   },
 ];
 
-/** A tier priced the way the customer's own App Store prices it. Falls back to
- *  the static figures when StoreKit has not answered (web, offline, products not
- *  approved yet) — never shows a blank price. */
-function pricedTier(tr: Tier, live: Record<string, IapProduct>): Tier {
+/** A tier priced the way the customer's own App Store prices it. On the web the
+ *  static figures stand in (there is no StoreKit). On the device a missing
+ *  product shows "…", never the static dollars: those masked products not being
+ *  attached to the version — the reviewer saw prices, tapped, and got a failure. */
+function pricedTier(tr: Tier, live: Record<string, IapProduct>, native: boolean): Tier {
   const m = live[PRODUCT_ID[`${tr.plan}:monthly`]];
   const y = live[PRODUCT_ID[`${tr.plan}:yearly`]];
-  if (!m || !y) return tr;
+  if (!m || !y) return native ? { ...tr, monthly: "…", yearly: "…", monthlyEq: "…", savePct: "" } : tr;
   const out: Tier = { ...tr, monthly: m.displayPrice, yearly: y.displayPrice };
   // The per-month equivalent comes PRE-FORMATTED from StoreKit. Formatting it
   // here instead would put two different-looking amounts of the same currency on
@@ -65,8 +66,19 @@ export default function Subscribe() {
   const [period, setPeriod] = useState<"monthly" | "yearly">("yearly");
   // Real App Store prices for this customer; {} on web and until they arrive.
   const [live, setLive] = useState<Record<string, IapProduct>>({});
-  useEffect(() => { void loadProducts().then(setLive); }, []);
-  const tiers = useMemo(() => TIERS.map((tr) => pricedTier(tr, live)), [live]);
+  const native = iapAvailable();
+  // pending -> ok | missing. "missing" = StoreKit answered without all four products.
+  const [prices, setPrices] = useState<"pending" | "ok" | "missing">(native ? "pending" : "ok");
+  const fetchPrices = () => {
+    if (!native) return;
+    setPrices("pending");
+    void loadProducts().then((p) => {
+      setLive(p);
+      setPrices(Object.values(PRODUCT_ID).every((id) => p[id]) ? "ok" : "missing");
+    });
+  };
+  useEffect(fetchPrices, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  const tiers = useMemo(() => TIERS.map((tr) => pricedTier(tr, live, native)), [live, native]);
   const maxSave = useMemo(
     () => Math.max(...tiers.map((tr) => parseInt(tr.savePct, 10) || 0)), [tiers]);
 
@@ -117,7 +129,7 @@ export default function Subscribe() {
           className={`period-tab${period === "yearly" ? " active" : ""}`}
           onClick={() => setPeriod("yearly")}
         >
-          {t("sub.yearly")}<span className="period-pill">−{maxSave}%</span>
+          {t("sub.yearly")}{maxSave > 0 && <span className="period-pill">−{maxSave}%</span>}
         </button>
       </div>
 
@@ -132,7 +144,7 @@ export default function Subscribe() {
               {period === "yearly" ? (
                 <>
                   <span className="sub-price-mo"><b>{tr.yearly}</b>{t("sub.perYear")}</span>
-                  <span className="sub-price-yr">{t("sub.perMoEq", { price: tr.monthlyEq })} · <span className="sub-save">−{tr.savePct}</span></span>
+                  <span className="sub-price-yr">{t("sub.perMoEq", { price: tr.monthlyEq })}{tr.savePct && <> · <span className="sub-save">−{tr.savePct}</span></>}</span>
                 </>
               ) : (
                 <span className="sub-price-mo"><b>{tr.monthly}</b>{t("sub.perMonth")}</span>
@@ -146,7 +158,7 @@ export default function Subscribe() {
             {current ? (
               <div className="sub-current">{t("sub.current")}</div>
             ) : (
-              <button className={`sub-buy${tr.flagship ? " primary" : ""}`} disabled={busy} onClick={() => buy(tr.plan, period)}>
+              <button className={`sub-buy${tr.flagship ? " primary" : ""}`} disabled={busy || prices !== "ok"} onClick={() => buy(tr.plan, period)}>
                 {busy ? "…" : t("sub.choose")}
               </button>
             )}
@@ -156,6 +168,12 @@ export default function Subscribe() {
 
       {user?.plan !== "ai" && user?.plan !== "core" && (
         <p className="sub-free-note">{t("sub.freeNote")}</p>
+      )}
+      {prices === "missing" && (
+        <p className="sub-note">
+          {t("sub.pricesUnavailable")}{" "}
+          <button className="sub-retry" onClick={fetchPrices}>{t("common.retry")}</button>
+        </p>
       )}
       {note && <p className="sub-note">{note}</p>}
       <button className="sub-restore" disabled={busy} onClick={restore}>{t("sub.restore")}</button>

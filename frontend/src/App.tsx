@@ -272,6 +272,46 @@ function NativeWidgetSync({ uid }: { uid: number }) {
   return null;
 }
 
+/** Launch could not reach the server. Not the login screen: the learner is
+ *  still signed in, and without password recovery "Sign in" here reads as
+ *  "the app logged me out". */
+function OfflineScreen({ onRetry }: { onRetry: () => void }) {
+  const { t } = useI18n();
+  return (
+    <div className="auth-screen">
+      <div className="auth-card" style={{ textAlign: "center" }}>
+        <div className="auth-brand">Executive English</div>
+        <p className="auth-tag">{t("err.offline")}</p>
+        <button className="l3-cta" onClick={onRetry}>{t("common.retry")}</button>
+      </div>
+    </div>
+  );
+}
+
+/** Native only: the Liquid-Glass tab bar is a UIKit view ABOVE the web view, so
+ *  web sheets (voice consent, batch menu, coach-marks, widget how-to, avatar
+ *  editor) could not cover it — it stayed visible and tappable on top of every
+ *  modal (NavBar.setVisible existed but nothing called it; found 2026-11-27).
+ *  One observer instead of a call in every sheet: any aria-modal dialog or the
+ *  batch action sheet in the DOM hides the bar; none left shows it again. */
+function NativeBarModalGuard() {
+  useEffect(() => {
+    if (!isNative()) return;
+    let hidden = false;
+    const sync = () => {
+      const open = !!document.querySelector('[aria-modal="true"], .bm-sheet');
+      if (open === hidden) return;
+      hidden = open;
+      NavBar.setVisible({ visible: !open }).catch(() => {});
+    };
+    const mo = new MutationObserver(sync);
+    mo.observe(document.body, { childList: true, subtree: true });
+    sync();
+    return () => { mo.disconnect(); if (hidden) NavBar.setVisible({ visible: true }).catch(() => {}); };
+  }, []);
+  return null;
+}
+
 /** Marks <html> while the page is scrolled, so the status-bar strip
  *  (.shell::before) shows only when content actually runs under the clock —
  *  at rest the top of every screen stays clean, like native large-title screens. */
@@ -288,10 +328,13 @@ function ScrolledFlag() {
 }
 
 function Shell() {
-  const { user, loading } = useAuth();
+  const { user, loading, offline, retry } = useAuth();
   const [obDone, setObDone] = useState(false);
   if (loading) {
     return <div className="auth-screen"><div className="auth-splash">Executive English</div></div>;
+  }
+  if (!user && offline) {
+    return <OfflineScreen onRetry={retry} />;
   }
   if (!user) {
     return <AuthScreen />;
@@ -314,6 +357,7 @@ function Shell() {
             <FloatingNav />
             <RouteTour uid={user.id} />
             <ScrolledFlag />
+            <NativeBarModalGuard />
             <NativeWidgetSync uid={user.id} />
           </div>
         </TeachProvider>

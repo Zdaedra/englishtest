@@ -26,6 +26,14 @@ _NOVICE_AVG = 4.0
 _MAX_AUDIO_BYTES = 8 * 1024 * 1024
 
 
+
+def _require_visible(b: "models.Batch | None", user_id: int) -> None:
+    """404 for someone else's private import or a deleted batch — BEFORE any paid
+    STT/LLM call, and before the AI gate (which answered 403 and so confirmed the
+    id exists). Sequential ids made foreign imports trivially enumerable."""
+    if not access.visible(b, user_id):
+        raise HTTPException(404, "Batch not found")
+
 def _today_start() -> datetime:
     now = datetime.now(timezone.utc)
     return now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -112,7 +120,9 @@ async def score_phrase(audio: UploadFile = File(...), phrase_id: int = Form(...)
     # free account could score any phrase of any locked topic. Same gate as
     # /answer: the free showcase topic keeps demoing AI to everyone.
     u = session.get(models.User, user_id)
-    if not access.ai_on_batch(effective_plan(u), session.get(models.Batch, p.batch_id)):
+    _b = session.get(models.Batch, p.batch_id)
+    _require_visible(_b, user_id)
+    if not access.ai_on_batch(effective_plan(u), _b):
         raise HTTPException(403, "ai_required")
     _check_rate(session, user_id)
     raw = await _read_audio(audio)
@@ -144,7 +154,9 @@ async def score_anchor(audio: UploadFile = File(...), phrase_id: int = Form(...)
     if not p:
         raise HTTPException(404, "Phrase not found")
     u = session.get(models.User, user_id)
-    if not access.ai_on_batch(effective_plan(u), session.get(models.Batch, p.batch_id)):
+    _b = session.get(models.Batch, p.batch_id)
+    _require_visible(_b, user_id)
+    if not access.ai_on_batch(effective_plan(u), _b):
         raise HTTPException(403, "ai_required")
     _check_rate(session, user_id)
     raw = await _read_audio(audio)
@@ -171,6 +183,7 @@ async def score_sequence(audio: UploadFile = File(...), batch_id: int = Form(...
     if not b or b.deleted_at:
         raise HTTPException(404, "Batch not found")
     u = session.get(models.User, user_id)
+    _require_visible(b, user_id)
     if not access.ai_on_batch(effective_plan(u), b):
         raise HTTPException(403, "ai_required")
     mnemo = session.exec(
@@ -272,8 +285,7 @@ def rotation(batch_id: int, user_id: int = Depends(current_user_id),
     """Adaptive drill order: weighted-random permutation favouring poorly-recalled
     phrases (weight = 11 - this user's avg_score)."""
     b = session.get(models.Batch, batch_id)
-    if not b or b.deleted_at:
-        raise HTTPException(404, "Batch not found")
+    _require_visible(b, user_id)
     phrases = session.exec(
         select(models.Phrase).where(models.Phrase.batch_id == batch_id)
         .order_by(models.Phrase.order_index)
@@ -551,6 +563,13 @@ def _swipe(body: SwipeIn, user_id: int, session: Session):
     p = session.get(models.Phrase, body.phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
+    b = session.get(models.Batch, p.batch_id)
+    _require_visible(b, user_id)
+    # A swipe creates a stat row, and stat rows feed the battle corpus: on a
+    # locked topic that was a free read of paid content (2026-11-27).
+    u = session.get(models.User, user_id)
+    if not access.batch_usable(effective_plan(u), b, user_id):
+        raise HTTPException(403, "locked")
     st = _stat(session, user_id, p)
     knew = body.swipe_direction == "right"
     val = 1.0 if knew else 0.0
@@ -617,6 +636,7 @@ async def answer(audio: UploadFile = File(...), phrase_id: int = Form(...),
         raise HTTPException(404, "Phrase not found")
     u = session.get(models.User, user_id)
     b = session.get(models.Batch, p.batch_id)
+    _require_visible(b, user_id)
     if not access.ai_on_batch(effective_plan(u), b):
         raise HTTPException(403, "ai_required")  # mic = AI plan (free on the showcase batch)
     _check_rate(session, user_id)
@@ -656,6 +676,7 @@ def answer_text(body: AnswerTextIn, user_id: int = Depends(current_user_id),
         raise HTTPException(404, "Phrase not found")
     u = session.get(models.User, user_id)
     b = session.get(models.Batch, p.batch_id)
+    _require_visible(b, user_id)
     if not access.ai_on_batch(effective_plan(u), b):
         raise HTTPException(403, "ai_required")  # mic = AI plan (free on the showcase batch)
     _check_rate(session, user_id)
@@ -689,6 +710,7 @@ def answer_confirm(body: ConfirmIn, user_id: int = Depends(current_user_id),
     ev = session.get(models.TrainingEvent, body.event_id)
     if not ev or ev.user_id != user_id:
         raise HTTPException(404, "Event not found")
+    already_failed = ev.manual_success is False   # a retried confirm must not lapse twice
     ev.manual_success = body.manual_success
     session.add(ev)
     p = session.get(models.Phrase, ev.phrase_id)
@@ -703,7 +725,7 @@ def answer_confirm(body: ConfirmIn, user_id: int = Depends(current_user_id),
             # "easy" — but the learner says it actually failed. Trust the human on
             # the downside: lapse the schedule so the phrase comes back soon instead
             # of hiding for days on an unearned interval.
-            if (ev.ai_score or 0) >= 8:
+            if (ev.ai_score or 0) >= 8 and not already_failed:
                 srs.advance(st, "failed", now)
         session.add(st)
     session.commit()
@@ -728,7 +750,9 @@ def coach(body: CoachIn, user_id: int = Depends(current_user_id),
     p = session.get(models.Phrase, body.phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
-    if not access.ai_on_batch(effective_plan(u), session.get(models.Batch, p.batch_id)):
+    _b = session.get(models.Batch, p.batch_id)
+    _require_visible(_b, user_id)
+    if not access.ai_on_batch(effective_plan(u), _b):
         raise HTTPException(403, "ai_plan_required")
     _check_rate(session, user_id)
     cp = session.exec(select(models.CheckPhrase).where(

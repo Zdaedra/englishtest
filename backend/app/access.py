@@ -12,6 +12,15 @@ from . import models
 _PAID = ("core", "ai")
 
 
+def visible(batch: "models.Batch | None", user_id: int) -> bool:
+    """Shared catalog or the user's own import — never someone else's private
+    import, never a deleted batch. Batch and phrase ids are sequential, so every
+    route taking an id must ask this first (found 2026-11-27: nine didn't)."""
+    if batch is None or getattr(batch, "deleted_at", None):
+        return False
+    return batch.owner_id is None or batch.owner_id == user_id
+
+
 def batch_usable(plan: str | None, batch: "models.Batch | None", user_id: int) -> bool:
     """May this user open/learn/practice this batch's content at all?
 
@@ -22,8 +31,8 @@ def batch_usable(plan: str | None, batch: "models.Batch | None", user_id: int) -
     paid topics stayed open. Every call site in the routers was fixed on
     2026-11-26; keep it that way.
     """
-    if batch is None:
-        return False
+    if not visible(batch, user_id):
+        return False                # someone else's private import was "usable" by any paid plan
     if batch.owner_id == user_id:   # own import
         return True
     if getattr(batch, "is_free", False):  # the free showcase batch

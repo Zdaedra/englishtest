@@ -41,12 +41,17 @@ def prompt_audio(text: str = Form(...), lang: str = Form("ru"),
         raise HTTPException(400, "empty")
     if len(text) > _MAX_CUE_CHARS:
         raise HTTPException(413, "cue_too_long")
+    # The cost key "tts" was missing from usage.EST_USD, so this accrued $0 and
+    # the monthly ceiling never saw it (2026-11-27). Check the ceiling first.
+    budget = user_entitlements(session, user_id).get("monthly_ai_cost_cap_usd")
+    if budget is not None and usage.month_cost_usd(session, user_id) >= budget:
+        raise HTTPException(429, "Monthly AI limit reached.")
     st = session.get(models.Setting, 1) or models.Setting(id=1)
     voice = st.tts_voice if lang.lower().startswith("en") else st.tts_voice_ru
     try:
         path, dur = tts.synth(text, voice=voice)
-    except Exception as e:
-        raise HTTPException(502, f"TTS failed: {e}")
+    except Exception:
+        raise HTTPException(502, "tts_failed")   # no exception text to the client
     usage.accrue(session, user_id, "tts")   # count it against the monthly ceiling
     session.commit()
     return {"audio_url": f"/audio/phrases/{path.name}", "duration": dur}

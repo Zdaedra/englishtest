@@ -1,4 +1,6 @@
+import logging
 import random
+import secrets
 from datetime import datetime, timedelta, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -143,11 +145,17 @@ def create_session(req: SessionRequest, user_id: int = Depends(current_user_id),
 
     voice = req.voice or st.tts_voice
     voice_ru = req.voice_ru or st.tts_voice_ru
+    # /audio/* is served without auth (native <audio> can't send the Bearer
+    # header), so the file name IS the access control. It used to be the
+    # sequential session id: /audio/sessions/1.wav, 2.wav … downloaded every
+    # topic's audio, paid and private ones included (found 2026-11-27).
+    name = f"{secrets.token_urlsafe(16)}.{get_settings().tts_format}"
     try:
         path, duration, plan = audio.render_session(
-            segments, f"{ps.id}.{get_settings().tts_format}", voice=voice, voice_ru=voice_ru)
-    except Exception as e:
-        raise HTTPException(502, f"Audio render failed: {e}")
+            segments, name, voice=voice, voice_ru=voice_ru)
+    except Exception:
+        logging.getLogger("sessions").exception("audio render failed for session %s", ps.id)
+        raise HTTPException(502, "audio_render_failed")   # no exception text to the client
 
     ps.rendered_audio_path = path.name
     ps.duration = duration

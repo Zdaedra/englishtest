@@ -80,6 +80,12 @@ def make_session(user_id: int) -> str:
 
 def parse_session(token: str) -> int | None:
     """Return the user_id from a valid, unexpired token, else None."""
+    parsed = parse_session_full(token)
+    return parsed[0] if parsed else None
+
+
+def parse_session_full(token: str) -> tuple[int, int] | None:
+    """(user_id, issued_at) from a valid, unexpired token, else None."""
     try:
         uid, exp, sig = token.split(".")
         msg = f"{uid}.{exp}"
@@ -88,9 +94,29 @@ def parse_session(token: str) -> int | None:
             return None
         if int(exp) < int(time.time()):
             return None
-        return int(uid)
+        return int(uid), int(exp) - _SESSION_TTL
     except Exception:
         return None
+
+
+# A token names only the user id, and SQLite hands a deleted account's id to the
+# next signup — so a deleted account's token opened the next person's account
+# (found 2026-11-27). A token issued before its account existed is not for this
+# account. Checked against created_at, so no token format change and nobody is
+# logged out. Skew covers the int() truncation of the issue time.
+_ISSUE_SKEW_S = 1   # an honest token: created_at < int(issue time) + 1, always
+
+
+def token_fits_user(issued_at: int, user) -> bool:
+    if user is None:
+        return False
+    created = getattr(user, "created_at", None)
+    if created is None:
+        return True
+    if created.tzinfo is None:
+        from datetime import timezone
+        created = created.replace(tzinfo=timezone.utc)
+    return created.timestamp() < issued_at + _ISSUE_SKEW_S
 
 
 def current_user_id(request: Request) -> int:

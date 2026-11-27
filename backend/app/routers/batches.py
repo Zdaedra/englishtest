@@ -325,7 +325,10 @@ def export_batch(batch_id: int, user_id: int = Depends(current_user_id),
                  session: Session = Depends(get_session)):
     """Round-trip a batch back to the authoring JSON format (for corrections)."""
     b = session.get(models.Batch, batch_id)
-    if not b or b.deleted_at or not _visible(b, user_id, is_admin(session, user_id)):
+    # Authoring round-trip is for the people who author: the admin (shared
+    # catalog) or the owner of a private import. Visibility alone let a free
+    # account export every phrase + mnemo of any paid topic (2026-11-27).
+    if not b or b.deleted_at or not (is_admin(session, user_id) or b.owner_id == user_id):
         raise HTTPException(404, "Batch not found")
     return content.to_authoring(session, b)
 

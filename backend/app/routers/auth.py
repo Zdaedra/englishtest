@@ -22,6 +22,9 @@ _USER_TABLES = (
     models.UserPhraseStat, models.PlaybackSession, models.ReviewEvent,
     models.PhraseAttempt, models.SequenceAttempt, models.BatchProgress,
     models.TrainingEvent, models.ConsentRecord,
+    # Written by the first voice scoring; missing here, its FK blocked every
+    # such delete with a 500 (found 2026-11-27). tests/test_auth.py guards the list.
+    models.UsageLedger,
 )
 _TRANSCRIPT_TABLES = (models.PhraseAttempt, models.SequenceAttempt, models.TrainingEvent)
 

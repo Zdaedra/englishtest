@@ -41,10 +41,10 @@ from sqlmodel import Session, select
 
 from .. import embeddings
 from .. import intents as intents_mod
-from .. import localize, models, scoring, stt, usage
+from .. import access, localize, models, scoring, stt, usage
 from ..auth import current_user_id
 from ..db import get_session
-from ..entitlements import user_entitlements
+from ..entitlements import effective_plan, user_entitlements
 
 router = APIRouter(prefix="/api/battle", tags=["battle"])
 
@@ -135,8 +135,15 @@ def _catalog_rows(session: Session, user_id: int):
 
 
 def _rows_for_scope(session: Session, user_id: int, scope: str):
-    return _catalog_rows(session, user_id) if scope == "all" \
+    """Rows the user may read. Both scopes used to skip the paywall: "all"
+    returned the whole paid catalog as text to a free account (the same 802
+    phrases closed on /api/batches/phrases), "learned" any topic the user had a
+    progress/stat row on — rows a free account can create itself (2026-11-27)."""
+    rows = _catalog_rows(session, user_id) if scope == "all" \
         else _user_rows(session, user_id)
+    u = session.get(models.User, user_id)
+    plan = effective_plan(u)
+    return [r for r in rows if access.batch_usable(plan, r[2], user_id)]
 
 
 def _kw_score(row, tt: list[str]) -> int:

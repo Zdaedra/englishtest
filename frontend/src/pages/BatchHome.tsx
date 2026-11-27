@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { api, BatchDetail as Batch, BatchListItem, RotationItem } from "../api";
+import { api, BatchDetail as Batch, BatchListItem, RotationItem, errKey } from "../api";
+import LoadError from "../ui/LoadError";
 import { usePlayer } from "../player/PlayerContext";
 import { getProgress, isEngaged, lessonStates, setProgress, inFocus, focusCount, FOCUS_CAP } from "../lib/progress";
 import { planPosition } from "../lib/plan";
@@ -29,7 +30,7 @@ export default function BatchHome() {
 
   useEffect(() => {
     if (!id) return;
-    api.getBatch(Number(id)).then(setBatch).catch((e) => setErr(String(e)));
+    api.getBatch(Number(id)).then(setBatch).catch((e) => setErr(errKey(e)));
     api.getRotation(Number(id)).then(setRotation).catch(() => {});
     api.listBatches().then(setBatchList).catch(() => {});
   }, [id]);
@@ -65,7 +66,7 @@ export default function BatchHome() {
     return planPosition(batchList, batch.id);
   }, [batch, batchList]);
 
-  if (err) return <div className="screen"><p className="error">{err}</p></div>;
+  if (err) return <LoadError msgKey={err} />;
   if (!batch) return <div className="screen"><p className="muted">{t("common.loading")}</p></div>;
 
   // Freemium paywall: locked (paid) batch → show an upsell instead of content.

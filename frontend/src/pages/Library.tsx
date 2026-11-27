@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { api, BatchListItem, BatchMastery, PhraseSearchItem, WeeklySummary } from "../api";
+import { api, BatchListItem, BatchMastery, PhraseSearchItem, WeeklySummary, errKey } from "../api";
 import { usePlayer } from "../player/PlayerContext";
 import { BatchCover } from "../ui/Art";
 import { BatchTapButton } from "../ui/BatchTapButton";
@@ -78,7 +78,7 @@ export default function Library() {
   const [phrases, setPhrases] = useState<PhraseSearchItem[] | null>(null);
 
   useEffect(() => {
-    api.listBatches().then(setBatches).catch((e) => setErr(String(e)));
+    api.listBatches().then(setBatches).catch((e) => setErr(errKey(e)));
     api.getMastery()
       .then((ms) => {
         setMastery(ms);
@@ -214,7 +214,7 @@ export default function Library() {
       player.playBatch(b, { mode: "listening", order: "full_random" });
       nav("/play");
     } catch (e) {
-      setErr(String(e));
+      setErr(errKey(e));
     }
   };
 
@@ -258,7 +258,7 @@ export default function Library() {
         </div>
       )}
 
-      {err && <p className="error">{err}</p>}
+      {err && <p className="error">{t(err)}</p>}
 
       {!err && batches.length === 0 && (
         <div className="empty">
@@ -502,7 +502,7 @@ export default function Library() {
                 <span className="focus-hero-title">{focus.title}</span>
                 {focus.preview && <span className="focus-hero-sub">{focus.preview}</span>}
                 <span className="focus-hero-meta">
-                  {t("lib.nPatterns", { n: focus.phrase_count })} · {Math.max(8, Math.round(focus.phrase_count * 1.5))} min
+                  {t("lib.nPatterns", { n: focus.phrase_count })} · {t("lib.nMin", { n: Math.max(8, Math.round(focus.phrase_count * 1.5)) })}
                 </span>
               </span>
               <BatchTapButton className="focus-hero-open" batchId={focus.id} title={focus.title}

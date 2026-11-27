@@ -407,3 +407,60 @@ def test_me_backs_off_when_apple_cannot_be_reached(make_user, monkeypatch):
     clock[0] += 120
     c.get("/api/auth/me")
     assert len(calls) == 1, "kept calling an unreachable Apple on every request"
+
+
+# --- Silent sign-in sync must not move subscriptions between accounts ---------
+# Found 2026-11-27 (Apple-rules audit): on every sign-in the app re-posts the
+# device's active purchases and the server applied them to whoever was signed in.
+# A reviewer who buys on the free demo account and then signs into the full
+# demo account would turn it into "core" — and free once the sandbox sub ends.
+
+def _verify_stub(monkeypatch, orig, product=None, expires=1893456000000, revoked=None):
+    import app.routers.billing as billing
+    product = product or "net.executiveenglish.core.monthly"
+
+    class _Tx:
+        productId = product
+        expiresDate = expires
+        originalTransactionId = orig
+        revocationDate = revoked
+
+    class _Verifier:
+        def verify_and_decode_signed_transaction(self, jws):
+            return _Tx()
+
+    monkeypatch.setattr(billing, "_build_verifiers", lambda: [_Verifier()])
+
+
+def test_sync_does_not_rebind_a_subscription_owned_by_another_account(make_user, monkeypatch):
+    owner = _linked(make_user, "orig-owned", plan="core")
+    other = make_user(plan="free")
+    _verify_stub(monkeypatch, "orig-owned")
+    r = other.post("/api/billing/verify", json={"signed_transaction": "j", "source": "sync"})
+    assert r.status_code == 200, r.text
+    assert r.json()["plan"] == "free", "a sign-in on another account stole the subscription"
+    assert owner.get("/api/auth/me").json()["plan"] == "core"
+
+
+def test_sync_does_not_overwrite_a_manually_granted_plan(make_user, monkeypatch):
+    c = make_user(plan="ai")                      # plan_source stays "manual"
+    _verify_stub(monkeypatch, "orig-device")
+    r = c.post("/api/billing/verify", json={"signed_transaction": "j", "source": "sync"})
+    assert r.json()["plan"] == "ai", "the full-access demo account was downgraded by a device purchase"
+
+
+def test_sync_still_recovers_an_unlinked_purchase(make_user, monkeypatch):
+    """The reason sync exists: a purchase whose /verify never reached us."""
+    c = make_user(plan="free")
+    _verify_stub(monkeypatch, "orig-lost")
+    r = c.post("/api/billing/verify", json={"signed_transaction": "j", "source": "sync"})
+    assert r.json()["plan"] == "core"
+
+
+def test_revoked_transaction_never_grants(make_user, monkeypatch):
+    c = make_user(plan="free")
+    _verify_stub(monkeypatch, "orig-refunded", revoked=1700000000000)
+    for source in ("purchase", "restore", "sync"):
+        r = c.post("/api/billing/verify", json={"signed_transaction": "j", "source": source})
+        assert r.status_code == 200, r.text
+        assert r.json()["plan"] == "free", f"{source}: a refunded purchase granted a plan"

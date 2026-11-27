@@ -8,11 +8,14 @@ import { syncPurchases } from "../lib/iap";
 import { loadToken, setToken, haptic } from "../lib/session";
 import { useI18n, type Lang } from "../i18n";
 
-const SUPPORTED = ["ru", "es", "de", "fr"];
+const SUPPORTED = ["en", "ru", "es", "de", "fr"];
 
 type AuthCtx = {
   user: Me | null;
   loading: boolean;
+  /** /me could not be reached at launch (offline, 5xx) — not the same as signed out. */
+  offline: boolean;
+  retry: () => void;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name?: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -26,6 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { setLang } = useI18n();
   const [user, setUser] = useState<Me | null>(null);
   const [loading, setLoading] = useState(true);
+  const [offline, setOffline] = useState(false);
 
   // On any authentication, replace the local progress cache with this user's
   // server-side progress (so a shared browser never shows another account's).
@@ -62,10 +66,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Load any stored native token first so /me carries the Bearer header.
     loadToken()
       .then(() => api.me())
-      .then((u) => { if (u) onAuthed(u); })
-      .catch(() => {})
+      .then((u) => { setOffline(false); if (u) onAuthed(u); })
+      .catch(() => setOffline(true))
       .finally(() => setLoading(false));
   }, [onAuthed]);
+
+  // Launch failed to reach the server: try again on its own when the network
+  // comes back or the app returns to the foreground, plus the button on screen.
+  const retry = useCallback(() => {
+    loadToken()
+      .then(() => api.me())
+      .then((u) => { setOffline(false); if (u) onAuthed(u); })
+      .catch(() => setOffline(true));
+  }, [onAuthed]);
+  useEffect(() => {
+    if (!offline) return;
+    const onVisible = () => { if (document.visibilityState === "visible") retry(); };
+    window.addEventListener("online", retry);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.removeEventListener("online", retry);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [offline, retry]);
 
   const login = useCallback(async (email: string, password: string) => {
     await onAuthed(await api.login(email, password));
@@ -78,7 +101,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [onAuthed]);
 
   const logout = useCallback(async () => {
-    await api.logout();
+    // Offline the server call throws; signing out of THIS device must still work
+    // (the token is stateless — dropping it locally is the sign-out).
+    try { await api.logout(); } catch { /* offline — local sign-out below still runs */ }
     await setToken(null);
     clearLocalProgress();
     // Account-boundary hygiene: unbind the learning profile, wipe the previous
@@ -97,7 +122,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <Ctx.Provider value={{ user, loading, login, register, logout, refresh }}>
+    <Ctx.Provider value={{ user, loading, offline, retry, login, register, logout, refresh }}>
       {children}
     </Ctx.Provider>
   );

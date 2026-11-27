@@ -149,8 +149,8 @@ def put_progress(batch_id: int, patch: ProgressPatch,
 def _put_progress(batch_id: int, patch: ProgressPatch, user_id: int,
                   session: Session):
     batch = session.get(models.Batch, batch_id)
-    if not batch:
-        raise HTTPException(404, "Batch not found")
+    if not access.visible(batch, user_id):
+        raise HTTPException(404, "Batch not found")   # foreign private import / deleted
     bp = session.exec(select(models.BatchProgress).where(
         models.BatchProgress.user_id == user_id,
         models.BatchProgress.batch_id == batch_id)).first()
@@ -229,6 +229,8 @@ def _put_progress(batch_id: int, patch: ProgressPatch, user_id: int,
     for k, v in data.items():
         if k in ("activated", "on_path"):
             continue
+        if k == "l1_best_seq" and v is not None and bp.l1_best_seq is not None:
+            v = max(v, bp.l1_best_seq)   # a stale device must not lower the best retell
         setattr(bp, k, v)
     bp.activated = next_activated
     bp.on_path = next_on_path

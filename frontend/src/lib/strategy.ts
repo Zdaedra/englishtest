@@ -139,16 +139,28 @@ export function focusBuckets(s: Strategy): FocusBucket[] {
     if (secRow && discRow && discRow.pct >= 15) { secRow.pct += 10; discRow.pct -= 10; }
     return rows;
   };
+  // The fixed "Business" bucket duplicated the learner's own Business goal: two
+  // "Business" rows on the map when business was the main or a secondary goal
+  // (2026-11-27). Fold its share into the goal's own row instead.
+  const foldBiz = (rows: FocusBucket[]): FocusBucket[] => {
+    const into = s.main === "business" ? rows.find((r) => r.key === s.main)
+      : s.secondary.includes("business") ? rows.find((r) => r.key === "secondary") : undefined;
+    const bizRow = rows.find((r) => r.key === "business");
+    if (!into || !bizRow) return rows;
+    into.pct += bizRow.pct;
+    return rows.filter((r) => r !== bizRow);
+  };
+  const out = (rows: FocusBucket[]) => foldBiz(boost(rows));
   if (s.intensity === "narrow")
-    return boost(hasSec
+    return out(hasSec
       ? [at(main, 75), at(sec, 15), at(disc, 10)]
       : [at(main, 75), at(biz, 15), at(disc, 10)]);
   if (s.intensity === "explore")
-    return boost(hasSec
+    return out(hasSec
       ? [at(main, 40), at(sec, 20), at(biz, 20), at(disc, 20)]
       : [at(main, 40), at(biz, 20), at(disc, 40)]);
   // balanced
-  return boost(hasSec
+  return out(hasSec
     ? [at(main, 50), at(sec, 25), at(biz, 15), at(disc, 10)]
     : [at(main, 60), at(biz, 15), at(disc, 25)]);
 }

@@ -236,7 +236,7 @@ export default function Profile() {
           </span>
         </button>
         <input ref={fileRef} type="file" accept="image/*" onChange={onFile} hidden />
-        <h1 style={{ marginBottom: 2 }}>{user?.name?.trim() || user?.email || "—"}</h1>
+        <h1 style={{ marginBottom: 2, overflowWrap: "anywhere" }}>{user?.name?.trim() || user?.email || "—"}</h1>
         <p className="muted small" style={{ margin: 0 }}>{t("profile.member")}</p>
         <p className="muted small" style={{ marginTop: 2 }}>
           {count == null ? "—" : t("profile.libCount", { n: count })}
@@ -360,7 +360,10 @@ export default function Profile() {
           </div>
           <span className="menu-chevron"><IconChevron /></span>
         </button>
-        {canImport && row(IconImport, t("profile.importTitle"), t("profile.importSub"), "/import")}
+        {/* Import is an untranslated authoring tool ("Use LLM", "parser", "Gloss (RU)").
+            Hidden in the iOS app until it's decided whether it ships (open
+            question for Alexey, 2026-11-27); the web keeps it. */}
+        {canImport && !isNative() && row(IconImport, t("profile.importTitle"), t("profile.importSub"), "/import")}
         {/* Call Analyzer — AI-plan feature; visible to everyone as the teaser. */}
         {row(IconWave, t("analyzer.title"), t("analyzer.menuSub"), "/analyze")}
         {isAdmin && row(IconGear, t("profile.listeningTitle"), t("profile.listeningSub"), "/settings")}
@@ -428,6 +431,14 @@ export default function Profile() {
       ) : (
         <div className="cab-danger-box">
           <p className="cab-danger-q">{t("account.deleteConfirm")}</p>
+          {user?.plan && user.plan !== "free" && (
+            <p className="cab-danger-sub">
+              {t("account.deleteSubNote")}{" "}
+              <a href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noreferrer">
+                {t("account.manageSub")}
+              </a>
+            </p>
+          )}
           <div className="cab-danger-row">
             <button className="cab-danger-cancel" onClick={() => setConfirmDel(false)}>{t("account.deleteCancel")}</button>
             <button className="cab-danger-yes" disabled={delBusy} onClick={doDelete}>

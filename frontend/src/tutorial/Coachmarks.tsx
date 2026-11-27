@@ -22,9 +22,12 @@ export default function Coachmarks({ steps, media, onDone }: Props) {
   const startX = useRef(0);
   const step = steps[i];
 
+  // onDone() is called OUTSIDE the state updater: calling a parent setter from
+  // inside setI's updater is "update a component while rendering another".
   const advance = useCallback(() => {
-    setI((n) => { if (n >= steps.length - 1) { onDone(); return n; } return n + 1; });
-  }, [steps.length, onDone]);
+    if (i >= steps.length - 1) { onDone(); return; }
+    setI(i + 1);
+  }, [i, steps.length, onDone]);
 
   const measure = useCallback(() => {
     const el = step && document.querySelector<HTMLElement>(`[data-tour="${step.target}"]`);
@@ -64,14 +67,22 @@ export default function Coachmarks({ steps, media, onDone }: Props) {
 
   const vw = window.innerWidth, vh = window.innerHeight;
   const m = media[step.target];
-  const below = box ? (box.y + box.h / 2) < vh * 0.5 : true;          // caption side
+  // Caption side = whichever side has more room. "Below if the target's centre
+  // is in the top half" sent the step-1 Practice caption off the bottom of the
+  // screen (dots and Skip gone, German text cut) — the card is tall.
+  const need = m ? 330 : 200;                                       // rough caption height
+  const spaceBelow = box ? vh - (box.y + box.h + PAD + GAP) : 0;
+  const spaceAbove = box ? box.y - PAD - GAP : 0;
+  const below = box ? spaceBelow >= spaceAbove : true;
+  // Neither side fits: pin the caption to the bottom over the dim, no arrow.
+  const pinned = !!box && Math.max(spaceBelow, spaceAbove) < need;
   const capW = Math.min(300, vw - 32);
   const cx = box
     ? Math.min(Math.max(box.x + box.w / 2, capW / 2 + 16), vw - capW / 2 - 16)
     : vw / 2;
   const capLeft = cx - capW / 2;
-  const capTop = box ? (below ? box.y + box.h + PAD + GAP : undefined) : vh * 0.42;
-  const capBottom = box && !below ? (vh - (box.y - PAD) + GAP) : undefined;
+  const capTop = pinned ? undefined : box ? (below ? box.y + box.h + PAD + GAP : undefined) : vh * 0.42;
+  const capBottom = pinned ? 24 : box && !below ? (vh - (box.y - PAD) + GAP) : undefined;
 
   // The single short arrow, living in the GAP between caption and element.
   const edgeY = box ? (below ? box.y + box.h + PAD : box.y - PAD) : 0;
@@ -97,7 +108,7 @@ export default function Coachmarks({ steps, media, onDone }: Props) {
           <rect x={box.x - PAD} y={box.y - PAD} width={box.w + 2 * PAD} height={box.h + 2 * PAD}
                 rx="14" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" />
         )}
-        {box && (
+        {box && !pinned && (
           <line x1={aStart.x} y1={aStart.y} x2={aEnd.x} y2={aEnd.y}
                 stroke="rgba(255,255,255,0.92)" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#cm-arrow)" />
         )}

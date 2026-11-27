@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { api, BatchListItem, BatchMastery } from "../api";
+import { api, BatchListItem, BatchMastery, errKey } from "../api";
+import LoadError from "../ui/LoadError";
 import { getProgress } from "../lib/progress";
 import { getPlanMode, getStrategy, isOnboarded, setPlanMode } from "../lib/profile";
 import { focusBuckets } from "../lib/strategy";
@@ -224,7 +225,7 @@ export default function Learning() {
       nav("/onboarding", { replace: true });
       return;
     }
-    api.listBatches().then(setBatches).catch((e) => setErr(String(e)));
+    api.listBatches().then(setBatches).catch((e) => setErr(errKey(e)));
     // Mastery feeds the review rail; if it fails, the map still stands.
     api.getMastery().then(setMastery).catch(() => {});
   }, [nav]);
@@ -400,7 +401,7 @@ export default function Learning() {
   const jumpToActive = () =>
     activeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
 
-  if (err) return <div className="screen"><p className="error">{err}</p></div>;
+  if (err) return <LoadError msgKey={err} />;
 
   let gi = -1; // running node index for the alternating serpentine
 

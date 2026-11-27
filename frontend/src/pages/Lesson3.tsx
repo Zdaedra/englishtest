@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  api, AnchorScore, BatchDetail as Batch, Phrase, PhraseScore, SequenceScore,
+  api, errKey, AnchorScore, BatchDetail as Batch, Phrase, PhraseScore, SequenceScore,
 } from "../api";
+import LoadError from "../ui/LoadError";
 import { anchorSegments, useMnemoAudio } from "../audio/useMnemoAudio";
 import { useRecorder } from "../audio/useRecorder";
 import { usePlayer } from "../player/PlayerContext";
@@ -113,7 +114,7 @@ export default function Lesson3() {
     api.getBatch(Number(id)).then((b) => {
       setBatch(b);
       player.prefetchPhrases(b.phrases.map((p) => p.id));
-    }).catch((e) => setErr(String(e)));
+    }).catch((e) => setErr(errKey(e)));
     mnemo.prefetch("full");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -151,13 +152,13 @@ export default function Lesson3() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, running, pos, anchorResult]);
 
+  // A failed scoring must not take the lesson down: it used to replace the whole
+  // screen with the raw server text (no way back). Now one sentence under the
+  // mic; a locked mic (core plan) goes to the paywall like everywhere else.
   const handleError = (e: unknown) => {
-    const msg = String(e);
-    if (msg.includes("429") || msg.toLowerCase().includes("limit")) {
-      setNotice(t("rec.limit"));
-    } else {
-      setErr(msg);
-    }
+    const k = errKey(e);
+    if (k === "err.aiRequired") { nav("/subscribe"); return; }
+    setNotice(t(k));
   };
 
   const finishStage = useCallback(() => {
@@ -326,7 +327,7 @@ export default function Lesson3() {
     setRunning(false); // back to the stage's intro card
   }, []);
 
-  if (err) return <div className="screen"><p className="error">{err}</p></div>;
+  if (err) return <LoadError msgKey={err} />;
   if (!batch) return <div className="screen"><p className="muted">{t("common.loading")}</p></div>;
 
   const sub = allDone

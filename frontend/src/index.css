@@ -88,6 +88,11 @@ body {
 button { font-family: inherit; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 
+/* Entrance animations use fill-mode BACKWARDS, never both/forwards: a filling
+   transform animation makes the element a containing block, so every
+   position:fixed sheet inside a .screen (voice consent, widget how-to) was laid
+   out against the screen box — the tab bar stayed on top and tappable, the dim
+   covered 613 of 844 pt (found 2026-11-27). */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
@@ -128,7 +133,7 @@ html.is-scrolled .shell::before { opacity: 1; }
 
 .screen {
   padding: max(20px, env(safe-area-inset-top)) 18px calc(env(safe-area-inset-bottom) + 92px);
-  animation: fade-up .42s var(--spring) both;
+  animation: fade-up .42s var(--spring) backwards;
 }
 
 .section-label {
@@ -166,14 +171,24 @@ html.is-scrolled .shell::before { opacity: 1; }
   letter-spacing: -.02em;
   margin: 6px 0 4px;
 }
+/* Same white pill as .bh-back (DESIGN.md): as a bare <button> it rendered as the
+   grey system button with a border on 11 screens. */
 .back-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--muted);
+  color: var(--text);
   margin-bottom: 14px;
+  background: var(--card);
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px 8px 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.06);
+  font-family: inherit;
+  cursor: pointer;
+  align-self: flex-start;   /* a column-flex screen would otherwise stretch the pill */
 }
 .back-link:active { color: var(--text); }
 
@@ -264,7 +279,7 @@ html.is-scrolled .shell::before { opacity: 1; }
   box-shadow: var(--shadow);
   margin-bottom: 34px;
   text-align: left;
-  animation: fade-up .5s var(--spring) both;
+  animation: fade-up .5s var(--spring) backwards;
   transition: transform .15s var(--spring);
 }
 .feature:active { transform: scale(.985); }
@@ -333,7 +348,7 @@ html.is-scrolled .shell::before { opacity: 1; }
   overflow: hidden;
   box-shadow: var(--shadow);
   text-align: left;
-  animation: fade-up .5s var(--spring) both;
+  animation: fade-up .5s var(--spring) backwards;
   transition: transform .15s var(--spring);
 }
 .album:active { transform: scale(.97); }
@@ -420,7 +435,7 @@ html.is-scrolled .shell::before { opacity: 1; }
   padding: 0;
   text-align: left;
   transition: transform .15s var(--spring);
-  animation: fade-up .5s var(--spring) both;
+  animation: fade-up .5s var(--spring) backwards;
 }
 .row-card:active { transform: scale(.96); }
 .row-card-art {
@@ -1069,7 +1084,7 @@ html.is-scrolled .shell::before { opacity: 1; }
   padding: 12px 14px 12px 12px;
   box-shadow: var(--shadow);
   text-align: left;
-  animation: fade-up .5s var(--spring) both;
+  animation: fade-up .5s var(--spring) backwards;
   transition: transform .15s var(--spring);
 }
 .sec-card:active { transform: scale(.98); }
@@ -1183,7 +1198,7 @@ html.is-scrolled .shell::before { opacity: 1; }
   padding: 16px;
   margin-bottom: 12px;
   box-shadow: var(--shadow);
-  animation: fade-up .45s var(--spring) both;
+  animation: fade-up .45s var(--spring) backwards;
   text-align: left;
   width: 100%;
 }
@@ -1676,7 +1691,7 @@ html.is-scrolled .shell::before { opacity: 1; }
   padding: 24px;
   background: rgba(17, 17, 17, .5);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  animation: fade-up .2s var(--spring) both;
+  animation: fade-up .2s var(--spring) backwards;
 }
 .ava-sheet {
   width: 100%; max-width: 340px;
@@ -2025,7 +2040,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   align-items: center;
   gap: 12px;
   margin-bottom: 18px;
-  animation: fade-up .3s var(--spring) both;
+  animation: fade-up .3s var(--spring) backwards;
 }
 .search-field {
   flex: 1;
@@ -2165,7 +2180,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   padding: 24px 20px;
   box-shadow: var(--shadow);
   margin: 18px 0;
-  animation: fade-up .35s var(--spring) both;
+  animation: fade-up .35s var(--spring) backwards;
 }
 .score-badge {
   width: 96px;
@@ -2634,6 +2649,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 .sub-current { text-align: center; font-size: 0.90625rem; font-weight: 700; color: var(--bronze-ink); padding: 14px; background: var(--bronze-soft); border-radius: 14px; }
 .sub-free-note { text-align: center; font-size: 0.8125rem; color: var(--faint); margin: 18px auto 0; max-width: 32ch; line-height: 1.4; }
 .sub-note { text-align: center; font-size: 0.84375rem; color: var(--bronze-ink); margin: 12px 4px 0; }
+.sub-retry { background: none; border: 0; padding: 0; color: inherit; font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer; }
 .sub-restore { display: block; margin: 14px auto 0; padding: 8px 16px; border: 0; background: none; color: var(--muted); font-size: 0.84375rem; font-weight: 600; }
 
 .bh-head { margin-top: 18px; }
@@ -2754,7 +2770,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   display: flex; align-items: center; gap: 12px;
   background: #fff; border-radius: 14px; padding: 11px 13px;
   box-shadow: var(--shadow);
-  animation: fade-up .3s var(--spring) both;
+  animation: fade-up .3s var(--spring) backwards;
 }
 .pr-score {
   flex: none; width: 38px; height: 38px; border-radius: 11px;
@@ -3432,7 +3448,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   padding: 8px 16px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(17, 17, 17, .22);
-  animation: fade-up .4s var(--spring) both;
+  animation: fade-up .4s var(--spring) backwards;
 }
 .map-bubble::after {
   content: "";
@@ -3486,7 +3502,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
   display: grid;
   place-items: center;
   box-shadow: 0 8px 24px rgba(17, 17, 17, .16);
-  animation: fade-up .26s var(--spring) both;
+  animation: fade-up .26s var(--spring) backwards;
   transition: transform .18s var(--spring);
 }
 .map-fab:active { transform: translateX(calc(var(--shell-w) / 2 - 48px - 16px)) scale(.92); }
@@ -3518,7 +3534,7 @@ table.phrases input { padding: 8px; font-size: 0.8125rem; }
 
 .quest-step {
   flex: 1;
-  animation: fade-up .34s var(--spring) both;
+  animation: fade-up .34s var(--spring) backwards;
 }
 .quest-q {
   font-size: 1.5625rem;
@@ -3769,7 +3785,7 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 .auth-card {
   width: min(380px, 92vw); background: var(--card); border: 1px solid var(--border);
   border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: 32px 26px;
-  animation: fade-up .42s var(--spring) both;
+  animation: fade-up .42s var(--spring) backwards;
 }
 .auth-brand { font-size: 1.5rem; font-weight: 820; letter-spacing: -.02em; }
 .auth-tag { font-size: 0.9375rem; color: var(--muted); margin: 4px 0 22px; }
@@ -3780,6 +3796,7 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 }
 .auth-input:focus { border-color: var(--map-green); background: var(--card); }
 .auth-err { color: var(--danger); font-size: 0.875rem; margin: 2px 0 10px; }
+.auth-forgot { display: block; text-align: center; margin: 4px 0 2px; font-size: .875rem; color: var(--muted); text-decoration: none; }
 .auth-toggle {
   width: 100%; margin-top: 16px; padding: 10px; border: 0; background: none;
   color: var(--map-green-ink); font-size: 0.875rem; font-weight: 600;
@@ -3809,7 +3826,7 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
   position: absolute; top: calc(100% + 8px); right: 0; z-index: 60; margin: 0; padding: 6px;
   list-style: none; min-width: 170px; background: var(--card); border: 1px solid var(--border);
   border-radius: 16px; box-shadow: 0 18px 40px -16px rgba(40,30,18,.5);
-  animation: fade-up .16s var(--spring) both;
+  animation: fade-up .16s var(--spring) backwards;
 }
 .lang-opt {
   width: 100%; display: flex; align-items: center; gap: 10px; cursor: pointer; font: inherit;
@@ -3838,7 +3855,7 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 .verify-card {
   width: min(380px, 92vw); background: var(--card); border: 1px solid var(--border);
   border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: 34px 26px;
-  text-align: center; animation: fade-up .42s var(--spring) both;
+  text-align: center; animation: fade-up .42s var(--spring) backwards;
 }
 .verify-mark { font-size: 2.75rem; line-height: 1; margin-bottom: 10px; }
 .verify-title { font-size: 1.375rem; font-weight: 800; letter-spacing: -.02em; margin: 0 0 8px; }
@@ -3882,6 +3899,8 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
   border: 1px solid rgba(214,69,69,.3); background: rgba(214,69,69,.05);
 }
 .cab-danger-q { margin: 0 0 12px; font-size: 0.875rem; color: var(--text-2); line-height: 1.4; }
+.cab-danger-sub { margin: -4px 0 12px; font-size: 0.8125rem; color: var(--text-2); line-height: 1.4; }
+.cab-danger-sub a { color: var(--accent, inherit); font-weight: 600; }
 .cab-danger-row { display: flex; gap: 10px; }
 .cab-danger-cancel, .cab-danger-yes {
   flex: 1; height: 46px; border-radius: 14px; border: 0; font-size: 0.9375rem; font-weight: 640;
@@ -4528,7 +4547,7 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 .tr-summary {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg);
   box-shadow: var(--shadow); padding: 28px 22px; margin-top: 22px; text-align: center;
-  animation: fade-up .4s var(--spring) both;
+  animation: fade-up .4s var(--spring) backwards;
 }
 .tr-sum-k { font-size: 3.375rem; font-weight: 840; line-height: 1; margin: 0; color: var(--map-green); }
 .tr-sum-k span { font-size: 1.625rem; color: var(--faint); font-weight: 700; }

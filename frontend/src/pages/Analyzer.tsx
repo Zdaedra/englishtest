@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useVoiceConsent } from "../ui/VoiceConsent";
 import { useNavigate } from "react-router-dom";
 import { api, CallUpgrade } from "../api";
 import { IconBack } from "../ui/icons";
@@ -12,6 +13,7 @@ export default function Analyzer() {
   const nav = useNavigate();
   const { t } = useI18n();
   const { user } = useAuth();
+  const { requireConsent, consentModal } = useVoiceConsent();
   const isAI = user?.plan === "ai";
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
@@ -20,6 +22,7 @@ export default function Analyzer() {
 
   const run = async () => {
     if (!isAI) { nav("/subscribe"); return; }
+    if (!requireConsent()) return;   // Apple 5.1.2(i): pasted text goes to third-party AI
     setErr(""); setBusy(true); setUpgrades(null);
     try {
       const r = await api.analyzeCall(text);
@@ -45,6 +48,7 @@ export default function Analyzer() {
 
   return (
     <div className="screen">
+      {consentModal}
       <button className="back-link" onClick={() => nav("/profile")}>
         <IconBack size={18} /> {t("common.back")}
       </button>
@@ -60,7 +64,7 @@ export default function Analyzer() {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button className="btn-primary" onClick={run} disabled={busy || text.trim().length < 40}>
+      <button className="btn btn-primary" onClick={run} disabled={busy || text.trim().length < 40}>
         {busy ? "…" : isAI ? t("analyzer.run") : t("analyzer.runLocked")}
       </button>
       {err && <p className="form-err" role="alert">{err}</p>}
@@ -77,7 +81,7 @@ export default function Analyzer() {
               {u.note && <p className="an-note">{u.note}</p>}
             </div>
           ))}
-          <button className="btn-primary" onClick={toImport}>{t("analyzer.train")}</button>
+          <button className="btn btn-primary" onClick={toImport}>{t("analyzer.train")}</button>
         </div>
       )}
     </div>

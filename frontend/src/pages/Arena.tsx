@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useVoiceConsent } from "../ui/VoiceConsent";
 import { useNavigate } from "react-router-dom";
 import { api, AnswerResult, Scenario } from "../api";
 import { IconBack, IconMic } from "../ui/icons";
@@ -18,6 +19,7 @@ export default function Arena() {
   const nav = useNavigate();
   const { t } = useI18n();
   const { user } = useAuth();
+  const { requireConsent, consentModal } = useVoiceConsent();
   const speech = useSpeech();
   const rec = useRecorder();
   const [scenario, setScenario] = useState<Scenario | null>(null);
@@ -61,6 +63,7 @@ export default function Arena() {
   // MediaRecorder + server STT.
   const onMic = async () => {
     if (!cur || busy || result) return;
+    if (!micActive && !requireConsent()) return;   // Apple 5.1.2(i): voice -> third-party AI
     setNotice("");
     if (speech.supported && !recFallback && !isNative()) {
       if (speech.listening) { speech.stop(); return; }
@@ -103,6 +106,7 @@ export default function Arena() {
 
   return (
     <div className="screen arena-screen">
+      {consentModal}
       <button className="back-link" onClick={() => nav("/learn")}>
         <IconBack size={18} /> {t("common.back")}
       </button>
@@ -113,7 +117,7 @@ export default function Arena() {
         <div className="arena-empty">
           <h1 className="arena-title">{t("arena.title")}</h1>
           <p className="league-sub">{t("arena.lockedSub")}</p>
-          <button className="btn-primary" onClick={() => nav("/subscribe")}>{t("arena.lockedCta")}</button>
+          <button className="btn btn-primary" onClick={() => nav("/subscribe")}>{t("arena.lockedCta")}</button>
         </div>
       )}
 
@@ -121,14 +125,14 @@ export default function Arena() {
         <div className="arena-empty">
           <h1 className="arena-title">{t("arena.title")}</h1>
           <p className="league-sub">{t("arena.notEnough")}</p>
-          <button className="btn-primary" onClick={() => nav("/practice")}>{t("arena.goPractice")}</button>
+          <button className="btn btn-primary" onClick={() => nav("/practice")}>{t("arena.goPractice")}</button>
         </div>
       )}
 
       {phase === "error" && (
         <div className="arena-empty">
           <p className="league-sub">{t("arena.error")}</p>
-          <button className="btn-primary" onClick={load}>{t("arena.retry")}</button>
+          <button className="btn btn-primary" onClick={load}>{t("arena.retry")}</button>
         </div>
       )}
 
@@ -145,7 +149,7 @@ export default function Arena() {
                 {Math.round(result.score * 10)}<span style={{ fontSize: 20, fontWeight: 700 }}>%</span>
               </div>
               <ModelPhrase label={t("practice.modelLabel")} model={result.correct_phrase} said={result.transcript} />
-              <button className="btn-primary arena-next" onClick={next}>
+              <button className="btn btn-primary arena-next" onClick={next}>
                 {beat + 1 >= scenario!.beats.length ? t("arena.finish") : t("arena.next")}
               </button>
             </div>
@@ -177,7 +181,7 @@ export default function Arena() {
               </p>
             ))}
           </div>
-          <button className="btn-primary" onClick={load}>{t("arena.again")}</button>
+          <button className="btn btn-primary" onClick={load}>{t("arena.again")}</button>
           <button className="arena-home" onClick={() => nav("/learn")}>{t("arena.home")}</button>
         </div>
       )}

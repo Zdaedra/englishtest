@@ -59,7 +59,7 @@ export async function buyPlan(plan: "ai" | "core", period: "monthly" | "yearly")
   const res = await IAP.purchase({ productId });
   if (res.status === "cancelled" || res.status === "pending") return null;
   if (res.status !== "success" || !res.jws) throw new Error("purchase_failed");
-  const verified = await api.verifyPurchase(res.jws);
+  const verified = await api.verifyPurchase(res.jws, "purchase");
   return verified.plan;
 }
 
@@ -86,7 +86,7 @@ let _updates: PluginListenerHandle | null = null;
 export async function syncPurchases(onPlan?: (plan: string) => void): Promise<void> {
   if (!isNative()) return;
   const verify = (jws: string) =>
-    api.verifyPurchase(jws)
+    api.verifyPurchase(jws, "sync")
       .then((r) => { if (r?.plan) onPlan?.(r.plan); })
       .catch(() => { /* not ours, or offline — the next sign-in retries */ });
 
@@ -111,7 +111,7 @@ export async function restorePurchases(): Promise<string | null> {
   const { jws } = await IAP.restore();
   let plan: string | null = null;
   for (const j of jws) {
-    try { plan = (await api.verifyPurchase(j)).plan; } catch { /* skip non-matching */ }
+    try { plan = (await api.verifyPurchase(j, "restore")).plan; } catch { /* skip non-matching */ }
   }
   try {
     const r = await api.refreshBilling();
