@@ -45,6 +45,7 @@ export default function Profile() {
   const dragRef = useRef<{ x: number; y: number; px: number; py: number } | null>(null);
   const [confirmDel, setConfirmDel] = useState(false);
   const [delBusy, setDelBusy] = useState(false);
+  const [delNote, setDelNote] = useState("");
   const [exporting, setExporting] = useState(false);
   const exportMyData = async () => {
     setExporting(true);
@@ -191,7 +192,18 @@ export default function Profile() {
 
   const doDelete = async () => {
     setDelBusy(true);
-    try { await api.deleteAccount(); } catch { /* fall through to logout */ }
+    // Never log out on a failed delete. Swallowing the error and signing out
+    // looked exactly like success, so a learner who deleted their account with
+    // no connection walked away believing their data was gone while the account
+    // was untouched — the one promise (Apple 5.1.1(v), GDPR erasure) we cannot
+    // appear to keep without keeping.
+    try {
+      await api.deleteAccount();
+    } catch {
+      setDelBusy(false);
+      setDelNote(t("account.deleteFailed"));
+      return;
+    }
     await logout();
   };
 
@@ -422,6 +434,7 @@ export default function Profile() {
               {delBusy ? "…" : t("account.deleteYes")}
             </button>
           </div>
+          {delNote && <p className="error">{delNote}</p>}
         </div>
       )}
     </div>

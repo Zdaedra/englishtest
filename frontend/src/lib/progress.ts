@@ -27,7 +27,7 @@ export function isEngaged(p: BatchProgress): boolean {
 // Mirrors backend entitlements.FOCUS_CAP; the server enforces it, this is the
 // client-side gate so the rule reads clearly (don't just eat a 403). Passing an
 // exam frees a slot.
-export const FOCUS_CAP = 3;
+export const FOCUS_CAP = 10;
 
 // "In focus" = in the practice deck and the final exam isn't passed yet. This is
 // exactly the set the cap meters (and what the last batch in learning belongs to).

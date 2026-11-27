@@ -4,6 +4,7 @@ import { clearLocalProgress, hydrateProgress } from "../lib/progress";
 import { adoptLearnProfile, releaseLearnProfile, type UserProfile } from "../lib/profile";
 import { clearWidget } from "../lib/widget";
 import { pauseReminders } from "../lib/reminders";
+import { syncPurchases } from "../lib/iap";
 import { loadToken, setToken, haptic } from "../lib/session";
 import { useI18n, type Lang } from "../i18n";
 
@@ -40,6 +41,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     adoptLearnProfile(u.id, (u.learn_profile as UserProfile | undefined) ?? null);
     clearLocalProgress();
     await hydrateProgress();
+    // Catch up on any App Store purchase the server never heard about: a renewal,
+    // an Ask-to-Buy approval, a purchase whose round-trip died mid-flight. Silent,
+    // native-only, and deliberately NOT awaited — a slow or failing store must
+    // never hold up sign-in. See lib/iap.syncPurchases.
+    void syncPurchases((plan) => setUser((cur) => (cur ? { ...cur, plan } : cur)));
   }, [setLang]);
 
   useEffect(() => {

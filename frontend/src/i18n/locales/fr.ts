@@ -264,6 +264,7 @@ const fr: Dict = {
   "account.delete": "Supprimer le compte",
   "account.deleteConfirm": "Supprimer le compte définitivement ? Toute la progression et les données seront effacées.",
   "account.deleteYes": "Supprimer définitivement",
+  "account.deleteFailed": "Impossible de supprimer le compte. Vérifie ta connexion et réessaie.",
   "account.deleteCancel": "Annuler",
 
   "sub.title": "Débloque l'accès complet",

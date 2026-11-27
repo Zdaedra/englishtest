@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../api";
 import { runBatchAction } from "../lib/batchActions";
 import heroProblem from "../assets/onboarding-problem.png";
@@ -56,6 +56,13 @@ export default function OnboardingFlow({ onDone }: { onDone: () => void }) {
   const [busy, setBusy] = useState(false);
   const [gender, setGender] = useState<string | null>(null);
   const last = i === SLIDES.length - 1;
+
+  // Start every slide at its top. The slides are taller than the screen, and the
+  // "next" button sits at the BOTTOM of the previous one, so without this the new
+  // slide opens at the old scroll offset — you land in its middle, with cards
+  // sliding under the clock and the Dynamic Island. It reads as broken layout,
+  // but the layout is fine; it is the scroll position that was never reset.
+  useEffect(() => { window.scrollTo(0, 0); }, [i]);
 
   const next = async () => {
     if (!last) { setI(i + 1); return; }

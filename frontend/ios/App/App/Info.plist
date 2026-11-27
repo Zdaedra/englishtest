@@ -48,17 +48,29 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<!-- Export compliance: the app contains no encryption of its own. All traffic
+	     goes over HTTPS provided by iOS; there is no crypto library in the bundle
+	     and no custom algorithm. Declaring it here means App Store Connect stops
+	     asking the "App Encryption Documentation" question on every single upload
+	     (it blocked build 1.1(2) until answered by hand on 2026-11-26). -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<!-- The languages the app actually speaks. Without this list iOS treats the
+	     bundle as English-only (CFBundleDevelopmentRegion), so WKWebView reports
+	     navigator.language = "en" no matter what the phone is set to — a Spanish
+	     iPhone opened the app in Russian, because "en" was not a known UI locale
+	     and detectLang() fell through to its last-resort default. Declaring them
+	     makes iOS hand the web layer the user's own preferred language. -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>ru</string>
+		<string>es</string>
+		<string>de</string>
+		<string>fr</string>
+	</array>
 </dict>
 </plist>

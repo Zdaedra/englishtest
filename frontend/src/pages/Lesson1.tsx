@@ -6,6 +6,7 @@ import { useRecorder } from "../audio/useRecorder";
 import { usePlayer } from "../player/PlayerContext";
 import { getProgress, setProgress } from "../lib/progress";
 import { RecFab, band } from "../ui/RecFab";
+import { useVoiceConsent } from "../ui/VoiceConsent";
 import { IconBack, IconCheck, IconChevron, IconPause, IconPlay } from "../ui/icons";
 import { useI18n } from "../i18n";
 
@@ -16,6 +17,7 @@ export default function Lesson1() {
   const player = usePlayer();
   const mnemo = useMnemoAudio(id ? Number(id) : undefined);
   const rec = useRecorder();
+  const { requireConsent, consentModal } = useVoiceConsent();
 
   const [batch, setBatch] = useState<Batch | null>(null);
   const [err, setErr] = useState("");
@@ -64,6 +66,9 @@ export default function Lesson1() {
   const onMic = useCallback(async () => {
     if (!batch) return;
     setErr("");
+    // First recording ever on this account: ask before the mic opens
+    // (Apple 5.1.2(i)). Never gates STOPPING a recording.
+    if (!rec.recording && !requireConsent()) return;
     if (!rec.recording) {
       setResult(null);
       await rec.start();
@@ -131,6 +136,7 @@ export default function Lesson1() {
 
   return (
     <div className="screen">
+      {consentModal}
       <button className="back-link" onClick={() => nav(`/batch/${batch.id}`)}>
         <IconBack /> {batch.title}
       </button>

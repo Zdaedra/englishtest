@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { LANGS, useI18n } from "../i18n";
 
-/** Compact globe switcher: button (🌐 + current code) → popover list of the 4 UI
- *  languages. Used on the pre-login screens (auth / onboarding) and in the cabinet. */
+/** Compact globe switcher: button (🌐 + current code) → popover list of the UI
+ *  languages in LANGS. Used on the pre-login screens (auth / onboarding) and in the cabinet. */
 export default function LangSwitcher({ variant = "pill" }: { variant?: "pill" | "ghost" }) {
   const { lang, setLang } = useI18n();
   const [open, setOpen] = useState(false);

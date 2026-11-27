@@ -16,6 +16,7 @@ public class IAPPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "getProducts", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "purchase", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "restore", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "syncEntitlements", returnType: CAPPluginReturnPromise),
     ]
 
     private var updatesTask: Task<Void, Never>?
@@ -48,6 +49,20 @@ public class IAPPlugin: CAPPlugin, CAPBridgedPlugin {
                         "displayName": p.displayName,
                         "description": p.description,
                         "displayPrice": p.displayPrice,
+                        // Numeric price + currency so JS can derive the
+                        // per-month equivalent and the annual discount in the
+                        // customer's own currency. displayPrice alone is a
+                        // formatted string and cannot be divided.
+                        "price": NSDecimalNumber(decimal: p.price).doubleValue,
+                        "currencyCode": p.priceFormatStyle.currencyCode,
+                        // The per-month equivalent of a yearly plan, formatted by
+                        // StoreKit itself. Formatting it on the JS side instead
+                        // produces a DIFFERENT look for the same currency — the
+                        // AlefSwitch release hit exactly this: "599.00 RUB" next
+                        // to "49,92 RUB" on one screen. Both prices on the card
+                        // must come out of the same formatter. Meaningless for
+                        // monthly products; the paywall only reads it on yearly.
+                        "displayPriceMonthlyEq": (p.price / 12).formatted(p.priceFormatStyle),
                     ]
                 }
                 call.resolve(["products": out])
@@ -81,6 +96,22 @@ public class IAPPlugin: CAPPlugin, CAPBridgedPlugin {
             } catch {
                 call.reject("purchase_failed", nil, error)
             }
+        }
+    }
+
+    // Silent entitlement read: what StoreKit currently considers active, WITHOUT
+    // AppStore.sync(), which prompts for the App Store password. Called on every
+    // sign-in so a purchase whose server round-trip never happened (app killed
+    // mid-purchase, offline, Ask-to-Buy approved hours later) is picked up with no
+    // user action. The visible "Restore purchases" button still calls restore()
+    // below, which does sync and may prompt — that one is user-initiated.
+    @objc func syncEntitlements(_ call: CAPPluginCall) {
+        Task {
+            var jws: [String] = []
+            for await entitlement in Transaction.currentEntitlements {
+                jws.append(entitlement.jwsRepresentation)
+            }
+            call.resolve(["jws": jws])
         }
     }
 

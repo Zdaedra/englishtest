@@ -13,21 +13,23 @@ import {
   Fragment, type ReactNode,
 } from "react";
 import ru from "./locales/ru";
+import en from "./locales/en";
 import es from "./locales/es";
 import de from "./locales/de";
 import fr from "./locales/fr";
 
-export type Lang = "ru" | "es" | "de" | "fr";
+export type Lang = "ru" | "en" | "es" | "de" | "fr";
 export type Dict = Record<string, string>;
 
 export const LANGS: { code: Lang; label: string; short: string; flag: string }[] = [
   { code: "ru", label: "Русский",  short: "RU", flag: "🇷🇺" },
+  { code: "en", label: "English",  short: "EN", flag: "🇺🇸" },
   { code: "es", label: "Español",  short: "ES", flag: "🇪🇸" },
   { code: "de", label: "Deutsch",  short: "DE", flag: "🇩🇪" },
   { code: "fr", label: "Français", short: "FR", flag: "🇫🇷" },
 ];
 
-const DICTS: Record<Lang, Dict> = { ru, es, de, fr };
+const DICTS: Record<Lang, Dict> = { ru, en, es, de, fr };
 const STORAGE_KEY = "ee-lang";
 
 export function detectLang(): Lang {
@@ -35,9 +37,16 @@ export function detectLang(): Lang {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved && saved in DICTS) return saved as Lang;
   } catch { /* private mode */ }
+  // Walk the user's WHOLE preference order, not just the first entry: a phone set
+  // to Spanish with English second should land on Spanish, and one set to a
+  // language we do not speak should fall to the next one it lists rather than
+  // straight to the default.
   try {
-    const nav = (navigator.language || "ru").slice(0, 2).toLowerCase();
-    if (nav in DICTS) return nav as Lang;
+    const prefs = [...(navigator.languages || []), navigator.language || ""];
+    for (const p of prefs) {
+      const code = p.slice(0, 2).toLowerCase();
+      if (code in DICTS) return code as Lang;
+    }
   } catch { /* no navigator */ }
   return "ru";
 }

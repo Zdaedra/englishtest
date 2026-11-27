@@ -1,4 +1,4 @@
-// Russian — source language. Keys here define the full UI surface; es/de/fr mirror it.
+// Russian — source language. Keys here define the full UI surface; en/es/de/fr mirror it.
 // NEVER put the English-being-learned here (anchor words, example sentences) — those
 // stay hardcoded English in the components.
 import type { Dict } from "../index";
@@ -227,7 +227,7 @@ const ru: Dict = {
   "batch.menu.removeActive": "Убрать из активных",
   "batch.menu.reactivate": "Повторить",
   "batch.menu.focusFull": "Сначала сдай экзамен",
-  "focus.full.body": "У тебя уже {{n}} темы в активном фокусе. Сдай финальный экзамен по одной из них, чтобы открыть новую.",
+  "focus.full.body": "У тебя уже {{n}} тем в активном фокусе. Сдай финальный экзамен по одной из них, чтобы открыть новую.",
   "focus.full.cta": "К активным темам",
   "focus.full.toast": "В фокусе — не больше {{n}} тем. Сдай экзамен, чтобы освободить место.",
   "batch.menu.moveStart": "В самое начало",
@@ -278,6 +278,7 @@ const ru: Dict = {
   "account.delete": "Удалить аккаунт",
   "account.deleteConfirm": "Удалить аккаунт навсегда? Весь прогресс и данные будут стёрты.",
   "account.deleteYes": "Удалить навсегда",
+  "account.deleteFailed": "Не удалось удалить аккаунт. Проверь соединение и попробуй ещё раз.",
   "account.deleteCancel": "Отмена",
 
   // ── Subscription screen ────────────────────────────────────────────

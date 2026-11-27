@@ -197,6 +197,12 @@ export const api = {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ signed_transaction: signedTransaction }),
     }).then(j<{ ok: boolean; plan: string; plan_expires_at: string | null }>),
+  // Ask the server to re-check this account against Apple's live subscription
+  // status. `checked` is false when it could not ask at all, so "nothing
+  // changed" is distinguishable from "we never looked".
+  refreshBilling: () =>
+    apiFetch("/api/billing/refresh", { method: "POST" })
+      .then(j<{ ok: boolean; checked: boolean; plan: string; plan_expires_at: string | null }>),
   parse: (raw_text: string, use_llm = false) =>
     apiFetch("/api/imports/parse", {
       method: "POST", headers: { "content-type": "application/json" },

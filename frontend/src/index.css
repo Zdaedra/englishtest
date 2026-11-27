@@ -3892,6 +3892,18 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
   background: var(--card);
   overflow-x: clip;            /* landing slides never scroll sideways; vertical scroll untouched */
 }
+/* The slides are taller than the screen, and iOS keeps the status bar transparent,
+   so scrolled text slid straight through the clock, the Dynamic Island and the
+   wifi icons — it reads as broken layout. A strip exactly as tall as the top inset
+   covers that band: it matches the flat slide background, and the blur keeps it
+   looking native where the mountain photo scrolls underneath. Zero-height on a
+   device without an inset. */
+.ob-screen::before {
+  content: ""; position: fixed; top: 0; left: 0; right: 0;
+  height: env(safe-area-inset-top, 0px); z-index: 30; pointer-events: none;
+  background: var(--card);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+}
 /* Slides that must fit one screen (no scroll): cap height, let flex absorb. */
 .ob-screen.ob-fit {
   height: 100dvh; min-height: 0; overflow: hidden;
@@ -4060,7 +4072,11 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 .ob-mt-mnemo-step { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1 1 0; min-width: 0; }
 .ob-mt-mnemo-ico { flex: none; width: 26px; height: 26px; border-radius: 999px; display: grid; place-items: center; background: rgba(255,245,224,.9); color: var(--bronze-ink); box-shadow: inset 0 0 0 1px rgba(176,138,74,.35); }
 .ob-mt-mnemo-ico svg { width: 13px; height: 13px; }
-.ob-mt-mnemo-lbl { font-size: 0.6875rem; font-weight: 740; letter-spacing: 0; line-height: 1.05; color: var(--bronze-ink); text-transform: uppercase; text-align: center; }
+/* One anchor word per slot, and the words differ wildly in length: UNDERSTAND is
+   two and a half times FAR. At a fixed 11px the long one overflowed its quarter
+   of the row and ran into its neighbour ("UNDERSTANDWALK"). Scale the type with
+   the viewport and let a word that still will not fit wrap instead of spilling. */
+.ob-mt-mnemo-lbl { font-size: clamp(0.4375rem, 1.9vw, 0.625rem); font-weight: 740; letter-spacing: -0.01em; line-height: 1.05; color: var(--bronze-ink); text-transform: uppercase; text-align: center; max-width: 100%; overflow-wrap: anywhere; }
 .ob-mt-mnemo-row > svg { flex: none; width: 9px; height: 9px; margin-top: 6px; color: rgba(176,138,74,.6); }
 .ob-mt-mnemo-foot { display: block; margin-top: 8px; font-size: 0.6875rem; color: var(--faint); font-style: italic; }
 
@@ -4145,7 +4161,6 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
   .ob-mt-ex { font-size: 0.75rem; }
   .ob-mt-mnemo  { width: 52%; }
   .ob-mt-pin    { width: 32px; height: 32px; font-size: 0.8125rem; }
-  .ob-mt-mnemo-lbl { font-size: 0.6875rem; }
 }
 
 /* Onboarding CTA — bronze pill (not the in-app green) */

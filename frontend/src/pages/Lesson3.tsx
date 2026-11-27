@@ -8,6 +8,7 @@ import { useRecorder } from "../audio/useRecorder";
 import { usePlayer } from "../player/PlayerContext";
 import { getProgress, setProgress } from "../lib/progress";
 import { RecFab, band } from "../ui/RecFab";
+import { useVoiceConsent } from "../ui/VoiceConsent";
 import {
   IconBack, IconCheck, IconChevron, IconHeadphones, IconMenu, IconPlay, IconShield, IconWave,
 } from "../ui/icons";
@@ -29,6 +30,7 @@ export default function Lesson3() {
   const { t, tx } = useI18n();
   const player = usePlayer();
   const rec = useRecorder();
+  const { requireConsent, consentModal } = useVoiceConsent();
 
   const [batch, setBatch] = useState<Batch | null>(null);
   const [err, setErr] = useState("");
@@ -176,6 +178,9 @@ export default function Lesson3() {
   const onMicRetell = useCallback(async () => {
     if (!batch) return;
     setErr("");
+    // First recording ever on this account: ask before the mic opens
+    // (Apple 5.1.2(i)). Never gates STOPPING a recording.
+    if (!rec.recording && !requireConsent()) return;
     if (!rec.recording) { setRetellResult(null); await rec.start(); return; }
     const clip = await rec.stop();
     if (!clip || clip.ms < 600) {
@@ -223,6 +228,9 @@ export default function Lesson3() {
   const onMicStop = useCallback(async () => {
     if (!stopPhrase) return;
     setErr("");
+    // First recording ever on this account: ask before the mic opens
+    // (Apple 5.1.2(i)). Never gates STOPPING a recording.
+    if (!rec.recording && !requireConsent()) return;
     if (!rec.recording) { setStopResult(null); await rec.start(); return; }
     const clip = await rec.stop();
     if (!clip || clip.ms < 600) {
@@ -272,6 +280,9 @@ export default function Lesson3() {
     const c = order3Ref.current[pos];
     if (!c) return;
     setErr("");
+    // First recording ever on this account: ask before the mic opens
+    // (Apple 5.1.2(i)). Never gates STOPPING a recording.
+    if (!rec.recording && !requireConsent()) return;
     if (!rec.recording) { setAnchorResult(null); await rec.start(); return; }
     const clip = await rec.stop();
     if (!clip || clip.ms < 400) {
@@ -326,6 +337,7 @@ export default function Lesson3() {
 
   return (
     <div className="screen l3-screen">
+      {consentModal}
       <div className="l3-header">
         <button className="l3-iconbtn" onClick={() => nav(`/batch/${batch.id}`)} aria-label={t("common.back")}>
           <IconBack size={20} />

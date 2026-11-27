@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n";
 import { haptic } from "../lib/session";
-import { buyPlan, restorePurchases, iapAvailable } from "../lib/iap";
+import { buyPlan, restorePurchases, iapAvailable, loadProducts, PRODUCT_ID,
+         type IapProduct } from "../lib/iap";
 import { IconBack, IconCheck } from "../ui/icons";
 
-// Static prices mirror the App Store Connect products (Core $6.99/$39.99,
-// AI $12.99/$79.99). On native, the buy button runs the real StoreKit purchase
+// FALLBACK prices only, for the web paywall, where there is no StoreKit to ask.
+// On the device the figures below are replaced by what the App Store actually
+// charges THIS customer (see pricedTier): currency, amount and the annual
+// discount all come from StoreKit. Showing these dollar amounts to a customer
+// whose store is in euros contradicts Apple's own purchase sheet — a 3.1.2
+// rejection, and wrong information besides.
+// On native, the buy button runs the real StoreKit purchase
 // → server verify; on web (no StoreKit) it shows the "coming in the app" note.
 type Tier = {
   plan: "ai" | "core";
@@ -30,8 +36,24 @@ const TIERS: Tier[] = [
   },
 ];
 
-// Biggest annual discount across tiers — labels the "yearly" toggle.
-const MAX_SAVE = Math.max(...TIERS.map((t) => parseInt(t.savePct, 10)));
+/** A tier priced the way the customer's own App Store prices it. Falls back to
+ *  the static figures when StoreKit has not answered (web, offline, products not
+ *  approved yet) — never shows a blank price. */
+function pricedTier(tr: Tier, live: Record<string, IapProduct>): Tier {
+  const m = live[PRODUCT_ID[`${tr.plan}:monthly`]];
+  const y = live[PRODUCT_ID[`${tr.plan}:yearly`]];
+  if (!m || !y) return tr;
+  const out: Tier = { ...tr, monthly: m.displayPrice, yearly: y.displayPrice };
+  // The per-month equivalent comes PRE-FORMATTED from StoreKit. Formatting it
+  // here instead would put two different-looking amounts of the same currency on
+  // one card (the AlefSwitch release shipped "599.00 RUB" beside "49,92 RUB"),
+  // so we never re-format money in JS — we only compute the percentage.
+  if (y.displayPriceMonthlyEq) out.monthlyEq = y.displayPriceMonthlyEq;
+  if (m.price != null && y.price != null && m.price > 0) {
+    out.savePct = `${Math.max(0, Math.round((1 - y.price / (m.price * 12)) * 100))}%`;
+  }
+  return out;
+}
 
 export default function Subscribe() {
   const nav = useNavigate();
@@ -41,6 +63,12 @@ export default function Subscribe() {
   const [busy, setBusy] = useState(false);
   // Billing period chooser — annual is the default (best value).
   const [period, setPeriod] = useState<"monthly" | "yearly">("yearly");
+  // Real App Store prices for this customer; {} on web and until they arrive.
+  const [live, setLive] = useState<Record<string, IapProduct>>({});
+  useEffect(() => { void loadProducts().then(setLive); }, []);
+  const tiers = useMemo(() => TIERS.map((tr) => pricedTier(tr, live)), [live]);
+  const maxSave = useMemo(
+    () => Math.max(...tiers.map((tr) => parseInt(tr.savePct, 10) || 0)), [tiers]);
 
   const buy = async (plan: "ai" | "core", period: "monthly" | "yearly") => {
     haptic("medium");
@@ -89,11 +117,11 @@ export default function Subscribe() {
           className={`period-tab${period === "yearly" ? " active" : ""}`}
           onClick={() => setPeriod("yearly")}
         >
-          {t("sub.yearly")}<span className="period-pill">−{MAX_SAVE}%</span>
+          {t("sub.yearly")}<span className="period-pill">−{maxSave}%</span>
         </button>
       </div>
 
-      {TIERS.map((tr) => {
+      {tiers.map((tr) => {
         const current = user?.plan === tr.plan;
         return (
           <div key={tr.plan} className={`sub-card${tr.flagship ? " flagship" : ""}`}>
