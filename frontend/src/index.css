@@ -107,6 +107,24 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   background: var(--bg);
 }
+/* Same fix as .ob-screen::before, for every in-app screen: iOS keeps the status
+   bar transparent, so scrolled content (the stats row, card titles) ran straight
+   through the clock. A strip as tall as the top inset, tinted with the page
+   ground and blurred, the way native large-title screens look. Lives on .shell,
+   not .screen: .screen animates a transform, which would turn `fixed` into
+   "scrolls with the page". Zero-height without an inset (desktop web).
+   Shown only while the page is scrolled (html.is-scrolled, set by ScrolledFlag
+   in App.tsx): any always-on tint read as a band at rest, gray on the white
+   lesson pages and light on the #F7F7F5 library. */
+.shell::before {
+  content: ""; position: fixed; top: 0; left: 0; right: 0;
+  height: env(safe-area-inset-top, 0px); z-index: 30; pointer-events: none;
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 0.5px 0 var(--border);
+  opacity: 0; transition: opacity .18s ease;
+}
+html.is-scrolled .shell::before { opacity: 1; }
 
 .screen {
   padding: max(20px, env(safe-area-inset-top)) 18px calc(env(safe-area-inset-bottom) + 92px);
@@ -229,6 +247,9 @@ a { color: inherit; text-decoration: none; }
   background: rgba(20,15,8,.55); color: #fff; display: grid; place-items: center;
   -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
 }
+/* Catalog row cards carry the "+ to focus" button in that same top-right corner,
+   so the lock went straight under it; on those cards it moves to the left. */
+.row-card .bcover-lock { right: auto; left: 8px; }
 
 /* ----- Featured "Current focus" — title is the hero, art supports --------- */
 .feature {

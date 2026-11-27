@@ -34,6 +34,15 @@ router = APIRouter(prefix="/api/billing", tags=["billing"])
 # with no way to tell which events those were. One line per notification, no
 # personal data, just the type and what we did with it.
 _log = logging.getLogger("billing")
+# Uvicorn wires up only its own loggers, so these lines were silently dropped —
+# and they are the only record of which notification Apple actually sent and
+# what self-repair decided. Print them next to the access log.
+if not _log.handlers:
+    _h = logging.StreamHandler()
+    _h.setFormatter(logging.Formatter("billing %(levelname)s: %(message)s"))
+    _log.addHandler(_h)
+    _log.setLevel(logging.INFO)
+    _log.propagate = False
 
 # App Store Connect product ids → our plan tier. Must match the products created
 # in App Store Connect → Subscriptions for bundle net.executiveenglish.app.
@@ -241,11 +250,28 @@ def verify(body: VerifyIn, request: Request, session: Session = Depends(get_sess
             "plan_expires_at": u.plan_expires_at.isoformat() if u.plan_expires_at else None}
 
 
-# Lazy self-repair throttle {user_id: monotonic seconds}. Only guards the case
-# where Apple could not be reached at all — a successful answer always moves the
-# account out of the "looks lapsed" state, so it stops asking by itself.
-_last_try: dict[int, float] = {}
-_RETRY_AFTER_S = 15 * 60
+# Lazy self-repair throttle {user_id: monotonic time of the next allowed ask}.
+# Apple unreachable -> wait long. Apple answered but the account still looks
+# lapsed -> ask again soon: right after a renewal Apple's status endpoint can
+# still show the period that just ended (seen live 2026-11-27: renewal 04:28:11,
+# app opened 23 s later, old period returned, subscriber locked for 15 min).
+# Billing retry also lands here — at most one call a minute while they use the app.
+_next_try: dict[int, float] = {}
+_RETRY_UNREACHABLE_S = 15 * 60
+_RETRY_STILL_LAPSED_S = 60
+
+
+def _looks_lapsed(user) -> bool:
+    """Paid plan in the DB, linked to an App Store subscription, period over."""
+    if not user or not getattr(user, "apple_original_tx_id", None):
+        return False
+    if (user.plan or "free") == "free":
+        return False
+    exp = getattr(user, "plan_expires_at", None)
+    if exp is None:
+        return False
+    e = exp if exp.tzinfo else exp.replace(tzinfo=timezone.utc)
+    return e < datetime.now(timezone.utc)
 
 
 def maybe_reconcile(session: Session, user) -> None:
@@ -261,26 +287,30 @@ def maybe_reconcile(session: Session, user) -> None:
     the account is linked to an App Store subscription, so it costs one API call
     per account per lapse, not one per request: whatever Apple answers (expired →
     plan goes free, still active → expiry moves forward) stops the condition from
-    matching again. The throttle only covers Apple being unreachable.
+    matching again. The throttle (see _next_try) covers Apple being unreachable
+    and the minute right after a renewal when Apple still shows the old period.
     """
-    if not user or not getattr(user, "apple_original_tx_id", None):
-        return
-    if (user.plan or "free") == "free":
-        return
-    exp = getattr(user, "plan_expires_at", None)
-    if exp is None:
-        return
-    e = exp if exp.tzinfo else exp.replace(tzinfo=timezone.utc)
-    if e >= datetime.now(timezone.utc):
-        return                      # still inside the paid period — nothing to check
+    if not _looks_lapsed(user):
+        return                      # nothing to check (or still inside the paid period)
     now = monotonic()
-    if now - _last_try.get(user.id, 0.0) < _RETRY_AFTER_S:
+    if now < _next_try.get(user.id, 0.0):
         return
-    _last_try[user.id] = now
+    _next_try[user.id] = now + _RETRY_UNREACHABLE_S   # held while the call runs
     try:
-        reconcile_with_apple(session, user)
+        answered = reconcile_with_apple(session, user)
     except Exception:
-        pass                        # never let self-repair break the caller
+        answered = False            # never let self-repair break the caller
+    if not answered:
+        _log.warning("self-repair for user %s: Apple not reachable, next try in %ss",
+                     user.id, _RETRY_UNREACHABLE_S)
+    elif _looks_lapsed(user):
+        _next_try[user.id] = now + _RETRY_STILL_LAPSED_S
+        _log.info("self-repair for user %s: Apple still shows the ended period, "
+                  "next try in %ss", user.id, _RETRY_STILL_LAPSED_S)
+    else:
+        _next_try.pop(user.id, None)
+        _log.info("self-repair for user %s: plan %s until %s",
+                  user.id, user.plan, user.plan_expires_at)
 
 
 @router.post("/refresh")

@@ -272,6 +272,21 @@ function NativeWidgetSync({ uid }: { uid: number }) {
   return null;
 }
 
+/** Marks <html> while the page is scrolled, so the status-bar strip
+ *  (.shell::before) shows only when content actually runs under the clock —
+ *  at rest the top of every screen stays clean, like native large-title screens. */
+function ScrolledFlag() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const root = document.documentElement;
+    const sync = () => root.classList.toggle("is-scrolled", window.scrollY > 2);
+    sync();
+    window.addEventListener("scroll", sync, { passive: true });
+    return () => { window.removeEventListener("scroll", sync); root.classList.remove("is-scrolled"); };
+  }, [pathname]);
+  return null;
+}
+
 function Shell() {
   const { user, loading } = useAuth();
   const [obDone, setObDone] = useState(false);
@@ -298,6 +313,7 @@ function Shell() {
             <MiniPlayer />
             <FloatingNav />
             <RouteTour uid={user.id} />
+            <ScrolledFlag />
             <NativeWidgetSync uid={user.id} />
           </div>
         </TeachProvider>

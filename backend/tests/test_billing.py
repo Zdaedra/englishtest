@@ -346,7 +346,7 @@ def _lapsed(make_user, orig="orig-lazy"):
 
 def test_me_repairs_an_account_apple_says_is_still_active(make_user, monkeypatch):
     import app.routers.billing as billing
-    billing._last_try.clear()
+    billing._next_try.clear()
     c = _lapsed(make_user, "orig-lazy-live")
     cl, tx = _status_client(1, "net.executiveenglish.ai.yearly", 1893456000000, "orig-lazy-live")
     monkeypatch.setattr(billing, "_build_api_clients", lambda: [cl])
@@ -358,9 +358,52 @@ def test_me_repairs_an_account_apple_says_is_still_active(make_user, monkeypatch
 def test_me_does_not_call_apple_for_an_account_inside_its_paid_period(make_user, monkeypatch):
     """One call per lapse, not one per request."""
     import app.routers.billing as billing
-    billing._last_try.clear()
+    billing._next_try.clear()
     calls = []
     monkeypatch.setattr(billing, "_build_api_clients", lambda: calls.append(1) or [])
     c = make_user(plan="ai")          # no expiry, no linked subscription
     c.get("/api/auth/me")
     assert not calls, "asked Apple about an account that had nothing to check"
+
+
+def test_me_retries_soon_when_the_renewal_is_not_visible_yet(make_user, monkeypatch):
+    """Seen live on 2026-11-27: Apple renewed at 04:28:11, the app opened 23 s
+    later, Apple's status endpoint still showed the old (just-ended) period, and
+    the 15-minute throttle then kept a paying subscriber locked out. When Apple
+    answers but the account still looks lapsed, ask again within a minute."""
+    import time as _time
+    import app.routers.billing as billing
+    billing._next_try.clear()
+    c = _lapsed(make_user, "orig-lazy-race")
+    past = int((_time.time() - 30) * 1000)
+    future = 1893456000000
+    answers = [past, future]
+    cl, tx = _status_client(1, "net.executiveenglish.ai.monthly", past, "orig-lazy-race")
+    def _decode(signed):
+        tx.expiresDate = answers[0]
+        return tx
+    monkeypatch.setattr(billing, "_build_api_clients", lambda: [cl])
+    monkeypatch.setattr(billing, "_decode_tx", _decode)
+    clock = [1000.0]
+    monkeypatch.setattr(billing, "monotonic", lambda: clock[0])
+
+    assert c.get("/api/auth/me").json()["plan"] == "free"   # renewal not visible yet
+    answers.pop(0)                                           # Apple catches up
+    clock[0] += 90
+    assert c.get("/api/auth/me").json()["plan"] == "ai", \
+        "a subscriber stayed locked out because the retry waited 15 minutes"
+
+
+def test_me_backs_off_when_apple_cannot_be_reached(make_user, monkeypatch):
+    """The long pause is for Apple being down — not one call per request."""
+    import app.routers.billing as billing
+    billing._next_try.clear()
+    c = _lapsed(make_user, "orig-lazy-down")
+    calls = []
+    monkeypatch.setattr(billing, "_build_api_clients", lambda: calls.append(1) or [])
+    clock = [1000.0]
+    monkeypatch.setattr(billing, "monotonic", lambda: clock[0])
+    c.get("/api/auth/me")
+    clock[0] += 120
+    c.get("/api/auth/me")
+    assert len(calls) == 1, "kept calling an unreachable Apple on every request"
