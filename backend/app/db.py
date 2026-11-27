@@ -139,6 +139,22 @@ def _migrate(s: Session) -> None:
                    "ON userphrasestat(user_id, phrase_id)"))
     s.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ux_progress_user_batch "
                    "ON batchprogress(user_id, batch_id)"))
+
+    # Single-user leftover, and a nasty one. Back when there was one progress row
+    # per batch, `batch_id` carried a UNIQUE index. Under multi-user that index
+    # lets only ONE account in the whole system hold progress for a given batch:
+    # every other user's write dies on IntegrityError, so their progress silently
+    # never persists and the app looks EMPTY on a fresh device. The model declares
+    # a plain index (index=True), so fresh DBs never had this — only DBs migrated
+    # from the single-user era, which is why tests and local dev never saw it.
+    # Replace it with the non-unique index the model expects; real uniqueness is
+    # ux_progress_user_batch above.
+    row = s.execute(text("SELECT sql FROM sqlite_master WHERE type='index' "
+                         "AND name='ix_batchprogress_batch_id'")).first()
+    if row and row[0] and "UNIQUE" in row[0].upper():
+        s.execute(text("DROP INDEX ix_batchprogress_batch_id"))
+        s.execute(text("CREATE INDEX IF NOT EXISTS ix_batchprogress_batch_id "
+                       "ON batchprogress(batch_id)"))
     s.commit()
 
     # Per-user scoping (commercial multi-user): add user_id to the per-user event

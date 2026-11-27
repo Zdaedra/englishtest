@@ -13,7 +13,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlmodel import Session
 
-from .. import scoring, usage
+from .. import entitlements, scoring, usage
 from ..auth import current_user_id
 from ..db import get_session
 
@@ -25,6 +25,13 @@ _DAILY_RUNS = 3
 
 # Per-process daily counter {user_id: (date, runs)}. A restart forgives the
 # count — fine for a $0.002 placement call; the point is bounding abuse loops.
+#
+# It is deliberately soft, but on its own it was the ONLY guard here, and we
+# redeploy several times on a busy day, so in practice the cap barely existed.
+# The durable backstop is the monthly estimated-AI-cost ceiling that every other
+# paid-AI endpoint already checks (training._check_rate) — league accrued cost to
+# that ledger but never looked at it. Both now apply: the dict bounds a tight
+# loop within one process, the ledger bounds the month across restarts.
 _runs: dict[int, tuple[date, int]] = {}
 
 
@@ -60,6 +67,10 @@ def score(data: LeagueIn, user_id: int = Depends(current_user_id),
         runs = 0
     if runs >= _DAILY_RUNS:
         raise HTTPException(429, "Daily league limit reached.")
+
+    budget = entitlements.user_entitlements(session, user_id).get("monthly_ai_cost_cap_usd")
+    if budget is not None and usage.month_cost_usd(session, user_id) >= budget:
+        raise HTTPException(429, "Monthly AI limit reached.")
 
     graded = scoring.league_score([a.model_dump() for a in data.answers])
     if graded["via"] != "llm":

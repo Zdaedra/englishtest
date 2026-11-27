@@ -10,7 +10,7 @@ ENTITLEMENTS: dict[str, dict] = {
         "server_stt": False,
         "ai_coach": False,
         "import": False,
-        "max_active_batches": 3,    # None => unlimited
+        "max_active_batches": 10,   # None => unlimited
         "scored_per_day": 30,
         "gapless_per_day": 3,       # gapless audio sessions/day (TTS cost lever)
         # Monthly estimated-AI-cost ceiling (USD). Bounds worst-case COGS to a known
@@ -50,7 +50,7 @@ ENTITLEMENTS: dict[str, dict] = {
 # finishing (passing exams) instead of piling up an unbounded deck. The effective
 # activation limit is min(plan max_active_batches, FOCUS_CAP): a plan can only make
 # it stricter, never looser. Passing an exam frees a slot. Enforced in progress.py.
-FOCUS_CAP = 3
+FOCUS_CAP = 10
 
 
 def ents(plan: str | None) -> dict:

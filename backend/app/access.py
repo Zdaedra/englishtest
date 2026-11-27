@@ -13,7 +13,15 @@ _PAID = ("core", "ai")
 
 
 def batch_usable(plan: str | None, batch: "models.Batch | None", user_id: int) -> bool:
-    """May this user open/learn/practice this batch's content at all?"""
+    """May this user open/learn/practice this batch's content at all?
+
+    `plan` must be `entitlements.effective_plan(user)`, NEVER the raw `user.plan`
+    column. The column keeps saying "ai" after an Apple subscription lapses — it
+    is only corrected when a webhook arrives, and a webhook can be lost, late or
+    duplicated. Passing the column meant the profile screen said "free" while the
+    paid topics stayed open. Every call site in the routers was fixed on
+    2026-11-26; keep it that way.
+    """
     if batch is None:
         return False
     if batch.owner_id == user_id:   # own import

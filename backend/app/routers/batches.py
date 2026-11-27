@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from sqlmodel import Session, select
 
 from .. import access, audio, content, cover, localize, models, tts
+from ..entitlements import effective_plan
 from .. import mnemo as mnemo_render
 from ..auth import current_user_id, is_admin
 from ..db import get_session
@@ -54,7 +55,7 @@ def list_batches(lang: str = "", user_id: int = Depends(current_user_id),
         .order_by(models.Batch.created_at.desc())
     ).all()
     u = session.get(models.User, user_id)
-    plan = u.plan if u else "free"
+    plan = effective_plan(u)
     lng = localize.resolve_lang(lang, u)
     out = []
     for b in rows:
@@ -85,11 +86,19 @@ def list_phrases(lang: str = "", user_id: int = Depends(current_user_id),
     """Flat index of every phrase across non-deleted batches — powers the library
     search's per-phrase results block. Read-only, no audio. Declared before
     /{batch_id} so the literal path wins the route match."""
-    lng = localize.resolve_lang(lang, session.get(models.User, user_id))
+    u = session.get(models.User, user_id)
+    lng = localize.resolve_lang(lang, u)
     batches = session.exec(
         select(models.Batch).where(models.Batch.deleted_at == None)  # noqa: E711
         .where(_owner_filter(user_id))
     ).all()
+    # PAYWALL. This is a content endpoint, not a catalogue one: it returns the
+    # English phrase and its gloss, i.e. the product itself. Without this filter a
+    # free account got all 802 phrases of the 89 locked topics — the library was
+    # locked on the shelf while search handed out everything inside it. Same gate
+    # as list_batches' `locked` flag, so the two can never disagree.
+    plan = effective_plan(u)
+    batches = [b for b in batches if access.batch_usable(plan, b, user_id)]
     title_by_id = {b.id: localize.pick(b.title_i18n, lng, b.title) for b in batches}
     ids = list(title_by_id.keys())
     if not ids:
@@ -114,7 +123,7 @@ def get_batch(batch_id: int, lang: str = "", user_id: int = Depends(current_user
         raise HTTPException(404, "Batch not found")
     u = session.get(models.User, user_id)
     lng = localize.resolve_lang(lang, u)
-    locked = not access.batch_usable(u.plan if u else "free", b, user_id)
+    locked = not access.batch_usable(effective_plan(u), b, user_id)
     head = {
         "id": b.id, "title": localize.pick(b.title_i18n, lng, b.title),
         "slug": b.slug, "theme": localize.pick(b.theme_i18n, lng, b.theme),
@@ -184,6 +193,12 @@ def phrase_audio(phrase_id: int, user_id: int = Depends(current_user_id),
     b = session.get(models.Batch, p.batch_id)
     if not b or not _visible(b, user_id, is_admin(session, user_id)):
         raise HTTPException(404, "Phrase not found")
+    # _visible answers "may they SEE this topic exists", which is not the same as
+    # "may they have its content". Without the paywall gate a free account could
+    # pull the spoken English of any locked phrase — and each miss costs a TTS call.
+    u = session.get(models.User, user_id)
+    if not access.batch_usable(effective_plan(u), b, user_id):
+        raise HTTPException(403, "locked")
     st = session.get(models.Setting, 1) or models.Setting(id=1)
     try:
         path, dur = tts.synth(p.phrase_en, voice=st.tts_voice)
@@ -254,6 +269,11 @@ def mnemo_audio(batch_id: int, layout: str = "full", lang: str = "",
     b = session.get(models.Batch, batch_id)
     if not b or b.deleted_at or not _visible(b, user_id, is_admin(session, user_id)):
         raise HTTPException(404, "Batch not found")
+    # Paywall: the mnemonic story IS the lesson-1 content, and rendering it costs
+    # a TTS pass. Visibility is not entitlement — see phrase_audio above.
+    u = session.get(models.User, user_id)
+    if not access.batch_usable(effective_plan(u), b, user_id):
+        raise HTTPException(403, "locked")
     mnemo = session.exec(select(models.MnemoStory).where(models.MnemoStory.batch_id == batch_id)).first()
     if not mnemo or not mnemo.story_ru.strip():
         raise HTTPException(404, "No mnemonic story for this batch")

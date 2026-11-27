@@ -39,17 +39,46 @@ def test_score_phrase_oversize_audio_is_413(make_user):
 
 
 def test_score_phrase_daily_limit_is_429(make_user):
+    """The DAILY cap, not the plan gate. A free account is now stopped earlier
+    (403 ai_required on a paid topic), so to reach the cap the caller must be one
+    that may score at all — otherwise this test silently stops testing the cap."""
+    admin = make_user(plan="ai", is_admin=True)   # scored_per_day == 400
+    bid = commit_sample_batch(admin)
+    pid = phrase_ids(admin, bid)[0]
+    uid = admin.user["id"]  # type: ignore[attr-defined]
+    with Session(engine()) as s:
+        for _ in range(400):
+            s.add(models.PhraseAttempt(user_id=uid, phrase_id=pid, score=5))
+        s.commit()
+    r = admin.post("/api/training/score-phrase", files=_AUDIO, data={"phrase_id": pid})
+    assert r.status_code == 429
+
+
+def test_score_endpoints_are_closed_to_a_free_account_on_a_paid_topic(make_user):
+    """Regression: score-phrase/-anchor/-sequence ran server STT and an LLM after
+    checking only the daily cap, so a free account could score any phrase of any
+    locked topic — the paid feature, at our cost per call."""
     admin = make_user(plan="ai", is_admin=True)
     bid = commit_sample_batch(admin)
     pid = phrase_ids(admin, bid)[0]
-    free = make_user(plan="free")             # scored_per_day == 30
-    uid = free.user["id"]  # type: ignore[attr-defined]
-    with Session(engine()) as s:
-        for _ in range(30):
-            s.add(models.PhraseAttempt(user_id=uid, phrase_id=pid, score=5))
-        s.commit()
+    free = make_user(plan="free")
+    for path, data in (("score-phrase", {"phrase_id": pid}),
+                       ("score-anchor", {"phrase_id": pid}),
+                       ("score-sequence", {"batch_id": bid})):
+        r = free.post(f"/api/training/{path}", files=_AUDIO, data=data)
+        assert r.status_code == 403, f"{path} let a free account through: {r.status_code}"
+
+
+def test_score_endpoints_stay_open_on_the_free_showcase_topic(make_user):
+    """The free topic deliberately demos the flagship AI to everyone — the gate
+    must not take that away."""
+    admin = make_user(plan="ai", is_admin=True)
+    bid = commit_sample_batch(admin)
+    assert admin.post(f"/api/batches/{bid}/free").status_code == 200
+    pid = phrase_ids(admin, bid)[0]
+    free = make_user(plan="free")
     r = free.post("/api/training/score-phrase", files=_AUDIO, data={"phrase_id": pid})
-    assert r.status_code == 429
+    assert r.status_code == 200, r.text
 
 
 def test_score_anchor_happy(make_user):

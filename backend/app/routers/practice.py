@@ -23,18 +23,32 @@ router = APIRouter(prefix="/api/practice", tags=["practice"])
 _SCENE_BEATS = 3
 
 
+# A cue is one short line. Anything longer is not a cue, it is someone using our
+# OpenAI account as a free text-to-speech service: this endpoint synthesises
+# ARBITRARY text and had no caller identity, no length bound and no accounting.
+_MAX_CUE_CHARS = 400
+
+
 @router.post("/prompt-audio")
 def prompt_audio(text: str = Form(...), lang: str = Form("ru"),
+                 user_id: int = Depends(current_user_id),
                  session: Session = Depends(get_session)):
     """TTS of a short prompt/cue (voice-first). `lang` picks the voice: en → the
     English voice, anything else → the Russian voice (so an English conversation
     cue isn't read by a RU-tuned voice). Cached on disk by tts."""
+    text = (text or "").strip()
+    if not text:
+        raise HTTPException(400, "empty")
+    if len(text) > _MAX_CUE_CHARS:
+        raise HTTPException(413, "cue_too_long")
     st = session.get(models.Setting, 1) or models.Setting(id=1)
     voice = st.tts_voice if lang.lower().startswith("en") else st.tts_voice_ru
     try:
         path, dur = tts.synth(text, voice=voice)
     except Exception as e:
         raise HTTPException(502, f"TTS failed: {e}")
+    usage.accrue(session, user_id, "tts")   # count it against the monthly ceiling
+    session.commit()
     return {"audio_url": f"/audio/phrases/{path.name}", "duration": dur}
 
 

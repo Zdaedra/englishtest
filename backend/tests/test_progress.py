@@ -3,7 +3,12 @@ from sqlmodel import Session
 
 from app import models
 from app.db import engine
+from app.entitlements import ENTITLEMENTS, FOCUS_CAP
 from conftest import commit_sample_batch
+
+# What a FREE learner can actually hold in focus: the plan limit and the
+# plan-independent pedagogical cap, whichever is stricter (see progress.py).
+_FREE_CAP = min(ENTITLEMENTS["free"]["max_active_batches"] or FOCUS_CAP, FOCUS_CAP)
 
 
 def _free_batch(slug):
@@ -62,13 +67,13 @@ def test_patch_missing_batch_is_404(make_user):
 
 
 def test_active_batch_cap_for_free(make_user):
-    """free max_active_batches == 3 -> activating a 4th is rejected."""
-    ids = [_free_batch(f"free-{i}") for i in range(4)]
+    """free: one past the effective cap is rejected."""
+    ids = [_free_batch(f"free-{i}") for i in range(_FREE_CAP + 1)]
     free = make_user(plan="free")
-    for bid in ids[:3]:
+    for bid in ids[:_FREE_CAP]:
         assert free.put(f"/api/progress/{bid}",
                         json={"activated": True}).status_code == 200
-    r = free.put(f"/api/progress/{ids[3]}", json={"activated": True})
+    r = free.put(f"/api/progress/{ids[_FREE_CAP]}", json={"activated": True})
     assert r.status_code == 403
     assert r.json()["detail"] == "limit_active"
 
@@ -108,10 +113,10 @@ def test_on_path_not_capped(make_user):
 
 def test_deactivate_always_allowed_and_frees_a_slot(make_user):
     """De-activation is never capped; it frees a slot so a new one can activate."""
-    ids = [_free_batch(f"deact-{i}") for i in range(3)]
+    ids = [_free_batch(f"deact-{i}") for i in range(_FREE_CAP)]
     free = make_user(plan="free")
     for bid in ids:
-        free.put(f"/api/progress/{bid}", json={"activated": True})  # 3/3 (at cap)
+        free.put(f"/api/progress/{bid}", json={"activated": True})  # at cap
     assert free.put(f"/api/progress/{ids[0]}",
                     json={"activated": False}).status_code == 200
     bid4 = _free_batch("deact-4")
@@ -130,21 +135,21 @@ def _seq_proof(uid, bid, score=8):
 
 def test_completed_batch_does_not_count_toward_cap(make_user):
     """Cap counts active-practice (activated && !l3_passed); maintenance is free."""
-    ids = [_free_batch(f"cap-{i}") for i in range(3)]
+    ids = [_free_batch(f"cap-{i}") for i in range(_FREE_CAP)]
     free = make_user(plan="free")
     for bid in ids:
-        free.put(f"/api/progress/{bid}", json={"activated": True})  # 3/3
+        free.put(f"/api/progress/{bid}", json={"activated": True})  # at cap
     _seq_proof(free.user["id"], ids[0])
     free.put(f"/api/progress/{ids[0]}", json={"l3_passed": True})    # → maintenance
     bid4 = _free_batch("cap-4")
     r = free.put(f"/api/progress/{bid4}", json={"activated": True})
-    assert r.status_code == 200, r.text                              # only 2 active-practice
+    assert r.status_code == 200, r.text                    # a slot came free
 
 
 def test_lesson_start_of_a_new_batch_is_capped(make_user):
     """The focus cap walls a NEW batch entering focus by ANY path — including
     starting a lesson. You can't pile up focus by opening lessons either."""
-    ids = [_free_batch(f"les-{i}") for i in range(3)]
+    ids = [_free_batch(f"les-{i}") for i in range(_FREE_CAP)]
     free = make_user(plan="free")
     for bid in ids:
         free.put(f"/api/progress/{bid}", json={"activated": True})  # at cap
@@ -157,7 +162,7 @@ def test_lesson_start_of_a_new_batch_is_capped(make_user):
 def test_lesson_progress_on_an_in_focus_batch_is_never_blocked(make_user):
     """Continuing the batches already in focus is always allowed — the cap only
     gates a NEW batch entering focus, never work on the ones you've opened."""
-    ids = [_free_batch(f"cont-{i}") for i in range(3)]
+    ids = [_free_batch(f"cont-{i}") for i in range(_FREE_CAP)]
     free = make_user(plan="free")
     for bid in ids:
         free.put(f"/api/progress/{bid}", json={"activated": True})  # at cap
@@ -168,13 +173,13 @@ def test_lesson_progress_on_an_in_focus_batch_is_never_blocked(make_user):
 
 def test_focus_cap_applies_to_paid_unlimited_plans(make_user):
     """The pedagogical cap is plan-independent: even an 'ai' plan (whose
-    max_active_batches is None/unlimited) can hold at most FOCUS_CAP=3 in focus."""
-    ids = [_free_batch(f"paid-{i}") for i in range(4)]
+    max_active_batches is None/unlimited) can hold at most FOCUS_CAP in focus."""
+    ids = [_free_batch(f"paid-{i}") for i in range(FOCUS_CAP + 1)]
     ai = make_user(plan="ai")
-    for bid in ids[:3]:
+    for bid in ids[:FOCUS_CAP]:
         assert ai.put(f"/api/progress/{bid}",
                       json={"activated": True}).status_code == 200
-    r = ai.put(f"/api/progress/{ids[3]}", json={"activated": True})
+    r = ai.put(f"/api/progress/{ids[FOCUS_CAP]}", json={"activated": True})
     assert r.status_code == 403
     assert r.json()["detail"] == "limit_active"
 
@@ -182,15 +187,44 @@ def test_focus_cap_applies_to_paid_unlimited_plans(make_user):
 def test_paid_exam_pass_frees_a_focus_slot(make_user):
     """Passing an exam (l3_passed) drops a batch out of active focus, so a paid
     learner at the cap can then open a new one — the intended release valve."""
-    ids = [_free_batch(f"free-slot-{i}") for i in range(3)]
+    ids = [_free_batch(f"free-slot-{i}") for i in range(FOCUS_CAP)]
     ai = make_user(plan="ai")
     for bid in ids:
-        ai.put(f"/api/progress/{bid}", json={"activated": True})  # 3/3
+        ai.put(f"/api/progress/{bid}", json={"activated": True})  # at cap
     _seq_proof(ai.user["id"], ids[0])
     ai.put(f"/api/progress/{ids[0]}", json={"l3_passed": True})   # frees a slot
     bid4 = _free_batch("free-slot-4")
     assert ai.put(f"/api/progress/{bid4}",
                   json={"activated": True}).status_code == 200
+
+
+def test_migration_replaces_single_user_unique_index_on_batch_id(make_user):
+    """Regression found on prod 2026-11-25. `batchprogress.batch_id` still carried
+    a UNIQUE index from the single-user era, so only ONE account in the whole
+    system could hold progress for a given batch: every other user's write died on
+    IntegrityError, their progress never persisted, and the app looked EMPTY on a
+    fresh device. Fresh DBs never had that index (the model declares a plain one),
+    so the only thing worth testing is the migration: re-create the legacy index,
+    migrate, then assert two accounts can both own progress on the same batch."""
+    from sqlalchemy import text  # noqa: PLC0415
+    from app.db import init_db   # noqa: PLC0415
+    bid = _free_batch("legacy-unique-idx")
+    with Session(engine()) as s:
+        s.execute(text("DROP INDEX IF EXISTS ix_batchprogress_batch_id"))
+        s.execute(text("CREATE UNIQUE INDEX ix_batchprogress_batch_id "
+                       "ON batchprogress(batch_id)"))
+        s.commit()
+
+    init_db()  # runs _migrate
+
+    with Session(engine()) as s:
+        row = s.execute(text("SELECT sql FROM sqlite_master WHERE type='index' "
+                             "AND name='ix_batchprogress_batch_id'")).first()
+    assert row and "UNIQUE" not in row[0].upper(), "legacy UNIQUE index survived"
+
+    a, b = make_user(plan="ai"), make_user(plan="ai")
+    assert a.put(f"/api/progress/{bid}", json={"activated": True}).status_code == 200
+    assert b.put(f"/api/progress/{bid}", json={"activated": True}).status_code == 200
 
 
 # --- Work-based streak (/api/progress/streak) --------------------------------

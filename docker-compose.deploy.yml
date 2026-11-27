@@ -15,9 +15,25 @@ services:
       - ENGLISH_APP_PASSWORD=${ENGLISH_APP_PASSWORD}
       - ENGLISH_COOKIE_SECRET=${ENGLISH_COOKIE_SECRET}
       # Apple IAP (StoreKit 2) — bundle id has a config default; these enable
-      # transaction verification. Not secrets. Flip ENV to production at launch.
+      # transaction verification. Not secrets.
+      # The var name MUST match config.Settings (env_prefix "ENGLISH_" + field
+      # `apple_environment`). It was ENGLISH_APPLE_ENV here and silently ignored
+      # (`extra="ignore"`), so "flip it at launch" would have left the server
+      # verifying live purchases as sandbox. There is nothing to flip now: both
+      # environments are verified (see billing._build_verifiers); this only picks
+      # which is TRIED FIRST.
       - ENGLISH_APPLE_APP_APPLE_ID=${ENGLISH_APPLE_APP_APPLE_ID:-6782193688}
-      - ENGLISH_APPLE_ENV=${ENGLISH_APPLE_ENV:-sandbox}
+      - ENGLISH_APPLE_ENVIRONMENT=${ENGLISH_APPLE_ENVIRONMENT:-sandbox}
+      # App Store Server API — lets the server ASK Apple for a subscription's
+      # current status instead of only waiting for notifications, which can be
+      # lost, duplicated or delivered out of order (see billing.reconcile_with_apple).
+      # The key id and issuer id are identifiers, not secrets. The private key is,
+      # so it is bind-mounted read-only from the host rather than baked into the
+      # image — an image layer keeps a secret forever and travels with the image.
+      # All three empty => reconciliation is simply skipped, never an error.
+      - ENGLISH_APPLE_KEY_ID=${ENGLISH_APPLE_KEY_ID:-}
+      - ENGLISH_APPLE_ISSUER_ID=${ENGLISH_APPLE_ISSUER_ID:-}
+      - ENGLISH_APPLE_PRIVATE_KEY_PATH=${ENGLISH_APPLE_PRIVATE_KEY_PATH:-}
       # Email verification (Resend). Empty key => the verification gate stays
       # dormant (signups auto-verify); set RESEND_API_KEY on the host to activate.
       - RESEND_API_KEY=${RESEND_API_KEY:-}
@@ -28,6 +44,10 @@ services:
       - ENGLISH_STATS_PASSWORD=${ENGLISH_STATS_PASSWORD:-}
     volumes:
       - english_data:/srv/backend/data
+      # Apple In-App Purchase private key (.p8), read-only. Absent on a host that
+      # has not been given one — docker creates an empty dir then, and
+      # _build_api_clients just finds no key and stays inert.
+      - ./apple_key.p8:/srv/apple_key.p8:ro
     expose:
       - "8000"
     restart: unless-stopped

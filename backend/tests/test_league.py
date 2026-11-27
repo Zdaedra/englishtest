@@ -65,3 +65,27 @@ def test_tier_mapping():
     assert t(4.0) == "confident"
     assert t(6.5) == "sharp"
     assert t(8.5) == "native"
+
+
+def test_league_is_stopped_by_the_monthly_cost_ceiling(make_user):
+    """League accrued cost to the monthly ledger but never checked it, so the
+    only guard was an in-process daily counter that every redeploy reset. The
+    ceiling is the durable one: it survives restarts."""
+    from sqlmodel import Session
+    from app.db import engine
+    from app import models
+    from app.entitlements import ENTITLEMENTS
+    from app.usage import _period
+
+    c = make_user(plan="free")
+    cap = ENTITLEMENTS["free"]["monthly_ai_cost_cap_usd"]
+    with Session(engine()) as s:
+        s.add(models.UsageLedger(user_id=c.user["id"],  # type: ignore[attr-defined]
+                                 period=_period(),
+                                 micros=int(cap * 1_000_000) + 1))
+        s.commit()
+
+    r = c.post("/api/league/score", json={"answers": [
+        {"id": "a1", "situation": "Your manager asks for an update.",
+         "text": "Here is where we landed."}]})
+    assert r.status_code == 429, f"league ran past the monthly ceiling: {r.status_code}"

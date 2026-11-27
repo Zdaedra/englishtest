@@ -12,7 +12,7 @@ from sqlmodel import Session, select
 from .. import access, models
 from ..auth import current_user_id
 from ..db import get_session
-from ..entitlements import FOCUS_CAP, user_entitlements
+from ..entitlements import FOCUS_CAP, effective_plan, user_entitlements
 
 router = APIRouter(prefix="/api/progress", tags=["progress"])
 
@@ -201,7 +201,7 @@ def _put_progress(batch_id: int, patch: ProgressPatch, user_id: int,
     # lesson flow gates its own access, so never re-wall content mid-lesson.
     if explicit_activation:
         u = session.get(models.User, user_id)
-        if not access.batch_usable(u.plan if u else "free", batch, user_id):
+        if not access.batch_usable(effective_plan(u), batch, user_id):
             raise HTTPException(403, "locked")
 
     # (b) Focus cap — a PEDAGOGICAL limit that applies to EVERY learner (free & paid)

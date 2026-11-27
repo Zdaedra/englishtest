@@ -40,7 +40,7 @@ def _norm(email: str) -> str:
     return (email or "").strip().lower()
 
 
-SUPPORTED_LANGS = {"ru", "es", "de", "fr"}
+SUPPORTED_LANGS = {"ru", "en", "es", "de", "fr"}
 HERO_GENDERS = {"male", "female", "mixed"}
 
 
@@ -121,6 +121,13 @@ def me(request: Request, session: Session = Depends(get_session)):
     u = session.get(models.User, uid) if uid else None
     if not u:
         raise HTTPException(401, {"code": "unauthorized", "msg": "Не авторизован."})
+    # If this account looks lapsed, ask Apple before answering. Renewals reach us
+    # as notifications and notifications go missing — on 2026-11-27 three of them
+    # did, and the server locked a live subscriber out of content they were still
+    # paying for. One API call per lapse, and only for accounts tied to an App
+    # Store subscription; see billing.maybe_reconcile.
+    from .billing import maybe_reconcile  # local import avoids a cycle
+    maybe_reconcile(session, u)
     return _serialize(u)
 
 

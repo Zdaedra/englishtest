@@ -37,3 +37,7 @@ _prod_check_phrases.md
 
 # Cover-art staging (one-off generation artifacts; prod serves from the data volume)
 _covers_staged*/
+
+# Демо-доступ для ревью Apple — НЕ коммитить (содержит пароль)
+/APP-REVIEW-ACCOUNT.md
+/TEST-IAP-ACCOUNT.md

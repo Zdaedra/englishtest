@@ -8,7 +8,7 @@ from .. import access, audio, models
 from ..auth import current_user_id, is_admin
 from ..config import get_settings
 from ..db import get_session
-from ..entitlements import user_entitlements
+from ..entitlements import effective_plan, user_entitlements
 from ..schemas import SessionRequest, SessionResponse
 
 router = APIRouter(prefix="/api/sessions", tags=["sessions"])
@@ -74,7 +74,7 @@ def create_session(req: SessionRequest, user_id: int = Depends(current_user_id),
     # Freemium gate: only the free batch (+ own imports) is usable without a paid plan.
     if not admin:
         u = session.get(models.User, user_id)
-        if not access.batch_usable(u.plan if u else "free", batch, user_id):
+        if not access.batch_usable(effective_plan(u), batch, user_id):
             raise HTTPException(403, "locked")
     phrases = session.exec(select(models.Phrase).where(models.Phrase.batch_id == req.batch_id)
                            .order_by(models.Phrase.order_index)).all()

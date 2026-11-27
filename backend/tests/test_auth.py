@@ -95,6 +95,39 @@ def test_ui_lang_updates_and_validates(make_user):
     assert bad.json()["detail"]["code"] == "bad_lang"
 
 
+def test_ui_lang_accepts_every_ui_locale(make_user):
+    """SUPPORTED_LANGS must mirror LANGS in frontend/src/i18n/index.tsx — a locale
+    shipped on the client but missing here gets a 400 and silently fails to sync
+    across devices."""
+    c = make_user()
+    for code in ("ru", "en", "es", "de", "fr"):
+        r = c.post("/api/auth/ui-lang", json={"lang": code})
+        assert r.status_code == 200, f"{code}: {r.text}"
+        assert r.json()["ui_lang"] == code
+        assert c.get("/api/auth/me").json()["ui_lang"] == code
+
+
+def test_ui_lang_en_leaves_content_axis_on_russian(make_user):
+    """`en` is a UI-chrome-only locale: localize.SUPPORTED stays {ru,es,de,fr}, so
+    an English UI must still resolve content (batch titles, glosses, stories) to
+    the Russian base instead of raising."""
+    from app import localize
+
+    c = make_user()
+    assert c.post("/api/auth/ui-lang", json={"lang": "en"}).status_code == 200
+    assert "en" not in localize.SUPPORTED
+
+    class U:
+        ui_lang = "en"
+
+    assert localize.resolve_lang(None, U()) == "ru"      # saved ui_lang collapses
+    assert localize.resolve_lang("en", U()) == "ru"      # explicit ?lang=en collapses
+    assert localize.pick({"es": "hola"}, "ru", "база") == "база"
+
+    assert c.get("/api/batches").status_code == 200
+    assert c.get("/api/batches?lang=en").status_code == 200
+
+
 def test_logout_requires_auth_but_succeeds_with_token(client, make_user):
     assert client.post("/api/auth/logout").status_code == 401
     c = make_user()

@@ -161,6 +161,17 @@ def terms():
     return FileResponse(str(_terms_file), media_type="text/html")
 
 
+# Public support page. App Store Connect requires a reachable Support URL, and
+# this is also where the missing self-service password reset is answered by hand
+# until that flow exists. Registered before the SPA catch-all, like the two above.
+_support_file = Path(__file__).resolve().parent / "static" / "support.html"
+
+
+@app.get("/support")
+def support():
+    return FileResponse(str(_support_file), media_type="text/html")
+
+
 @app.get("/api/policy/versions")
 def policy_versions():
     from .policy import PRIVACY_VERSION, TERMS_VERSION

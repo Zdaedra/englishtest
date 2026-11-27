@@ -15,6 +15,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
 from .. import access, cover, embeddings, entitlements, localize, models, scoring, srs, stt, usage
+from ..entitlements import effective_plan
 from ..auth import current_user_id
 from ..db import get_session
 
@@ -105,6 +106,14 @@ async def score_phrase(audio: UploadFile = File(...), phrase_id: int = Form(...)
     p = session.get(models.Phrase, phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
+    # Paywall + AI gate. These three endpoints run server STT and (for the
+    # phrase/sequence ones) an LLM, i.e. the paid flagship feature, and they
+    # spend real money per call. They checked only the daily rate limit, so a
+    # free account could score any phrase of any locked topic. Same gate as
+    # /answer: the free showcase topic keeps demoing AI to everyone.
+    u = session.get(models.User, user_id)
+    if not access.ai_on_batch(effective_plan(u), session.get(models.Batch, p.batch_id)):
+        raise HTTPException(403, "ai_required")
     _check_rate(session, user_id)
     raw = await _read_audio(audio)
     transcript = stt.transcribe(raw, filename=audio.filename or "clip.webm", language="en")
@@ -134,6 +143,9 @@ async def score_anchor(audio: UploadFile = File(...), phrase_id: int = Form(...)
     p = session.get(models.Phrase, phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
+    u = session.get(models.User, user_id)
+    if not access.ai_on_batch(effective_plan(u), session.get(models.Batch, p.batch_id)):
+        raise HTTPException(403, "ai_required")
     _check_rate(session, user_id)
     raw = await _read_audio(audio)
     transcript = stt.transcribe(raw, filename=audio.filename or "clip.webm", language="en")
@@ -158,6 +170,9 @@ async def score_sequence(audio: UploadFile = File(...), batch_id: int = Form(...
     b = session.get(models.Batch, batch_id)
     if not b or b.deleted_at:
         raise HTTPException(404, "Batch not found")
+    u = session.get(models.User, user_id)
+    if not access.ai_on_batch(effective_plan(u), b):
+        raise HTTPException(403, "ai_required")
     mnemo = session.exec(
         select(models.MnemoStory).where(models.MnemoStory.batch_id == batch_id)
     ).first()
@@ -206,7 +221,7 @@ def mastery(user_id: int = Depends(current_user_id), session: Session = Depends(
         models.BatchProgress.user_id == user_id,
         models.BatchProgress.activated == True)).all()}  # noqa: E712
     u = session.get(models.User, user_id)
-    plan = u.plan if u else "free"
+    plan = effective_plan(u)
     now = datetime.now(timezone.utc)
     live_since = now - timedelta(days=_LIVE_DAYS)
     by_batch: dict[int, list] = {}
@@ -367,7 +382,7 @@ def deck(batch_ids: str = "", maintenance_ids: str = "", limit: int = 30,
     # Freemium gate: a free user's deck only draws from usable batches (the free
     # showcase batch + own imports); paid plans draw from all.
     u = session.get(models.User, user_id)
-    plan = u.plan if u else "free"
+    plan = effective_plan(u)
     lng = localize.resolve_lang(lang, u)
     brows = session.exec(select(models.Batch).where(models.Batch.id.in_(all_ids))).all()
     usable = {b.id for b in brows if access.batch_usable(plan, b, user_id)}
@@ -602,7 +617,7 @@ async def answer(audio: UploadFile = File(...), phrase_id: int = Form(...),
         raise HTTPException(404, "Phrase not found")
     u = session.get(models.User, user_id)
     b = session.get(models.Batch, p.batch_id)
-    if not access.ai_on_batch(u.plan if u else "free", b):
+    if not access.ai_on_batch(effective_plan(u), b):
         raise HTTPException(403, "ai_required")  # mic = AI plan (free on the showcase batch)
     _check_rate(session, user_id)
     raw = await _read_audio(audio)
@@ -641,7 +656,7 @@ def answer_text(body: AnswerTextIn, user_id: int = Depends(current_user_id),
         raise HTTPException(404, "Phrase not found")
     u = session.get(models.User, user_id)
     b = session.get(models.Batch, p.batch_id)
-    if not access.ai_on_batch(u.plan if u else "free", b):
+    if not access.ai_on_batch(effective_plan(u), b):
         raise HTTPException(403, "ai_required")  # mic = AI plan (free on the showcase batch)
     _check_rate(session, user_id)
     transcript = (body.transcript or "").strip()
@@ -713,7 +728,7 @@ def coach(body: CoachIn, user_id: int = Depends(current_user_id),
     p = session.get(models.Phrase, body.phrase_id)
     if not p:
         raise HTTPException(404, "Phrase not found")
-    if not access.ai_on_batch(u.plan, session.get(models.Batch, p.batch_id)):
+    if not access.ai_on_batch(effective_plan(u), session.get(models.Batch, p.batch_id)):
         raise HTTPException(403, "ai_plan_required")
     _check_rate(session, user_id)
     cp = session.exec(select(models.CheckPhrase).where(

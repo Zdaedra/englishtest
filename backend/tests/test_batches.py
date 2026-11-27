@@ -107,3 +107,34 @@ def test_free_flag_requires_admin(make_user):
     ok = admin.post(f"/api/batches/{bid}/free")
     assert ok.status_code == 200, ok.text
     assert ok.json()["is_free"] is True
+
+
+# --- /batches/phrases is CONTENT, so it must respect the paywall -------------
+# Regression, found on live prod 2026-11-25: the flat phrase index had no plan
+# check at all, so a free account received phrase_en + gloss for all 802 phrases
+# of the 89 locked topics. The catalogue said "locked" while search handed out
+# everything inside. The gate must match list_batches' `locked` flag exactly.
+
+def test_phrases_index_hides_locked_topics_from_a_free_user(make_user):
+    admin = make_user(plan="ai", is_admin=True)
+    paid = commit_sample_batch(admin)
+    free_b = commit_sample_batch(admin)
+    assert admin.post(f"/api/batches/{free_b}/free").status_code == 200
+
+    free = make_user(plan="free")
+    rows = free.get("/api/batches/phrases").json()
+    got = {r["batch_id"] for r in rows}
+    assert free_b in got, "the free showcase topic must still be searchable"
+    assert paid not in got, "paid phrases leaked to a free account"
+    # And the catalogue agrees with the content endpoint.
+    locked = {b["id"] for b in free.get("/api/batches").json() if b["locked"]}
+    assert not (got & locked), "returned phrases from a topic marked locked"
+
+
+def test_phrases_index_gives_a_paid_user_everything(make_user):
+    admin = make_user(plan="ai", is_admin=True)
+    a = commit_sample_batch(admin)
+    b = commit_sample_batch(admin)
+    paid = make_user(plan="core")
+    got = {r["batch_id"] for r in paid.get("/api/batches/phrases").json()}
+    assert {a, b} <= got, "a paying account must see the whole catalogue"

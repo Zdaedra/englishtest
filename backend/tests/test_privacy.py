@@ -88,3 +88,27 @@ def test_retention_blanks_old_transcripts_only(make_user):
         assert by_score[7] == "NEW"   # recent → kept
         # numeric score survives the purge
         assert all(r.score in (5, 7) for r in rows)
+
+
+# --- The three public legal/help pages ---------------------------------------
+# App Store Connect requires a reachable Support URL, and Apple checks the
+# Privacy and Terms links too. All three must answer WITHOUT a session, because
+# a reviewer (and a locked-out user) opens them signed out.
+
+def test_public_pages_are_reachable_without_auth(client):
+    for path in ("/privacy", "/terms", "/support"):
+        r = client.get(path)
+        assert r.status_code == 200, f"{path} -> {r.status_code}"
+        assert r.headers["content-type"].startswith("text/html"), path
+        assert "<html" in r.text.lower(), f"{path} did not return a page"
+
+
+def test_support_page_answers_the_questions_a_user_is_locked_out_by(client):
+    """The page exists to be useful, not to satisfy a URL field: a user who
+    cannot sign in or wants their data must find the way out on it."""
+    html = client.get("/support").text
+    assert "support@executive-english.net" in html, "no way to reach us"
+    for needle in ("password", "Restore purchases", "Subscriptions", "delete"):
+        assert needle.lower() in html.lower(), f"support page never mentions {needle!r}"
+    for link in ('href="/privacy"', 'href="/terms"'):
+        assert link in html, f"support page does not link {link}"
