@@ -4618,7 +4618,13 @@ body:has(.tr-screen) { overflow: hidden; overscroll-behavior: none; }
 /* --- Coach-mark tutorial overlay (first-launch, contextual per screen) --- */
 .cm-root { position: fixed; inset: 0; z-index: 1000; -webkit-tap-highlight-color: transparent; touch-action: pan-y; animation: fade-up .25s var(--spring); }
 .cm-svg { position: absolute; inset: 0; }
-.cm-cap { position: absolute; color: #F4EFE7; text-align: center; pointer-events: none; }
+/* The caption floats over the DIMMED page, and a text-shadow alone is not enough
+   where it lands on a light, busy card: on the Learning screen the Spanish tip
+   read straight through the widget card underneath it, text on text. Give it the
+   same scrim the other tooltip style (.teach-tip) already has. */
+.cm-cap { position: absolute; color: #F4EFE7; text-align: center; pointer-events: none;
+  background: rgba(26,22,18,.82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-radius: 18px; padding: 14px 16px; box-shadow: 0 14px 40px rgba(0,0,0,.35); }
 .cm-cap .cm-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; text-shadow: 0 1px 10px rgba(0,0,0,.6); }
 .cm-cap .cm-body { font-size: .85rem; line-height: 1.45; color: #E8E1D4; text-shadow: 0 1px 10px rgba(0,0,0,.7); }
 .cm-video { width: 100%; max-height: 160px; object-fit: cover; border-radius: 14px; margin-bottom: 10px; background: rgba(0,0,0,.35); }
