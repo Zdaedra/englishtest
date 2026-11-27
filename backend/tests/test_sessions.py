@@ -64,10 +64,33 @@ def test_free_tier_daily_session_cap(make_user):
         s.commit()
     free = make_user(plan="free")
     uid = free.user["id"]  # type: ignore[attr-defined]
+    # Three separate sittings today (three other topics), so the 4th is a new one.
     with Session(engine()) as s:
         for _ in range(3):
-            s.add(models.PlaybackSession(user_id=uid, batch_id=bid))
+            s.add(models.PlaybackSession(user_id=uid, batch_id=_insert_batch()))
         s.commit()
     r = free.post("/api/sessions", json={"batch_id": bid})
     assert r.status_code == 429
     assert r.json()["detail"] == "daily_limit"
+
+
+def test_reshuffle_or_mode_switch_is_not_a_new_session(make_user):
+    """Shuffle and Listen/Recall each re-render the same topic. Counting those as
+    sessions let a free user hit the 3-a-day wall after one play, one shuffle and
+    one mode switch — and that's exactly what an App Store reviewer would do."""
+    bid = commit_sample_batch(make_user(plan="ai", is_admin=True))
+    with Session(engine()) as s:
+        b = s.get(models.Batch, bid)
+        b.is_free = True
+        s.add(b)
+        s.commit()
+    free = make_user(plan="free")
+    uid = free.user["id"]  # type: ignore[attr-defined]
+    with Session(engine()) as s:
+        s.add(models.PlaybackSession(user_id=uid, batch_id=_insert_batch()))
+        s.add(models.PlaybackSession(user_id=uid, batch_id=_insert_batch()))
+        s.add(models.PlaybackSession(user_id=uid, batch_id=bid))   # 3rd sitting: this topic
+        s.commit()
+    for mode in ("recall", "listening", "recall"):
+        r = free.post("/api/sessions", json={"batch_id": bid, "mode": mode})
+        assert r.status_code == 200, f"{mode}: {r.status_code} {r.text}"

@@ -573,6 +573,7 @@ const de: Dict = {
   "pb.listen": "Hören",
   "pb.recall": "Erinnern",
   "pb.counter": "{{i}} von {{n}}",
+  "pb.dailyLimit": "Die kostenlosen Hörsitzungen für heute sind aufgebraucht.",
   "pb.prevAria": "Zurück",
   "pb.playPauseAria": "Wiedergabe / Pause",
   "pb.nextAria": "Weiter",

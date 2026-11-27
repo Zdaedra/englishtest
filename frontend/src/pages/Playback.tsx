@@ -35,6 +35,19 @@ export default function Playback() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [p.batch, p.busy]);
 
+  // The session failed to build (free plan's daily cap, network): say so here.
+  // The generic "nothing is playing" below used to swallow the reason entirely.
+  if (p.batch && !p.session && !p.busy && p.err) {
+    return (
+      <div className="screen empty">
+        <PlaybackError err={p.err} />
+        <button className="btn btn-tint" onClick={() => nav("/")}>
+          {t("pb.goLibrary")}
+        </button>
+      </div>
+    );
+  }
+
   if (!p.batch || (!p.session && !p.busy)) {
     if (loadingFocus) {
       return (
@@ -134,7 +147,7 @@ export default function Playback() {
         )}
       </div>
 
-      {p.err && <p className="error">{p.err}</p>}
+      {p.err && <PlaybackError err={p.err} />}
 
       <div className="scrub">
         <div
@@ -211,6 +224,20 @@ export default function Playback() {
           })}
         </div>
       )}
+    </div>
+  );
+}
+
+/** The free plan's daily listening cap is a state with a way out (upgrade), not
+ *  a failure: a sentence and the paywall button, never the server's raw JSON. */
+function PlaybackError({ err }: { err: string }) {
+  const nav = useNavigate();
+  const { t } = useI18n();
+  if (err !== "daily_limit") return <p className="error">{err}</p>;
+  return (
+    <div className="pb-limit">
+      <p>{t("pb.dailyLimit")}</p>
+      <button className="btn btn-primary" onClick={() => nav("/subscribe")}>{t("paywall.cta")}</button>
     </div>
   );
 }

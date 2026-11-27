@@ -573,6 +573,7 @@ const es: Dict = {
   "pb.listen": "Escuchar",
   "pb.recall": "Recordar",
   "pb.counter": "{{i}} de {{n}}",
+  "pb.dailyLimit": "Ya usaste las sesiones de escucha gratuitas de hoy.",
   "pb.prevAria": "Anterior",
   "pb.playPauseAria": "Reproducir / pausa",
   "pb.nextAria": "Siguiente",

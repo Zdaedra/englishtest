@@ -2,9 +2,29 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "english-backend",
+      "runtimeExecutable": "/Users/daedra/.local/bin/python3.12",
+      "runtimeArgs": [
+        "-m",
+        "uvicorn",
+        "app.main:app",
+        "--port",
+        "8000"
+      ],
+      "cwd": "backend",
+      "port": 8000,
+      "env": {
+        "PYTHONPATH": ".venv/lib/python3.12/site-packages"
+      },
+      "autoPort": false
+    },
+    {
       "name": "english-frontend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "cwd": "frontend",
       "port": 5173
     }

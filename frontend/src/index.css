@@ -1264,6 +1264,9 @@ html.is-scrolled .shell::before { opacity: 1; }
   color: var(--muted);
 }
 
+/* Free plan's daily listening cap: a state, not an error — no red. */
+.pb-limit { text-align: center; margin: 8px 0 18px; display: grid; gap: 14px; justify-items: center; }
+.pb-limit p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.4; }
 .pb-hero {
   flex: 1;
   display: flex;

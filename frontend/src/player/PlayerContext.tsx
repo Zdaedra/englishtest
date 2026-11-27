@@ -164,7 +164,9 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         setDuration(s.duration);
         setCached(await isCached(s.audio_url));
       } catch (e) {
-        setErr(String(e));
+        // The free plan's sittings-per-day cap: a known state, not a failure —
+        // Playback renders it as a sentence + upgrade, never the raw JSON.
+        setErr(String(e).includes("daily_limit") ? "daily_limit" : String(e));
       } finally {
         setBusy(false);
       }

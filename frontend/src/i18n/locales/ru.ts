@@ -588,6 +588,7 @@ const ru: Dict = {
   "pb.listen": "Слушать",
   "pb.recall": "Вспоминать",
   "pb.counter": "{{i}} из {{n}}",
+  "pb.dailyLimit": "Бесплатные прослушивания на сегодня закончились.",
   "pb.prevAria": "Предыдущая",
   "pb.playPauseAria": "Играть / пауза",
   "pb.nextAria": "Следующая",
